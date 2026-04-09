@@ -1,0 +1,19 @@
+{
+  "pr_number": "41606",
+  "recommendation": "COMMENT",
+  "summary": "PR correctly fixes Explore Markets sort order by volume; live validation confirms descending order. Minor issue: PR description manual testing steps reference '5 crypto + 5 HIP-3 markets' but implementation shows unified top-10 — update the testing steps to avoid QA confusion.",
+  "comments": [
+    {
+      "path": "ui/hooks/perps/stream/usePerpsLiveMarketData.ts",
+      "line": 4,
+      "body": "`parseVolume` is imported from `pages/perps/utils/sortMarkets` — a page-level module — into a hook. This is a pre-existing pattern (same import exists in `ui/components/app/perps/utils.ts:3`), but hooks importing from pages creates a layering inversion. When touching this area next, consider moving `parseVolume` to `ui/components/app/perps/utils.ts` or a shared helpers location.",
+      "severity": "nitpick"
+    },
+    {
+      "path": "ui/components/app/perps/perps-explore-markets/perps-explore-markets.tsx",
+      "line": 62,
+      "body": "The `.slice(0, 10)` limit here diverges from mobile's `EXPLORE_MARKETS_LIMIT = 8` (in `usePerpsTabExploreData.ts`). Not a bug, but if the limit is a product constant, consider defining it in `shared/constants/perps.ts` to keep mobile and extension aligned and easy to change together.",
+      "severity": "nitpick"
+    }
+  ]
+}
