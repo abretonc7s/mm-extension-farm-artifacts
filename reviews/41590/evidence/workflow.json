@@ -1,0 +1,219 @@
+{
+  "description": "",
+  "hooks": {
+    "pre_conditions": [
+      "wallet.unlocked",
+      "perps.feature_enabled"
+    ],
+    "setup": [],
+    "teardown": []
+  },
+  "inputs": {},
+  "sourcePath": "",
+  "title": "PR #41590 validation — popover portal + candle period modal",
+  "workflow": {
+    "entry": "nav-to-eth",
+    "nodes": {
+      "nav-to-eth": {
+        "action": "call",
+        "ref": "perps/navigate-to-market-detail",
+        "params": {
+          "symbol": "ETH"
+        },
+        "next": "wait-detail",
+        "id": "nav-to-eth"
+      },
+      "wait-detail": {
+        "action": "wait_for",
+        "test_id": "perps-market-detail-page",
+        "timeout_ms": 10000,
+        "next": "baseline-screenshot",
+        "id": "wait-detail"
+      },
+      "baseline-screenshot": {
+        "action": "screenshot",
+        "filename": "evidence-01-market-detail-baseline.png",
+        "next": "check-position-exists",
+        "id": "baseline-screenshot"
+      },
+      "check-position-exists": {
+        "action": "eval_ref",
+        "ref": "perps-positions",
+        "save_as": "positions_json",
+        "next": "decide-popover-path",
+        "id": "check-position-exists"
+      },
+      "decide-popover-path": {
+        "action": "switch",
+        "cases": [
+          {
+            "when": {
+              "operator": "not_contains",
+              "field": "vars.positions_json",
+              "value": "\"symbol\":\"ETH\""
+            },
+            "next": "skip-popover-note",
+            "index": 0,
+            "label": ""
+          }
+        ],
+        "default": "open-margin-menu",
+        "id": "decide-popover-path"
+      },
+      "skip-popover-note": {
+        "action": "eval_sync",
+        "expression": "'no ETH position — popover validation will be exercised via DOM assertion on the perps-margin-card when present'",
+        "next": "open-candle-more",
+        "id": "skip-popover-note"
+      },
+      "open-margin-menu": {
+        "action": "press",
+        "test_id": "perps-margin-card",
+        "next": "wait-margin-menu",
+        "id": "open-margin-menu"
+      },
+      "wait-margin-menu": {
+        "action": "wait_for",
+        "test_id": "perps-margin-menu",
+        "timeout_ms": 3000,
+        "next": "assert-margin-menu-in-body",
+        "id": "wait-margin-menu"
+      },
+      "assert-margin-menu-in-body": {
+        "action": "ext_check_dom",
+        "selector": "body > [data-testid='perps-margin-menu']",
+        "visible": true,
+        "next": "screenshot-margin-menu",
+        "id": "assert-margin-menu-in-body"
+      },
+      "screenshot-margin-menu": {
+        "action": "screenshot",
+        "filename": "evidence-02-margin-menu-portaled.png",
+        "next": "close-margin-menu",
+        "id": "screenshot-margin-menu"
+      },
+      "close-margin-menu": {
+        "action": "eval_sync",
+        "expression": "document.body.click()",
+        "next": "wait-after-close-margin",
+        "id": "close-margin-menu"
+      },
+      "wait-after-close-margin": {
+        "action": "wait",
+        "ms": 400,
+        "next": "open-modify-menu",
+        "id": "wait-after-close-margin"
+      },
+      "open-modify-menu": {
+        "action": "press",
+        "test_id": "perps-modify-cta-button",
+        "next": "wait-modify-menu",
+        "id": "open-modify-menu"
+      },
+      "wait-modify-menu": {
+        "action": "wait_for",
+        "test_id": "perps-modify-menu",
+        "timeout_ms": 3000,
+        "next": "assert-modify-menu-in-body",
+        "id": "wait-modify-menu"
+      },
+      "assert-modify-menu-in-body": {
+        "action": "ext_check_dom",
+        "selector": "body > [data-testid='perps-modify-menu']",
+        "visible": true,
+        "next": "screenshot-modify-menu",
+        "id": "assert-modify-menu-in-body"
+      },
+      "screenshot-modify-menu": {
+        "action": "screenshot",
+        "filename": "evidence-03-modify-menu-portaled.png",
+        "next": "close-modify-menu",
+        "id": "screenshot-modify-menu"
+      },
+      "close-modify-menu": {
+        "action": "eval_sync",
+        "expression": "document.body.click()",
+        "next": "wait-after-close-modify",
+        "id": "close-modify-menu"
+      },
+      "wait-after-close-modify": {
+        "action": "wait",
+        "ms": 400,
+        "next": "open-candle-more",
+        "id": "wait-after-close-modify"
+      },
+      "open-candle-more": {
+        "action": "press",
+        "test_id": "perps-candle-period-more",
+        "next": "wait-candle-modal",
+        "id": "open-candle-more"
+      },
+      "wait-candle-modal": {
+        "action": "wait_for",
+        "test_id": "perps-candle-period-modal",
+        "timeout_ms": 3000,
+        "next": "assert-candle-modal-sections",
+        "id": "wait-candle-modal"
+      },
+      "assert-candle-modal-sections": {
+        "action": "ext_check_dom",
+        "test_id": "perps-candle-period-modal-1M",
+        "visible": true,
+        "next": "screenshot-candle-modal",
+        "id": "assert-candle-modal-sections"
+      },
+      "screenshot-candle-modal": {
+        "action": "screenshot",
+        "filename": "evidence-04-candle-period-modal.png",
+        "next": "click-1M",
+        "id": "screenshot-candle-modal"
+      },
+      "click-1M": {
+        "action": "press",
+        "test_id": "perps-candle-period-modal-1M",
+        "next": "wait-modal-closed",
+        "id": "click-1M"
+      },
+      "wait-modal-closed": {
+        "action": "wait",
+        "ms": 500,
+        "next": "assert-1M-selected",
+        "id": "wait-modal-closed"
+      },
+      "assert-1M-selected": {
+        "action": "eval_sync",
+        "expression": "(() => { const more = document.querySelector('[data-testid=\"perps-candle-period-more\"]'); const oneMin = document.querySelector('[data-testid=\"perps-candle-period-1m\"]'); return JSON.stringify({ moreHasMuted: more?.className?.includes('bg-muted') ?? false, oneMinHasMuted: oneMin?.className?.includes('bg-muted') ?? false, moreText: more?.textContent }); })()",
+        "save_as": "selection_state",
+        "assert": {
+          "operator": "contains",
+          "field": "result",
+          "value": "\"moreHasMuted\":true"
+        },
+        "next": "assert-1m-not-selected",
+        "id": "assert-1M-selected"
+      },
+      "assert-1m-not-selected": {
+        "action": "eval_sync",
+        "expression": "(() => { const oneMin = document.querySelector('[data-testid=\"perps-candle-period-1m\"]'); return String(!(oneMin?.className?.includes('bg-muted'))); })()",
+        "assert": {
+          "operator": "contains",
+          "field": "result",
+          "value": "true"
+        },
+        "next": "screenshot-final",
+        "id": "assert-1m-not-selected"
+      },
+      "screenshot-final": {
+        "action": "screenshot",
+        "filename": "evidence-05-after-1M-selected.png",
+        "next": "done",
+        "id": "screenshot-final"
+      },
+      "done": {
+        "action": "end",
+        "status": "pass",
+        "id": "done"
+      }
+    }
+  }
+}

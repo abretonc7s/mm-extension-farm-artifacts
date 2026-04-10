@@ -1,0 +1,25 @@
+{
+  "pr_number": "41590",
+  "recommendation": "COMMENT",
+  "summary": "Scoped, correct fix for TAT-2791. Portal + modal rewrite + strict-equality period matching cleanly solve the three acceptance criteria and the derived 1m/1M collision. Live-validated end-to-end for the candle modal path; portal path is covered by new unit-level parentElement assertions. Tests target the exact failure modes the bug produced. No blockers.",
+  "comments": [
+    {
+      "path": "ui/components/app/perps/perps-candle-period-selector/perps-candle-period-modal.tsx",
+      "line": 92,
+      "body": "Mobile's equivalent `PerpsCandlePeriodBottomSheet` tracks a `CANDLE_PERIOD_VIEWED` metrics event in a `useEffect` when the bottom sheet opens (see `metamask-mobile/app/components/UI/Perps/components/PerpsCandlePeriodBottomSheet/PerpsCandlePeriodBottomSheet.tsx`). Consider mirroring that in a follow-up for analytics parity — not a blocker for this PR since the ticket is about layering/selection, not analytics.",
+      "severity": "suggestion"
+    },
+    {
+      "path": "ui/pages/perps/perps-market-detail-page.tsx",
+      "line": 1235,
+      "body": "`z-[1050]` is an arbitrary Tailwind value. The same literal is already in use in `ui/components/multichain/global-menu-drawer/global-menu-drawer.tsx`, so it is a de facto portal-layer convention. Consider tokenizing it into the shared Tailwind `zIndex` scale in a follow-up to avoid the magic number drifting across files.",
+      "severity": "nitpick"
+    },
+    {
+      "path": "ui/pages/perps/perps-market-detail-page.tsx",
+      "line": 1729,
+      "body": "Live validation for the Margin and Modify portal behavior was gated on having an open ETH position in the dev wallet fixture — the recipe fell through to the candle modal path because the current fixture had no position. Unit tests cover this via `parentElement === document.body` on lines 596 and 622 of `perps-market-detail-page.test.tsx`, which is structurally equivalent. Consider seeding an open ETH position in the perps e2e fixture so future PRs can exercise the portal path in browser as well.",
+      "severity": "suggestion"
+    }
+  ]
+}

@@ -1,0 +1,59 @@
+flowchart TD
+  %% PR #41590 validation — popover portal + candle period modal
+  __entry__(["ENTRY"]) --> node_nav_to_eth
+  node_nav_to_eth[["nav-to-eth<br/>perps/navigate-to-market-detail"]]
+  node_wait_detail["wait-detail<br/>wait_for"]
+  node_baseline_screenshot["baseline-screenshot<br/>screenshot"]
+  node_check_position_exists["check-position-exists<br/>perps-positions"]
+  node_decide_popover_path{"decide-popover-path<br/>switch"}
+  node_skip_popover_note["skip-popover-note<br/>eval_sync"]
+  node_open_margin_menu["open-margin-menu<br/>press"]
+  node_wait_margin_menu["wait-margin-menu<br/>wait_for"]
+  node_assert_margin_menu_in_body["assert-margin-menu-in-body<br/>ext_check_dom"]
+  node_screenshot_margin_menu["screenshot-margin-menu<br/>screenshot"]
+  node_close_margin_menu["close-margin-menu<br/>eval_sync"]
+  node_wait_after_close_margin["wait-after-close-margin<br/>wait"]
+  node_open_modify_menu["open-modify-menu<br/>press"]
+  node_wait_modify_menu["wait-modify-menu<br/>wait_for"]
+  node_assert_modify_menu_in_body["assert-modify-menu-in-body<br/>ext_check_dom"]
+  node_screenshot_modify_menu["screenshot-modify-menu<br/>screenshot"]
+  node_close_modify_menu["close-modify-menu<br/>eval_sync"]
+  node_wait_after_close_modify["wait-after-close-modify<br/>wait"]
+  node_open_candle_more["open-candle-more<br/>press"]
+  node_wait_candle_modal["wait-candle-modal<br/>wait_for"]
+  node_assert_candle_modal_sections["assert-candle-modal-sections<br/>ext_check_dom"]
+  node_screenshot_candle_modal["screenshot-candle-modal<br/>screenshot"]
+  node_click_1M["click-1M<br/>press"]
+  node_wait_modal_closed["wait-modal-closed<br/>wait"]
+  node_assert_1M_selected["assert-1M-selected<br/>eval_sync"]
+  node_assert_1m_not_selected["assert-1m-not-selected<br/>eval_sync"]
+  node_screenshot_final["screenshot-final<br/>screenshot"]
+  node_done(["done<br/>PASS"])
+  node_nav_to_eth --> node_wait_detail
+  node_wait_detail --> node_baseline_screenshot
+  node_baseline_screenshot --> node_check_position_exists
+  node_check_position_exists --> node_decide_popover_path
+  node_decide_popover_path -->|vars.positions_json not_contains \"\\"symbol\\":\\"ETH\\"\"| node_skip_popover_note
+  node_decide_popover_path -->|default| node_open_margin_menu
+  node_skip_popover_note --> node_open_candle_more
+  node_open_margin_menu --> node_wait_margin_menu
+  node_wait_margin_menu --> node_assert_margin_menu_in_body
+  node_assert_margin_menu_in_body --> node_screenshot_margin_menu
+  node_screenshot_margin_menu --> node_close_margin_menu
+  node_close_margin_menu --> node_wait_after_close_margin
+  node_wait_after_close_margin --> node_open_modify_menu
+  node_open_modify_menu --> node_wait_modify_menu
+  node_wait_modify_menu --> node_assert_modify_menu_in_body
+  node_assert_modify_menu_in_body --> node_screenshot_modify_menu
+  node_screenshot_modify_menu --> node_close_modify_menu
+  node_close_modify_menu --> node_wait_after_close_modify
+  node_wait_after_close_modify --> node_open_candle_more
+  node_open_candle_more --> node_wait_candle_modal
+  node_wait_candle_modal --> node_assert_candle_modal_sections
+  node_assert_candle_modal_sections --> node_screenshot_candle_modal
+  node_screenshot_candle_modal --> node_click_1M
+  node_click_1M --> node_wait_modal_closed
+  node_wait_modal_closed --> node_assert_1M_selected
+  node_assert_1M_selected --> node_assert_1m_not_selected
+  node_assert_1m_not_selected --> node_screenshot_final
+  node_screenshot_final --> node_done

@@ -1,0 +1,100 @@
+[
+  {
+    "id": "nav-to-eth",
+    "action": "call",
+    "ok": true,
+    "raw": {
+      "passed": 2,
+      "failed": 0,
+      "trace": [
+        {
+          "id": "nav-detail",
+          "action": "navigate",
+          "ok": true,
+          "raw": {
+            "navigated": true,
+            "hash": "#/perps/market/ETH"
+          },
+          "durationMs": 26
+        },
+        {
+          "id": "wait-detail",
+          "action": "wait_for",
+          "ok": true,
+          "raw": {
+            "found": true,
+            "target": "testId:perps-market-detail-page"
+          },
+          "durationMs": 2348
+        },
+        {
+          "id": "done",
+          "action": "end",
+          "status": "pass",
+          "durationMs": 0
+        }
+      ],
+      "vars": {}
+    },
+    "durationMs": 2412
+  },
+  {
+    "id": "wait-detail",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-market-detail-page"
+    },
+    "durationMs": 53
+  },
+  {
+    "id": "baseline-screenshot",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "/Users/deeeed/dev/metamask/metamask-extension-1/temp/agentic/recipes/test-artifacts/screenshots/evidence-01-market-detail-baseline.png-1775799807767.png",
+      "width": 420,
+      "height": 800
+    },
+    "durationMs": 237
+  },
+  {
+    "id": "check-position-exists",
+    "action": "eval_ref",
+    "ok": true,
+    "raw": "[]",
+    "durationMs": 1
+  },
+  {
+    "id": "decide-popover-path",
+    "action": "switch",
+    "next": "skip-popover-note",
+    "durationMs": 0
+  },
+  {
+    "id": "skip-popover-note",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "no ETH position — popover validation will be exercised via DOM assertion on the perps-margin-card when present",
+    "durationMs": 0
+  },
+  {
+    "id": "open-candle-more",
+    "action": "press",
+    "ok": true,
+    "raw": {
+      "clicked": true,
+      "target": "testId:perps-candle-period-more"
+    },
+    "durationMs": 165
+  },
+  {
+    "id": "wait-candle-modal",
+    "action": "wait_for",
+    "ok": false,
+    "raw": null,
+    "durationMs": 3071,
+    "error": "Wait timed out: locator.waitFor: Timeout 3000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-testid=\"perps-candle-period-modal\"]') to be visible\u001b[22m\n\u001b[2m    11 × locator resolved to hidden <div class=\"mm-modal\" data-testid=\"perps-candle-period-modal\">…</div>\u001b[22m\n"
+  }
+]

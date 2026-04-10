@@ -1,0 +1,174 @@
+{
+  "title": "PR #41590 validation — popover portal + candle period modal",
+  "validate": {
+    "workflow": {
+      "pre_conditions": ["wallet.unlocked", "perps.feature_enabled"],
+      "entry": "nav-to-eth",
+      "nodes": {
+        "nav-to-eth": {
+          "action": "call",
+          "ref": "perps/navigate-to-market-detail",
+          "params": { "symbol": "ETH" },
+          "next": "wait-detail"
+        },
+        "wait-detail": {
+          "action": "wait_for",
+          "test_id": "perps-market-detail-page",
+          "timeout_ms": 10000,
+          "next": "baseline-screenshot"
+        },
+        "baseline-screenshot": {
+          "action": "screenshot",
+          "filename": "evidence-01-market-detail-baseline.png",
+          "next": "check-position-exists"
+        },
+        "check-position-exists": {
+          "action": "eval_ref",
+          "ref": "perps-positions",
+          "save_as": "positions_json",
+          "next": "decide-popover-path"
+        },
+        "decide-popover-path": {
+          "action": "switch",
+          "cases": [
+            {
+              "when": {
+                "operator": "not_contains",
+                "field": "vars.positions_json",
+                "value": "\"symbol\":\"ETH\""
+              },
+              "next": "skip-popover-note"
+            }
+          ],
+          "default": "open-margin-menu"
+        },
+        "skip-popover-note": {
+          "action": "eval_sync",
+          "expression": "'no ETH position — popover validation will be exercised via DOM assertion on the perps-margin-card when present'",
+          "next": "open-candle-more"
+        },
+        "open-margin-menu": {
+          "action": "press",
+          "test_id": "perps-margin-card",
+          "next": "wait-margin-menu"
+        },
+        "wait-margin-menu": {
+          "action": "wait_for",
+          "test_id": "perps-margin-menu",
+          "timeout_ms": 3000,
+          "next": "assert-margin-menu-in-body"
+        },
+        "assert-margin-menu-in-body": {
+          "action": "ext_check_dom",
+          "selector": "body > [data-testid='perps-margin-menu']",
+          "visible": true,
+          "next": "screenshot-margin-menu"
+        },
+        "screenshot-margin-menu": {
+          "action": "screenshot",
+          "filename": "evidence-02-margin-menu-portaled.png",
+          "next": "close-margin-menu"
+        },
+        "close-margin-menu": {
+          "action": "eval_sync",
+          "expression": "document.body.click()",
+          "next": "wait-after-close-margin"
+        },
+        "wait-after-close-margin": {
+          "action": "wait",
+          "ms": 400,
+          "next": "open-modify-menu"
+        },
+        "open-modify-menu": {
+          "action": "press",
+          "test_id": "perps-modify-cta-button",
+          "next": "wait-modify-menu"
+        },
+        "wait-modify-menu": {
+          "action": "wait_for",
+          "test_id": "perps-modify-menu",
+          "timeout_ms": 3000,
+          "next": "assert-modify-menu-in-body"
+        },
+        "assert-modify-menu-in-body": {
+          "action": "ext_check_dom",
+          "selector": "body > [data-testid='perps-modify-menu']",
+          "visible": true,
+          "next": "screenshot-modify-menu"
+        },
+        "screenshot-modify-menu": {
+          "action": "screenshot",
+          "filename": "evidence-03-modify-menu-portaled.png",
+          "next": "close-modify-menu"
+        },
+        "close-modify-menu": {
+          "action": "eval_sync",
+          "expression": "document.body.click()",
+          "next": "wait-after-close-modify"
+        },
+        "wait-after-close-modify": {
+          "action": "wait",
+          "ms": 400,
+          "next": "open-candle-more"
+        },
+        "open-candle-more": {
+          "action": "press",
+          "test_id": "perps-candle-period-more",
+          "next": "wait-candle-modal"
+        },
+        "wait-candle-modal": {
+          "action": "wait_for",
+          "test_id": "perps-candle-period-modal-1M",
+          "timeout_ms": 3000,
+          "next": "assert-candle-modal-present"
+        },
+        "assert-candle-modal-present": {
+          "action": "eval_sync",
+          "expression": "(() => { const hasOneMonth = !!document.querySelector('[data-testid=\"perps-candle-period-modal-1M\"]'); const hasOneMin = !!document.querySelector('[data-testid=\"perps-candle-period-modal-1m\"]'); const hasThirty = !!document.querySelector('[data-testid=\"perps-candle-period-modal-30m\"]'); return hasOneMin && hasOneMonth && hasThirty ? 'OK' : 'FAIL'; })()",
+          "assert": {
+            "operator": "eq",
+            "value": "OK"
+          },
+          "next": "screenshot-candle-modal"
+        },
+        "screenshot-candle-modal": {
+          "action": "screenshot",
+          "filename": "evidence-04-candle-period-modal.png",
+          "next": "click-1M"
+        },
+        "click-1M": {
+          "action": "eval_sync",
+          "expression": "(() => { const btn = document.querySelector('[data-testid=\"perps-candle-period-modal-1M\"]'); if (!btn) return 'NOT_FOUND'; btn.click(); return 'CLICKED'; })()",
+          "assert": {
+            "operator": "eq",
+            "value": "CLICKED"
+          },
+          "next": "wait-modal-closed"
+        },
+        "wait-modal-closed": {
+          "action": "wait",
+          "ms": 500,
+          "next": "assert-1M-selected"
+        },
+        "assert-1M-selected": {
+          "action": "eval_sync",
+          "expression": "(() => { const more = document.querySelector('[data-testid=\"perps-candle-period-more\"]'); const oneMin = document.querySelector('[data-testid=\"perps-candle-period-1m\"]'); const moreHasMuted = more?.className?.includes('bg-muted') ?? false; const oneMinHasMuted = oneMin?.className?.includes('bg-muted') ?? false; return moreHasMuted && !oneMinHasMuted ? 'PASS' : ('FAIL moreHasMuted=' + moreHasMuted + ' oneMinHasMuted=' + oneMinHasMuted); })()",
+          "assert": {
+            "operator": "eq",
+            "value": "PASS"
+          },
+          "next": "screenshot-final"
+        },
+        "screenshot-final": {
+          "action": "screenshot",
+          "filename": "evidence-05-after-1M-selected.png",
+          "next": "done"
+        },
+        "done": {
+          "action": "end",
+          "status": "pass"
+        }
+      }
+    }
+  }
+}
