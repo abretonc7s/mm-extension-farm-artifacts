@@ -1,0 +1,249 @@
+[
+  {
+    "id": "setup-check-locked",
+    "action": "ext_check_dom",
+    "ok": true,
+    "raw": {
+      "visible": false
+    },
+    "durationMs": 11
+  },
+  {
+    "id": "setup-branch-locked",
+    "action": "switch",
+    "next": "ac3-navigate-debug",
+    "durationMs": 0
+  },
+  {
+    "id": "ac3-navigate-debug",
+    "action": "ext_navigate_hash",
+    "ok": true,
+    "raw": {
+      "navigated": true,
+      "hash": "/settings/debug"
+    },
+    "durationMs": 17
+  },
+  {
+    "id": "ac3-wait-toggle",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-testnet-toggle"
+    },
+    "durationMs": 48
+  },
+  {
+    "id": "ac3-screenshot-before",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "/Users/deeeed/dev/metamask/metamask-extension-2/temp/agentic/recipes/test-artifacts/screenshots/evidence-ac3-toggle-visible.png-1775817542695.png",
+      "width": 640,
+      "height": 787
+    },
+    "durationMs": 232
+  },
+  {
+    "id": "gate-ensure-mainnet-read",
+    "action": "eval_async",
+    "ok": true,
+    "raw": false,
+    "durationMs": 1
+  },
+  {
+    "id": "gate-ensure-mainnet-branch",
+    "action": "switch",
+    "next": "ac5-read-initial-state",
+    "durationMs": 0
+  },
+  {
+    "id": "ac5-read-initial-state",
+    "action": "eval_async",
+    "ok": true,
+    "raw": false,
+    "durationMs": 1
+  },
+  {
+    "id": "ac3-navigate-perps-mainnet",
+    "action": "ext_navigate_hash",
+    "ok": true,
+    "raw": {
+      "navigated": true,
+      "hash": "/?tab=perps"
+    },
+    "durationMs": 33
+  },
+  {
+    "id": "ac3-wait-perps-mainnet",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:account-overview__perps-tab"
+    },
+    "durationMs": 97
+  },
+  {
+    "id": "ac3-screenshot-mainnet-markets",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "/Users/deeeed/dev/metamask/metamask-extension-2/temp/agentic/recipes/test-artifacts/screenshots/evidence-ac3-mainnet-markets.png-1775817543104.png",
+      "width": 640,
+      "height": 787
+    },
+    "durationMs": 76
+  },
+  {
+    "id": "ac3-pause-mainnet",
+    "action": "wait",
+    "ok": true,
+    "raw": null,
+    "durationMs": 2502
+  },
+  {
+    "id": "ac4-back-to-debug",
+    "action": "ext_navigate_hash",
+    "ok": true,
+    "raw": {
+      "navigated": true,
+      "hash": "/settings/debug"
+    },
+    "durationMs": 38
+  },
+  {
+    "id": "ac4-wait-toggle",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-testnet-toggle"
+    },
+    "durationMs": 60
+  },
+  {
+    "id": "ac4-click-toggle",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": true,
+    "durationMs": 2
+  },
+  {
+    "id": "ac5-assert-testnet-on",
+    "action": "wait_for",
+    "ok": true,
+    "raw": true,
+    "durationMs": 1016
+  },
+  {
+    "id": "ac5-screenshot-testnet-on",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "/Users/deeeed/dev/metamask/metamask-extension-2/temp/agentic/recipes/test-artifacts/screenshots/evidence-ac5-isTestnet-true.png-1775817546841.png",
+      "width": 640,
+      "height": 787
+    },
+    "durationMs": 117
+  },
+  {
+    "id": "ac6-navigate-perps",
+    "action": "ext_navigate_hash",
+    "ok": true,
+    "raw": {
+      "navigated": true,
+      "hash": "/?tab=perps"
+    },
+    "durationMs": 24
+  },
+  {
+    "id": "ac6-wait-perps",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:account-overview__perps-tab"
+    },
+    "durationMs": 126
+  },
+  {
+    "id": "ac6-screenshot-testnet-markets",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "/Users/deeeed/dev/metamask/metamask-extension-2/temp/agentic/recipes/test-artifacts/screenshots/evidence-ac6-perps-testnet-markets.png-1775817547145.png",
+      "width": 640,
+      "height": 787
+    },
+    "durationMs": 102
+  },
+  {
+    "id": "ac6-pause-testnet",
+    "action": "wait",
+    "ok": true,
+    "raw": null,
+    "durationMs": 2501
+  },
+  {
+    "id": "teardown-toggle-off",
+    "action": "ext_navigate_hash",
+    "ok": true,
+    "raw": {
+      "navigated": true,
+      "hash": "/settings/debug"
+    },
+    "durationMs": 33
+  },
+  {
+    "id": "teardown-wait-toggle",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-testnet-toggle"
+    },
+    "durationMs": 77
+  },
+  {
+    "id": "teardown-click-toggle-back",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": true,
+    "durationMs": 2
+  },
+  {
+    "id": "teardown-assert-mainnet",
+    "action": "wait_for",
+    "ok": true,
+    "raw": true,
+    "durationMs": 1007
+  },
+  {
+    "id": "teardown-navigate-home",
+    "action": "ext_navigate_hash",
+    "ok": true,
+    "raw": {
+      "navigated": true,
+      "hash": "/?tab=perps"
+    },
+    "durationMs": 39
+  },
+  {
+    "id": "teardown-wait-home",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:account-overview__perps-tab"
+    },
+    "durationMs": 111
+  },
+  {
+    "id": "done",
+    "action": "end",
+    "status": "pass",
+    "durationMs": 0
+  }
+]

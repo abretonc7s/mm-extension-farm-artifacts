@@ -1,0 +1,255 @@
+{
+  "description": "",
+  "hooks": {
+    "pre_conditions": [
+      "perps.feature_enabled"
+    ],
+    "setup": [],
+    "teardown": []
+  },
+  "inputs": {},
+  "sourcePath": "",
+  "title": "TAT-2901: Validate perps testnet toggle",
+  "workflow": {
+    "entry": "setup-check-locked",
+    "nodes": {
+      "setup-check-locked": {
+        "action": "ext_check_dom",
+        "test_id": "unlock-password",
+        "query": true,
+        "save_as": "lockState",
+        "next": "setup-branch-locked",
+        "id": "setup-check-locked"
+      },
+      "setup-branch-locked": {
+        "action": "switch",
+        "cases": [
+          {
+            "label": "locked",
+            "when": {
+              "field": "vars.lockState.visible",
+              "operator": "eq",
+              "value": true
+            },
+            "next": "setup-type-password",
+            "index": 0
+          }
+        ],
+        "default": "ac3-navigate-debug",
+        "id": "setup-branch-locked"
+      },
+      "setup-type-password": {
+        "action": "set_input",
+        "test_id": "unlock-password",
+        "value": "qwerasdf",
+        "next": "setup-submit-unlock",
+        "id": "setup-type-password"
+      },
+      "setup-submit-unlock": {
+        "action": "press",
+        "test_id": "unlock-submit",
+        "next": "setup-wait-home",
+        "id": "setup-submit-unlock"
+      },
+      "setup-wait-home": {
+        "action": "wait_for",
+        "test_id": "account-menu-icon",
+        "timeout_ms": 15000,
+        "next": "ac3-navigate-debug",
+        "id": "setup-wait-home"
+      },
+      "ac3-navigate-debug": {
+        "action": "ext_navigate_hash",
+        "hash": "/settings/debug",
+        "next": "ac3-wait-toggle",
+        "id": "ac3-navigate-debug"
+      },
+      "ac3-wait-toggle": {
+        "action": "wait_for",
+        "test_id": "perps-testnet-toggle",
+        "timeout_ms": 5000,
+        "next": "ac3-screenshot-before",
+        "id": "ac3-wait-toggle"
+      },
+      "ac3-screenshot-before": {
+        "action": "screenshot",
+        "filename": "evidence-ac3-toggle-visible.png",
+        "next": "gate-ensure-mainnet-read",
+        "id": "ac3-screenshot-before"
+      },
+      "gate-ensure-mainnet-read": {
+        "action": "eval_async",
+        "expression": "(async () => { const s = await chrome.storage.local.get('PerpsController'); return s?.PerpsController?.isTestnet ?? false; })()",
+        "save_as": "isTestnetBefore",
+        "next": "gate-ensure-mainnet-branch",
+        "id": "gate-ensure-mainnet-read"
+      },
+      "gate-ensure-mainnet-branch": {
+        "action": "switch",
+        "cases": [
+          {
+            "label": "already-testnet",
+            "when": {
+              "field": "vars.isTestnetBefore",
+              "operator": "eq",
+              "value": true
+            },
+            "next": "gate-reset-to-mainnet",
+            "index": 0
+          }
+        ],
+        "default": "ac5-read-initial-state",
+        "id": "gate-ensure-mainnet-branch"
+      },
+      "gate-reset-to-mainnet": {
+        "action": "eval_sync",
+        "expression": "document.querySelector('[data-testid=\"perps-testnet-toggle\"]').parentElement.click(); true",
+        "next": "gate-wait-mainnet",
+        "id": "gate-reset-to-mainnet"
+      },
+      "gate-wait-mainnet": {
+        "action": "wait_for",
+        "expression": "(async () => { const s = await chrome.storage.local.get('PerpsController'); return s?.PerpsController?.isTestnet === false; })()",
+        "timeout_ms": 5000,
+        "next": "ac5-read-initial-state",
+        "id": "gate-wait-mainnet"
+      },
+      "ac5-read-initial-state": {
+        "action": "eval_async",
+        "expression": "(async () => { const s = await chrome.storage.local.get('PerpsController'); return s?.PerpsController?.isTestnet ?? false; })()",
+        "assert": {
+          "operator": "falsy",
+          "field": ""
+        },
+        "next": "ac3-navigate-perps-mainnet",
+        "id": "ac5-read-initial-state"
+      },
+      "ac3-navigate-perps-mainnet": {
+        "action": "ext_navigate_hash",
+        "hash": "/?tab=perps",
+        "next": "ac3-wait-perps-mainnet",
+        "id": "ac3-navigate-perps-mainnet"
+      },
+      "ac3-wait-perps-mainnet": {
+        "action": "wait_for",
+        "test_id": "account-overview__perps-tab",
+        "timeout_ms": 10000,
+        "next": "ac3-screenshot-mainnet-markets",
+        "id": "ac3-wait-perps-mainnet"
+      },
+      "ac3-screenshot-mainnet-markets": {
+        "action": "screenshot",
+        "filename": "evidence-ac3-mainnet-markets.png",
+        "next": "ac3-pause-mainnet",
+        "id": "ac3-screenshot-mainnet-markets"
+      },
+      "ac3-pause-mainnet": {
+        "action": "wait",
+        "ms": 2500,
+        "next": "ac4-back-to-debug",
+        "id": "ac3-pause-mainnet"
+      },
+      "ac4-back-to-debug": {
+        "action": "ext_navigate_hash",
+        "hash": "/settings/debug",
+        "next": "ac4-wait-toggle",
+        "id": "ac4-back-to-debug"
+      },
+      "ac4-wait-toggle": {
+        "action": "wait_for",
+        "test_id": "perps-testnet-toggle",
+        "timeout_ms": 5000,
+        "next": "ac4-click-toggle",
+        "id": "ac4-wait-toggle"
+      },
+      "ac4-click-toggle": {
+        "action": "eval_sync",
+        "expression": "document.querySelector('[data-testid=\"perps-testnet-toggle\"]').parentElement.click(); true",
+        "next": "ac5-assert-testnet-on",
+        "id": "ac4-click-toggle"
+      },
+      "ac5-assert-testnet-on": {
+        "action": "wait_for",
+        "expression": "(async () => { const s = await chrome.storage.local.get('PerpsController'); return s?.PerpsController?.isTestnet === true; })()",
+        "timeout_ms": 5000,
+        "next": "ac5-screenshot-testnet-on",
+        "id": "ac5-assert-testnet-on"
+      },
+      "ac5-screenshot-testnet-on": {
+        "action": "screenshot",
+        "filename": "evidence-ac5-isTestnet-true.png",
+        "next": "ac6-navigate-perps",
+        "id": "ac5-screenshot-testnet-on"
+      },
+      "ac6-navigate-perps": {
+        "action": "ext_navigate_hash",
+        "hash": "/?tab=perps",
+        "next": "ac6-wait-perps",
+        "id": "ac6-navigate-perps"
+      },
+      "ac6-wait-perps": {
+        "action": "wait_for",
+        "test_id": "account-overview__perps-tab",
+        "timeout_ms": 10000,
+        "next": "ac6-screenshot-testnet-markets",
+        "id": "ac6-wait-perps"
+      },
+      "ac6-screenshot-testnet-markets": {
+        "action": "screenshot",
+        "filename": "evidence-ac6-perps-testnet-markets.png",
+        "next": "ac6-pause-testnet",
+        "id": "ac6-screenshot-testnet-markets"
+      },
+      "ac6-pause-testnet": {
+        "action": "wait",
+        "ms": 2500,
+        "next": "teardown-toggle-off",
+        "id": "ac6-pause-testnet"
+      },
+      "teardown-toggle-off": {
+        "action": "ext_navigate_hash",
+        "hash": "/settings/debug",
+        "next": "teardown-wait-toggle",
+        "id": "teardown-toggle-off"
+      },
+      "teardown-wait-toggle": {
+        "action": "wait_for",
+        "test_id": "perps-testnet-toggle",
+        "timeout_ms": 5000,
+        "next": "teardown-click-toggle-back",
+        "id": "teardown-wait-toggle"
+      },
+      "teardown-click-toggle-back": {
+        "action": "eval_sync",
+        "expression": "document.querySelector('[data-testid=\"perps-testnet-toggle\"]').parentElement.click(); true",
+        "next": "teardown-assert-mainnet",
+        "id": "teardown-click-toggle-back"
+      },
+      "teardown-assert-mainnet": {
+        "action": "wait_for",
+        "expression": "(async () => { const s = await chrome.storage.local.get('PerpsController'); return s?.PerpsController?.isTestnet === false; })()",
+        "timeout_ms": 5000,
+        "next": "teardown-navigate-home",
+        "id": "teardown-assert-mainnet"
+      },
+      "teardown-navigate-home": {
+        "action": "ext_navigate_hash",
+        "hash": "/?tab=perps",
+        "next": "teardown-wait-home",
+        "id": "teardown-navigate-home"
+      },
+      "teardown-wait-home": {
+        "action": "wait_for",
+        "test_id": "account-overview__perps-tab",
+        "timeout_ms": 10000,
+        "next": "done",
+        "id": "teardown-wait-home"
+      },
+      "done": {
+        "action": "end",
+        "status": "pass",
+        "id": "done"
+      }
+    }
+  }
+}

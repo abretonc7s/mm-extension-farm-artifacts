@@ -1,0 +1,70 @@
+flowchart TD
+  %% TAT-2901: Validate perps testnet toggle
+  __entry__(["ENTRY"]) --> node_setup_check_locked
+  node_setup_check_locked["setup-check-locked<br/>ext_check_dom"]
+  node_setup_branch_locked{"setup-branch-locked<br/>switch"}
+  node_setup_type_password["setup-type-password<br/>set_input"]
+  node_setup_submit_unlock["setup-submit-unlock<br/>press"]
+  node_setup_wait_home["setup-wait-home<br/>wait_for"]
+  node_ac3_navigate_debug["ac3-navigate-debug<br/>ext_navigate_hash"]
+  node_ac3_wait_toggle["ac3-wait-toggle<br/>wait_for"]
+  node_ac3_screenshot_before["ac3-screenshot-before<br/>screenshot"]
+  node_gate_ensure_mainnet_read["gate-ensure-mainnet-read<br/>eval_async"]
+  node_gate_ensure_mainnet_branch{"gate-ensure-mainnet-branch<br/>switch"}
+  node_gate_reset_to_mainnet["gate-reset-to-mainnet<br/>eval_sync"]
+  node_gate_wait_mainnet["gate-wait-mainnet<br/>wait_for"]
+  node_ac5_read_initial_state["ac5-read-initial-state<br/>eval_async"]
+  node_ac3_navigate_perps_mainnet["ac3-navigate-perps-mainnet<br/>ext_navigate_hash"]
+  node_ac3_wait_perps_mainnet["ac3-wait-perps-mainnet<br/>wait_for"]
+  node_ac3_screenshot_mainnet_markets["ac3-screenshot-mainnet-markets<br/>screenshot"]
+  node_ac3_pause_mainnet["ac3-pause-mainnet<br/>wait"]
+  node_ac4_back_to_debug["ac4-back-to-debug<br/>ext_navigate_hash"]
+  node_ac4_wait_toggle["ac4-wait-toggle<br/>wait_for"]
+  node_ac4_click_toggle["ac4-click-toggle<br/>eval_sync"]
+  node_ac5_assert_testnet_on["ac5-assert-testnet-on<br/>wait_for"]
+  node_ac5_screenshot_testnet_on["ac5-screenshot-testnet-on<br/>screenshot"]
+  node_ac6_navigate_perps["ac6-navigate-perps<br/>ext_navigate_hash"]
+  node_ac6_wait_perps["ac6-wait-perps<br/>wait_for"]
+  node_ac6_screenshot_testnet_markets["ac6-screenshot-testnet-markets<br/>screenshot"]
+  node_ac6_pause_testnet["ac6-pause-testnet<br/>wait"]
+  node_teardown_toggle_off["teardown-toggle-off<br/>ext_navigate_hash"]
+  node_teardown_wait_toggle["teardown-wait-toggle<br/>wait_for"]
+  node_teardown_click_toggle_back["teardown-click-toggle-back<br/>eval_sync"]
+  node_teardown_assert_mainnet["teardown-assert-mainnet<br/>wait_for"]
+  node_teardown_navigate_home["teardown-navigate-home<br/>ext_navigate_hash"]
+  node_teardown_wait_home["teardown-wait-home<br/>wait_for"]
+  node_done(["done<br/>PASS"])
+  node_setup_check_locked --> node_setup_branch_locked
+  node_setup_branch_locked -->|locked| node_setup_type_password
+  node_setup_branch_locked -->|default| node_ac3_navigate_debug
+  node_setup_type_password --> node_setup_submit_unlock
+  node_setup_submit_unlock --> node_setup_wait_home
+  node_setup_wait_home --> node_ac3_navigate_debug
+  node_ac3_navigate_debug --> node_ac3_wait_toggle
+  node_ac3_wait_toggle --> node_ac3_screenshot_before
+  node_ac3_screenshot_before --> node_gate_ensure_mainnet_read
+  node_gate_ensure_mainnet_read --> node_gate_ensure_mainnet_branch
+  node_gate_ensure_mainnet_branch -->|already-testnet| node_gate_reset_to_mainnet
+  node_gate_ensure_mainnet_branch -->|default| node_ac5_read_initial_state
+  node_gate_reset_to_mainnet --> node_gate_wait_mainnet
+  node_gate_wait_mainnet --> node_ac5_read_initial_state
+  node_ac5_read_initial_state --> node_ac3_navigate_perps_mainnet
+  node_ac3_navigate_perps_mainnet --> node_ac3_wait_perps_mainnet
+  node_ac3_wait_perps_mainnet --> node_ac3_screenshot_mainnet_markets
+  node_ac3_screenshot_mainnet_markets --> node_ac3_pause_mainnet
+  node_ac3_pause_mainnet --> node_ac4_back_to_debug
+  node_ac4_back_to_debug --> node_ac4_wait_toggle
+  node_ac4_wait_toggle --> node_ac4_click_toggle
+  node_ac4_click_toggle --> node_ac5_assert_testnet_on
+  node_ac5_assert_testnet_on --> node_ac5_screenshot_testnet_on
+  node_ac5_screenshot_testnet_on --> node_ac6_navigate_perps
+  node_ac6_navigate_perps --> node_ac6_wait_perps
+  node_ac6_wait_perps --> node_ac6_screenshot_testnet_markets
+  node_ac6_screenshot_testnet_markets --> node_ac6_pause_testnet
+  node_ac6_pause_testnet --> node_teardown_toggle_off
+  node_teardown_toggle_off --> node_teardown_wait_toggle
+  node_teardown_wait_toggle --> node_teardown_click_toggle_back
+  node_teardown_click_toggle_back --> node_teardown_assert_mainnet
+  node_teardown_assert_mainnet --> node_teardown_navigate_home
+  node_teardown_navigate_home --> node_teardown_wait_home
+  node_teardown_wait_home --> node_done
