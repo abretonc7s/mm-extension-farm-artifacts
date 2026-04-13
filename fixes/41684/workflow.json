@@ -1,0 +1,119 @@
+{
+  "description": "",
+  "hooks": {
+    "pre_conditions": [
+      "wallet.unlocked"
+    ],
+    "setup": [],
+    "teardown": []
+  },
+  "inputs": {},
+  "sourcePath": "",
+  "title": "Verify fix: Flip fee displayed and Confirm button copy (TAT-2830)",
+  "workflow": {
+    "entry": "setup-navigate-home",
+    "nodes": {
+      "setup-navigate-home": {
+        "action": "navigate",
+        "target": "Home",
+        "next": "setup-wait-home",
+        "id": "setup-navigate-home"
+      },
+      "setup-wait-home": {
+        "action": "wait_for",
+        "test_id": "account-menu-icon",
+        "timeout_ms": 10000,
+        "next": "setup-inject-position",
+        "id": "setup-wait-home"
+      },
+      "setup-inject-position": {
+        "action": "eval_async",
+        "expression": "(async()=>{const mgr=window.stateHooks.getPerpsStreamManager();mgr.positions.pushData([{symbol:'ETH',size:'2.5',entryPrice:'2850.00',positionValue:'7125.00',unrealizedPnl:'375.00',marginUsed:'2375.00',leverage:{type:'isolated',value:3,rawUsd:'2375.00'},liquidationPrice:'2400.00',maxLeverage:20,returnOnEquity:'15.79',cumulativeFunding:{allTime:'12.50',sinceOpen:'8.30',sinceChange:'0.00'}}]);return 'injected'})()",
+        "next": "setup-navigate-market",
+        "id": "setup-inject-position"
+      },
+      "setup-navigate-market": {
+        "action": "navigate",
+        "target": "PerpsMarketDetails",
+        "params": {
+          "symbol": "ETH"
+        },
+        "next": "setup-wait-page",
+        "id": "setup-navigate-market"
+      },
+      "setup-wait-page": {
+        "action": "wait_for",
+        "test_id": "perps-market-detail-page",
+        "timeout_ms": 10000,
+        "next": "setup-wait-modify",
+        "id": "setup-wait-page"
+      },
+      "setup-wait-modify": {
+        "action": "wait_for",
+        "test_id": "perps-modify-cta-button",
+        "timeout_ms": 10000,
+        "next": "setup-click-modify",
+        "id": "setup-wait-modify"
+      },
+      "setup-click-modify": {
+        "action": "press",
+        "test_id": "perps-modify-cta-button",
+        "next": "setup-wait-menu",
+        "id": "setup-click-modify"
+      },
+      "setup-wait-menu": {
+        "action": "wait_for",
+        "test_id": "perps-modify-menu-reverse-position",
+        "timeout_ms": 5000,
+        "next": "setup-click-reverse",
+        "id": "setup-wait-menu"
+      },
+      "setup-click-reverse": {
+        "action": "press",
+        "test_id": "perps-modify-menu-reverse-position",
+        "next": "setup-wait-modal",
+        "id": "setup-click-reverse"
+      },
+      "setup-wait-modal": {
+        "action": "wait_for",
+        "test_id": "perps-reverse-position-modal-save",
+        "timeout_ms": 5000,
+        "next": "ac1-assert-fee",
+        "id": "setup-wait-modal"
+      },
+      "ac1-assert-fee": {
+        "action": "ext_check_dom",
+        "test_id": "perps-reverse-fee-value",
+        "visible": true,
+        "text": "$",
+        "next": "ac1-screenshot-fee",
+        "id": "ac1-assert-fee"
+      },
+      "ac1-screenshot-fee": {
+        "action": "screenshot",
+        "filename": "evidence-ac1-fee-displayed.png",
+        "next": "ac2-assert-confirm",
+        "id": "ac1-screenshot-fee"
+      },
+      "ac2-assert-confirm": {
+        "action": "ext_check_dom",
+        "test_id": "perps-reverse-position-modal-save",
+        "text": "Confirm",
+        "next": "ac2-screenshot-confirm",
+        "id": "ac2-assert-confirm"
+      },
+      "ac2-screenshot-confirm": {
+        "action": "screenshot",
+        "filename": "evidence-ac2-confirm-button.png",
+        "next": "setup-done",
+        "id": "ac2-screenshot-confirm"
+      },
+      "setup-done": {
+        "action": "end",
+        "status": "pass",
+        "message": "Flip fee displayed and Confirm button verified",
+        "id": "setup-done"
+      }
+    }
+  }
+}

@@ -1,0 +1,32 @@
+flowchart TD
+  %% Verify fix: Flip fee displayed and Confirm button copy (TAT-2830)
+  __entry__(["ENTRY"]) --> node_setup_navigate_home
+  node_setup_navigate_home["setup-navigate-home<br/>navigate"]
+  node_setup_wait_home["setup-wait-home<br/>wait_for"]
+  node_setup_inject_position["setup-inject-position<br/>eval_async"]
+  node_setup_navigate_market["setup-navigate-market<br/>navigate"]
+  node_setup_wait_page["setup-wait-page<br/>wait_for"]
+  node_setup_wait_modify["setup-wait-modify<br/>wait_for"]
+  node_setup_click_modify["setup-click-modify<br/>press"]
+  node_setup_wait_menu["setup-wait-menu<br/>wait_for"]
+  node_setup_click_reverse["setup-click-reverse<br/>press"]
+  node_setup_wait_modal["setup-wait-modal<br/>wait_for"]
+  node_ac1_assert_fee["ac1-assert-fee<br/>ext_check_dom"]
+  node_ac1_screenshot_fee["ac1-screenshot-fee<br/>screenshot"]
+  node_ac2_assert_confirm["ac2-assert-confirm<br/>ext_check_dom"]
+  node_ac2_screenshot_confirm["ac2-screenshot-confirm<br/>screenshot"]
+  node_setup_done(["setup-done<br/>PASS"])
+  node_setup_navigate_home --> node_setup_wait_home
+  node_setup_wait_home --> node_setup_inject_position
+  node_setup_inject_position --> node_setup_navigate_market
+  node_setup_navigate_market --> node_setup_wait_page
+  node_setup_wait_page --> node_setup_wait_modify
+  node_setup_wait_modify --> node_setup_click_modify
+  node_setup_click_modify --> node_setup_wait_menu
+  node_setup_wait_menu --> node_setup_click_reverse
+  node_setup_click_reverse --> node_setup_wait_modal
+  node_setup_wait_modal --> node_ac1_assert_fee
+  node_ac1_assert_fee --> node_ac1_screenshot_fee
+  node_ac1_screenshot_fee --> node_ac2_assert_confirm
+  node_ac2_assert_confirm --> node_ac2_screenshot_confirm
+  node_ac2_screenshot_confirm --> node_setup_done

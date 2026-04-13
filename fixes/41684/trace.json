@@ -1,0 +1,109 @@
+[
+  {
+    "id": "setup-navigate-home",
+    "action": "navigate",
+    "ok": true,
+    "raw": {
+      "navigated": true,
+      "hash": "#/"
+    },
+    "durationMs": 4
+  },
+  {
+    "id": "setup-wait-home",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:account-menu-icon"
+    },
+    "durationMs": 67
+  },
+  {
+    "id": "setup-inject-position",
+    "action": "eval_async",
+    "ok": true,
+    "raw": "injected",
+    "durationMs": 1
+  },
+  {
+    "id": "setup-navigate-market",
+    "action": "navigate",
+    "ok": true,
+    "raw": {
+      "navigated": true,
+      "hash": "#/perps/market/ETH"
+    },
+    "durationMs": 3
+  },
+  {
+    "id": "setup-wait-page",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-market-detail-page"
+    },
+    "durationMs": 127
+  },
+  {
+    "id": "setup-wait-modify",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-modify-cta-button"
+    },
+    "durationMs": 60
+  },
+  {
+    "id": "setup-click-modify",
+    "action": "press",
+    "ok": true,
+    "raw": {
+      "clicked": true,
+      "target": "testId:perps-modify-cta-button"
+    },
+    "durationMs": 161
+  },
+  {
+    "id": "setup-wait-menu",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-modify-menu-reverse-position"
+    },
+    "durationMs": 143
+  },
+  {
+    "id": "setup-click-reverse",
+    "action": "press",
+    "ok": true,
+    "raw": {
+      "clicked": true,
+      "target": "testId:perps-modify-menu-reverse-position"
+    },
+    "durationMs": 114
+  },
+  {
+    "id": "setup-wait-modal",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-reverse-position-modal-save"
+    },
+    "durationMs": 65
+  },
+  {
+    "id": "ac1-assert-fee",
+    "action": "ext_check_dom",
+    "ok": false,
+    "raw": {
+      "visible": false
+    },
+    "durationMs": 1,
+    "error": "Expected visible=true, got false"
+  }
+]
