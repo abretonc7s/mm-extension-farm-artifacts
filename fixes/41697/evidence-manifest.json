@@ -1,0 +1,28 @@
+{
+  "version": 1,
+  "preferred_mode": "screenshots",
+  "summary": "Order entry now disables submit + shows 'Insufficient funds' when margin exceeds available balance.",
+  "before_after_pairs": [
+    {
+      "label": "Oversized order — button disabled with Insufficient funds",
+      "covers": ["ac1", "ac2"],
+      "before": "before.mp4",
+      "after": "after-ac1-button-disabled.png",
+      "note": "$999M order requires $333M margin vs $25 available — button disabled."
+    }
+  ],
+  "standalone": [
+    {
+      "label": "Normal order — button enabled with Open Long ETH",
+      "covers": ["ac3"],
+      "file": "after-ac3-button-enabled.png"
+    }
+  ],
+  "omit": [],
+  "videos": {
+    "before": "before.mp4",
+    "after": "after.mp4",
+    "preferred": false,
+    "note": "before.mp4 shows recipe failing at button-disabled check (bug present). after.mp4 shows 12/12 pass."
+  }
+}

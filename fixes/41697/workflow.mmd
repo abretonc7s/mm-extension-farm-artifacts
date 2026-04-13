@@ -1,0 +1,28 @@
+flowchart TD
+  %% Verify fix: order size restricted by available margin (TAT-2893)
+  __entry__(["ENTRY"]) --> node_setup_nav_market
+  node_setup_nav_market[["setup-nav-market<br/>perps/navigate-to-market-detail"]]
+  node_setup_nav_order_entry["setup-nav-order-entry<br/>eval_sync"]
+  node_setup_wait_order_entry["setup-wait-order-entry<br/>wait_for"]
+  node_setup_wait_submit_button["setup-wait-submit-button<br/>wait_for"]
+  node_ac1_enter_large_amount["ac1-enter-large-amount<br/>set_input"]
+  node_ac1_wait_button_disabled["ac1-wait-button-disabled<br/>wait_for"]
+  node_ac2_check_button_text["ac2-check-button-text<br/>ext_check_dom"]
+  node_ac1_screenshot_disabled["ac1-screenshot-disabled<br/>screenshot"]
+  node_ac3_enter_small_amount["ac3-enter-small-amount<br/>set_input"]
+  node_ac3_wait_button_enabled["ac3-wait-button-enabled<br/>wait_for"]
+  node_ac3_check_button_text["ac3-check-button-text<br/>ext_check_dom"]
+  node_ac3_screenshot_enabled["ac3-screenshot-enabled<br/>screenshot"]
+  node_done(["done<br/>PASS"])
+  node_setup_nav_market --> node_setup_nav_order_entry
+  node_setup_nav_order_entry --> node_setup_wait_order_entry
+  node_setup_wait_order_entry --> node_setup_wait_submit_button
+  node_setup_wait_submit_button --> node_ac1_enter_large_amount
+  node_ac1_enter_large_amount --> node_ac1_wait_button_disabled
+  node_ac1_wait_button_disabled --> node_ac2_check_button_text
+  node_ac2_check_button_text --> node_ac1_screenshot_disabled
+  node_ac1_screenshot_disabled --> node_ac3_enter_small_amount
+  node_ac3_enter_small_amount --> node_ac3_wait_button_enabled
+  node_ac3_wait_button_enabled --> node_ac3_check_button_text
+  node_ac3_check_button_text --> node_ac3_screenshot_enabled
+  node_ac3_screenshot_enabled --> node_done

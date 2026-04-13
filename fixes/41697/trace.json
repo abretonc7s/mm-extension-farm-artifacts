@@ -1,0 +1,150 @@
+[
+  {
+    "id": "setup-nav-market",
+    "action": "call",
+    "ok": true,
+    "raw": {
+      "passed": 2,
+      "failed": 0,
+      "trace": [
+        {
+          "id": "nav-detail",
+          "action": "navigate",
+          "ok": true,
+          "raw": {
+            "navigated": true,
+            "hash": "#/perps/market/ETH"
+          },
+          "durationMs": 4
+        },
+        {
+          "id": "wait-detail",
+          "action": "wait_for",
+          "ok": true,
+          "raw": {
+            "found": true,
+            "target": "testId:perps-market-detail-page"
+          },
+          "durationMs": 76
+        },
+        {
+          "id": "done",
+          "action": "end",
+          "status": "pass",
+          "durationMs": 0
+        }
+      ],
+      "vars": {}
+    },
+    "durationMs": 104
+  },
+  {
+    "id": "setup-nav-order-entry",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "ok",
+    "durationMs": 7
+  },
+  {
+    "id": "setup-wait-order-entry",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-order-entry-page"
+    },
+    "durationMs": 46
+  },
+  {
+    "id": "setup-wait-submit-button",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:submit-order-button"
+    },
+    "durationMs": 39
+  },
+  {
+    "id": "ac1-enter-large-amount",
+    "action": "set_input",
+    "ok": true,
+    "raw": {
+      "filled": true,
+      "fallback": true
+    },
+    "durationMs": 46
+  },
+  {
+    "id": "ac1-wait-button-disabled",
+    "action": "wait_for",
+    "ok": true,
+    "raw": true,
+    "durationMs": 0
+  },
+  {
+    "id": "ac2-check-button-text",
+    "action": "ext_check_dom",
+    "ok": true,
+    "raw": {
+      "visible": true,
+      "text": "Insufficient funds"
+    },
+    "durationMs": 1
+  },
+  {
+    "id": "ac1-screenshot-disabled",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "/Users/deeeed/dev/metamask/metamask-extension-6/temp/agentic/recipes/test-artifacts/screenshots/evidence-ac1-button-disabled-1776091223308.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 117
+  },
+  {
+    "id": "ac3-enter-small-amount",
+    "action": "set_input",
+    "ok": true,
+    "raw": {
+      "filled": true,
+      "fallback": true
+    },
+    "durationMs": 59
+  },
+  {
+    "id": "ac3-wait-button-enabled",
+    "action": "wait_for",
+    "ok": true,
+    "raw": true,
+    "durationMs": 0
+  },
+  {
+    "id": "ac3-check-button-text",
+    "action": "ext_check_dom",
+    "ok": true,
+    "raw": {
+      "visible": true,
+      "text": "Open Long ETH"
+    },
+    "durationMs": 1
+  },
+  {
+    "id": "ac3-screenshot-enabled",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "/Users/deeeed/dev/metamask/metamask-extension-6/temp/agentic/recipes/test-artifacts/screenshots/evidence-ac3-button-enabled-1776091223489.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 86
+  },
+  {
+    "id": "done",
+    "action": "end",
+    "status": "pass",
+    "durationMs": 0
+  }
+]

@@ -1,0 +1,108 @@
+{
+  "description": "",
+  "hooks": {
+    "pre_conditions": [
+      "wallet.unlocked",
+      "perps.feature_enabled"
+    ],
+    "setup": [],
+    "teardown": []
+  },
+  "inputs": {},
+  "sourcePath": "",
+  "title": "Verify fix: order size restricted by available margin (TAT-2893)",
+  "workflow": {
+    "entry": "setup-nav-market",
+    "nodes": {
+      "setup-nav-market": {
+        "action": "call",
+        "ref": "perps/navigate-to-market-detail",
+        "params": {
+          "symbol": "ETH"
+        },
+        "next": "setup-nav-order-entry",
+        "id": "setup-nav-market"
+      },
+      "setup-nav-order-entry": {
+        "action": "eval_sync",
+        "expression": "window.location.hash = '#/perps/trade/ETH?direction=long&mode=new'; 'ok'",
+        "next": "setup-wait-order-entry",
+        "id": "setup-nav-order-entry"
+      },
+      "setup-wait-order-entry": {
+        "action": "wait_for",
+        "test_id": "perps-order-entry-page",
+        "timeout_ms": 10000,
+        "next": "setup-wait-submit-button",
+        "id": "setup-wait-order-entry"
+      },
+      "setup-wait-submit-button": {
+        "action": "wait_for",
+        "test_id": "submit-order-button",
+        "timeout_ms": 5000,
+        "next": "ac1-enter-large-amount",
+        "id": "setup-wait-submit-button"
+      },
+      "ac1-enter-large-amount": {
+        "action": "set_input",
+        "test_id": "amount-input-field",
+        "value": "999999999",
+        "next": "ac1-wait-button-disabled",
+        "id": "ac1-enter-large-amount"
+      },
+      "ac1-wait-button-disabled": {
+        "action": "wait_for",
+        "expression": "document.querySelector('[data-testid=\"submit-order-button\"]')?.disabled === true",
+        "timeout_ms": 5000,
+        "next": "ac2-check-button-text",
+        "id": "ac1-wait-button-disabled"
+      },
+      "ac2-check-button-text": {
+        "action": "ext_check_dom",
+        "test_id": "submit-order-button",
+        "text": "Insufficient funds",
+        "next": "ac1-screenshot-disabled",
+        "id": "ac2-check-button-text"
+      },
+      "ac1-screenshot-disabled": {
+        "action": "screenshot",
+        "filename": "evidence-ac1-button-disabled",
+        "next": "ac3-enter-small-amount",
+        "id": "ac1-screenshot-disabled"
+      },
+      "ac3-enter-small-amount": {
+        "action": "set_input",
+        "test_id": "amount-input-field",
+        "value": "1",
+        "next": "ac3-wait-button-enabled",
+        "id": "ac3-enter-small-amount"
+      },
+      "ac3-wait-button-enabled": {
+        "action": "wait_for",
+        "expression": "document.querySelector('[data-testid=\"submit-order-button\"]')?.disabled === false",
+        "timeout_ms": 5000,
+        "next": "ac3-check-button-text",
+        "id": "ac3-wait-button-enabled"
+      },
+      "ac3-check-button-text": {
+        "action": "ext_check_dom",
+        "test_id": "submit-order-button",
+        "text": "Open long",
+        "next": "ac3-screenshot-enabled",
+        "id": "ac3-check-button-text"
+      },
+      "ac3-screenshot-enabled": {
+        "action": "screenshot",
+        "filename": "evidence-ac3-button-enabled",
+        "next": "done",
+        "id": "ac3-screenshot-enabled"
+      },
+      "done": {
+        "action": "end",
+        "status": "pass",
+        "message": "Order size margin restriction validated: button disabled + Insufficient funds text when exceeding balance, enabled with normal text when within balance",
+        "id": "done"
+      }
+    }
+  }
+}
