@@ -1,0 +1,231 @@
+[
+  {
+    "id": "setup-prime-perps",
+    "action": "call",
+    "ok": true,
+    "raw": {
+      "passed": 4,
+      "failed": 0,
+      "trace": [
+        {
+          "id": "nav-perps-tab",
+          "action": "navigate",
+          "ok": true,
+          "raw": {
+            "navigated": true,
+            "hash": "#/?tab=perps"
+          },
+          "durationMs": 4
+        },
+        {
+          "id": "check-tutorial",
+          "action": "eval_sync",
+          "ok": true,
+          "raw": "{\"visible\":false}",
+          "durationMs": 6
+        },
+        {
+          "id": "tutorial-switch",
+          "action": "switch",
+          "next": "wait-tab-mount",
+          "durationMs": 0
+        },
+        {
+          "id": "wait-tab-mount",
+          "action": "wait_for",
+          "ok": true,
+          "raw": {
+            "found": true,
+            "target": "testId:perps-balance-dropdown"
+          },
+          "durationMs": 90
+        },
+        {
+          "id": "fetch-account-state",
+          "action": "eval_async",
+          "ok": true,
+          "raw": "{\"ready\":true,\"bal\":11246.065329509998,\"accountState\":{\"availableBalance\":\"25.304907\",\"totalBalance\":\"11246.065329509998\",\"marginUsed\":\"3.338343\",\"unrealizedPnl\":\"0.01104\",\"returnOnEquity\":\"0.3307029864816167\",\"subAccountBreakdown\":{\"\":{\"availableBalance\":\"25.304907\",\"totalBalance\":\"28.64325\"},\"xyz\":{\"availableBalance\":\"0.0\",\"totalBalance\":\"0\"}}}}",
+          "durationMs": 667
+        },
+        {
+          "id": "done",
+          "action": "end",
+          "status": "pass",
+          "durationMs": 0
+        }
+      ],
+      "vars": {
+        "tutorial_state": {
+          "visible": false
+        },
+        "prime_balance": {
+          "ready": true,
+          "bal": 11246.065329509998,
+          "accountState": {
+            "availableBalance": "25.304907",
+            "totalBalance": "11246.065329509998",
+            "marginUsed": "3.338343",
+            "unrealizedPnl": "0.01104",
+            "returnOnEquity": "0.3307029864816167",
+            "subAccountBreakdown": {
+              "": {
+                "availableBalance": "25.304907",
+                "totalBalance": "28.64325"
+              },
+              "xyz": {
+                "availableBalance": "0.0",
+                "totalBalance": "0"
+              }
+            }
+          }
+        }
+      }
+    },
+    "durationMs": 816
+  },
+  {
+    "id": "setup-nav-to-detail",
+    "action": "call",
+    "ok": true,
+    "raw": {
+      "passed": 2,
+      "failed": 0,
+      "trace": [
+        {
+          "id": "nav-detail",
+          "action": "navigate",
+          "ok": true,
+          "raw": {
+            "navigated": true,
+            "hash": "#/perps/market/ETH"
+          },
+          "durationMs": 3
+        },
+        {
+          "id": "wait-detail",
+          "action": "wait_for",
+          "ok": true,
+          "raw": {
+            "found": true,
+            "target": "testId:perps-market-detail-page"
+          },
+          "durationMs": 65
+        },
+        {
+          "id": "done",
+          "action": "end",
+          "status": "pass",
+          "durationMs": 0
+        }
+      ],
+      "vars": {}
+    },
+    "durationMs": 100
+  },
+  {
+    "id": "setup-inject-position",
+    "action": "eval_async",
+    "ok": true,
+    "raw": "{\"injected\":true}",
+    "durationMs": 2
+  },
+  {
+    "id": "setup-wait-position-ctas",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-position-cta-buttons"
+    },
+    "durationMs": 56
+  },
+  {
+    "id": "setup-open-modify-menu",
+    "action": "press",
+    "ok": true,
+    "raw": {
+      "clicked": true,
+      "target": "testId:perps-modify-cta-button"
+    },
+    "durationMs": 121
+  },
+  {
+    "id": "setup-wait-modify-menu",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-modify-menu-reverse-position"
+    },
+    "durationMs": 62
+  },
+  {
+    "id": "setup-click-reverse",
+    "action": "press",
+    "ok": true,
+    "raw": {
+      "clicked": true,
+      "target": "testId:perps-modify-menu-reverse-position"
+    },
+    "durationMs": 190
+  },
+  {
+    "id": "setup-wait-modal-delay",
+    "action": "wait",
+    "ok": true,
+    "raw": null,
+    "durationMs": 400
+  },
+  {
+    "id": "setup-wait-modal",
+    "action": "wait_for",
+    "ok": true,
+    "raw": true,
+    "durationMs": 1
+  },
+  {
+    "id": "ac1-assert-fee-not-dash",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"feeText\":\"$0.22\"}",
+    "durationMs": 1
+  },
+  {
+    "id": "ac1-screenshot-fee",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "/Users/deeeed/dev/metamask/metamask-extension-5/temp/agentic/recipes/test-artifacts/screenshots/evidence-ac1-fee-visible-1776068751362.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 120
+  },
+  {
+    "id": "ac2-assert-confirm-button",
+    "action": "ext_check_dom",
+    "ok": true,
+    "raw": {
+      "visible": true,
+      "text": "Confirm"
+    },
+    "durationMs": 1
+  },
+  {
+    "id": "ac2-screenshot-confirm",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "/Users/deeeed/dev/metamask/metamask-extension-5/temp/agentic/recipes/test-artifacts/screenshots/evidence-ac2-confirm-button-1776068751485.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 89
+  },
+  {
+    "id": "gate-done",
+    "action": "end",
+    "status": "pass",
+    "durationMs": 0
+  }
+]

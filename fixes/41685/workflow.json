@@ -1,0 +1,135 @@
+{
+  "description": "",
+  "hooks": {
+    "pre_conditions": [
+      "wallet.unlocked",
+      "perps.feature_enabled"
+    ],
+    "setup": [],
+    "teardown": []
+  },
+  "inputs": {},
+  "sourcePath": "",
+  "title": "Verify fix: Flip fee displayed and Confirm button label",
+  "workflow": {
+    "entry": "setup-prime-perps",
+    "nodes": {
+      "setup-prime-perps": {
+        "action": "call",
+        "ref": "perps/prime-perps-state",
+        "next": "setup-nav-to-detail",
+        "id": "setup-prime-perps"
+      },
+      "setup-nav-to-detail": {
+        "action": "call",
+        "ref": "perps/navigate-to-market-detail",
+        "params": {
+          "symbol": "ETH"
+        },
+        "next": "setup-inject-position",
+        "id": "setup-nav-to-detail"
+      },
+      "setup-inject-position": {
+        "action": "eval_async",
+        "expression": "(async()=>{var mgr=stateHooks.getPerpsStreamManager();mgr.positions.pushData([{symbol:'ETH',size:'0.5',entryPrice:'2500.00',positionValue:'1250.00',unrealizedPnl:'50.00',marginUsed:'500.00',leverage:{type:'cross',value:3},liquidationPrice:'2000.00',maxLeverage:20,returnOnEquity:'10.00',cumulativeFunding:{allTime:'5.00',sinceOpen:'2.00',sinceChange:'0.00'}}]);return JSON.stringify({injected:true})})()",
+        "assert": {
+          "operator": "eq",
+          "field": "injected",
+          "value": true
+        },
+        "next": "setup-wait-position-ctas",
+        "id": "setup-inject-position"
+      },
+      "setup-wait-position-ctas": {
+        "action": "wait_for",
+        "test_id": "perps-position-cta-buttons",
+        "timeout_ms": 10000,
+        "next": "setup-open-modify-menu",
+        "id": "setup-wait-position-ctas"
+      },
+      "setup-open-modify-menu": {
+        "action": "press",
+        "test_id": "perps-modify-cta-button",
+        "next": "setup-wait-modify-menu",
+        "id": "setup-open-modify-menu"
+      },
+      "setup-wait-modify-menu": {
+        "action": "wait_for",
+        "test_id": "perps-modify-menu-reverse-position",
+        "timeout_ms": 5000,
+        "next": "setup-click-reverse",
+        "id": "setup-wait-modify-menu"
+      },
+      "setup-click-reverse": {
+        "action": "press",
+        "test_id": "perps-modify-menu-reverse-position",
+        "next": "setup-wait-modal-delay",
+        "id": "setup-click-reverse"
+      },
+      "setup-wait-modal-delay": {
+        "action": "wait",
+        "ms": 400,
+        "next": "setup-wait-modal",
+        "id": "setup-wait-modal-delay"
+      },
+      "setup-wait-modal": {
+        "action": "wait_for",
+        "expression": "document.querySelector('[data-testid=\"perps-reverse-position-modal\"] [data-testid=\"perps-reverse-position-modal-save\"]') !== null",
+        "timeout_ms": 10000,
+        "next": "ac1-assert-fee-not-dash",
+        "id": "setup-wait-modal"
+      },
+      "ac1-assert-fee-not-dash": {
+        "action": "eval_sync",
+        "expression": "JSON.stringify({ feeText: document.querySelector('[data-testid=\"perps-reverse-fee-value\"]')?.textContent ?? 'MISSING' })",
+        "assert": {
+          "all": [
+            {
+              "operator": "not_contains",
+              "field": "feeText",
+              "value": "—"
+            },
+            {
+              "operator": "not_contains",
+              "field": "feeText",
+              "value": "MISSING"
+            },
+            {
+              "operator": "contains",
+              "field": "feeText",
+              "value": "$"
+            }
+          ]
+        },
+        "save_as": "fee_check",
+        "next": "ac1-screenshot-fee",
+        "id": "ac1-assert-fee-not-dash"
+      },
+      "ac1-screenshot-fee": {
+        "action": "screenshot",
+        "filename": "evidence-ac1-fee-visible",
+        "next": "ac2-assert-confirm-button",
+        "id": "ac1-screenshot-fee"
+      },
+      "ac2-assert-confirm-button": {
+        "action": "ext_check_dom",
+        "test_id": "perps-reverse-position-modal-save",
+        "text": "Confirm",
+        "next": "ac2-screenshot-confirm",
+        "id": "ac2-assert-confirm-button"
+      },
+      "ac2-screenshot-confirm": {
+        "action": "screenshot",
+        "filename": "evidence-ac2-confirm-button",
+        "next": "gate-done",
+        "id": "ac2-screenshot-confirm"
+      },
+      "gate-done": {
+        "action": "end",
+        "status": "pass",
+        "message": "Flip fee is displayed and button says Confirm",
+        "id": "gate-done"
+      }
+    }
+  }
+}

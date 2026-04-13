@@ -1,0 +1,30 @@
+flowchart TD
+  %% Verify fix: Flip fee displayed and Confirm button label
+  __entry__(["ENTRY"]) --> node_setup_prime_perps
+  node_setup_prime_perps[["setup-prime-perps<br/>perps/prime-perps-state"]]
+  node_setup_nav_to_detail[["setup-nav-to-detail<br/>perps/navigate-to-market-detail"]]
+  node_setup_inject_position["setup-inject-position<br/>eval_async"]
+  node_setup_wait_position_ctas["setup-wait-position-ctas<br/>wait_for"]
+  node_setup_open_modify_menu["setup-open-modify-menu<br/>press"]
+  node_setup_wait_modify_menu["setup-wait-modify-menu<br/>wait_for"]
+  node_setup_click_reverse["setup-click-reverse<br/>press"]
+  node_setup_wait_modal_delay["setup-wait-modal-delay<br/>wait"]
+  node_setup_wait_modal["setup-wait-modal<br/>wait_for"]
+  node_ac1_assert_fee_not_dash["ac1-assert-fee-not-dash<br/>eval_sync"]
+  node_ac1_screenshot_fee["ac1-screenshot-fee<br/>screenshot"]
+  node_ac2_assert_confirm_button["ac2-assert-confirm-button<br/>ext_check_dom"]
+  node_ac2_screenshot_confirm["ac2-screenshot-confirm<br/>screenshot"]
+  node_gate_done(["gate-done<br/>PASS"])
+  node_setup_prime_perps --> node_setup_nav_to_detail
+  node_setup_nav_to_detail --> node_setup_inject_position
+  node_setup_inject_position --> node_setup_wait_position_ctas
+  node_setup_wait_position_ctas --> node_setup_open_modify_menu
+  node_setup_open_modify_menu --> node_setup_wait_modify_menu
+  node_setup_wait_modify_menu --> node_setup_click_reverse
+  node_setup_click_reverse --> node_setup_wait_modal_delay
+  node_setup_wait_modal_delay --> node_setup_wait_modal
+  node_setup_wait_modal --> node_ac1_assert_fee_not_dash
+  node_ac1_assert_fee_not_dash --> node_ac1_screenshot_fee
+  node_ac1_screenshot_fee --> node_ac2_assert_confirm_button
+  node_ac2_assert_confirm_button --> node_ac2_screenshot_confirm
+  node_ac2_screenshot_confirm --> node_gate_done
