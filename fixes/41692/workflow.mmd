@@ -1,0 +1,10 @@
+flowchart TD
+  %% TAT-2831 - disable perps submit CTA when no funds are available
+  __entry__(["ENTRY"]) --> node_ac1_wait_submit_disabled
+  node_ac1_wait_submit_disabled["ac1-wait-submit-disabled<br/>wait_for"]
+  node_ac1_assert_submit_label["ac1-assert-submit-label<br/>eval_sync"]
+  node_ac1_screenshot_disabled_submit["ac1-screenshot-disabled-submit<br/>screenshot"]
+  node_done(["done<br/>PASS"])
+  node_ac1_wait_submit_disabled --> node_ac1_assert_submit_label
+  node_ac1_assert_submit_label --> node_ac1_screenshot_disabled_submit
+  node_ac1_screenshot_disabled_submit --> node_done

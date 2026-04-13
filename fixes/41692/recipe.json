@@ -1,0 +1,99 @@
+{
+  "title": "TAT-2831 - disable perps submit CTA when no funds are available",
+  "validate": {
+    "workflow": {
+      "pre_conditions": [
+        "wallet.unlocked",
+        "perps.feature_enabled",
+        "perps.ready_to_trade"
+      ],
+      "setup": [
+        {
+          "id": "setup-prime-perps-state",
+          "action": "call",
+          "ref": "perps/prime-perps-state"
+        },
+        {
+          "id": "setup-navigate-market-detail",
+          "action": "call",
+          "ref": "perps/navigate-to-market-detail",
+          "params": {
+            "symbol": "BTC"
+          }
+        },
+        {
+          "id": "setup-wait-open-long-cta",
+          "action": "wait_for",
+          "test_id": "perps-long-cta-button",
+          "timeout_ms": 10000
+        },
+        {
+          "id": "setup-open-order-entry",
+          "action": "press",
+          "test_id": "perps-long-cta-button"
+        },
+        {
+          "id": "setup-wait-order-entry",
+          "action": "wait_for",
+          "test_id": "perps-order-entry-page",
+          "timeout_ms": 10000
+        },
+        {
+          "id": "setup-inject-zero-balance-account",
+          "action": "eval_sync",
+          "expression": "(()=>{const sm=stateHooks.getPerpsStreamManager();const current=sm.account.getCachedData()??{};const injected={...current,availableBalance:'0',totalBalance:'0',marginUsed:'0',unrealizedPnl:'0',returnOnEquity:'0',subAccountBreakdown:{'':{availableBalance:'0',totalBalance:'0'}}};sm.account.pushData(injected);const next=sm.account.getCachedData();return JSON.stringify({availableBalance:next?.availableBalance??null,totalBalance:next?.totalBalance??null})})()",
+          "assert": {
+            "operator": "eq",
+            "field": "availableBalance",
+            "value": "0"
+          }
+        }
+      ],
+      "teardown": [
+        {
+          "id": "teardown-restore-live-account",
+          "action": "eval_async",
+          "expression": "(async()=>{const sm=stateHooks.getPerpsStreamManager();const live=await stateHooks.submitRequestToBackground('perpsGetAccountState',[]);sm.account.pushData(live??null);const next=sm.account.getCachedData();return JSON.stringify({restored:!!next,availableBalance:next?.availableBalance??null})})()",
+          "assert": {
+            "operator": "truthy",
+            "field": "restored"
+          }
+        }
+      ],
+      "entry": "ac1-wait-submit-disabled",
+      "nodes": {
+        "ac1-wait-submit-disabled": {
+          "action": "wait_for",
+          "expression": "(()=>{const submit=document.querySelector('[data-testid=\"submit-order-button\"]');return JSON.stringify({exists:!!submit,disabled:!!submit&&(submit.hasAttribute('disabled')||submit.getAttribute('aria-disabled')==='true')})})()",
+          "assert": {
+            "operator": "eq",
+            "field": "disabled",
+            "value": true
+          },
+          "timeout_ms": 5000,
+          "poll_ms": 250,
+          "next": "ac1-assert-submit-label"
+        },
+        "ac1-assert-submit-label": {
+          "action": "eval_sync",
+          "expression": "(()=>{const submit=document.querySelector('[data-testid=\"submit-order-button\"]');return JSON.stringify({label:submit?.textContent?.trim()??null})})()",
+          "assert": {
+            "operator": "eq",
+            "field": "label",
+            "value": "Add funds"
+          },
+          "next": "ac1-screenshot-disabled-submit"
+        },
+        "ac1-screenshot-disabled-submit": {
+          "action": "screenshot",
+          "filename": "evidence-ac1-disabled-add-funds.png",
+          "next": "done"
+        },
+        "done": {
+          "action": "end",
+          "status": "pass"
+        }
+      }
+    }
+  }
+}

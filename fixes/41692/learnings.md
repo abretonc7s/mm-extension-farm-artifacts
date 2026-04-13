@@ -1,0 +1,3 @@
+- Reproducing the bug took longer than the fix because the live perps account was funded on both mainnet and testnet; the safe unblock was pushing a zero-balance payload into `stateHooks.getPerpsStreamManager().account` instead of touching live funds.
+- `validate-recipe.js` assumes task-relative paths under `temp/agentic/recipes` and writes screenshots into the runner cache, so this task needed path shims plus explicit screenshot normalization back into the task artifact directory.
+- Repo-level verification was noisy because ignored task/runtime files and baseline image optimizations can fail `yarn lint`; a clean detached worktree isolated the actual two-file patch and gave a trustworthy CI-parity signal.
