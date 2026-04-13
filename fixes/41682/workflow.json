@@ -1,0 +1,108 @@
+{
+  "description": "",
+  "hooks": {
+    "pre_conditions": [
+      "wallet.unlocked",
+      "perps.feature_enabled"
+    ],
+    "setup": [],
+    "teardown": []
+  },
+  "inputs": {},
+  "sourcePath": "",
+  "title": "Verify fix: Reverse position modal shows fee and Confirm button",
+  "workflow": {
+    "entry": "setup-open-position",
+    "nodes": {
+      "setup-open-position": {
+        "action": "call",
+        "ref": "perps/open-long-position",
+        "params": {
+          "symbol": "ETH",
+          "amount": "10"
+        },
+        "next": "setup-wait-modify",
+        "id": "setup-open-position"
+      },
+      "setup-wait-modify": {
+        "action": "wait_for",
+        "test_id": "perps-modify-cta-button",
+        "timeout_ms": 10000,
+        "next": "ac1-press-modify",
+        "id": "setup-wait-modify"
+      },
+      "ac1-press-modify": {
+        "action": "press",
+        "test_id": "perps-modify-cta-button",
+        "next": "ac1-wait-menu",
+        "id": "ac1-press-modify"
+      },
+      "ac1-wait-menu": {
+        "action": "wait_for",
+        "test_id": "perps-modify-menu",
+        "timeout_ms": 5000,
+        "next": "ac1-press-reverse",
+        "id": "ac1-wait-menu"
+      },
+      "ac1-press-reverse": {
+        "action": "press",
+        "test_id": "perps-modify-menu-reverse-position",
+        "next": "ac1-wait-modal",
+        "id": "ac1-press-reverse"
+      },
+      "ac1-wait-modal": {
+        "action": "wait_for",
+        "test_id": "perps-reverse-position-modal-cancel",
+        "timeout_ms": 5000,
+        "next": "ac1-assert-fee-displayed",
+        "id": "ac1-wait-modal"
+      },
+      "ac1-assert-fee-displayed": {
+        "action": "eval_sync",
+        "expression": "(function(){ var el = document.querySelector('[data-testid=\"perps-reverse-fee-value\"]'); var text = el?.textContent?.trim() ?? ''; return JSON.stringify({ feeText: text, hasFee: text.length > 0 && text !== '\\u2014' && text !== '--' }) })()",
+        "assert": {
+          "operator": "eq",
+          "field": "hasFee",
+          "value": true
+        },
+        "next": "ac2-assert-confirm-button",
+        "id": "ac1-assert-fee-displayed"
+      },
+      "ac2-assert-confirm-button": {
+        "action": "eval_sync",
+        "expression": "(function(){ var btn = document.querySelector('[data-testid=\"perps-reverse-position-modal-save\"]'); var text = btn?.textContent?.trim() ?? ''; return JSON.stringify({ buttonText: text, isConfirm: text === 'Confirm' }) })()",
+        "assert": {
+          "operator": "eq",
+          "field": "isConfirm",
+          "value": true
+        },
+        "next": "ac1-screenshot-fee",
+        "id": "ac2-assert-confirm-button"
+      },
+      "ac1-screenshot-fee": {
+        "action": "screenshot",
+        "filename": "evidence-ac1-fee-displayed",
+        "next": "ac2-screenshot-confirm",
+        "id": "ac1-screenshot-fee"
+      },
+      "ac2-screenshot-confirm": {
+        "action": "screenshot",
+        "filename": "evidence-ac2-confirm-button",
+        "next": "teardown-close-modal",
+        "id": "ac2-screenshot-confirm"
+      },
+      "teardown-close-modal": {
+        "action": "press",
+        "test_id": "perps-reverse-position-modal-cancel",
+        "next": "done",
+        "id": "teardown-close-modal"
+      },
+      "done": {
+        "action": "end",
+        "status": "pass",
+        "message": "Reverse position modal displays fee and Confirm button",
+        "id": "done"
+      }
+    }
+  }
+}

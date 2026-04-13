@@ -1,0 +1,26 @@
+flowchart TD
+  %% Verify fix: Reverse position modal shows fee and Confirm button
+  __entry__(["ENTRY"]) --> node_setup_open_position
+  node_setup_open_position[["setup-open-position<br/>perps/open-long-position"]]
+  node_setup_wait_modify["setup-wait-modify<br/>wait_for"]
+  node_ac1_press_modify["ac1-press-modify<br/>press"]
+  node_ac1_wait_menu["ac1-wait-menu<br/>wait_for"]
+  node_ac1_press_reverse["ac1-press-reverse<br/>press"]
+  node_ac1_wait_modal["ac1-wait-modal<br/>wait_for"]
+  node_ac1_assert_fee_displayed["ac1-assert-fee-displayed<br/>eval_sync"]
+  node_ac2_assert_confirm_button["ac2-assert-confirm-button<br/>eval_sync"]
+  node_ac1_screenshot_fee["ac1-screenshot-fee<br/>screenshot"]
+  node_ac2_screenshot_confirm["ac2-screenshot-confirm<br/>screenshot"]
+  node_teardown_close_modal["teardown-close-modal<br/>press"]
+  node_done(["done<br/>PASS"])
+  node_setup_open_position --> node_setup_wait_modify
+  node_setup_wait_modify --> node_ac1_press_modify
+  node_ac1_press_modify --> node_ac1_wait_menu
+  node_ac1_wait_menu --> node_ac1_press_reverse
+  node_ac1_press_reverse --> node_ac1_wait_modal
+  node_ac1_wait_modal --> node_ac1_assert_fee_displayed
+  node_ac1_assert_fee_displayed --> node_ac2_assert_confirm_button
+  node_ac2_assert_confirm_button --> node_ac1_screenshot_fee
+  node_ac1_screenshot_fee --> node_ac2_screenshot_confirm
+  node_ac2_screenshot_confirm --> node_teardown_close_modal
+  node_teardown_close_modal --> node_done

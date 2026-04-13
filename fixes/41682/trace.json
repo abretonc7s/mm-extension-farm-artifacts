@@ -1,0 +1,214 @@
+[
+  {
+    "id": "setup-open-position",
+    "action": "call",
+    "ok": true,
+    "raw": {
+      "passed": 5,
+      "failed": 0,
+      "trace": [
+        {
+          "id": "gate-check-balance",
+          "action": "eval_async",
+          "ok": true,
+          "raw": "{\"ok\":true,\"bal\":11246.076967509998,\"reason\":\"ok\"}",
+          "durationMs": 1359
+        },
+        {
+          "id": "call-nav-detail",
+          "action": "call",
+          "ok": true,
+          "raw": {
+            "passed": 2,
+            "failed": 0,
+            "trace": [
+              {
+                "id": "nav-detail",
+                "action": "navigate",
+                "ok": true,
+                "raw": {
+                  "navigated": true,
+                  "hash": "#/perps/market/ETH"
+                },
+                "durationMs": 4
+              },
+              {
+                "id": "wait-detail",
+                "action": "wait_for",
+                "ok": true,
+                "raw": {
+                  "found": true,
+                  "target": "testId:perps-market-detail-page"
+                },
+                "durationMs": 114
+              },
+              {
+                "id": "done",
+                "action": "end",
+                "status": "pass",
+                "durationMs": 0
+              }
+            ],
+            "vars": {}
+          },
+          "durationMs": 139
+        },
+        {
+          "id": "check-position",
+          "action": "ext_check_dom",
+          "ok": true,
+          "raw": {
+            "visible": true
+          },
+          "durationMs": 2
+        },
+        {
+          "id": "branch-position",
+          "action": "switch",
+          "next": "verify-position",
+          "durationMs": 0
+        },
+        {
+          "id": "verify-position",
+          "action": "wait_for",
+          "ok": true,
+          "raw": {
+            "found": true,
+            "target": "testId:perps-position-cta-buttons"
+          },
+          "durationMs": 77
+        },
+        {
+          "id": "screenshot-result",
+          "action": "screenshot",
+          "ok": true,
+          "raw": {
+            "path": "/Users/deeeed/dev/metamask/metamask-extension-1/temp/agentic/recipes/test-artifacts/screenshots/long-position-ETH-1776057964140.png",
+            "width": 500,
+            "height": 713
+          },
+          "durationMs": 114
+        },
+        {
+          "id": "done",
+          "action": "end",
+          "status": "pass",
+          "durationMs": 0
+        }
+      ],
+      "vars": {
+        "balance_gate": {
+          "ok": true,
+          "bal": 11246.076967509998,
+          "reason": "ok"
+        },
+        "pos_check": {
+          "visible": true
+        }
+      }
+    },
+    "durationMs": 2059
+  },
+  {
+    "id": "setup-wait-modify",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-modify-cta-button"
+    },
+    "durationMs": 69
+  },
+  {
+    "id": "ac1-press-modify",
+    "action": "press",
+    "ok": true,
+    "raw": {
+      "clicked": true,
+      "target": "testId:perps-modify-cta-button"
+    },
+    "durationMs": 112
+  },
+  {
+    "id": "ac1-wait-menu",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-modify-menu"
+    },
+    "durationMs": 74
+  },
+  {
+    "id": "ac1-press-reverse",
+    "action": "press",
+    "ok": true,
+    "raw": {
+      "clicked": true,
+      "target": "testId:perps-modify-menu-reverse-position"
+    },
+    "durationMs": 114
+  },
+  {
+    "id": "ac1-wait-modal",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-reverse-position-modal-cancel"
+    },
+    "durationMs": 64
+  },
+  {
+    "id": "ac1-assert-fee-displayed",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"feeText\":\"-<$0.01\",\"hasFee\":true}",
+    "durationMs": 0
+  },
+  {
+    "id": "ac2-assert-confirm-button",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"buttonText\":\"Confirm\",\"isConfirm\":true}",
+    "durationMs": 0
+  },
+  {
+    "id": "ac1-screenshot-fee",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "/Users/deeeed/dev/metamask/metamask-extension-1/temp/agentic/recipes/test-artifacts/screenshots/evidence-ac1-fee-displayed-1776057964697.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 90
+  },
+  {
+    "id": "ac2-screenshot-confirm",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "/Users/deeeed/dev/metamask/metamask-extension-1/temp/agentic/recipes/test-artifacts/screenshots/evidence-ac2-confirm-button-1776057964788.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 75
+  },
+  {
+    "id": "teardown-close-modal",
+    "action": "press",
+    "ok": true,
+    "raw": {
+      "clicked": true,
+      "target": "testId:perps-reverse-position-modal-cancel"
+    },
+    "durationMs": 185
+  },
+  {
+    "id": "done",
+    "action": "end",
+    "status": "pass",
+    "durationMs": 0
+  }
+]
