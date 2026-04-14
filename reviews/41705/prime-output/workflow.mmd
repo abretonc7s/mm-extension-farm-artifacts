@@ -1,0 +1,19 @@
+flowchart TD
+  %% Prime Perps state — navigate to perps tab and fetch live account state
+  __entry__(["ENTRY"]) --> node_nav_perps_tab
+  node_nav_perps_tab["nav-perps-tab<br/>navigate"]
+  node_check_tutorial["check-tutorial<br/>eval_sync"]
+  node_tutorial_switch{"tutorial-switch<br/>switch"}
+  node_dismiss_tutorial["dismiss-tutorial<br/>press"]
+  node_wait_tutorial_gone["wait-tutorial-gone<br/>wait_for"]
+  node_wait_tab_mount["wait-tab-mount<br/>wait_for"]
+  node_fetch_account_state["fetch-account-state<br/>eval_async"]
+  node_done(["done<br/>PASS"])
+  node_nav_perps_tab --> node_check_tutorial
+  node_check_tutorial --> node_tutorial_switch
+  node_tutorial_switch -->|tutorial_state.visible eq true| node_dismiss_tutorial
+  node_tutorial_switch -->|default| node_wait_tab_mount
+  node_dismiss_tutorial --> node_wait_tutorial_gone
+  node_wait_tutorial_gone --> node_wait_tab_mount
+  node_wait_tab_mount --> node_fetch_account_state
+  node_fetch_account_state --> node_done

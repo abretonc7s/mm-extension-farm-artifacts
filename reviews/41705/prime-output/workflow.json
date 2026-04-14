@@ -1,0 +1,86 @@
+{
+  "description": "Navigates to the Perps tab (triggers controller init), dismisses tutorial if present, then fetches live account state via submitRequestToBackground. Saves account state to vars.prime_balance.",
+  "hooks": {
+    "pre_conditions": [
+      "wallet.unlocked",
+      "perps.feature_enabled"
+    ],
+    "setup": [],
+    "teardown": []
+  },
+  "inputs": {},
+  "sourcePath": "",
+  "title": "Prime Perps state — navigate to perps tab and fetch live account state",
+  "workflow": {
+    "entry": "nav-perps-tab",
+    "nodes": {
+      "nav-perps-tab": {
+        "action": "navigate",
+        "target": "PerpsHome",
+        "next": "check-tutorial",
+        "id": "nav-perps-tab"
+      },
+      "check-tutorial": {
+        "action": "eval_sync",
+        "expression": "JSON.stringify({ visible: !!document.querySelector('[data-testid=\"perps-tutorial-modal\"]') })",
+        "save_as": "tutorial_state",
+        "next": "tutorial-switch",
+        "id": "check-tutorial"
+      },
+      "tutorial-switch": {
+        "action": "switch",
+        "cases": [
+          {
+            "when": {
+              "operator": "eq",
+              "field": "tutorial_state.visible",
+              "value": true
+            },
+            "next": "dismiss-tutorial",
+            "index": 0,
+            "label": ""
+          }
+        ],
+        "default": "wait-tab-mount",
+        "id": "tutorial-switch"
+      },
+      "dismiss-tutorial": {
+        "action": "press",
+        "test_id": "perps-tutorial-skip-button",
+        "next": "wait-tutorial-gone",
+        "id": "dismiss-tutorial"
+      },
+      "wait-tutorial-gone": {
+        "action": "wait_for",
+        "expression": "!document.querySelector('[data-testid=\"perps-tutorial-modal\"]')",
+        "timeout_ms": 5000,
+        "next": "wait-tab-mount",
+        "id": "wait-tutorial-gone"
+      },
+      "wait-tab-mount": {
+        "action": "wait_for",
+        "test_id": "perps-balance-dropdown",
+        "timeout_ms": 10000,
+        "next": "fetch-account-state",
+        "id": "wait-tab-mount"
+      },
+      "fetch-account-state": {
+        "action": "eval_async",
+        "expression": "(async()=>{var r=await stateHooks.submitRequestToBackground('perpsGetAccountState',[]);return JSON.stringify({ready:!!(r&&r.totalBalance),bal:parseFloat(r?.totalBalance??'0'),accountState:r??{}})})()",
+        "assert": {
+          "operator": "eq",
+          "field": "ready",
+          "value": true
+        },
+        "save_as": "prime_balance",
+        "next": "done",
+        "id": "fetch-account-state"
+      },
+      "done": {
+        "action": "end",
+        "status": "pass",
+        "id": "done"
+      }
+    }
+  }
+}

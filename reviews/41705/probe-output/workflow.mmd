@@ -1,0 +1,12 @@
+flowchart TD
+  %% Probe live perps state for PR #41705 review
+  __entry__(["ENTRY"]) --> node_gate_accounts
+  node_gate_accounts["gate-accounts<br/>accounts"]
+  node_gate_perps_state["gate-perps-state<br/>perps-state"]
+  node_gate_perps_positions["gate-perps-positions<br/>perps-positions"]
+  node_gate_perps_balance["gate-perps-balance<br/>perps-balance"]
+  node_done(["done<br/>PASS"])
+  node_gate_accounts --> node_gate_perps_state
+  node_gate_perps_state --> node_gate_perps_positions
+  node_gate_perps_positions --> node_gate_perps_balance
+  node_gate_perps_balance --> node_done

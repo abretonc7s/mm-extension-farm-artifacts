@@ -1,0 +1,13 @@
+{
+  "pr_number": "41705",
+  "recommendation": "APPROVE",
+  "summary": "The close-position receive calculation now matches mobile and the browser evidence proves the modal no longer double-counts unrealized PnL. I found one non-blocking test gap around half-cent rounding coverage.",
+  "comments": [
+    {
+      "path": "ui/components/app/perps/close-position/close-position-modal.test.tsx",
+      "line": 590,
+      "body": "This regression test locks the PnL bug, but the current fixture does not specifically exercise the new cent-rounding behavior. With `basePosition`, `estimatedFees` is `10.5125`, and both `margin - estimatedFees` and `margin - round2(estimatedFees)` still render as `$2,364.49`, so reverting `roundedFees` could still pass here. Consider adding a half-cent boundary fixture so the per-component rounding change is independently covered.",
+      "severity": "suggestion"
+    }
+  ]
+}

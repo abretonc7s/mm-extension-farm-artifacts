@@ -1,0 +1,142 @@
+{
+  "description": "",
+  "hooks": {
+    "pre_conditions": [
+      "wallet.unlocked",
+      "perps.feature_enabled"
+    ],
+    "setup": [
+      {
+        "id": "setup-prime-perps",
+        "action": "call",
+        "ref": "perps/prime-perps-state"
+      },
+      {
+        "id": "setup-open-market-detail",
+        "action": "call",
+        "ref": "perps/navigate-to-market-detail",
+        "params": {
+          "symbol": "ETH"
+        }
+      },
+      {
+        "id": "gate-close-cta-visible",
+        "action": "ext_check_dom",
+        "test_id": "perps-close-cta-button",
+        "visible": true,
+        "next": "setup-open-close-modal"
+      },
+      {
+        "id": "setup-open-close-modal",
+        "action": "press",
+        "test_id": "perps-close-cta-button",
+        "next": "setup-wait-close-modal"
+      },
+      {
+        "id": "setup-wait-close-modal",
+        "action": "wait_for",
+        "test_id": "perps-close-position-modal-submit",
+        "timeout_ms": 10000,
+        "next": "setup-wait-summary-values"
+      },
+      {
+        "id": "setup-wait-summary-values",
+        "action": "wait_for",
+        "expression": "(() => { const margin = document.querySelector('[data-testid=\"perps-close-summary-margin-value\"]')?.textContent?.trim() || ''; const fees = document.querySelector('[data-testid=\"perps-close-summary-fees-value\"]')?.textContent?.trim() || ''; const receive = document.querySelector('[data-testid=\"perps-close-summary-receive-value\"]')?.textContent?.trim() || ''; return margin.includes('$') && fees.includes('$') && receive.includes('$'); })()",
+        "timeout_ms": 10000,
+        "next": "ac1-assert-no-double-count"
+      }
+    ],
+    "teardown": []
+  },
+  "inputs": {
+    "symbol": {
+      "type": "string",
+      "default": "ETH",
+      "description": "Live position symbol to validate"
+    }
+  },
+  "sourcePath": "",
+  "title": "PR #41705 review — close position calculation",
+  "workflow": {
+    "entry": "ac1-assert-no-double-count",
+    "nodes": {
+      "ac1-assert-no-double-count": {
+        "action": "eval_async",
+        "expression": "(async()=>{const parseUsd=(id,absolute=false)=>{const value=Number((document.querySelector(`[data-testid=\"${id}\"]`)?.textContent||'').replace(/[^0-9.-]/g,''));return absolute?Math.abs(value):value;};const positions=await stateHooks.submitRequestToBackground('perpsGetPositions',[]);const position=(positions||[])[0]||{};const roundedMargin=Math.round((parseFloat(position.marginUsed||'0'))*100)/100;const roundedPnl=Math.round((parseFloat(position.unrealizedPnl||'0'))*100)/100;const displayedMargin=parseUsd('perps-close-summary-margin-value');const displayedFees=parseUsd('perps-close-summary-fees-value',true);const displayedReceive=parseUsd('perps-close-summary-receive-value');const expectedReceive=Math.max(Number((roundedMargin-displayedFees).toFixed(2)),0);const doubleCountedReceive=Math.max(Number((roundedMargin+roundedPnl-displayedFees).toFixed(2)),0);return JSON.stringify({symbol:position.symbol||null,roundedMargin,roundedPnl,displayedMargin,displayedFees,displayedReceive,expectedReceive,doubleCountedReceive,marginMatches:displayedMargin===roundedMargin,noDoubleCount:displayedReceive===expectedReceive,doubleCounted:displayedReceive===doubleCountedReceive});})()",
+        "assert": {
+          "all": [
+            {
+              "field": "marginMatches",
+              "operator": "eq",
+              "value": true
+            },
+            {
+              "field": "noDoubleCount",
+              "operator": "eq",
+              "value": true
+            },
+            {
+              "field": "doubleCounted",
+              "operator": "eq",
+              "value": false
+            }
+          ]
+        },
+        "next": "ac1-screenshot-no-double-count",
+        "id": "ac1-assert-no-double-count"
+      },
+      "ac1-screenshot-no-double-count": {
+        "action": "screenshot",
+        "filename": "evidence-ac1-no-double-count",
+        "next": "ac2-assert-mobile-formula",
+        "id": "ac1-screenshot-no-double-count"
+      },
+      "ac2-assert-mobile-formula": {
+        "action": "eval_async",
+        "expression": "(async()=>{const parseUsd=(id,absolute=false)=>{const value=Number((document.querySelector(`[data-testid=\"${id}\"]`)?.textContent||'').replace(/[^0-9.-]/g,''));return absolute?Math.abs(value):value;};const positions=await stateHooks.submitRequestToBackground('perpsGetPositions',[]);const position=(positions||[])[0]||{};const roundedMargin=Math.round((parseFloat(position.marginUsed||'0'))*100)/100;const displayedFees=parseUsd('perps-close-summary-fees-value',true);const displayedReceive=parseUsd('perps-close-summary-receive-value');const mobileFormulaReceive=Math.max(Number((roundedMargin-displayedFees).toFixed(2)),0);return JSON.stringify({roundedMargin,displayedFees,displayedReceive,mobileFormulaReceive,matchesMobileFormula:displayedReceive===mobileFormulaReceive});})()",
+        "assert": {
+          "field": "matchesMobileFormula",
+          "operator": "eq",
+          "value": true
+        },
+        "next": "ac2-screenshot-mobile-formula",
+        "id": "ac2-assert-mobile-formula"
+      },
+      "ac2-screenshot-mobile-formula": {
+        "action": "screenshot",
+        "filename": "evidence-ac2-mobile-formula",
+        "next": "ac3-assert-additive-breakdown",
+        "id": "ac2-screenshot-mobile-formula"
+      },
+      "ac3-assert-additive-breakdown": {
+        "action": "eval_sync",
+        "expression": "(()=>{const parseUsd=(id,absolute=false)=>{const value=Number((document.querySelector(`[data-testid=\"${id}\"]`)?.textContent||'').replace(/[^0-9.-]/g,''));return absolute?Math.abs(value):value;};const displayedMargin=parseUsd('perps-close-summary-margin-value');const displayedFees=parseUsd('perps-close-summary-fees-value',true);const displayedReceive=parseUsd('perps-close-summary-receive-value');const expectedReceive=Math.max(Number((displayedMargin-displayedFees).toFixed(2)),0);return JSON.stringify({displayedMargin,displayedFees,displayedReceive,expectedReceive,additiveBreakdown:displayedReceive===expectedReceive});})()",
+        "assert": {
+          "field": "additiveBreakdown",
+          "operator": "eq",
+          "value": true
+        },
+        "next": "ac3-screenshot-additive-breakdown",
+        "id": "ac3-assert-additive-breakdown"
+      },
+      "ac3-screenshot-additive-breakdown": {
+        "action": "screenshot",
+        "filename": "evidence-ac3-additive-breakdown",
+        "next": "teardown-close-modal",
+        "id": "ac3-screenshot-additive-breakdown"
+      },
+      "teardown-close-modal": {
+        "action": "ext_navigate_hash",
+        "hash": "#/perps/markets/ETH",
+        "next": "done",
+        "id": "teardown-close-modal"
+      },
+      "done": {
+        "action": "end",
+        "status": "pass",
+        "id": "done"
+      }
+    }
+  }
+}

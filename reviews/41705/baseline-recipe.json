@@ -1,0 +1,19 @@
+{
+  "title": "Baseline screenshot for PR #41705 review",
+  "validate": {
+    "workflow": {
+      "entry": "setup-baseline-screenshot",
+      "nodes": {
+        "setup-baseline-screenshot": {
+          "action": "screenshot",
+          "filename": "baseline-before-validation",
+          "next": "done"
+        },
+        "done": {
+          "action": "end",
+          "status": "pass"
+        }
+      }
+    }
+  }
+}

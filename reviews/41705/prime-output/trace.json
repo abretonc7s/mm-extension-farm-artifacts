@@ -1,0 +1,48 @@
+[
+  {
+    "id": "nav-perps-tab",
+    "action": "navigate",
+    "ok": true,
+    "raw": {
+      "navigated": true,
+      "hash": "#/?tab=perps"
+    },
+    "durationMs": 7
+  },
+  {
+    "id": "check-tutorial",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"visible\":false}",
+    "durationMs": 2
+  },
+  {
+    "id": "tutorial-switch",
+    "action": "switch",
+    "next": "wait-tab-mount",
+    "durationMs": 0
+  },
+  {
+    "id": "wait-tab-mount",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-balance-dropdown"
+    },
+    "durationMs": 2424
+  },
+  {
+    "id": "fetch-account-state",
+    "action": "eval_async",
+    "ok": true,
+    "raw": "{\"ready\":true,\"bal\":11246.87659251,\"accountState\":{\"availableBalance\":\"25.304907\",\"totalBalance\":\"11246.87659251\",\"marginUsed\":\"4.149606\",\"unrealizedPnl\":\"0.82386\",\"returnOnEquity\":\"19.853933120397453\",\"subAccountBreakdown\":{\"\":{\"availableBalance\":\"25.304907\",\"totalBalance\":\"29.454513\"},\"xyz\":{\"availableBalance\":\"0.0\",\"totalBalance\":\"0\"}}}}",
+    "durationMs": 223
+  },
+  {
+    "id": "done",
+    "action": "end",
+    "status": "pass",
+    "durationMs": 0
+  }
+]

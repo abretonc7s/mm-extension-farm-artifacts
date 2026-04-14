@@ -1,0 +1,6 @@
+flowchart TD
+  %% Baseline screenshot for PR #41705 review
+  __entry__(["ENTRY"]) --> node_setup_baseline_screenshot
+  node_setup_baseline_screenshot["setup-baseline-screenshot<br/>screenshot"]
+  node_done(["done<br/>PASS"])
+  node_setup_baseline_screenshot --> node_done

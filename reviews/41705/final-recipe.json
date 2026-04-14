@@ -1,0 +1,19 @@
+{
+  "title": "Final screenshot for PR #41705 review",
+  "validate": {
+    "workflow": {
+      "entry": "setup-final-screenshot",
+      "nodes": {
+        "setup-final-screenshot": {
+          "action": "screenshot",
+          "filename": "final-after-validation",
+          "next": "done"
+        },
+        "done": {
+          "action": "end",
+          "status": "pass"
+        }
+      }
+    }
+  }
+}

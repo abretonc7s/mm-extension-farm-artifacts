@@ -1,0 +1,27 @@
+{
+  "description": "",
+  "hooks": {
+    "pre_conditions": [],
+    "setup": [],
+    "teardown": []
+  },
+  "inputs": {},
+  "sourcePath": "",
+  "title": "Final screenshot for PR #41705 review",
+  "workflow": {
+    "entry": "setup-final-screenshot",
+    "nodes": {
+      "setup-final-screenshot": {
+        "action": "screenshot",
+        "filename": "final-after-validation",
+        "next": "done",
+        "id": "setup-final-screenshot"
+      },
+      "done": {
+        "action": "end",
+        "status": "pass",
+        "id": "done"
+      }
+    }
+  }
+}

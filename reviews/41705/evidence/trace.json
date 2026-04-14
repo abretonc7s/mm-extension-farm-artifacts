@@ -1,0 +1,72 @@
+[
+  {
+    "id": "ac1-assert-no-double-count",
+    "action": "eval_async",
+    "ok": true,
+    "raw": "{\"symbol\":\"ETH\",\"roundedMargin\":4.15,\"roundedPnl\":0.83,\"displayedMargin\":4.15,\"displayedFees\":0.02,\"displayedReceive\":4.13,\"expectedReceive\":4.13,\"doubleCountedReceive\":4.96,\"marginMatches\":true,\"noDoubleCount\":true,\"doubleCounted\":false}",
+    "durationMs": 1
+  },
+  {
+    "id": "ac1-screenshot-no-double-count",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "/Users/deeeed/dev/metamask/metamask-extension-1/temp/agentic/recipes/test-artifacts/screenshots/evidence-ac1-no-double-count-1776143506600.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 177
+  },
+  {
+    "id": "ac2-assert-mobile-formula",
+    "action": "eval_async",
+    "ok": true,
+    "raw": "{\"roundedMargin\":4.15,\"displayedFees\":0.02,\"displayedReceive\":4.13,\"mobileFormulaReceive\":4.13,\"matchesMobileFormula\":true}",
+    "durationMs": 1
+  },
+  {
+    "id": "ac2-screenshot-mobile-formula",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "/Users/deeeed/dev/metamask/metamask-extension-1/temp/agentic/recipes/test-artifacts/screenshots/evidence-ac2-mobile-formula-1776143506779.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 83
+  },
+  {
+    "id": "ac3-assert-additive-breakdown",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"displayedMargin\":4.15,\"displayedFees\":0.02,\"displayedReceive\":4.13,\"expectedReceive\":4.13,\"additiveBreakdown\":true}",
+    "durationMs": 1
+  },
+  {
+    "id": "ac3-screenshot-additive-breakdown",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "/Users/deeeed/dev/metamask/metamask-extension-1/temp/agentic/recipes/test-artifacts/screenshots/evidence-ac3-additive-breakdown-1776143506864.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 81
+  },
+  {
+    "id": "teardown-close-modal",
+    "action": "ext_navigate_hash",
+    "ok": true,
+    "raw": {
+      "navigated": true,
+      "hash": "#/perps/markets/ETH"
+    },
+    "durationMs": 3
+  },
+  {
+    "id": "done",
+    "action": "end",
+    "status": "pass",
+    "durationMs": 0
+  }
+]

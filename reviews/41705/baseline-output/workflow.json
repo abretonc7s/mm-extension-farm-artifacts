@@ -1,0 +1,27 @@
+{
+  "description": "",
+  "hooks": {
+    "pre_conditions": [],
+    "setup": [],
+    "teardown": []
+  },
+  "inputs": {},
+  "sourcePath": "",
+  "title": "Baseline screenshot for PR #41705 review",
+  "workflow": {
+    "entry": "setup-baseline-screenshot",
+    "nodes": {
+      "setup-baseline-screenshot": {
+        "action": "screenshot",
+        "filename": "baseline-before-validation",
+        "next": "done",
+        "id": "setup-baseline-screenshot"
+      },
+      "done": {
+        "action": "end",
+        "status": "pass",
+        "id": "done"
+      }
+    }
+  }
+}

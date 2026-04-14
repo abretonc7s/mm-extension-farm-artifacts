@@ -1,0 +1,18 @@
+flowchart TD
+  %% PR #41705 review — close position calculation
+  __entry__(["ENTRY"]) --> node_ac1_assert_no_double_count
+  node_ac1_assert_no_double_count["ac1-assert-no-double-count<br/>eval_async"]
+  node_ac1_screenshot_no_double_count["ac1-screenshot-no-double-count<br/>screenshot"]
+  node_ac2_assert_mobile_formula["ac2-assert-mobile-formula<br/>eval_async"]
+  node_ac2_screenshot_mobile_formula["ac2-screenshot-mobile-formula<br/>screenshot"]
+  node_ac3_assert_additive_breakdown["ac3-assert-additive-breakdown<br/>eval_sync"]
+  node_ac3_screenshot_additive_breakdown["ac3-screenshot-additive-breakdown<br/>screenshot"]
+  node_teardown_close_modal["teardown-close-modal<br/>ext_navigate_hash"]
+  node_done(["done<br/>PASS"])
+  node_ac1_assert_no_double_count --> node_ac1_screenshot_no_double_count
+  node_ac1_screenshot_no_double_count --> node_ac2_assert_mobile_formula
+  node_ac2_assert_mobile_formula --> node_ac2_screenshot_mobile_formula
+  node_ac2_screenshot_mobile_formula --> node_ac3_assert_additive_breakdown
+  node_ac3_assert_additive_breakdown --> node_ac3_screenshot_additive_breakdown
+  node_ac3_screenshot_additive_breakdown --> node_teardown_close_modal
+  node_teardown_close_modal --> node_done

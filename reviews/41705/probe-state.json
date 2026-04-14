@@ -1,0 +1,46 @@
+{
+  "title": "Probe live perps state for PR #41705 review",
+  "validate": {
+    "workflow": {
+      "entry": "gate-accounts",
+      "nodes": {
+        "gate-accounts": {
+          "action": "eval_ref",
+          "ref": "accounts",
+          "assert": {
+            "operator": "not_null"
+          },
+          "next": "gate-perps-state"
+        },
+        "gate-perps-state": {
+          "action": "eval_ref",
+          "ref": "perps-state",
+          "assert": {
+            "operator": "not_null"
+          },
+          "next": "gate-perps-positions"
+        },
+        "gate-perps-positions": {
+          "action": "eval_ref",
+          "ref": "perps-positions",
+          "assert": {
+            "operator": "not_null"
+          },
+          "next": "gate-perps-balance"
+        },
+        "gate-perps-balance": {
+          "action": "eval_ref",
+          "ref": "perps-balance",
+          "assert": {
+            "operator": "not_null"
+          },
+          "next": "done"
+        },
+        "done": {
+          "action": "end",
+          "status": "pass"
+        }
+      }
+    }
+  }
+}
