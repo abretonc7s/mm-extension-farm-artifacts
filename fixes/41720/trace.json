@@ -1,0 +1,123 @@
+[
+  {
+    "id": "setup-navigate",
+    "action": "call",
+    "ok": true,
+    "raw": {
+      "passed": 4,
+      "failed": 0,
+      "trace": [
+        {
+          "id": "nav-perps",
+          "action": "navigate",
+          "ok": true,
+          "raw": {
+            "navigated": true,
+            "hash": "#/?tab=perps"
+          },
+          "durationMs": 4
+        },
+        {
+          "id": "check-tutorial",
+          "action": "eval_sync",
+          "ok": true,
+          "raw": "{\"visible\":false}",
+          "durationMs": 1
+        },
+        {
+          "id": "tutorial-switch",
+          "action": "switch",
+          "next": "wait-perps",
+          "durationMs": 0
+        },
+        {
+          "id": "wait-perps",
+          "action": "wait_for",
+          "ok": true,
+          "raw": {
+            "found": true,
+            "target": "testId:perps-balance-dropdown"
+          },
+          "durationMs": 116
+        },
+        {
+          "id": "screenshot-perps",
+          "action": "screenshot",
+          "ok": true,
+          "raw": {
+            "path": "/Users/deeeed/dev/metamask/metamask-extension-6/temp/agentic/recipes/test-artifacts/screenshots/perps-tab-1776170370455.png",
+            "width": 500,
+            "height": 713
+          },
+          "durationMs": 110
+        },
+        {
+          "id": "done",
+          "action": "end",
+          "status": "pass",
+          "durationMs": 0
+        }
+      ],
+      "vars": {
+        "tutorial_state": {
+          "visible": false
+        }
+      }
+    },
+    "durationMs": 238
+  },
+  {
+    "id": "ac1-wait-position-card",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:position-card-ETH"
+    },
+    "durationMs": 134
+  },
+  {
+    "id": "ac1-assert-roe-element",
+    "action": "ext_check_dom",
+    "ok": true,
+    "raw": {
+      "visible": true
+    },
+    "durationMs": 1
+  },
+  {
+    "id": "ac1-screenshot-position-card",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "/Users/deeeed/dev/metamask/metamask-extension-6/temp/agentic/recipes/test-artifacts/screenshots/evidence-ac1-position-card-roe.png-1776170370704.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 67
+  },
+  {
+    "id": "ac2-assert-roe-format",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"hasPercent\":true,\"roeText\":\"(26.30%)\"}",
+    "durationMs": 0
+  },
+  {
+    "id": "ac2-screenshot-roe-format",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "/Users/deeeed/dev/metamask/metamask-extension-6/temp/agentic/recipes/test-artifacts/screenshots/evidence-ac2-roe-format.png-1776170370773.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 77
+  },
+  {
+    "id": "teardown-end",
+    "action": "end",
+    "status": "pass",
+    "durationMs": 0
+  }
+]

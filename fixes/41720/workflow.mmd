@@ -1,0 +1,16 @@
+flowchart TD
+  %% Validate fix: position card shows both USD P&L and ROE%
+  __entry__(["ENTRY"]) --> node_setup_navigate
+  node_setup_navigate[["setup-navigate<br/>perps/navigate-perps-tab"]]
+  node_ac1_wait_position_card["ac1-wait-position-card<br/>wait_for"]
+  node_ac1_assert_roe_element["ac1-assert-roe-element<br/>ext_check_dom"]
+  node_ac1_screenshot_position_card["ac1-screenshot-position-card<br/>screenshot"]
+  node_ac2_assert_roe_format["ac2-assert-roe-format<br/>eval_sync"]
+  node_ac2_screenshot_roe_format["ac2-screenshot-roe-format<br/>screenshot"]
+  node_teardown_end(["teardown-end<br/>PASS"])
+  node_setup_navigate --> node_ac1_wait_position_card
+  node_ac1_wait_position_card --> node_ac1_assert_roe_element
+  node_ac1_assert_roe_element --> node_ac1_screenshot_position_card
+  node_ac1_screenshot_position_card --> node_ac2_assert_roe_format
+  node_ac2_assert_roe_format --> node_ac2_screenshot_roe_format
+  node_ac2_screenshot_roe_format --> node_teardown_end

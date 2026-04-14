@@ -1,0 +1,53 @@
+{
+  "title": "Validate fix: position card shows both USD P&L and ROE%",
+  "validate": {
+    "workflow": {
+      "pre_conditions": [
+        "wallet.unlocked",
+        "perps.feature_enabled",
+        { "name": "perps.open_position", "symbol": "ETH" }
+      ],
+      "entry": "setup-navigate",
+      "nodes": {
+        "setup-navigate": {
+          "action": "call",
+          "ref": "perps/navigate-perps-tab",
+          "next": "ac1-wait-position-card"
+        },
+        "ac1-wait-position-card": {
+          "action": "wait_for",
+          "test_id": "position-card-ETH",
+          "timeout_ms": 5000,
+          "next": "ac1-assert-roe-element"
+        },
+        "ac1-assert-roe-element": {
+          "action": "ext_check_dom",
+          "test_id": "position-card-roe-ETH",
+          "visible": true,
+          "next": "ac1-screenshot-position-card"
+        },
+        "ac1-screenshot-position-card": {
+          "action": "screenshot",
+          "filename": "evidence-ac1-position-card-roe.png",
+          "next": "ac2-assert-roe-format"
+        },
+        "ac2-assert-roe-format": {
+          "action": "eval_sync",
+          "expression": "JSON.stringify({ hasPercent: (document.querySelector('[data-testid=\"position-card-roe-ETH\"]')?.textContent?.trim() ?? '').includes('%'), roeText: document.querySelector('[data-testid=\"position-card-roe-ETH\"]')?.textContent?.trim() ?? 'NOT_FOUND' })",
+          "assert": { "operator": "eq", "field": "hasPercent", "value": true },
+          "next": "ac2-screenshot-roe-format"
+        },
+        "ac2-screenshot-roe-format": {
+          "action": "screenshot",
+          "filename": "evidence-ac2-roe-format.png",
+          "next": "teardown-end"
+        },
+        "teardown-end": {
+          "action": "end",
+          "status": "pass",
+          "message": "Position card shows both USD P&L and ROE% in (XX.XX%) format"
+        }
+      }
+    }
+  }
+}

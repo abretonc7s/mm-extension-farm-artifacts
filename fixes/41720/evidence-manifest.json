@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "preferred_mode": "screenshots",
+  "summary": "Position card shows USD P&L + ROE% together (e.g. +$0.88 (26.30%)) — fix validated on live mainnet position.",
+  "before_after_pairs": [
+    {
+      "label": "Position card — USD P&L and ROE% both visible",
+      "covers": ["ac1", "ac2"],
+      "before": "before-ac1-position-card-roe.png",
+      "after": "after-ac1-position-card-roe.png",
+      "note": "Both before and after show the fixed state (fix was already merged to main via PR #41696 before this branch was created). ROE% (26.30%) visible alongside +$0.88 USD P&L."
+    }
+  ],
+  "standalone": [],
+  "omit": [
+    "after-ac2-roe-format.png",
+    "before-ac2-roe-format.png",
+    "evidence-ac1-position-card-roe.png",
+    "evidence-ac2-roe-format.png"
+  ],
+  "videos": {
+    "before": null,
+    "after": null,
+    "preferred": false,
+    "note": "Video recording unavailable on this machine (ScreenCaptureKit permission issue). Screenshots provide equivalent evidence."
+  }
+}
