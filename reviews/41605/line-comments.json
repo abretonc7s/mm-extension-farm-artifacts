@@ -1,0 +1,19 @@
+{
+  "pr_number": "41605",
+  "recommendation": "COMMENT",
+  "summary": "Locale fix is correct and well-tested. One unaddressed concern from geositta: closingFeeRate ?? 0 shows fee-free (inflated) estimated PnL while usePerpsOrderFees is loading — should guard with closingFeeRate === undefined.",
+  "comments": [
+    {
+      "path": "ui/components/app/perps/order-entry/components/auto-close-section/auto-close-section.tsx",
+      "line": 302,
+      "body": "`closingFeeRate ?? 0` shows estimated PnL without closing fees while `usePerpsOrderFees` is loading or on error (`feeRate: undefined`). This briefly displays an inflated number the user could act on.\n\nFix: add `closingFeeRate === undefined` to the null guard so the PnL row stays hidden until the rate resolves:\n```ts\nif (!estimatedSize || !takeProfitPrice || !pnlEntryPrice || closingFeeRate === undefined) {\n  return null;\n}\n```\nSame applies to the SL memo at line 316. This echoes @geositta's earlier review comment.",
+      "severity": "suggestion"
+    },
+    {
+      "path": "ui/components/app/perps/update-tpsl/update-tpsl-modal-content.tsx",
+      "line": 216,
+      "body": "Same `closingFeeRate ?? 0` concern as in AutoCloseSection — PnL row visible with zero fees while the hook loads. Add `closingFeeRate === undefined` to the guard here and at line 230 (SL memo).",
+      "severity": "suggestion"
+    }
+  ]
+}
