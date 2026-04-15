@@ -1,0 +1,80 @@
+flowchart TD
+  %% PR 41726 review validation
+  __entry__(["ENTRY"]) --> node_gate_dismiss_stale_tutorial_before_review
+  node_gate_dismiss_stale_tutorial_before_review["gate-dismiss-stale-tutorial-before-review<br/>eval_sync"]
+  node_gate_wait_stale_tutorial_dismissed_before_review["gate-wait-stale-tutorial-dismissed-before-review<br/>wait_for"]
+  node_ac1_open_order_entry["ac1-open-order-entry<br/>navigate"]
+  node_ac1_wait_order_entry["ac1-wait-order-entry<br/>wait_for"]
+  node_ac1_assert_order_entry["ac1-assert-order-entry<br/>eval_sync"]
+  node_ac1_screenshot_order_entry["ac1-screenshot-order-entry<br/>screenshot"]
+  node_ac2_assert_leverage_slider["ac2-assert-leverage-slider<br/>eval_sync"]
+  node_ac2_screenshot_leverage_slider["ac2-screenshot-leverage-slider<br/>screenshot"]
+  node_ac3_assert_direction_tabs["ac3-assert-direction-tabs<br/>eval_sync"]
+  node_ac3_screenshot_direction_tabs["ac3-screenshot-direction-tabs<br/>screenshot"]
+  node_gate_nav_market_detail[["gate-nav-market-detail<br/>perps/navigate-to-market-detail"]]
+  node_gate_scroll_stats["gate-scroll-stats<br/>eval_sync"]
+  node_ac4_assert_market_detail_tooltips["ac4-assert-market-detail-tooltips<br/>eval_sync"]
+  node_ac4_screenshot_market_detail_tooltips["ac4-screenshot-market-detail-tooltips<br/>screenshot"]
+  node_gate_scroll_recent_activity["gate-scroll-recent-activity<br/>eval_sync"]
+  node_ac5_assert_recent_activity["ac5-assert-recent-activity<br/>eval_sync"]
+  node_ac5_screenshot_recent_activity["ac5-screenshot-recent-activity<br/>screenshot"]
+  node_gate_nav_perps_home[["gate-nav-perps-home<br/>perps/navigate-perps-tab"]]
+  node_gate_dismiss_tutorial_before_balance["gate-dismiss-tutorial-before-balance<br/>eval_sync"]
+  node_gate_wait_tutorial_dismissed_before_balance["gate-wait-tutorial-dismissed-before-balance<br/>wait_for"]
+  node_gate_open_balance_dropdown["gate-open-balance-dropdown<br/>press"]
+  node_gate_wait_balance_dropdown["gate-wait-balance-dropdown<br/>wait_for"]
+  node_ac6_assert_balance_dropdown["ac6-assert-balance-dropdown<br/>eval_sync"]
+  node_ac6_screenshot_balance_dropdown["ac6-screenshot-balance-dropdown<br/>screenshot"]
+  node_gate_close_balance_dropdown["gate-close-balance-dropdown<br/>press"]
+  node_gate_scroll_explore_markets["gate-scroll-explore-markets<br/>eval_sync"]
+  node_ac7_assert_explore_markets["ac7-assert-explore-markets<br/>eval_sync"]
+  node_ac7_screenshot_explore_markets["ac7-screenshot-explore-markets<br/>screenshot"]
+  node_gate_nav_market_detail_again[["gate-nav-market-detail-again<br/>perps/navigate-to-market-detail"]]
+  node_gate_scroll_learn_basics["gate-scroll-learn-basics<br/>eval_sync"]
+  node_gate_open_tutorial["gate-open-tutorial<br/>press"]
+  node_ac8_wait_tutorial["ac8-wait-tutorial<br/>wait_for"]
+  node_ac8_assert_tutorial_em_dashes["ac8-assert-tutorial-em-dashes<br/>eval_sync"]
+  node_ac8_screenshot_tutorial["ac8-screenshot-tutorial<br/>screenshot"]
+  node_gate_close_tutorial["gate-close-tutorial<br/>press"]
+  node_gate_nav_perps_home_again[["gate-nav-perps-home-again<br/>perps/navigate-perps-tab"]]
+  node_ac9_assert_total_balance_copy["ac9-assert-total-balance-copy<br/>eval_sync"]
+  node_ac9_screenshot_total_balance_copy["ac9-screenshot-total-balance-copy<br/>screenshot"]
+  node_done(["done<br/>PASS"])
+  node_gate_dismiss_stale_tutorial_before_review --> node_gate_wait_stale_tutorial_dismissed_before_review
+  node_gate_wait_stale_tutorial_dismissed_before_review --> node_ac1_open_order_entry
+  node_ac1_open_order_entry --> node_ac1_wait_order_entry
+  node_ac1_wait_order_entry --> node_ac1_assert_order_entry
+  node_ac1_assert_order_entry --> node_ac1_screenshot_order_entry
+  node_ac1_screenshot_order_entry --> node_ac2_assert_leverage_slider
+  node_ac2_assert_leverage_slider --> node_ac2_screenshot_leverage_slider
+  node_ac2_screenshot_leverage_slider --> node_ac3_assert_direction_tabs
+  node_ac3_assert_direction_tabs --> node_ac3_screenshot_direction_tabs
+  node_ac3_screenshot_direction_tabs --> node_gate_nav_market_detail
+  node_gate_nav_market_detail --> node_gate_scroll_stats
+  node_gate_scroll_stats --> node_ac4_assert_market_detail_tooltips
+  node_ac4_assert_market_detail_tooltips --> node_ac4_screenshot_market_detail_tooltips
+  node_ac4_screenshot_market_detail_tooltips --> node_gate_scroll_recent_activity
+  node_gate_scroll_recent_activity --> node_ac5_assert_recent_activity
+  node_ac5_assert_recent_activity --> node_ac5_screenshot_recent_activity
+  node_ac5_screenshot_recent_activity --> node_gate_nav_perps_home
+  node_gate_nav_perps_home --> node_gate_dismiss_tutorial_before_balance
+  node_gate_dismiss_tutorial_before_balance --> node_gate_wait_tutorial_dismissed_before_balance
+  node_gate_wait_tutorial_dismissed_before_balance --> node_gate_open_balance_dropdown
+  node_gate_open_balance_dropdown --> node_gate_wait_balance_dropdown
+  node_gate_wait_balance_dropdown --> node_ac6_assert_balance_dropdown
+  node_ac6_assert_balance_dropdown --> node_ac6_screenshot_balance_dropdown
+  node_ac6_screenshot_balance_dropdown --> node_gate_close_balance_dropdown
+  node_gate_close_balance_dropdown --> node_gate_scroll_explore_markets
+  node_gate_scroll_explore_markets --> node_ac7_assert_explore_markets
+  node_ac7_assert_explore_markets --> node_ac7_screenshot_explore_markets
+  node_ac7_screenshot_explore_markets --> node_gate_nav_market_detail_again
+  node_gate_nav_market_detail_again --> node_gate_scroll_learn_basics
+  node_gate_scroll_learn_basics --> node_gate_open_tutorial
+  node_gate_open_tutorial --> node_ac8_wait_tutorial
+  node_ac8_wait_tutorial --> node_ac8_assert_tutorial_em_dashes
+  node_ac8_assert_tutorial_em_dashes --> node_ac8_screenshot_tutorial
+  node_ac8_screenshot_tutorial --> node_gate_close_tutorial
+  node_gate_close_tutorial --> node_gate_nav_perps_home_again
+  node_gate_nav_perps_home_again --> node_ac9_assert_total_balance_copy
+  node_ac9_assert_total_balance_copy --> node_ac9_screenshot_total_balance_copy
+  node_ac9_screenshot_total_balance_copy --> node_done

@@ -1,0 +1,19 @@
+{
+  "title": "PR 41726 baseline capture",
+  "validate": {
+    "workflow": {
+      "entry": "gate-capture",
+      "nodes": {
+        "gate-capture": {
+          "action": "screenshot",
+          "filename": "baseline-before-validation.png",
+          "next": "done"
+        },
+        "done": {
+          "action": "end",
+          "status": "pass"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "description": "",
+  "hooks": {
+    "pre_conditions": [],
+    "setup": [],
+    "teardown": []
+  },
+  "inputs": {},
+  "sourcePath": "",
+  "title": "PR 41726 preflight probe",
+  "workflow": {
+    "entry": "setup-prime",
+    "nodes": {
+      "setup-prime": {
+        "action": "call",
+        "ref": "perps/prime-perps-state",
+        "next": "probe-accounts",
+        "id": "setup-prime"
+      },
+      "probe-accounts": {
+        "action": "eval_ref",
+        "ref": "accounts",
+        "save_as": "accounts",
+        "next": "probe-balance",
+        "id": "probe-accounts"
+      },
+      "probe-balance": {
+        "action": "eval_ref",
+        "ref": "perps-balance",
+        "save_as": "balance",
+        "next": "probe-positions",
+        "id": "probe-balance"
+      },
+      "probe-positions": {
+        "action": "eval_ref",
+        "ref": "perps-positions",
+        "save_as": "positions",
+        "next": "probe-state",
+        "id": "probe-positions"
+      },
+      "probe-state": {
+        "action": "eval_ref",
+        "ref": "perps-state",
+        "save_as": "state",
+        "next": "done",
+        "id": "probe-state"
+      },
+      "done": {
+        "action": "end",
+        "status": "pass",
+        "id": "done"
+      }
+    }
+  }
+}

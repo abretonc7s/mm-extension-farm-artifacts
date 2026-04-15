@@ -1,0 +1,330 @@
+{
+  "description": "",
+  "hooks": {
+    "pre_conditions": [
+      "wallet.unlocked",
+      "perps.feature_enabled"
+    ],
+    "setup": [
+      {
+        "id": "setup-prime-perps",
+        "action": "call",
+        "ref": "perps/prime-perps-state"
+      },
+      {
+        "id": "setup-ensure-position",
+        "action": "call",
+        "ref": "perps/open-long-position",
+        "params": {
+          "symbol": "ETH",
+          "side": "long",
+          "amount": "10"
+        }
+      }
+    ],
+    "teardown": []
+  },
+  "inputs": {},
+  "sourcePath": "",
+  "title": "PR 41726 review validation",
+  "workflow": {
+    "entry": "gate-dismiss-stale-tutorial-before-review",
+    "nodes": {
+      "gate-dismiss-stale-tutorial-before-review": {
+        "action": "eval_sync",
+        "expression": "(function(){const skip=document.querySelector('[data-testid=\"perps-tutorial-skip-button\"]');const step=document.querySelector('[data-testid=\"perps-tutorial-what-are-perps\"]');const visible=Boolean(step)&&getComputedStyle(step).display!=='none'&&step.getBoundingClientRect().height>0;if(skip&&visible){skip.click();return JSON.stringify({dismissed:true});}return JSON.stringify({dismissed:false});})()",
+        "next": "gate-wait-stale-tutorial-dismissed-before-review",
+        "id": "gate-dismiss-stale-tutorial-before-review"
+      },
+      "gate-wait-stale-tutorial-dismissed-before-review": {
+        "action": "wait_for",
+        "expression": "(function(){const step=document.querySelector('[data-testid=\"perps-tutorial-what-are-perps\"]');return !step||getComputedStyle(step).display==='none'||step.getBoundingClientRect().height===0;})()",
+        "timeout_ms": 5000,
+        "next": "ac1-open-order-entry",
+        "id": "gate-wait-stale-tutorial-dismissed-before-review"
+      },
+      "ac1-open-order-entry": {
+        "action": "navigate",
+        "target": "PerpsOrderEntry",
+        "params": {
+          "market": {
+            "symbol": "ETH"
+          },
+          "direction": "long"
+        },
+        "next": "ac1-wait-order-entry",
+        "id": "ac1-open-order-entry"
+      },
+      "ac1-wait-order-entry": {
+        "action": "wait_for",
+        "test_id": "perps-order-entry-page",
+        "timeout_ms": 10000,
+        "next": "ac1-assert-order-entry",
+        "id": "ac1-wait-order-entry"
+      },
+      "ac1-assert-order-entry": {
+        "action": "eval_sync",
+        "expression": "(function(){const all=[...document.querySelectorAll('*')];const available=all.find((el)=>el.textContent?.trim()==='Available to trade');const size=all.find((el)=>el.textContent?.trim()==='Size');const availableRow=available?.parentElement;const balanceText=availableRow?[...availableRow.querySelectorAll('*')].map((el)=>el.textContent?.trim()).find((text)=>Boolean(text)&&/USDC$/.test(text)&&!text.includes('Available to trade')):null;const addFunds=document.querySelector('[data-testid=\"amount-input-add-funds\"]');const probe=document.createElement('div');probe.style.color='var(--color-icon-alternative)';document.body.appendChild(probe);const alternativeColor=getComputedStyle(probe).color;probe.style.color='var(--color-icon-muted)';const mutedColor=getComputedStyle(probe).color;probe.remove();const addFundsColor=addFunds?getComputedStyle(addFunds).color:null;return JSON.stringify({ok:Boolean(available&&size&&balanceText&&addFunds)&&available.getBoundingClientRect().top<size.getBoundingClientRect().top&&!balanceText.includes('$')&&addFundsColor===alternativeColor&&addFundsColor!==mutedColor,balanceText,addFundsColor,alternativeColor,mutedColor,availableTop:available?.getBoundingClientRect().top??null,sizeTop:size?.getBoundingClientRect().top??null})})()",
+        "assert": {
+          "operator": "eq",
+          "field": "ok",
+          "value": true
+        },
+        "next": "ac1-screenshot-order-entry",
+        "id": "ac1-assert-order-entry"
+      },
+      "ac1-screenshot-order-entry": {
+        "action": "screenshot",
+        "filename": "evidence-ac1-order-entry-available-to-trade.png",
+        "next": "ac2-assert-leverage-slider",
+        "id": "ac1-screenshot-order-entry"
+      },
+      "ac2-assert-leverage-slider": {
+        "action": "eval_sync",
+        "expression": "(function(){const sliderHost=document.querySelector('[data-testid=\"leverage-slider\"]');const sliderRoot=sliderHost?.querySelector('.MuiSlider-root');const marks=sliderHost?[...sliderHost.querySelectorAll('.MuiSlider-mark')]:[];const thumb=sliderHost?.querySelector('.MuiSlider-thumb');const labels=[...document.querySelectorAll('*')].filter((el)=>/^\\d+x$/.test(el.textContent?.trim()||''));const sliderBottom=sliderRoot?.getBoundingClientRect().bottom??0;const labelsBelow=labels.filter((el)=>el.getBoundingClientRect().top>=sliderBottom-1);const thumbWidth=thumb?.getBoundingClientRect().width??null;return JSON.stringify({ok:Boolean(sliderHost&&sliderRoot&&thumbWidth!==null)&&marks.length>0&&thumbWidth<=16.5&&labelsBelow.length>=2,marks:marks.length,thumbWidth,labelsBelow:labelsBelow.map((el)=>el.textContent?.trim())})})()",
+        "assert": {
+          "operator": "eq",
+          "field": "ok",
+          "value": true
+        },
+        "next": "ac2-screenshot-leverage-slider",
+        "id": "ac2-assert-leverage-slider"
+      },
+      "ac2-screenshot-leverage-slider": {
+        "action": "screenshot",
+        "filename": "evidence-ac2-leverage-slider.png",
+        "next": "ac3-assert-direction-tabs",
+        "id": "ac2-screenshot-leverage-slider"
+      },
+      "ac3-assert-direction-tabs": {
+        "action": "eval_sync",
+        "expression": "(function(){const container=document.querySelector('[data-testid=\"direction-tabs\"]');const longTab=document.querySelector('[data-testid=\"direction-tab-long\"]');const shortTab=document.querySelector('[data-testid=\"direction-tab-short\"]');const containerWidth=container?.getBoundingClientRect().width??0;const longWidth=longTab?.getBoundingClientRect().width??0;const shortWidth=shortTab?.getBoundingClientRect().width??0;const remaining=containerWidth-longWidth-shortWidth;return JSON.stringify({ok:Boolean(container&&longTab&&shortTab)&&Math.abs(longWidth-shortWidth)<=1&&remaining<=10,containerWidth,longWidth,shortWidth,remaining})})()",
+        "assert": {
+          "operator": "eq",
+          "field": "ok",
+          "value": true
+        },
+        "next": "ac3-screenshot-direction-tabs",
+        "id": "ac3-assert-direction-tabs"
+      },
+      "ac3-screenshot-direction-tabs": {
+        "action": "screenshot",
+        "filename": "evidence-ac3-direction-tabs.png",
+        "next": "gate-nav-market-detail",
+        "id": "ac3-screenshot-direction-tabs"
+      },
+      "gate-nav-market-detail": {
+        "action": "call",
+        "ref": "perps/navigate-to-market-detail",
+        "params": {
+          "symbol": "ETH"
+        },
+        "next": "gate-scroll-stats",
+        "id": "gate-nav-market-detail"
+      },
+      "gate-scroll-stats": {
+        "action": "eval_sync",
+        "expression": "(function(){window.scrollTo(0, 1350);return JSON.stringify({ok:true,scrollY:window.scrollY})})()",
+        "next": "ac4-assert-market-detail-tooltips",
+        "id": "gate-scroll-stats"
+      },
+      "ac4-assert-market-detail-tooltips": {
+        "action": "eval_sync",
+        "expression": "(function(){const root=document.querySelector('[data-testid=\"perps-market-detail-page\"]');const labels=['Open Interest','Funding Rate','Oracle Price'];const labelNodes=labels.map((label)=>[...root.querySelectorAll('*')].find((el)=>el.textContent?.trim()===label));const iconCount=labelNodes.filter((node)=>Boolean(node?.parentElement?.querySelector('svg'))).length;const legacyInfoTooltipCount=root.querySelectorAll('[data-testid=\"info-tooltip\"]').length;return JSON.stringify({ok:iconCount===3&&legacyInfoTooltipCount===0,iconCount,legacyInfoTooltipCount})})()",
+        "assert": {
+          "operator": "eq",
+          "field": "ok",
+          "value": true
+        },
+        "next": "ac4-screenshot-market-detail-tooltips",
+        "id": "ac4-assert-market-detail-tooltips"
+      },
+      "ac4-screenshot-market-detail-tooltips": {
+        "action": "screenshot",
+        "filename": "evidence-ac4-market-detail-tooltips.png",
+        "next": "gate-scroll-recent-activity",
+        "id": "ac4-screenshot-market-detail-tooltips"
+      },
+      "gate-scroll-recent-activity": {
+        "action": "eval_sync",
+        "expression": "(function(){window.scrollTo(0, 1750);return JSON.stringify({ok:true,scrollY:window.scrollY})})()",
+        "next": "ac5-assert-recent-activity",
+        "id": "gate-scroll-recent-activity"
+      },
+      "ac5-assert-recent-activity": {
+        "action": "eval_sync",
+        "expression": "(function(){const cards=[...document.querySelectorAll('[data-testid^=\"transaction-card-\"]')];const borders=cards.slice(0,3).map((card)=>getComputedStyle(card).borderTopWidth);return JSON.stringify({ok:cards.length>=2&&borders[0]==='0px'&&borders[1]!=='0px',count:cards.length,borders})})()",
+        "assert": {
+          "operator": "eq",
+          "field": "ok",
+          "value": true
+        },
+        "next": "ac5-screenshot-recent-activity",
+        "id": "ac5-assert-recent-activity"
+      },
+      "ac5-screenshot-recent-activity": {
+        "action": "screenshot",
+        "filename": "evidence-ac5-recent-activity.png",
+        "next": "gate-nav-perps-home",
+        "id": "ac5-screenshot-recent-activity"
+      },
+      "gate-nav-perps-home": {
+        "action": "call",
+        "ref": "perps/navigate-perps-tab",
+        "next": "gate-dismiss-tutorial-before-balance",
+        "id": "gate-nav-perps-home"
+      },
+      "gate-dismiss-tutorial-before-balance": {
+        "action": "eval_sync",
+        "expression": "(function(){const skip=document.querySelector('[data-testid=\"perps-tutorial-skip-button\"]');const step=document.querySelector('[data-testid=\"perps-tutorial-what-are-perps\"]');const visible=Boolean(step)&&getComputedStyle(step).display!=='none'&&step.getBoundingClientRect().height>0;if(skip&&visible){skip.click();return JSON.stringify({dismissed:true});}return JSON.stringify({dismissed:false});})()",
+        "next": "gate-wait-tutorial-dismissed-before-balance",
+        "id": "gate-dismiss-tutorial-before-balance"
+      },
+      "gate-wait-tutorial-dismissed-before-balance": {
+        "action": "wait_for",
+        "expression": "(function(){const step=document.querySelector('[data-testid=\"perps-tutorial-what-are-perps\"]');return !step||getComputedStyle(step).display==='none'||step.getBoundingClientRect().height===0;})()",
+        "timeout_ms": 5000,
+        "next": "gate-open-balance-dropdown",
+        "id": "gate-wait-tutorial-dismissed-before-balance"
+      },
+      "gate-open-balance-dropdown": {
+        "action": "press",
+        "test_id": "perps-balance-dropdown-balance",
+        "next": "gate-wait-balance-dropdown",
+        "id": "gate-open-balance-dropdown"
+      },
+      "gate-wait-balance-dropdown": {
+        "action": "wait_for",
+        "test_id": "perps-balance-dropdown-panel",
+        "timeout_ms": 5000,
+        "next": "ac6-assert-balance-dropdown",
+        "id": "gate-wait-balance-dropdown"
+      },
+      "ac6-assert-balance-dropdown": {
+        "action": "eval_sync",
+        "expression": "(function(){const balanceRow=document.querySelector('[data-testid=\"perps-balance-dropdown-balance\"]');const pnlRow=document.querySelector('[data-testid=\"perps-balance-dropdown-pnl\"]');const chevron=document.querySelector('[data-testid=\"perps-balance-dropdown-chevron\"]');const chevronHeight=chevron?.getBoundingClientRect().height??null;const rowGap=balanceRow&&pnlRow?Math.abs(balanceRow.getBoundingClientRect().bottom-pnlRow.getBoundingClientRect().top):null;return JSON.stringify({ok:Boolean(balanceRow&&pnlRow&&chevronHeight!==null&&rowGap!==null)&&chevronHeight<=12.5&&rowGap<=1.1,chevronHeight,rowGap})})()",
+        "assert": {
+          "operator": "eq",
+          "field": "ok",
+          "value": true
+        },
+        "next": "ac6-screenshot-balance-dropdown",
+        "id": "ac6-assert-balance-dropdown"
+      },
+      "ac6-screenshot-balance-dropdown": {
+        "action": "screenshot",
+        "filename": "evidence-ac6-balance-dropdown.png",
+        "next": "gate-close-balance-dropdown",
+        "id": "ac6-screenshot-balance-dropdown"
+      },
+      "gate-close-balance-dropdown": {
+        "action": "press",
+        "test_id": "perps-balance-dropdown-balance",
+        "next": "gate-scroll-explore-markets",
+        "id": "gate-close-balance-dropdown"
+      },
+      "gate-scroll-explore-markets": {
+        "action": "eval_sync",
+        "expression": "(function(){const row=document.querySelector('[data-testid=\"perps-explore-markets-row\"]');row?.scrollIntoView({block:'center'});return JSON.stringify({ok:Boolean(row)})})()",
+        "next": "ac7-assert-explore-markets",
+        "id": "gate-scroll-explore-markets"
+      },
+      "ac7-assert-explore-markets": {
+        "action": "eval_sync",
+        "expression": "(function(){const row=document.querySelector('[data-testid=\"perps-explore-markets-row\"]');const styles=row?getComputedStyle(row):null;return JSON.stringify({ok:Boolean(styles)&&styles.borderTopLeftRadius==='0px'&&styles.borderTopRightRadius==='0px'&&styles.borderBottomLeftRadius==='0px'&&styles.borderBottomRightRadius==='0px',radii:styles?[styles.borderTopLeftRadius,styles.borderTopRightRadius,styles.borderBottomLeftRadius,styles.borderBottomRightRadius]:[]})})()",
+        "assert": {
+          "operator": "eq",
+          "field": "ok",
+          "value": true
+        },
+        "next": "ac7-screenshot-explore-markets",
+        "id": "ac7-assert-explore-markets"
+      },
+      "ac7-screenshot-explore-markets": {
+        "action": "screenshot",
+        "filename": "evidence-ac7-explore-markets.png",
+        "next": "gate-nav-market-detail-again",
+        "id": "ac7-screenshot-explore-markets"
+      },
+      "gate-nav-market-detail-again": {
+        "action": "call",
+        "ref": "perps/navigate-to-market-detail",
+        "params": {
+          "symbol": "ETH"
+        },
+        "next": "gate-scroll-learn-basics",
+        "id": "gate-nav-market-detail-again"
+      },
+      "gate-scroll-learn-basics": {
+        "action": "eval_sync",
+        "expression": "(function(){const learn=document.querySelector('[data-testid=\"perps-learn-basics\"]');learn?.scrollIntoView({block:'center'});return JSON.stringify({ok:Boolean(learn)})})()",
+        "next": "gate-open-tutorial",
+        "id": "gate-scroll-learn-basics"
+      },
+      "gate-open-tutorial": {
+        "action": "press",
+        "test_id": "perps-learn-basics",
+        "next": "ac8-wait-tutorial",
+        "id": "gate-open-tutorial"
+      },
+      "ac8-wait-tutorial": {
+        "action": "wait_for",
+        "test_id": "perps-tutorial-what-are-perps",
+        "timeout_ms": 5000,
+        "next": "ac8-assert-tutorial-em-dashes",
+        "id": "ac8-wait-tutorial"
+      },
+      "ac8-assert-tutorial-em-dashes": {
+        "action": "eval_sync",
+        "expression": "(function(){const step=document.querySelector('[data-testid=\"perps-tutorial-what-are-perps\"]');const text=step?.textContent||'';return JSON.stringify({ok:text.includes(' — aka perps — '),text})})()",
+        "assert": {
+          "operator": "eq",
+          "field": "ok",
+          "value": true
+        },
+        "next": "ac8-screenshot-tutorial",
+        "id": "ac8-assert-tutorial-em-dashes"
+      },
+      "ac8-screenshot-tutorial": {
+        "action": "screenshot",
+        "filename": "evidence-ac8-tutorial-em-dashes.png",
+        "next": "gate-close-tutorial",
+        "id": "ac8-screenshot-tutorial"
+      },
+      "gate-close-tutorial": {
+        "action": "press",
+        "test_id": "perps-tutorial-skip-button",
+        "next": "gate-nav-perps-home-again",
+        "id": "gate-close-tutorial"
+      },
+      "gate-nav-perps-home-again": {
+        "action": "call",
+        "ref": "perps/navigate-perps-tab",
+        "next": "ac9-assert-total-balance-copy",
+        "id": "gate-nav-perps-home-again"
+      },
+      "ac9-assert-total-balance-copy": {
+        "action": "eval_sync",
+        "expression": "(function(){const row=document.querySelector('[data-testid=\"perps-balance-dropdown-balance\"]');const label=[...row.querySelectorAll('*')].map((el)=>el.textContent?.trim()).find((text)=>text==='Total balance'||text==='Total Balance')||null;return JSON.stringify({ok:label==='Total balance',label})})()",
+        "assert": {
+          "operator": "eq",
+          "field": "ok",
+          "value": true
+        },
+        "next": "ac9-screenshot-total-balance-copy",
+        "id": "ac9-assert-total-balance-copy"
+      },
+      "ac9-screenshot-total-balance-copy": {
+        "action": "screenshot",
+        "filename": "evidence-ac9-total-balance-copy.png",
+        "next": "done",
+        "id": "ac9-screenshot-total-balance-copy"
+      },
+      "done": {
+        "action": "end",
+        "status": "pass",
+        "id": "done"
+      }
+    }
+  }
+}

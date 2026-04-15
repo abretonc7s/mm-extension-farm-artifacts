@@ -1,0 +1,518 @@
+[
+  {
+    "id": "gate-dismiss-stale-tutorial-before-review",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"dismissed\":false}",
+    "durationMs": 1
+  },
+  {
+    "id": "gate-wait-stale-tutorial-dismissed-before-review",
+    "action": "wait_for",
+    "ok": true,
+    "raw": true,
+    "durationMs": 1
+  },
+  {
+    "id": "ac1-open-order-entry",
+    "action": "navigate",
+    "ok": true,
+    "raw": {
+      "navigated": true,
+      "hash": "#/perps/trade/ETH?direction=long&mode=new"
+    },
+    "durationMs": 4
+  },
+  {
+    "id": "ac1-wait-order-entry",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-order-entry-page"
+    },
+    "durationMs": 37
+  },
+  {
+    "id": "ac1-assert-order-entry",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"ok\":true,\"balanceText\":\"25.30 USDC\",\"addFundsColor\":\"rgb(163, 164, 167)\",\"alternativeColor\":\"rgb(163, 164, 167)\",\"mutedColor\":\"rgb(71, 72, 74)\",\"availableTop\":174,\"sizeTop\":208}",
+    "durationMs": 1
+  },
+  {
+    "id": "ac1-screenshot-order-entry",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "/Users/deeeed/dev/metamask/metamask-extension-1/temp/agentic/recipes/test-artifacts/screenshots/evidence-ac1-order-entry-available-to-trade.png-1776240121866.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 116
+  },
+  {
+    "id": "ac2-assert-leverage-slider",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"ok\":true,\"marks\":5,\"thumbWidth\":16,\"labelsBelow\":[\"1x\",\"25x\"]}",
+    "durationMs": 1
+  },
+  {
+    "id": "ac2-screenshot-leverage-slider",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "/Users/deeeed/dev/metamask/metamask-extension-1/temp/agentic/recipes/test-artifacts/screenshots/evidence-ac2-leverage-slider.png-1776240121986.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 97
+  },
+  {
+    "id": "ac3-assert-direction-tabs",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"ok\":true,\"containerWidth\":468,\"longWidth\":229,\"shortWidth\":229,\"remaining\":10}",
+    "durationMs": 2
+  },
+  {
+    "id": "ac3-screenshot-direction-tabs",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "/Users/deeeed/dev/metamask/metamask-extension-1/temp/agentic/recipes/test-artifacts/screenshots/evidence-ac3-direction-tabs.png-1776240122088.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 100
+  },
+  {
+    "id": "gate-nav-market-detail",
+    "action": "call",
+    "ok": true,
+    "raw": {
+      "passed": 2,
+      "failed": 0,
+      "trace": [
+        {
+          "id": "nav-detail",
+          "action": "navigate",
+          "ok": true,
+          "raw": {
+            "navigated": true,
+            "hash": "#/perps/market/ETH"
+          },
+          "durationMs": 5
+        },
+        {
+          "id": "wait-detail",
+          "action": "wait_for",
+          "ok": true,
+          "raw": {
+            "found": true,
+            "target": "testId:perps-market-detail-page"
+          },
+          "durationMs": 90
+        },
+        {
+          "id": "done",
+          "action": "end",
+          "status": "pass",
+          "durationMs": 0
+        }
+      ],
+      "vars": {}
+    },
+    "durationMs": 121
+  },
+  {
+    "id": "gate-scroll-stats",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"ok\":true,\"scrollY\":0}",
+    "durationMs": 1
+  },
+  {
+    "id": "ac4-assert-market-detail-tooltips",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"ok\":true,\"iconCount\":3,\"legacyInfoTooltipCount\":0}",
+    "durationMs": 1
+  },
+  {
+    "id": "ac4-screenshot-market-detail-tooltips",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "/Users/deeeed/dev/metamask/metamask-extension-1/temp/agentic/recipes/test-artifacts/screenshots/evidence-ac4-market-detail-tooltips.png-1776240122315.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 81
+  },
+  {
+    "id": "gate-scroll-recent-activity",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"ok\":true,\"scrollY\":0}",
+    "durationMs": 1
+  },
+  {
+    "id": "ac5-assert-recent-activity",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"ok\":true,\"count\":3,\"borders\":[\"0px\",\"1px\",\"1px\"]}",
+    "durationMs": 1
+  },
+  {
+    "id": "ac5-screenshot-recent-activity",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "/Users/deeeed/dev/metamask/metamask-extension-1/temp/agentic/recipes/test-artifacts/screenshots/evidence-ac5-recent-activity.png-1776240122400.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 104
+  },
+  {
+    "id": "gate-nav-perps-home",
+    "action": "call",
+    "ok": true,
+    "raw": {
+      "passed": 4,
+      "failed": 0,
+      "trace": [
+        {
+          "id": "nav-perps",
+          "action": "navigate",
+          "ok": true,
+          "raw": {
+            "navigated": true,
+            "hash": "#/?tab=perps"
+          },
+          "durationMs": 4
+        },
+        {
+          "id": "check-tutorial",
+          "action": "eval_sync",
+          "ok": true,
+          "raw": "{\"visible\":false}",
+          "durationMs": 4
+        },
+        {
+          "id": "tutorial-switch",
+          "action": "switch",
+          "next": "wait-perps",
+          "durationMs": 0
+        },
+        {
+          "id": "wait-perps",
+          "action": "wait_for",
+          "ok": true,
+          "raw": {
+            "found": true,
+            "target": "testId:perps-balance-dropdown"
+          },
+          "durationMs": 81
+        },
+        {
+          "id": "screenshot-perps",
+          "action": "screenshot",
+          "ok": true,
+          "raw": {
+            "path": "/Users/deeeed/dev/metamask/metamask-extension-1/temp/agentic/recipes/test-artifacts/screenshots/perps-tab-1776240122644.png",
+            "width": 500,
+            "height": 713
+          },
+          "durationMs": 106
+        },
+        {
+          "id": "done",
+          "action": "end",
+          "status": "pass",
+          "durationMs": 0
+        }
+      ],
+      "vars": {
+        "tutorial_state": {
+          "visible": false
+        }
+      }
+    },
+    "durationMs": 246
+  },
+  {
+    "id": "gate-dismiss-tutorial-before-balance",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"dismissed\":false}",
+    "durationMs": 2
+  },
+  {
+    "id": "gate-wait-tutorial-dismissed-before-balance",
+    "action": "wait_for",
+    "ok": true,
+    "raw": true,
+    "durationMs": 1
+  },
+  {
+    "id": "gate-open-balance-dropdown",
+    "action": "press",
+    "ok": true,
+    "raw": {
+      "clicked": true,
+      "target": "testId:perps-balance-dropdown-balance"
+    },
+    "durationMs": 208
+  },
+  {
+    "id": "gate-wait-balance-dropdown",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-balance-dropdown-panel"
+    },
+    "durationMs": 85
+  },
+  {
+    "id": "ac6-assert-balance-dropdown",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"ok\":true,\"chevronHeight\":12,\"rowGap\":1}",
+    "durationMs": 1
+  },
+  {
+    "id": "ac6-screenshot-balance-dropdown",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "/Users/deeeed/dev/metamask/metamask-extension-1/temp/agentic/recipes/test-artifacts/screenshots/evidence-ac6-balance-dropdown.png-1776240123063.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 118
+  },
+  {
+    "id": "gate-close-balance-dropdown",
+    "action": "press",
+    "ok": true,
+    "raw": {
+      "clicked": true,
+      "target": "testId:perps-balance-dropdown-balance"
+    },
+    "durationMs": 175
+  },
+  {
+    "id": "gate-scroll-explore-markets",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"ok\":true}",
+    "durationMs": 0
+  },
+  {
+    "id": "ac7-assert-explore-markets",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"ok\":true,\"radii\":[\"0px\",\"0px\",\"0px\",\"0px\"]}",
+    "durationMs": 1
+  },
+  {
+    "id": "ac7-screenshot-explore-markets",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "/Users/deeeed/dev/metamask/metamask-extension-1/temp/agentic/recipes/test-artifacts/screenshots/evidence-ac7-explore-markets.png-1776240123363.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 91
+  },
+  {
+    "id": "gate-nav-market-detail-again",
+    "action": "call",
+    "ok": true,
+    "raw": {
+      "passed": 2,
+      "failed": 0,
+      "trace": [
+        {
+          "id": "nav-detail",
+          "action": "navigate",
+          "ok": true,
+          "raw": {
+            "navigated": true,
+            "hash": "#/perps/market/ETH"
+          },
+          "durationMs": 6
+        },
+        {
+          "id": "wait-detail",
+          "action": "wait_for",
+          "ok": true,
+          "raw": {
+            "found": true,
+            "target": "testId:perps-market-detail-page"
+          },
+          "durationMs": 80
+        },
+        {
+          "id": "done",
+          "action": "end",
+          "status": "pass",
+          "durationMs": 0
+        }
+      ],
+      "vars": {}
+    },
+    "durationMs": 126
+  },
+  {
+    "id": "gate-scroll-learn-basics",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"ok\":true}",
+    "durationMs": 1
+  },
+  {
+    "id": "gate-open-tutorial",
+    "action": "press",
+    "ok": true,
+    "raw": {
+      "clicked": true,
+      "target": "testId:perps-learn-basics"
+    },
+    "durationMs": 150
+  },
+  {
+    "id": "ac8-wait-tutorial",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-tutorial-what-are-perps"
+    },
+    "durationMs": 103
+  },
+  {
+    "id": "ac8-assert-tutorial-em-dashes",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"ok\":true,\"text\":\"What are perps?MetaMask now supports perpetual futures — aka perps — letting you trade on a token's price movement without buying it.Here's how it works.\"}",
+    "durationMs": 1
+  },
+  {
+    "id": "ac8-screenshot-tutorial",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "/Users/deeeed/dev/metamask/metamask-extension-1/temp/agentic/recipes/test-artifacts/screenshots/evidence-ac8-tutorial-em-dashes.png-1776240123845.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 107
+  },
+  {
+    "id": "gate-close-tutorial",
+    "action": "press",
+    "ok": true,
+    "raw": {
+      "clicked": true,
+      "target": "testId:perps-tutorial-skip-button"
+    },
+    "durationMs": 241
+  },
+  {
+    "id": "gate-nav-perps-home-again",
+    "action": "call",
+    "ok": true,
+    "raw": {
+      "passed": 4,
+      "failed": 0,
+      "trace": [
+        {
+          "id": "nav-perps",
+          "action": "navigate",
+          "ok": true,
+          "raw": {
+            "navigated": true,
+            "hash": "#/?tab=perps"
+          },
+          "durationMs": 13
+        },
+        {
+          "id": "check-tutorial",
+          "action": "eval_sync",
+          "ok": true,
+          "raw": "{\"visible\":false}",
+          "durationMs": 6
+        },
+        {
+          "id": "tutorial-switch",
+          "action": "switch",
+          "next": "wait-perps",
+          "durationMs": 0
+        },
+        {
+          "id": "wait-perps",
+          "action": "wait_for",
+          "ok": true,
+          "raw": {
+            "found": true,
+            "target": "testId:perps-balance-dropdown"
+          },
+          "durationMs": 122
+        },
+        {
+          "id": "screenshot-perps",
+          "action": "screenshot",
+          "ok": true,
+          "raw": {
+            "path": "/Users/deeeed/dev/metamask/metamask-extension-1/temp/agentic/recipes/test-artifacts/screenshots/perps-tab-1776240124385.png",
+            "width": 500,
+            "height": 713
+          },
+          "durationMs": 102
+        },
+        {
+          "id": "done",
+          "action": "end",
+          "status": "pass",
+          "durationMs": 0
+        }
+      ],
+      "vars": {
+        "tutorial_state": {
+          "visible": false
+        }
+      }
+    },
+    "durationMs": 292
+  },
+  {
+    "id": "ac9-assert-total-balance-copy",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"ok\":true,\"label\":\"Total balance\"}",
+    "durationMs": 0
+  },
+  {
+    "id": "ac9-screenshot-total-balance-copy",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "/Users/deeeed/dev/metamask/metamask-extension-1/temp/agentic/recipes/test-artifacts/screenshots/evidence-ac9-total-balance-copy.png-1776240124504.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 114
+  },
+  {
+    "id": "done",
+    "action": "end",
+    "status": "pass",
+    "durationMs": 0
+  }
+]
