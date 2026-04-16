@@ -1,0 +1,50 @@
+[
+  {
+    "id": "nav",
+    "action": "navigate",
+    "ok": true,
+    "raw": {
+      "navigated": true,
+      "hash": "#/perps/market/ETH"
+    },
+    "durationMs": 3
+  },
+  {
+    "id": "wait-detail",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-market-detail-page"
+    },
+    "durationMs": 91
+  },
+  {
+    "id": "check-position",
+    "action": "ext_check_dom",
+    "ok": true,
+    "raw": {
+      "visible": true
+    },
+    "durationMs": 1
+  },
+  {
+    "id": "branch",
+    "action": "switch",
+    "next": "extract",
+    "durationMs": 0
+  },
+  {
+    "id": "extract",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"symbol\":\"ETH\",\"screen\":\"position_detail\",\"size\":\"0.0047 ETH\",\"margin\":\"$3.70\",\"entry\":\"$2,360.4\",\"liquidationPrice\":\"$1,609.2\",\"funding\":\"$0.00\"}",
+    "durationMs": 1
+  },
+  {
+    "id": "done",
+    "action": "end",
+    "status": "pass",
+    "durationMs": 0
+  }
+]

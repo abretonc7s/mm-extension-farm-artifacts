@@ -1,0 +1,86 @@
+{
+  "description": "",
+  "hooks": {
+    "pre_conditions": [
+      "wallet.unlocked"
+    ],
+    "setup": [],
+    "teardown": []
+  },
+  "inputs": {},
+  "sourcePath": "",
+  "title": "debug order submit with logs",
+  "workflow": {
+    "entry": "nav",
+    "nodes": {
+      "nav": {
+        "action": "navigate",
+        "target": "PerpsMarketDetails",
+        "params": {
+          "market": {
+            "symbol": "ETH"
+          }
+        },
+        "next": "wait-detail",
+        "id": "nav"
+      },
+      "wait-detail": {
+        "action": "wait_for",
+        "test_id": "perps-market-detail-page",
+        "timeout_ms": 10000,
+        "next": "open",
+        "id": "wait-detail"
+      },
+      "open": {
+        "action": "press",
+        "test_id": "perps-long-cta-button",
+        "next": "wait-entry",
+        "id": "open"
+      },
+      "wait-entry": {
+        "action": "wait_for",
+        "test_id": "perps-order-entry-page",
+        "timeout_ms": 10000,
+        "next": "set",
+        "id": "wait-entry"
+      },
+      "set": {
+        "action": "set_input",
+        "test_id": "amount-input-field",
+        "value": "10",
+        "next": "submit",
+        "id": "set"
+      },
+      "submit": {
+        "action": "press",
+        "test_id": "submit-order-button",
+        "next": "logs",
+        "id": "submit"
+      },
+      "logs": {
+        "action": "log_watch",
+        "window_seconds": 8,
+        "watch_for": [
+          "perps",
+          "Order failed",
+          "ORDER",
+          "margin",
+          "error"
+        ],
+        "next": "shot",
+        "id": "logs"
+      },
+      "shot": {
+        "action": "screenshot",
+        "filename": "debug-order-log-after-submit",
+        "next": "done",
+        "id": "shot"
+      },
+      "done": {
+        "action": "end",
+        "status": "pass",
+        "id": "done"
+      }
+    }
+  }
+}

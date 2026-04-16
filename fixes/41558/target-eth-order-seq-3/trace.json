@@ -1,0 +1,101 @@
+[
+  {
+    "id": "nav",
+    "action": "navigate",
+    "ok": true,
+    "raw": {
+      "navigated": true,
+      "hash": "#/perps/market/ETH"
+    },
+    "durationMs": 4
+  },
+  {
+    "id": "wait-market",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-market-detail-page"
+    },
+    "durationMs": 69
+  },
+  {
+    "id": "check-position",
+    "action": "ext_check_dom",
+    "ok": true,
+    "raw": {
+      "visible": true
+    },
+    "durationMs": 1
+  },
+  {
+    "id": "branch",
+    "action": "switch",
+    "next": "open-modify-menu",
+    "durationMs": 0
+  },
+  {
+    "id": "open-modify-menu",
+    "action": "press",
+    "ok": true,
+    "raw": {
+      "clicked": true,
+      "target": "testId:perps-modify-cta-button"
+    },
+    "durationMs": 108
+  },
+  {
+    "id": "wait-modify-menu",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-modify-menu"
+    },
+    "durationMs": 107
+  },
+  {
+    "id": "open-add-exposure",
+    "action": "press",
+    "ok": true,
+    "raw": {
+      "clicked": true,
+      "target": "testId:perps-modify-menu-add-exposure"
+    },
+    "durationMs": 37
+  },
+  {
+    "id": "wait-order",
+    "action": "wait_for",
+    "ok": true,
+    "raw": "{\"ready\":true}",
+    "durationMs": 3
+  },
+  {
+    "id": "set-amount",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"filled\":true,\"value\":\"11\"}",
+    "durationMs": 3
+  },
+  {
+    "id": "wait-summary",
+    "action": "wait_for",
+    "ok": true,
+    "raw": "{\"ready\":true}",
+    "durationMs": 1516
+  },
+  {
+    "id": "extract",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"symbol\":\"ETH\",\"screen\":\"order_entry\",\"price\":\"$2,345.4\",\"change\":\"+0.71%\",\"margin\":\"$3.67\",\"liquidationPrice\":\"$1,595.5\",\"fees\":\"$0.02\"}",
+    "durationMs": 1
+  },
+  {
+    "id": "done",
+    "action": "end",
+    "status": "pass",
+    "durationMs": 0
+  }
+]

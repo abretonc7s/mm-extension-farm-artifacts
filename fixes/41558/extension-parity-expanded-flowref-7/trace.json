@@ -1,0 +1,125 @@
+[
+  {
+    "id": "btc-market",
+    "action": "call",
+    "ok": true,
+    "raw": {
+      "passed": 4,
+      "failed": 0,
+      "trace": [
+        {
+          "id": "nav",
+          "action": "navigate",
+          "ok": true,
+          "raw": {
+            "navigated": true,
+            "hash": "#/perps/market/BTC"
+          },
+          "durationMs": 4
+        },
+        {
+          "id": "wait",
+          "action": "wait_for",
+          "ok": true,
+          "raw": {
+            "found": true,
+            "target": "testId:perps-market-detail-page"
+          },
+          "durationMs": 55
+        },
+        {
+          "id": "wait-price",
+          "action": "wait_for",
+          "ok": true,
+          "raw": "{\"ready\":true}",
+          "durationMs": 0
+        },
+        {
+          "id": "extract",
+          "action": "eval_sync",
+          "ok": true,
+          "raw": "{\"symbol\":\"BTC\",\"screen\":\"market_detail\",\"price\":\"$75,190\",\"change\":\"-1.10%\",\"oracle\":null}",
+          "durationMs": 1
+        },
+        {
+          "id": "done",
+          "action": "end",
+          "status": "pass",
+          "durationMs": 0
+        }
+      ],
+      "vars": {}
+    },
+    "durationMs": 83
+  },
+  {
+    "id": "btc-order",
+    "action": "call",
+    "ok": false,
+    "raw": {
+      "passed": 4,
+      "failed": 1,
+      "trace": [
+        {
+          "id": "nav",
+          "action": "navigate",
+          "ok": true,
+          "raw": {
+            "navigated": true,
+            "hash": "#/perps/market/BTC"
+          },
+          "durationMs": 3
+        },
+        {
+          "id": "wait-market",
+          "action": "wait_for",
+          "ok": true,
+          "raw": {
+            "found": true,
+            "target": "testId:perps-market-detail-page"
+          },
+          "durationMs": 51
+        },
+        {
+          "id": "check-position",
+          "action": "ext_check_dom",
+          "ok": true,
+          "raw": {
+            "visible": false
+          },
+          "durationMs": 2
+        },
+        {
+          "id": "branch",
+          "action": "switch",
+          "next": "open-order",
+          "durationMs": 0
+        },
+        {
+          "id": "open-order",
+          "action": "press",
+          "ok": true,
+          "raw": {
+            "clicked": true,
+            "target": "testId:perps-long-cta-button"
+          },
+          "durationMs": 106
+        },
+        {
+          "id": "wait-order",
+          "action": "wait_for",
+          "ok": false,
+          "raw": null,
+          "durationMs": 10027,
+          "error": "Wait timed out: locator.waitFor: Timeout 10000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-testid=\"perps-order-entry-page\"]') to be visible\u001b[22m\n"
+        }
+      ],
+      "vars": {
+        "position_state": {
+          "visible": false
+        }
+      }
+    },
+    "durationMs": 10199
+  }
+]

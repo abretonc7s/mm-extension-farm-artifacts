@@ -1,0 +1,596 @@
+Running recipe: Mobile perps decimal parity expanded
+Team: perps
+Pre-conditions: wallet.unlocked, perps.feature_enabled
+Setup: 4 step(s)
+Teardown: 1 step(s)
+Workflow nodes: 17
+
+Pre-conditions: PASS
+
+Setup hooks:
+[setup-account] call perps/select-account
+  > Running recipe: Select — switch to account 0x8dc623e964475d4d669da601fd15ea9125469003 and verify
+  > Team: perps
+  > Pre-conditions: wallet.unlocked
+  > Workflow nodes: 3
+
+Pre-conditions: PASS
+
+[switch-account] select account 0x8dc623e964475d4d669da601fd15ea9125469003
+  result: {"address":"0x8dc623e964475d4d669da601fd15ea9125469003","id":"0285a92b-905c-4814-8a16-52fe1db60357","name":"","switched":true}
+  PASS
+
+[wait-switch] wait for condition
+  result: {"address":"0x8dc623e964475d4d669da601fd15ea9125469003"}
+  PASS
+
+----------------------------------------
+Results: 2/2 passed
+Recipe: PASS
+
+  flow: perps/select-account
+  PASS
+
+[setup-testnet] call perps/setup-testnet
+  > Running recipe: Setup — enable testnet and verify market data loads
+  > Team: perps
+  > Pre-conditions: wallet.unlocked, perps.feature_enabled
+  > Workflow nodes: 4
+
+Pre-conditions: PASS
+
+[enable-testnet] toggle testnet=true
+  result: {"ok":true,"already":true}
+  PASS
+
+[wait-reload] wait for condition
+  result: {"isTestnet":true}
+  PASS
+
+[verify-markets] eval ref markets
+  result: [{"symbol":"SOL","price":"$85.593","change24h":"+2.75%"},{"symbol":"APT","price":"$0.92","change24h":"+6.47%"},{"symbol":"ATOM","price":"$1.7937","change24h":"+2.95%"},{"symbol":"BTC","price":"$75,272","change24h":"+0.90...
+  PASS
+
+----------------------------------------
+Results: 3/3 passed
+Recipe: PASS
+
+  flow: perps/setup-testnet
+  PASS
+
+[setup-clear-eth] eval_async
+  result: {"cleared":true}
+  PASS
+
+[setup-wait-no-eth] wait for condition
+  result: {"found":false}
+  PASS
+
+[btc-market] call perps/parity-market-detail-snapshot
+  > Running recipe: Parity snapshot — mobile market detail BTC
+  > Team: perps
+  > Pre-conditions: wallet.unlocked, perps.feature_enabled
+  > Workflow nodes: 4
+
+Pre-conditions: PASS
+
+[nav] navigate to PerpsMarketDetails
+  result: {"navigated":"PerpsMarketDetails","params":{"market":{"symbol":"BTC","name":"BTC","price":"0","change24h":"0","change24hPercent":"0","volume":"0","maxLeverage":"100"}},"previousRoute":{"key":"Wallet-kdNPI4qAWw2iwh9tWEyOb...
+  PASS
+
+[wait] wait for PerpsMarketDetails
+  result: {"route":"PerpsMarketDetails"}
+  PASS
+
+[extract] eval_sync
+  result: {"symbol":"BTC","screen":"market_detail","price":"$75,281","change":"+0.93%","oracle":"$75,029"}
+  PASS
+
+----------------------------------------
+Results: 3/3 passed
+Recipe: PASS
+
+  flow: perps/parity-market-detail-snapshot
+  PASS
+
+[btc-order] call perps/parity-order-entry-snapshot
+  > Running recipe: Parity snapshot — mobile order entry BTC
+  > Team: perps
+  > Pre-conditions: wallet.unlocked, perps.feature_enabled
+  > Workflow nodes: 12
+
+Pre-conditions: PASS
+
+[nav] navigate to PerpsMarketDetails
+  result: {"navigated":"PerpsMarketDetails","params":{"market":{"symbol":"BTC","name":"BTC","price":"0","change24h":"0","change24hPercent":"0","volume":"0","maxLeverage":"100"}},"previousRoute":{"key":"PerpsMarketDetails-RuN35FM5i...
+  PASS
+
+[wait-market] wait for PerpsMarketDetails
+  result: {"route":"PerpsMarketDetails"}
+  PASS
+
+[open] press perps-market-details-long-button
+  result: {"ok":true,"testId":"perps-market-details-long-button","deviceName":"mm-1"}
+  PASS
+
+[wait-order] wait for perps-amount-display-touchable
+  result: {"visible":true}
+  PASS
+
+[press-amount] press perps-amount-display-touchable
+  result: {"ok":true,"testId":"perps-amount-display-touchable","deviceName":"mm-1"}
+  PASS
+
+[wait-keypad] wait for keypad-delete-button
+  result: {"visible":true}
+  PASS
+
+[clear] clear keypad x8
+  result: {"ok":true,"deleted":8}
+  PASS
+
+[type] type 11
+  result: {"ok":true,"value":"11"}
+  PASS
+
+[done-keypad] press perps-order-view-keypad-done
+  result: {"ok":true,"testId":"perps-order-view-keypad-done","deviceName":"mm-1"}
+  PASS
+
+[wait-summary] wait 500ms
+  waited 500ms
+  PASS
+
+[extract] eval_sync
+  result: {"symbol":"BTC","screen":"order_entry","price":"$75,302","change":"+0.94%","margin":"$3.75","liquidationPrice":"$50,837","fees":"$0.02"}
+  PASS
+
+----------------------------------------
+Results: 11/11 passed
+Recipe: PASS
+
+  flow: perps/parity-order-entry-snapshot
+  PASS
+
+[eth-market] call perps/parity-market-detail-snapshot
+  > Running recipe: Parity snapshot — mobile market detail ETH
+  > Team: perps
+  > Pre-conditions: wallet.unlocked, perps.feature_enabled
+  > Workflow nodes: 4
+
+Pre-conditions: PASS
+
+[nav] navigate to PerpsMarketDetails
+  result: {"navigated":"PerpsMarketDetails","params":{"market":{"symbol":"ETH","name":"ETH","price":"0","change24h":"0","change24hPercent":"0","volume":"0","maxLeverage":"100"}},"previousRoute":{"key":"RedesignedConfirmations-eXA2...
+  PASS
+
+[wait] wait for PerpsMarketDetails
+  result: {"route":"PerpsMarketDetails"}
+  PASS
+
+[extract] eval_sync
+  result: {"symbol":"ETH","screen":"market_detail","price":"$2,365.4","change":"+1.58%","oracle":"$2,356.7"}
+  PASS
+
+----------------------------------------
+Results: 3/3 passed
+Recipe: PASS
+
+  flow: perps/parity-market-detail-snapshot
+  PASS
+
+[eth-order] call perps/parity-order-entry-snapshot
+  > Running recipe: Parity snapshot — mobile order entry ETH
+  > Team: perps
+  > Pre-conditions: wallet.unlocked, perps.feature_enabled
+  > Workflow nodes: 12
+
+Pre-conditions: PASS
+
+[nav] navigate to PerpsMarketDetails
+  result: {"navigated":"PerpsMarketDetails","params":{"market":{"symbol":"ETH","name":"ETH","price":"0","change24h":"0","change24hPercent":"0","volume":"0","maxLeverage":"100"}},"previousRoute":{"key":"PerpsMarketDetails-RuN35FM5i...
+  PASS
+
+[wait-market] wait for PerpsMarketDetails
+  result: {"route":"PerpsMarketDetails"}
+  PASS
+
+[open] press perps-market-details-long-button
+  result: {"ok":true,"testId":"perps-market-details-long-button","deviceName":"mm-1"}
+  PASS
+
+[wait-order] wait for perps-amount-display-touchable
+  result: {"visible":true}
+  PASS
+
+[press-amount] press perps-amount-display-touchable
+  result: {"ok":true,"testId":"perps-amount-display-touchable","deviceName":"mm-1"}
+  PASS
+
+[wait-keypad] wait for keypad-delete-button
+  result: {"visible":true}
+  PASS
+
+[clear] clear keypad x8
+  result: {"ok":true,"deleted":8}
+  PASS
+
+[type] type 11
+  result: {"ok":true,"value":"11"}
+  PASS
+
+[done-keypad] press perps-order-view-keypad-done
+  result: {"ok":true,"testId":"perps-order-view-keypad-done","deviceName":"mm-1"}
+  PASS
+
+[wait-summary] wait 500ms
+  waited 500ms
+  PASS
+
+[extract] eval_sync
+  result: {"symbol":"ETH","screen":"order_entry","price":"$2,365.3","change":"+1.58%","margin":"$3.69","liquidationPrice":"$1,609","fees":"$0.02"}
+  PASS
+
+----------------------------------------
+Results: 11/11 passed
+Recipe: PASS
+
+  flow: perps/parity-order-entry-snapshot
+  PASS
+
+[sol-market] call perps/parity-market-detail-snapshot
+  > Running recipe: Parity snapshot — mobile market detail SOL
+  > Team: perps
+  > Pre-conditions: wallet.unlocked, perps.feature_enabled
+  > Workflow nodes: 4
+
+Pre-conditions: PASS
+
+[nav] navigate to PerpsMarketDetails
+  result: {"navigated":"PerpsMarketDetails","params":{"market":{"symbol":"SOL","name":"SOL","price":"0","change24h":"0","change24hPercent":"0","volume":"0","maxLeverage":"100"}},"previousRoute":{"key":"RedesignedConfirmations-JxDQ...
+  PASS
+
+[wait] wait for PerpsMarketDetails
+  result: {"route":"PerpsMarketDetails"}
+  PASS
+
+[extract] eval_sync
+  result: {"symbol":"SOL","screen":"market_detail","price":"$85.582","change":"+2.74%","oracle":"$85.375"}
+  PASS
+
+----------------------------------------
+Results: 3/3 passed
+Recipe: PASS
+
+  flow: perps/parity-market-detail-snapshot
+  PASS
+
+[fart-market] call perps/parity-market-detail-snapshot
+  > Running recipe: Parity snapshot — mobile market detail FARTCOIN
+  > Team: perps
+  > Pre-conditions: wallet.unlocked, perps.feature_enabled
+  > Workflow nodes: 4
+
+Pre-conditions: PASS
+
+[nav] navigate to PerpsMarketDetails
+  result: {"navigated":"PerpsMarketDetails","params":{"market":{"symbol":"FARTCOIN","name":"FARTCOIN","price":"0","change24h":"0","change24hPercent":"0","volume":"0","maxLeverage":"100"}},"previousRoute":{"key":"PerpsMarketDetails...
+  PASS
+
+[wait] wait for PerpsMarketDetails
+  result: {"route":"PerpsMarketDetails"}
+  PASS
+
+[extract] eval_sync
+  result: {"symbol":"FARTCOIN","screen":"market_detail","price":"$0.21606","change":"+10.90%","oracle":"$0.21465"}
+  PASS
+
+----------------------------------------
+Results: 3/3 passed
+Recipe: PASS
+
+  flow: perps/parity-market-detail-snapshot
+  PASS
+
+[pump-market] call perps/parity-market-detail-snapshot
+  > Running recipe: Parity snapshot — mobile market detail PUMP
+  > Team: perps
+  > Pre-conditions: wallet.unlocked, perps.feature_enabled
+  > Workflow nodes: 4
+
+Pre-conditions: PASS
+
+[nav] navigate to PerpsMarketDetails
+  result: {"navigated":"PerpsMarketDetails","params":{"market":{"symbol":"PUMP","name":"PUMP","price":"0","change24h":"0","change24hPercent":"0","volume":"0","maxLeverage":"100"}},"previousRoute":{"key":"PerpsMarketDetails-RuN35FM...
+  PASS
+
+[wait] wait for PerpsMarketDetails
+  result: {"route":"PerpsMarketDetails"}
+  PASS
+
+[extract] eval_sync
+  result: {"symbol":"PUMP","screen":"market_detail","price":"$0.001963","change":"+8.06%","oracle":"$0.001971"}
+  PASS
+
+----------------------------------------
+Results: 3/3 passed
+Recipe: PASS
+
+  flow: perps/parity-market-detail-snapshot
+  PASS
+
+[check-eth-position] eval_async
+  result: {"found":false}
+  PASS
+
+[branch-eth-position] evaluate branch
+  branch -> open-eth-position (default)
+  PASS
+
+[open-eth-position] call perps/trade-open-market
+  > Running recipe: Trade — market long ETH $11
+  > Team: perps
+  > Pre-conditions: wallet.unlocked, perps.ready_to_trade, perps.sufficient_balance
+  > Workflow nodes: 14
+
+Pre-conditions: PASS
+
+[nav] navigate to PerpsMarketDetails
+  result: {"navigated":"PerpsMarketDetails","params":{"market":{"symbol":"ETH","name":"ETH","price":"0","change24h":"0","change24hPercent":"0","volume":"0","maxLeverage":"100"}},"previousRoute":{"key":"PerpsMarketDetails-RuN35FM5i...
+  PASS
+
+[wait-render] wait for perps-market-details-long-button
+  result: {"visible":true}
+  PASS
+
+[press-side] press perps-market-details-long-button
+  result: {"ok":true,"testId":"perps-market-details-long-button","deviceName":"mm-1"}
+  PASS
+
+[wait-form] wait for RedesignedConfirmations
+  result: {"route":"RedesignedConfirmations"}
+  PASS
+
+[press-amount] press perps-amount-display-touchable
+  result: {"ok":true,"testId":"perps-amount-display-touchable","deviceName":"mm-1"}
+  PASS
+
+[wait-keypad] wait for keypad-delete-button
+  result: {"visible":true}
+  PASS
+
+[clear-keypad] clear keypad x8
+  result: {"ok":true,"deleted":8}
+  PASS
+
+[type-amount] type 11
+  result: {"ok":true,"value":"11"}
+  PASS
+
+[assert-amount] eval_sync
+  result: {"v":"$11"}
+  PASS
+
+[press-done] press perps-order-view-keypad-done
+  result: {"ok":true,"testId":"perps-order-view-keypad-done","deviceName":"mm-1"}
+  PASS
+
+[wait-summary] wait for perps-order-view-place-order-button
+  result: {"visible":true}
+  PASS
+
+[place-order] press perps-order-view-place-order-button
+  result: {"ok":true,"testId":"perps-order-view-place-order-button","deviceName":"mm-1"}
+  PASS
+
+[wait-order-placed] wait for RedesignedConfirmations
+  result: {"route":"PerpsMarketDetails"}
+  PASS
+
+----------------------------------------
+Results: 13/13 passed
+Recipe: PASS
+
+  flow: perps/trade-open-market
+  PASS
+
+[wait-eth-position] wait for condition
+  result: {"found":true}
+  PASS
+
+[eth-position] call perps/parity-eth-position-detail
+  > Running recipe: Parity snapshot — mobile ETH position detail
+  > Team: perps
+  > Pre-conditions: wallet.unlocked, perps.feature_enabled
+  > Workflow nodes: 4
+
+Pre-conditions: PASS
+
+[nav] navigate to PerpsMarketDetails
+  result: {"navigated":"PerpsMarketDetails","params":{"market":{"symbol":"ETH","name":"ETH","price":"0","change24h":"0","change24hPercent":"0","volume":"0","maxLeverage":"100"}},"previousRoute":{"key":"PerpsMarketDetails-RuN35FM5i...
+  PASS
+
+[wait] wait for position-card-details
+  result: {"visible":true}
+  PASS
+
+[extract] eval_sync
+  result: {"symbol":"ETH","screen":"position_detail","size":"0.0047 ETH","margin":"$3.69","entry":"$2,365.5","liquidationPrice":"$1,612","funding":"$0.00"}
+  PASS
+
+----------------------------------------
+Results: 3/3 passed
+Recipe: PASS
+
+  flow: perps/parity-eth-position-detail
+  PASS
+
+[eth-reverse] call perps/parity-eth-reverse-modal
+  > Running recipe: Parity snapshot — mobile ETH reverse modal
+  > Team: perps
+  > Pre-conditions: wallet.unlocked, perps.feature_enabled
+  > Workflow nodes: 9
+
+Pre-conditions: PASS
+
+[nav] navigate to PerpsMarketDetails
+  result: {"navigated":"PerpsMarketDetails","params":{"market":{"symbol":"ETH","name":"ETH","price":"0","change24h":"0","change24hPercent":"0","volume":"0","maxLeverage":"100"}},"previousRoute":{"key":"PerpsMarketDetails-RuN35FM5i...
+  PASS
+
+[wait] wait for perps-market-details-modify-button
+  result: {"visible":true}
+  PASS
+
+[open-sheet] press perps-market-details-modify-button
+  result: {"ok":true,"testId":"perps-market-details-modify-button","deviceName":"mm-1"}
+  PASS
+
+[wait-modify] wait 500ms
+  waited 500ms
+  PASS
+
+[press-reverse-text] eval_sync
+  result: {"ok":true,"text":"Reverse position"}
+  PASS
+
+[wait-reverse] wait for perps-flip-position-confirm-sheet
+  result: {"visible":true}
+  PASS
+
+[extract] eval_sync
+  result: {"symbol":"ETH","screen":"reverse_modal","estSize":"0.0047 ETH","fees":"--"}
+  PASS
+
+[close] press perps-flip-position-cancel-button
+  result: {"ok":true,"testId":"perps-flip-position-cancel-button","deviceName":"mm-1"}
+  PASS
+
+----------------------------------------
+Results: 8/8 passed
+Recipe: PASS
+
+  flow: perps/parity-eth-reverse-modal
+  PASS
+
+[eth-remove-margin] call perps/parity-eth-remove-margin
+  > Running recipe: Parity snapshot — mobile ETH remove margin
+  > Team: perps
+  > Pre-conditions: wallet.unlocked, perps.feature_enabled
+  > Workflow nodes: 8
+
+Pre-conditions: PASS
+
+[nav] navigate to PerpsMarketDetails
+  result: {"navigated":"PerpsMarketDetails","params":{"market":{"symbol":"ETH","name":"ETH","price":"0","change24h":"0","change24hPercent":"0","volume":"0","maxLeverage":"100"}},"previousRoute":{"key":"PerpsMarketDetails-RuN35FM5i...
+  PASS
+
+[wait] wait for position-card-margin-chevron
+  result: {"visible":true}
+  PASS
+
+[open-actions] press position-card-margin-chevron
+  result: {"ok":true,"testId":"position-card-margin-chevron","deviceName":"mm-1"}
+  PASS
+
+[wait-actions] wait for perps-adjust-margin-reduce-btn
+  result: {"visible":true}
+  PASS
+
+[open-remove] press perps-adjust-margin-reduce-btn
+  result: {"ok":true,"testId":"perps-adjust-margin-reduce-btn","deviceName":"mm-1"}
+  PASS
+
+[wait-view] wait for perps-adjust-margin-confirm-button
+  result: {"visible":true}
+  PASS
+
+[extract] eval_sync
+  result: {"symbol":"ETH","screen":"remove_margin","available":"$0","liquidationPrice":"$1,612","liquidationDistance":"32%"}
+  PASS
+
+----------------------------------------
+Results: 7/7 passed
+Recipe: PASS
+
+  flow: perps/parity-eth-remove-margin
+  PASS
+
+[eth-close] call perps/parity-eth-close-position
+  > Running recipe: Parity snapshot — mobile ETH close position
+  > Team: perps
+  > Pre-conditions: wallet.unlocked, perps.feature_enabled
+  > Workflow nodes: 6
+
+Pre-conditions: PASS
+
+[nav] navigate to PerpsMarketDetails
+  result: {"navigated":"PerpsMarketDetails","params":{"market":{"symbol":"ETH","name":"ETH","price":"0","change24h":"0","change24hPercent":"0","volume":"0","maxLeverage":"100"}},"previousRoute":{"key":"PerpsAdjustMargin-yIYz6cj7NB...
+  PASS
+
+[wait] wait for perps-market-details-close-button
+  result: {"visible":true}
+  PASS
+
+[open] press perps-market-details-close-button
+  result: {"ok":true,"testId":"perps-market-details-close-button","deviceName":"mm-1"}
+  PASS
+
+[wait-view] wait for close-position-confirm-button
+  result: {"visible":true}
+  PASS
+
+[extract] eval_sync
+  result: {"symbol":"ETH","screen":"close_position","closeAmount":"$11.11","margin":"$3.69","fees":"-$0.02","receive":"$3.67"}
+  PASS
+
+----------------------------------------
+Results: 5/5 passed
+Recipe: PASS
+
+  flow: perps/parity-eth-close-position
+  PASS
+
+[withdraw] call perps/parity-withdraw-snapshot
+  > Running recipe: Parity snapshot — mobile withdraw
+  > Team: perps
+  > Pre-conditions: wallet.unlocked, perps.feature_enabled
+  > Workflow nodes: 6
+
+Pre-conditions: PASS
+
+[nav] navigate to PerpsWithdraw
+  result: {"navigated":"PerpsWithdraw","params":{},"previousRoute":{"key":"PerpsClosePosition-CxfTAqNtSyTWHS8a5EeLL","name":"PerpsClosePosition","params":{"position":{"cumulativeFunding":{"allTime":"0.451146","sinceChange":"0.0","...
+  PASS
+
+[wait] wait for PerpsWithdraw
+  result: {"route":"PerpsWithdraw"}
+  PASS
+
+[press-25] eval_sync
+  result: {"ok":true,"text":"25%"}
+  PASS
+
+[settle] wait 500ms
+  waited 500ms
+  PASS
+
+[extract] eval_sync
+  result: {"screen":"withdraw","preset10":"10%","preset25":"25%","preset50":"50%","fee":"$1.00","time":"5 minutes","receive":"$214.72"}
+  PASS
+
+----------------------------------------
+Results: 5/5 passed
+Recipe: PASS
+
+  flow: perps/parity-withdraw-snapshot
+  PASS
+
+----------------------------------------
+Results: 20/20 passed
+Recipe: PASS
+
+Teardown hooks:
+[teardown-close-eth] eval_async
+  result: {"cleared":true}
+  PASS
+

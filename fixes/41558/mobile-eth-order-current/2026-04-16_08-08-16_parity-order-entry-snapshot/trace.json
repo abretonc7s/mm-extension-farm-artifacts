@@ -1,0 +1,157 @@
+{
+  "env": {
+    "appRoot": "/Users/deeeed/dev/metamask/metamask-mobile-1",
+    "recipePath": "/Users/deeeed/dev/metamask/metamask-mobile-1/scripts/perps/agentic/teams/perps/flows/parity-order-entry-snapshot.json",
+    "team": "perps"
+  },
+  "inputs": {
+    "symbol": "ETH",
+    "usdAmount": 11
+  },
+  "last": {
+    "route": "PerpsMarketDetails"
+  },
+  "nodes": {
+    "nav": {
+      "action": "navigate",
+      "description": "navigate to PerpsMarketDetails",
+      "finishedAt": "2026-04-16T08:08:17.749Z",
+      "id": "nav",
+      "status": "pass",
+      "startedAt": "2026-04-16T08:08:17.060Z",
+      "durationMs": 689,
+      "next": "wait-market",
+      "result": {
+        "navigated": "PerpsMarketDetails",
+        "params": {
+          "market": {
+            "symbol": "ETH",
+            "name": "ETH",
+            "price": "0",
+            "change24h": "0",
+            "change24hPercent": "0",
+            "volume": "0",
+            "maxLeverage": "100"
+          }
+        },
+        "previousRoute": {
+          "key": "PerpsMarketDetails-A621_KoqcG1KodBj1Igew",
+          "name": "PerpsMarketDetails",
+          "params": {
+            "market": {
+              "change24h": "0",
+              "change24hPercent": "0",
+              "maxLeverage": "100",
+              "name": "ETH",
+              "price": "0",
+              "symbol": "ETH",
+              "volume": "0"
+            }
+          }
+        },
+        "currentRoute": {
+          "key": "PerpsMarketDetails-A621_KoqcG1KodBj1Igew",
+          "name": "PerpsMarketDetails",
+          "params": {
+            "market": {
+              "change24h": "0",
+              "change24hPercent": "0",
+              "maxLeverage": "100",
+              "name": "ETH",
+              "price": "0",
+              "symbol": "ETH",
+              "volume": "0"
+            }
+          }
+        },
+        "deviceName": "mm-1",
+        "platform": "ios"
+      }
+    },
+    "wait-market": {
+      "action": "wait_for",
+      "description": "wait for PerpsMarketDetails",
+      "finishedAt": "2026-04-16T08:08:17.906Z",
+      "id": "wait-market",
+      "status": "pass",
+      "startedAt": "2026-04-16T08:08:17.750Z",
+      "durationMs": 156,
+      "next": "open",
+      "result": {
+        "route": "PerpsMarketDetails"
+      }
+    }
+  },
+  "trace": [
+    {
+      "action": "navigate",
+      "description": "navigate to PerpsMarketDetails",
+      "finishedAt": "2026-04-16T08:08:17.749Z",
+      "id": "nav",
+      "status": "pass",
+      "startedAt": "2026-04-16T08:08:17.060Z",
+      "durationMs": 689,
+      "next": "wait-market",
+      "result": {
+        "navigated": "PerpsMarketDetails",
+        "params": {
+          "market": {
+            "symbol": "ETH",
+            "name": "ETH",
+            "price": "0",
+            "change24h": "0",
+            "change24hPercent": "0",
+            "volume": "0",
+            "maxLeverage": "100"
+          }
+        },
+        "previousRoute": {
+          "key": "PerpsMarketDetails-A621_KoqcG1KodBj1Igew",
+          "name": "PerpsMarketDetails",
+          "params": {
+            "market": {
+              "change24h": "0",
+              "change24hPercent": "0",
+              "maxLeverage": "100",
+              "name": "ETH",
+              "price": "0",
+              "symbol": "ETH",
+              "volume": "0"
+            }
+          }
+        },
+        "currentRoute": {
+          "key": "PerpsMarketDetails-A621_KoqcG1KodBj1Igew",
+          "name": "PerpsMarketDetails",
+          "params": {
+            "market": {
+              "change24h": "0",
+              "change24hPercent": "0",
+              "maxLeverage": "100",
+              "name": "ETH",
+              "price": "0",
+              "symbol": "ETH",
+              "volume": "0"
+            }
+          }
+        },
+        "deviceName": "mm-1",
+        "platform": "ios"
+      }
+    },
+    {
+      "action": "wait_for",
+      "description": "wait for PerpsMarketDetails",
+      "finishedAt": "2026-04-16T08:08:17.906Z",
+      "id": "wait-market",
+      "status": "pass",
+      "startedAt": "2026-04-16T08:08:17.750Z",
+      "durationMs": 156,
+      "next": "open",
+      "result": {
+        "route": "PerpsMarketDetails"
+      }
+    }
+  ],
+  "vars": {}
+}

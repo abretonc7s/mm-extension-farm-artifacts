@@ -1,0 +1,62 @@
+flowchart TD
+  %% PR #41558 extension decimal parity expanded (1s delayed)
+  __entry__(["ENTRY"]) --> node_btc_market
+  node_btc_market[["btc-market<br/>perps/parity-market-detail-snapshot"]]
+  node_delay_01["delay-01<br/>wait"]
+  node_btc_order[["btc-order<br/>perps/parity-order-entry-snapshot"]]
+  node_delay_02["delay-02<br/>wait"]
+  node_eth_market[["eth-market<br/>perps/parity-market-detail-snapshot"]]
+  node_delay_03["delay-03<br/>wait"]
+  node_eth_order[["eth-order<br/>perps/parity-order-entry-snapshot"]]
+  node_delay_04["delay-04<br/>wait"]
+  node_sol_market[["sol-market<br/>perps/parity-market-detail-snapshot"]]
+  node_delay_05["delay-05<br/>wait"]
+  node_sol_order[["sol-order<br/>perps/parity-order-entry-snapshot"]]
+  node_delay_06["delay-06<br/>wait"]
+  node_fart_market[["fart-market<br/>perps/parity-market-detail-snapshot"]]
+  node_delay_07["delay-07<br/>wait"]
+  node_fart_order[["fart-order<br/>perps/parity-order-entry-snapshot"]]
+  node_delay_08["delay-08<br/>wait"]
+  node_pump_market[["pump-market<br/>perps/parity-market-detail-snapshot"]]
+  node_delay_09["delay-09<br/>wait"]
+  node_pump_order[["pump-order<br/>perps/parity-order-entry-snapshot"]]
+  node_delay_10["delay-10<br/>wait"]
+  node_eth_position[["eth-position<br/>perps/parity-eth-position-detail"]]
+  node_delay_11["delay-11<br/>wait"]
+  node_eth_reverse[["eth-reverse<br/>perps/parity-eth-reverse-modal"]]
+  node_delay_12["delay-12<br/>wait"]
+  node_eth_remove_margin[["eth-remove-margin<br/>perps/parity-eth-remove-margin"]]
+  node_delay_13["delay-13<br/>wait"]
+  node_eth_close[["eth-close<br/>perps/parity-eth-close-position"]]
+  node_delay_14["delay-14<br/>wait"]
+  node_withdraw[["withdraw<br/>perps/parity-withdraw-snapshot"]]
+  node_done(["done<br/>PASS"])
+  node_btc_market --> node_delay_01
+  node_delay_01 --> node_btc_order
+  node_btc_order --> node_delay_02
+  node_delay_02 --> node_eth_market
+  node_eth_market --> node_delay_03
+  node_delay_03 --> node_eth_order
+  node_eth_order --> node_delay_04
+  node_delay_04 --> node_sol_market
+  node_sol_market --> node_delay_05
+  node_delay_05 --> node_sol_order
+  node_sol_order --> node_delay_06
+  node_delay_06 --> node_fart_market
+  node_fart_market --> node_delay_07
+  node_delay_07 --> node_fart_order
+  node_fart_order --> node_delay_08
+  node_delay_08 --> node_pump_market
+  node_pump_market --> node_delay_09
+  node_delay_09 --> node_pump_order
+  node_pump_order --> node_delay_10
+  node_delay_10 --> node_eth_position
+  node_eth_position --> node_delay_11
+  node_delay_11 --> node_eth_reverse
+  node_eth_reverse --> node_delay_12
+  node_delay_12 --> node_eth_remove_margin
+  node_eth_remove_margin --> node_delay_13
+  node_delay_13 --> node_eth_close
+  node_eth_close --> node_delay_14
+  node_delay_14 --> node_withdraw
+  node_withdraw --> node_done

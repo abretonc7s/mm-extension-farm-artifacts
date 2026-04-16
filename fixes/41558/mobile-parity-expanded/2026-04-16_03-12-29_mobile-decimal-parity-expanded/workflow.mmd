@@ -1,0 +1,186 @@
+flowchart TD
+  %% Mobile perps decimal parity expanded
+  __entry__(["ENTRY"]) --> node_home_nav
+  node_home_nav["home-nav<br/>navigate"]
+  node_home_wait["home-wait<br/>wait_for"]
+  node_home_extract["home-extract<br/>eval_sync"]
+  node_btc_nav_market["btc-nav-market<br/>navigate"]
+  node_btc_wait_market["btc-wait-market<br/>wait_for"]
+  node_btc_market_extract["btc-market-extract<br/>eval_sync"]
+  node_btc_open_order["btc-open-order<br/>navigate"]
+  node_btc_wait_order["btc-wait-order<br/>wait_for"]
+  node_btc_press_amount["btc-press-amount<br/>press"]
+  node_btc_wait_keypad["btc-wait-keypad<br/>wait_for"]
+  node_btc_clear_keypad["btc-clear-keypad<br/>clear_keypad"]
+  node_btc_type_amount["btc-type-amount<br/>type_keypad"]
+  node_btc_press_done["btc-press-done<br/>press"]
+  node_btc_wait_summary["btc-wait-summary<br/>wait"]
+  node_btc_order_extract["btc-order-extract<br/>eval_sync"]
+  node_eth_nav_market["eth-nav-market<br/>navigate"]
+  node_eth_wait_market["eth-wait-market<br/>wait_for"]
+  node_eth_market_extract["eth-market-extract<br/>eval_sync"]
+  node_eth_open_order["eth-open-order<br/>navigate"]
+  node_eth_wait_order["eth-wait-order<br/>wait_for"]
+  node_eth_press_amount["eth-press-amount<br/>press"]
+  node_eth_wait_keypad["eth-wait-keypad<br/>wait_for"]
+  node_eth_clear_keypad["eth-clear-keypad<br/>clear_keypad"]
+  node_eth_type_amount["eth-type-amount<br/>type_keypad"]
+  node_eth_press_done["eth-press-done<br/>press"]
+  node_eth_wait_summary["eth-wait-summary<br/>wait"]
+  node_eth_order_extract["eth-order-extract<br/>eval_sync"]
+  node_sol_nav_market["sol-nav-market<br/>navigate"]
+  node_sol_wait_market["sol-wait-market<br/>wait_for"]
+  node_sol_market_extract["sol-market-extract<br/>eval_sync"]
+  node_sol_open_order["sol-open-order<br/>navigate"]
+  node_sol_wait_order["sol-wait-order<br/>wait_for"]
+  node_sol_press_amount["sol-press-amount<br/>press"]
+  node_sol_wait_keypad["sol-wait-keypad<br/>wait_for"]
+  node_sol_clear_keypad["sol-clear-keypad<br/>clear_keypad"]
+  node_sol_type_amount["sol-type-amount<br/>type_keypad"]
+  node_sol_press_done["sol-press-done<br/>press"]
+  node_sol_wait_summary["sol-wait-summary<br/>wait"]
+  node_sol_order_extract["sol-order-extract<br/>eval_sync"]
+  node_fartcoin_nav_market["fartcoin-nav-market<br/>navigate"]
+  node_fartcoin_wait_market["fartcoin-wait-market<br/>wait_for"]
+  node_fartcoin_market_extract["fartcoin-market-extract<br/>eval_sync"]
+  node_fartcoin_open_order["fartcoin-open-order<br/>navigate"]
+  node_fartcoin_wait_order["fartcoin-wait-order<br/>wait_for"]
+  node_fartcoin_press_amount["fartcoin-press-amount<br/>press"]
+  node_fartcoin_wait_keypad["fartcoin-wait-keypad<br/>wait_for"]
+  node_fartcoin_clear_keypad["fartcoin-clear-keypad<br/>clear_keypad"]
+  node_fartcoin_type_amount["fartcoin-type-amount<br/>type_keypad"]
+  node_fartcoin_press_done["fartcoin-press-done<br/>press"]
+  node_fartcoin_wait_summary["fartcoin-wait-summary<br/>wait"]
+  node_fartcoin_order_extract["fartcoin-order-extract<br/>eval_sync"]
+  node_pump_nav_market["pump-nav-market<br/>navigate"]
+  node_pump_wait_market["pump-wait-market<br/>wait_for"]
+  node_pump_market_extract["pump-market-extract<br/>eval_sync"]
+  node_pump_open_order["pump-open-order<br/>navigate"]
+  node_pump_wait_order["pump-wait-order<br/>wait_for"]
+  node_pump_press_amount["pump-press-amount<br/>press"]
+  node_pump_wait_keypad["pump-wait-keypad<br/>wait_for"]
+  node_pump_clear_keypad["pump-clear-keypad<br/>clear_keypad"]
+  node_pump_type_amount["pump-type-amount<br/>type_keypad"]
+  node_pump_press_done["pump-press-done<br/>press"]
+  node_pump_wait_summary["pump-wait-summary<br/>wait"]
+  node_pump_order_extract["pump-order-extract<br/>eval_sync"]
+  node_eth_open_position[["eth-open-position<br/>perps/trade-open-market"]]
+  node_eth_wait_position["eth-wait-position<br/>wait_for"]
+  node_eth_position_nav["eth-position-nav<br/>navigate"]
+  node_eth_position_wait["eth-position-wait<br/>wait_for"]
+  node_eth_position_extract["eth-position-extract<br/>eval_sync"]
+  node_eth_reverse_open_modify["eth-reverse-open-modify<br/>press"]
+  node_eth_reverse_wait_sheet["eth-reverse-wait-sheet<br/>wait_for"]
+  node_eth_reverse_open_sheet["eth-reverse-open-sheet<br/>press"]
+  node_eth_reverse_wait["eth-reverse-wait<br/>wait_for"]
+  node_eth_reverse_extract["eth-reverse-extract<br/>eval_sync"]
+  node_eth_reverse_close["eth-reverse-close<br/>press"]
+  node_eth_margin_nav["eth-margin-nav<br/>navigate"]
+  node_eth_margin_wait["eth-margin-wait<br/>wait_for"]
+  node_eth_margin_open["eth-margin-open<br/>press"]
+  node_eth_margin_wait_actions["eth-margin-wait-actions<br/>wait_for"]
+  node_eth_margin_open_remove["eth-margin-open-remove<br/>press"]
+  node_eth_margin_wait_view["eth-margin-wait-view<br/>wait_for"]
+  node_eth_margin_extract["eth-margin-extract<br/>eval_sync"]
+  node_eth_close_nav["eth-close-nav<br/>navigate"]
+  node_eth_close_wait["eth-close-wait<br/>wait_for"]
+  node_eth_close_open["eth-close-open<br/>press"]
+  node_eth_close_view["eth-close-view<br/>wait_for"]
+  node_eth_close_extract["eth-close-extract<br/>eval_sync"]
+  node_withdraw_nav["withdraw-nav<br/>navigate"]
+  node_withdraw_wait["withdraw-wait<br/>wait_for"]
+  node_withdraw_preset_25["withdraw-preset-25<br/>eval_sync"]
+  node_withdraw_wait_values["withdraw-wait-values<br/>wait"]
+  node_withdraw_extract["withdraw-extract<br/>eval_sync"]
+  node_done(["done<br/>PASS"])
+  node_home_nav --> node_home_wait
+  node_home_wait --> node_home_extract
+  node_home_extract --> node_btc_nav_market
+  node_btc_nav_market --> node_btc_wait_market
+  node_btc_wait_market --> node_btc_market_extract
+  node_btc_market_extract --> node_btc_open_order
+  node_btc_open_order --> node_btc_wait_order
+  node_btc_wait_order --> node_btc_press_amount
+  node_btc_press_amount --> node_btc_wait_keypad
+  node_btc_wait_keypad --> node_btc_clear_keypad
+  node_btc_clear_keypad --> node_btc_type_amount
+  node_btc_type_amount --> node_btc_press_done
+  node_btc_press_done --> node_btc_wait_summary
+  node_btc_wait_summary --> node_btc_order_extract
+  node_btc_order_extract --> node_eth_nav_market
+  node_eth_nav_market --> node_eth_wait_market
+  node_eth_wait_market --> node_eth_market_extract
+  node_eth_market_extract --> node_eth_open_order
+  node_eth_open_order --> node_eth_wait_order
+  node_eth_wait_order --> node_eth_press_amount
+  node_eth_press_amount --> node_eth_wait_keypad
+  node_eth_wait_keypad --> node_eth_clear_keypad
+  node_eth_clear_keypad --> node_eth_type_amount
+  node_eth_type_amount --> node_eth_press_done
+  node_eth_press_done --> node_eth_wait_summary
+  node_eth_wait_summary --> node_eth_order_extract
+  node_eth_order_extract --> node_sol_nav_market
+  node_sol_nav_market --> node_sol_wait_market
+  node_sol_wait_market --> node_sol_market_extract
+  node_sol_market_extract --> node_sol_open_order
+  node_sol_open_order --> node_sol_wait_order
+  node_sol_wait_order --> node_sol_press_amount
+  node_sol_press_amount --> node_sol_wait_keypad
+  node_sol_wait_keypad --> node_sol_clear_keypad
+  node_sol_clear_keypad --> node_sol_type_amount
+  node_sol_type_amount --> node_sol_press_done
+  node_sol_press_done --> node_sol_wait_summary
+  node_sol_wait_summary --> node_sol_order_extract
+  node_sol_order_extract --> node_fartcoin_nav_market
+  node_fartcoin_nav_market --> node_fartcoin_wait_market
+  node_fartcoin_wait_market --> node_fartcoin_market_extract
+  node_fartcoin_market_extract --> node_fartcoin_open_order
+  node_fartcoin_open_order --> node_fartcoin_wait_order
+  node_fartcoin_wait_order --> node_fartcoin_press_amount
+  node_fartcoin_press_amount --> node_fartcoin_wait_keypad
+  node_fartcoin_wait_keypad --> node_fartcoin_clear_keypad
+  node_fartcoin_clear_keypad --> node_fartcoin_type_amount
+  node_fartcoin_type_amount --> node_fartcoin_press_done
+  node_fartcoin_press_done --> node_fartcoin_wait_summary
+  node_fartcoin_wait_summary --> node_fartcoin_order_extract
+  node_fartcoin_order_extract --> node_pump_nav_market
+  node_pump_nav_market --> node_pump_wait_market
+  node_pump_wait_market --> node_pump_market_extract
+  node_pump_market_extract --> node_pump_open_order
+  node_pump_open_order --> node_pump_wait_order
+  node_pump_wait_order --> node_pump_press_amount
+  node_pump_press_amount --> node_pump_wait_keypad
+  node_pump_wait_keypad --> node_pump_clear_keypad
+  node_pump_clear_keypad --> node_pump_type_amount
+  node_pump_type_amount --> node_pump_press_done
+  node_pump_press_done --> node_pump_wait_summary
+  node_pump_wait_summary --> node_pump_order_extract
+  node_pump_order_extract --> node_eth_open_position
+  node_eth_open_position --> node_eth_wait_position
+  node_eth_wait_position --> node_eth_position_nav
+  node_eth_position_nav --> node_eth_position_wait
+  node_eth_position_wait --> node_eth_position_extract
+  node_eth_position_extract --> node_eth_reverse_open_modify
+  node_eth_reverse_open_modify --> node_eth_reverse_wait_sheet
+  node_eth_reverse_wait_sheet --> node_eth_reverse_open_sheet
+  node_eth_reverse_open_sheet --> node_eth_reverse_wait
+  node_eth_reverse_wait --> node_eth_reverse_extract
+  node_eth_reverse_extract --> node_eth_reverse_close
+  node_eth_reverse_close --> node_eth_margin_nav
+  node_eth_margin_nav --> node_eth_margin_wait
+  node_eth_margin_wait --> node_eth_margin_open
+  node_eth_margin_open --> node_eth_margin_wait_actions
+  node_eth_margin_wait_actions --> node_eth_margin_open_remove
+  node_eth_margin_open_remove --> node_eth_margin_wait_view
+  node_eth_margin_wait_view --> node_eth_margin_extract
+  node_eth_margin_extract --> node_eth_close_nav
+  node_eth_close_nav --> node_eth_close_wait
+  node_eth_close_wait --> node_eth_close_open
+  node_eth_close_open --> node_eth_close_view
+  node_eth_close_view --> node_eth_close_extract
+  node_eth_close_extract --> node_withdraw_nav
+  node_withdraw_nav --> node_withdraw_wait
+  node_withdraw_wait --> node_withdraw_preset_25
+  node_withdraw_preset_25 --> node_withdraw_wait_values
+  node_withdraw_wait_values --> node_withdraw_extract
+  node_withdraw_extract --> node_done

@@ -1,0 +1,438 @@
+[
+  {
+    "id": "ac1-nav-home",
+    "action": "navigate",
+    "ok": true,
+    "raw": {
+      "navigated": true,
+      "hash": "#/?tab=perps"
+    },
+    "durationMs": 4
+  },
+  {
+    "id": "ac1-wait-home",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-balance-dropdown"
+    },
+    "durationMs": 99
+  },
+  {
+    "id": "ac1-shot-home",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "/Users/deeeed/dev/metamask/metamask-extension-3/temp/agentic/recipes/test-artifacts/screenshots/after-01-perps-home-1776272125088.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 137
+  },
+  {
+    "id": "ac2-nav-detail",
+    "action": "navigate",
+    "ok": true,
+    "raw": {
+      "navigated": true,
+      "hash": "#/perps/market/ETH"
+    },
+    "durationMs": 4
+  },
+  {
+    "id": "ac2-wait-detail",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-market-detail-page"
+    },
+    "durationMs": 57
+  },
+  {
+    "id": "ac2-check-position",
+    "action": "ext_check_dom",
+    "ok": true,
+    "raw": {
+      "visible": true
+    },
+    "durationMs": 1
+  },
+  {
+    "id": "ac2-branch-position",
+    "action": "switch",
+    "next": "ac3-shot-market-detail",
+    "durationMs": 0
+  },
+  {
+    "id": "ac3-shot-market-detail",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "/Users/deeeed/dev/metamask/metamask-extension-3/temp/agentic/recipes/test-artifacts/screenshots/after-02-market-detail-1776272125310.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 90
+  },
+  {
+    "id": "ac4-open-modify-menu",
+    "action": "press",
+    "ok": true,
+    "raw": {
+      "clicked": true,
+      "target": "testId:perps-modify-cta-button"
+    },
+    "durationMs": 105
+  },
+  {
+    "id": "ac4-wait-modify-menu",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-modify-menu"
+    },
+    "durationMs": 51
+  },
+  {
+    "id": "ac4-shot-modify-menu",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "/Users/deeeed/dev/metamask/metamask-extension-3/temp/agentic/recipes/test-artifacts/screenshots/after-03-modify-menu-1776272125556.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 94
+  },
+  {
+    "id": "ac5-open-reverse",
+    "action": "press",
+    "ok": true,
+    "raw": {
+      "clicked": true,
+      "target": "testId:perps-modify-menu-reverse-position"
+    },
+    "durationMs": 85
+  },
+  {
+    "id": "ac5-wait-reverse-modal",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-reverse-position-modal-save"
+    },
+    "durationMs": 47
+  },
+  {
+    "id": "ac5-shot-reverse-modal",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "/Users/deeeed/dev/metamask/metamask-extension-3/temp/agentic/recipes/test-artifacts/screenshots/after-04-reverse-modal-1776272125785.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 80
+  },
+  {
+    "id": "ac5-close-reverse-modal",
+    "action": "press",
+    "ok": true,
+    "raw": {
+      "clicked": true,
+      "target": "testId:perps-reverse-position-modal-cancel"
+    },
+    "durationMs": 315
+  },
+  {
+    "id": "ac6-nav-detail",
+    "action": "navigate",
+    "ok": true,
+    "raw": {
+      "navigated": true,
+      "hash": "#/perps/market/ETH"
+    },
+    "durationMs": 2
+  },
+  {
+    "id": "ac6-wait-detail",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-market-detail-page"
+    },
+    "durationMs": 58
+  },
+  {
+    "id": "ac6-open-margin-menu",
+    "action": "press",
+    "ok": true,
+    "raw": {
+      "clicked": true,
+      "target": "testId:perps-margin-card"
+    },
+    "durationMs": 97
+  },
+  {
+    "id": "ac6-wait-margin-menu",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-margin-menu"
+    },
+    "durationMs": 82
+  },
+  {
+    "id": "ac6-open-remove-margin",
+    "action": "press",
+    "ok": true,
+    "raw": {
+      "clicked": true,
+      "target": "testId:perps-margin-menu-remove"
+    },
+    "durationMs": 105
+  },
+  {
+    "id": "ac6-wait-remove-margin-modal",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-edit-margin-modal-save"
+    },
+    "durationMs": 58
+  },
+  {
+    "id": "ac6-shot-remove-margin-modal",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "/Users/deeeed/dev/metamask/metamask-extension-3/temp/agentic/recipes/test-artifacts/screenshots/after-05-remove-margin-modal-1776272126593.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 109
+  },
+  {
+    "id": "ac6-close-remove-margin-modal",
+    "action": "press",
+    "ok": true,
+    "raw": {
+      "clicked": true,
+      "target": "testId:perps-edit-margin-modal-cancel"
+    },
+    "durationMs": 306
+  },
+  {
+    "id": "ac7-nav-detail",
+    "action": "navigate",
+    "ok": true,
+    "raw": {
+      "navigated": true,
+      "hash": "#/perps/market/ETH"
+    },
+    "durationMs": 3
+  },
+  {
+    "id": "ac7-wait-detail",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-market-detail-page"
+    },
+    "durationMs": 47
+  },
+  {
+    "id": "ac7-open-close-modal",
+    "action": "press",
+    "ok": true,
+    "raw": {
+      "clicked": true,
+      "target": "testId:perps-close-cta-button"
+    },
+    "durationMs": 116
+  },
+  {
+    "id": "ac7-wait-close-modal",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-close-position-modal-submit"
+    },
+    "durationMs": 65
+  },
+  {
+    "id": "ac7-shot-close-modal",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "/Users/deeeed/dev/metamask/metamask-extension-3/temp/agentic/recipes/test-artifacts/screenshots/after-06-close-modal-1776272127250.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 85
+  },
+  {
+    "id": "ac7-close-close-modal",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"clicked\":true}",
+    "durationMs": 3
+  },
+  {
+    "id": "ac8-nav-detail",
+    "action": "navigate",
+    "ok": true,
+    "raw": {
+      "navigated": true,
+      "hash": "#/perps/market/ETH"
+    },
+    "durationMs": 3
+  },
+  {
+    "id": "ac8-wait-detail",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-market-detail-page"
+    },
+    "durationMs": 51
+  },
+  {
+    "id": "ac8-open-modify-menu",
+    "action": "press",
+    "ok": true,
+    "raw": {
+      "clicked": true,
+      "target": "testId:perps-modify-cta-button"
+    },
+    "durationMs": 93
+  },
+  {
+    "id": "ac8-wait-modify-menu",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-modify-menu"
+    },
+    "durationMs": 54
+  },
+  {
+    "id": "ac8-open-add-exposure",
+    "action": "press",
+    "ok": true,
+    "raw": {
+      "clicked": true,
+      "target": "testId:perps-modify-menu-add-exposure"
+    },
+    "durationMs": 115
+  },
+  {
+    "id": "ac8-wait-order-entry",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-order-entry-page"
+    },
+    "durationMs": 36
+  },
+  {
+    "id": "ac8-shot-order-entry",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "/Users/deeeed/dev/metamask/metamask-extension-3/temp/agentic/recipes/test-artifacts/screenshots/after-07-order-entry-1776272127700.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 77
+  },
+  {
+    "id": "ac9-nav-withdraw",
+    "action": "navigate",
+    "ok": true,
+    "raw": {
+      "navigated": true,
+      "hash": "#/?tab=perps"
+    },
+    "durationMs": 3
+  },
+  {
+    "id": "ac9-wait-home",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-balance-dropdown"
+    },
+    "durationMs": 96
+  },
+  {
+    "id": "ac9-open-balance-dropdown",
+    "action": "press",
+    "ok": true,
+    "raw": {
+      "clicked": true,
+      "target": "testId:perps-balance-dropdown-balance"
+    },
+    "durationMs": 110
+  },
+  {
+    "id": "ac9-wait-balance-dropdown-panel",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-balance-dropdown-panel"
+    },
+    "durationMs": 93
+  },
+  {
+    "id": "ac9-open-withdraw",
+    "action": "press",
+    "ok": true,
+    "raw": {
+      "clicked": true,
+      "target": "testId:perps-balance-dropdown-withdraw"
+    },
+    "durationMs": 89
+  },
+  {
+    "id": "ac9-wait-withdraw",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-withdraw-page"
+    },
+    "durationMs": 37
+  },
+  {
+    "id": "ac9-shot-withdraw",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "/Users/deeeed/dev/metamask/metamask-extension-3/temp/agentic/recipes/test-artifacts/screenshots/after-08-withdraw-page-1776272128237.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 71
+  },
+  {
+    "id": "done",
+    "action": "end",
+    "status": "pass",
+    "durationMs": 0
+  }
+]

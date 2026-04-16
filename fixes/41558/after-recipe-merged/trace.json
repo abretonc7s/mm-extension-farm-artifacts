@@ -1,0 +1,116 @@
+[
+  {
+    "id": "ac1-nav-home",
+    "action": "navigate",
+    "ok": true,
+    "raw": {
+      "navigated": true,
+      "hash": "#/?tab=perps"
+    },
+    "durationMs": 3
+  },
+  {
+    "id": "ac1-wait-home",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-balance-dropdown"
+    },
+    "durationMs": 2410
+  },
+  {
+    "id": "ac1-shot-home",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "/Users/deeeed/dev/metamask/metamask-extension-3/temp/agentic/recipes/test-artifacts/screenshots/after-01-perps-home-1776270406217.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 262
+  },
+  {
+    "id": "ac2-nav-detail",
+    "action": "navigate",
+    "ok": true,
+    "raw": {
+      "navigated": true,
+      "hash": "#/perps/market/ETH"
+    },
+    "durationMs": 3
+  },
+  {
+    "id": "ac2-wait-detail",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-market-detail-page"
+    },
+    "durationMs": 54
+  },
+  {
+    "id": "ac2-check-position",
+    "action": "ext_check_dom",
+    "ok": true,
+    "raw": {
+      "visible": false
+    },
+    "durationMs": 1
+  },
+  {
+    "id": "ac2-branch-position",
+    "action": "switch",
+    "next": "ac2-open-order-entry",
+    "durationMs": 0
+  },
+  {
+    "id": "ac2-open-order-entry",
+    "action": "press",
+    "ok": true,
+    "raw": {
+      "clicked": true,
+      "target": "testId:perps-long-cta-button"
+    },
+    "durationMs": 61
+  },
+  {
+    "id": "ac2-wait-order-entry",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-order-entry-page"
+    },
+    "durationMs": 51
+  },
+  {
+    "id": "ac2-set-amount",
+    "action": "set_input",
+    "ok": true,
+    "raw": {
+      "filled": true,
+      "fallback": true
+    },
+    "durationMs": 47
+  },
+  {
+    "id": "ac2-submit-order",
+    "action": "press",
+    "ok": true,
+    "raw": {
+      "clicked": true,
+      "target": "testId:submit-order-button"
+    },
+    "durationMs": 86
+  },
+  {
+    "id": "ac2-wait-position",
+    "action": "wait_for",
+    "ok": false,
+    "raw": null,
+    "durationMs": 15080,
+    "error": "Wait timed out: locator.waitFor: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-testid=\"perps-position-cta-buttons\"]') to be visible\u001b[22m\n"
+  }
+]

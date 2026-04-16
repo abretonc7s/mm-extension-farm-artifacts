@@ -1,0 +1,313 @@
+[
+  {
+    "id": "btc-nav-market",
+    "action": "navigate",
+    "ok": true,
+    "raw": {
+      "navigated": true,
+      "hash": "#/perps/market/BTC"
+    },
+    "durationMs": 5
+  },
+  {
+    "id": "btc-wait-market",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-market-detail-page"
+    },
+    "durationMs": 67
+  },
+  {
+    "id": "btc-market-data",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"symbol\":\"BTC\",\"screen\":\"market_detail\",\"price\":\"$73,800\",\"change\":\"0.13%\"}",
+    "durationMs": 1
+  },
+  {
+    "id": "btc-open-order",
+    "action": "press",
+    "ok": true,
+    "raw": {
+      "clicked": true,
+      "target": "testId:perps-long-cta-button"
+    },
+    "durationMs": 127
+  },
+  {
+    "id": "btc-wait-order",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-order-entry-page"
+    },
+    "durationMs": 43
+  },
+  {
+    "id": "btc-order-data",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"symbol\":\"BTC\",\"screen\":\"order_entry\",\"price\":\"$73,800\",\"change\":\"0.12%\"}",
+    "durationMs": 1
+  },
+  {
+    "id": "eth-nav-market",
+    "action": "navigate",
+    "ok": true,
+    "raw": {
+      "navigated": true,
+      "hash": "#/perps/market/ETH"
+    },
+    "durationMs": 4
+  },
+  {
+    "id": "eth-wait-market",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-market-detail-page"
+    },
+    "durationMs": 69
+  },
+  {
+    "id": "eth-market-data",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"symbol\":\"ETH\",\"screen\":\"market_detail\",\"price\":\"$2,353.70\",\"change\":\"0.91%\"}",
+    "durationMs": 0
+  },
+  {
+    "id": "eth-check-position",
+    "action": "ext_check_dom",
+    "ok": true,
+    "raw": {
+      "visible": true
+    },
+    "durationMs": 2
+  },
+  {
+    "id": "eth-position-branch",
+    "action": "switch",
+    "next": "eth-open-modify-menu",
+    "durationMs": 0
+  },
+  {
+    "id": "eth-open-modify-menu",
+    "action": "press",
+    "ok": true,
+    "raw": {
+      "clicked": true,
+      "target": "testId:perps-modify-cta-button"
+    },
+    "durationMs": 106
+  },
+  {
+    "id": "eth-wait-modify-menu",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-modify-menu"
+    },
+    "durationMs": 69
+  },
+  {
+    "id": "eth-open-add-exposure",
+    "action": "press",
+    "ok": true,
+    "raw": {
+      "clicked": true,
+      "target": "testId:perps-modify-menu-add-exposure"
+    },
+    "durationMs": 108
+  },
+  {
+    "id": "eth-wait-order",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-order-entry-page"
+    },
+    "durationMs": 41
+  },
+  {
+    "id": "eth-order-data",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"symbol\":\"ETH\",\"screen\":\"order_entry\",\"price\":\"$2,353.70\",\"change\":\"0.91%\"}",
+    "durationMs": 0
+  },
+  {
+    "id": "sol-nav-market",
+    "action": "navigate",
+    "ok": true,
+    "raw": {
+      "navigated": true,
+      "hash": "#/perps/market/SOL"
+    },
+    "durationMs": 4
+  },
+  {
+    "id": "sol-wait-market",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-market-detail-page"
+    },
+    "durationMs": 44
+  },
+  {
+    "id": "sol-market-data",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"symbol\":\"SOL\",\"screen\":\"market_detail\",\"price\":\"$84.779\",\"change\":\"1.27%\"}",
+    "durationMs": 1
+  },
+  {
+    "id": "sol-open-order",
+    "action": "press",
+    "ok": true,
+    "raw": {
+      "clicked": true,
+      "target": "testId:perps-long-cta-button"
+    },
+    "durationMs": 88
+  },
+  {
+    "id": "sol-wait-order",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-order-entry-page"
+    },
+    "durationMs": 46
+  },
+  {
+    "id": "sol-order-data",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"symbol\":\"SOL\",\"screen\":\"order_entry\",\"price\":\"$84.779\",\"change\":\"1.27%\"}",
+    "durationMs": 1
+  },
+  {
+    "id": "fartcoin-nav-market",
+    "action": "navigate",
+    "ok": true,
+    "raw": {
+      "navigated": true,
+      "hash": "#/perps/market/FARTCOIN"
+    },
+    "durationMs": 3
+  },
+  {
+    "id": "fartcoin-wait-market",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-market-detail-page"
+    },
+    "durationMs": 44
+  },
+  {
+    "id": "fartcoin-market-data",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"symbol\":\"FARTCOIN\",\"screen\":\"market_detail\",\"price\":\"$0.2044\",\"change\":\"5.95%\"}",
+    "durationMs": 0
+  },
+  {
+    "id": "fartcoin-open-order",
+    "action": "press",
+    "ok": true,
+    "raw": {
+      "clicked": true,
+      "target": "testId:perps-long-cta-button"
+    },
+    "durationMs": 99
+  },
+  {
+    "id": "fartcoin-wait-order",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-order-entry-page"
+    },
+    "durationMs": 55
+  },
+  {
+    "id": "fartcoin-order-data",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"symbol\":\"FARTCOIN\",\"screen\":\"order_entry\",\"price\":\"$0.2044\",\"change\":\"5.95%\"}",
+    "durationMs": 1
+  },
+  {
+    "id": "pump-nav-market",
+    "action": "navigate",
+    "ok": true,
+    "raw": {
+      "navigated": true,
+      "hash": "#/perps/market/PUMP"
+    },
+    "durationMs": 4
+  },
+  {
+    "id": "pump-wait-market",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-market-detail-page"
+    },
+    "durationMs": 49
+  },
+  {
+    "id": "pump-market-data",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"symbol\":\"PUMP\",\"screen\":\"market_detail\",\"price\":\"$0.001905\",\"change\":\"3.81%\"}",
+    "durationMs": 0
+  },
+  {
+    "id": "pump-open-order",
+    "action": "press",
+    "ok": true,
+    "raw": {
+      "clicked": true,
+      "target": "testId:perps-long-cta-button"
+    },
+    "durationMs": 102
+  },
+  {
+    "id": "pump-wait-order",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-order-entry-page"
+    },
+    "durationMs": 51
+  },
+  {
+    "id": "pump-order-data",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"symbol\":\"PUMP\",\"screen\":\"order_entry\",\"price\":\"$0.001905\",\"change\":\"3.81%\"}",
+    "durationMs": 0
+  },
+  {
+    "id": "done",
+    "action": "end",
+    "status": "pass",
+    "durationMs": 0
+  }
+]

@@ -1,0 +1,79 @@
+{
+  "description": "",
+  "hooks": {
+    "pre_conditions": [
+      "wallet.unlocked"
+    ],
+    "setup": [],
+    "teardown": []
+  },
+  "inputs": {},
+  "sourcePath": "",
+  "title": "Parity snapshot — extension ETH reverse modal",
+  "workflow": {
+    "entry": "nav",
+    "nodes": {
+      "nav": {
+        "action": "navigate",
+        "target": "PerpsMarketDetails",
+        "params": {
+          "market": {
+            "symbol": "ETH"
+          }
+        },
+        "next": "wait",
+        "id": "nav"
+      },
+      "wait": {
+        "action": "wait_for",
+        "test_id": "perps-market-detail-page",
+        "timeout_ms": 10000,
+        "next": "open-modify-menu",
+        "id": "wait"
+      },
+      "open-modify-menu": {
+        "action": "press",
+        "test_id": "perps-modify-cta-button",
+        "next": "wait-menu",
+        "id": "open-modify-menu"
+      },
+      "wait-menu": {
+        "action": "wait_for",
+        "test_id": "perps-modify-menu",
+        "timeout_ms": 10000,
+        "next": "open-reverse",
+        "id": "wait-menu"
+      },
+      "open-reverse": {
+        "action": "press",
+        "test_id": "perps-modify-menu-reverse-position",
+        "next": "wait-modal",
+        "id": "open-reverse"
+      },
+      "wait-modal": {
+        "action": "wait_for",
+        "test_id": "perps-reverse-position-modal-save",
+        "timeout_ms": 10000,
+        "next": "extract",
+        "id": "wait-modal"
+      },
+      "extract": {
+        "action": "eval_sync",
+        "expression": "(function(){ function t(id){var el=document.querySelector('[data-testid=\"'+id+'\"]'); return el?((el.textContent||'').trim()||null):null;} return JSON.stringify({symbol:'ETH',screen:'reverse_modal',estSize:t('perps-reverse-est-size-value'),fees:t('perps-reverse-fee-value')}); })()",
+        "next": "close",
+        "id": "extract"
+      },
+      "close": {
+        "action": "press",
+        "test_id": "perps-reverse-position-modal-cancel",
+        "next": "done",
+        "id": "close"
+      },
+      "done": {
+        "action": "end",
+        "status": "pass",
+        "id": "done"
+      }
+    }
+  }
+}

@@ -1,0 +1,60 @@
+[
+  {
+    "id": "nav-home",
+    "action": "navigate",
+    "ok": true,
+    "raw": {
+      "navigated": true,
+      "hash": "#/?tab=perps"
+    },
+    "durationMs": 5
+  },
+  {
+    "id": "wait-home",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-balance-dropdown"
+    },
+    "durationMs": 140
+  },
+  {
+    "id": "open-balance",
+    "action": "press",
+    "ok": true,
+    "raw": {
+      "clicked": true,
+      "target": "testId:perps-balance-dropdown-balance"
+    },
+    "durationMs": 174
+  },
+  {
+    "id": "wait-panel",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-balance-dropdown-panel"
+    },
+    "durationMs": 106
+  },
+  {
+    "id": "open-page",
+    "action": "press",
+    "ok": true,
+    "raw": {
+      "clicked": true,
+      "target": "testId:perps-balance-dropdown-withdraw"
+    },
+    "durationMs": 80
+  },
+  {
+    "id": "wait-page",
+    "action": "wait_for",
+    "ok": false,
+    "raw": null,
+    "durationMs": 10031,
+    "error": "Wait timed out: locator.waitFor: Timeout 10000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-testid=\"perps-withdraw-page\"]') to be visible\u001b[22m\n"
+  }
+]

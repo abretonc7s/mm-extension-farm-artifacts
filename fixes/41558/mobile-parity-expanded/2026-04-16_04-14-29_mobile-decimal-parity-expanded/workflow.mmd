@@ -1,0 +1,35 @@
+flowchart TD
+  %% Mobile perps decimal parity expanded
+  __entry__(["ENTRY"]) --> node_btc_market
+  node_btc_market[["btc-market<br/>perps/parity-market-detail-snapshot"]]
+  node_btc_order[["btc-order<br/>perps/parity-order-entry-snapshot"]]
+  node_eth_market[["eth-market<br/>perps/parity-market-detail-snapshot"]]
+  node_eth_order[["eth-order<br/>perps/parity-order-entry-snapshot"]]
+  node_sol_market[["sol-market<br/>perps/parity-market-detail-snapshot"]]
+  node_fart_market[["fart-market<br/>perps/parity-market-detail-snapshot"]]
+  node_pump_market[["pump-market<br/>perps/parity-market-detail-snapshot"]]
+  node_open_eth_position[["open-eth-position<br/>perps/trade-open-market"]]
+  node_wait_eth_position["wait-eth-position<br/>wait_for"]
+  node_eth_position[["eth-position<br/>perps/parity-eth-position-detail"]]
+  node_eth_reverse[["eth-reverse<br/>perps/parity-eth-reverse-modal"]]
+  node_eth_remove_margin[["eth-remove-margin<br/>perps/parity-eth-remove-margin"]]
+  node_eth_close[["eth-close<br/>perps/parity-eth-close-position"]]
+  node_done(["done<br/>PASS"])
+  node_check_eth_position["check-eth-position<br/>eval_async"]
+  node_branch_eth_position{"branch-eth-position<br/>switch"}
+  node_btc_market --> node_btc_order
+  node_btc_order --> node_eth_market
+  node_eth_market --> node_eth_order
+  node_eth_order --> node_sol_market
+  node_sol_market --> node_fart_market
+  node_fart_market --> node_pump_market
+  node_pump_market --> node_check_eth_position
+  node_open_eth_position --> node_wait_eth_position
+  node_wait_eth_position --> node_eth_position
+  node_eth_position --> node_eth_reverse
+  node_eth_reverse --> node_eth_remove_margin
+  node_eth_remove_margin --> node_eth_close
+  node_eth_close --> node_done
+  node_check_eth_position --> node_branch_eth_position
+  node_branch_eth_position -->|vars.eth_position_present.found truthy| node_eth_position
+  node_branch_eth_position -->|default| node_open_eth_position

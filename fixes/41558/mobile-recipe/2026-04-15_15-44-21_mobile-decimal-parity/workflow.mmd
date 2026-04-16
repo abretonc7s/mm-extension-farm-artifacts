@@ -1,0 +1,54 @@
+flowchart TD
+  %% Mobile perps decimal parity reference
+  __entry__(["ENTRY"]) --> node_ac1_home
+  node_ac1_home["ac1-home<br/>navigate"]
+  node_ac1_home_wait["ac1-home-wait<br/>wait_for"]
+  node_ac1_home_shot["ac1-home-shot<br/>screenshot"]
+  node_ac2_market[["ac2-market<br/>perps/market-discovery"]]
+  node_ac2_market_shot["ac2-market-shot<br/>screenshot"]
+  node_ac3_order_press["ac3-order-press<br/>press"]
+  node_ac3_order_wait["ac3-order-wait<br/>wait_for"]
+  node_ac3_order_shot["ac3-order-shot<br/>screenshot"]
+  node_ac4_market_reset["ac4-market-reset<br/>navigate"]
+  node_ac4_flip_wait["ac4-flip-wait<br/>wait_for"]
+  node_ac4_flip_press["ac4-flip-press<br/>press"]
+  node_ac4_flip_sheet["ac4-flip-sheet<br/>wait_for"]
+  node_ac4_flip_shot["ac4-flip-shot<br/>screenshot"]
+  node_ac5_market_reset["ac5-market-reset<br/>navigate"]
+  node_ac5_margin_wait["ac5-margin-wait<br/>wait_for"]
+  node_ac5_margin_press["ac5-margin-press<br/>press"]
+  node_ac5_reduce_wait["ac5-reduce-wait<br/>wait_for"]
+  node_ac5_reduce_press["ac5-reduce-press<br/>press"]
+  node_ac5_adjust_wait["ac5-adjust-wait<br/>wait_for"]
+  node_ac5_adjust_shot["ac5-adjust-shot<br/>screenshot"]
+  node_ac6_market_reset["ac6-market-reset<br/>navigate"]
+  node_ac6_close_wait["ac6-close-wait<br/>wait_for"]
+  node_ac6_close_press["ac6-close-press<br/>press"]
+  node_ac6_close_route["ac6-close-route<br/>wait_for"]
+  node_ac6_close_shot["ac6-close-shot<br/>screenshot"]
+  node_done(["done<br/>PASS"])
+  node_ac1_home --> node_ac1_home_wait
+  node_ac1_home_wait --> node_ac1_home_shot
+  node_ac1_home_shot --> node_ac2_market
+  node_ac2_market --> node_ac2_market_shot
+  node_ac2_market_shot --> node_ac3_order_press
+  node_ac3_order_press --> node_ac3_order_wait
+  node_ac3_order_wait --> node_ac3_order_shot
+  node_ac3_order_shot --> node_ac4_market_reset
+  node_ac4_market_reset --> node_ac4_flip_wait
+  node_ac4_flip_wait --> node_ac4_flip_press
+  node_ac4_flip_press --> node_ac4_flip_sheet
+  node_ac4_flip_sheet --> node_ac4_flip_shot
+  node_ac4_flip_shot --> node_ac5_market_reset
+  node_ac5_market_reset --> node_ac5_margin_wait
+  node_ac5_margin_wait --> node_ac5_margin_press
+  node_ac5_margin_press --> node_ac5_reduce_wait
+  node_ac5_reduce_wait --> node_ac5_reduce_press
+  node_ac5_reduce_press --> node_ac5_adjust_wait
+  node_ac5_adjust_wait --> node_ac5_adjust_shot
+  node_ac5_adjust_shot --> node_ac6_market_reset
+  node_ac6_market_reset --> node_ac6_close_wait
+  node_ac6_close_wait --> node_ac6_close_press
+  node_ac6_close_press --> node_ac6_close_route
+  node_ac6_close_route --> node_ac6_close_shot
+  node_ac6_close_shot --> node_done

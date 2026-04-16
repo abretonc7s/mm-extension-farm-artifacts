@@ -1,0 +1,12 @@
+flowchart TD
+  %% Parity snapshot — extension market detail SOL
+  __entry__(["ENTRY"]) --> node_nav
+  node_nav["nav<br/>navigate"]
+  node_wait["wait<br/>wait_for"]
+  node_extract["extract<br/>eval_sync"]
+  node_done(["done<br/>PASS"])
+  node_wait_price["wait-price<br/>wait_for"]
+  node_nav --> node_wait
+  node_wait --> node_wait_price
+  node_extract --> node_done
+  node_wait_price --> node_extract

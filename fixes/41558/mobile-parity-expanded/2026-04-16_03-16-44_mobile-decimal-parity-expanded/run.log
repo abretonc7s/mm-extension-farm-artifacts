@@ -1,0 +1,158 @@
+Running recipe: Mobile perps decimal parity expanded
+Team: perps
+Pre-conditions: wallet.unlocked, perps.feature_enabled
+Setup: 4 step(s)
+Teardown: 1 step(s)
+Workflow nodes: 89
+
+Pre-conditions: PASS
+
+Setup hooks:
+[setup-account] call perps/select-account
+  > Running recipe: Select — switch to account 0x8dc623e964475d4d669da601fd15ea9125469003 and verify
+  > Team: perps
+  > Pre-conditions: wallet.unlocked
+  > Workflow nodes: 3
+
+Pre-conditions: PASS
+
+[switch-account] select account 0x8dc623e964475d4d669da601fd15ea9125469003
+  result: {"address":"0x8dc623e964475d4d669da601fd15ea9125469003","id":"0285a92b-905c-4814-8a16-52fe1db60357","name":"","switched":true}
+  PASS
+
+[wait-switch] wait for condition
+  result: {"address":"0x8dc623e964475d4d669da601fd15ea9125469003"}
+  PASS
+
+----------------------------------------
+Results: 2/2 passed
+Recipe: PASS
+
+  flow: perps/select-account
+  PASS
+
+[setup-testnet] call perps/setup-testnet
+  > Running recipe: Setup — enable testnet and verify market data loads
+  > Team: perps
+  > Pre-conditions: wallet.unlocked, perps.feature_enabled
+  > Workflow nodes: 4
+
+Pre-conditions: PASS
+
+[enable-testnet] toggle testnet=true
+  result: {"ok":true,"already":true}
+  PASS
+
+[wait-reload] wait for condition
+  result: {"isTestnet":true}
+  PASS
+
+[verify-markets] eval ref markets
+  result: [{"symbol":"SOL","price":"$85.385","change24h":"+2.16%"},{"symbol":"APT","price":"$0.9023","change24h":"+4.12%"},{"symbol":"ATOM","price":"$1.7766","change24h":"+1.38%"},{"symbol":"BTC","price":"$75,251","change24h":"-0....
+  PASS
+
+----------------------------------------
+Results: 3/3 passed
+Recipe: PASS
+
+  flow: perps/setup-testnet
+  PASS
+
+[setup-clear-eth] eval_async
+  result: {"cleared":true}
+  PASS
+
+[setup-wait-no-eth] wait for condition
+  result: {"found":false}
+  PASS
+
+[btc-nav-market] navigate to PerpsMarketDetails
+  result: {"navigated":"PerpsMarketDetails","params":{"market":{"symbol":"BTC","name":"BTC","price":"0","change24h":"0","change24hPercent":"0","volume":"0","maxLeverage":"100"}},"previousRoute":{"key":"RedesignedConfirmations-pvFc...
+  PASS
+
+[btc-wait-market] wait for PerpsMarketDetails
+  result: {"route":"PerpsMarketDetails"}
+  PASS
+
+[btc-market-extract] eval_sync
+  result: {"symbol":"BTC","screen":"market_detail","price":"$75,267","change":"-0.63%","oracle":null}
+  PASS
+
+[btc-open-order] press perps-market-details-long-button
+  result: {"ok":true,"testId":"perps-market-details-long-button","deviceName":"mm-1"}
+  PASS
+
+[btc-wait-order] wait for perps-amount-display-touchable
+  result: {"visible":true}
+  PASS
+
+[btc-press-amount] press perps-amount-display-touchable
+  result: {"ok":true,"testId":"perps-amount-display-touchable","deviceName":"mm-1"}
+  PASS
+
+[btc-wait-keypad] wait for keypad-delete-button
+  result: {"visible":true}
+  PASS
+
+[btc-clear-keypad] clear keypad x8
+  result: {"ok":true,"deleted":8}
+  PASS
+
+[btc-type-amount] type 11
+  result: {"ok":true,"value":"11"}
+  PASS
+
+[btc-press-done] press perps-order-view-keypad-done
+  result: {"ok":true,"testId":"perps-order-view-keypad-done","deviceName":"mm-1"}
+  PASS
+
+[btc-wait-summary] wait 500ms
+  waited 500ms
+  PASS
+
+[btc-order-extract] eval_sync
+  result: {"symbol":"BTC","screen":"order_entry","price":"$75,245","change":"-0.64%","margin":"$3.75","liquidationPrice":"$50,798","fees":"$11"}
+  PASS
+
+[eth-nav-market] navigate to PerpsMarketDetails
+  result: {"navigated":"PerpsMarketDetails","params":{"market":{"symbol":"ETH","name":"ETH","price":"0","change24h":"0","change24hPercent":"0","volume":"0","maxLeverage":"100"}},"previousRoute":{"key":"RedesignedConfirmations-RqfB...
+  PASS
+
+[eth-wait-market] wait for PerpsMarketDetails
+  result: {"route":"PerpsMarketDetails"}
+  PASS
+
+[eth-market-extract] eval_sync
+  result: {"symbol":"ETH","screen":"market_detail","price":"$2,365.7","change":"+1.55%","oracle":null}
+  PASS
+
+[eth-open-order] press perps-market-details-long-button
+  result: {"ok":true,"testId":"perps-market-details-long-button","deviceName":"mm-1"}
+  PASS
+
+[eth-wait-order] wait for perps-amount-display-touchable
+  result: {"visible":true}
+  PASS
+
+[eth-press-amount] press perps-amount-display-touchable
+  result: {"ok":true,"testId":"perps-amount-display-touchable","deviceName":"mm-1"}
+  PASS
+
+[eth-wait-keypad] wait for keypad-delete-button
+  result: {"visible":true}
+  PASS
+
+[eth-clear-keypad] clear keypad x8
+  result: {"ok":true,"deleted":8}
+  PASS
+
+[eth-type-amount] type 11
+  result: {"ok":true,"value":"11"}
+  PASS
+
+[eth-press-done] press perps-order-view-keypad-done
+  result: {"ok":true,"testId":"perps-order-view-keypad-done","deviceName":"mm-1"}
+  PASS
+
+[eth-wait-summary] wait 500ms
+  waited 500ms

@@ -1,0 +1,32 @@
+[
+  {
+    "id": "nav",
+    "action": "navigate",
+    "ok": true,
+    "raw": {
+      "navigated": true,
+      "hash": "#/perps/market/BTC"
+    },
+    "durationMs": 3
+  },
+  {
+    "id": "wait",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-market-detail-page"
+    },
+    "durationMs": 45
+  },
+  {
+    "id": "wait-price",
+    "action": "wait_for",
+    "ok": false,
+    "raw": {
+      "timeout": true
+    },
+    "durationMs": 15066,
+    "error": "Timed out polling expression for node \"wait-price\""
+  }
+]

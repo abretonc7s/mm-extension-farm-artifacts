@@ -1,0 +1,507 @@
+{
+  "env": {
+    "appRoot": "/Users/deeeed/dev/metamask/metamask-mobile-1",
+    "recipePath": "/tmp/mobile-eth-add-exposure-11.json",
+    "team": ""
+  },
+  "inputs": {},
+  "last": {
+    "message": "",
+    "status": "pass"
+  },
+  "nodes": {
+    "nav": {
+      "action": "navigate",
+      "description": "navigate to PerpsMarketDetails",
+      "finishedAt": "2026-04-16T08:35:34.286Z",
+      "id": "nav",
+      "status": "pass",
+      "startedAt": "2026-04-16T08:35:33.499Z",
+      "durationMs": 787,
+      "next": "wait-market",
+      "result": {
+        "navigated": "PerpsMarketDetails",
+        "params": {
+          "market": {
+            "symbol": "ETH",
+            "name": "ETH",
+            "price": "0",
+            "change24h": "0",
+            "change24hPercent": "0",
+            "volume": "0",
+            "maxLeverage": "100"
+          }
+        },
+        "previousRoute": {
+          "key": "RedesignedConfirmations-NEHfe2nHB-FF5rbCUTv-J",
+          "name": "RedesignedConfirmations",
+          "params": {
+            "asset": "ETH",
+            "direction": "long",
+            "existingPosition": {
+              "cumulativeFunding": {
+                "allTime": "0.459332",
+                "sinceChange": "0.008186",
+                "sinceOpen": "0.008186"
+              },
+              "entryPrice": "2362.2",
+              "leverage": {
+                "rawUsd": "-7.421571",
+                "type": "isolated",
+                "value": 3
+              },
+              "liquidationPrice": "1611.2833260964",
+              "marginUsed": "3.615439",
+              "maxLeverage": 25,
+              "positionValue": "11.03701",
+              "returnOnEquity": "-0.0176530353",
+              "size": "0.0047",
+              "stopLossCount": 0,
+              "symbol": "ETH",
+              "takeProfitCount": 0,
+              "unrealizedPnl": "-0.06533"
+            },
+            "hideTPSL": true,
+            "showPerpsHeader": false,
+            "source": "position_screen"
+          }
+        },
+        "currentRoute": {
+          "key": "PerpsMarketDetails-rM0q9foTPpUC9QsTZvkVC",
+          "name": "PerpsMarketDetails",
+          "params": {
+            "market": {
+              "change24h": "0",
+              "change24hPercent": "0",
+              "maxLeverage": "100",
+              "name": "ETH",
+              "price": "0",
+              "symbol": "ETH",
+              "volume": "0"
+            }
+          }
+        },
+        "deviceName": "mm-1",
+        "platform": "ios"
+      }
+    },
+    "wait-market": {
+      "action": "wait_for",
+      "description": "wait for PerpsMarketDetails",
+      "finishedAt": "2026-04-16T08:35:34.445Z",
+      "id": "wait-market",
+      "status": "pass",
+      "startedAt": "2026-04-16T08:35:34.286Z",
+      "durationMs": 159,
+      "next": "open-modify",
+      "result": {
+        "route": "PerpsMarketDetails"
+      }
+    },
+    "open-modify": {
+      "action": "press",
+      "description": "press perps-market-details-modify-button",
+      "finishedAt": "2026-04-16T08:35:34.917Z",
+      "id": "open-modify",
+      "status": "pass",
+      "startedAt": "2026-04-16T08:35:34.445Z",
+      "durationMs": 472,
+      "next": "press-increase",
+      "result": {
+        "ok": true,
+        "testId": "perps-market-details-modify-button",
+        "deviceName": "mm-1"
+      }
+    },
+    "press-increase": {
+      "action": "eval_sync",
+      "description": "eval_sync",
+      "finishedAt": "2026-04-16T08:35:35.146Z",
+      "id": "press-increase",
+      "status": "pass",
+      "startedAt": "2026-04-16T08:35:34.917Z",
+      "durationMs": 229,
+      "next": "wait-order",
+      "result": {
+        "ok": true,
+        "text": "Increase exposure"
+      }
+    },
+    "wait-order": {
+      "action": "wait_for",
+      "description": "wait for perps-amount-display-touchable",
+      "finishedAt": "2026-04-16T08:35:39.046Z",
+      "id": "wait-order",
+      "status": "pass",
+      "startedAt": "2026-04-16T08:35:35.146Z",
+      "durationMs": 3900,
+      "next": "press-amount",
+      "result": {
+        "visible": true
+      }
+    },
+    "press-amount": {
+      "action": "press",
+      "description": "press perps-amount-display-touchable",
+      "finishedAt": "2026-04-16T08:35:39.994Z",
+      "id": "press-amount",
+      "status": "pass",
+      "startedAt": "2026-04-16T08:35:39.046Z",
+      "durationMs": 948,
+      "next": "wait-keypad",
+      "result": {
+        "ok": true,
+        "testId": "perps-amount-display-touchable",
+        "deviceName": "mm-1"
+      }
+    },
+    "wait-keypad": {
+      "action": "wait_for",
+      "description": "wait for keypad-delete-button",
+      "finishedAt": "2026-04-16T08:35:40.164Z",
+      "id": "wait-keypad",
+      "status": "pass",
+      "startedAt": "2026-04-16T08:35:39.994Z",
+      "durationMs": 170,
+      "next": "clear",
+      "result": {
+        "visible": true
+      }
+    },
+    "clear": {
+      "action": "clear_keypad",
+      "description": "clear keypad x8",
+      "finishedAt": "2026-04-16T08:35:44.172Z",
+      "id": "clear",
+      "status": "pass",
+      "startedAt": "2026-04-16T08:35:40.164Z",
+      "durationMs": 4008,
+      "next": "type",
+      "result": {
+        "ok": true,
+        "deleted": 8
+      }
+    },
+    "type": {
+      "action": "type_keypad",
+      "description": "type 11",
+      "finishedAt": "2026-04-16T08:35:45.364Z",
+      "id": "type",
+      "status": "pass",
+      "startedAt": "2026-04-16T08:35:44.172Z",
+      "durationMs": 1192,
+      "next": "done-keypad",
+      "result": {
+        "ok": true,
+        "value": "11"
+      }
+    },
+    "done-keypad": {
+      "action": "press",
+      "description": "press perps-order-view-keypad-done",
+      "finishedAt": "2026-04-16T08:35:47.695Z",
+      "id": "done-keypad",
+      "status": "pass",
+      "startedAt": "2026-04-16T08:35:45.364Z",
+      "durationMs": 2331,
+      "next": "wait-summary",
+      "result": {
+        "ok": true,
+        "testId": "perps-order-view-keypad-done",
+        "deviceName": "mm-1"
+      }
+    },
+    "wait-summary": {
+      "action": "wait",
+      "description": "wait 1500ms",
+      "finishedAt": "2026-04-16T08:35:49.448Z",
+      "id": "wait-summary",
+      "status": "pass",
+      "startedAt": "2026-04-16T08:35:47.695Z",
+      "durationMs": 1753,
+      "next": "extract",
+      "result": {
+        "waitedMs": 1500
+      }
+    },
+    "extract": {
+      "action": "eval_sync",
+      "description": "eval_sync",
+      "finishedAt": "2026-04-16T08:35:49.628Z",
+      "id": "extract",
+      "status": "pass",
+      "startedAt": "2026-04-16T08:35:49.448Z",
+      "durationMs": 180,
+      "next": "done",
+      "result": {
+        "symbol": "ETH",
+        "screen": "order_entry",
+        "price": "$2,348.5",
+        "change": "+0.86%",
+        "margin": "$3.67",
+        "liquidationPrice": "$1,597.6",
+        "fees": "$0.02"
+      }
+    },
+    "done": {
+      "action": "end",
+      "description": "pass end",
+      "finishedAt": "2026-04-16T08:35:49.628Z",
+      "id": "done",
+      "status": "pass",
+      "note": "",
+      "result": {
+        "message": "",
+        "status": "pass"
+      }
+    }
+  },
+  "trace": [
+    {
+      "action": "navigate",
+      "description": "navigate to PerpsMarketDetails",
+      "finishedAt": "2026-04-16T08:35:34.286Z",
+      "id": "nav",
+      "status": "pass",
+      "startedAt": "2026-04-16T08:35:33.499Z",
+      "durationMs": 787,
+      "next": "wait-market",
+      "result": {
+        "navigated": "PerpsMarketDetails",
+        "params": {
+          "market": {
+            "symbol": "ETH",
+            "name": "ETH",
+            "price": "0",
+            "change24h": "0",
+            "change24hPercent": "0",
+            "volume": "0",
+            "maxLeverage": "100"
+          }
+        },
+        "previousRoute": {
+          "key": "RedesignedConfirmations-NEHfe2nHB-FF5rbCUTv-J",
+          "name": "RedesignedConfirmations",
+          "params": {
+            "asset": "ETH",
+            "direction": "long",
+            "existingPosition": {
+              "cumulativeFunding": {
+                "allTime": "0.459332",
+                "sinceChange": "0.008186",
+                "sinceOpen": "0.008186"
+              },
+              "entryPrice": "2362.2",
+              "leverage": {
+                "rawUsd": "-7.421571",
+                "type": "isolated",
+                "value": 3
+              },
+              "liquidationPrice": "1611.2833260964",
+              "marginUsed": "3.615439",
+              "maxLeverage": 25,
+              "positionValue": "11.03701",
+              "returnOnEquity": "-0.0176530353",
+              "size": "0.0047",
+              "stopLossCount": 0,
+              "symbol": "ETH",
+              "takeProfitCount": 0,
+              "unrealizedPnl": "-0.06533"
+            },
+            "hideTPSL": true,
+            "showPerpsHeader": false,
+            "source": "position_screen"
+          }
+        },
+        "currentRoute": {
+          "key": "PerpsMarketDetails-rM0q9foTPpUC9QsTZvkVC",
+          "name": "PerpsMarketDetails",
+          "params": {
+            "market": {
+              "change24h": "0",
+              "change24hPercent": "0",
+              "maxLeverage": "100",
+              "name": "ETH",
+              "price": "0",
+              "symbol": "ETH",
+              "volume": "0"
+            }
+          }
+        },
+        "deviceName": "mm-1",
+        "platform": "ios"
+      }
+    },
+    {
+      "action": "wait_for",
+      "description": "wait for PerpsMarketDetails",
+      "finishedAt": "2026-04-16T08:35:34.445Z",
+      "id": "wait-market",
+      "status": "pass",
+      "startedAt": "2026-04-16T08:35:34.286Z",
+      "durationMs": 159,
+      "next": "open-modify",
+      "result": {
+        "route": "PerpsMarketDetails"
+      }
+    },
+    {
+      "action": "press",
+      "description": "press perps-market-details-modify-button",
+      "finishedAt": "2026-04-16T08:35:34.917Z",
+      "id": "open-modify",
+      "status": "pass",
+      "startedAt": "2026-04-16T08:35:34.445Z",
+      "durationMs": 472,
+      "next": "press-increase",
+      "result": {
+        "ok": true,
+        "testId": "perps-market-details-modify-button",
+        "deviceName": "mm-1"
+      }
+    },
+    {
+      "action": "eval_sync",
+      "description": "eval_sync",
+      "finishedAt": "2026-04-16T08:35:35.146Z",
+      "id": "press-increase",
+      "status": "pass",
+      "startedAt": "2026-04-16T08:35:34.917Z",
+      "durationMs": 229,
+      "next": "wait-order",
+      "result": {
+        "ok": true,
+        "text": "Increase exposure"
+      }
+    },
+    {
+      "action": "wait_for",
+      "description": "wait for perps-amount-display-touchable",
+      "finishedAt": "2026-04-16T08:35:39.046Z",
+      "id": "wait-order",
+      "status": "pass",
+      "startedAt": "2026-04-16T08:35:35.146Z",
+      "durationMs": 3900,
+      "next": "press-amount",
+      "result": {
+        "visible": true
+      }
+    },
+    {
+      "action": "press",
+      "description": "press perps-amount-display-touchable",
+      "finishedAt": "2026-04-16T08:35:39.994Z",
+      "id": "press-amount",
+      "status": "pass",
+      "startedAt": "2026-04-16T08:35:39.046Z",
+      "durationMs": 948,
+      "next": "wait-keypad",
+      "result": {
+        "ok": true,
+        "testId": "perps-amount-display-touchable",
+        "deviceName": "mm-1"
+      }
+    },
+    {
+      "action": "wait_for",
+      "description": "wait for keypad-delete-button",
+      "finishedAt": "2026-04-16T08:35:40.164Z",
+      "id": "wait-keypad",
+      "status": "pass",
+      "startedAt": "2026-04-16T08:35:39.994Z",
+      "durationMs": 170,
+      "next": "clear",
+      "result": {
+        "visible": true
+      }
+    },
+    {
+      "action": "clear_keypad",
+      "description": "clear keypad x8",
+      "finishedAt": "2026-04-16T08:35:44.172Z",
+      "id": "clear",
+      "status": "pass",
+      "startedAt": "2026-04-16T08:35:40.164Z",
+      "durationMs": 4008,
+      "next": "type",
+      "result": {
+        "ok": true,
+        "deleted": 8
+      }
+    },
+    {
+      "action": "type_keypad",
+      "description": "type 11",
+      "finishedAt": "2026-04-16T08:35:45.364Z",
+      "id": "type",
+      "status": "pass",
+      "startedAt": "2026-04-16T08:35:44.172Z",
+      "durationMs": 1192,
+      "next": "done-keypad",
+      "result": {
+        "ok": true,
+        "value": "11"
+      }
+    },
+    {
+      "action": "press",
+      "description": "press perps-order-view-keypad-done",
+      "finishedAt": "2026-04-16T08:35:47.695Z",
+      "id": "done-keypad",
+      "status": "pass",
+      "startedAt": "2026-04-16T08:35:45.364Z",
+      "durationMs": 2331,
+      "next": "wait-summary",
+      "result": {
+        "ok": true,
+        "testId": "perps-order-view-keypad-done",
+        "deviceName": "mm-1"
+      }
+    },
+    {
+      "action": "wait",
+      "description": "wait 1500ms",
+      "finishedAt": "2026-04-16T08:35:49.448Z",
+      "id": "wait-summary",
+      "status": "pass",
+      "startedAt": "2026-04-16T08:35:47.695Z",
+      "durationMs": 1753,
+      "next": "extract",
+      "result": {
+        "waitedMs": 1500
+      }
+    },
+    {
+      "action": "eval_sync",
+      "description": "eval_sync",
+      "finishedAt": "2026-04-16T08:35:49.628Z",
+      "id": "extract",
+      "status": "pass",
+      "startedAt": "2026-04-16T08:35:49.448Z",
+      "durationMs": 180,
+      "next": "done",
+      "result": {
+        "symbol": "ETH",
+        "screen": "order_entry",
+        "price": "$2,348.5",
+        "change": "+0.86%",
+        "margin": "$3.67",
+        "liquidationPrice": "$1,597.6",
+        "fees": "$0.02"
+      }
+    },
+    {
+      "action": "end",
+      "description": "pass end",
+      "finishedAt": "2026-04-16T08:35:49.628Z",
+      "id": "done",
+      "status": "pass",
+      "note": "",
+      "result": {
+        "message": "",
+        "status": "pass"
+      }
+    }
+  ],
+  "vars": {}
+}

@@ -1,0 +1,438 @@
+{
+  "env": {
+    "appRoot": "/Users/deeeed/dev/metamask/metamask-mobile-1",
+    "recipePath": "/Users/deeeed/dev/metamask/metamask-mobile-1/scripts/perps/agentic/teams/perps/recipes/mobile-decimal-parity-expanded.json",
+    "team": "perps"
+  },
+  "inputs": {},
+  "last": {
+    "cleared": true
+  },
+  "nodes": {
+    "setup-account": {
+      "action": "call",
+      "description": "call perps/select-account",
+      "finishedAt": "2026-04-16T03:13:05.076Z",
+      "id": "setup-account",
+      "status": "pass",
+      "startedAt": "2026-04-16T03:13:04.465Z",
+      "durationMs": 611,
+      "next": "",
+      "result": {
+        "ref": "perps/select-account",
+        "title": "Select — switch to account 0x8dc623e964475d4d669da601fd15ea9125469003 and verify",
+        "counts": {
+          "total": 2,
+          "passed": 2,
+          "skipped": 0
+        }
+      }
+    },
+    "setup-testnet": {
+      "action": "call",
+      "description": "call perps/setup-testnet",
+      "finishedAt": "2026-04-16T03:13:06.303Z",
+      "id": "setup-testnet",
+      "status": "pass",
+      "startedAt": "2026-04-16T03:13:05.076Z",
+      "durationMs": 1227,
+      "next": "",
+      "result": {
+        "ref": "perps/setup-testnet",
+        "title": "Setup — enable testnet and verify market data loads",
+        "counts": {
+          "total": 3,
+          "passed": 3,
+          "skipped": 0
+        }
+      }
+    },
+    "setup-clear-eth": {
+      "action": "eval_async",
+      "description": "eval_async",
+      "finishedAt": "2026-04-16T03:13:06.685Z",
+      "id": "setup-clear-eth",
+      "status": "pass",
+      "startedAt": "2026-04-16T03:13:06.303Z",
+      "durationMs": 382,
+      "next": "",
+      "result": {
+        "cleared": true
+      }
+    },
+    "setup-wait-no-eth": {
+      "action": "wait_for",
+      "description": "wait for condition",
+      "finishedAt": "2026-04-16T03:13:07.098Z",
+      "id": "setup-wait-no-eth",
+      "status": "pass",
+      "startedAt": "2026-04-16T03:13:06.685Z",
+      "durationMs": 413,
+      "next": "",
+      "result": {
+        "found": false
+      }
+    },
+    "btc-nav-market": {
+      "action": "navigate",
+      "description": "navigate to PerpsMarketDetails",
+      "finishedAt": "2026-04-16T03:13:07.865Z",
+      "id": "btc-nav-market",
+      "status": "pass",
+      "startedAt": "2026-04-16T03:13:07.098Z",
+      "durationMs": 767,
+      "next": "btc-wait-market",
+      "result": {
+        "navigated": "PerpsMarketDetails",
+        "params": {
+          "market": {
+            "symbol": "BTC",
+            "name": "BTC",
+            "price": "0",
+            "change24h": "0",
+            "change24hPercent": "0",
+            "volume": "0",
+            "maxLeverage": "100"
+          }
+        },
+        "previousRoute": {
+          "key": "PerpsMarketListView-AA4wxOJZ7IOrecBr8cPO0",
+          "name": "PerpsMarketListView"
+        },
+        "currentRoute": {
+          "key": "PerpsMarketDetails-yg63UIrim3BIJDIHfumwP",
+          "name": "PerpsMarketDetails",
+          "params": {
+            "market": {
+              "change24h": "0",
+              "change24hPercent": "0",
+              "maxLeverage": "100",
+              "name": "BTC",
+              "price": "0",
+              "symbol": "BTC",
+              "volume": "0"
+            }
+          }
+        },
+        "deviceName": "mm-1",
+        "platform": "ios"
+      }
+    },
+    "btc-wait-market": {
+      "action": "wait_for",
+      "description": "wait for PerpsMarketDetails",
+      "finishedAt": "2026-04-16T03:13:09.024Z",
+      "id": "btc-wait-market",
+      "status": "pass",
+      "startedAt": "2026-04-16T03:13:07.865Z",
+      "durationMs": 1159,
+      "next": "btc-market-extract",
+      "result": {
+        "route": "PerpsMarketDetails"
+      }
+    },
+    "btc-market-extract": {
+      "action": "eval_sync",
+      "description": "eval_sync",
+      "finishedAt": "2026-04-16T03:13:13.334Z",
+      "id": "btc-market-extract",
+      "status": "pass",
+      "startedAt": "2026-04-16T03:13:09.024Z",
+      "durationMs": 4310,
+      "next": "btc-open-order",
+      "result": {
+        "symbol": "BTC",
+        "screen": "market_detail",
+        "price": "$75,174",
+        "change": "-0.56%",
+        "oracle": null
+      }
+    },
+    "btc-open-order": {
+      "action": "navigate",
+      "description": "navigate to RedesignedConfirmations",
+      "finishedAt": "2026-04-16T03:13:14.631Z",
+      "id": "btc-open-order",
+      "status": "pass",
+      "startedAt": "2026-04-16T03:13:13.334Z",
+      "durationMs": 1297,
+      "next": "btc-wait-order",
+      "result": {
+        "navigated": "RedesignedConfirmations",
+        "params": {
+          "asset": "BTC",
+          "direction": "long",
+          "showPerpsHeader": false,
+          "source": "perp_asset_screen"
+        },
+        "previousRoute": {
+          "key": "PerpsMarketDetails-yg63UIrim3BIJDIHfumwP",
+          "name": "PerpsMarketDetails",
+          "params": {
+            "market": {
+              "change24h": "0",
+              "change24hPercent": "0",
+              "maxLeverage": "100",
+              "name": "BTC",
+              "price": "0",
+              "symbol": "BTC",
+              "volume": "0"
+            }
+          }
+        },
+        "currentRoute": {
+          "key": "RedesignedConfirmations-I64FZLD9qHf2FucKlCRMt",
+          "name": "RedesignedConfirmations",
+          "params": {
+            "asset": "BTC",
+            "direction": "long",
+            "showPerpsHeader": false,
+            "source": "perp_asset_screen"
+          }
+        },
+        "deviceName": "mm-1",
+        "platform": "ios"
+      }
+    },
+    "btc-wait-order": {
+      "action": "wait_for",
+      "description": "wait for RedesignedConfirmations",
+      "finishedAt": "2026-04-16T03:13:14.823Z",
+      "id": "btc-wait-order",
+      "status": "pass",
+      "startedAt": "2026-04-16T03:13:14.631Z",
+      "durationMs": 192,
+      "next": "btc-press-amount",
+      "result": {
+        "route": "RedesignedConfirmations"
+      }
+    },
+    "teardown-close-eth": {
+      "action": "eval_async",
+      "description": "eval_async",
+      "finishedAt": "2026-04-16T03:13:19.121Z",
+      "id": "teardown-close-eth",
+      "status": "pass",
+      "startedAt": "2026-04-16T03:13:18.568Z",
+      "durationMs": 553,
+      "next": "",
+      "result": {
+        "cleared": true
+      }
+    }
+  },
+  "trace": [
+    {
+      "action": "call",
+      "description": "call perps/select-account",
+      "finishedAt": "2026-04-16T03:13:05.076Z",
+      "id": "setup-account",
+      "status": "pass",
+      "startedAt": "2026-04-16T03:13:04.465Z",
+      "durationMs": 611,
+      "next": "",
+      "result": {
+        "ref": "perps/select-account",
+        "title": "Select — switch to account 0x8dc623e964475d4d669da601fd15ea9125469003 and verify",
+        "counts": {
+          "total": 2,
+          "passed": 2,
+          "skipped": 0
+        }
+      }
+    },
+    {
+      "action": "call",
+      "description": "call perps/setup-testnet",
+      "finishedAt": "2026-04-16T03:13:06.303Z",
+      "id": "setup-testnet",
+      "status": "pass",
+      "startedAt": "2026-04-16T03:13:05.076Z",
+      "durationMs": 1227,
+      "next": "",
+      "result": {
+        "ref": "perps/setup-testnet",
+        "title": "Setup — enable testnet and verify market data loads",
+        "counts": {
+          "total": 3,
+          "passed": 3,
+          "skipped": 0
+        }
+      }
+    },
+    {
+      "action": "eval_async",
+      "description": "eval_async",
+      "finishedAt": "2026-04-16T03:13:06.685Z",
+      "id": "setup-clear-eth",
+      "status": "pass",
+      "startedAt": "2026-04-16T03:13:06.303Z",
+      "durationMs": 382,
+      "next": "",
+      "result": {
+        "cleared": true
+      }
+    },
+    {
+      "action": "wait_for",
+      "description": "wait for condition",
+      "finishedAt": "2026-04-16T03:13:07.098Z",
+      "id": "setup-wait-no-eth",
+      "status": "pass",
+      "startedAt": "2026-04-16T03:13:06.685Z",
+      "durationMs": 413,
+      "next": "",
+      "result": {
+        "found": false
+      }
+    },
+    {
+      "action": "navigate",
+      "description": "navigate to PerpsMarketDetails",
+      "finishedAt": "2026-04-16T03:13:07.865Z",
+      "id": "btc-nav-market",
+      "status": "pass",
+      "startedAt": "2026-04-16T03:13:07.098Z",
+      "durationMs": 767,
+      "next": "btc-wait-market",
+      "result": {
+        "navigated": "PerpsMarketDetails",
+        "params": {
+          "market": {
+            "symbol": "BTC",
+            "name": "BTC",
+            "price": "0",
+            "change24h": "0",
+            "change24hPercent": "0",
+            "volume": "0",
+            "maxLeverage": "100"
+          }
+        },
+        "previousRoute": {
+          "key": "PerpsMarketListView-AA4wxOJZ7IOrecBr8cPO0",
+          "name": "PerpsMarketListView"
+        },
+        "currentRoute": {
+          "key": "PerpsMarketDetails-yg63UIrim3BIJDIHfumwP",
+          "name": "PerpsMarketDetails",
+          "params": {
+            "market": {
+              "change24h": "0",
+              "change24hPercent": "0",
+              "maxLeverage": "100",
+              "name": "BTC",
+              "price": "0",
+              "symbol": "BTC",
+              "volume": "0"
+            }
+          }
+        },
+        "deviceName": "mm-1",
+        "platform": "ios"
+      }
+    },
+    {
+      "action": "wait_for",
+      "description": "wait for PerpsMarketDetails",
+      "finishedAt": "2026-04-16T03:13:09.024Z",
+      "id": "btc-wait-market",
+      "status": "pass",
+      "startedAt": "2026-04-16T03:13:07.865Z",
+      "durationMs": 1159,
+      "next": "btc-market-extract",
+      "result": {
+        "route": "PerpsMarketDetails"
+      }
+    },
+    {
+      "action": "eval_sync",
+      "description": "eval_sync",
+      "finishedAt": "2026-04-16T03:13:13.334Z",
+      "id": "btc-market-extract",
+      "status": "pass",
+      "startedAt": "2026-04-16T03:13:09.024Z",
+      "durationMs": 4310,
+      "next": "btc-open-order",
+      "result": {
+        "symbol": "BTC",
+        "screen": "market_detail",
+        "price": "$75,174",
+        "change": "-0.56%",
+        "oracle": null
+      }
+    },
+    {
+      "action": "navigate",
+      "description": "navigate to RedesignedConfirmations",
+      "finishedAt": "2026-04-16T03:13:14.631Z",
+      "id": "btc-open-order",
+      "status": "pass",
+      "startedAt": "2026-04-16T03:13:13.334Z",
+      "durationMs": 1297,
+      "next": "btc-wait-order",
+      "result": {
+        "navigated": "RedesignedConfirmations",
+        "params": {
+          "asset": "BTC",
+          "direction": "long",
+          "showPerpsHeader": false,
+          "source": "perp_asset_screen"
+        },
+        "previousRoute": {
+          "key": "PerpsMarketDetails-yg63UIrim3BIJDIHfumwP",
+          "name": "PerpsMarketDetails",
+          "params": {
+            "market": {
+              "change24h": "0",
+              "change24hPercent": "0",
+              "maxLeverage": "100",
+              "name": "BTC",
+              "price": "0",
+              "symbol": "BTC",
+              "volume": "0"
+            }
+          }
+        },
+        "currentRoute": {
+          "key": "RedesignedConfirmations-I64FZLD9qHf2FucKlCRMt",
+          "name": "RedesignedConfirmations",
+          "params": {
+            "asset": "BTC",
+            "direction": "long",
+            "showPerpsHeader": false,
+            "source": "perp_asset_screen"
+          }
+        },
+        "deviceName": "mm-1",
+        "platform": "ios"
+      }
+    },
+    {
+      "action": "wait_for",
+      "description": "wait for RedesignedConfirmations",
+      "finishedAt": "2026-04-16T03:13:14.823Z",
+      "id": "btc-wait-order",
+      "status": "pass",
+      "startedAt": "2026-04-16T03:13:14.631Z",
+      "durationMs": 192,
+      "next": "btc-press-amount",
+      "result": {
+        "route": "RedesignedConfirmations"
+      }
+    },
+    {
+      "action": "eval_async",
+      "description": "eval_async",
+      "finishedAt": "2026-04-16T03:13:19.121Z",
+      "id": "teardown-close-eth",
+      "status": "pass",
+      "startedAt": "2026-04-16T03:13:18.568Z",
+      "durationMs": 553,
+      "next": "",
+      "result": {
+        "cleared": true
+      }
+    }
+  ],
+  "vars": {}
+}

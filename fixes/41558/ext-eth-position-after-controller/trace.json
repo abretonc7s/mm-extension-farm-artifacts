@@ -1,0 +1,85 @@
+[
+  {
+    "id": "nav",
+    "action": "navigate",
+    "ok": true,
+    "raw": {
+      "navigated": true,
+      "hash": "#/perps/market/ETH"
+    },
+    "durationMs": 3
+  },
+  {
+    "id": "wait-detail",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-market-detail-page"
+    },
+    "durationMs": 65
+  },
+  {
+    "id": "check-position",
+    "action": "ext_check_dom",
+    "ok": true,
+    "raw": {
+      "visible": false
+    },
+    "durationMs": 1
+  },
+  {
+    "id": "branch",
+    "action": "switch",
+    "next": "open-order",
+    "durationMs": 0
+  },
+  {
+    "id": "open-order",
+    "action": "press",
+    "ok": true,
+    "raw": {
+      "clicked": true,
+      "target": "testId:perps-long-cta-button"
+    },
+    "durationMs": 96
+  },
+  {
+    "id": "wait-order",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-order-entry-page"
+    },
+    "durationMs": 45
+  },
+  {
+    "id": "set-amount",
+    "action": "set_input",
+    "ok": true,
+    "raw": {
+      "filled": true,
+      "fallback": true
+    },
+    "durationMs": 44
+  },
+  {
+    "id": "submit",
+    "action": "press",
+    "ok": true,
+    "raw": {
+      "clicked": true,
+      "target": "testId:submit-order-button"
+    },
+    "durationMs": 92
+  },
+  {
+    "id": "wait-position",
+    "action": "wait_for",
+    "ok": false,
+    "raw": null,
+    "durationMs": 15083,
+    "error": "Wait timed out: locator.waitFor: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-testid=\"perps-position-cta-buttons\"]') to be visible\u001b[22m\n"
+  }
+]

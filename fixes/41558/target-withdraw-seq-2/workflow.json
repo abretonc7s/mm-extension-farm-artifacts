@@ -1,0 +1,80 @@
+{
+  "description": "",
+  "hooks": {
+    "pre_conditions": [
+      "wallet.unlocked"
+    ],
+    "setup": [],
+    "teardown": []
+  },
+  "inputs": {},
+  "sourcePath": "",
+  "title": "Parity snapshot — extension withdraw",
+  "workflow": {
+    "entry": "nav-home",
+    "nodes": {
+      "nav-home": {
+        "action": "navigate",
+        "target": "PerpsHome",
+        "next": "wait-home",
+        "id": "nav-home"
+      },
+      "wait-home": {
+        "action": "wait_for",
+        "test_id": "perps-balance-dropdown",
+        "timeout_ms": 10000,
+        "next": "open-balance",
+        "id": "wait-home"
+      },
+      "open-balance": {
+        "action": "press",
+        "test_id": "perps-balance-dropdown-balance",
+        "next": "wait-panel",
+        "id": "open-balance"
+      },
+      "wait-panel": {
+        "action": "wait_for",
+        "test_id": "perps-balance-dropdown-panel",
+        "timeout_ms": 10000,
+        "next": "open-page",
+        "id": "wait-panel"
+      },
+      "open-page": {
+        "action": "press",
+        "test_id": "perps-balance-dropdown-withdraw",
+        "next": "wait-page",
+        "id": "open-page"
+      },
+      "wait-page": {
+        "action": "wait_for",
+        "test_id": "perps-withdraw-page",
+        "timeout_ms": 10000,
+        "next": "preset-25",
+        "id": "wait-page"
+      },
+      "preset-25": {
+        "action": "press",
+        "test_id": "perps-withdraw-percentage-25",
+        "next": "wait-values",
+        "id": "preset-25"
+      },
+      "wait-values": {
+        "action": "wait",
+        "ms": 500,
+        "next": "extract",
+        "id": "wait-values"
+      },
+      "extract": {
+        "action": "eval_sync",
+        "expression": "(function(){\n        function textByTestId(id){ var el=document.querySelector('[data-testid=\"'+id+'\"]'); return el?((el.textContent||'').trim()||null):null; }\n        return JSON.stringify({screen:'withdraw',preset10:textByTestId('perps-withdraw-percentage-10'),preset25:textByTestId('perps-withdraw-percentage-25'),preset50:textByTestId('perps-withdraw-percentage-50'),presetMax:textByTestId('perps-withdraw-percentage-max'),asset:textByTestId('perps-withdraw-summary-asset-value'),fee:textByTestId('perps-withdraw-summary-fee-value'),time:textByTestId('perps-withdraw-summary-time-value'),receive:textByTestId('perps-withdraw-summary-receive-value')});\n      })()",
+        "next": "done",
+        "id": "extract"
+      },
+      "done": {
+        "action": "end",
+        "status": "pass",
+        "id": "done"
+      }
+    }
+  }
+}

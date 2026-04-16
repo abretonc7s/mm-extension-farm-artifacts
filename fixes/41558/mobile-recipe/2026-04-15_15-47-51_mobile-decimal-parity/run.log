@@ -1,0 +1,270 @@
+Running recipe: Mobile perps decimal parity reference
+Pre-conditions: wallet.unlocked, perps.feature_enabled
+Setup: 4 step(s)
+Teardown: 1 step(s)
+Workflow nodes: 23
+
+Pre-conditions: PASS
+
+Setup hooks:
+[setup-account] call perps/select-account
+  > Running recipe: Select — switch to account 0x8dc623e964475d4d669da601fd15ea9125469003 and verify
+  > Team: perps
+  > Pre-conditions: wallet.unlocked
+  > Workflow nodes: 3
+
+Pre-conditions: PASS
+
+[switch-account] select account 0x8dc623e964475d4d669da601fd15ea9125469003
+  result: {"address":"0x8dc623e964475d4d669da601fd15ea9125469003","id":"0285a92b-905c-4814-8a16-52fe1db60357","name":"","switched":true}
+  PASS
+
+[wait-switch] wait for condition
+  result: {"address":"0x8dc623e964475d4d669da601fd15ea9125469003"}
+  PASS
+
+----------------------------------------
+Results: 2/2 passed
+Recipe: PASS
+
+  flow: perps/select-account
+  PASS
+
+[setup-testnet] call perps/setup-testnet
+  > Running recipe: Setup — enable testnet and verify market data loads
+  > Team: perps
+  > Pre-conditions: wallet.unlocked, perps.feature_enabled
+  > Workflow nodes: 4
+
+Pre-conditions: PASS
+
+[enable-testnet] toggle testnet=true
+  result: {"ok":true,"already":true}
+  PASS
+
+[wait-reload] wait for condition
+  result: {"isTestnet":true}
+  PASS
+
+[verify-markets] eval ref markets
+  result: [{"symbol":"SOL","price":"$84.129","change24h":"-2.58%"},{"symbol":"APT","price":"$0.8981","change24h":"+3.03%"},{"symbol":"ATOM","price":"$1.7367","change24h":"-1.15%"},{"symbol":"BTC","price":"$74,152","change24h":"-3....
+  PASS
+
+----------------------------------------
+Results: 3/3 passed
+Recipe: PASS
+
+  flow: perps/setup-testnet
+  PASS
+
+[setup-clear-eth] eval_async
+  result: {"cleared":true}
+  PASS
+
+[setup-wait-no-eth] wait for condition
+  result: {"found":false}
+  PASS
+
+[ac1-home] navigate to PerpsHomeView
+  result: {"navigated":"PerpsMarketListView","params":{},"previousRoute":{"key":"PerpsMarketDetails-QsJTVZrBk1ruJR6Wng9mF","name":"PerpsMarketDetails","params":{"market":{"change24h":"0","change24hPercent":"0","maxLeverage":"100",...
+  PASS
+
+[ac1-home-wait] wait for PerpsMarketListView
+  result: {"route":"PerpsMarketListView"}
+  PASS
+
+[ac1-home-shot] capture screenshot ac1-home-shot
+  screenshot: /Users/deeeed/dev/metamask/metamask-mobile-1/.agent/screenshots/2026-04-15_234758_mobile-01-home.png
+  PASS
+
+[ac2-market] call perps/market-discovery
+  > Running recipe: Market Discovery — find ETH in list and verify price loads
+  > Team: perps
+  > Pre-conditions: wallet.unlocked, perps.feature_enabled
+  > Workflow nodes: 9
+
+Pre-conditions: PASS
+
+[nav-market-list] navigate to PerpsTrendingView
+  result: {"navigated":"PerpsTrendingView","params":{},"previousRoute":{"key":"PerpsMarketListView-ubuaZxwEqkZgpkgoxy7wx","name":"PerpsMarketListView"},"currentRoute":{"key":"PerpsTrendingView-ynvKXg_VpGQDYhCZfqIls","name":"PerpsT...
+  PASS
+
+[wait-market-data] wait for PerpsTrendingView
+  result: {"route":"PerpsTrendingView"}
+  PASS
+
+[select-category] eval_sync
+  result: {"skipped":true,"category":"all"}
+  PASS
+
+[search-symbol] eval_sync
+  result: {"skipped":true}
+  PASS
+
+[wait-filter] wait for condition
+  result: {"count":253}
+  PASS
+
+[assert-symbol-in-list] eval_async
+  result: {"found":true,"symbol":"ETH"}
+  PASS
+
+[nav-market-detail] navigate to PerpsMarketDetails
+  result: {"navigated":"PerpsMarketDetails","params":{"market":{"symbol":"ETH","name":"ETH","price":"0","change24h":"0","change24hPercent":"0","volume":"0","maxLeverage":"100"}},"previousRoute":{"key":"PerpsTrendingView-ynvKXg_VpG...
+  PASS
+
+[wait-price-load] wait for condition
+  result: {"price":"$2,343.7"}
+  PASS
+
+----------------------------------------
+Results: 8/8 passed
+Recipe: PASS
+
+  flow: perps/market-discovery
+  PASS
+
+[ac2-market-shot] capture screenshot ac2-market-shot
+  screenshot: /Users/deeeed/dev/metamask/metamask-mobile-1/.agent/screenshots/2026-04-15_234808_mobile-02-market-detail.png
+  PASS
+
+[ac3-order-press] press perps-market-details-long-button
+  result: {"ok":true,"testId":"perps-market-details-long-button","deviceName":"mm-1"}
+  PASS
+
+[ac3-order-wait] wait for RedesignedConfirmations
+  result: {"route":"RedesignedConfirmations"}
+  PASS
+
+[ac3-order-shot] capture screenshot ac3-order-shot
+  screenshot: /Users/deeeed/dev/metamask/metamask-mobile-1/.agent/screenshots/2026-04-15_234816_mobile-03-order-entry.png
+  PASS
+
+[ac3-open-eth] call perps/trade-open-market
+  > Running recipe: Trade — market long ETH $11
+  > Team: perps
+  > Pre-conditions: wallet.unlocked, perps.ready_to_trade, perps.sufficient_balance
+  > Workflow nodes: 14
+
+Pre-conditions: PASS
+
+[nav] navigate to PerpsMarketDetails
+  result: {"navigated":"PerpsMarketDetails","params":{"market":{"symbol":"ETH","name":"ETH","price":"0","change24h":"0","change24hPercent":"0","volume":"0","maxLeverage":"100"}},"previousRoute":{"key":"RedesignedConfirmations-hEce...
+  PASS
+
+[wait-render] wait for perps-market-details-long-button
+  result: {"visible":true}
+  PASS
+
+[press-side] press perps-market-details-long-button
+  result: {"ok":true,"testId":"perps-market-details-long-button","deviceName":"mm-1"}
+  PASS
+
+[wait-form] wait for RedesignedConfirmations
+  result: {"route":"RedesignedConfirmations"}
+  PASS
+
+[press-amount] press perps-amount-display-touchable
+  result: {"ok":true,"testId":"perps-amount-display-touchable","deviceName":"mm-1"}
+  PASS
+
+[wait-keypad] wait for keypad-delete-button
+  result: {"visible":true}
+  PASS
+
+[clear-keypad] clear keypad x8
+  result: {"ok":true,"deleted":8}
+  PASS
+
+[type-amount] type 11
+  result: {"ok":true,"value":"11"}
+  PASS
+
+[assert-amount] eval_sync
+  result: {"v":"$11"}
+  PASS
+
+[press-done] press perps-order-view-keypad-done
+  result: {"ok":true,"testId":"perps-order-view-keypad-done","deviceName":"mm-1"}
+  PASS
+
+[wait-summary] wait for perps-order-view-place-order-button
+  result: {"visible":true}
+  PASS
+
+[place-order] press perps-order-view-place-order-button
+  result: {"ok":true,"testId":"perps-order-view-place-order-button","deviceName":"mm-1"}
+  PASS
+
+[wait-order-placed] wait for RedesignedConfirmations
+  result: {"route":"PerpsMarketDetails"}
+  PASS
+
+----------------------------------------
+Results: 13/13 passed
+Recipe: PASS
+
+  flow: perps/trade-open-market
+  PASS
+
+[ac3-wait-eth] wait for condition
+  result: {"found":true}
+  PASS
+
+[ac4-market-reset] navigate to PerpsMarketDetails
+  result: {"navigated":"PerpsMarketDetails","params":{"market":{"symbol":"ETH","name":"ETH","price":"0","change24h":"0","change24hPercent":"0","volume":"0","maxLeverage":"100"}},"previousRoute":{"key":"PerpsMarketDetails-QsJTVZrBk...
+  PASS
+
+[ac4-margin-wait] wait for position-card-margin-chevron
+  result: {"visible":true}
+  PASS
+
+[ac4-margin-press] press position-card-margin-chevron
+  result: {"ok":true,"testId":"position-card-margin-chevron","deviceName":"mm-1"}
+  PASS
+
+[ac4-reduce-wait] wait for perps-adjust-margin-reduce-btn
+  result: {"visible":true}
+  PASS
+
+[ac4-reduce-press] press perps-adjust-margin-reduce-btn
+  result: {"ok":true,"testId":"perps-adjust-margin-reduce-btn","deviceName":"mm-1"}
+  PASS
+
+[ac4-adjust-wait] wait for PerpsAdjustMargin
+  result: {"route":"PerpsAdjustMargin"}
+  PASS
+
+[ac4-adjust-shot] capture screenshot ac4-adjust-shot
+  screenshot: /Users/deeeed/dev/metamask/metamask-mobile-1/.agent/screenshots/2026-04-15_234844_mobile-04-adjust-margin.png
+  PASS
+
+[ac5-market-reset] navigate to PerpsMarketDetails
+  result: {"navigated":"PerpsMarketDetails","params":{"market":{"symbol":"ETH","name":"ETH","price":"0","change24h":"0","change24hPercent":"0","volume":"0","maxLeverage":"100"}},"previousRoute":{"key":"PerpsAdjustMargin-mHDzYG3pUs...
+  PASS
+
+[ac5-close-wait] wait for perps-market-details-close-button
+  result: {"visible":true}
+  PASS
+
+[ac5-close-press] press perps-market-details-close-button
+  result: {"ok":true,"testId":"perps-market-details-close-button","deviceName":"mm-1"}
+  PASS
+
+[ac5-close-route] wait for PerpsClosePosition
+  result: {"route":"PerpsClosePosition"}
+  PASS
+
+[ac5-close-shot] capture screenshot ac5-close-shot
+  screenshot: /Users/deeeed/dev/metamask/metamask-mobile-1/.agent/screenshots/2026-04-15_234849_mobile-05-close-view.png
+  PASS
+
+----------------------------------------
+Results: 26/26 passed
+Recipe: PASS
+
+Teardown hooks:
+[teardown-close-eth] eval_async
+  result: {"cleared":true}
+  PASS
+

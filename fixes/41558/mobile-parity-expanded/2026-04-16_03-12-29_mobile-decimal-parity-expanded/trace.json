@@ -1,0 +1,270 @@
+{
+  "env": {
+    "appRoot": "/Users/deeeed/dev/metamask/metamask-mobile-1",
+    "recipePath": "/Users/deeeed/dev/metamask/metamask-mobile-1/scripts/perps/agentic/teams/perps/recipes/mobile-decimal-parity-expanded.json",
+    "team": "perps"
+  },
+  "inputs": {},
+  "last": {
+    "cleared": true
+  },
+  "nodes": {
+    "setup-account": {
+      "action": "call",
+      "description": "call perps/select-account",
+      "finishedAt": "2026-04-16T03:12:30.489Z",
+      "id": "setup-account",
+      "status": "pass",
+      "startedAt": "2026-04-16T03:12:29.841Z",
+      "durationMs": 648,
+      "next": "",
+      "result": {
+        "ref": "perps/select-account",
+        "title": "Select — switch to account 0x8dc623e964475d4d669da601fd15ea9125469003 and verify",
+        "counts": {
+          "total": 2,
+          "passed": 2,
+          "skipped": 0
+        }
+      }
+    },
+    "setup-testnet": {
+      "action": "call",
+      "description": "call perps/setup-testnet",
+      "finishedAt": "2026-04-16T03:12:32.852Z",
+      "id": "setup-testnet",
+      "status": "pass",
+      "startedAt": "2026-04-16T03:12:30.489Z",
+      "durationMs": 2363,
+      "next": "",
+      "result": {
+        "ref": "perps/setup-testnet",
+        "title": "Setup — enable testnet and verify market data loads",
+        "counts": {
+          "total": 3,
+          "passed": 3,
+          "skipped": 0
+        }
+      }
+    },
+    "setup-clear-eth": {
+      "action": "eval_async",
+      "description": "eval_async",
+      "finishedAt": "2026-04-16T03:12:33.266Z",
+      "id": "setup-clear-eth",
+      "status": "pass",
+      "startedAt": "2026-04-16T03:12:32.852Z",
+      "durationMs": 414,
+      "next": "",
+      "result": {
+        "cleared": true
+      }
+    },
+    "setup-wait-no-eth": {
+      "action": "wait_for",
+      "description": "wait for condition",
+      "finishedAt": "2026-04-16T03:12:33.966Z",
+      "id": "setup-wait-no-eth",
+      "status": "pass",
+      "startedAt": "2026-04-16T03:12:33.266Z",
+      "durationMs": 700,
+      "next": "",
+      "result": {
+        "found": false
+      }
+    },
+    "home-nav": {
+      "action": "navigate",
+      "description": "navigate to PerpsHomeView",
+      "finishedAt": "2026-04-16T03:12:35.003Z",
+      "id": "home-nav",
+      "status": "pass",
+      "startedAt": "2026-04-16T03:12:33.966Z",
+      "durationMs": 1037,
+      "next": "home-wait",
+      "result": {
+        "navigated": "PerpsMarketListView",
+        "params": {},
+        "previousRoute": {
+          "key": "PerpsClosePosition-1WB8gbChInN-CQHtSEDxf",
+          "name": "PerpsClosePosition",
+          "params": {
+            "position": {
+              "cumulativeFunding": {
+                "allTime": "0.444397",
+                "sinceChange": "0.0",
+                "sinceOpen": "0.0"
+              },
+              "entryPrice": "2364.8",
+              "leverage": {
+                "rawUsd": "-7.419982",
+                "type": "isolated",
+                "value": 3
+              },
+              "liquidationPrice": "1610.938341294",
+              "marginUsed": "3.694108",
+              "maxLeverage": 25,
+              "positionValue": "11.11409",
+              "returnOnEquity": "-0.0001268606",
+              "size": "0.0047",
+              "stopLossCount": 0,
+              "symbol": "ETH",
+              "takeProfitCount": 0,
+              "unrealizedPnl": "-0.00047"
+            },
+            "source": "perp_asset_screen"
+          }
+        },
+        "currentRoute": {
+          "key": "PerpsMarketListView-AA4wxOJZ7IOrecBr8cPO0",
+          "name": "PerpsMarketListView"
+        },
+        "deviceName": "mm-1",
+        "platform": "ios"
+      }
+    },
+    "teardown-close-eth": {
+      "action": "eval_async",
+      "description": "eval_async",
+      "finishedAt": "2026-04-16T03:12:49.551Z",
+      "id": "teardown-close-eth",
+      "status": "pass",
+      "startedAt": "2026-04-16T03:12:49.089Z",
+      "durationMs": 462,
+      "next": "",
+      "result": {
+        "cleared": true
+      }
+    }
+  },
+  "trace": [
+    {
+      "action": "call",
+      "description": "call perps/select-account",
+      "finishedAt": "2026-04-16T03:12:30.489Z",
+      "id": "setup-account",
+      "status": "pass",
+      "startedAt": "2026-04-16T03:12:29.841Z",
+      "durationMs": 648,
+      "next": "",
+      "result": {
+        "ref": "perps/select-account",
+        "title": "Select — switch to account 0x8dc623e964475d4d669da601fd15ea9125469003 and verify",
+        "counts": {
+          "total": 2,
+          "passed": 2,
+          "skipped": 0
+        }
+      }
+    },
+    {
+      "action": "call",
+      "description": "call perps/setup-testnet",
+      "finishedAt": "2026-04-16T03:12:32.852Z",
+      "id": "setup-testnet",
+      "status": "pass",
+      "startedAt": "2026-04-16T03:12:30.489Z",
+      "durationMs": 2363,
+      "next": "",
+      "result": {
+        "ref": "perps/setup-testnet",
+        "title": "Setup — enable testnet and verify market data loads",
+        "counts": {
+          "total": 3,
+          "passed": 3,
+          "skipped": 0
+        }
+      }
+    },
+    {
+      "action": "eval_async",
+      "description": "eval_async",
+      "finishedAt": "2026-04-16T03:12:33.266Z",
+      "id": "setup-clear-eth",
+      "status": "pass",
+      "startedAt": "2026-04-16T03:12:32.852Z",
+      "durationMs": 414,
+      "next": "",
+      "result": {
+        "cleared": true
+      }
+    },
+    {
+      "action": "wait_for",
+      "description": "wait for condition",
+      "finishedAt": "2026-04-16T03:12:33.966Z",
+      "id": "setup-wait-no-eth",
+      "status": "pass",
+      "startedAt": "2026-04-16T03:12:33.266Z",
+      "durationMs": 700,
+      "next": "",
+      "result": {
+        "found": false
+      }
+    },
+    {
+      "action": "navigate",
+      "description": "navigate to PerpsHomeView",
+      "finishedAt": "2026-04-16T03:12:35.003Z",
+      "id": "home-nav",
+      "status": "pass",
+      "startedAt": "2026-04-16T03:12:33.966Z",
+      "durationMs": 1037,
+      "next": "home-wait",
+      "result": {
+        "navigated": "PerpsMarketListView",
+        "params": {},
+        "previousRoute": {
+          "key": "PerpsClosePosition-1WB8gbChInN-CQHtSEDxf",
+          "name": "PerpsClosePosition",
+          "params": {
+            "position": {
+              "cumulativeFunding": {
+                "allTime": "0.444397",
+                "sinceChange": "0.0",
+                "sinceOpen": "0.0"
+              },
+              "entryPrice": "2364.8",
+              "leverage": {
+                "rawUsd": "-7.419982",
+                "type": "isolated",
+                "value": 3
+              },
+              "liquidationPrice": "1610.938341294",
+              "marginUsed": "3.694108",
+              "maxLeverage": 25,
+              "positionValue": "11.11409",
+              "returnOnEquity": "-0.0001268606",
+              "size": "0.0047",
+              "stopLossCount": 0,
+              "symbol": "ETH",
+              "takeProfitCount": 0,
+              "unrealizedPnl": "-0.00047"
+            },
+            "source": "perp_asset_screen"
+          }
+        },
+        "currentRoute": {
+          "key": "PerpsMarketListView-AA4wxOJZ7IOrecBr8cPO0",
+          "name": "PerpsMarketListView"
+        },
+        "deviceName": "mm-1",
+        "platform": "ios"
+      }
+    },
+    {
+      "action": "eval_async",
+      "description": "eval_async",
+      "finishedAt": "2026-04-16T03:12:49.551Z",
+      "id": "teardown-close-eth",
+      "status": "pass",
+      "startedAt": "2026-04-16T03:12:49.089Z",
+      "durationMs": 462,
+      "next": "",
+      "result": {
+        "cleared": true
+      }
+    }
+  ],
+  "vars": {}
+}

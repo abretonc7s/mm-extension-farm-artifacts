@@ -1,0 +1,42 @@
+[
+  {
+    "id": "nav",
+    "action": "navigate",
+    "ok": true,
+    "raw": {
+      "navigated": true,
+      "hash": "#/perps/market/BTC"
+    },
+    "durationMs": 4
+  },
+  {
+    "id": "wait",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-market-detail-page"
+    },
+    "durationMs": 41
+  },
+  {
+    "id": "wait-price",
+    "action": "wait_for",
+    "ok": true,
+    "raw": "{\"ready\":true}",
+    "durationMs": 1
+  },
+  {
+    "id": "extract",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"symbol\":\"BTC\",\"screen\":\"market_detail\",\"price\":\"$75,141\",\"change\":\"+0.72%\",\"oracle\":\"$75,141\"}",
+    "durationMs": 1
+  },
+  {
+    "id": "done",
+    "action": "end",
+    "status": "pass",
+    "durationMs": 0
+  }
+]

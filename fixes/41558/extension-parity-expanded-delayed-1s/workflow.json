@@ -1,0 +1,243 @@
+{
+  "description": "",
+  "hooks": {
+    "pre_conditions": [
+      "wallet.unlocked"
+    ],
+    "setup": [
+      {
+        "id": "setup-network",
+        "action": "call",
+        "ref": "perps/ensure-perps-network",
+        "params": {
+          "network": "testnet",
+          "provider": "hyperliquid"
+        }
+      }
+    ],
+    "teardown": []
+  },
+  "inputs": {},
+  "sourcePath": "",
+  "title": "PR #41558 extension decimal parity expanded (1s delayed)",
+  "workflow": {
+    "entry": "btc-market",
+    "nodes": {
+      "btc-market": {
+        "action": "call",
+        "ref": "perps/parity-market-detail-snapshot",
+        "params": {
+          "symbol": "BTC"
+        },
+        "next": "delay-01",
+        "id": "btc-market"
+      },
+      "delay-01": {
+        "action": "wait",
+        "ms": 1000,
+        "next": "btc-order",
+        "id": "delay-01"
+      },
+      "btc-order": {
+        "action": "call",
+        "ref": "perps/parity-order-entry-snapshot",
+        "params": {
+          "symbol": "BTC",
+          "amount": "11"
+        },
+        "next": "delay-02",
+        "id": "btc-order"
+      },
+      "delay-02": {
+        "action": "wait",
+        "ms": 1000,
+        "next": "eth-market",
+        "id": "delay-02"
+      },
+      "eth-market": {
+        "action": "call",
+        "ref": "perps/parity-market-detail-snapshot",
+        "params": {
+          "symbol": "ETH"
+        },
+        "next": "delay-03",
+        "id": "eth-market"
+      },
+      "delay-03": {
+        "action": "wait",
+        "ms": 1000,
+        "next": "eth-order",
+        "id": "delay-03"
+      },
+      "eth-order": {
+        "action": "call",
+        "ref": "perps/parity-order-entry-snapshot",
+        "params": {
+          "symbol": "ETH",
+          "amount": "11"
+        },
+        "next": "delay-04",
+        "id": "eth-order"
+      },
+      "delay-04": {
+        "action": "wait",
+        "ms": 1000,
+        "next": "sol-market",
+        "id": "delay-04"
+      },
+      "sol-market": {
+        "action": "call",
+        "ref": "perps/parity-market-detail-snapshot",
+        "params": {
+          "symbol": "SOL"
+        },
+        "next": "delay-05",
+        "id": "sol-market"
+      },
+      "delay-05": {
+        "action": "wait",
+        "ms": 1000,
+        "next": "sol-order",
+        "id": "delay-05"
+      },
+      "sol-order": {
+        "action": "call",
+        "ref": "perps/parity-order-entry-snapshot",
+        "params": {
+          "symbol": "SOL",
+          "amount": "11"
+        },
+        "next": "delay-06",
+        "id": "sol-order"
+      },
+      "delay-06": {
+        "action": "wait",
+        "ms": 1000,
+        "next": "fart-market",
+        "id": "delay-06"
+      },
+      "fart-market": {
+        "action": "call",
+        "ref": "perps/parity-market-detail-snapshot",
+        "params": {
+          "symbol": "FARTCOIN"
+        },
+        "next": "delay-07",
+        "id": "fart-market"
+      },
+      "delay-07": {
+        "action": "wait",
+        "ms": 1000,
+        "next": "fart-order",
+        "id": "delay-07"
+      },
+      "fart-order": {
+        "action": "call",
+        "ref": "perps/parity-order-entry-snapshot",
+        "params": {
+          "symbol": "FARTCOIN",
+          "amount": "11"
+        },
+        "next": "delay-08",
+        "id": "fart-order"
+      },
+      "delay-08": {
+        "action": "wait",
+        "ms": 1000,
+        "next": "pump-market",
+        "id": "delay-08"
+      },
+      "pump-market": {
+        "action": "call",
+        "ref": "perps/parity-market-detail-snapshot",
+        "params": {
+          "symbol": "PUMP"
+        },
+        "next": "delay-09",
+        "id": "pump-market"
+      },
+      "delay-09": {
+        "action": "wait",
+        "ms": 1000,
+        "next": "pump-order",
+        "id": "delay-09"
+      },
+      "pump-order": {
+        "action": "call",
+        "ref": "perps/parity-order-entry-snapshot",
+        "params": {
+          "symbol": "PUMP",
+          "amount": "11"
+        },
+        "next": "delay-10",
+        "id": "pump-order"
+      },
+      "delay-10": {
+        "action": "wait",
+        "ms": 1000,
+        "next": "eth-position",
+        "id": "delay-10"
+      },
+      "eth-position": {
+        "action": "call",
+        "ref": "perps/parity-eth-position-detail",
+        "next": "delay-11",
+        "id": "eth-position"
+      },
+      "delay-11": {
+        "action": "wait",
+        "ms": 1000,
+        "next": "eth-reverse",
+        "id": "delay-11"
+      },
+      "eth-reverse": {
+        "action": "call",
+        "ref": "perps/parity-eth-reverse-modal",
+        "next": "delay-12",
+        "id": "eth-reverse"
+      },
+      "delay-12": {
+        "action": "wait",
+        "ms": 1000,
+        "next": "eth-remove-margin",
+        "id": "delay-12"
+      },
+      "eth-remove-margin": {
+        "action": "call",
+        "ref": "perps/parity-eth-remove-margin",
+        "next": "delay-13",
+        "id": "eth-remove-margin"
+      },
+      "delay-13": {
+        "action": "wait",
+        "ms": 1000,
+        "next": "eth-close",
+        "id": "delay-13"
+      },
+      "eth-close": {
+        "action": "call",
+        "ref": "perps/parity-eth-close-position",
+        "next": "delay-14",
+        "id": "eth-close"
+      },
+      "delay-14": {
+        "action": "wait",
+        "ms": 1000,
+        "next": "withdraw",
+        "id": "delay-14"
+      },
+      "withdraw": {
+        "action": "call",
+        "ref": "perps/parity-withdraw-snapshot",
+        "next": "done",
+        "id": "withdraw"
+      },
+      "done": {
+        "action": "end",
+        "status": "pass",
+        "message": "Captured expanded extension perps decimal parity values via composable flows with 1s delays.",
+        "id": "done"
+      }
+    }
+  }
+}

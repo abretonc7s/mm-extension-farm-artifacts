@@ -1,0 +1,1403 @@
+{
+  "env": {
+    "appRoot": "/Users/deeeed/dev/metamask/metamask-mobile-1",
+    "recipePath": "/Users/deeeed/dev/metamask/metamask-mobile-1/scripts/perps/agentic/teams/perps/recipes/mobile-decimal-matrix.json",
+    "team": "perps"
+  },
+  "inputs": {},
+  "last": {
+    "message": "",
+    "status": "pass"
+  },
+  "nodes": {
+    "btc-nav-market": {
+      "action": "navigate",
+      "description": "navigate to PerpsMarketDetails",
+      "finishedAt": "2026-04-16T00:59:44.866Z",
+      "id": "btc-nav-market",
+      "status": "pass",
+      "startedAt": "2026-04-16T00:59:44.030Z",
+      "durationMs": 836,
+      "next": "btc-wait-market",
+      "result": {
+        "navigated": "PerpsMarketDetails",
+        "params": {
+          "market": {
+            "symbol": "BTC",
+            "name": "BTC",
+            "price": "0",
+            "change24h": "0",
+            "change24hPercent": "0",
+            "volume": "0",
+            "maxLeverage": "100"
+          }
+        },
+        "previousRoute": {
+          "key": "RedesignedConfirmations-HNbVcZTbxPK_b1cVTt3ku",
+          "name": "RedesignedConfirmations",
+          "params": {
+            "asset": "BTC",
+            "direction": "long",
+            "showPerpsHeader": true,
+            "source": "perp_asset_screen"
+          }
+        },
+        "currentRoute": {
+          "key": "PerpsMarketDetails-YQIU6BnNDhUzM0F3UwGIv",
+          "name": "PerpsMarketDetails",
+          "params": {
+            "market": {
+              "change24h": "0",
+              "change24hPercent": "0",
+              "maxLeverage": "100",
+              "name": "BTC",
+              "price": "0",
+              "symbol": "BTC",
+              "volume": "0"
+            }
+          }
+        },
+        "deviceName": "mm-1",
+        "platform": "ios"
+      }
+    },
+    "btc-wait-market": {
+      "action": "wait_for",
+      "description": "wait for PerpsMarketDetails",
+      "finishedAt": "2026-04-16T00:59:45.216Z",
+      "id": "btc-wait-market",
+      "status": "pass",
+      "startedAt": "2026-04-16T00:59:44.867Z",
+      "durationMs": 349,
+      "next": "btc-market-data",
+      "result": {
+        "route": "PerpsMarketDetails"
+      }
+    },
+    "btc-market-data": {
+      "action": "eval_sync",
+      "description": "eval_sync",
+      "finishedAt": "2026-04-16T00:59:45.492Z",
+      "id": "btc-market-data",
+      "status": "pass",
+      "startedAt": "2026-04-16T00:59:45.216Z",
+      "durationMs": 276,
+      "next": "btc-open-order",
+      "result": {
+        "symbol": "BTC",
+        "screen": "market_detail",
+        "title": "BTC-USD",
+        "price": "$75,037",
+        "change": "-1.06%",
+        "header": [
+          "BTC-USD",
+          "BTC-USD",
+          "BTC-USD",
+          "BTC-USD",
+          "BTC-USD",
+          "BTC-USD",
+          "BTC-USD",
+          "BTC-USD",
+          "BTC-USD",
+          "BTC-USD",
+          "BTC-USD",
+          "BTC-USD"
+        ]
+      }
+    },
+    "btc-open-order": {
+      "action": "press",
+      "description": "press perps-market-details-long-button",
+      "finishedAt": "2026-04-16T00:59:45.811Z",
+      "id": "btc-open-order",
+      "status": "pass",
+      "startedAt": "2026-04-16T00:59:45.492Z",
+      "durationMs": 319,
+      "next": "btc-wait-order",
+      "result": {
+        "ok": true,
+        "testId": "perps-market-details-long-button",
+        "deviceName": "mm-1"
+      }
+    },
+    "btc-wait-order": {
+      "action": "wait_for",
+      "description": "wait for RedesignedConfirmations",
+      "finishedAt": "2026-04-16T00:59:49.866Z",
+      "id": "btc-wait-order",
+      "status": "pass",
+      "startedAt": "2026-04-16T00:59:45.811Z",
+      "durationMs": 4055,
+      "next": "btc-order-data",
+      "result": {
+        "route": "RedesignedConfirmations"
+      }
+    },
+    "btc-order-data": {
+      "action": "eval_sync",
+      "description": "eval_sync",
+      "finishedAt": "2026-04-16T00:59:50.595Z",
+      "id": "btc-order-data",
+      "status": "pass",
+      "startedAt": "2026-04-16T00:59:49.866Z",
+      "durationMs": 729,
+      "next": "eth-nav-market",
+      "result": {
+        "symbol": "BTC",
+        "screen": "order_entry",
+        "title": "Long BTC",
+        "price": "$75,043",
+        "change": "-1.06%",
+        "header": [
+          "Long BTC",
+          "$75,043",
+          "-1.06%",
+          "Market",
+          "Long BTC",
+          "$75,043",
+          "-1.06%",
+          "Market",
+          "Long BTC",
+          "$75,043",
+          "-1.06%",
+          "Long BTC"
+        ]
+      }
+    },
+    "eth-nav-market": {
+      "action": "navigate",
+      "description": "navigate to PerpsMarketDetails",
+      "finishedAt": "2026-04-16T00:59:52.183Z",
+      "id": "eth-nav-market",
+      "status": "pass",
+      "startedAt": "2026-04-16T00:59:50.595Z",
+      "durationMs": 1588,
+      "next": "eth-wait-market",
+      "result": {
+        "navigated": "PerpsMarketDetails",
+        "params": {
+          "market": {
+            "symbol": "ETH",
+            "name": "ETH",
+            "price": "0",
+            "change24h": "0",
+            "change24hPercent": "0",
+            "volume": "0",
+            "maxLeverage": "100"
+          }
+        },
+        "previousRoute": {
+          "key": "RedesignedConfirmations-0KYKIgo8m9UwrSNs2lkOz",
+          "name": "RedesignedConfirmations",
+          "params": {
+            "asset": "BTC",
+            "defaultMaxLeverage": 40,
+            "defaultSzDecimals": 5,
+            "direction": "long",
+            "showPerpsHeader": false,
+            "source": "perp_asset_screen"
+          }
+        },
+        "currentRoute": {
+          "key": "PerpsMarketDetails-YQIU6BnNDhUzM0F3UwGIv",
+          "name": "PerpsMarketDetails",
+          "params": {
+            "market": {
+              "change24h": "0",
+              "change24hPercent": "0",
+              "maxLeverage": "100",
+              "name": "ETH",
+              "price": "0",
+              "symbol": "ETH",
+              "volume": "0"
+            }
+          }
+        },
+        "deviceName": "mm-1",
+        "platform": "ios"
+      }
+    },
+    "eth-wait-market": {
+      "action": "wait_for",
+      "description": "wait for PerpsMarketDetails",
+      "finishedAt": "2026-04-16T00:59:52.927Z",
+      "id": "eth-wait-market",
+      "status": "pass",
+      "startedAt": "2026-04-16T00:59:52.183Z",
+      "durationMs": 744,
+      "next": "eth-market-data",
+      "result": {
+        "route": "PerpsMarketDetails"
+      }
+    },
+    "eth-market-data": {
+      "action": "eval_sync",
+      "description": "eval_sync",
+      "finishedAt": "2026-04-16T00:59:53.220Z",
+      "id": "eth-market-data",
+      "status": "pass",
+      "startedAt": "2026-04-16T00:59:52.927Z",
+      "durationMs": 293,
+      "next": "eth-open-order",
+      "result": {
+        "symbol": "ETH",
+        "screen": "market_detail",
+        "title": "ETH-USD",
+        "price": "$2,368.1",
+        "change": "+1.12%",
+        "header": [
+          "ETH-USD",
+          "ETH-USD",
+          "ETH-USD",
+          "ETH-USD",
+          "ETH-USD",
+          "ETH-USD",
+          "ETH-USD",
+          "ETH-USD",
+          "ETH-USD",
+          "ETH-USD",
+          "ETH-USD",
+          "ETH-USD"
+        ]
+      }
+    },
+    "eth-open-order": {
+      "action": "press",
+      "description": "press perps-market-details-long-button",
+      "finishedAt": "2026-04-16T00:59:53.512Z",
+      "id": "eth-open-order",
+      "status": "pass",
+      "startedAt": "2026-04-16T00:59:53.220Z",
+      "durationMs": 292,
+      "next": "eth-wait-order",
+      "result": {
+        "ok": true,
+        "testId": "perps-market-details-long-button",
+        "deviceName": "mm-1"
+      }
+    },
+    "eth-wait-order": {
+      "action": "wait_for",
+      "description": "wait for RedesignedConfirmations",
+      "finishedAt": "2026-04-16T00:59:57.677Z",
+      "id": "eth-wait-order",
+      "status": "pass",
+      "startedAt": "2026-04-16T00:59:53.512Z",
+      "durationMs": 4165,
+      "next": "eth-order-data",
+      "result": {
+        "route": "RedesignedConfirmations"
+      }
+    },
+    "eth-order-data": {
+      "action": "eval_sync",
+      "description": "eval_sync",
+      "finishedAt": "2026-04-16T00:59:58.398Z",
+      "id": "eth-order-data",
+      "status": "pass",
+      "startedAt": "2026-04-16T00:59:57.677Z",
+      "durationMs": 721,
+      "next": "sol-nav-market",
+      "result": {
+        "symbol": "ETH",
+        "screen": "order_entry",
+        "title": "Long ETH",
+        "price": "$2,367.5",
+        "change": "+1.12%",
+        "header": [
+          "Long ETH",
+          "$2,367.5",
+          "+1.12%",
+          "Market",
+          "Long ETH",
+          "$2,367.5",
+          "+1.12%",
+          "Market",
+          "Long ETH",
+          "$2,367.5",
+          "+1.12%",
+          "Long ETH"
+        ]
+      }
+    },
+    "sol-nav-market": {
+      "action": "navigate",
+      "description": "navigate to PerpsMarketDetails",
+      "finishedAt": "2026-04-16T00:59:59.807Z",
+      "id": "sol-nav-market",
+      "status": "pass",
+      "startedAt": "2026-04-16T00:59:58.398Z",
+      "durationMs": 1409,
+      "next": "sol-wait-market",
+      "result": {
+        "navigated": "PerpsMarketDetails",
+        "params": {
+          "market": {
+            "symbol": "SOL",
+            "name": "SOL",
+            "price": "0",
+            "change24h": "0",
+            "change24hPercent": "0",
+            "volume": "0",
+            "maxLeverage": "100"
+          }
+        },
+        "previousRoute": {
+          "key": "RedesignedConfirmations-HtWYNVxdsBunrYPihwPuN",
+          "name": "RedesignedConfirmations",
+          "params": {
+            "asset": "ETH",
+            "defaultMaxLeverage": 25,
+            "defaultSzDecimals": 4,
+            "direction": "long",
+            "showPerpsHeader": false,
+            "source": "perp_asset_screen"
+          }
+        },
+        "currentRoute": {
+          "key": "PerpsMarketDetails-YQIU6BnNDhUzM0F3UwGIv",
+          "name": "PerpsMarketDetails",
+          "params": {
+            "market": {
+              "change24h": "0",
+              "change24hPercent": "0",
+              "maxLeverage": "100",
+              "name": "SOL",
+              "price": "0",
+              "symbol": "SOL",
+              "volume": "0"
+            }
+          }
+        },
+        "deviceName": "mm-1",
+        "platform": "ios"
+      }
+    },
+    "sol-wait-market": {
+      "action": "wait_for",
+      "description": "wait for PerpsMarketDetails",
+      "finishedAt": "2026-04-16T01:00:00.562Z",
+      "id": "sol-wait-market",
+      "status": "pass",
+      "startedAt": "2026-04-16T00:59:59.807Z",
+      "durationMs": 755,
+      "next": "sol-market-data",
+      "result": {
+        "route": "PerpsMarketDetails"
+      }
+    },
+    "sol-market-data": {
+      "action": "eval_sync",
+      "description": "eval_sync",
+      "finishedAt": "2026-04-16T01:00:00.913Z",
+      "id": "sol-market-data",
+      "status": "pass",
+      "startedAt": "2026-04-16T01:00:00.562Z",
+      "durationMs": 351,
+      "next": "fartcoin-nav-market",
+      "result": {
+        "symbol": "SOL",
+        "screen": "market_detail",
+        "title": "SOL-USD",
+        "price": "$85.06",
+        "change": "+1.36%",
+        "header": [
+          "SOL-USD",
+          "SOL-USD",
+          "SOL-USD",
+          "SOL-USD",
+          "SOL-USD",
+          "SOL-USD",
+          "SOL-USD",
+          "SOL-USD",
+          "SOL-USD",
+          "SOL-USD",
+          "SOL-USD",
+          "SOL-USD"
+        ]
+      }
+    },
+    "fartcoin-nav-market": {
+      "action": "navigate",
+      "description": "navigate to PerpsMarketDetails",
+      "finishedAt": "2026-04-16T01:00:01.842Z",
+      "id": "fartcoin-nav-market",
+      "status": "pass",
+      "startedAt": "2026-04-16T01:00:00.913Z",
+      "durationMs": 929,
+      "next": "fartcoin-wait-market",
+      "result": {
+        "navigated": "PerpsMarketDetails",
+        "params": {
+          "market": {
+            "symbol": "FARTCOIN",
+            "name": "FARTCOIN",
+            "price": "0",
+            "change24h": "0",
+            "change24hPercent": "0",
+            "volume": "0",
+            "maxLeverage": "100"
+          }
+        },
+        "previousRoute": {
+          "key": "PerpsMarketDetails-YQIU6BnNDhUzM0F3UwGIv",
+          "name": "PerpsMarketDetails",
+          "params": {
+            "market": {
+              "change24h": "0",
+              "change24hPercent": "0",
+              "maxLeverage": "100",
+              "name": "SOL",
+              "price": "0",
+              "symbol": "SOL",
+              "volume": "0"
+            }
+          }
+        },
+        "currentRoute": {
+          "key": "PerpsMarketDetails-YQIU6BnNDhUzM0F3UwGIv",
+          "name": "PerpsMarketDetails",
+          "params": {
+            "market": {
+              "change24h": "0",
+              "change24hPercent": "0",
+              "maxLeverage": "100",
+              "name": "FARTCOIN",
+              "price": "0",
+              "symbol": "FARTCOIN",
+              "volume": "0"
+            }
+          }
+        },
+        "deviceName": "mm-1",
+        "platform": "ios"
+      }
+    },
+    "fartcoin-wait-market": {
+      "action": "wait_for",
+      "description": "wait for PerpsMarketDetails",
+      "finishedAt": "2026-04-16T01:00:02.196Z",
+      "id": "fartcoin-wait-market",
+      "status": "pass",
+      "startedAt": "2026-04-16T01:00:01.842Z",
+      "durationMs": 354,
+      "next": "fartcoin-market-data",
+      "result": {
+        "route": "PerpsMarketDetails"
+      }
+    },
+    "fartcoin-market-data": {
+      "action": "eval_sync",
+      "description": "eval_sync",
+      "finishedAt": "2026-04-16T01:00:02.680Z",
+      "id": "fartcoin-market-data",
+      "status": "pass",
+      "startedAt": "2026-04-16T01:00:02.196Z",
+      "durationMs": 484,
+      "next": "pump-nav-market",
+      "result": {
+        "symbol": "FARTCOIN",
+        "screen": "market_detail",
+        "title": "FARTCOIN-USD",
+        "price": "$0.20519",
+        "change": "+6.46%",
+        "header": [
+          "FARTCOIN-USD",
+          "FARTCOIN-USD",
+          "FARTCOIN-USD",
+          "FARTCOIN-USD",
+          "FARTCOIN-USD",
+          "FARTCOIN-USD",
+          "FARTCOIN-USD",
+          "FARTCOIN-USD",
+          "FARTCOIN-USD",
+          "FARTCOIN-USD",
+          "FARTCOIN-USD",
+          "FARTCOIN-USD"
+        ]
+      }
+    },
+    "pump-nav-market": {
+      "action": "navigate",
+      "description": "navigate to PerpsMarketDetails",
+      "finishedAt": "2026-04-16T01:00:03.554Z",
+      "id": "pump-nav-market",
+      "status": "pass",
+      "startedAt": "2026-04-16T01:00:02.680Z",
+      "durationMs": 874,
+      "next": "pump-wait-market",
+      "result": {
+        "navigated": "PerpsMarketDetails",
+        "params": {
+          "market": {
+            "symbol": "PUMP",
+            "name": "PUMP",
+            "price": "0",
+            "change24h": "0",
+            "change24hPercent": "0",
+            "volume": "0",
+            "maxLeverage": "100"
+          }
+        },
+        "previousRoute": {
+          "key": "PerpsMarketDetails-YQIU6BnNDhUzM0F3UwGIv",
+          "name": "PerpsMarketDetails",
+          "params": {
+            "market": {
+              "change24h": "0",
+              "change24hPercent": "0",
+              "maxLeverage": "100",
+              "name": "FARTCOIN",
+              "price": "0",
+              "symbol": "FARTCOIN",
+              "volume": "0"
+            }
+          }
+        },
+        "currentRoute": {
+          "key": "PerpsMarketDetails-YQIU6BnNDhUzM0F3UwGIv",
+          "name": "PerpsMarketDetails",
+          "params": {
+            "market": {
+              "change24h": "0",
+              "change24hPercent": "0",
+              "maxLeverage": "100",
+              "name": "PUMP",
+              "price": "0",
+              "symbol": "PUMP",
+              "volume": "0"
+            }
+          }
+        },
+        "deviceName": "mm-1",
+        "platform": "ios"
+      }
+    },
+    "pump-wait-market": {
+      "action": "wait_for",
+      "description": "wait for PerpsMarketDetails",
+      "finishedAt": "2026-04-16T01:00:03.850Z",
+      "id": "pump-wait-market",
+      "status": "pass",
+      "startedAt": "2026-04-16T01:00:03.554Z",
+      "durationMs": 296,
+      "next": "pump-market-data",
+      "result": {
+        "route": "PerpsMarketDetails"
+      }
+    },
+    "pump-market-data": {
+      "action": "eval_sync",
+      "description": "eval_sync",
+      "finishedAt": "2026-04-16T01:00:04.319Z",
+      "id": "pump-market-data",
+      "status": "pass",
+      "startedAt": "2026-04-16T01:00:03.850Z",
+      "durationMs": 469,
+      "next": "done",
+      "result": {
+        "symbol": "PUMP",
+        "screen": "market_detail",
+        "title": "PUMP-USD",
+        "price": "$0.001899",
+        "change": "+4.60%",
+        "header": [
+          "PUMP-USD",
+          "PUMP-USD",
+          "PUMP-USD",
+          "PUMP-USD",
+          "PUMP-USD",
+          "PUMP-USD",
+          "PUMP-USD",
+          "PUMP-USD",
+          "PUMP-USD",
+          "PUMP-USD",
+          "PUMP-USD",
+          "PUMP-USD"
+        ]
+      }
+    },
+    "done": {
+      "action": "end",
+      "description": "pass end",
+      "finishedAt": "2026-04-16T01:00:04.319Z",
+      "id": "done",
+      "status": "pass",
+      "note": "",
+      "result": {
+        "message": "",
+        "status": "pass"
+      }
+    }
+  },
+  "trace": [
+    {
+      "action": "navigate",
+      "description": "navigate to PerpsMarketDetails",
+      "finishedAt": "2026-04-16T00:59:44.866Z",
+      "id": "btc-nav-market",
+      "status": "pass",
+      "startedAt": "2026-04-16T00:59:44.030Z",
+      "durationMs": 836,
+      "next": "btc-wait-market",
+      "result": {
+        "navigated": "PerpsMarketDetails",
+        "params": {
+          "market": {
+            "symbol": "BTC",
+            "name": "BTC",
+            "price": "0",
+            "change24h": "0",
+            "change24hPercent": "0",
+            "volume": "0",
+            "maxLeverage": "100"
+          }
+        },
+        "previousRoute": {
+          "key": "RedesignedConfirmations-HNbVcZTbxPK_b1cVTt3ku",
+          "name": "RedesignedConfirmations",
+          "params": {
+            "asset": "BTC",
+            "direction": "long",
+            "showPerpsHeader": true,
+            "source": "perp_asset_screen"
+          }
+        },
+        "currentRoute": {
+          "key": "PerpsMarketDetails-YQIU6BnNDhUzM0F3UwGIv",
+          "name": "PerpsMarketDetails",
+          "params": {
+            "market": {
+              "change24h": "0",
+              "change24hPercent": "0",
+              "maxLeverage": "100",
+              "name": "BTC",
+              "price": "0",
+              "symbol": "BTC",
+              "volume": "0"
+            }
+          }
+        },
+        "deviceName": "mm-1",
+        "platform": "ios"
+      }
+    },
+    {
+      "action": "wait_for",
+      "description": "wait for PerpsMarketDetails",
+      "finishedAt": "2026-04-16T00:59:45.216Z",
+      "id": "btc-wait-market",
+      "status": "pass",
+      "startedAt": "2026-04-16T00:59:44.867Z",
+      "durationMs": 349,
+      "next": "btc-market-data",
+      "result": {
+        "route": "PerpsMarketDetails"
+      }
+    },
+    {
+      "action": "eval_sync",
+      "description": "eval_sync",
+      "finishedAt": "2026-04-16T00:59:45.492Z",
+      "id": "btc-market-data",
+      "status": "pass",
+      "startedAt": "2026-04-16T00:59:45.216Z",
+      "durationMs": 276,
+      "next": "btc-open-order",
+      "result": {
+        "symbol": "BTC",
+        "screen": "market_detail",
+        "title": "BTC-USD",
+        "price": "$75,037",
+        "change": "-1.06%",
+        "header": [
+          "BTC-USD",
+          "BTC-USD",
+          "BTC-USD",
+          "BTC-USD",
+          "BTC-USD",
+          "BTC-USD",
+          "BTC-USD",
+          "BTC-USD",
+          "BTC-USD",
+          "BTC-USD",
+          "BTC-USD",
+          "BTC-USD"
+        ]
+      }
+    },
+    {
+      "action": "press",
+      "description": "press perps-market-details-long-button",
+      "finishedAt": "2026-04-16T00:59:45.811Z",
+      "id": "btc-open-order",
+      "status": "pass",
+      "startedAt": "2026-04-16T00:59:45.492Z",
+      "durationMs": 319,
+      "next": "btc-wait-order",
+      "result": {
+        "ok": true,
+        "testId": "perps-market-details-long-button",
+        "deviceName": "mm-1"
+      }
+    },
+    {
+      "action": "wait_for",
+      "description": "wait for RedesignedConfirmations",
+      "finishedAt": "2026-04-16T00:59:49.866Z",
+      "id": "btc-wait-order",
+      "status": "pass",
+      "startedAt": "2026-04-16T00:59:45.811Z",
+      "durationMs": 4055,
+      "next": "btc-order-data",
+      "result": {
+        "route": "RedesignedConfirmations"
+      }
+    },
+    {
+      "action": "eval_sync",
+      "description": "eval_sync",
+      "finishedAt": "2026-04-16T00:59:50.595Z",
+      "id": "btc-order-data",
+      "status": "pass",
+      "startedAt": "2026-04-16T00:59:49.866Z",
+      "durationMs": 729,
+      "next": "eth-nav-market",
+      "result": {
+        "symbol": "BTC",
+        "screen": "order_entry",
+        "title": "Long BTC",
+        "price": "$75,043",
+        "change": "-1.06%",
+        "header": [
+          "Long BTC",
+          "$75,043",
+          "-1.06%",
+          "Market",
+          "Long BTC",
+          "$75,043",
+          "-1.06%",
+          "Market",
+          "Long BTC",
+          "$75,043",
+          "-1.06%",
+          "Long BTC"
+        ]
+      }
+    },
+    {
+      "action": "navigate",
+      "description": "navigate to PerpsMarketDetails",
+      "finishedAt": "2026-04-16T00:59:52.183Z",
+      "id": "eth-nav-market",
+      "status": "pass",
+      "startedAt": "2026-04-16T00:59:50.595Z",
+      "durationMs": 1588,
+      "next": "eth-wait-market",
+      "result": {
+        "navigated": "PerpsMarketDetails",
+        "params": {
+          "market": {
+            "symbol": "ETH",
+            "name": "ETH",
+            "price": "0",
+            "change24h": "0",
+            "change24hPercent": "0",
+            "volume": "0",
+            "maxLeverage": "100"
+          }
+        },
+        "previousRoute": {
+          "key": "RedesignedConfirmations-0KYKIgo8m9UwrSNs2lkOz",
+          "name": "RedesignedConfirmations",
+          "params": {
+            "asset": "BTC",
+            "defaultMaxLeverage": 40,
+            "defaultSzDecimals": 5,
+            "direction": "long",
+            "showPerpsHeader": false,
+            "source": "perp_asset_screen"
+          }
+        },
+        "currentRoute": {
+          "key": "PerpsMarketDetails-YQIU6BnNDhUzM0F3UwGIv",
+          "name": "PerpsMarketDetails",
+          "params": {
+            "market": {
+              "change24h": "0",
+              "change24hPercent": "0",
+              "maxLeverage": "100",
+              "name": "ETH",
+              "price": "0",
+              "symbol": "ETH",
+              "volume": "0"
+            }
+          }
+        },
+        "deviceName": "mm-1",
+        "platform": "ios"
+      }
+    },
+    {
+      "action": "wait_for",
+      "description": "wait for PerpsMarketDetails",
+      "finishedAt": "2026-04-16T00:59:52.927Z",
+      "id": "eth-wait-market",
+      "status": "pass",
+      "startedAt": "2026-04-16T00:59:52.183Z",
+      "durationMs": 744,
+      "next": "eth-market-data",
+      "result": {
+        "route": "PerpsMarketDetails"
+      }
+    },
+    {
+      "action": "eval_sync",
+      "description": "eval_sync",
+      "finishedAt": "2026-04-16T00:59:53.220Z",
+      "id": "eth-market-data",
+      "status": "pass",
+      "startedAt": "2026-04-16T00:59:52.927Z",
+      "durationMs": 293,
+      "next": "eth-open-order",
+      "result": {
+        "symbol": "ETH",
+        "screen": "market_detail",
+        "title": "ETH-USD",
+        "price": "$2,368.1",
+        "change": "+1.12%",
+        "header": [
+          "ETH-USD",
+          "ETH-USD",
+          "ETH-USD",
+          "ETH-USD",
+          "ETH-USD",
+          "ETH-USD",
+          "ETH-USD",
+          "ETH-USD",
+          "ETH-USD",
+          "ETH-USD",
+          "ETH-USD",
+          "ETH-USD"
+        ]
+      }
+    },
+    {
+      "action": "press",
+      "description": "press perps-market-details-long-button",
+      "finishedAt": "2026-04-16T00:59:53.512Z",
+      "id": "eth-open-order",
+      "status": "pass",
+      "startedAt": "2026-04-16T00:59:53.220Z",
+      "durationMs": 292,
+      "next": "eth-wait-order",
+      "result": {
+        "ok": true,
+        "testId": "perps-market-details-long-button",
+        "deviceName": "mm-1"
+      }
+    },
+    {
+      "action": "wait_for",
+      "description": "wait for RedesignedConfirmations",
+      "finishedAt": "2026-04-16T00:59:57.677Z",
+      "id": "eth-wait-order",
+      "status": "pass",
+      "startedAt": "2026-04-16T00:59:53.512Z",
+      "durationMs": 4165,
+      "next": "eth-order-data",
+      "result": {
+        "route": "RedesignedConfirmations"
+      }
+    },
+    {
+      "action": "eval_sync",
+      "description": "eval_sync",
+      "finishedAt": "2026-04-16T00:59:58.398Z",
+      "id": "eth-order-data",
+      "status": "pass",
+      "startedAt": "2026-04-16T00:59:57.677Z",
+      "durationMs": 721,
+      "next": "sol-nav-market",
+      "result": {
+        "symbol": "ETH",
+        "screen": "order_entry",
+        "title": "Long ETH",
+        "price": "$2,367.5",
+        "change": "+1.12%",
+        "header": [
+          "Long ETH",
+          "$2,367.5",
+          "+1.12%",
+          "Market",
+          "Long ETH",
+          "$2,367.5",
+          "+1.12%",
+          "Market",
+          "Long ETH",
+          "$2,367.5",
+          "+1.12%",
+          "Long ETH"
+        ]
+      }
+    },
+    {
+      "action": "navigate",
+      "description": "navigate to PerpsMarketDetails",
+      "finishedAt": "2026-04-16T00:59:59.807Z",
+      "id": "sol-nav-market",
+      "status": "pass",
+      "startedAt": "2026-04-16T00:59:58.398Z",
+      "durationMs": 1409,
+      "next": "sol-wait-market",
+      "result": {
+        "navigated": "PerpsMarketDetails",
+        "params": {
+          "market": {
+            "symbol": "SOL",
+            "name": "SOL",
+            "price": "0",
+            "change24h": "0",
+            "change24hPercent": "0",
+            "volume": "0",
+            "maxLeverage": "100"
+          }
+        },
+        "previousRoute": {
+          "key": "RedesignedConfirmations-HtWYNVxdsBunrYPihwPuN",
+          "name": "RedesignedConfirmations",
+          "params": {
+            "asset": "ETH",
+            "defaultMaxLeverage": 25,
+            "defaultSzDecimals": 4,
+            "direction": "long",
+            "showPerpsHeader": false,
+            "source": "perp_asset_screen"
+          }
+        },
+        "currentRoute": {
+          "key": "PerpsMarketDetails-YQIU6BnNDhUzM0F3UwGIv",
+          "name": "PerpsMarketDetails",
+          "params": {
+            "market": {
+              "change24h": "0",
+              "change24hPercent": "0",
+              "maxLeverage": "100",
+              "name": "SOL",
+              "price": "0",
+              "symbol": "SOL",
+              "volume": "0"
+            }
+          }
+        },
+        "deviceName": "mm-1",
+        "platform": "ios"
+      }
+    },
+    {
+      "action": "wait_for",
+      "description": "wait for PerpsMarketDetails",
+      "finishedAt": "2026-04-16T01:00:00.562Z",
+      "id": "sol-wait-market",
+      "status": "pass",
+      "startedAt": "2026-04-16T00:59:59.807Z",
+      "durationMs": 755,
+      "next": "sol-market-data",
+      "result": {
+        "route": "PerpsMarketDetails"
+      }
+    },
+    {
+      "action": "eval_sync",
+      "description": "eval_sync",
+      "finishedAt": "2026-04-16T01:00:00.913Z",
+      "id": "sol-market-data",
+      "status": "pass",
+      "startedAt": "2026-04-16T01:00:00.562Z",
+      "durationMs": 351,
+      "next": "fartcoin-nav-market",
+      "result": {
+        "symbol": "SOL",
+        "screen": "market_detail",
+        "title": "SOL-USD",
+        "price": "$85.06",
+        "change": "+1.36%",
+        "header": [
+          "SOL-USD",
+          "SOL-USD",
+          "SOL-USD",
+          "SOL-USD",
+          "SOL-USD",
+          "SOL-USD",
+          "SOL-USD",
+          "SOL-USD",
+          "SOL-USD",
+          "SOL-USD",
+          "SOL-USD",
+          "SOL-USD"
+        ]
+      }
+    },
+    {
+      "action": "navigate",
+      "description": "navigate to PerpsMarketDetails",
+      "finishedAt": "2026-04-16T01:00:01.842Z",
+      "id": "fartcoin-nav-market",
+      "status": "pass",
+      "startedAt": "2026-04-16T01:00:00.913Z",
+      "durationMs": 929,
+      "next": "fartcoin-wait-market",
+      "result": {
+        "navigated": "PerpsMarketDetails",
+        "params": {
+          "market": {
+            "symbol": "FARTCOIN",
+            "name": "FARTCOIN",
+            "price": "0",
+            "change24h": "0",
+            "change24hPercent": "0",
+            "volume": "0",
+            "maxLeverage": "100"
+          }
+        },
+        "previousRoute": {
+          "key": "PerpsMarketDetails-YQIU6BnNDhUzM0F3UwGIv",
+          "name": "PerpsMarketDetails",
+          "params": {
+            "market": {
+              "change24h": "0",
+              "change24hPercent": "0",
+              "maxLeverage": "100",
+              "name": "SOL",
+              "price": "0",
+              "symbol": "SOL",
+              "volume": "0"
+            }
+          }
+        },
+        "currentRoute": {
+          "key": "PerpsMarketDetails-YQIU6BnNDhUzM0F3UwGIv",
+          "name": "PerpsMarketDetails",
+          "params": {
+            "market": {
+              "change24h": "0",
+              "change24hPercent": "0",
+              "maxLeverage": "100",
+              "name": "FARTCOIN",
+              "price": "0",
+              "symbol": "FARTCOIN",
+              "volume": "0"
+            }
+          }
+        },
+        "deviceName": "mm-1",
+        "platform": "ios"
+      }
+    },
+    {
+      "action": "wait_for",
+      "description": "wait for PerpsMarketDetails",
+      "finishedAt": "2026-04-16T01:00:02.196Z",
+      "id": "fartcoin-wait-market",
+      "status": "pass",
+      "startedAt": "2026-04-16T01:00:01.842Z",
+      "durationMs": 354,
+      "next": "fartcoin-market-data",
+      "result": {
+        "route": "PerpsMarketDetails"
+      }
+    },
+    {
+      "action": "eval_sync",
+      "description": "eval_sync",
+      "finishedAt": "2026-04-16T01:00:02.680Z",
+      "id": "fartcoin-market-data",
+      "status": "pass",
+      "startedAt": "2026-04-16T01:00:02.196Z",
+      "durationMs": 484,
+      "next": "pump-nav-market",
+      "result": {
+        "symbol": "FARTCOIN",
+        "screen": "market_detail",
+        "title": "FARTCOIN-USD",
+        "price": "$0.20519",
+        "change": "+6.46%",
+        "header": [
+          "FARTCOIN-USD",
+          "FARTCOIN-USD",
+          "FARTCOIN-USD",
+          "FARTCOIN-USD",
+          "FARTCOIN-USD",
+          "FARTCOIN-USD",
+          "FARTCOIN-USD",
+          "FARTCOIN-USD",
+          "FARTCOIN-USD",
+          "FARTCOIN-USD",
+          "FARTCOIN-USD",
+          "FARTCOIN-USD"
+        ]
+      }
+    },
+    {
+      "action": "navigate",
+      "description": "navigate to PerpsMarketDetails",
+      "finishedAt": "2026-04-16T01:00:03.554Z",
+      "id": "pump-nav-market",
+      "status": "pass",
+      "startedAt": "2026-04-16T01:00:02.680Z",
+      "durationMs": 874,
+      "next": "pump-wait-market",
+      "result": {
+        "navigated": "PerpsMarketDetails",
+        "params": {
+          "market": {
+            "symbol": "PUMP",
+            "name": "PUMP",
+            "price": "0",
+            "change24h": "0",
+            "change24hPercent": "0",
+            "volume": "0",
+            "maxLeverage": "100"
+          }
+        },
+        "previousRoute": {
+          "key": "PerpsMarketDetails-YQIU6BnNDhUzM0F3UwGIv",
+          "name": "PerpsMarketDetails",
+          "params": {
+            "market": {
+              "change24h": "0",
+              "change24hPercent": "0",
+              "maxLeverage": "100",
+              "name": "FARTCOIN",
+              "price": "0",
+              "symbol": "FARTCOIN",
+              "volume": "0"
+            }
+          }
+        },
+        "currentRoute": {
+          "key": "PerpsMarketDetails-YQIU6BnNDhUzM0F3UwGIv",
+          "name": "PerpsMarketDetails",
+          "params": {
+            "market": {
+              "change24h": "0",
+              "change24hPercent": "0",
+              "maxLeverage": "100",
+              "name": "PUMP",
+              "price": "0",
+              "symbol": "PUMP",
+              "volume": "0"
+            }
+          }
+        },
+        "deviceName": "mm-1",
+        "platform": "ios"
+      }
+    },
+    {
+      "action": "wait_for",
+      "description": "wait for PerpsMarketDetails",
+      "finishedAt": "2026-04-16T01:00:03.850Z",
+      "id": "pump-wait-market",
+      "status": "pass",
+      "startedAt": "2026-04-16T01:00:03.554Z",
+      "durationMs": 296,
+      "next": "pump-market-data",
+      "result": {
+        "route": "PerpsMarketDetails"
+      }
+    },
+    {
+      "action": "eval_sync",
+      "description": "eval_sync",
+      "finishedAt": "2026-04-16T01:00:04.319Z",
+      "id": "pump-market-data",
+      "status": "pass",
+      "startedAt": "2026-04-16T01:00:03.850Z",
+      "durationMs": 469,
+      "next": "done",
+      "result": {
+        "symbol": "PUMP",
+        "screen": "market_detail",
+        "title": "PUMP-USD",
+        "price": "$0.001899",
+        "change": "+4.60%",
+        "header": [
+          "PUMP-USD",
+          "PUMP-USD",
+          "PUMP-USD",
+          "PUMP-USD",
+          "PUMP-USD",
+          "PUMP-USD",
+          "PUMP-USD",
+          "PUMP-USD",
+          "PUMP-USD",
+          "PUMP-USD",
+          "PUMP-USD",
+          "PUMP-USD"
+        ]
+      }
+    },
+    {
+      "action": "end",
+      "description": "pass end",
+      "finishedAt": "2026-04-16T01:00:04.319Z",
+      "id": "done",
+      "status": "pass",
+      "note": "",
+      "result": {
+        "message": "",
+        "status": "pass"
+      }
+    }
+  ],
+  "vars": {
+    "btc_market": {
+      "symbol": "BTC",
+      "screen": "market_detail",
+      "title": "BTC-USD",
+      "price": "$75,037",
+      "change": "-1.06%",
+      "header": [
+        "BTC-USD",
+        "BTC-USD",
+        "BTC-USD",
+        "BTC-USD",
+        "BTC-USD",
+        "BTC-USD",
+        "BTC-USD",
+        "BTC-USD",
+        "BTC-USD",
+        "BTC-USD",
+        "BTC-USD",
+        "BTC-USD"
+      ]
+    },
+    "btc_order": {
+      "symbol": "BTC",
+      "screen": "order_entry",
+      "title": "Long BTC",
+      "price": "$75,043",
+      "change": "-1.06%",
+      "header": [
+        "Long BTC",
+        "$75,043",
+        "-1.06%",
+        "Market",
+        "Long BTC",
+        "$75,043",
+        "-1.06%",
+        "Market",
+        "Long BTC",
+        "$75,043",
+        "-1.06%",
+        "Long BTC"
+      ]
+    },
+    "eth_market": {
+      "symbol": "ETH",
+      "screen": "market_detail",
+      "title": "ETH-USD",
+      "price": "$2,368.1",
+      "change": "+1.12%",
+      "header": [
+        "ETH-USD",
+        "ETH-USD",
+        "ETH-USD",
+        "ETH-USD",
+        "ETH-USD",
+        "ETH-USD",
+        "ETH-USD",
+        "ETH-USD",
+        "ETH-USD",
+        "ETH-USD",
+        "ETH-USD",
+        "ETH-USD"
+      ]
+    },
+    "eth_order": {
+      "symbol": "ETH",
+      "screen": "order_entry",
+      "title": "Long ETH",
+      "price": "$2,367.5",
+      "change": "+1.12%",
+      "header": [
+        "Long ETH",
+        "$2,367.5",
+        "+1.12%",
+        "Market",
+        "Long ETH",
+        "$2,367.5",
+        "+1.12%",
+        "Market",
+        "Long ETH",
+        "$2,367.5",
+        "+1.12%",
+        "Long ETH"
+      ]
+    },
+    "sol_market": {
+      "symbol": "SOL",
+      "screen": "market_detail",
+      "title": "SOL-USD",
+      "price": "$85.06",
+      "change": "+1.36%",
+      "header": [
+        "SOL-USD",
+        "SOL-USD",
+        "SOL-USD",
+        "SOL-USD",
+        "SOL-USD",
+        "SOL-USD",
+        "SOL-USD",
+        "SOL-USD",
+        "SOL-USD",
+        "SOL-USD",
+        "SOL-USD",
+        "SOL-USD"
+      ]
+    },
+    "fartcoin_market": {
+      "symbol": "FARTCOIN",
+      "screen": "market_detail",
+      "title": "FARTCOIN-USD",
+      "price": "$0.20519",
+      "change": "+6.46%",
+      "header": [
+        "FARTCOIN-USD",
+        "FARTCOIN-USD",
+        "FARTCOIN-USD",
+        "FARTCOIN-USD",
+        "FARTCOIN-USD",
+        "FARTCOIN-USD",
+        "FARTCOIN-USD",
+        "FARTCOIN-USD",
+        "FARTCOIN-USD",
+        "FARTCOIN-USD",
+        "FARTCOIN-USD",
+        "FARTCOIN-USD"
+      ]
+    },
+    "pump_market": {
+      "symbol": "PUMP",
+      "screen": "market_detail",
+      "title": "PUMP-USD",
+      "price": "$0.001899",
+      "change": "+4.60%",
+      "header": [
+        "PUMP-USD",
+        "PUMP-USD",
+        "PUMP-USD",
+        "PUMP-USD",
+        "PUMP-USD",
+        "PUMP-USD",
+        "PUMP-USD",
+        "PUMP-USD",
+        "PUMP-USD",
+        "PUMP-USD",
+        "PUMP-USD",
+        "PUMP-USD"
+      ]
+    }
+  }
+}

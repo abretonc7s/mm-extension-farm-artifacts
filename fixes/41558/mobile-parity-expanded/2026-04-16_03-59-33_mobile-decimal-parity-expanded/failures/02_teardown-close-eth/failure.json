@@ -1,0 +1,44 @@
+{
+  "capturedAt": "2026-04-16T03:59:56.350Z",
+  "depth": 0,
+  "recipePath": "/Users/deeeed/dev/metamask/metamask-mobile-1/scripts/perps/agentic/teams/perps/recipes/mobile-decimal-parity-expanded.json",
+  "recipeTitle": "Mobile perps decimal parity expanded",
+  "step": {
+    "id": "teardown-close-eth",
+    "action": "eval_async",
+    "expression": "Engine.context.PerpsController.getPositions().then(function(ps){var p=ps.find(function(x){return x.symbol==='ETH'});if(!p){return JSON.stringify({cleared:true});}return Engine.context.PerpsController.closePosition({symbol:'ETH'}).then(function(){return JSON.stringify({cleared:true});});})",
+    "assert": {
+      "operator": "eq",
+      "field": "cleared",
+      "value": true
+    }
+  },
+  "error": "ERROR: WebSocket closed",
+  "route": {
+    "key": "Wallet-HC_AARYsZhplg8JRuGkYG",
+    "name": "Wallet"
+  },
+  "state": {
+    "error": "ERROR: WebSocket closed"
+  },
+  "workflowState": {
+    "env": {
+      "appRoot": "/Users/deeeed/dev/metamask/metamask-mobile-1",
+      "recipePath": "/Users/deeeed/dev/metamask/metamask-mobile-1/scripts/perps/agentic/teams/perps/recipes/mobile-decimal-parity-expanded.json",
+      "team": "perps"
+    },
+    "inputs": {},
+    "last": null,
+    "nodes": {},
+    "trace": [],
+    "vars": {}
+  },
+  "evalRefs": {},
+  "logs": [
+    {
+      "source": "/Users/deeeed/dev/metamask/metamask-mobile-1/.agent/metro.log",
+      "excerpt": "/Users/deeeed/dev/metamask/metamask-extension-3/temp/.task/fix/41558-0415-1045/artifacts/mobile-parity-expanded/2026-04-16_03-59-33_mobile-decimal-parity-expanded/failures/02_teardown-close-eth/metro.log"
+    }
+  ],
+  "screenshot": "/Users/deeeed/dev/metamask/metamask-extension-3/temp/.task/fix/41558-0415-1045/artifacts/mobile-parity-expanded/2026-04-16_03-59-33_mobile-decimal-parity-expanded/failures/02_teardown-close-eth/2026-04-16_115951_failure-teardown-close-eth.png"
+}

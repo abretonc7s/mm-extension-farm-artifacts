@@ -1,0 +1,20 @@
+flowchart TD
+  %% Parity snapshot — extension ETH reverse modal
+  __entry__(["ENTRY"]) --> node_nav
+  node_nav["nav<br/>navigate"]
+  node_wait["wait<br/>wait_for"]
+  node_open_modify_menu["open-modify-menu<br/>press"]
+  node_wait_menu["wait-menu<br/>wait_for"]
+  node_open_reverse["open-reverse<br/>press"]
+  node_wait_modal["wait-modal<br/>wait_for"]
+  node_extract["extract<br/>eval_sync"]
+  node_close["close<br/>press"]
+  node_done(["done<br/>PASS"])
+  node_nav --> node_wait
+  node_wait --> node_open_modify_menu
+  node_open_modify_menu --> node_wait_menu
+  node_wait_menu --> node_open_reverse
+  node_open_reverse --> node_wait_modal
+  node_wait_modal --> node_extract
+  node_extract --> node_close
+  node_close --> node_done

@@ -1,0 +1,90 @@
+[
+  {
+    "id": "nav",
+    "action": "navigate",
+    "ok": true,
+    "raw": {
+      "navigated": true,
+      "hash": "#/perps/market/ETH"
+    },
+    "durationMs": 5
+  },
+  {
+    "id": "wait-detail",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-market-detail-page"
+    },
+    "durationMs": 69
+  },
+  {
+    "id": "open",
+    "action": "press",
+    "ok": true,
+    "raw": {
+      "clicked": true,
+      "target": "testId:perps-long-cta-button"
+    },
+    "durationMs": 95
+  },
+  {
+    "id": "wait-entry",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-order-entry-page"
+    },
+    "durationMs": 46
+  },
+  {
+    "id": "set",
+    "action": "set_input",
+    "ok": true,
+    "raw": {
+      "filled": true,
+      "fallback": true
+    },
+    "durationMs": 53
+  },
+  {
+    "id": "submit",
+    "action": "press",
+    "ok": true,
+    "raw": {
+      "clicked": true,
+      "target": "testId:submit-order-button"
+    },
+    "durationMs": 95
+  },
+  {
+    "id": "logs",
+    "action": "log_watch",
+    "ok": true,
+    "raw": {
+      "logs": 0,
+      "violations": [],
+      "watched": []
+    },
+    "durationMs": 8002
+  },
+  {
+    "id": "shot",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "/Users/deeeed/dev/metamask/metamask-extension-3/temp/agentic/recipes/test-artifacts/screenshots/debug-order-log-after-submit-1776270564846.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 119
+  },
+  {
+    "id": "done",
+    "action": "end",
+    "status": "pass",
+    "durationMs": 0
+  }
+]

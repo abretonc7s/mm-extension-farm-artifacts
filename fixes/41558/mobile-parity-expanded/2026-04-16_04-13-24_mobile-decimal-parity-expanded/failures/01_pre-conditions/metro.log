@@ -1,0 +1,400 @@
+ (NOBRIDGE) WARN  [TypeError: Network request failed]
+ (NOBRIDGE) WARN  [TypeError: Network request failed]
+ (NOBRIDGE) WARN  [MetaMask DEBUG]: [TypeError: Network request failed] [Component Stack]
+ (NOBRIDGE) DEBUG  HyperLiquidProvider: Testnet - filtered to allowed DEXs {"allowedDexs": ["xyz"], "availableHip3Dexs": 203, "filteredDexs": ["xyz"]}
+ (NOBRIDGE) DEBUG  HyperLiquidProvider: standalone account state fetched {"totalBalance": "872.734644"}
+ (NOBRIDGE) DEBUG  PerpsController: User data preloaded {"orderCount": 2, "positionCount": 2, "totalBalance": "872.734644"}
+ (NOBRIDGE) DEBUG  SDKConnect::init() - waited 1000ms - keep initializing
+ (NOBRIDGE) DEBUG  SDKConnect::init() - connections length=0 approvedHosts length=0
+ (NOBRIDGE) DEBUG  SDKConnect::init() - valid connections length=0 {}
+ (NOBRIDGE) DEBUG  SDKConnect::init() - done
+ (NOBRIDGE) DEBUG  SDKConnect::postInit() - check keychain unlocked=true
+ (NOBRIDGE) DEBUG  wait:: waitForKeyChainUnlocked[init] unlocked: true
+ (NOBRIDGE) DEBUG  SDKConnect::postInit() - currentRouteName=Wallet
+ (NOBRIDGE) DEBUG  SDKConnect::postInit() - currentRouteName=Wallet - start reconnectAll
+ (NOBRIDGE) DEBUG  SDKConnect::postInit() - keychain unlocked -- wait for reconnectAll
+ (NOBRIDGE) DEBUG  SDKConnect::reconnectAll paused=false reconnected=false
+ (NOBRIDGE) DEBUG  SDKConnect::reconnectAll - channelIds=0 - done
+ (NOBRIDGE) DEBUG  SDKConnect::postInit() - done
+ (NOBRIDGE) LOG  [MetaMask DEBUG]: PerpsController state persisted successfully
+ (NOBRIDGE) LOG  RNFS:script finished in 1775ms
+ (NOBRIDGE) DEBUG  HyperLiquidProvider: Testnet - filtered to allowed DEXs {"allowedDexs": ["xyz"], "availableHip3Dexs": 203, "filteredDexs": ["xyz"]}
+ (NOBRIDGE) DEBUG  HyperLiquidProvider: Available DEXs (market filtering applied at data layer) {"count": 1, "dexNames": ["xyz"]}
+ (NOBRIDGE) DEBUG  HyperLiquidProvider: Starting asset mapping rebuild {"allowlistMarkets": ["xyz:*"], "blocklistMarkets": ["demo"], "dexs": [null, "xyz"], "hip3Enabled": true, "previousMapSize": 0, "timestamp": "2026-04-16T04:11:02.488Z"}
+ (NOBRIDGE) DEBUG  Feature flags updated: {"allowlistMarkets": ["xyz:*"], "blocklistMarkets": ["demo"], "enabledDexs": ["xyz"], "hip3Enabled": true, "previousAllowlistMarkets": ["xyz:*"], "previousBlocklistMarkets": ["demo"], "previousEnabledDexs": [], "previousHip3Enabled": true}
+ (NOBRIDGE) DEBUG  Establishing subscriptions for new DEXs: ["xyz"]
+ (NOBRIDGE) DEBUG  DEX discovery complete, proceeding with subscriptions {"enabledDexs": ["xyz"]}
+ (NOBRIDGE) DEBUG  [ensureClearinghouseStateSubscription] Waiting for pending subscription for DEX: xyz
+ (NOBRIDGE) DEBUG  webData3 subscription established for OI caps (main + HIP-3)
+ (NOBRIDGE) DEBUG  clearinghouseState subscription established for DEX: xyz
+ (NOBRIDGE) DEBUG  [ensureOpenOrdersSubscription] Waiting for pending subscription for DEX: xyz
+ (NOBRIDGE) DEBUG  Waiting for all DEXs to send initial data {"expected": ["", "xyz"], "initialized": ["xyz"]}
+ (NOBRIDGE) DEBUG  clearinghouseState subscription established for DEX: main
+ (NOBRIDGE) DEBUG  PERPSMARK_SENTRY_WS PerpsWS: First position data received {"duration": "2111ms", "metric": "perps.websocket.first_position_data"}
+ (NOBRIDGE) DEBUG  PERPSMARK_SENTRY_WS PerpsWS: First order data received {"duration": "2111ms"}
+ (NOBRIDGE) DEBUG  PERPSMARK_SENTRY_WS PerpsWS: First account data received {"duration": "2111ms"}
+ (NOBRIDGE) DEBUG  openOrders subscription established for DEX: main
+ (NOBRIDGE) DEBUG  openOrders subscription established for DEX: xyz
+ (NOBRIDGE) DEBUG  Established user data subscriptions for new DEX: xyz
+ (NOBRIDGE) DEBUG  HIP-3 user data subscriptions established for 2 DEXs
+ (NOBRIDGE) LOG  [MetaMask DEBUG]: AccountTreeController state persisted successfully
+ (NOBRIDGE) DEBUG  PerpsStreamProvider: Using stream manager: {"isE2EMockManager": false, "isRealManager": true, "isTestManager": false}
+ (NOBRIDGE) DEBUG  [SubscriptionService] DEX meta cache populated {"dex": "main", "universeSize": 207}
+ (NOBRIDGE) DEBUG  [SubscriptionService] DEX assetCtxs cache populated {"ctxsCount": 207, "dex": "main"}
+ (NOBRIDGE) DEBUG  [SubscriptionService] DEX meta cache populated {"dex": "xyz", "universeSize": 46}
+ (NOBRIDGE) DEBUG  [SubscriptionService] DEX assetCtxs cache populated {"ctxsCount": 46, "dex": "xyz"}
+ (NOBRIDGE) DEBUG  HyperLiquidProvider: Asset mapping built {"dexCount": 2, "hip3Sample": ["xyz:XYZ100", "xyz:TSLA", "xyz:NVDA", "xyz:GOLD", "xyz:HOOD", "xyz:INTC", "xyz:PLTR", "xyz:COIN", "xyz:META", "xyz:AAPL"], "mainDexSample": ["SOL", "APT", "ATOM", "BTC", "ETH"], "totalAssets": 253}
+ (NOBRIDGE) DEBUG  [ensureReady] Initialization complete
+ (NOBRIDGE) DEBUG  HyperLiquidProvider: Fetching markets from DEXs {"dexCount": 2, "skipFilters": false}
+ (NOBRIDGE) DEBUG  [getCachedMeta] Using cached meta response {"dex": "main", "universeSize": 207}
+ (NOBRIDGE) DEBUG  [getCachedMeta] Using cached meta response {"dex": "xyz", "universeSize": 46}
+ (NOBRIDGE) DEBUG  HyperLiquidProvider: Fetched markets for DEX {"dex": "main", "marketCount": 207, "skipCache": false, "skipFilters": false}
+ (NOBRIDGE) DEBUG  HyperLiquidProvider: Fetched markets for DEX {"dex": "xyz", "marketCount": 46, "skipCache": false, "skipFilters": false}
+ (NOBRIDGE) DEBUG  PriceStreamChannel: Pre-warming with all market symbols {"symbolCount": 253, "symbols": ["SOL", "APT", "ATOM", "BTC", "ETH", "MATIC", "BNB", "AVAX", "GMT", "DYDX"]}
+ (NOBRIDGE) DEBUG  Using cached meta for  {"dex": "", "firstAssetSample": "SOL", "universeCount": 207}
+ (NOBRIDGE) DEBUG  Using cached meta for xyz {"dex": "xyz", "firstAssetSample": "xyz:XYZ100", "universeCount": 46}
+ (NOBRIDGE) LOG  [MetaMask DEBUG]: MultichainAssetsController state persisted successfully
+ (NOBRIDGE) LOG  [MetaMask DEBUG]: MultichainBalancesController state persisted successfully
+ (NOBRIDGE) LOG  [MetaMask DEBUG]: MultichainAssetsRatesController state persisted successfully
+ (NOBRIDGE) DEBUG  HyperLiquid: Global allMids subscription established
+ (NOBRIDGE) LOG  [MetaMask DEBUG]: MultichainBalancesController state persisted successfully
+ (NOBRIDGE) LOG  [MetaMask DEBUG]: PerpsController state persisted successfully
+ (NOBRIDGE) LOG  [MetaMask DEBUG]: SnapController state persisted successfully
+ (NOBRIDGE) DEBUG  assetCtxs subscription established for main DEX
+ (NOBRIDGE) DEBUG  assetCtxs subscription established for DEX: xyz
+ (NOBRIDGE) DEBUG  PerpsStreamProvider: Using stream manager: {"isE2EMockManager": false, "isRealManager": true, "isTestManager": false}
+ (NOBRIDGE) LOG  [MetaMask DEBUG]: AccountTreeController state persisted successfully
+ (NOBRIDGE) LOG  [MetaMask DEBUG]: TransactionController state persisted successfully
+ (NOBRIDGE) LOG  [MetaMask DEBUG]: AccountTreeController state persisted successfully
+ (NOBRIDGE) DEBUG  PerpsStreamProvider: Using stream manager: {"isE2EMockManager": false, "isRealManager": true, "isTestManager": false}
+ (NOBRIDGE) LOG  [MetaMask DEBUG]: MultichainBalancesController state persisted successfully
+ (NOBRIDGE) LOG  [MetaMask DEBUG]: SnapController state persisted successfully
+ (NOBRIDGE) LOG  [MetaMask DEBUG]: MultichainAssetsController state persisted successfully
+ (NOBRIDGE) LOG  [MetaMask DEBUG]: MultichainBalancesController state persisted successfully
+ (NOBRIDGE) LOG  [MetaMask DEBUG]: AccountTreeController state persisted successfully
+ (NOBRIDGE) DEBUG  PerpsStreamProvider: Using stream manager: {"isE2EMockManager": false, "isRealManager": true, "isTestManager": false}
+ (NOBRIDGE) LOG  [MetaMask DEBUG]: PerpsController state persisted successfully
+ (NOBRIDGE) LOG  [MetaMask DEBUG]: MultichainAssetsController state persisted successfully
+ (NOBRIDGE) LOG  [MetaMask DEBUG]: MultichainBalancesController state persisted successfully
+ (NOBRIDGE) LOG  [MetaMask DEBUG]: PerpsController state persisted successfully
+ (NOBRIDGE) DEBUG  Getting account state via HyperLiquid SDK
+ (NOBRIDGE) DEBUG  User address for account state: 0x8dc623e964475d4d669da601fd15ea9125469003
+ (NOBRIDGE) DEBUG  Network mode: TESTNET
+ (NOBRIDGE) DEBUG  Spot state: {"balances": []}
+ (NOBRIDGE) DEBUG  Perps states (all DEXs): {"dexCount": 2}
+ (NOBRIDGE) DEBUG  DEX main account state: {"availableBalance": "863.216974", "marginUsed": "6.259824", "totalBalance": "872.743464", "unrealizedPnl": "-0.22479"}
+ (NOBRIDGE) DEBUG  DEX xyz account state: {"availableBalance": "0.0", "marginUsed": "0.0", "totalBalance": "0", "unrealizedPnl": "0"}
+ (NOBRIDGE) DEBUG  Aggregated account state: {"availableBalance": "863.216974", "marginUsed": "6.259824", "returnOnEquity": "-3.590995529586774", "subAccountBreakdown": {"": {"availableBalance": "863.216974", "totalBalance": "872.743464"}, "xyz": {"availableBalance": "0.0", "totalBalance": "0"}}, "totalBalance": "872.743464", "unrealizedPnl": "-0.22479"}
+ (NOBRIDGE) LOG  [MetaMask DEBUG]: PerpsController state persisted successfully
+ (NOBRIDGE) DEBUG  PerpsStreamProvider: Using stream manager: {"isE2EMockManager": false, "isRealManager": true, "isTestManager": false}
+ (NOBRIDGE) DEBUG  usePerpsLiveFills: Subscribing with no throttle (instant updates)
+ (NOBRIDGE) DEBUG  usePerpsLiveFills: Received first WebSocket update {"count": 30}
+ (NOBRIDGE) DEBUG  usePerpsLiveFills: Received fill update {"count": 30}
+ (NOBRIDGE) DEBUG  Getting user fills via HyperLiquid SDK: {"aggregateByTime": false, "startTime": 1768536676078}
+ (NOBRIDGE) DEBUG  usePerpsLivePositions: Received first WebSocket update {"positionsCount": 2}
+ (NOBRIDGE) DEBUG  usePerpsLivePositions: Received first WebSocket update {"positionsCount": 2}
+ (NOBRIDGE) DEBUG  usePerpsLiveFills: Subscribing with no throttle (instant updates)
+ (NOBRIDGE) DEBUG  usePerpsLiveFills: Received first WebSocket update {"count": 30}
+ (NOBRIDGE) DEBUG  usePerpsLiveFills: Received fill update {"count": 30}
+ (NOBRIDGE) DEBUG  Getting user fills via HyperLiquid SDK: {"startTime": 1768536676087}
+ (NOBRIDGE) DEBUG  [ensureReady] Reusing existing initialization promise
+ (NOBRIDGE) DEBUG  PerpsStreamProvider: Using stream manager: {"isE2EMockManager": false, "isRealManager": true, "isTestManager": false}
+ (NOBRIDGE) DEBUG  HyperLiquidProvider: Getting markets with symbol filter {"symbolCount": 1}
+ (NOBRIDGE) DEBUG  [getCachedMeta] Using cached meta response {"dex": "main", "universeSize": 207}
+ (NOBRIDGE) DEBUG  HyperLiquidProvider: Fetched markets for DEX {"dex": "main", "marketCount": 207, "skipCache": false, "skipFilters": false}
+ (NOBRIDGE) INFO  TRACK event saved {"event": "Home Viewed", "properties": {"app_session_id": "c233f6a5-26cc-48a6-bfb9-3a34a50df6c0", "entry_point": "app_opened", "interaction_type": "session_summary", "location": "home", "max_scroll_depth_visit": 0, "session_time": 19, "total_sections_loaded": 7, "total_sections_viewed": 2, "visit_number": 1}, "type": "track"}
+ (NOBRIDGE) DEBUG  Cleaned up assetCtxs subscription for main DEX
+ (NOBRIDGE) DEBUG  Using cached meta for  {"dex": "", "firstAssetSample": "SOL", "universeCount": 207}
+ (NOBRIDGE) DEBUG  HyperLiquid: Market data subscription established for ETH
+ (NOBRIDGE) DEBUG  User fills received: {"count": 151}
+ (NOBRIDGE) LOG  [MetaMask DEBUG]: PerpsController state persisted successfully
+ (NOBRIDGE) DEBUG  User fills received: {"count": 151}
+ (NOBRIDGE) DEBUG  assetCtxs subscription established for main DEX
+ (NOBRIDGE) DEBUG  CandleStreamChannel: WebSocket subscription established {"cacheKey": "ETH-1h", "interval": "1h", "symbol": "ETH"}
+ (NOBRIDGE) DEBUG  CandleStreamChannel: WebSocket subscription established {"cacheKey": "ETH-15m", "interval": "15m", "symbol": "ETH"}
+ (NOBRIDGE) LOG  [MetaMask DEBUG]: ComplianceController state persisted successfully
+ (NOBRIDGE) DEBUG  PERPSMARK_SENTRY PerpsScreen: Perps Position Details View completed {"context": {"hasMarketStats": true, "loadingStates": {"isLoadingHistory": false, "isLoadingPosition": false}, "symbol": "ETH"}, "endConditions": 4, "metric": "Perps Position Details View"}
+ (NOBRIDGE) INFO  TRACK event saved {"event": "Perp Screen Viewed", "properties": {"ab_test_button_color": "monochrome", "asset": "ETH", "market_insights_displayed": true, "open_order": 2, "open_position": 1, "screen_type": "asset_details", "source": "perp_markets", "timestamp": 1776312677334}, "type": "track"}
+ (NOBRIDGE) LOG  [MetaMask DEBUG]: PerpsController state persisted successfully
+ (NOBRIDGE) LOG  [MetaMask DEBUG]: MultichainAssetsController state persisted successfully
+ (NOBRIDGE) LOG  [MetaMask DEBUG]: MultichainBalancesController state persisted successfully
+ (NOBRIDGE) LOG  [MetaMask DEBUG]: PerpsController state persisted successfully
+ (NOBRIDGE) LOG  [MetaMask DEBUG]: PerpsController state persisted successfully
+ (NOBRIDGE) LOG  [MetaMask DEBUG]: PerpsController state persisted successfully
+ (NOBRIDGE) LOG  [MetaMask DEBUG]: PerpsController state persisted successfully
+ (NOBRIDGE) DEBUG  PerpsStreamProvider: Using stream manager: {"isE2EMockManager": false, "isRealManager": true, "isTestManager": false}
+ (NOBRIDGE) DEBUG  PerpsStreamProvider: Using stream manager: {"isE2EMockManager": false, "isRealManager": true, "isTestManager": false}
+ (NOBRIDGE) DEBUG  [useComplianceGate] Wallet not blocked, proceeding
+ (NOBRIDGE) LOG  [MetaMask DEBUG]: [BottomSheet] onCloseBottomSheet ignored (already closing)
+ (NOBRIDGE) INFO  TRACK event saved {"event": "Perp UI Interaction", "properties": {"asset": "ETH", "direction": "long", "interaction_type": "flip_position", "source": "position_screen"}, "type": "track"}
+ (NOBRIDGE) DEBUG  PERPSMARK_SENTRY PerpsScreen: Perps Flip Position Sheet completed {"context": {}, "endConditions": 1, "metric": "Perps Flip Position Sheet"}
+ (NOBRIDGE) DEBUG  TopOfBookStreamChannel: Subscribing to top of book {"symbol": "ETH"}
+ (NOBRIDGE) DEBUG  HyperLiquid Fee Calculation Started {"amount": "0", "baseFeeRate": 0.00045, "baseMakerRate": 0.00015, "baseTakerRate": 0.00045, "hip3Multiplier": 1, "isHip3Asset": false, "isMaker": false, "orderType": "market", "symbol": "ETH"}
+ (NOBRIDGE) LOG  [MetaMask DEBUG]: RewardsController: Fetching fresh season metadata via API call for type current
+ (NOBRIDGE) DEBUG  HyperLiquid Fee Calculation Started {"amount": "22.1887", "baseFeeRate": 0.00045, "baseMakerRate": 0.00015, "baseTakerRate": 0.00045, "hip3Multiplier": 1, "isHip3Asset": false, "isMaker": false, "orderType": "market", "symbol": "ETH"}
+ (NOBRIDGE) DEBUG  User Address Retrieved {"network": "testnet", "userAddress": "0x8dc623e964475d4d669da601fd15ea9125469003"}
+ (NOBRIDGE) DEBUG  Fetching Fresh Fee Rates from HyperLiquid API {"cacheHit": false, "userAddress": "0x8dc623e964475d4d669da601fd15ea9125469003"}
+ (NOBRIDGE) DEBUG  User Address Retrieved {"network": "testnet", "userAddress": "0x8dc623e964475d4d669da601fd15ea9125469003"}
+ (NOBRIDGE) DEBUG  Fetching Fresh Fee Rates from HyperLiquid API {"cacheHit": false, "userAddress": "0x8dc623e964475d4d669da601fd15ea9125469003"}
+ (NOBRIDGE) LOG  [MetaMask DEBUG]: [BottomSheet] onCloseBottomSheet ignored (already closing)
+ (NOBRIDGE) DEBUG  HyperLiquid: BBO subscription established for ETH
+ (NOBRIDGE) DEBUG  HyperLiquid userFees API Response {"activeReferralDiscount": "0.04", "activeStakingDiscount": {"bpsOfMaxSupply": "0.0", "discount": "0.0"}, "userAddRate": "0.00015", "userCrossRate": "0.00045"}
+ (NOBRIDGE) DEBUG  Fee Discount Calculation {"discounts": {"referral": "4.0%", "staking": "0.0%", "total": "4.0%"}, "rates": {"after": {"maker": "0.0144%", "taker": "0.0432%"}, "before": {"maker": "0.0150%", "taker": "0.0450%"}}}
+ (NOBRIDGE) DEBUG  Fee Rates Validated and Cached {"cacheExpiry": "2026-04-16T04:16:46.233Z", "discountApplied": true, "hip3Multiplier": 1, "isHip3Asset": false, "selectedRate": 0.000432, "selectedRatePercentage": "0.0432%"}
+ (NOBRIDGE) DEBUG  Final Fee Calculation Result {"amount": "0", "fees": {"metamaskRate": "0.1000%", "protocolRate": "0.0432%", "totalAmount": 0, "totalRate": "0.1432%"}, "orderType": "market", "usingFallbackRates": false}
+ (NOBRIDGE) DEBUG  HyperLiquid userFees API Response {"activeReferralDiscount": "0.04", "activeStakingDiscount": {"bpsOfMaxSupply": "0.0", "discount": "0.0"}, "userAddRate": "0.00015", "userCrossRate": "0.00045"}
+ (NOBRIDGE) DEBUG  Fee Discount Calculation {"discounts": {"referral": "4.0%", "staking": "0.0%", "total": "4.0%"}, "rates": {"after": {"maker": "0.0144%", "taker": "0.0432%"}, "before": {"maker": "0.0150%", "taker": "0.0450%"}}}
+ (NOBRIDGE) DEBUG  Fee Rates Validated and Cached {"cacheExpiry": "2026-04-16T04:16:46.234Z", "discountApplied": true, "hip3Multiplier": 1, "isHip3Asset": false, "selectedRate": 0.000432, "selectedRatePercentage": "0.0432%"}
+ (NOBRIDGE) DEBUG  Final Fee Calculation Result {"amount": "22.1887", "fees": {"metamaskRate": "0.1000%", "protocolRate": "0.0432%", "totalAmount": 0.031774218400000005, "totalRate": "0.1432%"}, "orderType": "market", "usingFallbackRates": false}
+ (NOBRIDGE) DEBUG  Rewards: Fetching fee discount via controller {"address": "0x8Dc623E964475D4d669da601Fd15ea9125469003", "caipAccountId": "eip155:1:0x8Dc623E964475D4d669da601Fd15ea9125469003"}
+ (NOBRIDGE) DEBUG  Rewards: Fee discount bips fetched via controller {"address": "0x8Dc623E964475D4d669da601Fd15ea9125469003", "discountBips": 0, "duration": "0ms"}
+ (NOBRIDGE) DEBUG  Rewards: Calculating points with discounted fee {"actualFeeUSD": 0.022188700000000002, "adjustedRate": 0.001, "amount": 22.1887, "discountPercentage": 0, "originalRate": 0.001}
+ (NOBRIDGE) DEBUG  Rewards: Points estimation request via controller {"estimatePointsDto": {"account": "eip155:1:0x8Dc623E964475D4d669da601Fd15ea9125469003", "activityContext": {"perpsContext": [Object]}, "activityType": "PERPS"}, "isClose": false, "size": 22.1887, "symbol": "ETH"}
+ (NOBRIDGE) LOG  [MetaMask DEBUG]: RewardsController: Fetching fresh season metadata via API call for type current
+ (NOBRIDGE) LOG  [MetaMask DEBUG]: RewardsController: Failed to check active season: No valid season metadata could be found for type: current
+ (NOBRIDGE) LOG  [MetaMask DEBUG]: RewardsController: Failed to check active season: No valid season metadata could be found for type: current
+ (NOBRIDGE) DEBUG  Rewards: Points estimated via controller {"bonusBips": 0, "duration": "774ms", "isClose": false, "pointsEstimate": 0, "size": 22.1887, "symbol": "ETH"}
+ (NOBRIDGE) DEBUG  Rewards: Cached points calculation parameters {"address": "0x8Dc623E964475D4d669da601Fd15ea9125469003", "basePointsPerDollar": 0, "bonusBips": 0, "cacheExpiry": "2026-04-16T04:16:46.236Z"}
+ (NOBRIDGE) LOG  [MetaMask DEBUG]: RewardsController: Fetching fresh season metadata via API call for type current
+ (NOBRIDGE) LOG  [MetaMask DEBUG]: RewardsController: Failed to check active season: No valid season metadata could be found for type: current
+ (NOBRIDGE) LOG  [MetaMask DEBUG]: PerpsController state persisted successfully
+ (NOBRIDGE) LOG  [MetaMask DEBUG]: MultichainBalancesController state persisted successfully
+ (NOBRIDGE) LOG  [MetaMask DEBUG]: MultichainAssetsController state persisted successfully
+ (NOBRIDGE) LOG  [MetaMask DEBUG]: MultichainBalancesController state persisted successfully
+ (NOBRIDGE) LOG  [MetaMask DEBUG]: SnapController state persisted successfully
+ (NOBRIDGE) DEBUG  [useComplianceGate] Wallet not blocked, proceeding
+ (NOBRIDGE) LOG  [MetaMask DEBUG]: [BottomSheet] onCloseBottomSheet ignored (already closing)
+ (NOBRIDGE) INFO  TRACK event saved {"event": "Perp UI Interaction", "properties": {"asset": "ETH", "direction": "long", "interaction_type": "flip_position", "source": "position_screen"}, "type": "track"}
+ (NOBRIDGE) DEBUG  PERPSMARK_SENTRY PerpsScreen: Perps Flip Position Sheet completed {"context": {}, "endConditions": 1, "metric": "Perps Flip Position Sheet"}
+ (NOBRIDGE) DEBUG  TopOfBookStreamChannel: Subscribing to top of book {"symbol": "ETH"}
+ (NOBRIDGE) DEBUG  HyperLiquid Fee Calculation Started {"amount": "0", "baseFeeRate": 0.00045, "baseMakerRate": 0.00015, "baseTakerRate": 0.00045, "hip3Multiplier": 1, "isHip3Asset": false, "isMaker": false, "orderType": "market", "symbol": "ETH"}
+ (NOBRIDGE) LOG  [MetaMask DEBUG]: RewardsController: Fetching fresh season metadata via API call for type current
+ (NOBRIDGE) DEBUG  HyperLiquid Fee Calculation Started {"amount": "22.19058", "baseFeeRate": 0.00045, "baseMakerRate": 0.00015, "baseTakerRate": 0.00045, "hip3Multiplier": 1, "isHip3Asset": false, "isMaker": false, "orderType": "market", "symbol": "ETH"}
+ (NOBRIDGE) DEBUG  User Address Retrieved {"network": "testnet", "userAddress": "0x8dc623e964475d4d669da601fd15ea9125469003"}
+ (NOBRIDGE) DEBUG  📦 Using Cached Fee Rates {"cacheAge": "10s", "cacheExpiry": "2026-04-16T04:16:46.234Z", "cacheHit": true, "hip3Multiplier": 1, "isHip3Asset": false, "perpsMakerRate": 0.00014399999999999998, "perpsTakerRate": 0.000432, "selectedRate": 0.000432, "spotMakerRate": 0.000384, "spotTakerRate": 0.000672}
+ (NOBRIDGE) DEBUG  Final Fee Calculation Result {"amount": "0", "fees": {"metamaskRate": "0.1000%", "protocolRate": "0.0432%", "totalAmount": 0, "totalRate": "0.1432%"}, "orderType": "market", "usingFallbackRates": false}
+ (NOBRIDGE) DEBUG  User Address Retrieved {"network": "testnet", "userAddress": "0x8dc623e964475d4d669da601fd15ea9125469003"}
+ (NOBRIDGE) DEBUG  📦 Using Cached Fee Rates {"cacheAge": "10s", "cacheExpiry": "2026-04-16T04:16:46.234Z", "cacheHit": true, "hip3Multiplier": 1, "isHip3Asset": false, "perpsMakerRate": 0.00014399999999999998, "perpsTakerRate": 0.000432, "selectedRate": 0.000432, "spotMakerRate": 0.000384, "spotTakerRate": 0.000672}
+ (NOBRIDGE) DEBUG  Final Fee Calculation Result {"amount": "22.19058", "fees": {"metamaskRate": "0.1000%", "protocolRate": "0.0432%", "totalAmount": 0.03177691056, "totalRate": "0.1432%"}, "orderType": "market", "usingFallbackRates": false}
+ (NOBRIDGE) DEBUG  Rewards: Using cached fee discount {"address": "0x8Dc623E964475D4d669da601Fd15ea9125469003", "cacheAge": "10s", "discountBips": 0}
+ (NOBRIDGE) DEBUG  Rewards: Calculating points with discounted fee {"actualFeeUSD": 0.02219058, "adjustedRate": 0.001, "amount": 22.19058, "discountPercentage": 0, "originalRate": 0.001}
+ (NOBRIDGE) DEBUG  Rewards: Points estimation request via controller {"estimatePointsDto": {"account": "eip155:1:0x8Dc623E964475D4d669da601Fd15ea9125469003", "activityContext": {"perpsContext": [Object]}, "activityType": "PERPS"}, "isClose": false, "size": 22.19058, "symbol": "ETH"}
+ (NOBRIDGE) LOG  [MetaMask DEBUG]: RewardsController: Fetching fresh season metadata via API call for type current
+ (NOBRIDGE) DEBUG  HyperLiquid: BBO subscription established for ETH
+ (NOBRIDGE) LOG  [MetaMask DEBUG]: RewardsController: Failed to check active season: No valid season metadata could be found for type: current
+ (NOBRIDGE) LOG  [MetaMask DEBUG]: RewardsController: Failed to check active season: No valid season metadata could be found for type: current
+ (NOBRIDGE) DEBUG  Rewards: Points estimated via controller {"bonusBips": 0, "duration": "314ms", "isClose": false, "pointsEstimate": 0, "size": 22.19058, "symbol": "ETH"}
+ (NOBRIDGE) DEBUG  Rewards: Cached points calculation parameters {"address": "0x8Dc623E964475D4d669da601Fd15ea9125469003", "basePointsPerDollar": 0, "bonusBips": 0, "cacheExpiry": "2026-04-16T04:16:56.697Z"}
+ (NOBRIDGE) LOG  [MetaMask DEBUG]: RewardsController: Fetching fresh season metadata via API call for type current
+ (NOBRIDGE) LOG  [MetaMask DEBUG]: RewardsController: Failed to check active season: No valid season metadata could be found for type: current
+ (NOBRIDGE) LOG  [MetaMask DEBUG]: PerpsController state persisted successfully
+ (NOBRIDGE) DEBUG  HyperLiquid Fee Calculation Started {"amount": "22.18776", "baseFeeRate": 0.00045, "baseMakerRate": 0.00015, "baseTakerRate": 0.00045, "hip3Multiplier": 1, "isHip3Asset": false, "isMaker": false, "orderType": "market", "symbol": "ETH"}
+ (NOBRIDGE) DEBUG  User Address Retrieved {"network": "testnet", "userAddress": "0x8dc623e964475d4d669da601fd15ea9125469003"}
+ (NOBRIDGE) DEBUG  📦 Using Cached Fee Rates {"cacheAge": "17s", "cacheExpiry": "2026-04-16T04:16:46.234Z", "cacheHit": true, "hip3Multiplier": 1, "isHip3Asset": false, "perpsMakerRate": 0.00014399999999999998, "perpsTakerRate": 0.000432, "selectedRate": 0.000432, "spotMakerRate": 0.000384, "spotTakerRate": 0.000672}
+ (NOBRIDGE) DEBUG  Final Fee Calculation Result {"amount": "22.18776", "fees": {"metamaskRate": "0.1000%", "protocolRate": "0.0432%", "totalAmount": 0.031772872320000006, "totalRate": "0.1432%"}, "orderType": "market", "usingFallbackRates": false}
+ (NOBRIDGE) DEBUG  Rewards: Using cached fee discount {"address": "0x8Dc623E964475D4d669da601Fd15ea9125469003", "cacheAge": "17s", "discountBips": 0}
+ (NOBRIDGE) DEBUG  Rewards: Calculating points with discounted fee {"actualFeeUSD": 0.02218776, "adjustedRate": 0.001, "amount": 22.18776, "discountPercentage": 0, "originalRate": 0.001}
+ (NOBRIDGE) DEBUG  Rewards: Points estimation request via controller {"estimatePointsDto": {"account": "eip155:1:0x8Dc623E964475D4d669da601Fd15ea9125469003", "activityContext": {"perpsContext": [Object]}, "activityType": "PERPS"}, "isClose": false, "size": 22.18776, "symbol": "ETH"}
+ (NOBRIDGE) LOG  [MetaMask DEBUG]: RewardsController: Fetching fresh season metadata via API call for type current
+ (NOBRIDGE) LOG  [MetaMask DEBUG]: PerpsController state persisted successfully
+ (NOBRIDGE) LOG  [MetaMask DEBUG]: RewardsController: Failed to check active season: No valid season metadata could be found for type: current
+ (NOBRIDGE) DEBUG  Rewards: Points estimated via controller {"bonusBips": 0, "duration": "303ms", "isClose": false, "pointsEstimate": 0, "size": 22.18776, "symbol": "ETH"}
+ (NOBRIDGE) DEBUG  Rewards: Cached points calculation parameters {"address": "0x8Dc623E964475D4d669da601Fd15ea9125469003", "basePointsPerDollar": 0, "bonusBips": 0, "cacheExpiry": "2026-04-16T04:17:03.708Z"}
+ (NOBRIDGE) DEBUG  PerpsStreamProvider: Using stream manager: {"isE2EMockManager": false, "isRealManager": true, "isTestManager": false}
+ (NOBRIDGE) INFO  TRACK event saved {"event": "Home Viewed", "properties": {"app_session_id": "c233f6a5-26cc-48a6-bfb9-3a34a50df6c0", "entry_point": "navigated_back", "interaction_type": "section_viewed", "is_empty": true, "item_count": 0, "location": "home", "section_index": 0, "section_name": "cash", "total_sections_loaded": 7, "visit_number": 2}, "type": "track"}
+ (NOBRIDGE) INFO  TRACK event saved {"event": "Home Viewed", "properties": {"app_session_id": "c233f6a5-26cc-48a6-bfb9-3a34a50df6c0", "entry_point": "navigated_back", "interaction_type": "section_viewed", "is_empty": false, "item_count": 4, "location": "home", "section_index": 1, "section_name": "tokens", "total_sections_loaded": 7, "visit_number": 2}, "type": "track"}
+ (NOBRIDGE) DEBUG  CandleStreamChannel: Disconnecting WebSocket (no subscribers) {"cacheKey": "ETH-1h"}
+ (NOBRIDGE) DEBUG  Cleaned up assetCtxs subscription for main DEX
+ (NOBRIDGE) DEBUG  CandleStreamChannel: Disconnecting WebSocket (no subscribers) {"cacheKey": "ETH-15m"}
+ (NOBRIDGE) DEBUG  usePerpsLiveFills: Unsubscribing
+ (NOBRIDGE) DEBUG  usePerpsLiveFills: Unsubscribing
+ (NOBRIDGE) LOG  [MetaMask DEBUG]: CurrencyRateController state persisted successfully
+ (NOBRIDGE) LOG  [MetaMask DEBUG]: TokenRatesController state persisted successfully
+ (NOBRIDGE) LOG  [MetaMask DEBUG]: PerpsController state persisted successfully
+ (NOBRIDGE) LOG  [MetaMask DEBUG]: MultichainAssetsRatesController state persisted successfully
+ (NOBRIDGE) LOG  [MetaMask DEBUG]: PerpsController state persisted successfully
+ (NOBRIDGE) DEBUG  PerpsStreamProvider: Using stream manager: {"isE2EMockManager": false, "isRealManager": true, "isTestManager": false}
+ (NOBRIDGE) DEBUG  usePerpsLiveFills: Subscribing with no throttle (instant updates)
+ (NOBRIDGE) DEBUG  usePerpsLiveFills: Received first WebSocket update {"count": 30}
+ (NOBRIDGE) DEBUG  usePerpsLiveFills: Received fill update {"count": 30}
+ (NOBRIDGE) DEBUG  Getting user fills via HyperLiquid SDK: {"aggregateByTime": false, "startTime": 1768536737232}
+ (NOBRIDGE) DEBUG  usePerpsLivePositions: Received first WebSocket update {"positionsCount": 2}
+ (NOBRIDGE) DEBUG  usePerpsLivePositions: Received first WebSocket update {"positionsCount": 2}
+ (NOBRIDGE) DEBUG  usePerpsLiveFills: Subscribing with no throttle (instant updates)
+ (NOBRIDGE) DEBUG  usePerpsLiveFills: Received first WebSocket update {"count": 30}
+ (NOBRIDGE) DEBUG  usePerpsLiveFills: Received fill update {"count": 30}
+ (NOBRIDGE) DEBUG  Getting user fills via HyperLiquid SDK: {"startTime": 1768536737238}
+ (NOBRIDGE) DEBUG  [ensureReady] Reusing existing initialization promise
+ (NOBRIDGE) DEBUG  PerpsStreamProvider: Using stream manager: {"isE2EMockManager": false, "isRealManager": true, "isTestManager": false}
+ (NOBRIDGE) DEBUG  PERPSMARK_SENTRY PerpsScreen: Perps Position Details View completed {"context": {"hasMarketStats": true, "loadingStates": {"isLoadingHistory": false, "isLoadingPosition": false}, "symbol": "ETH"}, "endConditions": 4, "metric": "Perps Position Details View"}
+ (NOBRIDGE) DEBUG  Using cached meta for  {"dex": "", "firstAssetSample": "SOL", "universeCount": 207}
+ (NOBRIDGE) DEBUG  HyperLiquidProvider: Getting markets with symbol filter {"symbolCount": 1}
+ (NOBRIDGE) DEBUG  [getCachedMeta] Using cached meta response {"dex": "main", "universeSize": 207}
+ (NOBRIDGE) DEBUG  HyperLiquidProvider: Fetched markets for DEX {"dex": "main", "marketCount": 207, "skipCache": false, "skipFilters": false}
+ (NOBRIDGE) INFO  TRACK event saved {"event": "Home Viewed", "properties": {"app_session_id": "c233f6a5-26cc-48a6-bfb9-3a34a50df6c0", "entry_point": "navigated_back", "interaction_type": "session_summary", "location": "home", "max_scroll_depth_visit": 1, "session_time": 9, "total_sections_loaded": 7, "total_sections_viewed": 2, "visit_number": 2}, "type": "track"}
+ (NOBRIDGE) DEBUG  Cleaned up assetCtxs subscription for main DEX
+ (NOBRIDGE) DEBUG  Using cached meta for  {"dex": "", "firstAssetSample": "SOL", "universeCount": 207}
+ (NOBRIDGE) INFO  TRACK event saved {"event": "Perp Screen Viewed", "properties": {"ab_test_button_color": "monochrome", "asset": "ETH", "market_insights_displayed": true, "open_order": 2, "open_position": 1, "screen_type": "asset_details", "source": "perp_markets", "timestamp": 1776312737500}, "type": "track"}
+ (NOBRIDGE) DEBUG  HyperLiquid: Market data subscription established for ETH
+ (NOBRIDGE) DEBUG  assetCtxs subscription established for main DEX
+ (NOBRIDGE) DEBUG  User fills received: {"count": 151}
+ (NOBRIDGE) DEBUG  User fills received: {"count": 151}
+ (NOBRIDGE) DEBUG  CandleStreamChannel: WebSocket subscription established {"cacheKey": "ETH-1h", "interval": "1h", "symbol": "ETH"}
+ (NOBRIDGE) DEBUG  CandleStreamChannel: WebSocket subscription established {"cacheKey": "ETH-15m", "interval": "15m", "symbol": "ETH"}
+ (NOBRIDGE) LOG  [MetaMask DEBUG]: PerpsController state persisted successfully
+ (NOBRIDGE) LOG  [MetaMask DEBUG]: ComplianceController state persisted successfully
+ (NOBRIDGE) LOG  [MetaMask DEBUG]: PerpsController state persisted successfully
+ (NOBRIDGE) LOG  [MetaMask DEBUG]: MultichainBalancesController state persisted successfully
+ (NOBRIDGE) DEBUG  [useComplianceGate] Wallet not blocked, proceeding
+ (NOBRIDGE) DEBUG  PerpsStreamProvider: Using stream manager: {"isE2EMockManager": false, "isRealManager": true, "isTestManager": false}
+ (NOBRIDGE) DEBUG  [ensureReady] Reusing existing initialization promise
+ (NOBRIDGE) DEBUG  PERPSMARK_SENTRY PerpsScreen: Perps Close Position View completed {"context": {}, "endConditions": 1, "metric": "Perps Close Position View"}
+ (NOBRIDGE) DEBUG  TopOfBookStreamChannel: Subscribing to top of book {"symbol": "ETH"}
+ (NOBRIDGE) DEBUG  usePerpsLivePositions: Received first WebSocket update {"positionsCount": 2}
+ (NOBRIDGE) DEBUG  HyperLiquid Fee Calculation Started {"amount": "11.11409", "baseFeeRate": 0.00045, "baseMakerRate": 0.00015, "baseTakerRate": 0.00045, "hip3Multiplier": 1, "isHip3Asset": false, "isMaker": false, "orderType": "market", "symbol": "ETH"}
+ (NOBRIDGE) LOG  [MetaMask DEBUG]: RewardsController: Fetching fresh season metadata via API call for type current
+ (NOBRIDGE) DEBUG  [ensureReady] Reusing existing initialization promise
+ (NOBRIDGE) DEBUG  usePerpsClosePositionValidation: Validating close params {"currentPrice": 2364.7, "orderType": "market", "price": undefined, "size": undefined, "symbol": "ETH"}
+ (NOBRIDGE) DEBUG  HyperLiquid Fee Calculation Started {"amount": "11.128425", "baseFeeRate": 0.00045, "baseMakerRate": 0.00015, "baseTakerRate": 0.00045, "hip3Multiplier": 1, "isHip3Asset": false, "isMaker": false, "orderType": "market", "symbol": "ETH"}
+ (NOBRIDGE) DEBUG  usePerpsClosePositionValidation: Validating close params {"currentPrice": 2367.75, "orderType": "market", "price": undefined, "size": undefined, "symbol": "ETH"}
+ (NOBRIDGE) DEBUG  HyperLiquidProvider: Getting markets with symbol filter {"symbolCount": 1}
+ (NOBRIDGE) DEBUG  [getCachedMeta] Using cached meta response {"dex": "main", "universeSize": 207}
+ (NOBRIDGE) DEBUG  User Address Retrieved {"network": "testnet", "userAddress": "0x8dc623e964475d4d669da601fd15ea9125469003"}
+ (NOBRIDGE) DEBUG  📦 Using Cached Fee Rates {"cacheAge": "40s", "cacheExpiry": "2026-04-16T04:16:46.234Z", "cacheHit": true, "hip3Multiplier": 1, "isHip3Asset": false, "perpsMakerRate": 0.00014399999999999998, "perpsTakerRate": 0.000432, "selectedRate": 0.000432, "spotMakerRate": 0.000384, "spotTakerRate": 0.000672}
+ (NOBRIDGE) DEBUG  Final Fee Calculation Result {"amount": "11.11409", "fees": {"metamaskRate": "0.1000%", "protocolRate": "0.0432%", "totalAmount": 0.01591537688, "totalRate": "0.1432%"}, "orderType": "market", "usingFallbackRates": false}
+ (NOBRIDGE) DEBUG  HyperLiquidProvider: Getting markets with symbol filter {"symbolCount": 1}
+ (NOBRIDGE) DEBUG  [getCachedMeta] Using cached meta response {"dex": "main", "universeSize": 207}
+ (NOBRIDGE) DEBUG  usePerpsClosePositionValidation: Protocol validation result {"isValid": true}
+ (NOBRIDGE) DEBUG  User Address Retrieved {"network": "testnet", "userAddress": "0x8dc623e964475d4d669da601fd15ea9125469003"}
+ (NOBRIDGE) DEBUG  📦 Using Cached Fee Rates {"cacheAge": "40s", "cacheExpiry": "2026-04-16T04:16:46.234Z", "cacheHit": true, "hip3Multiplier": 1, "isHip3Asset": false, "perpsMakerRate": 0.00014399999999999998, "perpsTakerRate": 0.000432, "selectedRate": 0.000432, "spotMakerRate": 0.000384, "spotTakerRate": 0.000672}
+ (NOBRIDGE) DEBUG  Final Fee Calculation Result {"amount": "11.128425", "fees": {"metamaskRate": "0.1000%", "protocolRate": "0.0432%", "totalAmount": 0.015935904600000002, "totalRate": "0.1432%"}, "orderType": "market", "usingFallbackRates": false}
+ (NOBRIDGE) DEBUG  usePerpsClosePositionValidation: Protocol validation result {"isValid": true}
+ (NOBRIDGE) DEBUG  HyperLiquidProvider: Fetched markets for DEX {"dex": "main", "marketCount": 207, "skipCache": false, "skipFilters": false}
+ (NOBRIDGE) DEBUG  HyperLiquidProvider: Fetched markets for DEX {"dex": "main", "marketCount": 207, "skipCache": false, "skipFilters": false}
+ (NOBRIDGE) DEBUG  Rewards: Using cached fee discount {"address": "0x8Dc623E964475D4d669da601Fd15ea9125469003", "cacheAge": "40s", "discountBips": 0}
+ (NOBRIDGE) DEBUG  Rewards: Calculating points with discounted fee {"actualFeeUSD": 0.011128425, "adjustedRate": 0.001, "amount": 11.128425, "discountPercentage": 0, "originalRate": 0.001}
+ (NOBRIDGE) DEBUG  Rewards: Points estimation request via controller {"estimatePointsDto": {"account": "eip155:1:0x8Dc623E964475D4d669da601Fd15ea9125469003", "activityContext": {"perpsContext": [Object]}, "activityType": "PERPS"}, "isClose": true, "size": 11.128425, "symbol": "ETH"}
+ (NOBRIDGE) LOG  [MetaMask DEBUG]: RewardsController: Fetching fresh season metadata via API call for type current
+ (NOBRIDGE) INFO  TRACK event saved {"event": "Perp Screen Viewed", "properties": {"asset": "ETH", "direction": "long", "position_size": 0.0047, "received_amount": 3.7, "screen_type": "position_close", "source": "perp_asset_screen", "timestamp": 1776312746058, "unrealized_dollar_pnl": 0.0141, "unrealized_percent_pnl": 0.3822075603908276}, "type": "track"}
+ (NOBRIDGE) DEBUG  usePerpsClosePositionValidation: Validating close params {"currentPrice": 2367.75, "orderType": "market", "price": undefined, "size": undefined, "symbol": "ETH"}
+ (NOBRIDGE) DEBUG  usePerpsClosePositionValidation: Protocol validation result {"isValid": true}
+ (NOBRIDGE) DEBUG  HyperLiquid: BBO subscription established for ETH
+ (NOBRIDGE) LOG  [MetaMask DEBUG]: PerpsController state persisted successfully
+ (NOBRIDGE) LOG  [MetaMask DEBUG]: RewardsController: Failed to check active season: No valid season metadata could be found for type: current
+ (NOBRIDGE) LOG  [MetaMask DEBUG]: RewardsController: Failed to check active season: No valid season metadata could be found for type: current
+ (NOBRIDGE) DEBUG  Rewards: Points estimated via controller {"bonusBips": 0, "duration": "12055ms", "isClose": true, "pointsEstimate": 0, "size": 11.128425, "symbol": "ETH"}
+ (NOBRIDGE) DEBUG  Rewards: Cached points calculation parameters {"address": "0x8Dc623E964475D4d669da601Fd15ea9125469003", "basePointsPerDollar": 0, "bonusBips": 0, "cacheExpiry": "2026-04-16T04:17:26.124Z"}
+ (NOBRIDGE) DEBUG  HyperLiquid Fee Calculation Started {"amount": "11.129835000000002", "baseFeeRate": 0.00045, "baseMakerRate": 0.00015, "baseTakerRate": 0.00045, "hip3Multiplier": 1, "isHip3Asset": false, "isMaker": false, "orderType": "market", "symbol": "ETH"}
+ (NOBRIDGE) LOG  [MetaMask DEBUG]: RewardsController: Fetching fresh season metadata via API call for type current
+ (NOBRIDGE) DEBUG  usePerpsClosePositionValidation: Validating close params {"currentPrice": 2368.05, "orderType": "market", "price": undefined, "size": undefined, "symbol": "ETH"}
+ (NOBRIDGE) DEBUG  User Address Retrieved {"network": "testnet", "userAddress": "0x8dc623e964475d4d669da601fd15ea9125469003"}
+ (NOBRIDGE) DEBUG  📦 Using Cached Fee Rates {"cacheAge": "52s", "cacheExpiry": "2026-04-16T04:16:46.234Z", "cacheHit": true, "hip3Multiplier": 1, "isHip3Asset": false, "perpsMakerRate": 0.00014399999999999998, "perpsTakerRate": 0.000432, "selectedRate": 0.000432, "spotMakerRate": 0.000384, "spotTakerRate": 0.000672}
+ (NOBRIDGE) DEBUG  Final Fee Calculation Result {"amount": "11.129835000000002", "fees": {"metamaskRate": "0.1000%", "protocolRate": "0.0432%", "totalAmount": 0.015937923720000004, "totalRate": "0.1432%"}, "orderType": "market", "usingFallbackRates": false}
+ (NOBRIDGE) DEBUG  usePerpsClosePositionValidation: Protocol validation result {"isValid": true}
+ (NOBRIDGE) DEBUG  Rewards: Using cached fee discount {"address": "0x8Dc623E964475D4d669da601Fd15ea9125469003", "cacheAge": "52s", "discountBips": 0}
+ (NOBRIDGE) DEBUG  Rewards: Calculating points with discounted fee {"actualFeeUSD": 0.011129835000000001, "adjustedRate": 0.001, "amount": 11.129835000000002, "discountPercentage": 0, "originalRate": 0.001}
+ (NOBRIDGE) DEBUG  Rewards: Points estimation request via controller {"estimatePointsDto": {"account": "eip155:1:0x8Dc623E964475D4d669da601Fd15ea9125469003", "activityContext": {"perpsContext": [Object]}, "activityType": "PERPS"}, "isClose": true, "size": 11.129835000000002, "symbol": "ETH"}
+ (NOBRIDGE) LOG  [MetaMask DEBUG]: RewardsController: Fetching fresh season metadata via API call for type current
+ (NOBRIDGE) LOG  [MetaMask DEBUG]: RewardsController: Failed to check active season: No valid season metadata could be found for type: current
+ (NOBRIDGE) LOG  [MetaMask DEBUG]: MultichainAssetsController state persisted successfully
+ (NOBRIDGE) LOG  [MetaMask DEBUG]: PerpsController state persisted successfully
+ (NOBRIDGE) LOG  [MetaMask DEBUG]: RewardsController: Failed to check active season: No valid season metadata could be found for type: current
+ (NOBRIDGE) DEBUG  Rewards: Points estimated via controller {"bonusBips": 0, "duration": "254ms", "isClose": true, "pointsEstimate": 0, "size": 11.129835000000002, "symbol": "ETH"}
+ (NOBRIDGE) DEBUG  Rewards: Cached points calculation parameters {"address": "0x8Dc623E964475D4d669da601Fd15ea9125469003", "basePointsPerDollar": 0, "bonusBips": 0, "cacheExpiry": "2026-04-16T04:17:38.316Z"}
+ (NOBRIDGE) LOG  [MetaMask DEBUG]: MultichainBalancesController state persisted successfully
+ (NOBRIDGE) LOG  [MetaMask DEBUG]: PerpsController state persisted successfully
+ (NOBRIDGE) DEBUG  usePerpsClosePositionValidation: Validating close params {"currentPrice": 2368.05, "orderType": "market", "price": undefined, "size": undefined, "symbol": "ETH"}
+ (NOBRIDGE) DEBUG  usePerpsClosePositionValidation: Protocol validation result {"isValid": true}
+ (NOBRIDGE) DEBUG  HyperLiquid Fee Calculation Started {"amount": "11.129130000000002", "baseFeeRate": 0.00045, "baseMakerRate": 0.00015, "baseTakerRate": 0.00045, "hip3Multiplier": 1, "isHip3Asset": false, "isMaker": false, "orderType": "market", "symbol": "ETH"}
+ (NOBRIDGE) DEBUG  usePerpsClosePositionValidation: Validating close params {"currentPrice": 2367.9, "orderType": "market", "price": undefined, "size": undefined, "symbol": "ETH"}
+ (NOBRIDGE) DEBUG  User Address Retrieved {"network": "testnet", "userAddress": "0x8dc623e964475d4d669da601fd15ea9125469003"}
+ (NOBRIDGE) DEBUG  📦 Using Cached Fee Rates {"cacheAge": "53s", "cacheExpiry": "2026-04-16T04:16:46.234Z", "cacheHit": true, "hip3Multiplier": 1, "isHip3Asset": false, "perpsMakerRate": 0.00014399999999999998, "perpsTakerRate": 0.000432, "selectedRate": 0.000432, "spotMakerRate": 0.000384, "spotTakerRate": 0.000672}
+ (NOBRIDGE) DEBUG  Final Fee Calculation Result {"amount": "11.129130000000002", "fees": {"metamaskRate": "0.1000%", "protocolRate": "0.0432%", "totalAmount": 0.015936914160000003, "totalRate": "0.1432%"}, "orderType": "market", "usingFallbackRates": false}
+ (NOBRIDGE) DEBUG  usePerpsClosePositionValidation: Protocol validation result {"isValid": true}
+ (NOBRIDGE) DEBUG  Rewards: Using cached fee discount {"address": "0x8Dc623E964475D4d669da601Fd15ea9125469003", "cacheAge": "53s", "discountBips": 0}
+ (NOBRIDGE) DEBUG  Rewards: Calculating points with discounted fee {"actualFeeUSD": 0.011129130000000003, "adjustedRate": 0.001, "amount": 11.129130000000002, "discountPercentage": 0, "originalRate": 0.001}
+ (NOBRIDGE) DEBUG  Rewards: Points estimation request via controller {"estimatePointsDto": {"account": "eip155:1:0x8Dc623E964475D4d669da601Fd15ea9125469003", "activityContext": {"perpsContext": [Object]}, "activityType": "PERPS"}, "isClose": true, "size": 11.129130000000002, "symbol": "ETH"}
+ (NOBRIDGE) LOG  [MetaMask DEBUG]: RewardsController: Fetching fresh season metadata via API call for type current
+ (NOBRIDGE) LOG  [MetaMask DEBUG]: RewardsController: Failed to check active season: No valid season metadata could be found for type: current
+ (NOBRIDGE) DEBUG  Rewards: Points estimated via controller {"bonusBips": 0, "duration": "302ms", "isClose": true, "pointsEstimate": 0, "size": 11.129130000000002, "symbol": "ETH"}
+ (NOBRIDGE) DEBUG  Rewards: Cached points calculation parameters {"address": "0x8Dc623E964475D4d669da601Fd15ea9125469003", "basePointsPerDollar": 0, "bonusBips": 0, "cacheExpiry": "2026-04-16T04:17:39.509Z"}
+ (NOBRIDGE) LOG  [MetaMask DEBUG]: PerpsController state persisted successfully
+ (NOBRIDGE) DEBUG  HyperLiquid Fee Calculation Started {"amount": "11.1249", "baseFeeRate": 0.00045, "baseMakerRate": 0.00015, "baseTakerRate": 0.00045, "hip3Multiplier": 1, "isHip3Asset": false, "isMaker": false, "orderType": "market", "symbol": "ETH"}
+ (NOBRIDGE) DEBUG  usePerpsClosePositionValidation: Validating close params {"currentPrice": 2367, "orderType": "market", "price": undefined, "size": undefined, "symbol": "ETH"}
+ (NOBRIDGE) DEBUG  User Address Retrieved {"network": "testnet", "userAddress": "0x8dc623e964475d4d669da601fd15ea9125469003"}
+ (NOBRIDGE) DEBUG  📦 Using Cached Fee Rates {"cacheAge": "58s", "cacheExpiry": "2026-04-16T04:16:46.234Z", "cacheHit": true, "hip3Multiplier": 1, "isHip3Asset": false, "perpsMakerRate": 0.00014399999999999998, "perpsTakerRate": 0.000432, "selectedRate": 0.000432, "spotMakerRate": 0.000384, "spotTakerRate": 0.000672}
+ (NOBRIDGE) DEBUG  Final Fee Calculation Result {"amount": "11.1249", "fees": {"metamaskRate": "0.1000%", "protocolRate": "0.0432%", "totalAmount": 0.0159308568, "totalRate": "0.1432%"}, "orderType": "market", "usingFallbackRates": false}
+ (NOBRIDGE) DEBUG  usePerpsClosePositionValidation: Protocol validation result {"isValid": true}
+ (NOBRIDGE) DEBUG  Rewards: Using cached fee discount {"address": "0x8Dc623E964475D4d669da601Fd15ea9125469003", "cacheAge": "58s", "discountBips": 0}
+ (NOBRIDGE) DEBUG  Rewards: Calculating points with discounted fee {"actualFeeUSD": 0.0111249, "adjustedRate": 0.001, "amount": 11.1249, "discountPercentage": 0, "originalRate": 0.001}
+ (NOBRIDGE) DEBUG  Rewards: Points estimation request via controller {"estimatePointsDto": {"account": "eip155:1:0x8Dc623E964475D4d669da601Fd15ea9125469003", "activityContext": {"perpsContext": [Object]}, "activityType": "PERPS"}, "isClose": true, "size": 11.1249, "symbol": "ETH"}
+ (NOBRIDGE) LOG  [MetaMask DEBUG]: RewardsController: Fetching fresh season metadata via API call for type current
+ (NOBRIDGE) LOG  [MetaMask DEBUG]: RewardsController: Failed to check active season: No valid season metadata could be found for type: current
+ (NOBRIDGE) DEBUG  Rewards: Points estimated via controller {"bonusBips": 0, "duration": "321ms", "isClose": true, "pointsEstimate": 0, "size": 11.1249, "symbol": "ETH"}
+ (NOBRIDGE) DEBUG  Rewards: Cached points calculation parameters {"address": "0x8Dc623E964475D4d669da601Fd15ea9125469003", "basePointsPerDollar": 0, "bonusBips": 0, "cacheExpiry": "2026-04-16T04:17:44.623Z"}
+ (NOBRIDGE) DEBUG  usePerpsClosePositionValidation: Validating close params {"currentPrice": 2367, "orderType": "market", "price": undefined, "size": undefined, "symbol": "ETH"}
+ (NOBRIDGE) DEBUG  usePerpsClosePositionValidation: Protocol validation result {"isValid": true}
+ (NOBRIDGE) DEBUG  HyperLiquid Fee Calculation Started {"amount": "11.12443", "baseFeeRate": 0.00045, "baseMakerRate": 0.00015, "baseTakerRate": 0.00045, "hip3Multiplier": 1, "isHip3Asset": false, "isMaker": false, "orderType": "market", "symbol": "ETH"}
+ (NOBRIDGE) DEBUG  usePerpsClosePositionValidation: Validating close params {"currentPrice": 2366.9, "orderType": "market", "price": undefined, "size": undefined, "symbol": "ETH"}
+ (NOBRIDGE) DEBUG  User Address Retrieved {"network": "testnet", "userAddress": "0x8dc623e964475d4d669da601fd15ea9125469003"}
+ (NOBRIDGE) DEBUG  📦 Using Cached Fee Rates {"cacheAge": "60s", "cacheExpiry": "2026-04-16T04:16:46.234Z", "cacheHit": true, "hip3Multiplier": 1, "isHip3Asset": false, "perpsMakerRate": 0.00014399999999999998, "perpsTakerRate": 0.000432, "selectedRate": 0.000432, "spotMakerRate": 0.000384, "spotTakerRate": 0.000672}
+ (NOBRIDGE) DEBUG  Final Fee Calculation Result {"amount": "11.12443", "fees": {"metamaskRate": "0.1000%", "protocolRate": "0.0432%", "totalAmount": 0.01593018376, "totalRate": "0.1432%"}, "orderType": "market", "usingFallbackRates": false}
+ (NOBRIDGE) DEBUG  usePerpsClosePositionValidation: Protocol validation result {"isValid": true}
+ (NOBRIDGE) DEBUG  Rewards: Using cached fee discount {"address": "0x8Dc623E964475D4d669da601Fd15ea9125469003", "cacheAge": "60s", "discountBips": 0}
+ (NOBRIDGE) DEBUG  Rewards: Calculating points with discounted fee {"actualFeeUSD": 0.011124430000000001, "adjustedRate": 0.001, "amount": 11.12443, "discountPercentage": 0, "originalRate": 0.001}
+ (NOBRIDGE) DEBUG  Rewards: Points estimation request via controller {"estimatePointsDto": {"account": "eip155:1:0x8Dc623E964475D4d669da601Fd15ea9125469003", "activityContext": {"perpsContext": [Object]}, "activityType": "PERPS"}, "isClose": true, "size": 11.12443, "symbol": "ETH"}
+ (NOBRIDGE) LOG  [MetaMask DEBUG]: RewardsController: Fetching fresh season metadata via API call for type current
+ (NOBRIDGE) LOG  [MetaMask DEBUG]: RewardsController: Failed to check active season: No valid season metadata could be found for type: current
+ (NOBRIDGE) DEBUG  Rewards: Points estimated via controller {"bonusBips": 0, "duration": "296ms", "isClose": true, "pointsEstimate": 0, "size": 11.12443, "symbol": "ETH"}
+ (NOBRIDGE) DEBUG  Rewards: Cached points calculation parameters {"address": "0x8Dc623E964475D4d669da601Fd15ea9125469003", "basePointsPerDollar": 0, "bonusBips": 0, "cacheExpiry": "2026-04-16T04:17:45.949Z"}
+ (NOBRIDGE) DEBUG  HyperLiquid Fee Calculation Started {"amount": "11.124195", "baseFeeRate": 0.00045, "baseMakerRate": 0.00015, "baseTakerRate": 0.00045, "hip3Multiplier": 1, "isHip3Asset": false, "isMaker": false, "orderType": "market", "symbol": "ETH"}
+ (NOBRIDGE) DEBUG  usePerpsClosePositionValidation: Validating close params {"currentPrice": 2366.85, "orderType": "market", "price": undefined, "size": undefined, "symbol": "ETH"}
+ (NOBRIDGE) DEBUG  User Address Retrieved {"network": "testnet", "userAddress": "0x8dc623e964475d4d669da601fd15ea9125469003"}
+ (NOBRIDGE) DEBUG  📦 Using Cached Fee Rates {"cacheAge": "61s", "cacheExpiry": "2026-04-16T04:16:46.234Z", "cacheHit": true, "hip3Multiplier": 1, "isHip3Asset": false, "perpsMakerRate": 0.00014399999999999998, "perpsTakerRate": 0.000432, "selectedRate": 0.000432, "spotMakerRate": 0.000384, "spotTakerRate": 0.000672}
+ (NOBRIDGE) DEBUG  Final Fee Calculation Result {"amount": "11.124195", "fees": {"metamaskRate": "0.1000%", "protocolRate": "0.0432%", "totalAmount": 0.015929847240000003, "totalRate": "0.1432%"}, "orderType": "market", "usingFallbackRates": false}
+ (NOBRIDGE) DEBUG  usePerpsClosePositionValidation: Protocol validation result {"isValid": true}
+ (NOBRIDGE) DEBUG  Rewards: Using cached fee discount {"address": "0x8Dc623E964475D4d669da601Fd15ea9125469003", "cacheAge": "61s", "discountBips": 0}
+ (NOBRIDGE) DEBUG  Rewards: Calculating points with discounted fee {"actualFeeUSD": 0.011124195, "adjustedRate": 0.001, "amount": 11.124195, "discountPercentage": 0, "originalRate": 0.001}
+ (NOBRIDGE) DEBUG  Rewards: Points estimation request via controller {"estimatePointsDto": {"account": "eip155:1:0x8Dc623E964475D4d669da601Fd15ea9125469003", "activityContext": {"perpsContext": [Object]}, "activityType": "PERPS"}, "isClose": true, "size": 11.124195, "symbol": "ETH"}
+ (NOBRIDGE) LOG  [MetaMask DEBUG]: RewardsController: Fetching fresh season metadata via API call for type current
+ (NOBRIDGE) LOG  [MetaMask DEBUG]: RewardsController: Failed to check active season: No valid season metadata could be found for type: current
+ (NOBRIDGE) DEBUG  Rewards: Points estimated via controller {"bonusBips": 0, "duration": "87ms", "isClose": true, "pointsEstimate": 0, "size": 11.124195, "symbol": "ETH"}
+ (NOBRIDGE) DEBUG  Rewards: Cached points calculation parameters {"address": "0x8Dc623E964475D4d669da601Fd15ea9125469003", "basePointsPerDollar": 0, "bonusBips": 0, "cacheExpiry": "2026-04-16T04:17:47.533Z"}
+ (NOBRIDGE) LOG  [MetaMask DEBUG]: PerpsController state persisted successfully
+ (NOBRIDGE) LOG  [MetaMask DEBUG]: PerpsController state persisted successfully
+ (NOBRIDGE) LOG  [MetaMask DEBUG]: MultichainAssetsController state persisted successfully
+ (NOBRIDGE) LOG  [MetaMask DEBUG]: MultichainBalancesController state persisted successfully
+ (NOBRIDGE) WARN  An internal error occurred:  [Error: Queue restoration timeout]
+ (NOBRIDGE) WARN  Flush triggered but queue restoration and settings loading not complete. Flush will be retried. [Error: Promise timed out]
+ (NOBRIDGE) INFO  Sent 17 events
+ (NOBRIDGE) DEBUG  HyperLiquid Fee Calculation Started {"amount": "11.117145", "baseFeeRate": 0.00045, "baseMakerRate": 0.00015, "baseTakerRate": 0.00045, "hip3Multiplier": 1, "isHip3Asset": false, "isMaker": false, "orderType": "market", "symbol": "ETH"}
+ (NOBRIDGE) DEBUG  usePerpsClosePositionValidation: Validating close params {"currentPrice": 2365.35, "orderType": "market", "price": undefined, "size": undefined, "symbol": "ETH"}
+ (NOBRIDGE) DEBUG  User Address Retrieved {"network": "testnet", "userAddress": "0x8dc623e964475d4d669da601fd15ea9125469003"}
+ (NOBRIDGE) DEBUG  📦 Using Cached Fee Rates {"cacheAge": "119s", "cacheExpiry": "2026-04-16T04:16:46.234Z", "cacheHit": true, "hip3Multiplier": 1, "isHip3Asset": false, "perpsMakerRate": 0.00014399999999999998, "perpsTakerRate": 0.000432, "selectedRate": 0.000432, "spotMakerRate": 0.000384, "spotTakerRate": 0.000672}
+ (NOBRIDGE) DEBUG  Final Fee Calculation Result {"amount": "11.117145", "fees": {"metamaskRate": "0.1000%", "protocolRate": "0.0432%", "totalAmount": 0.015919751640000004, "totalRate": "0.1432%"}, "orderType": "market", "usingFallbackRates": false}
+ (NOBRIDGE) DEBUG  usePerpsClosePositionValidation: Protocol validation result {"isValid": true}
+ (NOBRIDGE) DEBUG  Rewards: Using cached fee discount {"address": "0x8Dc623E964475D4d669da601Fd15ea9125469003", "cacheAge": "119s", "discountBips": 0}
+ (NOBRIDGE) DEBUG  Rewards: Calculating points with discounted fee {"actualFeeUSD": 0.011117145, "adjustedRate": 0.001, "amount": 11.117145, "discountPercentage": 0, "originalRate": 0.001}
+ (NOBRIDGE) DEBUG  Rewards: Points estimation request via controller {"estimatePointsDto": {"account": "eip155:1:0x8Dc623E964475D4d669da601Fd15ea9125469003", "activityContext": {"perpsContext": [Object]}, "activityType": "PERPS"}, "isClose": true, "size": 11.117145, "symbol": "ETH"}
+ (NOBRIDGE) LOG  [MetaMask DEBUG]: RewardsController: Fetching fresh season metadata via API call for type current
+ (NOBRIDGE) LOG  [MetaMask DEBUG]: RewardsController: Failed to check active season: No valid season metadata could be found for type: current
+ (NOBRIDGE) DEBUG  Rewards: Points estimated via controller {"bonusBips": 0, "duration": "324ms", "isClose": true, "pointsEstimate": 0, "size": 11.117145, "symbol": "ETH"}
+ (NOBRIDGE) DEBUG  Rewards: Cached points calculation parameters {"address": "0x8Dc623E964475D4d669da601Fd15ea9125469003", "basePointsPerDollar": 0, "bonusBips": 0, "cacheExpiry": "2026-04-16T04:18:44.905Z"}
+ (NOBRIDGE) LOG  [MetaMask DEBUG]: PerpsController state persisted successfully
+ (NOBRIDGE) LOG  [MetaMask DEBUG]: MultichainBalancesController state persisted successfully
+ (NOBRIDGE) LOG  [MetaMask DEBUG]: MultichainAssetsController state persisted successfully
+ (NOBRIDGE) LOG  [MetaMask DEBUG]: MultichainBalancesController state persisted successfully
+ (NOBRIDGE) DEBUG  HyperLiquid Fee Calculation Started {"amount": "11.11785", "baseFeeRate": 0.00045, "baseMakerRate": 0.00015, "baseTakerRate": 0.00045, "hip3Multiplier": 1, "isHip3Asset": false, "isMaker": false, "orderType": "market", "symbol": "ETH"}
+ (NOBRIDGE) DEBUG  usePerpsClosePositionValidation: Validating close params {"currentPrice": 2365.5, "orderType": "market", "price": undefined, "size": undefined, "symbol": "ETH"}
+ (NOBRIDGE) DEBUG  User Address Retrieved {"network": "testnet", "userAddress": "0x8dc623e964475d4d669da601fd15ea9125469003"}
+ (NOBRIDGE) DEBUG  📦 Using Cached Fee Rates {"cacheAge": "122s", "cacheExpiry": "2026-04-16T04:16:46.234Z", "cacheHit": true, "hip3Multiplier": 1, "isHip3Asset": false, "perpsMakerRate": 0.00014399999999999998, "perpsTakerRate": 0.000432, "selectedRate": 0.000432, "spotMakerRate": 0.000384, "spotTakerRate": 0.000672}
+ (NOBRIDGE) DEBUG  Final Fee Calculation Result {"amount": "11.11785", "fees": {"metamaskRate": "0.1000%", "protocolRate": "0.0432%", "totalAmount": 0.0159207612, "totalRate": "0.1432%"}, "orderType": "market", "usingFallbackRates": false}
+ (NOBRIDGE) DEBUG  usePerpsClosePositionValidation: Protocol validation result {"isValid": true}
+ (NOBRIDGE) DEBUG  Rewards: Using cached fee discount {"address": "0x8Dc623E964475D4d669da601Fd15ea9125469003", "cacheAge": "122s", "discountBips": 0}
+ (NOBRIDGE) DEBUG  Rewards: Calculating points with discounted fee {"actualFeeUSD": 0.01111785, "adjustedRate": 0.001, "amount": 11.11785, "discountPercentage": 0, "originalRate": 0.001}
+ (NOBRIDGE) DEBUG  Rewards: Points estimation request via controller {"estimatePointsDto": {"account": "eip155:1:0x8Dc623E964475D4d669da601Fd15ea9125469003", "activityContext": {"perpsContext": [Object]}, "activityType": "PERPS"}, "isClose": true, "size": 11.11785, "symbol": "ETH"}
+ (NOBRIDGE) LOG  [MetaMask DEBUG]: RewardsController: Fetching fresh season metadata via API call for type current
+ (NOBRIDGE) LOG  [MetaMask DEBUG]: RewardsController: Failed to check active season: No valid season metadata could be found for type: current
+ (NOBRIDGE) DEBUG  Rewards: Points estimated via controller {"bonusBips": 0, "duration": "300ms", "isClose": true, "pointsEstimate": 0, "size": 11.11785, "symbol": "ETH"}
+ (NOBRIDGE) DEBUG  Rewards: Cached points calculation parameters {"address": "0x8Dc623E964475D4d669da601Fd15ea9125469003", "basePointsPerDollar": 0, "bonusBips": 0, "cacheExpiry": "2026-04-16T04:18:48.713Z"}
+

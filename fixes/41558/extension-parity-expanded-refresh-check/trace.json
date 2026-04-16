@@ -1,0 +1,194 @@
+[
+  {
+    "id": "btc-market",
+    "action": "call",
+    "ok": true,
+    "raw": {
+      "passed": 4,
+      "failed": 0,
+      "trace": [
+        {
+          "id": "nav",
+          "action": "navigate",
+          "ok": true,
+          "raw": {
+            "navigated": true,
+            "hash": "#/perps/market/BTC"
+          },
+          "durationMs": 4
+        },
+        {
+          "id": "wait",
+          "action": "wait_for",
+          "ok": true,
+          "raw": {
+            "found": true,
+            "target": "testId:perps-market-detail-page"
+          },
+          "durationMs": 42
+        },
+        {
+          "id": "wait-price",
+          "action": "wait_for",
+          "ok": true,
+          "raw": "{\"ready\":true}",
+          "durationMs": 573
+        },
+        {
+          "id": "extract",
+          "action": "eval_sync",
+          "ok": true,
+          "raw": "{\"symbol\":\"BTC\",\"screen\":\"market_detail\",\"price\":\"$75,130\",\"change\":\"+0.71%\",\"oracle\":\"$74,721\"}",
+          "durationMs": 0
+        },
+        {
+          "id": "done",
+          "action": "end",
+          "status": "pass",
+          "durationMs": 0
+        }
+      ],
+      "vars": {}
+    },
+    "durationMs": 645
+  },
+  {
+    "id": "btc-order",
+    "action": "call",
+    "ok": true,
+    "raw": {
+      "passed": 8,
+      "failed": 0,
+      "trace": [
+        {
+          "id": "nav",
+          "action": "navigate",
+          "ok": true,
+          "raw": {
+            "navigated": true,
+            "hash": "#/perps/market/BTC"
+          },
+          "durationMs": 3
+        },
+        {
+          "id": "wait-market",
+          "action": "wait_for",
+          "ok": true,
+          "raw": {
+            "found": true,
+            "target": "testId:perps-market-detail-page"
+          },
+          "durationMs": 55
+        },
+        {
+          "id": "check-position",
+          "action": "ext_check_dom",
+          "ok": true,
+          "raw": {
+            "visible": false
+          },
+          "durationMs": 1
+        },
+        {
+          "id": "branch",
+          "action": "switch",
+          "next": "open-order",
+          "durationMs": 0
+        },
+        {
+          "id": "open-order",
+          "action": "press",
+          "ok": true,
+          "raw": {
+            "clicked": true,
+            "target": "testId:perps-long-cta-button"
+          },
+          "durationMs": 45
+        },
+        {
+          "id": "wait-order",
+          "action": "wait_for",
+          "ok": true,
+          "raw": "{\"ready\":true}",
+          "durationMs": 2
+        },
+        {
+          "id": "set-amount",
+          "action": "eval_sync",
+          "ok": true,
+          "raw": "{\"filled\":true,\"value\":\"11\"}",
+          "durationMs": 4
+        },
+        {
+          "id": "wait-summary",
+          "action": "wait_for",
+          "ok": true,
+          "raw": "{\"ready\":true}",
+          "durationMs": 1506
+        },
+        {
+          "id": "extract",
+          "action": "eval_sync",
+          "ok": true,
+          "raw": "{\"symbol\":\"BTC\",\"screen\":\"order_entry\",\"price\":\"$75,130\",\"change\":\"+0.71%\",\"margin\":\"$3.74\",\"liquidationPrice\":\"$50,721\",\"fees\":\"$0.02\"}",
+          "durationMs": 1
+        },
+        {
+          "id": "done",
+          "action": "end",
+          "status": "pass",
+          "durationMs": 0
+        }
+      ],
+      "vars": {
+        "position_state": {
+          "visible": false
+        }
+      }
+    },
+    "durationMs": 1647
+  },
+  {
+    "id": "eth-market",
+    "action": "call",
+    "ok": false,
+    "raw": {
+      "passed": 2,
+      "failed": 1,
+      "trace": [
+        {
+          "id": "nav",
+          "action": "navigate",
+          "ok": true,
+          "raw": {
+            "navigated": true,
+            "hash": "#/perps/market/ETH"
+          },
+          "durationMs": 4
+        },
+        {
+          "id": "wait",
+          "action": "wait_for",
+          "ok": true,
+          "raw": {
+            "found": true,
+            "target": "testId:perps-market-detail-page"
+          },
+          "durationMs": 91
+        },
+        {
+          "id": "wait-price",
+          "action": "wait_for",
+          "ok": false,
+          "raw": {
+            "timeout": true
+          },
+          "durationMs": 15061,
+          "error": "Timed out polling expression for node \"wait-price\""
+        }
+      ],
+      "vars": {}
+    },
+    "durationMs": 15175
+  }
+]

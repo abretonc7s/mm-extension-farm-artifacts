@@ -1,0 +1,239 @@
+{
+  "title": "Mobile perps decimal matrix",
+  "description": "",
+  "sourcePath": "/Users/deeeed/dev/metamask/metamask-mobile-1/scripts/perps/agentic/teams/perps/recipes/mobile-decimal-matrix.json",
+  "hooks": {
+    "pre_conditions": [
+      "wallet.unlocked",
+      "perps.feature_enabled"
+    ],
+    "setup": [],
+    "teardown": []
+  },
+  "workflow": {
+    "entry": "btc-nav-market",
+    "nodes": {
+      "btc-nav-market": {
+        "action": "navigate",
+        "target": "PerpsMarketDetails",
+        "params": {
+          "market": {
+            "symbol": "BTC",
+            "name": "BTC",
+            "price": "0",
+            "change24h": "0",
+            "change24hPercent": "0",
+            "volume": "0",
+            "maxLeverage": "100"
+          }
+        },
+        "next": "btc-wait-market",
+        "id": "btc-nav-market"
+      },
+      "btc-wait-market": {
+        "action": "wait_for",
+        "route": "PerpsMarketDetails",
+        "next": "btc-market-data",
+        "id": "btc-wait-market"
+      },
+      "btc-market-data": {
+        "action": "eval_sync",
+        "expression": "(function(){ function flat(v,out){ if(v===null||v===undefined)return; if(typeof v==='string'||typeof v==='number'){ var s=String(v).trim(); if(s) out.push(s); return; } if(Array.isArray(v)){ for(var i=0;i<v.length;i++) flat(v[i],out); return; } if(v&&v.props&&v.props.children!==undefined){ flat(v.props.children,out); } } function find(testId){ var hook=globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__; if(!hook||!hook.renderers||!hook.getFiberRoots)return null; var found=null; function walk(f){ if(!f||found)return; var p=f.memoizedProps; if(p&&p.testID===testId){ found=f; return; } walk(f.child); walk(f.sibling); } var it=hook.renderers.entries(); var step=it.next(); while(!step.done){ var roots=hook.getFiberRoots(step.value[0]); if(roots){ roots.forEach(function(r){ if(!found&&r.current) walk(r.current); }); } if(found) break; step=it.next(); } return found; } function collect(root){ var out=[]; function walk(f){ if(!f)return; var p=f.memoizedProps; if(p&&p.children!==undefined) flat(p.children,out); walk(f.child); walk(f.sibling); } walk(root); return out; } function firstMatch(arr,re){ for(var i=0;i<arr.length;i++){ if(re.test(arr[i])) return arr[i]; } return null; } var header=collect(find('perps-market-header')); return JSON.stringify({symbol:'BTC',screen:'market_detail',title:header[0]||null,price:firstMatch(header,/^\\$/),change:firstMatch(header,/%$/),header:header.slice(0,12)}); })()",
+        "save_as": "btc_market",
+        "assert": {
+          "operator": "not_null",
+          "field": "price"
+        },
+        "next": "btc-open-order",
+        "id": "btc-market-data"
+      },
+      "btc-open-order": {
+        "action": "press",
+        "test_id": "perps-market-details-long-button",
+        "next": "btc-wait-order",
+        "id": "btc-open-order"
+      },
+      "btc-wait-order": {
+        "action": "wait_for",
+        "route": "RedesignedConfirmations",
+        "next": "btc-order-data",
+        "id": "btc-wait-order"
+      },
+      "btc-order-data": {
+        "action": "eval_sync",
+        "expression": "(function(){ function flat(v,out){ if(v===null||v===undefined)return; if(typeof v==='string'||typeof v==='number'){ var s=String(v).trim(); if(s) out.push(s); return; } if(Array.isArray(v)){ for(var i=0;i<v.length;i++) flat(v[i],out); return; } if(v&&v.props&&v.props.children!==undefined){ flat(v.props.children,out); } } function find(testId){ var hook=globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__; if(!hook||!hook.renderers||!hook.getFiberRoots)return null; var found=null; function walk(f){ if(!f||found)return; var p=f.memoizedProps; if(p&&p.testID===testId){ found=f; return; } walk(f.child); walk(f.sibling); } var it=hook.renderers.entries(); var step=it.next(); while(!step.done){ var roots=hook.getFiberRoots(step.value[0]); if(roots){ roots.forEach(function(r){ if(!found&&r.current) walk(r.current); }); } if(found) break; step=it.next(); } return found; } function collect(root){ var out=[]; function walk(f){ if(!f)return; var p=f.memoizedProps; if(p&&p.children!==undefined) flat(p.children,out); walk(f.child); walk(f.sibling); } walk(root); return out; } function firstMatch(arr,re){ for(var i=0;i<arr.length;i++){ if(re.test(arr[i])) return arr[i]; } return null; } var header=collect(find('perps-order-header')); return JSON.stringify({symbol:'BTC',screen:'order_entry',title:header[0]||null,price:firstMatch(header,/^\\$/),change:firstMatch(header,/%$/),header:header.slice(0,12)}); })()",
+        "save_as": "btc_order",
+        "assert": {
+          "operator": "not_null",
+          "field": "price"
+        },
+        "next": "eth-nav-market",
+        "id": "btc-order-data"
+      },
+      "eth-nav-market": {
+        "action": "navigate",
+        "target": "PerpsMarketDetails",
+        "params": {
+          "market": {
+            "symbol": "ETH",
+            "name": "ETH",
+            "price": "0",
+            "change24h": "0",
+            "change24hPercent": "0",
+            "volume": "0",
+            "maxLeverage": "100"
+          }
+        },
+        "next": "eth-wait-market",
+        "id": "eth-nav-market"
+      },
+      "eth-wait-market": {
+        "action": "wait_for",
+        "route": "PerpsMarketDetails",
+        "next": "eth-market-data",
+        "id": "eth-wait-market"
+      },
+      "eth-market-data": {
+        "action": "eval_sync",
+        "expression": "(function(){ function flat(v,out){ if(v===null||v===undefined)return; if(typeof v==='string'||typeof v==='number'){ var s=String(v).trim(); if(s) out.push(s); return; } if(Array.isArray(v)){ for(var i=0;i<v.length;i++) flat(v[i],out); return; } if(v&&v.props&&v.props.children!==undefined){ flat(v.props.children,out); } } function find(testId){ var hook=globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__; if(!hook||!hook.renderers||!hook.getFiberRoots)return null; var found=null; function walk(f){ if(!f||found)return; var p=f.memoizedProps; if(p&&p.testID===testId){ found=f; return; } walk(f.child); walk(f.sibling); } var it=hook.renderers.entries(); var step=it.next(); while(!step.done){ var roots=hook.getFiberRoots(step.value[0]); if(roots){ roots.forEach(function(r){ if(!found&&r.current) walk(r.current); }); } if(found) break; step=it.next(); } return found; } function collect(root){ var out=[]; function walk(f){ if(!f)return; var p=f.memoizedProps; if(p&&p.children!==undefined) flat(p.children,out); walk(f.child); walk(f.sibling); } walk(root); return out; } function firstMatch(arr,re){ for(var i=0;i<arr.length;i++){ if(re.test(arr[i])) return arr[i]; } return null; } var header=collect(find('perps-market-header')); return JSON.stringify({symbol:'ETH',screen:'market_detail',title:header[0]||null,price:firstMatch(header,/^\\$/),change:firstMatch(header,/%$/),header:header.slice(0,12)}); })()",
+        "save_as": "eth_market",
+        "assert": {
+          "operator": "not_null",
+          "field": "price"
+        },
+        "next": "eth-open-order",
+        "id": "eth-market-data"
+      },
+      "eth-open-order": {
+        "action": "press",
+        "test_id": "perps-market-details-long-button",
+        "next": "eth-wait-order",
+        "id": "eth-open-order"
+      },
+      "eth-wait-order": {
+        "action": "wait_for",
+        "route": "RedesignedConfirmations",
+        "next": "eth-order-data",
+        "id": "eth-wait-order"
+      },
+      "eth-order-data": {
+        "action": "eval_sync",
+        "expression": "(function(){ function flat(v,out){ if(v===null||v===undefined)return; if(typeof v==='string'||typeof v==='number'){ var s=String(v).trim(); if(s) out.push(s); return; } if(Array.isArray(v)){ for(var i=0;i<v.length;i++) flat(v[i],out); return; } if(v&&v.props&&v.props.children!==undefined){ flat(v.props.children,out); } } function find(testId){ var hook=globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__; if(!hook||!hook.renderers||!hook.getFiberRoots)return null; var found=null; function walk(f){ if(!f||found)return; var p=f.memoizedProps; if(p&&p.testID===testId){ found=f; return; } walk(f.child); walk(f.sibling); } var it=hook.renderers.entries(); var step=it.next(); while(!step.done){ var roots=hook.getFiberRoots(step.value[0]); if(roots){ roots.forEach(function(r){ if(!found&&r.current) walk(r.current); }); } if(found) break; step=it.next(); } return found; } function collect(root){ var out=[]; function walk(f){ if(!f)return; var p=f.memoizedProps; if(p&&p.children!==undefined) flat(p.children,out); walk(f.child); walk(f.sibling); } walk(root); return out; } function firstMatch(arr,re){ for(var i=0;i<arr.length;i++){ if(re.test(arr[i])) return arr[i]; } return null; } var header=collect(find('perps-order-header')); return JSON.stringify({symbol:'ETH',screen:'order_entry',title:header[0]||null,price:firstMatch(header,/^\\$/),change:firstMatch(header,/%$/),header:header.slice(0,12)}); })()",
+        "save_as": "eth_order",
+        "assert": {
+          "operator": "not_null",
+          "field": "price"
+        },
+        "next": "sol-nav-market",
+        "id": "eth-order-data"
+      },
+      "sol-nav-market": {
+        "action": "navigate",
+        "target": "PerpsMarketDetails",
+        "params": {
+          "market": {
+            "symbol": "SOL",
+            "name": "SOL",
+            "price": "0",
+            "change24h": "0",
+            "change24hPercent": "0",
+            "volume": "0",
+            "maxLeverage": "100"
+          }
+        },
+        "next": "sol-wait-market",
+        "id": "sol-nav-market"
+      },
+      "sol-wait-market": {
+        "action": "wait_for",
+        "route": "PerpsMarketDetails",
+        "next": "sol-market-data",
+        "id": "sol-wait-market"
+      },
+      "sol-market-data": {
+        "action": "eval_sync",
+        "expression": "(function(){ function flat(v,out){ if(v===null||v===undefined)return; if(typeof v==='string'||typeof v==='number'){ var s=String(v).trim(); if(s) out.push(s); return; } if(Array.isArray(v)){ for(var i=0;i<v.length;i++) flat(v[i],out); return; } if(v&&v.props&&v.props.children!==undefined){ flat(v.props.children,out); } } function find(testId){ var hook=globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__; if(!hook||!hook.renderers||!hook.getFiberRoots)return null; var found=null; function walk(f){ if(!f||found)return; var p=f.memoizedProps; if(p&&p.testID===testId){ found=f; return; } walk(f.child); walk(f.sibling); } var it=hook.renderers.entries(); var step=it.next(); while(!step.done){ var roots=hook.getFiberRoots(step.value[0]); if(roots){ roots.forEach(function(r){ if(!found&&r.current) walk(r.current); }); } if(found) break; step=it.next(); } return found; } function collect(root){ var out=[]; function walk(f){ if(!f)return; var p=f.memoizedProps; if(p&&p.children!==undefined) flat(p.children,out); walk(f.child); walk(f.sibling); } walk(root); return out; } function firstMatch(arr,re){ for(var i=0;i<arr.length;i++){ if(re.test(arr[i])) return arr[i]; } return null; } var header=collect(find('perps-market-header')); return JSON.stringify({symbol:'SOL',screen:'market_detail',title:header[0]||null,price:firstMatch(header,/^\\$/),change:firstMatch(header,/%$/),header:header.slice(0,12)}); })()",
+        "save_as": "sol_market",
+        "assert": {
+          "operator": "not_null",
+          "field": "price"
+        },
+        "next": "fartcoin-nav-market",
+        "id": "sol-market-data"
+      },
+      "fartcoin-nav-market": {
+        "action": "navigate",
+        "target": "PerpsMarketDetails",
+        "params": {
+          "market": {
+            "symbol": "FARTCOIN",
+            "name": "FARTCOIN",
+            "price": "0",
+            "change24h": "0",
+            "change24hPercent": "0",
+            "volume": "0",
+            "maxLeverage": "100"
+          }
+        },
+        "next": "fartcoin-wait-market",
+        "id": "fartcoin-nav-market"
+      },
+      "fartcoin-wait-market": {
+        "action": "wait_for",
+        "route": "PerpsMarketDetails",
+        "next": "fartcoin-market-data",
+        "id": "fartcoin-wait-market"
+      },
+      "fartcoin-market-data": {
+        "action": "eval_sync",
+        "expression": "(function(){ function flat(v,out){ if(v===null||v===undefined)return; if(typeof v==='string'||typeof v==='number'){ var s=String(v).trim(); if(s) out.push(s); return; } if(Array.isArray(v)){ for(var i=0;i<v.length;i++) flat(v[i],out); return; } if(v&&v.props&&v.props.children!==undefined){ flat(v.props.children,out); } } function find(testId){ var hook=globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__; if(!hook||!hook.renderers||!hook.getFiberRoots)return null; var found=null; function walk(f){ if(!f||found)return; var p=f.memoizedProps; if(p&&p.testID===testId){ found=f; return; } walk(f.child); walk(f.sibling); } var it=hook.renderers.entries(); var step=it.next(); while(!step.done){ var roots=hook.getFiberRoots(step.value[0]); if(roots){ roots.forEach(function(r){ if(!found&&r.current) walk(r.current); }); } if(found) break; step=it.next(); } return found; } function collect(root){ var out=[]; function walk(f){ if(!f)return; var p=f.memoizedProps; if(p&&p.children!==undefined) flat(p.children,out); walk(f.child); walk(f.sibling); } walk(root); return out; } function firstMatch(arr,re){ for(var i=0;i<arr.length;i++){ if(re.test(arr[i])) return arr[i]; } return null; } var header=collect(find('perps-market-header')); return JSON.stringify({symbol:'FARTCOIN',screen:'market_detail',title:header[0]||null,price:firstMatch(header,/^\\$/),change:firstMatch(header,/%$/),header:header.slice(0,12)}); })()",
+        "save_as": "fartcoin_market",
+        "assert": {
+          "operator": "not_null",
+          "field": "price"
+        },
+        "next": "pump-nav-market",
+        "id": "fartcoin-market-data"
+      },
+      "pump-nav-market": {
+        "action": "navigate",
+        "target": "PerpsMarketDetails",
+        "params": {
+          "market": {
+            "symbol": "PUMP",
+            "name": "PUMP",
+            "price": "0",
+            "change24h": "0",
+            "change24hPercent": "0",
+            "volume": "0",
+            "maxLeverage": "100"
+          }
+        },
+        "next": "pump-wait-market",
+        "id": "pump-nav-market"
+      },
+      "pump-wait-market": {
+        "action": "wait_for",
+        "route": "PerpsMarketDetails",
+        "next": "pump-market-data",
+        "id": "pump-wait-market"
+      },
+      "pump-market-data": {
+        "action": "eval_sync",
+        "expression": "(function(){ function flat(v,out){ if(v===null||v===undefined)return; if(typeof v==='string'||typeof v==='number'){ var s=String(v).trim(); if(s) out.push(s); return; } if(Array.isArray(v)){ for(var i=0;i<v.length;i++) flat(v[i],out); return; } if(v&&v.props&&v.props.children!==undefined){ flat(v.props.children,out); } } function find(testId){ var hook=globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__; if(!hook||!hook.renderers||!hook.getFiberRoots)return null; var found=null; function walk(f){ if(!f||found)return; var p=f.memoizedProps; if(p&&p.testID===testId){ found=f; return; } walk(f.child); walk(f.sibling); } var it=hook.renderers.entries(); var step=it.next(); while(!step.done){ var roots=hook.getFiberRoots(step.value[0]); if(roots){ roots.forEach(function(r){ if(!found&&r.current) walk(r.current); }); } if(found) break; step=it.next(); } return found; } function collect(root){ var out=[]; function walk(f){ if(!f)return; var p=f.memoizedProps; if(p&&p.children!==undefined) flat(p.children,out); walk(f.child); walk(f.sibling); } walk(root); return out; } function firstMatch(arr,re){ for(var i=0;i<arr.length;i++){ if(re.test(arr[i])) return arr[i]; } return null; } var header=collect(find('perps-market-header')); return JSON.stringify({symbol:'PUMP',screen:'market_detail',title:header[0]||null,price:firstMatch(header,/^\\$/),change:firstMatch(header,/%$/),header:header.slice(0,12)}); })()",
+        "save_as": "pump_market",
+        "assert": {
+          "operator": "not_null",
+          "field": "price"
+        },
+        "next": "done",
+        "id": "pump-market-data"
+      },
+      "done": {
+        "action": "end",
+        "status": "pass",
+        "id": "done"
+      }
+    }
+  }
+}

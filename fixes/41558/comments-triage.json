@@ -1,0 +1,13 @@
+[
+  {
+    "comment_id": 3051724823,
+    "author": "cursor[bot]",
+    "source": "bot",
+    "path": "ui/pages/perps/perps-market-detail-page.tsx",
+    "line": 1290,
+    "body": "### Inconsistent String coercion risks TypeError on numeric fields\n\n**Medium Severity**\n\n<!-- DESCRIPTION START -->\n`position.entryPrice`, `position.takeProfitPrice`, `position.stopLossPrice`, and `position.liquidationPrice` have `.replace()` called directly on them, which will throw a `TypeError` if any of these are numbers. Meanwhile, `position.cumulativeFunding.sinceOpen` is defensively wrapped in `String()` before `.replace()`, indicating awareness that some position fields may not be strings. The old code used template literals (`$${value}`), which safely coerce both strings and numbers. The new code is strictly less safe for non-string values.\n<!-- DESCRIPTION END -->\n\n<!-- BUGBOT_BUG_ID: ad3e8ded-5f43-45a4-8804-cd81598434e1 -->",
+    "triage": "REAL",
+    "action": "Reworked the perps formatting change onto the shared controller formatter path and normalized runtime values so numeric fields no longer depend on string-only operations.",
+    "fixed_in_commit": "4712cd991206dc0201153bf97d1591a87e94596a"
+  }
+]

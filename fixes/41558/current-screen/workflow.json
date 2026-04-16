@@ -1,0 +1,29 @@
+{
+  "description": "",
+  "hooks": {
+    "pre_conditions": [
+      "wallet.unlocked"
+    ],
+    "setup": [],
+    "teardown": []
+  },
+  "inputs": {},
+  "sourcePath": "",
+  "title": "shot",
+  "workflow": {
+    "entry": "shot",
+    "nodes": {
+      "shot": {
+        "action": "screenshot",
+        "filename": "current-order-screen",
+        "next": "done",
+        "id": "shot"
+      },
+      "done": {
+        "action": "end",
+        "status": "pass",
+        "id": "done"
+      }
+    }
+  }
+}

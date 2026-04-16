@@ -1,0 +1,92 @@
+[
+  {
+    "id": "nav-home",
+    "action": "navigate",
+    "ok": true,
+    "raw": {
+      "navigated": true,
+      "hash": "#/?tab=perps"
+    },
+    "durationMs": 4
+  },
+  {
+    "id": "wait-home",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-balance-dropdown"
+    },
+    "durationMs": 108
+  },
+  {
+    "id": "open-balance",
+    "action": "press",
+    "ok": true,
+    "raw": {
+      "clicked": true,
+      "target": "testId:perps-balance-dropdown-balance"
+    },
+    "durationMs": 136
+  },
+  {
+    "id": "wait-panel",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-balance-dropdown-panel"
+    },
+    "durationMs": 85
+  },
+  {
+    "id": "open-page",
+    "action": "press",
+    "ok": true,
+    "raw": {
+      "clicked": true,
+      "target": "testId:perps-balance-dropdown-withdraw"
+    },
+    "durationMs": 106
+  },
+  {
+    "id": "wait-page",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-withdraw-page"
+    },
+    "durationMs": 38
+  },
+  {
+    "id": "preset-25",
+    "action": "press",
+    "ok": true,
+    "raw": {
+      "clicked": true,
+      "target": "testId:perps-withdraw-percentage-25"
+    },
+    "durationMs": 82
+  },
+  {
+    "id": "wait-values",
+    "action": "wait",
+    "ok": true,
+    "raw": null,
+    "durationMs": 501
+  },
+  {
+    "id": "extract",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"screen\":\"withdraw\",\"preset10\":\"10%\",\"preset25\":\"25%\",\"preset50\":\"50%\",\"presetMax\":\"Max\",\"asset\":\"USDC\",\"fee\":\"$1.00\",\"time\":\"5 minutes\",\"receive\":\"$214.71\"}",
+    "durationMs": 1
+  },
+  {
+    "id": "done",
+    "action": "end",
+    "status": "pass",
+    "durationMs": 0
+  }
+]

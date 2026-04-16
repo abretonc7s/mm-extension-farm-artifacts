@@ -1,0 +1,212 @@
+{
+  "title": "Mobile perps decimal parity expanded",
+  "description": "",
+  "sourcePath": "/Users/deeeed/dev/metamask/metamask-mobile-1/scripts/perps/agentic/teams/perps/recipes/mobile-decimal-parity-expanded.json",
+  "hooks": {
+    "pre_conditions": [
+      "wallet.unlocked",
+      "perps.feature_enabled"
+    ],
+    "setup": [
+      {
+        "id": "setup-account",
+        "action": "call",
+        "ref": "perps/select-account",
+        "params": {
+          "address": "0x8dc623e964475d4d669da601fd15ea9125469003"
+        }
+      },
+      {
+        "id": "setup-testnet",
+        "action": "call",
+        "ref": "perps/setup-testnet"
+      },
+      {
+        "id": "setup-clear-eth",
+        "action": "eval_async",
+        "expression": "Engine.context.PerpsController.getPositions().then(function(ps){var p=ps.find(function(x){return x.symbol==='ETH'});if(!p){return JSON.stringify({cleared:true});}return Engine.context.PerpsController.closePosition({symbol:'ETH'}).then(function(){return JSON.stringify({cleared:true});});})",
+        "assert": {
+          "operator": "eq",
+          "field": "cleared",
+          "value": true
+        }
+      },
+      {
+        "id": "setup-wait-no-eth",
+        "action": "wait_for",
+        "expression": "Engine.context.PerpsController.getPositions().then(function(ps){var p=ps.find(function(x){return x.symbol==='ETH'});return JSON.stringify({found:!!p});})",
+        "assert": {
+          "operator": "eq",
+          "field": "found",
+          "value": false
+        },
+        "timeout_ms": 10000
+      }
+    ],
+    "teardown": [
+      {
+        "id": "teardown-close-eth",
+        "action": "eval_async",
+        "expression": "Engine.context.PerpsController.getPositions().then(function(ps){var p=ps.find(function(x){return x.symbol==='ETH'});if(!p){return JSON.stringify({cleared:true});}return Engine.context.PerpsController.closePosition({symbol:'ETH'}).then(function(){return JSON.stringify({cleared:true});});})",
+        "assert": {
+          "operator": "eq",
+          "field": "cleared",
+          "value": true
+        }
+      }
+    ]
+  },
+  "workflow": {
+    "entry": "btc-market",
+    "nodes": {
+      "btc-market": {
+        "action": "call",
+        "ref": "perps/parity-market-detail-snapshot",
+        "params": {
+          "symbol": "BTC"
+        },
+        "next": "btc-order",
+        "id": "btc-market"
+      },
+      "btc-order": {
+        "action": "call",
+        "ref": "perps/parity-order-entry-snapshot",
+        "params": {
+          "symbol": "BTC",
+          "usdAmount": "11"
+        },
+        "next": "eth-market",
+        "id": "btc-order"
+      },
+      "eth-market": {
+        "action": "call",
+        "ref": "perps/parity-market-detail-snapshot",
+        "params": {
+          "symbol": "ETH"
+        },
+        "next": "eth-order",
+        "id": "eth-market"
+      },
+      "eth-order": {
+        "action": "call",
+        "ref": "perps/parity-order-entry-snapshot",
+        "params": {
+          "symbol": "ETH",
+          "usdAmount": "11"
+        },
+        "next": "sol-market",
+        "id": "eth-order"
+      },
+      "sol-market": {
+        "action": "call",
+        "ref": "perps/parity-market-detail-snapshot",
+        "params": {
+          "symbol": "SOL"
+        },
+        "next": "fart-market",
+        "id": "sol-market"
+      },
+      "fart-market": {
+        "action": "call",
+        "ref": "perps/parity-market-detail-snapshot",
+        "params": {
+          "symbol": "FARTCOIN"
+        },
+        "next": "pump-market",
+        "id": "fart-market"
+      },
+      "pump-market": {
+        "action": "call",
+        "ref": "perps/parity-market-detail-snapshot",
+        "params": {
+          "symbol": "PUMP"
+        },
+        "next": "check-eth-position",
+        "id": "pump-market"
+      },
+      "open-eth-position": {
+        "action": "call",
+        "ref": "perps/trade-open-market",
+        "params": {
+          "symbol": "ETH",
+          "side": "long",
+          "usdAmount": "11",
+          "leverage": "2"
+        },
+        "next": "wait-eth-position",
+        "id": "open-eth-position"
+      },
+      "wait-eth-position": {
+        "action": "wait_for",
+        "expression": "Engine.context.PerpsController.getPositions().then(function(ps){var p=ps.find(function(x){return x.symbol==='ETH'});return JSON.stringify({found:!!p});})",
+        "assert": {
+          "operator": "eq",
+          "field": "found",
+          "value": true
+        },
+        "timeout_ms": 10000,
+        "next": "eth-position",
+        "id": "wait-eth-position"
+      },
+      "eth-position": {
+        "action": "call",
+        "ref": "perps/parity-eth-position-detail",
+        "next": "eth-reverse",
+        "id": "eth-position"
+      },
+      "eth-reverse": {
+        "action": "call",
+        "ref": "perps/parity-eth-reverse-modal",
+        "next": "eth-remove-margin",
+        "id": "eth-reverse"
+      },
+      "eth-remove-margin": {
+        "action": "call",
+        "ref": "perps/parity-eth-remove-margin",
+        "next": "eth-close",
+        "id": "eth-remove-margin"
+      },
+      "eth-close": {
+        "action": "call",
+        "ref": "perps/parity-eth-close-position",
+        "next": "withdraw",
+        "id": "eth-close"
+      },
+      "done": {
+        "action": "end",
+        "status": "pass",
+        "message": "Captured expanded mobile perps decimal parity values via composable flows.",
+        "id": "done"
+      },
+      "check-eth-position": {
+        "action": "eval_async",
+        "expression": "Engine.context.PerpsController.getPositions().then(function(ps){var p=ps.find(function(x){return x.symbol==='ETH'});return JSON.stringify({found:!!p});})",
+        "save_as": "eth_position_present",
+        "next": "branch-eth-position",
+        "id": "check-eth-position"
+      },
+      "branch-eth-position": {
+        "action": "switch",
+        "cases": [
+          {
+            "when": {
+              "field": "vars.eth_position_present.found",
+              "operator": "truthy"
+            },
+            "next": "eth-position",
+            "index": 0,
+            "label": ""
+          }
+        ],
+        "default": "open-eth-position",
+        "id": "branch-eth-position"
+      },
+      "withdraw": {
+        "action": "call",
+        "ref": "perps/parity-withdraw-snapshot",
+        "next": "done",
+        "id": "withdraw"
+      }
+    }
+  }
+}

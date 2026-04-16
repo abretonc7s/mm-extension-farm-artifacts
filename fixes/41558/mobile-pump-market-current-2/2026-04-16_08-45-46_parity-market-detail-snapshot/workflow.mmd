@@ -1,0 +1,10 @@
+flowchart TD
+  %% Parity snapshot — mobile market detail PUMP
+  __entry__(["ENTRY"]) --> node_nav
+  node_nav["nav<br/>navigate"]
+  node_wait["wait<br/>wait_for"]
+  node_extract["extract<br/>eval_sync"]
+  node_done(["done<br/>PASS"])
+  node_nav --> node_wait
+  node_wait --> node_extract
+  node_extract --> node_done

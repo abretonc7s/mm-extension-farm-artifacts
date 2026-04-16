@@ -1,0 +1,1679 @@
+{
+  "capturedAt": "2026-04-16T04:01:32.787Z",
+  "depth": 1,
+  "recipePath": "/Users/deeeed/dev/metamask/metamask-mobile-1/scripts/perps/agentic/teams/perps/flows/parity-eth-position-detail.json",
+  "recipeTitle": "Parity snapshot — mobile ETH position detail",
+  "step": {
+    "action": "eval_sync",
+    "expression": "(function(){var a=globalThis.__AGENTIC__; var details=a?.getTextByTestId('position-card-details',{all:true})||[]; function firstAfter(label,re){ var idx=details.indexOf(label); if(idx===-1) return null; for(var i=idx+1;i<details.length;i++){ if(re.test(details[i])) return details[i]; } return null; } return JSON.stringify({symbol:'ETH',screen:'position_detail',size:a?.getTextByTestId('position-card-size-value')??null,margin:a?.getTextByTestId('position-card-margin-value')??null,entry:firstAfter('Entry price',/^\\$/),liquidationPrice:firstAfter('Liq. price',/^\\$|^-$/),funding:firstAfter('Funding payments',/^\\$|^-\\$|^-$)});})()",
+    "next": "done",
+    "id": "extract"
+  },
+  "error": "ERROR: Evaluation error: Compiling JS failed: 1:662:non-terminated regular expression literal",
+  "route": {
+    "key": "PerpsMarketDetails-gkwSOC2x8U6tYDL-LKV2N",
+    "name": "PerpsMarketDetails",
+    "params": {
+      "market": {
+        "change24h": "0",
+        "change24hPercent": "0",
+        "maxLeverage": "100",
+        "name": "ETH",
+        "price": "0",
+        "symbol": "ETH",
+        "volume": "0"
+      }
+    }
+  },
+  "state": {
+    "index": 0,
+    "key": "stack-ms_fVBR3MJ8T2u0vQ167D",
+    "routeNames": [
+      "NavigationChildren"
+    ],
+    "routes": [
+      {
+        "key": "NavigationChildren-xKL2gWOXXb1EJn5VbB3Ep",
+        "name": "NavigationChildren",
+        "state": {
+          "index": 0,
+          "key": "stack-QD7iE4HCvxhHzIjFtLMWJ",
+          "routeNames": [
+            "HomeNav",
+            "FoxLoader",
+            "Login",
+            "Rehydrate",
+            "MaxBrowserTabsModal",
+            "OnboardingRootNav",
+            "OnboardingSuccessFlow",
+            "RestoreWallet",
+            "RootModalFlow",
+            "ImportPrivateKeyView",
+            "ImportSRPView",
+            "ConnectQRHardwareFlow",
+            "ConnectLedgerFlow",
+            "ConnectHardwareWalletFlow",
+            "MultichainAccountDetails",
+            "MultichainAccountGroupDetails",
+            "RevealPrivateCredentialView",
+            "MultichainAccountActions",
+            "MultichainAccountDetailActions",
+            "MultichainAddressList",
+            "MultichainPrivateKeyList",
+            "LedgerTransactionModal",
+            "QRSigningTransactionModal",
+            "LedgerMessageSignModal",
+            "OptionsSheet",
+            "EditAccountName",
+            "AddNetwork",
+            "EditNetwork",
+            "LockScreen",
+            "ConfirmationRequestModal",
+            "ConfirmationSwitchAccountType",
+            "ConfirmationPayWithModal"
+          ],
+          "routes": [
+            {
+              "key": "HomeNav-hvawdSngpUxcBi0Vcpz_M",
+              "name": "HomeNav",
+              "state": {
+                "index": 0,
+                "key": "stack-EYFCv7xK56cJt0dUUMFtC",
+                "routeNames": [
+                  "Main",
+                  "ReviewModal"
+                ],
+                "routes": [
+                  {
+                    "key": "Main-9WslxrRLajXCrlXUgjpVg",
+                    "name": "Main",
+                    "state": {
+                      "index": 1,
+                      "key": "stack-IQdRLnonhaBqFqXFhwExW",
+                      "routeNames": [
+                        "Home",
+                        "CollectiblesDetails",
+                        "DeprecatedNetworkDetails",
+                        "TokensFullView",
+                        "DeFiFullView",
+                        "CashTokensFullView",
+                        "AddAsset",
+                        "ConfirmAddAsset",
+                        "SettingsView",
+                        "Asset",
+                        "TrendingTokensFullView",
+                        "RWATokensFullView",
+                        "Webview",
+                        "Send",
+                        "AddBookmarkView",
+                        "OfflineModeView",
+                        "NotificationsView",
+                        "QRTabSwitcher",
+                        "NftDetails",
+                        "NftDetailsFullImage",
+                        "NftFullView",
+                        "BenefitFullView",
+                        "BenefitsFullView",
+                        "RampTokenSelection",
+                        "RampBuy",
+                        "RampSell",
+                        "Deposit",
+                        "Bridge",
+                        "BridgeModals",
+                        "StakeScreens",
+                        "EarnScreens",
+                        "EarnModals",
+                        "MoneyScreens",
+                        "StakeModals",
+                        "Perps",
+                        "PerpsTutorial",
+                        "PerpsModals",
+                        "PerpsPositionTransaction",
+                        "PerpsOrderTransaction",
+                        "PerpsFundingTransaction",
+                        "Predict",
+                        "PredictModals",
+                        "MarketInsightsView",
+                        "TopTradersView",
+                        "TraderProfileView",
+                        "TraderPositionView",
+                        "ExploreSearch",
+                        "SitesFullView",
+                        "ExploreSectionResultsFullView",
+                        "BrowserTabHome",
+                        "SetPasswordFlow",
+                        "GeneralSettings",
+                        "FeatureFlagOverride",
+                        "OptInStack",
+                        "DeFiProtocolPositionDetails",
+                        "CardScreens",
+                        "RampProcessingInfoModal"
+                      ],
+                      "routes": [
+                        {
+                          "key": "Home-ctv5-hkVydgiaccY9nlbB",
+                          "name": "Home"
+                        },
+                        {
+                          "key": "Perps-hYAicW9mimEp_AszL4OOA",
+                          "name": "Perps",
+                          "params": {
+                            "params": {
+                              "market": {
+                                "change24h": "0",
+                                "change24hPercent": "0",
+                                "maxLeverage": "100",
+                                "name": "ETH",
+                                "price": "0",
+                                "symbol": "ETH",
+                                "volume": "0"
+                              }
+                            },
+                            "screen": "PerpsMarketDetails"
+                          },
+                          "state": {
+                            "index": 0,
+                            "key": "stack-x17QRH7DcFW9OguWYRoFI",
+                            "routeNames": [
+                              "PerpsTradingView",
+                              "PerpsMarketListView",
+                              "PerpsTrendingView",
+                              "PerpsWithdraw",
+                              "PerpsMarketDetails",
+                              "PerpsPositions",
+                              "PerpsClosePosition",
+                              "PerpsHIP3Debug",
+                              "PerpsTPSL",
+                              "PerpsAdjustMargin",
+                              "PerpsOrderDetailsView",
+                              "PerpsOrderBook",
+                              "PerpsPnlHeroCard",
+                              "PerpsActivity",
+                              "PerpsClosePositionModals",
+                              "PerpsModals",
+                              "PerpsOrderRedirect",
+                              "RedesignedConfirmations"
+                            ],
+                            "routes": [
+                              {
+                                "key": "PerpsMarketDetails-gkwSOC2x8U6tYDL-LKV2N",
+                                "name": "PerpsMarketDetails",
+                                "params": {
+                                  "market": {
+                                    "change24h": "0",
+                                    "change24hPercent": "0",
+                                    "maxLeverage": "100",
+                                    "name": "ETH",
+                                    "price": "0",
+                                    "symbol": "ETH",
+                                    "volume": "0"
+                                  }
+                                }
+                              }
+                            ],
+                            "stale": false,
+                            "type": "stack"
+                          }
+                        }
+                      ],
+                      "stale": false,
+                      "type": "stack"
+                    }
+                  }
+                ],
+                "stale": false,
+                "type": "stack"
+              }
+            }
+          ],
+          "stale": false,
+          "type": "stack"
+        }
+      }
+    ],
+    "stale": false,
+    "type": "stack"
+  },
+  "workflowState": {
+    "env": {
+      "appRoot": "/Users/deeeed/dev/metamask/metamask-mobile-1",
+      "recipePath": "/Users/deeeed/dev/metamask/metamask-mobile-1/scripts/perps/agentic/teams/perps/flows/parity-eth-position-detail.json",
+      "team": "perps"
+    },
+    "inputs": {},
+    "last": {
+      "visible": true
+    },
+    "nodes": {
+      "nav": {
+        "action": "navigate",
+        "description": "navigate to PerpsMarketDetails",
+        "finishedAt": "2026-04-16T04:01:27.743Z",
+        "id": "nav",
+        "status": "pass",
+        "startedAt": "2026-04-16T04:01:26.989Z",
+        "durationMs": 754,
+        "next": "wait",
+        "result": {
+          "navigated": "PerpsMarketDetails",
+          "params": {
+            "market": {
+              "symbol": "ETH",
+              "name": "ETH",
+              "price": "0",
+              "change24h": "0",
+              "change24hPercent": "0",
+              "volume": "0",
+              "maxLeverage": "100"
+            }
+          },
+          "previousRoute": {
+            "key": "PerpsMarketDetails-gkwSOC2x8U6tYDL-LKV2N",
+            "name": "PerpsMarketDetails",
+            "params": {
+              "market": {
+                "change24h": "+$33.8",
+                "change24hPercent": "+1.45%",
+                "fundingRate": 0.0002717691,
+                "isHip3": false,
+                "isNewMarket": false,
+                "isStale": false,
+                "maxLeverage": "25x",
+                "name": "ETH",
+                "openInterest": "$2.71M",
+                "price": "$2,365.7",
+                "symbol": "ETH",
+                "volume": "$880K",
+                "volumeNumber": 880000
+              }
+            }
+          },
+          "currentRoute": {
+            "key": "PerpsMarketDetails-gkwSOC2x8U6tYDL-LKV2N",
+            "name": "PerpsMarketDetails",
+            "params": {
+              "market": {
+                "change24h": "0",
+                "change24hPercent": "0",
+                "maxLeverage": "100",
+                "name": "ETH",
+                "price": "0",
+                "symbol": "ETH",
+                "volume": "0"
+              }
+            }
+          },
+          "deviceName": "mm-1",
+          "platform": "ios"
+        }
+      },
+      "wait": {
+        "action": "wait_for",
+        "description": "wait for position-card-details",
+        "finishedAt": "2026-04-16T04:01:27.934Z",
+        "id": "wait",
+        "status": "pass",
+        "startedAt": "2026-04-16T04:01:27.743Z",
+        "durationMs": 191,
+        "next": "extract",
+        "result": {
+          "visible": true
+        }
+      }
+    },
+    "trace": [
+      {
+        "action": "navigate",
+        "description": "navigate to PerpsMarketDetails",
+        "finishedAt": "2026-04-16T04:01:27.743Z",
+        "id": "nav",
+        "status": "pass",
+        "startedAt": "2026-04-16T04:01:26.989Z",
+        "durationMs": 754,
+        "next": "wait",
+        "result": {
+          "navigated": "PerpsMarketDetails",
+          "params": {
+            "market": {
+              "symbol": "ETH",
+              "name": "ETH",
+              "price": "0",
+              "change24h": "0",
+              "change24hPercent": "0",
+              "volume": "0",
+              "maxLeverage": "100"
+            }
+          },
+          "previousRoute": {
+            "key": "PerpsMarketDetails-gkwSOC2x8U6tYDL-LKV2N",
+            "name": "PerpsMarketDetails",
+            "params": {
+              "market": {
+                "change24h": "+$33.8",
+                "change24hPercent": "+1.45%",
+                "fundingRate": 0.0002717691,
+                "isHip3": false,
+                "isNewMarket": false,
+                "isStale": false,
+                "maxLeverage": "25x",
+                "name": "ETH",
+                "openInterest": "$2.71M",
+                "price": "$2,365.7",
+                "symbol": "ETH",
+                "volume": "$880K",
+                "volumeNumber": 880000
+              }
+            }
+          },
+          "currentRoute": {
+            "key": "PerpsMarketDetails-gkwSOC2x8U6tYDL-LKV2N",
+            "name": "PerpsMarketDetails",
+            "params": {
+              "market": {
+                "change24h": "0",
+                "change24hPercent": "0",
+                "maxLeverage": "100",
+                "name": "ETH",
+                "price": "0",
+                "symbol": "ETH",
+                "volume": "0"
+              }
+            }
+          },
+          "deviceName": "mm-1",
+          "platform": "ios"
+        }
+      },
+      {
+        "action": "wait_for",
+        "description": "wait for position-card-details",
+        "finishedAt": "2026-04-16T04:01:27.934Z",
+        "id": "wait",
+        "status": "pass",
+        "startedAt": "2026-04-16T04:01:27.743Z",
+        "durationMs": 191,
+        "next": "extract",
+        "result": {
+          "visible": true
+        }
+      }
+    ],
+    "vars": {}
+  },
+  "evalRefs": {
+    "perps/markets": [
+      {
+        "symbol": "SOL",
+        "price": "$85.393",
+        "change24h": "+2.07%"
+      },
+      {
+        "symbol": "APT",
+        "price": "$0.9088",
+        "change24h": "+4.87%"
+      },
+      {
+        "symbol": "ATOM",
+        "price": "$1.7867",
+        "change24h": "+1.95%"
+      },
+      {
+        "symbol": "BTC",
+        "price": "$75,090",
+        "change24h": "-0.96%"
+      },
+      {
+        "symbol": "ETH",
+        "price": "$2,364.7",
+        "change24h": "+1.16%"
+      },
+      {
+        "symbol": "MATIC",
+        "price": "$0.37035",
+        "change24h": "0.00%"
+      },
+      {
+        "symbol": "BNB",
+        "price": "$624.65",
+        "change24h": "+1.26%"
+      },
+      {
+        "symbol": "AVAX",
+        "price": "$9.4993",
+        "change24h": "+1.76%"
+      },
+      {
+        "symbol": "GMT",
+        "price": "$0.011282",
+        "change24h": "+5.81%"
+      },
+      {
+        "symbol": "DYDX",
+        "price": "$0.10657",
+        "change24h": "+12.20%"
+      },
+      {
+        "symbol": "APE",
+        "price": "$0.09674",
+        "change24h": "+7.11%"
+      },
+      {
+        "symbol": "OP",
+        "price": "$0.121",
+        "change24h": "+7.34%"
+      },
+      {
+        "symbol": "kPEPE",
+        "price": "$0.00398",
+        "change24h": "+10.80%"
+      },
+      {
+        "symbol": "ARB",
+        "price": "$0.11642",
+        "change24h": "+3.72%"
+      },
+      {
+        "symbol": "RLB",
+        "price": "$0.073173",
+        "change24h": "0.00%"
+      },
+      {
+        "symbol": "WLD",
+        "price": "$0.31094",
+        "change24h": "+6.10%"
+      },
+      {
+        "symbol": "HPOS",
+        "price": "$0.042763",
+        "change24h": "0.00%"
+      },
+      {
+        "symbol": "UNIBOT",
+        "price": "$8.447",
+        "change24h": "0.00%"
+      },
+      {
+        "symbol": "COMP",
+        "price": "$22.485",
+        "change24h": "+3.94%"
+      },
+      {
+        "symbol": "FXS",
+        "price": "$0.67026",
+        "change24h": "0.00%"
+      },
+      {
+        "symbol": "MKR",
+        "price": "$1,813.6",
+        "change24h": "0.00%"
+      },
+      {
+        "symbol": "AAVE",
+        "price": "$106.87",
+        "change24h": "+6.02%"
+      },
+      {
+        "symbol": "SNX",
+        "price": "$0.29953",
+        "change24h": "+3.20%"
+      },
+      {
+        "symbol": "RNDR",
+        "price": "$6.9233",
+        "change24h": "0.00%"
+      },
+      {
+        "symbol": "LDO",
+        "price": "$0.38138",
+        "change24h": "+9.16%"
+      },
+      {
+        "symbol": "SUI",
+        "price": "$0.97529",
+        "change24h": "+3.52%"
+      },
+      {
+        "symbol": "INJ",
+        "price": "$3.317",
+        "change24h": "+10.43%"
+      },
+      {
+        "symbol": "STX",
+        "price": "$0.24016",
+        "change24h": "+8.28%"
+      },
+      {
+        "symbol": "FTM",
+        "price": "$0.75391",
+        "change24h": "0.00%"
+      },
+      {
+        "symbol": "kSHIB",
+        "price": "$0.006102",
+        "change24h": "+4.40%"
+      },
+      {
+        "symbol": "OX",
+        "price": "$0.007042",
+        "change24h": "0.00%"
+      },
+      {
+        "symbol": "FRIEND",
+        "price": "$4.7187",
+        "change24h": "0.00%"
+      },
+      {
+        "symbol": "ZRO",
+        "price": "$1.9436",
+        "change24h": "+2.29%"
+      },
+      {
+        "symbol": "BLZ",
+        "price": "$0.069811",
+        "change24h": "0.00%"
+      },
+      {
+        "symbol": "BANANA",
+        "price": "$3.7258",
+        "change24h": "+6.96%"
+      },
+      {
+        "symbol": "FTT",
+        "price": "$0.29985",
+        "change24h": "+4.08%"
+      },
+      {
+        "symbol": "TRB",
+        "price": "$18.431",
+        "change24h": "+17.12%"
+      },
+      {
+        "symbol": "CANTO",
+        "price": "$0.04525",
+        "change24h": "0.00%"
+      },
+      {
+        "symbol": "BIGTIME",
+        "price": "$0.013245",
+        "change24h": "+3.43%"
+      },
+      {
+        "symbol": "NTRN",
+        "price": "$0.12612",
+        "change24h": "0.00%"
+      },
+      {
+        "symbol": "KAS",
+        "price": "$0.033059",
+        "change24h": "+3.58%"
+      },
+      {
+        "symbol": "BLUR",
+        "price": "$0.025987",
+        "change24h": "+26.67%"
+      },
+      {
+        "symbol": "TIA",
+        "price": "$0.3438",
+        "change24h": "+10.49%"
+      },
+      {
+        "symbol": "BSV",
+        "price": "$15.576",
+        "change24h": "+2.27%"
+      },
+      {
+        "symbol": "TON",
+        "price": "$1.4184",
+        "change24h": "+4.60%"
+      },
+      {
+        "symbol": "ADA",
+        "price": "$0.24948",
+        "change24h": "+3.92%"
+      },
+      {
+        "symbol": "MINA",
+        "price": "$0.058652",
+        "change24h": "+3.96%"
+      },
+      {
+        "symbol": "POLYX",
+        "price": "$0.053686",
+        "change24h": "+5.54%"
+      },
+      {
+        "symbol": "GAS",
+        "price": "$1.694",
+        "change24h": "+1.17%"
+      },
+      {
+        "symbol": "AXL",
+        "price": "$0.9747",
+        "change24h": "0.00%"
+      },
+      {
+        "symbol": "PENDLE",
+        "price": "$1.1293",
+        "change24h": "+4.31%"
+      },
+      {
+        "symbol": "STG",
+        "price": "$0.17286",
+        "change24h": "0.00%"
+      },
+      {
+        "symbol": "FET",
+        "price": "$0.23125",
+        "change24h": "+2.14%"
+      },
+      {
+        "symbol": "STRAX",
+        "price": "$1.4746",
+        "change24h": "0.00%"
+      },
+      {
+        "symbol": "NEAR",
+        "price": "$1.4258",
+        "change24h": "+4.25%"
+      },
+      {
+        "symbol": "MEME",
+        "price": "$0.000563",
+        "change24h": "+8.69%"
+      },
+      {
+        "symbol": "ORDI",
+        "price": "$4.1267",
+        "change24h": "+60.12%"
+      },
+      {
+        "symbol": "BADGER",
+        "price": "$1.2315",
+        "change24h": "0.00%"
+      },
+      {
+        "symbol": "NEO",
+        "price": "$2.8827",
+        "change24h": "+1.75%"
+      },
+      {
+        "symbol": "ZEN",
+        "price": "$5.7443",
+        "change24h": "+1.22%"
+      },
+      {
+        "symbol": "FIL",
+        "price": "$0.94573",
+        "change24h": "+5.04%"
+      },
+      {
+        "symbol": "PYTH",
+        "price": "$0.045527",
+        "change24h": "+4.71%"
+      },
+      {
+        "symbol": "RUNE",
+        "price": "$0.41219",
+        "change24h": "+2.90%"
+      },
+      {
+        "symbol": "SUSHI",
+        "price": "$0.20386",
+        "change24h": "+1.98%"
+      },
+      {
+        "symbol": "ILV",
+        "price": "$14.1",
+        "change24h": "0.00%"
+      },
+      {
+        "symbol": "MAV",
+        "price": "$0.015702",
+        "change24h": "+6.30%"
+      },
+      {
+        "symbol": "IMX",
+        "price": "$0.16138",
+        "change24h": "+7.18%"
+      },
+      {
+        "symbol": "kBONK",
+        "price": "$0.006241",
+        "change24h": "+5.46%"
+      },
+      {
+        "symbol": "NFTI",
+        "price": "$6.4518",
+        "change24h": "0.00%"
+      },
+      {
+        "symbol": "SUPER",
+        "price": "$0.11812",
+        "change24h": "-2.12%"
+      },
+      {
+        "symbol": "USTC",
+        "price": "$0.005188",
+        "change24h": "-1.48%"
+      },
+      {
+        "symbol": "JUP",
+        "price": "$0.17183",
+        "change24h": "+3.81%"
+      },
+      {
+        "symbol": "JOE",
+        "price": "$0.15313",
+        "change24h": "0.00%"
+      },
+      {
+        "symbol": "GALA",
+        "price": "$0.003135",
+        "change24h": "+4.36%"
+      },
+      {
+        "symbol": "RSR",
+        "price": "$0.00159",
+        "change24h": "+6.64%"
+      },
+      {
+        "symbol": "kLUNC",
+        "price": "$0.042736",
+        "change24h": "+3.94%"
+      },
+      {
+        "symbol": "JTO",
+        "price": "$0.31918",
+        "change24h": "+2.09%"
+      },
+      {
+        "symbol": "ACE",
+        "price": "$0.1194",
+        "change24h": "+3.11%"
+      },
+      {
+        "symbol": "WIF",
+        "price": "$0.20816",
+        "change24h": "+7.36%"
+      },
+      {
+        "symbol": "CAKE",
+        "price": "$1.5978",
+        "change24h": "-0.41%"
+      },
+      {
+        "symbol": "PEOPLE",
+        "price": "$0.007922",
+        "change24h": "+11.51%"
+      },
+      {
+        "symbol": "ENS",
+        "price": "$5.9847",
+        "change24h": "+3.34%"
+      },
+      {
+        "symbol": "ETC",
+        "price": "$8.5322",
+        "change24h": "+2.84%"
+      },
+      {
+        "symbol": "XAI",
+        "price": "$0.0099",
+        "change24h": "+4.43%"
+      },
+      {
+        "symbol": "MANTA",
+        "price": "$0.06679",
+        "change24h": "+0.80%"
+      },
+      {
+        "symbol": "UMA",
+        "price": "$0.43318",
+        "change24h": "+1.86%"
+      },
+      {
+        "symbol": "REQ",
+        "price": "$0.14197",
+        "change24h": "0.00%"
+      },
+      {
+        "symbol": "ONDO",
+        "price": "$0.26064",
+        "change24h": "+3.35%"
+      },
+      {
+        "symbol": "ALT",
+        "price": "$0.007232",
+        "change24h": "+5.28%"
+      },
+      {
+        "symbol": "ZETA",
+        "price": "$0.05161",
+        "change24h": "+3.32%"
+      },
+      {
+        "symbol": "DYM",
+        "price": "$0.01872",
+        "change24h": "+11.96%"
+      },
+      {
+        "symbol": "MAVIA",
+        "price": "$0.03314",
+        "change24h": "+5.81%"
+      },
+      {
+        "symbol": "W",
+        "price": "$0.01256",
+        "change24h": "+4.25%"
+      },
+      {
+        "symbol": "PANDORA",
+        "price": "$2,957",
+        "change24h": "0.00%"
+      },
+      {
+        "symbol": "AI",
+        "price": "$0.13086",
+        "change24h": "0.00%"
+      },
+      {
+        "symbol": "TAO",
+        "price": "$245.53",
+        "change24h": "-0.18%"
+      },
+      {
+        "symbol": "PIXEL",
+        "price": "$0.023539",
+        "change24h": "0.00%"
+      },
+      {
+        "symbol": "AR",
+        "price": "$2.0247",
+        "change24h": "+14.01%"
+      },
+      {
+        "symbol": "TNSR",
+        "price": "$0.05003",
+        "change24h": "-0.42%"
+      },
+      {
+        "symbol": "SAGA",
+        "price": "$0.02713",
+        "change24h": "+1.88%"
+      },
+      {
+        "symbol": "MERL",
+        "price": "$0.036707",
+        "change24h": "+20.48%"
+      },
+      {
+        "symbol": "HBAR",
+        "price": "$0.087547",
+        "change24h": "+2.25%"
+      },
+      {
+        "symbol": "POPCAT",
+        "price": "$0.055124",
+        "change24h": "+5.33%"
+      },
+      {
+        "symbol": "OMNI",
+        "price": "$4.0988",
+        "change24h": "0.00%"
+      },
+      {
+        "symbol": "EIGEN",
+        "price": "$0.1785",
+        "change24h": "+10.59%"
+      },
+      {
+        "symbol": "REZ",
+        "price": "$0.003884",
+        "change24h": "+6.59%"
+      },
+      {
+        "symbol": "NOT",
+        "price": "$0.000406",
+        "change24h": "+8.85%"
+      },
+      {
+        "symbol": "TURBO",
+        "price": "$0.001172",
+        "change24h": "+2.90%"
+      },
+      {
+        "symbol": "IO",
+        "price": "$0.10626",
+        "change24h": "+0.14%"
+      },
+      {
+        "symbol": "BRETT",
+        "price": "$0.007562",
+        "change24h": "+5.25%"
+      },
+      {
+        "symbol": "ZK",
+        "price": "$0.016383",
+        "change24h": "+1.47%"
+      },
+      {
+        "symbol": "BLAST",
+        "price": "$0.000518",
+        "change24h": "-1.15%"
+      },
+      {
+        "symbol": "LISTA",
+        "price": "$0.14003",
+        "change24h": "0.00%"
+      },
+      {
+        "symbol": "MEW",
+        "price": "$0.000605",
+        "change24h": "+6.33%"
+      },
+      {
+        "symbol": "RENDER",
+        "price": "$1.8902",
+        "change24h": "+0.24%"
+      },
+      {
+        "symbol": "kDOGS",
+        "price": "$0.1403",
+        "change24h": "0.00%"
+      },
+      {
+        "symbol": "POL",
+        "price": "$0.086583",
+        "change24h": "+2.60%"
+      },
+      {
+        "symbol": "CATI",
+        "price": "$0.083097",
+        "change24h": "0.00%"
+      },
+      {
+        "symbol": "CELO",
+        "price": "$0.083415",
+        "change24h": "+3.83%"
+      },
+      {
+        "symbol": "HMSTR",
+        "price": "$0.00015",
+        "change24h": "+3.45%"
+      },
+      {
+        "symbol": "SCR",
+        "price": "$0.04367",
+        "change24h": "+2.92%"
+      },
+      {
+        "symbol": "NEIROETH",
+        "price": "$0.006887",
+        "change24h": "0.00%"
+      },
+      {
+        "symbol": "kNEIRO",
+        "price": "$0.09401",
+        "change24h": "+42.27%"
+      },
+      {
+        "symbol": "GOAT",
+        "price": "$0.016717",
+        "change24h": "+12.57%"
+      },
+      {
+        "symbol": "MOODENG",
+        "price": "$0.059311",
+        "change24h": "+14.77%"
+      },
+      {
+        "symbol": "PURR",
+        "price": "$5",
+        "change24h": "0.00%"
+      },
+      {
+        "symbol": "GRASS",
+        "price": "$0.35197",
+        "change24h": "+6.96%"
+      },
+      {
+        "symbol": "PNUT",
+        "price": "$0.05445",
+        "change24h": "+22.41%"
+      },
+      {
+        "symbol": "XLM",
+        "price": "$0.15981",
+        "change24h": "+3.14%"
+      },
+      {
+        "symbol": "CHILLGUY",
+        "price": "$0.012828",
+        "change24h": "+12.30%"
+      },
+      {
+        "symbol": "SAND",
+        "price": "$0.07991",
+        "change24h": "+2.03%"
+      },
+      {
+        "symbol": "ALGO",
+        "price": "$0.11351",
+        "change24h": "+3.46%"
+      },
+      {
+        "symbol": "ICP",
+        "price": "$2.5485",
+        "change24h": "+5.31%"
+      },
+      {
+        "symbol": "IOTA",
+        "price": "$0.056108",
+        "change24h": "+2.17%"
+      },
+      {
+        "symbol": "VET",
+        "price": "$0.021588",
+        "change24h": "0.00%"
+      },
+      {
+        "symbol": "HYPE",
+        "price": "$55.363",
+        "change24h": "+53.79%"
+      },
+      {
+        "symbol": "ME",
+        "price": "$0.10669",
+        "change24h": "+4.88%"
+      },
+      {
+        "symbol": "MOVE",
+        "price": "$0.017945",
+        "change24h": "+5.10%"
+      },
+      {
+        "symbol": "VIRTUAL",
+        "price": "$0.70099",
+        "change24h": "+4.20%"
+      },
+      {
+        "symbol": "PENGU",
+        "price": "$0.00743",
+        "change24h": "+4.93%"
+      },
+      {
+        "symbol": "USUAL",
+        "price": "$0.013966",
+        "change24h": "+4.34%"
+      },
+      {
+        "symbol": "FARTCOIN",
+        "price": "$0.20952",
+        "change24h": "+7.46%"
+      },
+      {
+        "symbol": "AIXBT",
+        "price": "$0.027714",
+        "change24h": "+13.27%"
+      },
+      {
+        "symbol": "AI16Z",
+        "price": "$0.06506",
+        "change24h": "0.00%"
+      },
+      {
+        "symbol": "ZEREBRO",
+        "price": "$0.010441",
+        "change24h": "+3.97%"
+      },
+      {
+        "symbol": "BIO",
+        "price": "$0.045394",
+        "change24h": "+125.48%"
+      },
+      {
+        "symbol": "SPX",
+        "price": "$0.34325",
+        "change24h": "+7.28%"
+      },
+      {
+        "symbol": "GRIFFAIN",
+        "price": "$0.013093",
+        "change24h": "-12.71%"
+      },
+      {
+        "symbol": "S",
+        "price": "$0.043893",
+        "change24h": "+6.79%"
+      },
+      {
+        "symbol": "MORPHO",
+        "price": "$1.7976",
+        "change24h": "+3.35%"
+      },
+      {
+        "symbol": "TRUMP",
+        "price": "$2.8961",
+        "change24h": "+3.75%"
+      },
+      {
+        "symbol": "ANIME",
+        "price": "$0.004822",
+        "change24h": "+1.17%"
+      },
+      {
+        "symbol": "MELANIA",
+        "price": "$0.10401",
+        "change24h": "+1.48%"
+      },
+      {
+        "symbol": "VINE",
+        "price": "$0.01795",
+        "change24h": "+9.16%"
+      },
+      {
+        "symbol": "VVV",
+        "price": "$8.5812",
+        "change24h": "-1.37%"
+      },
+      {
+        "symbol": "JELLYJELLY",
+        "price": "$0.2",
+        "change24h": "0.00%"
+      },
+      {
+        "symbol": "JELLY",
+        "price": "$0.01458",
+        "change24h": "0.00%"
+      },
+      {
+        "symbol": "BERA",
+        "price": "$0.4064",
+        "change24h": "+3.52%"
+      },
+      {
+        "symbol": "TST",
+        "price": "$0.010293",
+        "change24h": "+0.13%"
+      },
+      {
+        "symbol": "LAYER",
+        "price": "$0.083252",
+        "change24h": "+2.76%"
+      },
+      {
+        "symbol": "IP",
+        "price": "$0.50584",
+        "change24h": "+2.36%"
+      },
+      {
+        "symbol": "OM",
+        "price": "$0.06333",
+        "change24h": "-4.21%"
+      },
+      {
+        "symbol": "KAITO",
+        "price": "$0.45143",
+        "change24h": "-1.48%"
+      },
+      {
+        "symbol": "CHZ",
+        "price": "$0.044548",
+        "change24h": "0.00%"
+      },
+      {
+        "symbol": "NIL",
+        "price": "$0.036124",
+        "change24h": "-0.05%"
+      },
+      {
+        "symbol": "PAXG",
+        "price": "$4,813",
+        "change24h": "-0.09%"
+      },
+      {
+        "symbol": "PROMPT",
+        "price": "$0.033735",
+        "change24h": "+6.93%"
+      },
+      {
+        "symbol": "BABY",
+        "price": "$0.014565",
+        "change24h": "+1.60%"
+      },
+      {
+        "symbol": "WCT",
+        "price": "$0.064372",
+        "change24h": "+9.86%"
+      },
+      {
+        "symbol": "HYPER",
+        "price": "$0.099777",
+        "change24h": "-0.31%"
+      },
+      {
+        "symbol": "ZORA",
+        "price": "$0.014359",
+        "change24h": "+2.22%"
+      },
+      {
+        "symbol": "INIT",
+        "price": "$0.084064",
+        "change24h": "-0.05%"
+      },
+      {
+        "symbol": "DOOD",
+        "price": "$0.00333",
+        "change24h": "+7.73%"
+      },
+      {
+        "symbol": "DOGE",
+        "price": "$0.097116",
+        "change24h": "+4.32%"
+      },
+      {
+        "symbol": "LAUNCHCOIN",
+        "price": "$0.066842",
+        "change24h": "0.00%"
+      },
+      {
+        "symbol": "NXPC",
+        "price": "$0.28883",
+        "change24h": "+3.42%"
+      },
+      {
+        "symbol": "SOPH",
+        "price": "$0.008733",
+        "change24h": "+2.55%"
+      },
+      {
+        "symbol": "RESOLV",
+        "price": "$0.034905",
+        "change24h": "+1.18%"
+      },
+      {
+        "symbol": "SYRUP",
+        "price": "$0.22667",
+        "change24h": "+3.31%"
+      },
+      {
+        "symbol": "PUMP",
+        "price": "$0.001946",
+        "change24h": "+6.75%"
+      },
+      {
+        "symbol": "PROVE",
+        "price": "$0.22969",
+        "change24h": "+1.54%"
+      },
+      {
+        "symbol": "YZY",
+        "price": "$0.35",
+        "change24h": "0.00%"
+      },
+      {
+        "symbol": "XPL",
+        "price": "$0.13378",
+        "change24h": "+2.18%"
+      },
+      {
+        "symbol": "WLFI",
+        "price": "$0.080774",
+        "change24h": "+0.07%"
+      },
+      {
+        "symbol": "LINEA",
+        "price": "$0.00345",
+        "change24h": "+6.12%"
+      },
+      {
+        "symbol": "SKY",
+        "price": "$0.075254",
+        "change24h": "+0.96%"
+      },
+      {
+        "symbol": "ASTER",
+        "price": "$0.66741",
+        "change24h": "+0.07%"
+      },
+      {
+        "symbol": "AVNT",
+        "price": "$0.13506",
+        "change24h": "+0.38%"
+      },
+      {
+        "symbol": "STBL",
+        "price": "$0.040641",
+        "change24h": "+5.75%"
+      },
+      {
+        "symbol": "0G",
+        "price": "$0.59813",
+        "change24h": "+2.29%"
+      },
+      {
+        "symbol": "HEMI",
+        "price": "$0.007599",
+        "change24h": "-0.85%"
+      },
+      {
+        "symbol": "APEX",
+        "price": "$0.28625",
+        "change24h": "+1.95%"
+      },
+      {
+        "symbol": "2Z",
+        "price": "$0.082622",
+        "change24h": "+3.80%"
+      },
+      {
+        "symbol": "ZEC",
+        "price": "$138.65",
+        "change24h": "0.00%"
+      },
+      {
+        "symbol": "MON",
+        "price": "$0.036662",
+        "change24h": "+4.92%"
+      },
+      {
+        "symbol": "MET",
+        "price": "$0.14344",
+        "change24h": "+5.23%"
+      },
+      {
+        "symbol": "MEGA",
+        "price": "$0.19148",
+        "change24h": "0.00%"
+      },
+      {
+        "symbol": "CC",
+        "price": "$0.14921",
+        "change24h": "-2.46%"
+      },
+      {
+        "symbol": "AERO",
+        "price": "$0.37605",
+        "change24h": "+2.10%"
+      },
+      {
+        "symbol": "STABLE",
+        "price": "$0.026566",
+        "change24h": "+1.56%"
+      },
+      {
+        "symbol": "FOGO",
+        "price": "$0.019135",
+        "change24h": "+2.90%"
+      },
+      {
+        "symbol": "LIT",
+        "price": "$1.0556",
+        "change24h": "+1.97%"
+      },
+      {
+        "symbol": "XMR",
+        "price": "$343",
+        "change24h": "+0.38%"
+      },
+      {
+        "symbol": "AXS",
+        "price": "$1.1323",
+        "change24h": "-0.73%"
+      },
+      {
+        "symbol": "DASH",
+        "price": "$38.218",
+        "change24h": "-1.45%"
+      },
+      {
+        "symbol": "SKR",
+        "price": "$0.016709",
+        "change24h": "+3.76%"
+      },
+      {
+        "symbol": "AZTEC",
+        "price": "$0.02291",
+        "change24h": "+5.51%"
+      },
+      {
+        "symbol": "xyz:XYZ100",
+        "price": "$25,547",
+        "change24h": "-5.38%"
+      },
+      {
+        "symbol": "xyz:TSLA",
+        "price": "$246",
+        "change24h": "-37.24%"
+      },
+      {
+        "symbol": "xyz:NVDA",
+        "price": "$198",
+        "change24h": "0.00%"
+      },
+      {
+        "symbol": "xyz:GOLD",
+        "price": "$4,699.5",
+        "change24h": "-4.58%"
+      },
+      {
+        "symbol": "xyz:HOOD",
+        "price": "$120",
+        "change24h": "+34.20%"
+      },
+      {
+        "symbol": "xyz:INTC",
+        "price": "$40.5",
+        "change24h": "-38.05%"
+      },
+      {
+        "symbol": "xyz:PLTR",
+        "price": "$143",
+        "change24h": "0.00%"
+      },
+      {
+        "symbol": "xyz:COIN",
+        "price": "$254",
+        "change24h": "+28.69%"
+      },
+      {
+        "symbol": "xyz:META",
+        "price": "$644",
+        "change24h": "-4.52%"
+      },
+      {
+        "symbol": "xyz:AAPL",
+        "price": "$278",
+        "change24h": "+4.21%"
+      },
+      {
+        "symbol": "xyz:MSFT",
+        "price": "$475",
+        "change24h": "+13.56%"
+      },
+      {
+        "symbol": "xyz:ORCL",
+        "price": "$180",
+        "change24h": "+3.45%"
+      },
+      {
+        "symbol": "xyz:GOOGL",
+        "price": "$306",
+        "change24h": "-9.61%"
+      },
+      {
+        "symbol": "xyz:AMZN",
+        "price": "$233.75",
+        "change24h": "0.00%"
+      },
+      {
+        "symbol": "xyz:AMD",
+        "price": "$220.8",
+        "change24h": "-14.71%"
+      },
+      {
+        "symbol": "xyz:MU",
+        "price": "$330",
+        "change24h": "-27.68%"
+      },
+      {
+        "symbol": "xyz:SNDK",
+        "price": "$370",
+        "change24h": "-58.99%"
+      },
+      {
+        "symbol": "xyz:MSTR",
+        "price": "$177",
+        "change24h": "+22.58%"
+      },
+      {
+        "symbol": "xyz:CRCL",
+        "price": "$80",
+        "change24h": "-24.85%"
+      },
+      {
+        "symbol": "xyz:NFLX",
+        "price": "$88",
+        "change24h": "-18.49%"
+      },
+      {
+        "symbol": "xyz:COST",
+        "price": "$982",
+        "change24h": "-0.26%"
+      },
+      {
+        "symbol": "xyz:LLY",
+        "price": "$1,076",
+        "change24h": "+18.16%"
+      },
+      {
+        "symbol": "xyz:SKHX",
+        "price": "$400.6",
+        "change24h": "-48.74%"
+      },
+      {
+        "symbol": "xyz:TSM",
+        "price": "$335",
+        "change24h": "-11.17%"
+      },
+      {
+        "symbol": "xyz:JPY",
+        "price": "$156",
+        "change24h": "-1.68%"
+      },
+      {
+        "symbol": "xyz:EUR",
+        "price": "$1.19",
+        "change24h": "+0.74%"
+      },
+      {
+        "symbol": "xyz:SILVER",
+        "price": "$82.19",
+        "change24h": "+2.26%"
+      },
+      {
+        "symbol": "xyz:RIVN",
+        "price": "$14.04",
+        "change24h": "-15.50%"
+      },
+      {
+        "symbol": "xyz:BABA",
+        "price": "$155",
+        "change24h": "+12.84%"
+      },
+      {
+        "symbol": "xyz:CL",
+        "price": "$95.685",
+        "change24h": "+0.02%"
+      },
+      {
+        "symbol": "xyz:COPPER",
+        "price": "$5.85",
+        "change24h": "-5.22%"
+      },
+      {
+        "symbol": "xyz:NATGAS",
+        "price": "$2.88",
+        "change24h": "+4.77%"
+      },
+      {
+        "symbol": "xyz:URANIUM",
+        "price": "$85",
+        "change24h": "0.00%"
+      },
+      {
+        "symbol": "xyz:ALUMINIUM",
+        "price": "$3,192.3",
+        "change24h": "0.00%"
+      },
+      {
+        "symbol": "xyz:SMSN",
+        "price": "$113",
+        "change24h": "-23.26%"
+      },
+      {
+        "symbol": "xyz:PLATINUM",
+        "price": "$2,026.5",
+        "change24h": "-5.42%"
+      },
+      {
+        "symbol": "xyz:USAR",
+        "price": "$19.76",
+        "change24h": "+6.07%"
+      },
+      {
+        "symbol": "xyz:CRWV",
+        "price": "$83",
+        "change24h": "-29.98%"
+      },
+      {
+        "symbol": "xyz:URNM",
+        "price": "$63",
+        "change24h": "-9.88%"
+      },
+      {
+        "symbol": "xyz:PALLADIUM",
+        "price": "$1,390",
+        "change24h": "-12.60%"
+      },
+      {
+        "symbol": "xyz:DXY",
+        "price": "$100",
+        "change24h": "+2.11%"
+      },
+      {
+        "symbol": "xyz:GME",
+        "price": "$23",
+        "change24h": "0.00%"
+      },
+      {
+        "symbol": "xyz:KR200",
+        "price": "$800",
+        "change24h": "0.00%"
+      },
+      {
+        "symbol": "xyz:SOFTBANK",
+        "price": "$31",
+        "change24h": "0.00%"
+      },
+      {
+        "symbol": "xyz:JP225",
+        "price": "$57,000",
+        "change24h": "0.00%"
+      },
+      {
+        "symbol": "xyz:HYUNDAI",
+        "price": "$343",
+        "change24h": "0.00%"
+      }
+    ]
+  },
+  "logs": [
+    {
+      "source": "/Users/deeeed/dev/metamask/metamask-mobile-1/.agent/metro.log",
+      "excerpt": "/Users/deeeed/dev/metamask/metamask-extension-3/temp/.task/fix/41558-0415-1045/artifacts/mobile-parity-expanded/2026-04-16_03-59-51_mobile-decimal-parity-expanded/failures/01_extract/metro.log"
+    }
+  ],
+  "screenshot": "/Users/deeeed/dev/metamask/metamask-extension-3/temp/.task/fix/41558-0415-1045/artifacts/mobile-parity-expanded/2026-04-16_03-59-51_mobile-decimal-parity-expanded/failures/01_extract/2026-04-16_120128_failure-extract.png"
+}

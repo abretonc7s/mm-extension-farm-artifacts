@@ -1,0 +1,776 @@
+{
+  "env": {
+    "appRoot": "/Users/deeeed/dev/metamask/metamask-mobile-1",
+    "recipePath": "/Users/deeeed/dev/metamask/metamask-mobile-1/scripts/perps/agentic/teams/perps/recipes/mobile-decimal-parity-expanded.json",
+    "team": "perps"
+  },
+  "inputs": {},
+  "last": {
+    "cleared": true
+  },
+  "nodes": {
+    "setup-account": {
+      "action": "call",
+      "description": "call perps/select-account",
+      "finishedAt": "2026-04-16T05:07:27.400Z",
+      "id": "setup-account",
+      "status": "pass",
+      "startedAt": "2026-04-16T05:07:26.848Z",
+      "durationMs": 552,
+      "next": "",
+      "result": {
+        "ref": "perps/select-account",
+        "title": "Select — switch to account 0x8dc623e964475d4d669da601fd15ea9125469003 and verify",
+        "counts": {
+          "total": 2,
+          "passed": 2,
+          "skipped": 0
+        }
+      }
+    },
+    "setup-testnet": {
+      "action": "call",
+      "description": "call perps/setup-testnet",
+      "finishedAt": "2026-04-16T05:07:28.447Z",
+      "id": "setup-testnet",
+      "status": "pass",
+      "startedAt": "2026-04-16T05:07:27.400Z",
+      "durationMs": 1047,
+      "next": "",
+      "result": {
+        "ref": "perps/setup-testnet",
+        "title": "Setup — enable testnet and verify market data loads",
+        "counts": {
+          "total": 3,
+          "passed": 3,
+          "skipped": 0
+        }
+      }
+    },
+    "setup-clear-eth": {
+      "action": "eval_async",
+      "description": "eval_async",
+      "finishedAt": "2026-04-16T05:07:31.927Z",
+      "id": "setup-clear-eth",
+      "status": "pass",
+      "startedAt": "2026-04-16T05:07:28.447Z",
+      "durationMs": 3480,
+      "next": "",
+      "result": {
+        "cleared": true
+      }
+    },
+    "setup-wait-no-eth": {
+      "action": "wait_for",
+      "description": "wait for condition",
+      "finishedAt": "2026-04-16T05:07:32.397Z",
+      "id": "setup-wait-no-eth",
+      "status": "pass",
+      "startedAt": "2026-04-16T05:07:31.927Z",
+      "durationMs": 470,
+      "next": "",
+      "result": {
+        "found": false
+      }
+    },
+    "btc-market": {
+      "action": "call",
+      "description": "call perps/parity-market-detail-snapshot",
+      "finishedAt": "2026-04-16T05:07:34.560Z",
+      "id": "btc-market",
+      "status": "pass",
+      "startedAt": "2026-04-16T05:07:32.397Z",
+      "durationMs": 2163,
+      "next": "btc-order",
+      "result": {
+        "ref": "perps/parity-market-detail-snapshot",
+        "title": "Parity snapshot — mobile market detail BTC",
+        "counts": {
+          "total": 3,
+          "passed": 3,
+          "skipped": 0
+        }
+      }
+    },
+    "btc-order": {
+      "action": "call",
+      "description": "call perps/parity-order-entry-snapshot",
+      "finishedAt": "2026-04-16T05:07:50.257Z",
+      "id": "btc-order",
+      "status": "pass",
+      "startedAt": "2026-04-16T05:07:34.560Z",
+      "durationMs": 15697,
+      "next": "eth-market",
+      "result": {
+        "ref": "perps/parity-order-entry-snapshot",
+        "title": "Parity snapshot — mobile order entry BTC",
+        "counts": {
+          "total": 11,
+          "passed": 11,
+          "skipped": 0
+        }
+      }
+    },
+    "eth-market": {
+      "action": "call",
+      "description": "call perps/parity-market-detail-snapshot",
+      "finishedAt": "2026-04-16T05:07:52.569Z",
+      "id": "eth-market",
+      "status": "pass",
+      "startedAt": "2026-04-16T05:07:50.257Z",
+      "durationMs": 2312,
+      "next": "eth-order",
+      "result": {
+        "ref": "perps/parity-market-detail-snapshot",
+        "title": "Parity snapshot — mobile market detail ETH",
+        "counts": {
+          "total": 3,
+          "passed": 3,
+          "skipped": 0
+        }
+      }
+    },
+    "eth-order": {
+      "action": "call",
+      "description": "call perps/parity-order-entry-snapshot",
+      "finishedAt": "2026-04-16T05:08:06.429Z",
+      "id": "eth-order",
+      "status": "pass",
+      "startedAt": "2026-04-16T05:07:52.569Z",
+      "durationMs": 13860,
+      "next": "sol-market",
+      "result": {
+        "ref": "perps/parity-order-entry-snapshot",
+        "title": "Parity snapshot — mobile order entry ETH",
+        "counts": {
+          "total": 11,
+          "passed": 11,
+          "skipped": 0
+        }
+      }
+    },
+    "sol-market": {
+      "action": "call",
+      "description": "call perps/parity-market-detail-snapshot",
+      "finishedAt": "2026-04-16T05:08:09.610Z",
+      "id": "sol-market",
+      "status": "pass",
+      "startedAt": "2026-04-16T05:08:06.429Z",
+      "durationMs": 3181,
+      "next": "fart-market",
+      "result": {
+        "ref": "perps/parity-market-detail-snapshot",
+        "title": "Parity snapshot — mobile market detail SOL",
+        "counts": {
+          "total": 3,
+          "passed": 3,
+          "skipped": 0
+        }
+      }
+    },
+    "fart-market": {
+      "action": "call",
+      "description": "call perps/parity-market-detail-snapshot",
+      "finishedAt": "2026-04-16T05:08:11.445Z",
+      "id": "fart-market",
+      "status": "pass",
+      "startedAt": "2026-04-16T05:08:09.610Z",
+      "durationMs": 1835,
+      "next": "pump-market",
+      "result": {
+        "ref": "perps/parity-market-detail-snapshot",
+        "title": "Parity snapshot — mobile market detail FARTCOIN",
+        "counts": {
+          "total": 3,
+          "passed": 3,
+          "skipped": 0
+        }
+      }
+    },
+    "pump-market": {
+      "action": "call",
+      "description": "call perps/parity-market-detail-snapshot",
+      "finishedAt": "2026-04-16T05:08:13.333Z",
+      "id": "pump-market",
+      "status": "pass",
+      "startedAt": "2026-04-16T05:08:11.445Z",
+      "durationMs": 1888,
+      "next": "check-eth-position",
+      "result": {
+        "ref": "perps/parity-market-detail-snapshot",
+        "title": "Parity snapshot — mobile market detail PUMP",
+        "counts": {
+          "total": 3,
+          "passed": 3,
+          "skipped": 0
+        }
+      }
+    },
+    "check-eth-position": {
+      "action": "eval_async",
+      "description": "eval_async",
+      "finishedAt": "2026-04-16T05:08:13.741Z",
+      "id": "check-eth-position",
+      "status": "pass",
+      "startedAt": "2026-04-16T05:08:13.333Z",
+      "durationMs": 408,
+      "next": "branch-eth-position",
+      "result": {
+        "found": false
+      }
+    },
+    "branch-eth-position": {
+      "action": "switch",
+      "description": "evaluate branch",
+      "finishedAt": "2026-04-16T05:08:13.742Z",
+      "id": "branch-eth-position",
+      "status": "pass",
+      "startedAt": "2026-04-16T05:08:13.742Z",
+      "durationMs": 0,
+      "next": "open-eth-position",
+      "note": "",
+      "branch": {
+        "assumed": false,
+        "label": "default",
+        "next": "open-eth-position"
+      }
+    },
+    "open-eth-position": {
+      "action": "call",
+      "description": "call perps/trade-open-market",
+      "finishedAt": "2026-04-16T05:08:30.051Z",
+      "id": "open-eth-position",
+      "status": "pass",
+      "startedAt": "2026-04-16T05:08:13.742Z",
+      "durationMs": 16309,
+      "next": "wait-eth-position",
+      "result": {
+        "ref": "perps/trade-open-market",
+        "title": "Trade — market long ETH $11",
+        "counts": {
+          "total": 13,
+          "passed": 13,
+          "skipped": 0
+        }
+      }
+    },
+    "wait-eth-position": {
+      "action": "wait_for",
+      "description": "wait for condition",
+      "finishedAt": "2026-04-16T05:08:32.952Z",
+      "id": "wait-eth-position",
+      "status": "pass",
+      "startedAt": "2026-04-16T05:08:30.051Z",
+      "durationMs": 2901,
+      "next": "eth-position",
+      "result": {
+        "found": true
+      }
+    },
+    "eth-position": {
+      "action": "call",
+      "description": "call perps/parity-eth-position-detail",
+      "finishedAt": "2026-04-16T05:08:34.550Z",
+      "id": "eth-position",
+      "status": "pass",
+      "startedAt": "2026-04-16T05:08:32.952Z",
+      "durationMs": 1598,
+      "next": "eth-reverse",
+      "result": {
+        "ref": "perps/parity-eth-position-detail",
+        "title": "Parity snapshot — mobile ETH position detail",
+        "counts": {
+          "total": 3,
+          "passed": 3,
+          "skipped": 0
+        }
+      }
+    },
+    "eth-reverse": {
+      "action": "call",
+      "description": "call perps/parity-eth-reverse-modal",
+      "finishedAt": "2026-04-16T05:08:38.554Z",
+      "id": "eth-reverse",
+      "status": "pass",
+      "startedAt": "2026-04-16T05:08:34.550Z",
+      "durationMs": 4004,
+      "next": "eth-remove-margin",
+      "result": {
+        "ref": "perps/parity-eth-reverse-modal",
+        "title": "Parity snapshot — mobile ETH reverse modal",
+        "counts": {
+          "total": 8,
+          "passed": 8,
+          "skipped": 0
+        }
+      }
+    },
+    "eth-remove-margin": {
+      "action": "call",
+      "description": "call perps/parity-eth-remove-margin",
+      "finishedAt": "2026-04-16T05:08:41.870Z",
+      "id": "eth-remove-margin",
+      "status": "pass",
+      "startedAt": "2026-04-16T05:08:38.554Z",
+      "durationMs": 3316,
+      "next": "eth-close",
+      "result": {
+        "ref": "perps/parity-eth-remove-margin",
+        "title": "Parity snapshot — mobile ETH remove margin",
+        "counts": {
+          "total": 7,
+          "passed": 7,
+          "skipped": 0
+        }
+      }
+    },
+    "eth-close": {
+      "action": "call",
+      "description": "call perps/parity-eth-close-position",
+      "finishedAt": "2026-04-16T05:08:44.551Z",
+      "id": "eth-close",
+      "status": "pass",
+      "startedAt": "2026-04-16T05:08:41.870Z",
+      "durationMs": 2681,
+      "next": "withdraw",
+      "result": {
+        "ref": "perps/parity-eth-close-position",
+        "title": "Parity snapshot — mobile ETH close position",
+        "counts": {
+          "total": 5,
+          "passed": 5,
+          "skipped": 0
+        }
+      }
+    },
+    "withdraw": {
+      "action": "call",
+      "description": "call perps/parity-withdraw-snapshot",
+      "finishedAt": "2026-04-16T05:08:47.028Z",
+      "id": "withdraw",
+      "status": "pass",
+      "startedAt": "2026-04-16T05:08:44.551Z",
+      "durationMs": 2477,
+      "next": "done",
+      "result": {
+        "ref": "perps/parity-withdraw-snapshot",
+        "title": "Parity snapshot — mobile withdraw",
+        "counts": {
+          "total": 5,
+          "passed": 5,
+          "skipped": 0
+        }
+      }
+    },
+    "done": {
+      "action": "end",
+      "description": "pass end",
+      "finishedAt": "2026-04-16T05:08:47.028Z",
+      "id": "done",
+      "status": "pass",
+      "note": "Captured expanded mobile perps decimal parity values via composable flows.",
+      "result": {
+        "message": "Captured expanded mobile perps decimal parity values via composable flows.",
+        "status": "pass"
+      }
+    },
+    "teardown-close-eth": {
+      "action": "eval_async",
+      "description": "eval_async",
+      "finishedAt": "2026-04-16T05:08:48.426Z",
+      "id": "teardown-close-eth",
+      "status": "pass",
+      "startedAt": "2026-04-16T05:08:47.028Z",
+      "durationMs": 1398,
+      "next": "",
+      "result": {
+        "cleared": true
+      }
+    }
+  },
+  "trace": [
+    {
+      "action": "call",
+      "description": "call perps/select-account",
+      "finishedAt": "2026-04-16T05:07:27.400Z",
+      "id": "setup-account",
+      "status": "pass",
+      "startedAt": "2026-04-16T05:07:26.848Z",
+      "durationMs": 552,
+      "next": "",
+      "result": {
+        "ref": "perps/select-account",
+        "title": "Select — switch to account 0x8dc623e964475d4d669da601fd15ea9125469003 and verify",
+        "counts": {
+          "total": 2,
+          "passed": 2,
+          "skipped": 0
+        }
+      }
+    },
+    {
+      "action": "call",
+      "description": "call perps/setup-testnet",
+      "finishedAt": "2026-04-16T05:07:28.447Z",
+      "id": "setup-testnet",
+      "status": "pass",
+      "startedAt": "2026-04-16T05:07:27.400Z",
+      "durationMs": 1047,
+      "next": "",
+      "result": {
+        "ref": "perps/setup-testnet",
+        "title": "Setup — enable testnet and verify market data loads",
+        "counts": {
+          "total": 3,
+          "passed": 3,
+          "skipped": 0
+        }
+      }
+    },
+    {
+      "action": "eval_async",
+      "description": "eval_async",
+      "finishedAt": "2026-04-16T05:07:31.927Z",
+      "id": "setup-clear-eth",
+      "status": "pass",
+      "startedAt": "2026-04-16T05:07:28.447Z",
+      "durationMs": 3480,
+      "next": "",
+      "result": {
+        "cleared": true
+      }
+    },
+    {
+      "action": "wait_for",
+      "description": "wait for condition",
+      "finishedAt": "2026-04-16T05:07:32.397Z",
+      "id": "setup-wait-no-eth",
+      "status": "pass",
+      "startedAt": "2026-04-16T05:07:31.927Z",
+      "durationMs": 470,
+      "next": "",
+      "result": {
+        "found": false
+      }
+    },
+    {
+      "action": "call",
+      "description": "call perps/parity-market-detail-snapshot",
+      "finishedAt": "2026-04-16T05:07:34.560Z",
+      "id": "btc-market",
+      "status": "pass",
+      "startedAt": "2026-04-16T05:07:32.397Z",
+      "durationMs": 2163,
+      "next": "btc-order",
+      "result": {
+        "ref": "perps/parity-market-detail-snapshot",
+        "title": "Parity snapshot — mobile market detail BTC",
+        "counts": {
+          "total": 3,
+          "passed": 3,
+          "skipped": 0
+        }
+      }
+    },
+    {
+      "action": "call",
+      "description": "call perps/parity-order-entry-snapshot",
+      "finishedAt": "2026-04-16T05:07:50.257Z",
+      "id": "btc-order",
+      "status": "pass",
+      "startedAt": "2026-04-16T05:07:34.560Z",
+      "durationMs": 15697,
+      "next": "eth-market",
+      "result": {
+        "ref": "perps/parity-order-entry-snapshot",
+        "title": "Parity snapshot — mobile order entry BTC",
+        "counts": {
+          "total": 11,
+          "passed": 11,
+          "skipped": 0
+        }
+      }
+    },
+    {
+      "action": "call",
+      "description": "call perps/parity-market-detail-snapshot",
+      "finishedAt": "2026-04-16T05:07:52.569Z",
+      "id": "eth-market",
+      "status": "pass",
+      "startedAt": "2026-04-16T05:07:50.257Z",
+      "durationMs": 2312,
+      "next": "eth-order",
+      "result": {
+        "ref": "perps/parity-market-detail-snapshot",
+        "title": "Parity snapshot — mobile market detail ETH",
+        "counts": {
+          "total": 3,
+          "passed": 3,
+          "skipped": 0
+        }
+      }
+    },
+    {
+      "action": "call",
+      "description": "call perps/parity-order-entry-snapshot",
+      "finishedAt": "2026-04-16T05:08:06.429Z",
+      "id": "eth-order",
+      "status": "pass",
+      "startedAt": "2026-04-16T05:07:52.569Z",
+      "durationMs": 13860,
+      "next": "sol-market",
+      "result": {
+        "ref": "perps/parity-order-entry-snapshot",
+        "title": "Parity snapshot — mobile order entry ETH",
+        "counts": {
+          "total": 11,
+          "passed": 11,
+          "skipped": 0
+        }
+      }
+    },
+    {
+      "action": "call",
+      "description": "call perps/parity-market-detail-snapshot",
+      "finishedAt": "2026-04-16T05:08:09.610Z",
+      "id": "sol-market",
+      "status": "pass",
+      "startedAt": "2026-04-16T05:08:06.429Z",
+      "durationMs": 3181,
+      "next": "fart-market",
+      "result": {
+        "ref": "perps/parity-market-detail-snapshot",
+        "title": "Parity snapshot — mobile market detail SOL",
+        "counts": {
+          "total": 3,
+          "passed": 3,
+          "skipped": 0
+        }
+      }
+    },
+    {
+      "action": "call",
+      "description": "call perps/parity-market-detail-snapshot",
+      "finishedAt": "2026-04-16T05:08:11.445Z",
+      "id": "fart-market",
+      "status": "pass",
+      "startedAt": "2026-04-16T05:08:09.610Z",
+      "durationMs": 1835,
+      "next": "pump-market",
+      "result": {
+        "ref": "perps/parity-market-detail-snapshot",
+        "title": "Parity snapshot — mobile market detail FARTCOIN",
+        "counts": {
+          "total": 3,
+          "passed": 3,
+          "skipped": 0
+        }
+      }
+    },
+    {
+      "action": "call",
+      "description": "call perps/parity-market-detail-snapshot",
+      "finishedAt": "2026-04-16T05:08:13.333Z",
+      "id": "pump-market",
+      "status": "pass",
+      "startedAt": "2026-04-16T05:08:11.445Z",
+      "durationMs": 1888,
+      "next": "check-eth-position",
+      "result": {
+        "ref": "perps/parity-market-detail-snapshot",
+        "title": "Parity snapshot — mobile market detail PUMP",
+        "counts": {
+          "total": 3,
+          "passed": 3,
+          "skipped": 0
+        }
+      }
+    },
+    {
+      "action": "eval_async",
+      "description": "eval_async",
+      "finishedAt": "2026-04-16T05:08:13.741Z",
+      "id": "check-eth-position",
+      "status": "pass",
+      "startedAt": "2026-04-16T05:08:13.333Z",
+      "durationMs": 408,
+      "next": "branch-eth-position",
+      "result": {
+        "found": false
+      }
+    },
+    {
+      "action": "switch",
+      "description": "evaluate branch",
+      "finishedAt": "2026-04-16T05:08:13.742Z",
+      "id": "branch-eth-position",
+      "status": "pass",
+      "startedAt": "2026-04-16T05:08:13.742Z",
+      "durationMs": 0,
+      "next": "open-eth-position",
+      "note": "",
+      "branch": {
+        "assumed": false,
+        "label": "default",
+        "next": "open-eth-position"
+      }
+    },
+    {
+      "action": "call",
+      "description": "call perps/trade-open-market",
+      "finishedAt": "2026-04-16T05:08:30.051Z",
+      "id": "open-eth-position",
+      "status": "pass",
+      "startedAt": "2026-04-16T05:08:13.742Z",
+      "durationMs": 16309,
+      "next": "wait-eth-position",
+      "result": {
+        "ref": "perps/trade-open-market",
+        "title": "Trade — market long ETH $11",
+        "counts": {
+          "total": 13,
+          "passed": 13,
+          "skipped": 0
+        }
+      }
+    },
+    {
+      "action": "wait_for",
+      "description": "wait for condition",
+      "finishedAt": "2026-04-16T05:08:32.952Z",
+      "id": "wait-eth-position",
+      "status": "pass",
+      "startedAt": "2026-04-16T05:08:30.051Z",
+      "durationMs": 2901,
+      "next": "eth-position",
+      "result": {
+        "found": true
+      }
+    },
+    {
+      "action": "call",
+      "description": "call perps/parity-eth-position-detail",
+      "finishedAt": "2026-04-16T05:08:34.550Z",
+      "id": "eth-position",
+      "status": "pass",
+      "startedAt": "2026-04-16T05:08:32.952Z",
+      "durationMs": 1598,
+      "next": "eth-reverse",
+      "result": {
+        "ref": "perps/parity-eth-position-detail",
+        "title": "Parity snapshot — mobile ETH position detail",
+        "counts": {
+          "total": 3,
+          "passed": 3,
+          "skipped": 0
+        }
+      }
+    },
+    {
+      "action": "call",
+      "description": "call perps/parity-eth-reverse-modal",
+      "finishedAt": "2026-04-16T05:08:38.554Z",
+      "id": "eth-reverse",
+      "status": "pass",
+      "startedAt": "2026-04-16T05:08:34.550Z",
+      "durationMs": 4004,
+      "next": "eth-remove-margin",
+      "result": {
+        "ref": "perps/parity-eth-reverse-modal",
+        "title": "Parity snapshot — mobile ETH reverse modal",
+        "counts": {
+          "total": 8,
+          "passed": 8,
+          "skipped": 0
+        }
+      }
+    },
+    {
+      "action": "call",
+      "description": "call perps/parity-eth-remove-margin",
+      "finishedAt": "2026-04-16T05:08:41.870Z",
+      "id": "eth-remove-margin",
+      "status": "pass",
+      "startedAt": "2026-04-16T05:08:38.554Z",
+      "durationMs": 3316,
+      "next": "eth-close",
+      "result": {
+        "ref": "perps/parity-eth-remove-margin",
+        "title": "Parity snapshot — mobile ETH remove margin",
+        "counts": {
+          "total": 7,
+          "passed": 7,
+          "skipped": 0
+        }
+      }
+    },
+    {
+      "action": "call",
+      "description": "call perps/parity-eth-close-position",
+      "finishedAt": "2026-04-16T05:08:44.551Z",
+      "id": "eth-close",
+      "status": "pass",
+      "startedAt": "2026-04-16T05:08:41.870Z",
+      "durationMs": 2681,
+      "next": "withdraw",
+      "result": {
+        "ref": "perps/parity-eth-close-position",
+        "title": "Parity snapshot — mobile ETH close position",
+        "counts": {
+          "total": 5,
+          "passed": 5,
+          "skipped": 0
+        }
+      }
+    },
+    {
+      "action": "call",
+      "description": "call perps/parity-withdraw-snapshot",
+      "finishedAt": "2026-04-16T05:08:47.028Z",
+      "id": "withdraw",
+      "status": "pass",
+      "startedAt": "2026-04-16T05:08:44.551Z",
+      "durationMs": 2477,
+      "next": "done",
+      "result": {
+        "ref": "perps/parity-withdraw-snapshot",
+        "title": "Parity snapshot — mobile withdraw",
+        "counts": {
+          "total": 5,
+          "passed": 5,
+          "skipped": 0
+        }
+      }
+    },
+    {
+      "action": "end",
+      "description": "pass end",
+      "finishedAt": "2026-04-16T05:08:47.028Z",
+      "id": "done",
+      "status": "pass",
+      "note": "Captured expanded mobile perps decimal parity values via composable flows.",
+      "result": {
+        "message": "Captured expanded mobile perps decimal parity values via composable flows.",
+        "status": "pass"
+      }
+    },
+    {
+      "action": "eval_async",
+      "description": "eval_async",
+      "finishedAt": "2026-04-16T05:08:48.426Z",
+      "id": "teardown-close-eth",
+      "status": "pass",
+      "startedAt": "2026-04-16T05:08:47.028Z",
+      "durationMs": 1398,
+      "next": "",
+      "result": {
+        "cleared": true
+      }
+    }
+  ],
+  "vars": {
+    "eth_position_present": {
+      "found": false
+    }
+  }
+}

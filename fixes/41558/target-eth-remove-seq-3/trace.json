@@ -1,0 +1,85 @@
+[
+  {
+    "id": "nav",
+    "action": "navigate",
+    "ok": true,
+    "raw": {
+      "navigated": true,
+      "hash": "#/perps/market/ETH"
+    },
+    "durationMs": 4
+  },
+  {
+    "id": "wait-detail",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-market-detail-page"
+    },
+    "durationMs": 79
+  },
+  {
+    "id": "open-margin",
+    "action": "press",
+    "ok": true,
+    "raw": {
+      "clicked": true,
+      "target": "testId:perps-margin-card"
+    },
+    "durationMs": 133
+  },
+  {
+    "id": "wait-menu",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-margin-menu"
+    },
+    "durationMs": 83
+  },
+  {
+    "id": "open-remove",
+    "action": "press",
+    "ok": true,
+    "raw": {
+      "clicked": true,
+      "target": "testId:perps-margin-menu-remove"
+    },
+    "durationMs": 154
+  },
+  {
+    "id": "wait-modal",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-edit-margin-modal-save"
+    },
+    "durationMs": 87
+  },
+  {
+    "id": "extract",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"symbol\":\"ETH\",\"screen\":\"remove_margin\",\"available\":\"$0 USDC\",\"liquidationPrice\":\"$1,610.3\",\"liquidationDistance\":\"31.6%\"}",
+    "durationMs": 1
+  },
+  {
+    "id": "close",
+    "action": "press",
+    "ok": true,
+    "raw": {
+      "clicked": true,
+      "target": "testId:perps-edit-margin-modal-cancel"
+    },
+    "durationMs": 316
+  },
+  {
+    "id": "done",
+    "action": "end",
+    "status": "pass",
+    "durationMs": 0
+  }
+]

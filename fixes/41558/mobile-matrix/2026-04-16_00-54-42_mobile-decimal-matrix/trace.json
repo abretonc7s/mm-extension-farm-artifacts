@@ -1,0 +1,346 @@
+{
+  "env": {
+    "appRoot": "/Users/deeeed/dev/metamask/metamask-mobile-1",
+    "recipePath": "/Users/deeeed/dev/metamask/metamask-mobile-1/scripts/perps/agentic/teams/perps/recipes/mobile-decimal-matrix.json",
+    "team": "perps"
+  },
+  "inputs": {},
+  "last": {
+    "route": "RedesignedConfirmations"
+  },
+  "nodes": {
+    "btc-nav-market": {
+      "action": "navigate",
+      "description": "navigate to PerpsMarketDetails",
+      "finishedAt": "2026-04-16T00:54:43.311Z",
+      "id": "btc-nav-market",
+      "status": "pass",
+      "startedAt": "2026-04-16T00:54:42.444Z",
+      "durationMs": 867,
+      "next": "btc-wait-market",
+      "result": {
+        "navigated": "PerpsMarketDetails",
+        "params": {
+          "market": {
+            "symbol": "BTC",
+            "name": "BTC",
+            "price": "0",
+            "change24h": "0",
+            "change24hPercent": "0",
+            "volume": "0",
+            "maxLeverage": "100"
+          }
+        },
+        "previousRoute": {
+          "key": "RedesignedConfirmations-03acNlg8BOPa9fjN1VWpT",
+          "name": "RedesignedConfirmations",
+          "params": {
+            "asset": "SOL",
+            "direction": "long",
+            "showPerpsHeader": false,
+            "source": "perp_asset_screen"
+          }
+        },
+        "currentRoute": {
+          "key": "PerpsMarketDetails-YQIU6BnNDhUzM0F3UwGIv",
+          "name": "PerpsMarketDetails",
+          "params": {
+            "market": {
+              "change24h": "0",
+              "change24hPercent": "0",
+              "maxLeverage": "100",
+              "name": "BTC",
+              "price": "0",
+              "symbol": "BTC",
+              "volume": "0"
+            }
+          }
+        },
+        "deviceName": "mm-1",
+        "platform": "ios"
+      }
+    },
+    "btc-wait-market": {
+      "action": "wait_for",
+      "description": "wait for PerpsMarketDetails",
+      "finishedAt": "2026-04-16T00:54:43.677Z",
+      "id": "btc-wait-market",
+      "status": "pass",
+      "startedAt": "2026-04-16T00:54:43.312Z",
+      "durationMs": 365,
+      "next": "btc-market-data",
+      "result": {
+        "route": "PerpsMarketDetails"
+      }
+    },
+    "btc-market-data": {
+      "action": "eval_sync",
+      "description": "eval_sync",
+      "finishedAt": "2026-04-16T00:54:43.979Z",
+      "id": "btc-market-data",
+      "status": "pass",
+      "startedAt": "2026-04-16T00:54:43.677Z",
+      "durationMs": 302,
+      "next": "btc-open-order",
+      "result": {
+        "symbol": "BTC",
+        "screen": "market_detail",
+        "title": "BTC-USD",
+        "price": "$75,047",
+        "change": "-1.10%",
+        "header": [
+          "BTC-USD",
+          "BTC-USD",
+          "BTC-USD",
+          "BTC-USD",
+          "BTC-USD",
+          "BTC-USD",
+          "BTC-USD",
+          "BTC-USD",
+          "BTC-USD",
+          "BTC-USD",
+          "BTC-USD",
+          "BTC-USD"
+        ]
+      }
+    },
+    "btc-open-order": {
+      "action": "navigate",
+      "description": "navigate to RedesignedConfirmations",
+      "finishedAt": "2026-04-16T00:54:44.808Z",
+      "id": "btc-open-order",
+      "status": "pass",
+      "startedAt": "2026-04-16T00:54:43.979Z",
+      "durationMs": 829,
+      "next": "btc-wait-order",
+      "result": {
+        "navigated": "RedesignedConfirmations",
+        "params": {
+          "asset": "BTC",
+          "direction": "long",
+          "showPerpsHeader": false,
+          "source": "perp_asset_screen"
+        },
+        "previousRoute": {
+          "key": "PerpsMarketDetails-YQIU6BnNDhUzM0F3UwGIv",
+          "name": "PerpsMarketDetails",
+          "params": {
+            "market": {
+              "change24h": "0",
+              "change24hPercent": "0",
+              "maxLeverage": "100",
+              "name": "BTC",
+              "price": "0",
+              "symbol": "BTC",
+              "volume": "0"
+            }
+          }
+        },
+        "currentRoute": {
+          "key": "RedesignedConfirmations-mIcpJJtMbxBrP__S689_s",
+          "name": "RedesignedConfirmations",
+          "params": {
+            "asset": "BTC",
+            "direction": "long",
+            "showPerpsHeader": false,
+            "source": "perp_asset_screen"
+          }
+        },
+        "deviceName": "mm-1",
+        "platform": "ios"
+      }
+    },
+    "btc-wait-order": {
+      "action": "wait_for",
+      "description": "wait for RedesignedConfirmations",
+      "finishedAt": "2026-04-16T00:54:45.209Z",
+      "id": "btc-wait-order",
+      "status": "pass",
+      "startedAt": "2026-04-16T00:54:44.808Z",
+      "durationMs": 401,
+      "next": "btc-order-data",
+      "result": {
+        "route": "RedesignedConfirmations"
+      }
+    }
+  },
+  "trace": [
+    {
+      "action": "navigate",
+      "description": "navigate to PerpsMarketDetails",
+      "finishedAt": "2026-04-16T00:54:43.311Z",
+      "id": "btc-nav-market",
+      "status": "pass",
+      "startedAt": "2026-04-16T00:54:42.444Z",
+      "durationMs": 867,
+      "next": "btc-wait-market",
+      "result": {
+        "navigated": "PerpsMarketDetails",
+        "params": {
+          "market": {
+            "symbol": "BTC",
+            "name": "BTC",
+            "price": "0",
+            "change24h": "0",
+            "change24hPercent": "0",
+            "volume": "0",
+            "maxLeverage": "100"
+          }
+        },
+        "previousRoute": {
+          "key": "RedesignedConfirmations-03acNlg8BOPa9fjN1VWpT",
+          "name": "RedesignedConfirmations",
+          "params": {
+            "asset": "SOL",
+            "direction": "long",
+            "showPerpsHeader": false,
+            "source": "perp_asset_screen"
+          }
+        },
+        "currentRoute": {
+          "key": "PerpsMarketDetails-YQIU6BnNDhUzM0F3UwGIv",
+          "name": "PerpsMarketDetails",
+          "params": {
+            "market": {
+              "change24h": "0",
+              "change24hPercent": "0",
+              "maxLeverage": "100",
+              "name": "BTC",
+              "price": "0",
+              "symbol": "BTC",
+              "volume": "0"
+            }
+          }
+        },
+        "deviceName": "mm-1",
+        "platform": "ios"
+      }
+    },
+    {
+      "action": "wait_for",
+      "description": "wait for PerpsMarketDetails",
+      "finishedAt": "2026-04-16T00:54:43.677Z",
+      "id": "btc-wait-market",
+      "status": "pass",
+      "startedAt": "2026-04-16T00:54:43.312Z",
+      "durationMs": 365,
+      "next": "btc-market-data",
+      "result": {
+        "route": "PerpsMarketDetails"
+      }
+    },
+    {
+      "action": "eval_sync",
+      "description": "eval_sync",
+      "finishedAt": "2026-04-16T00:54:43.979Z",
+      "id": "btc-market-data",
+      "status": "pass",
+      "startedAt": "2026-04-16T00:54:43.677Z",
+      "durationMs": 302,
+      "next": "btc-open-order",
+      "result": {
+        "symbol": "BTC",
+        "screen": "market_detail",
+        "title": "BTC-USD",
+        "price": "$75,047",
+        "change": "-1.10%",
+        "header": [
+          "BTC-USD",
+          "BTC-USD",
+          "BTC-USD",
+          "BTC-USD",
+          "BTC-USD",
+          "BTC-USD",
+          "BTC-USD",
+          "BTC-USD",
+          "BTC-USD",
+          "BTC-USD",
+          "BTC-USD",
+          "BTC-USD"
+        ]
+      }
+    },
+    {
+      "action": "navigate",
+      "description": "navigate to RedesignedConfirmations",
+      "finishedAt": "2026-04-16T00:54:44.808Z",
+      "id": "btc-open-order",
+      "status": "pass",
+      "startedAt": "2026-04-16T00:54:43.979Z",
+      "durationMs": 829,
+      "next": "btc-wait-order",
+      "result": {
+        "navigated": "RedesignedConfirmations",
+        "params": {
+          "asset": "BTC",
+          "direction": "long",
+          "showPerpsHeader": false,
+          "source": "perp_asset_screen"
+        },
+        "previousRoute": {
+          "key": "PerpsMarketDetails-YQIU6BnNDhUzM0F3UwGIv",
+          "name": "PerpsMarketDetails",
+          "params": {
+            "market": {
+              "change24h": "0",
+              "change24hPercent": "0",
+              "maxLeverage": "100",
+              "name": "BTC",
+              "price": "0",
+              "symbol": "BTC",
+              "volume": "0"
+            }
+          }
+        },
+        "currentRoute": {
+          "key": "RedesignedConfirmations-mIcpJJtMbxBrP__S689_s",
+          "name": "RedesignedConfirmations",
+          "params": {
+            "asset": "BTC",
+            "direction": "long",
+            "showPerpsHeader": false,
+            "source": "perp_asset_screen"
+          }
+        },
+        "deviceName": "mm-1",
+        "platform": "ios"
+      }
+    },
+    {
+      "action": "wait_for",
+      "description": "wait for RedesignedConfirmations",
+      "finishedAt": "2026-04-16T00:54:45.209Z",
+      "id": "btc-wait-order",
+      "status": "pass",
+      "startedAt": "2026-04-16T00:54:44.808Z",
+      "durationMs": 401,
+      "next": "btc-order-data",
+      "result": {
+        "route": "RedesignedConfirmations"
+      }
+    }
+  ],
+  "vars": {
+    "btc_market": {
+      "symbol": "BTC",
+      "screen": "market_detail",
+      "title": "BTC-USD",
+      "price": "$75,047",
+      "change": "-1.10%",
+      "header": [
+        "BTC-USD",
+        "BTC-USD",
+        "BTC-USD",
+        "BTC-USD",
+        "BTC-USD",
+        "BTC-USD",
+        "BTC-USD",
+        "BTC-USD",
+        "BTC-USD",
+        "BTC-USD",
+        "BTC-USD",
+        "BTC-USD"
+      ]
+    }
+  }
+}

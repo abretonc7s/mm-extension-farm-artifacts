@@ -1,0 +1,97 @@
+[
+  {
+    "id": "nav",
+    "action": "navigate",
+    "ok": true,
+    "raw": {
+      "navigated": true,
+      "hash": "#/perps/market/ETH"
+    },
+    "durationMs": 4
+  },
+  {
+    "id": "wait-detail",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-market-detail-page"
+    },
+    "durationMs": 60
+  },
+  {
+    "id": "open",
+    "action": "press",
+    "ok": true,
+    "raw": {
+      "clicked": true,
+      "target": "testId:perps-long-cta-button"
+    },
+    "durationMs": 80
+  },
+  {
+    "id": "wait-entry",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-order-entry-page"
+    },
+    "durationMs": 34
+  },
+  {
+    "id": "set",
+    "action": "set_input",
+    "ok": true,
+    "raw": {
+      "filled": true,
+      "fallback": true
+    },
+    "durationMs": 41
+  },
+  {
+    "id": "shot1",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "/Users/deeeed/dev/metamask/metamask-extension-3/temp/agentic/recipes/test-artifacts/screenshots/debug-order-before-submit-1776270519220.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 120
+  },
+  {
+    "id": "submit",
+    "action": "press",
+    "ok": true,
+    "raw": {
+      "clicked": true,
+      "target": "testId:submit-order-button"
+    },
+    "durationMs": 102
+  },
+  {
+    "id": "wait",
+    "action": "wait",
+    "ok": true,
+    "raw": null,
+    "durationMs": 2002
+  },
+  {
+    "id": "shot2",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "/Users/deeeed/dev/metamask/metamask-extension-3/temp/agentic/recipes/test-artifacts/screenshots/debug-order-after-submit-1776270521447.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 93
+  },
+  {
+    "id": "done",
+    "action": "end",
+    "status": "pass",
+    "durationMs": 0
+  }
+]

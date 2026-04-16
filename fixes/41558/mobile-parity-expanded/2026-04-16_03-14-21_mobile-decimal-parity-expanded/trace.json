@@ -1,0 +1,556 @@
+{
+  "env": {
+    "appRoot": "/Users/deeeed/dev/metamask/metamask-mobile-1",
+    "recipePath": "/Users/deeeed/dev/metamask/metamask-mobile-1/scripts/perps/agentic/teams/perps/recipes/mobile-decimal-parity-expanded.json",
+    "team": "perps"
+  },
+  "inputs": {},
+  "last": {
+    "cleared": true
+  },
+  "nodes": {
+    "setup-account": {
+      "action": "call",
+      "description": "call perps/select-account",
+      "finishedAt": "2026-04-16T03:14:22.400Z",
+      "id": "setup-account",
+      "status": "pass",
+      "startedAt": "2026-04-16T03:14:21.543Z",
+      "durationMs": 857,
+      "next": "",
+      "result": {
+        "ref": "perps/select-account",
+        "title": "Select — switch to account 0x8dc623e964475d4d669da601fd15ea9125469003 and verify",
+        "counts": {
+          "total": 2,
+          "passed": 2,
+          "skipped": 0
+        }
+      }
+    },
+    "setup-testnet": {
+      "action": "call",
+      "description": "call perps/setup-testnet",
+      "finishedAt": "2026-04-16T03:14:23.982Z",
+      "id": "setup-testnet",
+      "status": "pass",
+      "startedAt": "2026-04-16T03:14:22.400Z",
+      "durationMs": 1582,
+      "next": "",
+      "result": {
+        "ref": "perps/setup-testnet",
+        "title": "Setup — enable testnet and verify market data loads",
+        "counts": {
+          "total": 3,
+          "passed": 3,
+          "skipped": 0
+        }
+      }
+    },
+    "setup-clear-eth": {
+      "action": "eval_async",
+      "description": "eval_async",
+      "finishedAt": "2026-04-16T03:14:24.453Z",
+      "id": "setup-clear-eth",
+      "status": "pass",
+      "startedAt": "2026-04-16T03:14:23.982Z",
+      "durationMs": 471,
+      "next": "",
+      "result": {
+        "cleared": true
+      }
+    },
+    "setup-wait-no-eth": {
+      "action": "wait_for",
+      "description": "wait for condition",
+      "finishedAt": "2026-04-16T03:14:25.478Z",
+      "id": "setup-wait-no-eth",
+      "status": "pass",
+      "startedAt": "2026-04-16T03:14:24.453Z",
+      "durationMs": 1025,
+      "next": "",
+      "result": {
+        "found": false
+      }
+    },
+    "btc-nav-market": {
+      "action": "navigate",
+      "description": "navigate to PerpsMarketDetails",
+      "finishedAt": "2026-04-16T03:14:26.231Z",
+      "id": "btc-nav-market",
+      "status": "pass",
+      "startedAt": "2026-04-16T03:14:25.478Z",
+      "durationMs": 753,
+      "next": "btc-wait-market",
+      "result": {
+        "navigated": "PerpsMarketDetails",
+        "params": {
+          "market": {
+            "symbol": "BTC",
+            "name": "BTC",
+            "price": "0",
+            "change24h": "0",
+            "change24hPercent": "0",
+            "volume": "0",
+            "maxLeverage": "100"
+          }
+        },
+        "previousRoute": {
+          "key": "RedesignedConfirmations-GKnWRyqZ9sny0RcF8Iopv",
+          "name": "RedesignedConfirmations",
+          "params": {
+            "asset": "BTC",
+            "direction": "long",
+            "showPerpsHeader": false,
+            "source": "perp_asset_screen"
+          }
+        },
+        "currentRoute": {
+          "key": "PerpsMarketDetails-yg63UIrim3BIJDIHfumwP",
+          "name": "PerpsMarketDetails",
+          "params": {
+            "market": {
+              "change24h": "0",
+              "change24hPercent": "0",
+              "maxLeverage": "100",
+              "name": "BTC",
+              "price": "0",
+              "symbol": "BTC",
+              "volume": "0"
+            }
+          }
+        },
+        "deviceName": "mm-1",
+        "platform": "ios"
+      }
+    },
+    "btc-wait-market": {
+      "action": "wait_for",
+      "description": "wait for PerpsMarketDetails",
+      "finishedAt": "2026-04-16T03:14:26.487Z",
+      "id": "btc-wait-market",
+      "status": "pass",
+      "startedAt": "2026-04-16T03:14:26.231Z",
+      "durationMs": 256,
+      "next": "btc-market-extract",
+      "result": {
+        "route": "PerpsMarketDetails"
+      }
+    },
+    "btc-market-extract": {
+      "action": "eval_sync",
+      "description": "eval_sync",
+      "finishedAt": "2026-04-16T03:14:31.038Z",
+      "id": "btc-market-extract",
+      "status": "pass",
+      "startedAt": "2026-04-16T03:14:26.487Z",
+      "durationMs": 4551,
+      "next": "btc-open-order",
+      "result": {
+        "symbol": "BTC",
+        "screen": "market_detail",
+        "price": "$75,178",
+        "change": "-0.55%",
+        "oracle": null
+      }
+    },
+    "btc-open-order": {
+      "action": "press",
+      "description": "press perps-market-details-long-button",
+      "finishedAt": "2026-04-16T03:14:31.498Z",
+      "id": "btc-open-order",
+      "status": "pass",
+      "startedAt": "2026-04-16T03:14:31.038Z",
+      "durationMs": 460,
+      "next": "btc-wait-order",
+      "result": {
+        "ok": true,
+        "testId": "perps-market-details-long-button",
+        "deviceName": "mm-1"
+      }
+    },
+    "btc-wait-order": {
+      "action": "wait_for",
+      "description": "wait for perps-amount-display-touchable",
+      "finishedAt": "2026-04-16T03:14:37.218Z",
+      "id": "btc-wait-order",
+      "status": "pass",
+      "startedAt": "2026-04-16T03:14:31.498Z",
+      "durationMs": 5720,
+      "next": "btc-press-amount",
+      "result": {
+        "visible": true
+      }
+    },
+    "btc-press-amount": {
+      "action": "press",
+      "description": "press perps-amount-display-touchable",
+      "finishedAt": "2026-04-16T03:14:39.660Z",
+      "id": "btc-press-amount",
+      "status": "pass",
+      "startedAt": "2026-04-16T03:14:37.218Z",
+      "durationMs": 2442,
+      "next": "btc-wait-keypad",
+      "result": {
+        "ok": true,
+        "testId": "perps-amount-display-touchable",
+        "deviceName": "mm-1"
+      }
+    },
+    "btc-wait-keypad": {
+      "action": "wait_for",
+      "description": "wait for keypad-delete-button",
+      "finishedAt": "2026-04-16T03:14:40.883Z",
+      "id": "btc-wait-keypad",
+      "status": "pass",
+      "startedAt": "2026-04-16T03:14:39.660Z",
+      "durationMs": 1223,
+      "next": "btc-clear-keypad",
+      "result": {
+        "visible": true
+      }
+    },
+    "btc-clear-keypad": {
+      "action": "clear_keypad",
+      "description": "clear keypad x8",
+      "finishedAt": "2026-04-16T03:14:44.875Z",
+      "id": "btc-clear-keypad",
+      "status": "pass",
+      "startedAt": "2026-04-16T03:14:40.883Z",
+      "durationMs": 3992,
+      "next": "btc-type-amount",
+      "result": {
+        "ok": true,
+        "deleted": 8
+      }
+    },
+    "btc-type-amount": {
+      "action": "type_keypad",
+      "description": "type 11",
+      "finishedAt": "2026-04-16T03:14:46.659Z",
+      "id": "btc-type-amount",
+      "status": "pass",
+      "startedAt": "2026-04-16T03:14:44.875Z",
+      "durationMs": 1784,
+      "next": "btc-press-done",
+      "result": {
+        "ok": true,
+        "value": "11"
+      }
+    },
+    "btc-press-done": {
+      "action": "press",
+      "description": "press perps-order-view-keypad-done",
+      "finishedAt": "2026-04-16T03:14:49.110Z",
+      "id": "btc-press-done",
+      "status": "pass",
+      "startedAt": "2026-04-16T03:14:46.659Z",
+      "durationMs": 2451,
+      "next": "btc-wait-summary",
+      "result": {
+        "ok": true,
+        "testId": "perps-order-view-keypad-done",
+        "deviceName": "mm-1"
+      }
+    },
+    "btc-wait-summary": {
+      "action": "wait",
+      "description": "wait 500ms",
+      "finishedAt": "2026-04-16T03:14:50.264Z",
+      "id": "btc-wait-summary",
+      "status": "pass",
+      "startedAt": "2026-04-16T03:14:49.110Z",
+      "durationMs": 1154,
+      "next": "btc-order-extract",
+      "result": {
+        "waitedMs": 500
+      }
+    },
+    "teardown-close-eth": {
+      "action": "eval_async",
+      "description": "eval_async",
+      "finishedAt": "2026-04-16T03:15:12.909Z",
+      "id": "teardown-close-eth",
+      "status": "pass",
+      "startedAt": "2026-04-16T03:15:11.941Z",
+      "durationMs": 968,
+      "next": "",
+      "result": {
+        "cleared": true
+      }
+    }
+  },
+  "trace": [
+    {
+      "action": "call",
+      "description": "call perps/select-account",
+      "finishedAt": "2026-04-16T03:14:22.400Z",
+      "id": "setup-account",
+      "status": "pass",
+      "startedAt": "2026-04-16T03:14:21.543Z",
+      "durationMs": 857,
+      "next": "",
+      "result": {
+        "ref": "perps/select-account",
+        "title": "Select — switch to account 0x8dc623e964475d4d669da601fd15ea9125469003 and verify",
+        "counts": {
+          "total": 2,
+          "passed": 2,
+          "skipped": 0
+        }
+      }
+    },
+    {
+      "action": "call",
+      "description": "call perps/setup-testnet",
+      "finishedAt": "2026-04-16T03:14:23.982Z",
+      "id": "setup-testnet",
+      "status": "pass",
+      "startedAt": "2026-04-16T03:14:22.400Z",
+      "durationMs": 1582,
+      "next": "",
+      "result": {
+        "ref": "perps/setup-testnet",
+        "title": "Setup — enable testnet and verify market data loads",
+        "counts": {
+          "total": 3,
+          "passed": 3,
+          "skipped": 0
+        }
+      }
+    },
+    {
+      "action": "eval_async",
+      "description": "eval_async",
+      "finishedAt": "2026-04-16T03:14:24.453Z",
+      "id": "setup-clear-eth",
+      "status": "pass",
+      "startedAt": "2026-04-16T03:14:23.982Z",
+      "durationMs": 471,
+      "next": "",
+      "result": {
+        "cleared": true
+      }
+    },
+    {
+      "action": "wait_for",
+      "description": "wait for condition",
+      "finishedAt": "2026-04-16T03:14:25.478Z",
+      "id": "setup-wait-no-eth",
+      "status": "pass",
+      "startedAt": "2026-04-16T03:14:24.453Z",
+      "durationMs": 1025,
+      "next": "",
+      "result": {
+        "found": false
+      }
+    },
+    {
+      "action": "navigate",
+      "description": "navigate to PerpsMarketDetails",
+      "finishedAt": "2026-04-16T03:14:26.231Z",
+      "id": "btc-nav-market",
+      "status": "pass",
+      "startedAt": "2026-04-16T03:14:25.478Z",
+      "durationMs": 753,
+      "next": "btc-wait-market",
+      "result": {
+        "navigated": "PerpsMarketDetails",
+        "params": {
+          "market": {
+            "symbol": "BTC",
+            "name": "BTC",
+            "price": "0",
+            "change24h": "0",
+            "change24hPercent": "0",
+            "volume": "0",
+            "maxLeverage": "100"
+          }
+        },
+        "previousRoute": {
+          "key": "RedesignedConfirmations-GKnWRyqZ9sny0RcF8Iopv",
+          "name": "RedesignedConfirmations",
+          "params": {
+            "asset": "BTC",
+            "direction": "long",
+            "showPerpsHeader": false,
+            "source": "perp_asset_screen"
+          }
+        },
+        "currentRoute": {
+          "key": "PerpsMarketDetails-yg63UIrim3BIJDIHfumwP",
+          "name": "PerpsMarketDetails",
+          "params": {
+            "market": {
+              "change24h": "0",
+              "change24hPercent": "0",
+              "maxLeverage": "100",
+              "name": "BTC",
+              "price": "0",
+              "symbol": "BTC",
+              "volume": "0"
+            }
+          }
+        },
+        "deviceName": "mm-1",
+        "platform": "ios"
+      }
+    },
+    {
+      "action": "wait_for",
+      "description": "wait for PerpsMarketDetails",
+      "finishedAt": "2026-04-16T03:14:26.487Z",
+      "id": "btc-wait-market",
+      "status": "pass",
+      "startedAt": "2026-04-16T03:14:26.231Z",
+      "durationMs": 256,
+      "next": "btc-market-extract",
+      "result": {
+        "route": "PerpsMarketDetails"
+      }
+    },
+    {
+      "action": "eval_sync",
+      "description": "eval_sync",
+      "finishedAt": "2026-04-16T03:14:31.038Z",
+      "id": "btc-market-extract",
+      "status": "pass",
+      "startedAt": "2026-04-16T03:14:26.487Z",
+      "durationMs": 4551,
+      "next": "btc-open-order",
+      "result": {
+        "symbol": "BTC",
+        "screen": "market_detail",
+        "price": "$75,178",
+        "change": "-0.55%",
+        "oracle": null
+      }
+    },
+    {
+      "action": "press",
+      "description": "press perps-market-details-long-button",
+      "finishedAt": "2026-04-16T03:14:31.498Z",
+      "id": "btc-open-order",
+      "status": "pass",
+      "startedAt": "2026-04-16T03:14:31.038Z",
+      "durationMs": 460,
+      "next": "btc-wait-order",
+      "result": {
+        "ok": true,
+        "testId": "perps-market-details-long-button",
+        "deviceName": "mm-1"
+      }
+    },
+    {
+      "action": "wait_for",
+      "description": "wait for perps-amount-display-touchable",
+      "finishedAt": "2026-04-16T03:14:37.218Z",
+      "id": "btc-wait-order",
+      "status": "pass",
+      "startedAt": "2026-04-16T03:14:31.498Z",
+      "durationMs": 5720,
+      "next": "btc-press-amount",
+      "result": {
+        "visible": true
+      }
+    },
+    {
+      "action": "press",
+      "description": "press perps-amount-display-touchable",
+      "finishedAt": "2026-04-16T03:14:39.660Z",
+      "id": "btc-press-amount",
+      "status": "pass",
+      "startedAt": "2026-04-16T03:14:37.218Z",
+      "durationMs": 2442,
+      "next": "btc-wait-keypad",
+      "result": {
+        "ok": true,
+        "testId": "perps-amount-display-touchable",
+        "deviceName": "mm-1"
+      }
+    },
+    {
+      "action": "wait_for",
+      "description": "wait for keypad-delete-button",
+      "finishedAt": "2026-04-16T03:14:40.883Z",
+      "id": "btc-wait-keypad",
+      "status": "pass",
+      "startedAt": "2026-04-16T03:14:39.660Z",
+      "durationMs": 1223,
+      "next": "btc-clear-keypad",
+      "result": {
+        "visible": true
+      }
+    },
+    {
+      "action": "clear_keypad",
+      "description": "clear keypad x8",
+      "finishedAt": "2026-04-16T03:14:44.875Z",
+      "id": "btc-clear-keypad",
+      "status": "pass",
+      "startedAt": "2026-04-16T03:14:40.883Z",
+      "durationMs": 3992,
+      "next": "btc-type-amount",
+      "result": {
+        "ok": true,
+        "deleted": 8
+      }
+    },
+    {
+      "action": "type_keypad",
+      "description": "type 11",
+      "finishedAt": "2026-04-16T03:14:46.659Z",
+      "id": "btc-type-amount",
+      "status": "pass",
+      "startedAt": "2026-04-16T03:14:44.875Z",
+      "durationMs": 1784,
+      "next": "btc-press-done",
+      "result": {
+        "ok": true,
+        "value": "11"
+      }
+    },
+    {
+      "action": "press",
+      "description": "press perps-order-view-keypad-done",
+      "finishedAt": "2026-04-16T03:14:49.110Z",
+      "id": "btc-press-done",
+      "status": "pass",
+      "startedAt": "2026-04-16T03:14:46.659Z",
+      "durationMs": 2451,
+      "next": "btc-wait-summary",
+      "result": {
+        "ok": true,
+        "testId": "perps-order-view-keypad-done",
+        "deviceName": "mm-1"
+      }
+    },
+    {
+      "action": "wait",
+      "description": "wait 500ms",
+      "finishedAt": "2026-04-16T03:14:50.264Z",
+      "id": "btc-wait-summary",
+      "status": "pass",
+      "startedAt": "2026-04-16T03:14:49.110Z",
+      "durationMs": 1154,
+      "next": "btc-order-extract",
+      "result": {
+        "waitedMs": 500
+      }
+    },
+    {
+      "action": "eval_async",
+      "description": "eval_async",
+      "finishedAt": "2026-04-16T03:15:12.909Z",
+      "id": "teardown-close-eth",
+      "status": "pass",
+      "startedAt": "2026-04-16T03:15:11.941Z",
+      "durationMs": 968,
+      "next": "",
+      "result": {
+        "cleared": true
+      }
+    }
+  ],
+  "vars": {}
+}

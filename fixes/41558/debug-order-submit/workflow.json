@@ -1,0 +1,85 @@
+{
+  "description": "",
+  "hooks": {
+    "pre_conditions": [
+      "wallet.unlocked"
+    ],
+    "setup": [],
+    "teardown": []
+  },
+  "inputs": {},
+  "sourcePath": "",
+  "title": "debug order submit",
+  "workflow": {
+    "entry": "nav",
+    "nodes": {
+      "nav": {
+        "action": "navigate",
+        "target": "PerpsMarketDetails",
+        "params": {
+          "market": {
+            "symbol": "ETH"
+          }
+        },
+        "next": "wait-detail",
+        "id": "nav"
+      },
+      "wait-detail": {
+        "action": "wait_for",
+        "test_id": "perps-market-detail-page",
+        "timeout_ms": 10000,
+        "next": "open",
+        "id": "wait-detail"
+      },
+      "open": {
+        "action": "press",
+        "test_id": "perps-long-cta-button",
+        "next": "wait-entry",
+        "id": "open"
+      },
+      "wait-entry": {
+        "action": "wait_for",
+        "test_id": "perps-order-entry-page",
+        "timeout_ms": 10000,
+        "next": "set",
+        "id": "wait-entry"
+      },
+      "set": {
+        "action": "set_input",
+        "test_id": "amount-input-field",
+        "value": "10",
+        "next": "shot1",
+        "id": "set"
+      },
+      "shot1": {
+        "action": "screenshot",
+        "filename": "debug-order-before-submit",
+        "next": "submit",
+        "id": "shot1"
+      },
+      "submit": {
+        "action": "press",
+        "test_id": "submit-order-button",
+        "next": "wait",
+        "id": "submit"
+      },
+      "wait": {
+        "action": "wait",
+        "ms": 2000,
+        "next": "shot2",
+        "id": "wait"
+      },
+      "shot2": {
+        "action": "screenshot",
+        "filename": "debug-order-after-submit",
+        "next": "done",
+        "id": "shot2"
+      },
+      "done": {
+        "action": "end",
+        "status": "pass",
+        "id": "done"
+      }
+    }
+  }
+}

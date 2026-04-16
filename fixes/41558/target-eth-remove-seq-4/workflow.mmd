@@ -1,0 +1,20 @@
+flowchart TD
+  %% Parity snapshot — extension ETH remove margin
+  __entry__(["ENTRY"]) --> node_nav
+  node_nav["nav<br/>navigate"]
+  node_wait_detail["wait-detail<br/>wait_for"]
+  node_open_margin["open-margin<br/>press"]
+  node_wait_menu["wait-menu<br/>wait_for"]
+  node_open_remove["open-remove<br/>press"]
+  node_wait_modal["wait-modal<br/>wait_for"]
+  node_extract["extract<br/>eval_sync"]
+  node_close["close<br/>press"]
+  node_done(["done<br/>PASS"])
+  node_nav --> node_wait_detail
+  node_wait_detail --> node_open_margin
+  node_open_margin --> node_wait_menu
+  node_wait_menu --> node_open_remove
+  node_open_remove --> node_wait_modal
+  node_wait_modal --> node_extract
+  node_extract --> node_close
+  node_close --> node_done

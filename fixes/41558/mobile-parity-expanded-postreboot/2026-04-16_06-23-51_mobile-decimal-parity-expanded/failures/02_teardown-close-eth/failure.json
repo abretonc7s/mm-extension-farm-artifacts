@@ -1,0 +1,43 @@
+{
+  "capturedAt": "2026-04-16T06:24:21.765Z",
+  "depth": 0,
+  "recipePath": "/Users/deeeed/dev/metamask/metamask-mobile-1/scripts/perps/agentic/teams/perps/recipes/mobile-decimal-parity-expanded.json",
+  "recipeTitle": "Mobile perps decimal parity expanded",
+  "step": {
+    "id": "teardown-close-eth",
+    "action": "eval_async",
+    "expression": "Engine.context.PerpsController.getPositions().then(function(ps){var p=ps.find(function(x){return x.symbol==='ETH'});if(!p){return JSON.stringify({cleared:true});}return Engine.context.PerpsController.closePosition({symbol:'ETH'}).then(function(){return JSON.stringify({cleared:true});});})",
+    "assert": {
+      "operator": "eq",
+      "field": "cleared",
+      "value": true
+    }
+  },
+  "error": "ERROR: Cannot reach Metro at http://localhost:8061/json/list. Is Metro running?",
+  "route": {
+    "error": "ERROR: Cannot reach Metro at http://localhost:8061/json/list. Is Metro running?"
+  },
+  "state": {
+    "error": "ERROR: Cannot reach Metro at http://localhost:8061/json/list. Is Metro running?"
+  },
+  "workflowState": {
+    "env": {
+      "appRoot": "/Users/deeeed/dev/metamask/metamask-mobile-1",
+      "recipePath": "/Users/deeeed/dev/metamask/metamask-mobile-1/scripts/perps/agentic/teams/perps/recipes/mobile-decimal-parity-expanded.json",
+      "team": "perps"
+    },
+    "inputs": {},
+    "last": null,
+    "nodes": {},
+    "trace": [],
+    "vars": {}
+  },
+  "evalRefs": {},
+  "logs": [
+    {
+      "source": "/Users/deeeed/dev/metamask/metamask-mobile-1/.agent/metro.log",
+      "excerpt": "/Users/deeeed/dev/metamask/metamask-extension-3/temp/.task/fix/41558-0415-1045/artifacts/mobile-parity-expanded-postreboot/2026-04-16_06-23-51_mobile-decimal-parity-expanded/failures/02_teardown-close-eth/metro.log"
+    }
+  ],
+  "screenshot": "/Users/deeeed/dev/metamask/metamask-extension-3/temp/.task/fix/41558-0415-1045/artifacts/mobile-parity-expanded-postreboot/2026-04-16_06-23-51_mobile-decimal-parity-expanded/failures/02_teardown-close-eth/2026-04-16_142419_failure-teardown-close-eth.png"
+}

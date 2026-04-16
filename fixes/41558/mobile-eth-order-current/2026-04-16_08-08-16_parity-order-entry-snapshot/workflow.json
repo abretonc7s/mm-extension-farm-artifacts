@@ -1,0 +1,100 @@
+{
+  "title": "Parity snapshot — mobile order entry ETH",
+  "description": "",
+  "sourcePath": "/Users/deeeed/dev/metamask/metamask-mobile-1/scripts/perps/agentic/teams/perps/flows/parity-order-entry-snapshot.json",
+  "hooks": {
+    "pre_conditions": [
+      "wallet.unlocked",
+      "perps.feature_enabled"
+    ],
+    "setup": [],
+    "teardown": []
+  },
+  "workflow": {
+    "entry": "nav",
+    "nodes": {
+      "nav": {
+        "action": "navigate",
+        "target": "PerpsMarketDetails",
+        "params": {
+          "market": {
+            "symbol": "ETH",
+            "name": "ETH",
+            "price": "0",
+            "change24h": "0",
+            "change24hPercent": "0",
+            "volume": "0",
+            "maxLeverage": "100"
+          }
+        },
+        "next": "wait-market",
+        "id": "nav"
+      },
+      "wait-market": {
+        "action": "wait_for",
+        "route": "PerpsMarketDetails",
+        "next": "open",
+        "id": "wait-market"
+      },
+      "open": {
+        "action": "press",
+        "test_id": "perps-market-details-long-button",
+        "next": "wait-order",
+        "id": "open"
+      },
+      "wait-order": {
+        "action": "wait_for",
+        "test_id": "perps-amount-display-touchable",
+        "next": "press-amount",
+        "id": "wait-order"
+      },
+      "press-amount": {
+        "action": "press",
+        "test_id": "perps-amount-display-touchable",
+        "next": "wait-keypad",
+        "id": "press-amount"
+      },
+      "wait-keypad": {
+        "action": "wait_for",
+        "test_id": "keypad-delete-button",
+        "next": "clear",
+        "id": "wait-keypad"
+      },
+      "clear": {
+        "action": "clear_keypad",
+        "count": 8,
+        "next": "type",
+        "id": "clear"
+      },
+      "type": {
+        "action": "type_keypad",
+        "value": "11",
+        "next": "done-keypad",
+        "id": "type"
+      },
+      "done-keypad": {
+        "action": "press",
+        "test_id": "perps-order-view-keypad-done",
+        "next": "wait-summary",
+        "id": "done-keypad"
+      },
+      "wait-summary": {
+        "action": "wait",
+        "ms": 500,
+        "next": "extract",
+        "id": "wait-summary"
+      },
+      "extract": {
+        "action": "eval_sync",
+        "expression": "(function(){var a=globalThis.__AGENTIC__; var header=(a&&a.getTextByTestId('perps-order-header',{all:true}))||[]; function first(re){ for(var i=0;i<header.length;i++){ if(re.test(header[i])) return header[i]; } return null; } return JSON.stringify({symbol:'ETH',screen:'order_entry',price:first(/^\\$/),change:first(/%$/),margin:a?a.getTextByTestId('perps-order-view-margin-value'):null,liquidationPrice:a?a.getTextByTestId('perps-order-view-liquidation-price-value'):null,fees:a?a.getTextByTestId('perps-order-view-fees-value'):null});})()",
+        "next": "done",
+        "id": "extract"
+      },
+      "done": {
+        "action": "end",
+        "status": "pass",
+        "id": "done"
+      }
+    }
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "description": "",
+  "hooks": {
+    "pre_conditions": [
+      "wallet.unlocked"
+    ],
+    "setup": [],
+    "teardown": []
+  },
+  "inputs": {},
+  "sourcePath": "",
+  "title": "debug order dom",
+  "workflow": {
+    "entry": "nav",
+    "nodes": {
+      "nav": {
+        "action": "navigate",
+        "target": "PerpsMarketDetails",
+        "params": {
+          "market": {
+            "symbol": "ETH"
+          }
+        },
+        "next": "wait-detail",
+        "id": "nav"
+      },
+      "wait-detail": {
+        "action": "wait_for",
+        "test_id": "perps-market-detail-page",
+        "timeout_ms": 10000,
+        "next": "open",
+        "id": "wait-detail"
+      },
+      "open": {
+        "action": "press",
+        "test_id": "perps-long-cta-button",
+        "next": "wait-entry",
+        "id": "open"
+      },
+      "wait-entry": {
+        "action": "wait_for",
+        "test_id": "perps-order-entry-page",
+        "timeout_ms": 10000,
+        "next": "set",
+        "id": "wait-entry"
+      },
+      "set": {
+        "action": "set_input",
+        "test_id": "amount-input-field",
+        "value": "10",
+        "next": "submit",
+        "id": "set"
+      },
+      "submit": {
+        "action": "press",
+        "test_id": "submit-order-button",
+        "next": "check-error",
+        "id": "submit"
+      },
+      "check-error": {
+        "action": "ext_check_dom",
+        "test_id": "perps-order-submit-error",
+        "query": true,
+        "save_as": "submit_error",
+        "next": "check-button",
+        "id": "check-error"
+      },
+      "check-button": {
+        "action": "eval_sync",
+        "expression": "(function(){var btn=document.querySelector('[data-testid=\"submit-order-button\"]'); return JSON.stringify({disabled:!!btn&&btn.disabled,text:btn?btn.textContent:null});})()",
+        "next": "done",
+        "id": "check-button"
+      },
+      "done": {
+        "action": "end",
+        "status": "pass",
+        "id": "done"
+      }
+    }
+  }
+}

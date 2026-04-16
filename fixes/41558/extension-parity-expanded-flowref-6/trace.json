@@ -1,0 +1,1241 @@
+[
+  {
+    "id": "btc-market",
+    "action": "call",
+    "ok": true,
+    "raw": {
+      "passed": 4,
+      "failed": 0,
+      "trace": [
+        {
+          "id": "nav",
+          "action": "navigate",
+          "ok": true,
+          "raw": {
+            "navigated": true,
+            "hash": "#/perps/market/BTC"
+          },
+          "durationMs": 6
+        },
+        {
+          "id": "wait",
+          "action": "wait_for",
+          "ok": true,
+          "raw": {
+            "found": true,
+            "target": "testId:perps-market-detail-page"
+          },
+          "durationMs": 153
+        },
+        {
+          "id": "wait-price",
+          "action": "wait_for",
+          "ok": true,
+          "raw": "{\"ready\":true}",
+          "durationMs": 1
+        },
+        {
+          "id": "extract",
+          "action": "eval_sync",
+          "ok": true,
+          "raw": "{\"symbol\":\"BTC\",\"screen\":\"market_detail\",\"price\":\"$75,219\",\"change\":\"-0.90%\",\"oracle\":null}",
+          "durationMs": 2
+        },
+        {
+          "id": "done",
+          "action": "end",
+          "status": "pass",
+          "durationMs": 0
+        }
+      ],
+      "vars": {}
+    },
+    "durationMs": 189
+  },
+  {
+    "id": "btc-order",
+    "action": "call",
+    "ok": true,
+    "raw": {
+      "passed": 8,
+      "failed": 0,
+      "trace": [
+        {
+          "id": "nav",
+          "action": "navigate",
+          "ok": true,
+          "raw": {
+            "navigated": true,
+            "hash": "#/perps/market/BTC"
+          },
+          "durationMs": 5
+        },
+        {
+          "id": "wait-market",
+          "action": "wait_for",
+          "ok": true,
+          "raw": {
+            "found": true,
+            "target": "testId:perps-market-detail-page"
+          },
+          "durationMs": 159
+        },
+        {
+          "id": "check-position",
+          "action": "ext_check_dom",
+          "ok": true,
+          "raw": {
+            "visible": false
+          },
+          "durationMs": 1
+        },
+        {
+          "id": "branch",
+          "action": "switch",
+          "next": "open-order",
+          "durationMs": 0
+        },
+        {
+          "id": "open-order",
+          "action": "press",
+          "ok": true,
+          "raw": {
+            "clicked": true,
+            "target": "testId:perps-long-cta-button"
+          },
+          "durationMs": 181
+        },
+        {
+          "id": "wait-order",
+          "action": "wait_for",
+          "ok": true,
+          "raw": {
+            "found": true,
+            "target": "testId:perps-order-entry-page"
+          },
+          "durationMs": 99
+        },
+        {
+          "id": "set-amount",
+          "action": "eval_sync",
+          "ok": true,
+          "raw": "{\"filled\":true,\"value\":\"11\"}",
+          "durationMs": 6
+        },
+        {
+          "id": "wait-summary",
+          "action": "wait",
+          "ok": true,
+          "raw": null,
+          "durationMs": 801
+        },
+        {
+          "id": "extract",
+          "action": "eval_sync",
+          "ok": true,
+          "raw": "{\"symbol\":\"BTC\",\"screen\":\"order_entry\",\"price\":\"$75,202\",\"change\":\"-0.90%\",\"margin\":\"$3.50\",\"liquidationPrice\":\"$50,576\",\"fees\":\"$0.02\"}",
+          "durationMs": 2
+        },
+        {
+          "id": "done",
+          "action": "end",
+          "status": "pass",
+          "durationMs": 0
+        }
+      ],
+      "vars": {
+        "position_state": {
+          "visible": false
+        }
+      }
+    },
+    "durationMs": 1292
+  },
+  {
+    "id": "eth-market",
+    "action": "call",
+    "ok": true,
+    "raw": {
+      "passed": 4,
+      "failed": 0,
+      "trace": [
+        {
+          "id": "nav",
+          "action": "navigate",
+          "ok": true,
+          "raw": {
+            "navigated": true,
+            "hash": "#/perps/market/ETH"
+          },
+          "durationMs": 8
+        },
+        {
+          "id": "wait",
+          "action": "wait_for",
+          "ok": true,
+          "raw": {
+            "found": true,
+            "target": "testId:perps-market-detail-page"
+          },
+          "durationMs": 108
+        },
+        {
+          "id": "wait-price",
+          "action": "wait_for",
+          "ok": true,
+          "raw": "{\"ready\":true}",
+          "durationMs": 2
+        },
+        {
+          "id": "extract",
+          "action": "eval_sync",
+          "ok": true,
+          "raw": "{\"symbol\":\"ETH\",\"screen\":\"market_detail\",\"price\":\"$2,362.50\",\"change\":\"+0.97%\",\"oracle\":null}",
+          "durationMs": 2
+        },
+        {
+          "id": "done",
+          "action": "end",
+          "status": "pass",
+          "durationMs": 0
+        }
+      ],
+      "vars": {}
+    },
+    "durationMs": 155
+  },
+  {
+    "id": "eth-order",
+    "action": "call",
+    "ok": true,
+    "raw": {
+      "passed": 10,
+      "failed": 0,
+      "trace": [
+        {
+          "id": "nav",
+          "action": "navigate",
+          "ok": true,
+          "raw": {
+            "navigated": true,
+            "hash": "#/perps/market/ETH"
+          },
+          "durationMs": 5
+        },
+        {
+          "id": "wait-market",
+          "action": "wait_for",
+          "ok": true,
+          "raw": {
+            "found": true,
+            "target": "testId:perps-market-detail-page"
+          },
+          "durationMs": 90
+        },
+        {
+          "id": "check-position",
+          "action": "ext_check_dom",
+          "ok": true,
+          "raw": {
+            "visible": true
+          },
+          "durationMs": 1
+        },
+        {
+          "id": "branch",
+          "action": "switch",
+          "next": "open-modify-menu",
+          "durationMs": 0
+        },
+        {
+          "id": "open-modify-menu",
+          "action": "press",
+          "ok": true,
+          "raw": {
+            "clicked": true,
+            "target": "testId:perps-modify-cta-button"
+          },
+          "durationMs": 92
+        },
+        {
+          "id": "wait-modify-menu",
+          "action": "wait_for",
+          "ok": true,
+          "raw": {
+            "found": true,
+            "target": "testId:perps-modify-menu"
+          },
+          "durationMs": 93
+        },
+        {
+          "id": "open-add-exposure",
+          "action": "press",
+          "ok": true,
+          "raw": {
+            "clicked": true,
+            "target": "testId:perps-modify-menu-add-exposure"
+          },
+          "durationMs": 70
+        },
+        {
+          "id": "wait-order",
+          "action": "wait_for",
+          "ok": true,
+          "raw": {
+            "found": true,
+            "target": "testId:perps-order-entry-page"
+          },
+          "durationMs": 31
+        },
+        {
+          "id": "set-amount",
+          "action": "eval_sync",
+          "ok": true,
+          "raw": "{\"filled\":true,\"value\":\"11\"}",
+          "durationMs": 3
+        },
+        {
+          "id": "wait-summary",
+          "action": "wait",
+          "ok": true,
+          "raw": null,
+          "durationMs": 801
+        },
+        {
+          "id": "extract",
+          "action": "eval_sync",
+          "ok": true,
+          "raw": "{\"symbol\":\"ETH\",\"screen\":\"order_entry\",\"price\":\"$2,361.90\",\"change\":\"+0.97%\",\"margin\":\"$3.61\",\"liquidationPrice\":\"$1,601.2\",\"fees\":\"$0.02\"}",
+          "durationMs": 2
+        },
+        {
+          "id": "done",
+          "action": "end",
+          "status": "pass",
+          "durationMs": 0
+        }
+      ],
+      "vars": {
+        "position_state": {
+          "visible": true
+        }
+      }
+    },
+    "durationMs": 1201
+  },
+  {
+    "id": "sol-market",
+    "action": "call",
+    "ok": true,
+    "raw": {
+      "passed": 4,
+      "failed": 0,
+      "trace": [
+        {
+          "id": "nav",
+          "action": "navigate",
+          "ok": true,
+          "raw": {
+            "navigated": true,
+            "hash": "#/perps/market/SOL"
+          },
+          "durationMs": 7
+        },
+        {
+          "id": "wait",
+          "action": "wait_for",
+          "ok": true,
+          "raw": {
+            "found": true,
+            "target": "testId:perps-market-detail-page"
+          },
+          "durationMs": 154
+        },
+        {
+          "id": "wait-price",
+          "action": "wait_for",
+          "ok": true,
+          "raw": "{\"ready\":true}",
+          "durationMs": 1
+        },
+        {
+          "id": "extract",
+          "action": "eval_sync",
+          "ok": true,
+          "raw": "{\"symbol\":\"SOL\",\"screen\":\"market_detail\",\"price\":\"$85.36\",\"change\":\"+1.96%\",\"oracle\":null}",
+          "durationMs": 1
+        },
+        {
+          "id": "done",
+          "action": "end",
+          "status": "pass",
+          "durationMs": 0
+        }
+      ],
+      "vars": {}
+    },
+    "durationMs": 190
+  },
+  {
+    "id": "sol-order",
+    "action": "call",
+    "ok": true,
+    "raw": {
+      "passed": 10,
+      "failed": 0,
+      "trace": [
+        {
+          "id": "nav",
+          "action": "navigate",
+          "ok": true,
+          "raw": {
+            "navigated": true,
+            "hash": "#/perps/market/SOL"
+          },
+          "durationMs": 3
+        },
+        {
+          "id": "wait-market",
+          "action": "wait_for",
+          "ok": true,
+          "raw": {
+            "found": true,
+            "target": "testId:perps-market-detail-page"
+          },
+          "durationMs": 46
+        },
+        {
+          "id": "check-position",
+          "action": "ext_check_dom",
+          "ok": true,
+          "raw": {
+            "visible": true
+          },
+          "durationMs": 1
+        },
+        {
+          "id": "branch",
+          "action": "switch",
+          "next": "open-modify-menu",
+          "durationMs": 0
+        },
+        {
+          "id": "open-modify-menu",
+          "action": "press",
+          "ok": true,
+          "raw": {
+            "clicked": true,
+            "target": "testId:perps-modify-cta-button"
+          },
+          "durationMs": 96
+        },
+        {
+          "id": "wait-modify-menu",
+          "action": "wait_for",
+          "ok": true,
+          "raw": {
+            "found": true,
+            "target": "testId:perps-modify-menu"
+          },
+          "durationMs": 78
+        },
+        {
+          "id": "open-add-exposure",
+          "action": "press",
+          "ok": true,
+          "raw": {
+            "clicked": true,
+            "target": "testId:perps-modify-menu-add-exposure"
+          },
+          "durationMs": 89
+        },
+        {
+          "id": "wait-order",
+          "action": "wait_for",
+          "ok": true,
+          "raw": {
+            "found": true,
+            "target": "testId:perps-order-entry-page"
+          },
+          "durationMs": 31
+        },
+        {
+          "id": "set-amount",
+          "action": "eval_sync",
+          "ok": true,
+          "raw": "{\"filled\":true,\"value\":\"11\"}",
+          "durationMs": 3
+        },
+        {
+          "id": "wait-summary",
+          "action": "wait",
+          "ok": true,
+          "raw": null,
+          "durationMs": 800
+        },
+        {
+          "id": "extract",
+          "action": "eval_sync",
+          "ok": true,
+          "raw": "{\"symbol\":\"SOL\",\"screen\":\"order_entry\",\"price\":\"$85.38\",\"change\":\"+1.96%\",\"margin\":\"$3.41\",\"liquidationPrice\":\"$59.782\",\"fees\":\"$0.01\"}",
+          "durationMs": 2
+        },
+        {
+          "id": "done",
+          "action": "end",
+          "status": "pass",
+          "durationMs": 0
+        }
+      ],
+      "vars": {
+        "position_state": {
+          "visible": true
+        }
+      }
+    },
+    "durationMs": 1165
+  },
+  {
+    "id": "fart-market",
+    "action": "call",
+    "ok": true,
+    "raw": {
+      "passed": 4,
+      "failed": 0,
+      "trace": [
+        {
+          "id": "nav",
+          "action": "navigate",
+          "ok": true,
+          "raw": {
+            "navigated": true,
+            "hash": "#/perps/market/FARTCOIN"
+          },
+          "durationMs": 8
+        },
+        {
+          "id": "wait",
+          "action": "wait_for",
+          "ok": true,
+          "raw": {
+            "found": true,
+            "target": "testId:perps-market-detail-page"
+          },
+          "durationMs": 59
+        },
+        {
+          "id": "wait-price",
+          "action": "wait_for",
+          "ok": true,
+          "raw": "{\"ready\":true}",
+          "durationMs": 0
+        },
+        {
+          "id": "extract",
+          "action": "eval_sync",
+          "ok": true,
+          "raw": "{\"symbol\":\"FARTCOIN\",\"screen\":\"market_detail\",\"price\":\"$0.22\",\"change\":\"+8.63%\",\"oracle\":null}",
+          "durationMs": 1
+        },
+        {
+          "id": "done",
+          "action": "end",
+          "status": "pass",
+          "durationMs": 0
+        }
+      ],
+      "vars": {}
+    },
+    "durationMs": 92
+  },
+  {
+    "id": "fart-order",
+    "action": "call",
+    "ok": true,
+    "raw": {
+      "passed": 8,
+      "failed": 0,
+      "trace": [
+        {
+          "id": "nav",
+          "action": "navigate",
+          "ok": true,
+          "raw": {
+            "navigated": true,
+            "hash": "#/perps/market/FARTCOIN"
+          },
+          "durationMs": 3
+        },
+        {
+          "id": "wait-market",
+          "action": "wait_for",
+          "ok": true,
+          "raw": {
+            "found": true,
+            "target": "testId:perps-market-detail-page"
+          },
+          "durationMs": 36
+        },
+        {
+          "id": "check-position",
+          "action": "ext_check_dom",
+          "ok": true,
+          "raw": {
+            "visible": false
+          },
+          "durationMs": 0
+        },
+        {
+          "id": "branch",
+          "action": "switch",
+          "next": "open-order",
+          "durationMs": 0
+        },
+        {
+          "id": "open-order",
+          "action": "press",
+          "ok": true,
+          "raw": {
+            "clicked": true,
+            "target": "testId:perps-long-cta-button"
+          },
+          "durationMs": 109
+        },
+        {
+          "id": "wait-order",
+          "action": "wait_for",
+          "ok": true,
+          "raw": {
+            "found": true,
+            "target": "testId:perps-order-entry-page"
+          },
+          "durationMs": 104
+        },
+        {
+          "id": "set-amount",
+          "action": "eval_sync",
+          "ok": true,
+          "raw": "{\"filled\":true,\"value\":\"11\"}",
+          "durationMs": 3
+        },
+        {
+          "id": "wait-summary",
+          "action": "wait",
+          "ok": true,
+          "raw": null,
+          "durationMs": 800
+        },
+        {
+          "id": "extract",
+          "action": "eval_sync",
+          "ok": true,
+          "raw": "{\"symbol\":\"FARTCOIN\",\"screen\":\"order_entry\",\"price\":\"$0.22\",\"change\":\"+8.63%\",\"margin\":\"$3.66\",\"liquidationPrice\":\"$0.14884\",\"fees\":\"$0.02\"}",
+          "durationMs": 1
+        },
+        {
+          "id": "done",
+          "action": "end",
+          "status": "pass",
+          "durationMs": 0
+        }
+      ],
+      "vars": {
+        "position_state": {
+          "visible": false
+        }
+      }
+    },
+    "durationMs": 1067
+  },
+  {
+    "id": "pump-market",
+    "action": "call",
+    "ok": true,
+    "raw": {
+      "passed": 4,
+      "failed": 0,
+      "trace": [
+        {
+          "id": "nav",
+          "action": "navigate",
+          "ok": true,
+          "raw": {
+            "navigated": true,
+            "hash": "#/perps/market/PUMP"
+          },
+          "durationMs": 6
+        },
+        {
+          "id": "wait",
+          "action": "wait_for",
+          "ok": true,
+          "raw": {
+            "found": true,
+            "target": "testId:perps-market-detail-page"
+          },
+          "durationMs": 37
+        },
+        {
+          "id": "wait-price",
+          "action": "wait_for",
+          "ok": true,
+          "raw": "{\"ready\":true}",
+          "durationMs": 1
+        },
+        {
+          "id": "extract",
+          "action": "eval_sync",
+          "ok": true,
+          "raw": "{\"symbol\":\"PUMP\",\"screen\":\"market_detail\",\"price\":\"<$0.01\",\"change\":\"+7.52%\",\"oracle\":null}",
+          "durationMs": 0
+        },
+        {
+          "id": "done",
+          "action": "end",
+          "status": "pass",
+          "durationMs": 0
+        }
+      ],
+      "vars": {}
+    },
+    "durationMs": 69
+  },
+  {
+    "id": "pump-order",
+    "action": "call",
+    "ok": true,
+    "raw": {
+      "passed": 8,
+      "failed": 0,
+      "trace": [
+        {
+          "id": "nav",
+          "action": "navigate",
+          "ok": true,
+          "raw": {
+            "navigated": true,
+            "hash": "#/perps/market/PUMP"
+          },
+          "durationMs": 3
+        },
+        {
+          "id": "wait-market",
+          "action": "wait_for",
+          "ok": true,
+          "raw": {
+            "found": true,
+            "target": "testId:perps-market-detail-page"
+          },
+          "durationMs": 36
+        },
+        {
+          "id": "check-position",
+          "action": "ext_check_dom",
+          "ok": true,
+          "raw": {
+            "visible": false
+          },
+          "durationMs": 1
+        },
+        {
+          "id": "branch",
+          "action": "switch",
+          "next": "open-order",
+          "durationMs": 0
+        },
+        {
+          "id": "open-order",
+          "action": "press",
+          "ok": true,
+          "raw": {
+            "clicked": true,
+            "target": "testId:perps-long-cta-button"
+          },
+          "durationMs": 80
+        },
+        {
+          "id": "wait-order",
+          "action": "wait_for",
+          "ok": true,
+          "raw": {
+            "found": true,
+            "target": "testId:perps-order-entry-page"
+          },
+          "durationMs": 36
+        },
+        {
+          "id": "set-amount",
+          "action": "eval_sync",
+          "ok": true,
+          "raw": "{\"filled\":true,\"value\":\"11\"}",
+          "durationMs": 2
+        },
+        {
+          "id": "wait-summary",
+          "action": "wait",
+          "ok": true,
+          "raw": null,
+          "durationMs": 801
+        },
+        {
+          "id": "extract",
+          "action": "eval_sync",
+          "ok": true,
+          "raw": "{\"symbol\":\"PUMP\",\"screen\":\"order_entry\",\"price\":\"<$0.01\",\"change\":\"+7.52%\",\"margin\":\"$3.67\",\"liquidationPrice\":\"$0.001376\",\"fees\":\"$0.02\"}",
+          "durationMs": 1
+        },
+        {
+          "id": "done",
+          "action": "end",
+          "status": "pass",
+          "durationMs": 0
+        }
+      ],
+      "vars": {
+        "position_state": {
+          "visible": false
+        }
+      }
+    },
+    "durationMs": 973
+  },
+  {
+    "id": "eth-position",
+    "action": "call",
+    "ok": true,
+    "raw": {
+      "passed": 4,
+      "failed": 0,
+      "trace": [
+        {
+          "id": "nav",
+          "action": "navigate",
+          "ok": true,
+          "raw": {
+            "navigated": true,
+            "hash": "#/perps/market/ETH"
+          },
+          "durationMs": 9
+        },
+        {
+          "id": "wait-detail",
+          "action": "wait_for",
+          "ok": true,
+          "raw": {
+            "found": true,
+            "target": "testId:perps-market-detail-page"
+          },
+          "durationMs": 70
+        },
+        {
+          "id": "check-position",
+          "action": "ext_check_dom",
+          "ok": true,
+          "raw": {
+            "visible": true
+          },
+          "durationMs": 2
+        },
+        {
+          "id": "branch",
+          "action": "switch",
+          "next": "extract",
+          "durationMs": 0
+        },
+        {
+          "id": "extract",
+          "action": "eval_sync",
+          "ok": true,
+          "raw": "{\"symbol\":\"ETH\",\"screen\":\"position_detail\",\"size\":\"0.0047 ETH\",\"margin\":\"$3.6831\",\"entry\":\"$2,366.1\",\"liquidationPrice\":\"$1,610.5\",\"funding\":\"$0\",\"autoClose\":\"-\"}",
+          "durationMs": 1
+        },
+        {
+          "id": "done",
+          "action": "end",
+          "status": "pass",
+          "durationMs": 0
+        }
+      ],
+      "vars": {
+        "eth_position_state": {
+          "visible": true
+        }
+      }
+    },
+    "durationMs": 113
+  },
+  {
+    "id": "eth-reverse",
+    "action": "call",
+    "ok": true,
+    "raw": {
+      "passed": 8,
+      "failed": 0,
+      "trace": [
+        {
+          "id": "nav",
+          "action": "navigate",
+          "ok": true,
+          "raw": {
+            "navigated": true,
+            "hash": "#/perps/market/ETH"
+          },
+          "durationMs": 3
+        },
+        {
+          "id": "wait",
+          "action": "wait_for",
+          "ok": true,
+          "raw": {
+            "found": true,
+            "target": "testId:perps-market-detail-page"
+          },
+          "durationMs": 122
+        },
+        {
+          "id": "open-modify-menu",
+          "action": "press",
+          "ok": true,
+          "raw": {
+            "clicked": true,
+            "target": "testId:perps-modify-cta-button"
+          },
+          "durationMs": 238
+        },
+        {
+          "id": "wait-menu",
+          "action": "wait_for",
+          "ok": true,
+          "raw": {
+            "found": true,
+            "target": "testId:perps-modify-menu"
+          },
+          "durationMs": 81
+        },
+        {
+          "id": "open-reverse",
+          "action": "press",
+          "ok": true,
+          "raw": {
+            "clicked": true,
+            "target": "testId:perps-modify-menu-reverse-position"
+          },
+          "durationMs": 135
+        },
+        {
+          "id": "wait-modal",
+          "action": "wait_for",
+          "ok": true,
+          "raw": {
+            "found": true,
+            "target": "testId:perps-reverse-position-modal-save"
+          },
+          "durationMs": 85
+        },
+        {
+          "id": "extract",
+          "action": "eval_sync",
+          "ok": true,
+          "raw": "{\"symbol\":\"ETH\",\"screen\":\"reverse_modal\",\"estSize\":\"0.0047 ETH\",\"fees\":\"$0.03\"}",
+          "durationMs": 1
+        },
+        {
+          "id": "close",
+          "action": "press",
+          "ok": true,
+          "raw": {
+            "clicked": true,
+            "target": "testId:perps-reverse-position-modal-cancel"
+          },
+          "durationMs": 334
+        },
+        {
+          "id": "done",
+          "action": "end",
+          "status": "pass",
+          "durationMs": 0
+        }
+      ],
+      "vars": {}
+    },
+    "durationMs": 1024
+  },
+  {
+    "id": "eth-remove-margin",
+    "action": "call",
+    "ok": true,
+    "raw": {
+      "passed": 8,
+      "failed": 0,
+      "trace": [
+        {
+          "id": "nav",
+          "action": "navigate",
+          "ok": true,
+          "raw": {
+            "navigated": true,
+            "hash": "#/perps/market/ETH"
+          },
+          "durationMs": 4
+        },
+        {
+          "id": "wait-detail",
+          "action": "wait_for",
+          "ok": true,
+          "raw": {
+            "found": true,
+            "target": "testId:perps-market-detail-page"
+          },
+          "durationMs": 79
+        },
+        {
+          "id": "open-margin",
+          "action": "press",
+          "ok": true,
+          "raw": {
+            "clicked": true,
+            "target": "testId:perps-margin-card"
+          },
+          "durationMs": 156
+        },
+        {
+          "id": "wait-menu",
+          "action": "wait_for",
+          "ok": true,
+          "raw": {
+            "found": true,
+            "target": "testId:perps-margin-menu"
+          },
+          "durationMs": 138
+        },
+        {
+          "id": "open-remove",
+          "action": "press",
+          "ok": true,
+          "raw": {
+            "clicked": true,
+            "target": "testId:perps-margin-menu-remove"
+          },
+          "durationMs": 149
+        },
+        {
+          "id": "wait-modal",
+          "action": "wait_for",
+          "ok": true,
+          "raw": {
+            "found": true,
+            "target": "testId:perps-edit-margin-modal-save"
+          },
+          "durationMs": 144
+        },
+        {
+          "id": "extract",
+          "action": "eval_sync",
+          "ok": true,
+          "raw": "{\"symbol\":\"ETH\",\"screen\":\"remove_margin\",\"available\":\"$0 USDC\",\"liquidationPrice\":\"$1,610.5\",\"liquidationDistance\":\"31.8%\"}",
+          "durationMs": 2
+        },
+        {
+          "id": "close",
+          "action": "press",
+          "ok": true,
+          "raw": {
+            "clicked": true,
+            "target": "testId:perps-edit-margin-modal-cancel"
+          },
+          "durationMs": 341
+        },
+        {
+          "id": "done",
+          "action": "end",
+          "status": "pass",
+          "durationMs": 0
+        }
+      ],
+      "vars": {}
+    },
+    "durationMs": 1028
+  },
+  {
+    "id": "eth-close",
+    "action": "call",
+    "ok": true,
+    "raw": {
+      "passed": 6,
+      "failed": 0,
+      "trace": [
+        {
+          "id": "nav",
+          "action": "navigate",
+          "ok": true,
+          "raw": {
+            "navigated": true,
+            "hash": "#/perps/market/ETH"
+          },
+          "durationMs": 3
+        },
+        {
+          "id": "wait-detail",
+          "action": "wait_for",
+          "ok": true,
+          "raw": {
+            "found": true,
+            "target": "testId:perps-market-detail-page"
+          },
+          "durationMs": 75
+        },
+        {
+          "id": "open",
+          "action": "press",
+          "ok": true,
+          "raw": {
+            "clicked": true,
+            "target": "testId:perps-close-cta-button"
+          },
+          "durationMs": 150
+        },
+        {
+          "id": "wait-modal",
+          "action": "wait_for",
+          "ok": true,
+          "raw": {
+            "found": true,
+            "target": "testId:perps-close-position-modal-submit"
+          },
+          "durationMs": 185
+        },
+        {
+          "id": "extract",
+          "action": "eval_sync",
+          "ok": true,
+          "raw": "{\"symbol\":\"ETH\",\"screen\":\"close_position\",\"closeAmount\":\"$11.105\",\"margin\":\"$3.68\",\"fees\":\"-$0.02\",\"receive\":\"$3.66\"}",
+          "durationMs": 0
+        },
+        {
+          "id": "close",
+          "action": "eval_sync",
+          "ok": true,
+          "raw": "{\"clicked\":true}",
+          "durationMs": 4
+        },
+        {
+          "id": "done",
+          "action": "end",
+          "status": "pass",
+          "durationMs": 0
+        }
+      ],
+      "vars": {}
+    },
+    "durationMs": 429
+  },
+  {
+    "id": "withdraw",
+    "action": "call",
+    "ok": true,
+    "raw": {
+      "passed": 9,
+      "failed": 0,
+      "trace": [
+        {
+          "id": "nav-home",
+          "action": "navigate",
+          "ok": true,
+          "raw": {
+            "navigated": true,
+            "hash": "#/?tab=perps"
+          },
+          "durationMs": 4
+        },
+        {
+          "id": "wait-home",
+          "action": "wait_for",
+          "ok": true,
+          "raw": {
+            "found": true,
+            "target": "testId:perps-balance-dropdown"
+          },
+          "durationMs": 155
+        },
+        {
+          "id": "open-balance",
+          "action": "press",
+          "ok": true,
+          "raw": {
+            "clicked": true,
+            "target": "testId:perps-balance-dropdown-balance"
+          },
+          "durationMs": 306
+        },
+        {
+          "id": "wait-panel",
+          "action": "wait_for",
+          "ok": true,
+          "raw": {
+            "found": true,
+            "target": "testId:perps-balance-dropdown-panel"
+          },
+          "durationMs": 644
+        },
+        {
+          "id": "open-page",
+          "action": "press",
+          "ok": true,
+          "raw": {
+            "clicked": true,
+            "target": "testId:perps-balance-dropdown-withdraw"
+          },
+          "durationMs": 198
+        },
+        {
+          "id": "wait-page",
+          "action": "wait_for",
+          "ok": true,
+          "raw": {
+            "found": true,
+            "target": "testId:perps-withdraw-page"
+          },
+          "durationMs": 161
+        },
+        {
+          "id": "preset-25",
+          "action": "press",
+          "ok": true,
+          "raw": {
+            "clicked": true,
+            "target": "testId:perps-withdraw-percentage-25"
+          },
+          "durationMs": 313
+        },
+        {
+          "id": "wait-values",
+          "action": "wait",
+          "ok": true,
+          "raw": null,
+          "durationMs": 502
+        },
+        {
+          "id": "extract",
+          "action": "eval_sync",
+          "ok": true,
+          "raw": "{\"screen\":\"withdraw\",\"preset10\":\"10%\",\"preset25\":\"25%\",\"preset50\":\"50%\",\"presetMax\":\"Max\",\"asset\":\"USDC\",\"fee\":\"$1.00\",\"time\":\"~5 min\",\"receive\":\"$214.75\"}",
+          "durationMs": 2
+        },
+        {
+          "id": "done",
+          "action": "end",
+          "status": "pass",
+          "durationMs": 0
+        }
+      ],
+      "vars": {}
+    },
+    "durationMs": 2347
+  },
+  {
+    "id": "done",
+    "action": "end",
+    "status": "pass",
+    "durationMs": 0
+  }
+]

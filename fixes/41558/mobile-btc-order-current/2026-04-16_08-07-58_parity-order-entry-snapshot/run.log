@@ -1,0 +1,55 @@
+Running recipe: Parity snapshot — mobile order entry BTC
+Team: perps
+Pre-conditions: wallet.unlocked, perps.feature_enabled
+Workflow nodes: 12
+
+Pre-conditions: PASS
+
+[nav] navigate to PerpsMarketDetails
+  result: {"navigated":"PerpsMarketDetails","params":{"market":{"symbol":"BTC","name":"BTC","price":"0","change24h":"0","change24hPercent":"0","volume":"0","maxLeverage":"100"}},"previousRoute":{"key":"PerpsMarketDetails-A621_Koqc...
+  PASS
+
+[wait-market] wait for PerpsMarketDetails
+  result: {"route":"PerpsMarketDetails"}
+  PASS
+
+[open] press perps-market-details-long-button
+  result: {"ok":true,"testId":"perps-market-details-long-button","deviceName":"mm-1"}
+  PASS
+
+[wait-order] wait for perps-amount-display-touchable
+  result: {"visible":true}
+  PASS
+
+[press-amount] press perps-amount-display-touchable
+  result: {"ok":true,"testId":"perps-amount-display-touchable","deviceName":"mm-1"}
+  PASS
+
+[wait-keypad] wait for keypad-delete-button
+  result: {"visible":true}
+  PASS
+
+[clear] clear keypad x8
+  result: {"ok":true,"deleted":8}
+  PASS
+
+[type] type 11
+  result: {"ok":true,"value":"11"}
+  PASS
+
+[done-keypad] press perps-order-view-keypad-done
+  result: {"ok":true,"testId":"perps-order-view-keypad-done","deviceName":"mm-1"}
+  PASS
+
+[wait-summary] wait 500ms
+  waited 500ms
+  PASS
+
+[extract] eval_sync
+  result: {"symbol":"BTC","screen":"order_entry","price":"$75,145","change":"+0.73%","margin":"$3.73","liquidationPrice":"$50,731","fees":"$0.02"}
+  PASS
+
+----------------------------------------
+Results: 11/11 passed
+Recipe: PASS
+

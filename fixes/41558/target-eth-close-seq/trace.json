@@ -1,0 +1,62 @@
+[
+  {
+    "id": "nav",
+    "action": "navigate",
+    "ok": true,
+    "raw": {
+      "navigated": true,
+      "hash": "#/perps/market/ETH"
+    },
+    "durationMs": 3
+  },
+  {
+    "id": "wait-detail",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-market-detail-page"
+    },
+    "durationMs": 77
+  },
+  {
+    "id": "open",
+    "action": "press",
+    "ok": true,
+    "raw": {
+      "clicked": true,
+      "target": "testId:perps-close-cta-button"
+    },
+    "durationMs": 140
+  },
+  {
+    "id": "wait-modal",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-close-position-modal-submit"
+    },
+    "durationMs": 78
+  },
+  {
+    "id": "extract",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"symbol\":\"ETH\",\"screen\":\"close_position\",\"closeAmount\":\"$11.10\",\"margin\":\"$3.68\",\"fees\":\"-$0\",\"receive\":\"$3.68\"}",
+    "durationMs": 1
+  },
+  {
+    "id": "close",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"clicked\":true}",
+    "durationMs": 2
+  },
+  {
+    "id": "done",
+    "action": "end",
+    "status": "pass",
+    "durationMs": 0
+  }
+]

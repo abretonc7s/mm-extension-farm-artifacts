@@ -1,0 +1,71 @@
+{
+  "description": "",
+  "hooks": {
+    "pre_conditions": [
+      "wallet.unlocked"
+    ],
+    "setup": [],
+    "teardown": []
+  },
+  "inputs": {},
+  "sourcePath": "",
+  "title": "Parity snapshot — extension ETH close position",
+  "workflow": {
+    "entry": "nav",
+    "nodes": {
+      "nav": {
+        "action": "navigate",
+        "target": "PerpsMarketDetails",
+        "params": {
+          "market": {
+            "symbol": "ETH"
+          }
+        },
+        "next": "wait-detail",
+        "id": "nav"
+      },
+      "wait-detail": {
+        "action": "wait_for",
+        "test_id": "perps-market-detail-page",
+        "timeout_ms": 10000,
+        "next": "open",
+        "id": "wait-detail"
+      },
+      "open": {
+        "action": "press",
+        "test_id": "perps-close-cta-button",
+        "next": "wait-modal",
+        "id": "open"
+      },
+      "wait-modal": {
+        "action": "wait_for",
+        "test_id": "perps-close-position-modal-submit",
+        "timeout_ms": 10000,
+        "next": "extract",
+        "id": "wait-modal"
+      },
+      "extract": {
+        "action": "eval_sync",
+        "expression": "(function(){\n        function textByTestId(id){ var el=document.querySelector('[data-testid=\"'+id+'\"]'); return el?((el.textContent||'').trim()||null):null; }\n        return JSON.stringify({symbol:'ETH',screen:'close_position',closeAmount:textByTestId('close-amount-value'),margin:textByTestId('perps-close-summary-margin-value'),fees:textByTestId('perps-close-summary-fees-value'),receive:textByTestId('perps-close-summary-receive-value')});\n      })()",
+        "next": "close",
+        "id": "extract"
+      },
+      "close": {
+        "action": "eval_sync",
+        "expression": "(function(){var buttons=Array.from(document.querySelectorAll('button[aria-label=\"Close\"],button[aria-label=\"close\"]'));var btn=buttons[0];if(btn){btn.click();}return JSON.stringify({clicked:!!btn});})()",
+        "assert": {
+          "operator": "eq",
+          "field": "clicked",
+          "value": true
+        },
+        "next": "done",
+        "id": "close"
+      },
+      "done": {
+        "action": "end",
+        "status": "pass",
+        "id": "done"
+      }
+    }
+  }
+}

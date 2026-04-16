@@ -1,0 +1,682 @@
+{
+  "env": {
+    "appRoot": "/Users/deeeed/dev/metamask/metamask-mobile-1",
+    "recipePath": "/tmp/mobile-decimal-parity.json",
+    "team": ""
+  },
+  "inputs": {},
+  "last": {
+    "cleared": true
+  },
+  "nodes": {
+    "setup-account": {
+      "action": "call",
+      "description": "call perps/select-account",
+      "finishedAt": "2026-04-15T15:46:02.670Z",
+      "id": "setup-account",
+      "status": "pass",
+      "startedAt": "2026-04-15T15:46:01.655Z",
+      "durationMs": 1015,
+      "next": "",
+      "result": {
+        "ref": "perps/select-account",
+        "title": "Select — switch to account 0x8dc623e964475d4d669da601fd15ea9125469003 and verify",
+        "counts": {
+          "total": 2,
+          "passed": 2,
+          "skipped": 0
+        }
+      }
+    },
+    "setup-testnet": {
+      "action": "call",
+      "description": "call perps/setup-testnet",
+      "finishedAt": "2026-04-15T15:46:04.499Z",
+      "id": "setup-testnet",
+      "status": "pass",
+      "startedAt": "2026-04-15T15:46:02.670Z",
+      "durationMs": 1829,
+      "next": "",
+      "result": {
+        "ref": "perps/setup-testnet",
+        "title": "Setup — enable testnet and verify market data loads",
+        "counts": {
+          "total": 3,
+          "passed": 3,
+          "skipped": 0
+        }
+      }
+    },
+    "setup-clear-eth": {
+      "action": "eval_async",
+      "description": "eval_async",
+      "finishedAt": "2026-04-15T15:46:05.000Z",
+      "id": "setup-clear-eth",
+      "status": "pass",
+      "startedAt": "2026-04-15T15:46:04.499Z",
+      "durationMs": 501,
+      "next": "",
+      "result": {
+        "cleared": true
+      }
+    },
+    "setup-wait-no-eth": {
+      "action": "wait_for",
+      "description": "wait for condition",
+      "finishedAt": "2026-04-15T15:46:05.635Z",
+      "id": "setup-wait-no-eth",
+      "status": "pass",
+      "startedAt": "2026-04-15T15:46:05.000Z",
+      "durationMs": 635,
+      "next": "",
+      "result": {
+        "found": false
+      }
+    },
+    "ac1-home": {
+      "action": "navigate",
+      "description": "navigate to PerpsHomeView",
+      "finishedAt": "2026-04-15T15:46:07.105Z",
+      "id": "ac1-home",
+      "status": "pass",
+      "startedAt": "2026-04-15T15:46:05.635Z",
+      "durationMs": 1470,
+      "next": "ac1-home-wait",
+      "result": {
+        "navigated": "PerpsMarketListView",
+        "params": {},
+        "previousRoute": {
+          "key": "PerpsMarketDetails-QsJTVZrBk1ruJR6Wng9mF",
+          "name": "PerpsMarketDetails",
+          "params": {
+            "market": {
+              "change24h": "0",
+              "change24hPercent": "0",
+              "maxLeverage": "100",
+              "name": "ETH",
+              "price": "0",
+              "symbol": "ETH",
+              "volume": "0"
+            }
+          }
+        },
+        "currentRoute": {
+          "key": "PerpsMarketListView-mn7IPgesb4aMvk3Gn-zZb",
+          "name": "PerpsMarketListView"
+        },
+        "deviceName": "mm-1",
+        "platform": "ios"
+      }
+    },
+    "ac1-home-wait": {
+      "action": "wait_for",
+      "description": "wait for PerpsMarketListView",
+      "finishedAt": "2026-04-15T15:46:08.029Z",
+      "id": "ac1-home-wait",
+      "status": "pass",
+      "startedAt": "2026-04-15T15:46:07.105Z",
+      "durationMs": 924,
+      "next": "ac1-home-shot",
+      "result": {
+        "route": "PerpsMarketListView"
+      }
+    },
+    "ac1-home-shot": {
+      "action": "screenshot",
+      "description": "capture screenshot ac1-home-shot",
+      "finishedAt": "2026-04-15T15:46:11.254Z",
+      "id": "ac1-home-shot",
+      "status": "pass",
+      "startedAt": "2026-04-15T15:46:08.029Z",
+      "durationMs": 3225,
+      "next": "ac2-market",
+      "result": {
+        "screenshot": "/Users/deeeed/dev/metamask/metamask-mobile-1/.agent/screenshots/2026-04-15_234608_mobile-01-home.png"
+      }
+    },
+    "ac2-market": {
+      "action": "call",
+      "description": "call perps/market-discovery",
+      "finishedAt": "2026-04-15T15:46:16.760Z",
+      "id": "ac2-market",
+      "status": "pass",
+      "startedAt": "2026-04-15T15:46:11.254Z",
+      "durationMs": 5506,
+      "next": "ac2-market-shot",
+      "result": {
+        "ref": "perps/market-discovery",
+        "title": "Market Discovery — find ETH in list and verify price loads",
+        "counts": {
+          "total": 8,
+          "passed": 8,
+          "skipped": 0
+        }
+      }
+    },
+    "ac2-market-shot": {
+      "action": "screenshot",
+      "description": "capture screenshot ac2-market-shot",
+      "finishedAt": "2026-04-15T15:46:19.868Z",
+      "id": "ac2-market-shot",
+      "status": "pass",
+      "startedAt": "2026-04-15T15:46:16.760Z",
+      "durationMs": 3108,
+      "next": "ac3-order-press",
+      "result": {
+        "screenshot": "/Users/deeeed/dev/metamask/metamask-mobile-1/.agent/screenshots/2026-04-15_234616_mobile-02-market-detail.png"
+      }
+    },
+    "ac3-order-press": {
+      "action": "press",
+      "description": "press perps-market-details-long-button",
+      "finishedAt": "2026-04-15T15:46:20.253Z",
+      "id": "ac3-order-press",
+      "status": "pass",
+      "startedAt": "2026-04-15T15:46:19.869Z",
+      "durationMs": 384,
+      "next": "ac3-order-wait",
+      "result": {
+        "ok": true,
+        "testId": "perps-market-details-long-button",
+        "deviceName": "mm-1"
+      }
+    },
+    "ac3-order-wait": {
+      "action": "wait_for",
+      "description": "wait for RedesignedConfirmations",
+      "finishedAt": "2026-04-15T15:46:24.554Z",
+      "id": "ac3-order-wait",
+      "status": "pass",
+      "startedAt": "2026-04-15T15:46:20.253Z",
+      "durationMs": 4301,
+      "next": "ac3-order-shot",
+      "result": {
+        "route": "RedesignedConfirmations"
+      }
+    },
+    "ac3-order-shot": {
+      "action": "screenshot",
+      "description": "capture screenshot ac3-order-shot",
+      "finishedAt": "2026-04-15T15:46:27.689Z",
+      "id": "ac3-order-shot",
+      "status": "pass",
+      "startedAt": "2026-04-15T15:46:24.554Z",
+      "durationMs": 3135,
+      "next": "ac3-open-eth",
+      "result": {
+        "screenshot": "/Users/deeeed/dev/metamask/metamask-mobile-1/.agent/screenshots/2026-04-15_234624_mobile-03-order-entry.png"
+      }
+    },
+    "ac3-open-eth": {
+      "action": "call",
+      "description": "call perps/trade-open-market",
+      "finishedAt": "2026-04-15T15:46:46.835Z",
+      "id": "ac3-open-eth",
+      "status": "pass",
+      "startedAt": "2026-04-15T15:46:27.689Z",
+      "durationMs": 19146,
+      "next": "ac3-wait-eth",
+      "result": {
+        "ref": "perps/trade-open-market",
+        "title": "Trade — market long ETH $11",
+        "counts": {
+          "total": 13,
+          "passed": 13,
+          "skipped": 0
+        }
+      }
+    },
+    "ac3-wait-eth": {
+      "action": "wait_for",
+      "description": "wait for condition",
+      "finishedAt": "2026-04-15T15:46:54.477Z",
+      "id": "ac3-wait-eth",
+      "status": "pass",
+      "startedAt": "2026-04-15T15:46:46.835Z",
+      "durationMs": 7642,
+      "next": "ac4-market-reset",
+      "result": {
+        "found": true
+      }
+    },
+    "ac4-market-reset": {
+      "action": "navigate",
+      "description": "navigate to PerpsMarketDetails",
+      "finishedAt": "2026-04-15T15:46:55.420Z",
+      "id": "ac4-market-reset",
+      "status": "pass",
+      "startedAt": "2026-04-15T15:46:54.477Z",
+      "durationMs": 943,
+      "next": "ac4-flip-wait",
+      "result": {
+        "navigated": "PerpsMarketDetails",
+        "params": {
+          "market": {
+            "symbol": "ETH",
+            "name": "ETH",
+            "price": "0",
+            "change24h": "0",
+            "change24hPercent": "0",
+            "volume": "0",
+            "maxLeverage": "100"
+          }
+        },
+        "previousRoute": {
+          "key": "PerpsMarketDetails-QsJTVZrBk1ruJR6Wng9mF",
+          "name": "PerpsMarketDetails",
+          "params": {
+            "market": {
+              "change24h": "-$10.5",
+              "change24hPercent": "-0.45%",
+              "fundingRate": 0.0004196712,
+              "isHip3": false,
+              "isNewMarket": false,
+              "isStale": false,
+              "maxLeverage": "25x",
+              "name": "ETH",
+              "openInterest": "$2.70M",
+              "price": "$2,342.4",
+              "symbol": "ETH",
+              "volume": "$823K",
+              "volumeNumber": 823000
+            }
+          }
+        },
+        "currentRoute": {
+          "key": "PerpsMarketDetails-QsJTVZrBk1ruJR6Wng9mF",
+          "name": "PerpsMarketDetails",
+          "params": {
+            "market": {
+              "change24h": "0",
+              "change24hPercent": "0",
+              "maxLeverage": "100",
+              "name": "ETH",
+              "price": "0",
+              "symbol": "ETH",
+              "volume": "0"
+            }
+          }
+        },
+        "deviceName": "mm-1",
+        "platform": "ios"
+      }
+    },
+    "ac4-flip-wait": {
+      "action": "wait_for",
+      "description": "wait for position-card-flip-icon",
+      "finishedAt": "2026-04-15T15:46:55.713Z",
+      "id": "ac4-flip-wait",
+      "status": "pass",
+      "startedAt": "2026-04-15T15:46:55.420Z",
+      "durationMs": 293,
+      "next": "ac4-flip-press",
+      "result": {
+        "visible": true
+      }
+    },
+    "ac4-flip-press": {
+      "action": "press",
+      "description": "press position-card-flip-icon",
+      "finishedAt": "2026-04-15T15:46:56.116Z",
+      "id": "ac4-flip-press",
+      "status": "pass",
+      "startedAt": "2026-04-15T15:46:55.713Z",
+      "durationMs": 403,
+      "next": "ac4-flip-sheet",
+      "result": {
+        "ok": true,
+        "testId": "position-card-flip-icon",
+        "deviceName": "mm-1"
+      }
+    },
+    "teardown-close-eth": {
+      "action": "eval_async",
+      "description": "eval_async",
+      "finishedAt": "2026-04-15T15:47:13.463Z",
+      "id": "teardown-close-eth",
+      "status": "pass",
+      "startedAt": "2026-04-15T15:47:11.791Z",
+      "durationMs": 1672,
+      "next": "",
+      "result": {
+        "cleared": true
+      }
+    }
+  },
+  "trace": [
+    {
+      "action": "call",
+      "description": "call perps/select-account",
+      "finishedAt": "2026-04-15T15:46:02.670Z",
+      "id": "setup-account",
+      "status": "pass",
+      "startedAt": "2026-04-15T15:46:01.655Z",
+      "durationMs": 1015,
+      "next": "",
+      "result": {
+        "ref": "perps/select-account",
+        "title": "Select — switch to account 0x8dc623e964475d4d669da601fd15ea9125469003 and verify",
+        "counts": {
+          "total": 2,
+          "passed": 2,
+          "skipped": 0
+        }
+      }
+    },
+    {
+      "action": "call",
+      "description": "call perps/setup-testnet",
+      "finishedAt": "2026-04-15T15:46:04.499Z",
+      "id": "setup-testnet",
+      "status": "pass",
+      "startedAt": "2026-04-15T15:46:02.670Z",
+      "durationMs": 1829,
+      "next": "",
+      "result": {
+        "ref": "perps/setup-testnet",
+        "title": "Setup — enable testnet and verify market data loads",
+        "counts": {
+          "total": 3,
+          "passed": 3,
+          "skipped": 0
+        }
+      }
+    },
+    {
+      "action": "eval_async",
+      "description": "eval_async",
+      "finishedAt": "2026-04-15T15:46:05.000Z",
+      "id": "setup-clear-eth",
+      "status": "pass",
+      "startedAt": "2026-04-15T15:46:04.499Z",
+      "durationMs": 501,
+      "next": "",
+      "result": {
+        "cleared": true
+      }
+    },
+    {
+      "action": "wait_for",
+      "description": "wait for condition",
+      "finishedAt": "2026-04-15T15:46:05.635Z",
+      "id": "setup-wait-no-eth",
+      "status": "pass",
+      "startedAt": "2026-04-15T15:46:05.000Z",
+      "durationMs": 635,
+      "next": "",
+      "result": {
+        "found": false
+      }
+    },
+    {
+      "action": "navigate",
+      "description": "navigate to PerpsHomeView",
+      "finishedAt": "2026-04-15T15:46:07.105Z",
+      "id": "ac1-home",
+      "status": "pass",
+      "startedAt": "2026-04-15T15:46:05.635Z",
+      "durationMs": 1470,
+      "next": "ac1-home-wait",
+      "result": {
+        "navigated": "PerpsMarketListView",
+        "params": {},
+        "previousRoute": {
+          "key": "PerpsMarketDetails-QsJTVZrBk1ruJR6Wng9mF",
+          "name": "PerpsMarketDetails",
+          "params": {
+            "market": {
+              "change24h": "0",
+              "change24hPercent": "0",
+              "maxLeverage": "100",
+              "name": "ETH",
+              "price": "0",
+              "symbol": "ETH",
+              "volume": "0"
+            }
+          }
+        },
+        "currentRoute": {
+          "key": "PerpsMarketListView-mn7IPgesb4aMvk3Gn-zZb",
+          "name": "PerpsMarketListView"
+        },
+        "deviceName": "mm-1",
+        "platform": "ios"
+      }
+    },
+    {
+      "action": "wait_for",
+      "description": "wait for PerpsMarketListView",
+      "finishedAt": "2026-04-15T15:46:08.029Z",
+      "id": "ac1-home-wait",
+      "status": "pass",
+      "startedAt": "2026-04-15T15:46:07.105Z",
+      "durationMs": 924,
+      "next": "ac1-home-shot",
+      "result": {
+        "route": "PerpsMarketListView"
+      }
+    },
+    {
+      "action": "screenshot",
+      "description": "capture screenshot ac1-home-shot",
+      "finishedAt": "2026-04-15T15:46:11.254Z",
+      "id": "ac1-home-shot",
+      "status": "pass",
+      "startedAt": "2026-04-15T15:46:08.029Z",
+      "durationMs": 3225,
+      "next": "ac2-market",
+      "result": {
+        "screenshot": "/Users/deeeed/dev/metamask/metamask-mobile-1/.agent/screenshots/2026-04-15_234608_mobile-01-home.png"
+      }
+    },
+    {
+      "action": "call",
+      "description": "call perps/market-discovery",
+      "finishedAt": "2026-04-15T15:46:16.760Z",
+      "id": "ac2-market",
+      "status": "pass",
+      "startedAt": "2026-04-15T15:46:11.254Z",
+      "durationMs": 5506,
+      "next": "ac2-market-shot",
+      "result": {
+        "ref": "perps/market-discovery",
+        "title": "Market Discovery — find ETH in list and verify price loads",
+        "counts": {
+          "total": 8,
+          "passed": 8,
+          "skipped": 0
+        }
+      }
+    },
+    {
+      "action": "screenshot",
+      "description": "capture screenshot ac2-market-shot",
+      "finishedAt": "2026-04-15T15:46:19.868Z",
+      "id": "ac2-market-shot",
+      "status": "pass",
+      "startedAt": "2026-04-15T15:46:16.760Z",
+      "durationMs": 3108,
+      "next": "ac3-order-press",
+      "result": {
+        "screenshot": "/Users/deeeed/dev/metamask/metamask-mobile-1/.agent/screenshots/2026-04-15_234616_mobile-02-market-detail.png"
+      }
+    },
+    {
+      "action": "press",
+      "description": "press perps-market-details-long-button",
+      "finishedAt": "2026-04-15T15:46:20.253Z",
+      "id": "ac3-order-press",
+      "status": "pass",
+      "startedAt": "2026-04-15T15:46:19.869Z",
+      "durationMs": 384,
+      "next": "ac3-order-wait",
+      "result": {
+        "ok": true,
+        "testId": "perps-market-details-long-button",
+        "deviceName": "mm-1"
+      }
+    },
+    {
+      "action": "wait_for",
+      "description": "wait for RedesignedConfirmations",
+      "finishedAt": "2026-04-15T15:46:24.554Z",
+      "id": "ac3-order-wait",
+      "status": "pass",
+      "startedAt": "2026-04-15T15:46:20.253Z",
+      "durationMs": 4301,
+      "next": "ac3-order-shot",
+      "result": {
+        "route": "RedesignedConfirmations"
+      }
+    },
+    {
+      "action": "screenshot",
+      "description": "capture screenshot ac3-order-shot",
+      "finishedAt": "2026-04-15T15:46:27.689Z",
+      "id": "ac3-order-shot",
+      "status": "pass",
+      "startedAt": "2026-04-15T15:46:24.554Z",
+      "durationMs": 3135,
+      "next": "ac3-open-eth",
+      "result": {
+        "screenshot": "/Users/deeeed/dev/metamask/metamask-mobile-1/.agent/screenshots/2026-04-15_234624_mobile-03-order-entry.png"
+      }
+    },
+    {
+      "action": "call",
+      "description": "call perps/trade-open-market",
+      "finishedAt": "2026-04-15T15:46:46.835Z",
+      "id": "ac3-open-eth",
+      "status": "pass",
+      "startedAt": "2026-04-15T15:46:27.689Z",
+      "durationMs": 19146,
+      "next": "ac3-wait-eth",
+      "result": {
+        "ref": "perps/trade-open-market",
+        "title": "Trade — market long ETH $11",
+        "counts": {
+          "total": 13,
+          "passed": 13,
+          "skipped": 0
+        }
+      }
+    },
+    {
+      "action": "wait_for",
+      "description": "wait for condition",
+      "finishedAt": "2026-04-15T15:46:54.477Z",
+      "id": "ac3-wait-eth",
+      "status": "pass",
+      "startedAt": "2026-04-15T15:46:46.835Z",
+      "durationMs": 7642,
+      "next": "ac4-market-reset",
+      "result": {
+        "found": true
+      }
+    },
+    {
+      "action": "navigate",
+      "description": "navigate to PerpsMarketDetails",
+      "finishedAt": "2026-04-15T15:46:55.420Z",
+      "id": "ac4-market-reset",
+      "status": "pass",
+      "startedAt": "2026-04-15T15:46:54.477Z",
+      "durationMs": 943,
+      "next": "ac4-flip-wait",
+      "result": {
+        "navigated": "PerpsMarketDetails",
+        "params": {
+          "market": {
+            "symbol": "ETH",
+            "name": "ETH",
+            "price": "0",
+            "change24h": "0",
+            "change24hPercent": "0",
+            "volume": "0",
+            "maxLeverage": "100"
+          }
+        },
+        "previousRoute": {
+          "key": "PerpsMarketDetails-QsJTVZrBk1ruJR6Wng9mF",
+          "name": "PerpsMarketDetails",
+          "params": {
+            "market": {
+              "change24h": "-$10.5",
+              "change24hPercent": "-0.45%",
+              "fundingRate": 0.0004196712,
+              "isHip3": false,
+              "isNewMarket": false,
+              "isStale": false,
+              "maxLeverage": "25x",
+              "name": "ETH",
+              "openInterest": "$2.70M",
+              "price": "$2,342.4",
+              "symbol": "ETH",
+              "volume": "$823K",
+              "volumeNumber": 823000
+            }
+          }
+        },
+        "currentRoute": {
+          "key": "PerpsMarketDetails-QsJTVZrBk1ruJR6Wng9mF",
+          "name": "PerpsMarketDetails",
+          "params": {
+            "market": {
+              "change24h": "0",
+              "change24hPercent": "0",
+              "maxLeverage": "100",
+              "name": "ETH",
+              "price": "0",
+              "symbol": "ETH",
+              "volume": "0"
+            }
+          }
+        },
+        "deviceName": "mm-1",
+        "platform": "ios"
+      }
+    },
+    {
+      "action": "wait_for",
+      "description": "wait for position-card-flip-icon",
+      "finishedAt": "2026-04-15T15:46:55.713Z",
+      "id": "ac4-flip-wait",
+      "status": "pass",
+      "startedAt": "2026-04-15T15:46:55.420Z",
+      "durationMs": 293,
+      "next": "ac4-flip-press",
+      "result": {
+        "visible": true
+      }
+    },
+    {
+      "action": "press",
+      "description": "press position-card-flip-icon",
+      "finishedAt": "2026-04-15T15:46:56.116Z",
+      "id": "ac4-flip-press",
+      "status": "pass",
+      "startedAt": "2026-04-15T15:46:55.713Z",
+      "durationMs": 403,
+      "next": "ac4-flip-sheet",
+      "result": {
+        "ok": true,
+        "testId": "position-card-flip-icon",
+        "deviceName": "mm-1"
+      }
+    },
+    {
+      "action": "eval_async",
+      "description": "eval_async",
+      "finishedAt": "2026-04-15T15:47:13.463Z",
+      "id": "teardown-close-eth",
+      "status": "pass",
+      "startedAt": "2026-04-15T15:47:11.791Z",
+      "durationMs": 1672,
+      "next": "",
+      "result": {
+        "cleared": true
+      }
+    }
+  ],
+  "vars": {}
+}

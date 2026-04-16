@@ -1,0 +1,52 @@
+{
+  "title": "Parity snapshot — mobile market detail ETH",
+  "description": "",
+  "sourcePath": "/Users/deeeed/dev/metamask/metamask-mobile-1/scripts/perps/agentic/teams/perps/flows/parity-market-detail-snapshot.json",
+  "hooks": {
+    "pre_conditions": [
+      "wallet.unlocked",
+      "perps.feature_enabled"
+    ],
+    "setup": [],
+    "teardown": []
+  },
+  "workflow": {
+    "entry": "nav",
+    "nodes": {
+      "nav": {
+        "action": "navigate",
+        "target": "PerpsMarketDetails",
+        "params": {
+          "market": {
+            "symbol": "ETH",
+            "name": "ETH",
+            "price": "0",
+            "change24h": "0",
+            "change24hPercent": "0",
+            "volume": "0",
+            "maxLeverage": "100"
+          }
+        },
+        "next": "wait",
+        "id": "nav"
+      },
+      "wait": {
+        "action": "wait_for",
+        "route": "PerpsMarketDetails",
+        "next": "extract",
+        "id": "wait"
+      },
+      "extract": {
+        "action": "eval_sync",
+        "expression": "(function(){var a=globalThis.__AGENTIC__; return JSON.stringify({symbol:'ETH',screen:'market_detail',price:a?a.getTextByTestId('perps-market-header-price-title-section'):null,change:a?a.getTextByTestId('perps-market-header-price-change-title-section'):null,oracle:a?a.getTextByTestId('perps-statistics-oracle-price'):null});})()",
+        "next": "done",
+        "id": "extract"
+      },
+      "done": {
+        "action": "end",
+        "status": "pass",
+        "id": "done"
+      }
+    }
+  }
+}

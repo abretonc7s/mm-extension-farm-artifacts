@@ -1,0 +1,64 @@
+flowchart TD
+  %% Mobile perps decimal matrix
+  __entry__(["ENTRY"]) --> node_btc_nav_market
+  node_btc_nav_market["btc-nav-market<br/>navigate"]
+  node_btc_wait_market["btc-wait-market<br/>wait_for"]
+  node_btc_market_data["btc-market-data<br/>eval_sync"]
+  node_btc_open_order["btc-open-order<br/>press"]
+  node_btc_wait_order["btc-wait-order<br/>wait_for"]
+  node_btc_order_data["btc-order-data<br/>eval_sync"]
+  node_eth_nav_market["eth-nav-market<br/>navigate"]
+  node_eth_wait_market["eth-wait-market<br/>wait_for"]
+  node_eth_market_data["eth-market-data<br/>eval_sync"]
+  node_eth_open_order["eth-open-order<br/>press"]
+  node_eth_wait_order["eth-wait-order<br/>wait_for"]
+  node_eth_order_data["eth-order-data<br/>eval_sync"]
+  node_sol_nav_market["sol-nav-market<br/>navigate"]
+  node_sol_wait_market["sol-wait-market<br/>wait_for"]
+  node_sol_market_data["sol-market-data<br/>eval_sync"]
+  node_sol_open_order["sol-open-order<br/>press"]
+  node_sol_wait_order["sol-wait-order<br/>wait_for"]
+  node_sol_order_data["sol-order-data<br/>eval_sync"]
+  node_fartcoin_nav_market["fartcoin-nav-market<br/>navigate"]
+  node_fartcoin_wait_market["fartcoin-wait-market<br/>wait_for"]
+  node_fartcoin_market_data["fartcoin-market-data<br/>eval_sync"]
+  node_fartcoin_open_order["fartcoin-open-order<br/>press"]
+  node_fartcoin_wait_order["fartcoin-wait-order<br/>wait_for"]
+  node_fartcoin_order_data["fartcoin-order-data<br/>eval_sync"]
+  node_pump_nav_market["pump-nav-market<br/>navigate"]
+  node_pump_wait_market["pump-wait-market<br/>wait_for"]
+  node_pump_market_data["pump-market-data<br/>eval_sync"]
+  node_pump_open_order["pump-open-order<br/>press"]
+  node_pump_wait_order["pump-wait-order<br/>wait_for"]
+  node_pump_order_data["pump-order-data<br/>eval_sync"]
+  node_done(["done<br/>PASS"])
+  node_btc_nav_market --> node_btc_wait_market
+  node_btc_wait_market --> node_btc_market_data
+  node_btc_market_data --> node_btc_open_order
+  node_btc_open_order --> node_btc_wait_order
+  node_btc_wait_order --> node_btc_order_data
+  node_btc_order_data --> node_eth_nav_market
+  node_eth_nav_market --> node_eth_wait_market
+  node_eth_wait_market --> node_eth_market_data
+  node_eth_market_data --> node_eth_open_order
+  node_eth_open_order --> node_eth_wait_order
+  node_eth_wait_order --> node_eth_order_data
+  node_eth_order_data --> node_sol_nav_market
+  node_sol_nav_market --> node_sol_wait_market
+  node_sol_wait_market --> node_sol_market_data
+  node_sol_market_data --> node_sol_open_order
+  node_sol_open_order --> node_sol_wait_order
+  node_sol_wait_order --> node_sol_order_data
+  node_sol_order_data --> node_fartcoin_nav_market
+  node_fartcoin_nav_market --> node_fartcoin_wait_market
+  node_fartcoin_wait_market --> node_fartcoin_market_data
+  node_fartcoin_market_data --> node_fartcoin_open_order
+  node_fartcoin_open_order --> node_fartcoin_wait_order
+  node_fartcoin_wait_order --> node_fartcoin_order_data
+  node_fartcoin_order_data --> node_pump_nav_market
+  node_pump_nav_market --> node_pump_wait_market
+  node_pump_wait_market --> node_pump_market_data
+  node_pump_market_data --> node_pump_open_order
+  node_pump_open_order --> node_pump_wait_order
+  node_pump_wait_order --> node_pump_order_data
+  node_pump_order_data --> node_done

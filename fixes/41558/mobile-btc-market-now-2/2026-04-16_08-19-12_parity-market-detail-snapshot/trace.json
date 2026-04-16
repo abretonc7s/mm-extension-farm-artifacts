@@ -1,0 +1,253 @@
+{
+  "env": {
+    "appRoot": "/Users/deeeed/dev/metamask/metamask-mobile-1",
+    "recipePath": "/Users/deeeed/dev/metamask/metamask-mobile-1/scripts/perps/agentic/teams/perps/flows/parity-market-detail-snapshot.json",
+    "team": "perps"
+  },
+  "inputs": {
+    "symbol": "BTC"
+  },
+  "last": {
+    "message": "",
+    "status": "pass"
+  },
+  "nodes": {
+    "nav": {
+      "action": "navigate",
+      "description": "navigate to PerpsMarketDetails",
+      "finishedAt": "2026-04-16T08:19:13.599Z",
+      "id": "nav",
+      "status": "pass",
+      "startedAt": "2026-04-16T08:19:12.372Z",
+      "durationMs": 1227,
+      "next": "wait",
+      "result": {
+        "navigated": "PerpsMarketDetails",
+        "params": {
+          "market": {
+            "symbol": "BTC",
+            "name": "BTC",
+            "price": "0",
+            "change24h": "0",
+            "change24hPercent": "0",
+            "volume": "0",
+            "maxLeverage": "100"
+          }
+        },
+        "previousRoute": {
+          "key": "RedesignedConfirmations-ZM3wqlLnPYCUvNzLjY6T5",
+          "name": "RedesignedConfirmations",
+          "params": {
+            "asset": "ETH",
+            "direction": "long",
+            "existingPosition": {
+              "cumulativeFunding": {
+                "allTime": "0.459332",
+                "sinceChange": "0.008186",
+                "sinceOpen": "0.008186"
+              },
+              "entryPrice": "2362.2",
+              "leverage": {
+                "rawUsd": "-7.421571",
+                "type": "isolated",
+                "value": 3
+              },
+              "liquidationPrice": "1611.2833260964",
+              "marginUsed": "3.581599",
+              "maxLeverage": 25,
+              "positionValue": "11.00317",
+              "returnOnEquity": "-0.0267970536",
+              "size": "0.0047",
+              "stopLossCount": 0,
+              "symbol": "ETH",
+              "takeProfitCount": 0,
+              "unrealizedPnl": "-0.09917"
+            },
+            "hideTPSL": true,
+            "showPerpsHeader": false,
+            "source": "position_screen"
+          }
+        },
+        "currentRoute": {
+          "key": "PerpsMarketDetails-rM0q9foTPpUC9QsTZvkVC",
+          "name": "PerpsMarketDetails",
+          "params": {
+            "market": {
+              "change24h": "0",
+              "change24hPercent": "0",
+              "maxLeverage": "100",
+              "name": "BTC",
+              "price": "0",
+              "symbol": "BTC",
+              "volume": "0"
+            }
+          }
+        },
+        "deviceName": "mm-1",
+        "platform": "ios"
+      }
+    },
+    "wait": {
+      "action": "wait_for",
+      "description": "wait for PerpsMarketDetails",
+      "finishedAt": "2026-04-16T08:19:13.786Z",
+      "id": "wait",
+      "status": "pass",
+      "startedAt": "2026-04-16T08:19:13.600Z",
+      "durationMs": 186,
+      "next": "extract",
+      "result": {
+        "route": "PerpsMarketDetails"
+      }
+    },
+    "extract": {
+      "action": "eval_sync",
+      "description": "eval_sync",
+      "finishedAt": "2026-04-16T08:19:14.359Z",
+      "id": "extract",
+      "status": "pass",
+      "startedAt": "2026-04-16T08:19:13.786Z",
+      "durationMs": 573,
+      "next": "done",
+      "result": {
+        "symbol": "BTC",
+        "screen": "market_detail",
+        "price": "$75,112",
+        "change": "+0.71%",
+        "oracle": "$74,642"
+      }
+    },
+    "done": {
+      "action": "end",
+      "description": "pass end",
+      "finishedAt": "2026-04-16T08:19:14.359Z",
+      "id": "done",
+      "status": "pass",
+      "note": "",
+      "result": {
+        "message": "",
+        "status": "pass"
+      }
+    }
+  },
+  "trace": [
+    {
+      "action": "navigate",
+      "description": "navigate to PerpsMarketDetails",
+      "finishedAt": "2026-04-16T08:19:13.599Z",
+      "id": "nav",
+      "status": "pass",
+      "startedAt": "2026-04-16T08:19:12.372Z",
+      "durationMs": 1227,
+      "next": "wait",
+      "result": {
+        "navigated": "PerpsMarketDetails",
+        "params": {
+          "market": {
+            "symbol": "BTC",
+            "name": "BTC",
+            "price": "0",
+            "change24h": "0",
+            "change24hPercent": "0",
+            "volume": "0",
+            "maxLeverage": "100"
+          }
+        },
+        "previousRoute": {
+          "key": "RedesignedConfirmations-ZM3wqlLnPYCUvNzLjY6T5",
+          "name": "RedesignedConfirmations",
+          "params": {
+            "asset": "ETH",
+            "direction": "long",
+            "existingPosition": {
+              "cumulativeFunding": {
+                "allTime": "0.459332",
+                "sinceChange": "0.008186",
+                "sinceOpen": "0.008186"
+              },
+              "entryPrice": "2362.2",
+              "leverage": {
+                "rawUsd": "-7.421571",
+                "type": "isolated",
+                "value": 3
+              },
+              "liquidationPrice": "1611.2833260964",
+              "marginUsed": "3.581599",
+              "maxLeverage": 25,
+              "positionValue": "11.00317",
+              "returnOnEquity": "-0.0267970536",
+              "size": "0.0047",
+              "stopLossCount": 0,
+              "symbol": "ETH",
+              "takeProfitCount": 0,
+              "unrealizedPnl": "-0.09917"
+            },
+            "hideTPSL": true,
+            "showPerpsHeader": false,
+            "source": "position_screen"
+          }
+        },
+        "currentRoute": {
+          "key": "PerpsMarketDetails-rM0q9foTPpUC9QsTZvkVC",
+          "name": "PerpsMarketDetails",
+          "params": {
+            "market": {
+              "change24h": "0",
+              "change24hPercent": "0",
+              "maxLeverage": "100",
+              "name": "BTC",
+              "price": "0",
+              "symbol": "BTC",
+              "volume": "0"
+            }
+          }
+        },
+        "deviceName": "mm-1",
+        "platform": "ios"
+      }
+    },
+    {
+      "action": "wait_for",
+      "description": "wait for PerpsMarketDetails",
+      "finishedAt": "2026-04-16T08:19:13.786Z",
+      "id": "wait",
+      "status": "pass",
+      "startedAt": "2026-04-16T08:19:13.600Z",
+      "durationMs": 186,
+      "next": "extract",
+      "result": {
+        "route": "PerpsMarketDetails"
+      }
+    },
+    {
+      "action": "eval_sync",
+      "description": "eval_sync",
+      "finishedAt": "2026-04-16T08:19:14.359Z",
+      "id": "extract",
+      "status": "pass",
+      "startedAt": "2026-04-16T08:19:13.786Z",
+      "durationMs": 573,
+      "next": "done",
+      "result": {
+        "symbol": "BTC",
+        "screen": "market_detail",
+        "price": "$75,112",
+        "change": "+0.71%",
+        "oracle": "$74,642"
+      }
+    },
+    {
+      "action": "end",
+      "description": "pass end",
+      "finishedAt": "2026-04-16T08:19:14.359Z",
+      "id": "done",
+      "status": "pass",
+      "note": "",
+      "result": {
+        "message": "",
+        "status": "pass"
+      }
+    }
+  ],
+  "vars": {}
+}

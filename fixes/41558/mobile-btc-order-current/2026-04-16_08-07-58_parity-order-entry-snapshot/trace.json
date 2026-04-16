@@ -1,0 +1,444 @@
+{
+  "env": {
+    "appRoot": "/Users/deeeed/dev/metamask/metamask-mobile-1",
+    "recipePath": "/Users/deeeed/dev/metamask/metamask-mobile-1/scripts/perps/agentic/teams/perps/flows/parity-order-entry-snapshot.json",
+    "team": "perps"
+  },
+  "inputs": {
+    "symbol": "BTC",
+    "usdAmount": 11
+  },
+  "last": {
+    "message": "",
+    "status": "pass"
+  },
+  "nodes": {
+    "nav": {
+      "action": "navigate",
+      "description": "navigate to PerpsMarketDetails",
+      "finishedAt": "2026-04-16T08:07:59.536Z",
+      "id": "nav",
+      "status": "pass",
+      "startedAt": "2026-04-16T08:07:58.872Z",
+      "durationMs": 664,
+      "next": "wait-market",
+      "result": {
+        "navigated": "PerpsMarketDetails",
+        "params": {
+          "market": {
+            "symbol": "BTC",
+            "name": "BTC",
+            "price": "0",
+            "change24h": "0",
+            "change24hPercent": "0",
+            "volume": "0",
+            "maxLeverage": "100"
+          }
+        },
+        "previousRoute": {
+          "key": "PerpsMarketDetails-A621_KoqcG1KodBj1Igew",
+          "name": "PerpsMarketDetails",
+          "params": {
+            "market": {
+              "change24h": "0",
+              "change24hPercent": "0",
+              "maxLeverage": "100",
+              "name": "BTC",
+              "price": "0",
+              "symbol": "BTC",
+              "volume": "0"
+            }
+          }
+        },
+        "currentRoute": {
+          "key": "PerpsMarketDetails-A621_KoqcG1KodBj1Igew",
+          "name": "PerpsMarketDetails",
+          "params": {
+            "market": {
+              "change24h": "0",
+              "change24hPercent": "0",
+              "maxLeverage": "100",
+              "name": "BTC",
+              "price": "0",
+              "symbol": "BTC",
+              "volume": "0"
+            }
+          }
+        },
+        "deviceName": "mm-1",
+        "platform": "ios"
+      }
+    },
+    "wait-market": {
+      "action": "wait_for",
+      "description": "wait for PerpsMarketDetails",
+      "finishedAt": "2026-04-16T08:07:59.687Z",
+      "id": "wait-market",
+      "status": "pass",
+      "startedAt": "2026-04-16T08:07:59.536Z",
+      "durationMs": 151,
+      "next": "open",
+      "result": {
+        "route": "PerpsMarketDetails"
+      }
+    },
+    "open": {
+      "action": "press",
+      "description": "press perps-market-details-long-button",
+      "finishedAt": "2026-04-16T08:07:59.887Z",
+      "id": "open",
+      "status": "pass",
+      "startedAt": "2026-04-16T08:07:59.687Z",
+      "durationMs": 200,
+      "next": "wait-order",
+      "result": {
+        "ok": true,
+        "testId": "perps-market-details-long-button",
+        "deviceName": "mm-1"
+      }
+    },
+    "wait-order": {
+      "action": "wait_for",
+      "description": "wait for perps-amount-display-touchable",
+      "finishedAt": "2026-04-16T08:08:03.930Z",
+      "id": "wait-order",
+      "status": "pass",
+      "startedAt": "2026-04-16T08:07:59.887Z",
+      "durationMs": 4043,
+      "next": "press-amount",
+      "result": {
+        "visible": true
+      }
+    },
+    "press-amount": {
+      "action": "press",
+      "description": "press perps-amount-display-touchable",
+      "finishedAt": "2026-04-16T08:08:04.524Z",
+      "id": "press-amount",
+      "status": "pass",
+      "startedAt": "2026-04-16T08:08:03.930Z",
+      "durationMs": 594,
+      "next": "wait-keypad",
+      "result": {
+        "ok": true,
+        "testId": "perps-amount-display-touchable",
+        "deviceName": "mm-1"
+      }
+    },
+    "wait-keypad": {
+      "action": "wait_for",
+      "description": "wait for keypad-delete-button",
+      "finishedAt": "2026-04-16T08:08:04.811Z",
+      "id": "wait-keypad",
+      "status": "pass",
+      "startedAt": "2026-04-16T08:08:04.524Z",
+      "durationMs": 287,
+      "next": "clear",
+      "result": {
+        "visible": true
+      }
+    },
+    "clear": {
+      "action": "clear_keypad",
+      "description": "clear keypad x8",
+      "finishedAt": "2026-04-16T08:08:08.601Z",
+      "id": "clear",
+      "status": "pass",
+      "startedAt": "2026-04-16T08:08:04.811Z",
+      "durationMs": 3790,
+      "next": "type",
+      "result": {
+        "ok": true,
+        "deleted": 8
+      }
+    },
+    "type": {
+      "action": "type_keypad",
+      "description": "type 11",
+      "finishedAt": "2026-04-16T08:08:10.040Z",
+      "id": "type",
+      "status": "pass",
+      "startedAt": "2026-04-16T08:08:08.601Z",
+      "durationMs": 1439,
+      "next": "done-keypad",
+      "result": {
+        "ok": true,
+        "value": "11"
+      }
+    },
+    "done-keypad": {
+      "action": "press",
+      "description": "press perps-order-view-keypad-done",
+      "finishedAt": "2026-04-16T08:08:11.989Z",
+      "id": "done-keypad",
+      "status": "pass",
+      "startedAt": "2026-04-16T08:08:10.040Z",
+      "durationMs": 1949,
+      "next": "wait-summary",
+      "result": {
+        "ok": true,
+        "testId": "perps-order-view-keypad-done",
+        "deviceName": "mm-1"
+      }
+    },
+    "wait-summary": {
+      "action": "wait",
+      "description": "wait 500ms",
+      "finishedAt": "2026-04-16T08:08:12.815Z",
+      "id": "wait-summary",
+      "status": "pass",
+      "startedAt": "2026-04-16T08:08:11.989Z",
+      "durationMs": 826,
+      "next": "extract",
+      "result": {
+        "waitedMs": 500
+      }
+    },
+    "extract": {
+      "action": "eval_sync",
+      "description": "eval_sync",
+      "finishedAt": "2026-04-16T08:08:13.989Z",
+      "id": "extract",
+      "status": "pass",
+      "startedAt": "2026-04-16T08:08:12.815Z",
+      "durationMs": 1174,
+      "next": "done",
+      "result": {
+        "symbol": "BTC",
+        "screen": "order_entry",
+        "price": "$75,145",
+        "change": "+0.73%",
+        "margin": "$3.73",
+        "liquidationPrice": "$50,731",
+        "fees": "$0.02"
+      }
+    },
+    "done": {
+      "action": "end",
+      "description": "pass end",
+      "finishedAt": "2026-04-16T08:08:13.990Z",
+      "id": "done",
+      "status": "pass",
+      "note": "",
+      "result": {
+        "message": "",
+        "status": "pass"
+      }
+    }
+  },
+  "trace": [
+    {
+      "action": "navigate",
+      "description": "navigate to PerpsMarketDetails",
+      "finishedAt": "2026-04-16T08:07:59.536Z",
+      "id": "nav",
+      "status": "pass",
+      "startedAt": "2026-04-16T08:07:58.872Z",
+      "durationMs": 664,
+      "next": "wait-market",
+      "result": {
+        "navigated": "PerpsMarketDetails",
+        "params": {
+          "market": {
+            "symbol": "BTC",
+            "name": "BTC",
+            "price": "0",
+            "change24h": "0",
+            "change24hPercent": "0",
+            "volume": "0",
+            "maxLeverage": "100"
+          }
+        },
+        "previousRoute": {
+          "key": "PerpsMarketDetails-A621_KoqcG1KodBj1Igew",
+          "name": "PerpsMarketDetails",
+          "params": {
+            "market": {
+              "change24h": "0",
+              "change24hPercent": "0",
+              "maxLeverage": "100",
+              "name": "BTC",
+              "price": "0",
+              "symbol": "BTC",
+              "volume": "0"
+            }
+          }
+        },
+        "currentRoute": {
+          "key": "PerpsMarketDetails-A621_KoqcG1KodBj1Igew",
+          "name": "PerpsMarketDetails",
+          "params": {
+            "market": {
+              "change24h": "0",
+              "change24hPercent": "0",
+              "maxLeverage": "100",
+              "name": "BTC",
+              "price": "0",
+              "symbol": "BTC",
+              "volume": "0"
+            }
+          }
+        },
+        "deviceName": "mm-1",
+        "platform": "ios"
+      }
+    },
+    {
+      "action": "wait_for",
+      "description": "wait for PerpsMarketDetails",
+      "finishedAt": "2026-04-16T08:07:59.687Z",
+      "id": "wait-market",
+      "status": "pass",
+      "startedAt": "2026-04-16T08:07:59.536Z",
+      "durationMs": 151,
+      "next": "open",
+      "result": {
+        "route": "PerpsMarketDetails"
+      }
+    },
+    {
+      "action": "press",
+      "description": "press perps-market-details-long-button",
+      "finishedAt": "2026-04-16T08:07:59.887Z",
+      "id": "open",
+      "status": "pass",
+      "startedAt": "2026-04-16T08:07:59.687Z",
+      "durationMs": 200,
+      "next": "wait-order",
+      "result": {
+        "ok": true,
+        "testId": "perps-market-details-long-button",
+        "deviceName": "mm-1"
+      }
+    },
+    {
+      "action": "wait_for",
+      "description": "wait for perps-amount-display-touchable",
+      "finishedAt": "2026-04-16T08:08:03.930Z",
+      "id": "wait-order",
+      "status": "pass",
+      "startedAt": "2026-04-16T08:07:59.887Z",
+      "durationMs": 4043,
+      "next": "press-amount",
+      "result": {
+        "visible": true
+      }
+    },
+    {
+      "action": "press",
+      "description": "press perps-amount-display-touchable",
+      "finishedAt": "2026-04-16T08:08:04.524Z",
+      "id": "press-amount",
+      "status": "pass",
+      "startedAt": "2026-04-16T08:08:03.930Z",
+      "durationMs": 594,
+      "next": "wait-keypad",
+      "result": {
+        "ok": true,
+        "testId": "perps-amount-display-touchable",
+        "deviceName": "mm-1"
+      }
+    },
+    {
+      "action": "wait_for",
+      "description": "wait for keypad-delete-button",
+      "finishedAt": "2026-04-16T08:08:04.811Z",
+      "id": "wait-keypad",
+      "status": "pass",
+      "startedAt": "2026-04-16T08:08:04.524Z",
+      "durationMs": 287,
+      "next": "clear",
+      "result": {
+        "visible": true
+      }
+    },
+    {
+      "action": "clear_keypad",
+      "description": "clear keypad x8",
+      "finishedAt": "2026-04-16T08:08:08.601Z",
+      "id": "clear",
+      "status": "pass",
+      "startedAt": "2026-04-16T08:08:04.811Z",
+      "durationMs": 3790,
+      "next": "type",
+      "result": {
+        "ok": true,
+        "deleted": 8
+      }
+    },
+    {
+      "action": "type_keypad",
+      "description": "type 11",
+      "finishedAt": "2026-04-16T08:08:10.040Z",
+      "id": "type",
+      "status": "pass",
+      "startedAt": "2026-04-16T08:08:08.601Z",
+      "durationMs": 1439,
+      "next": "done-keypad",
+      "result": {
+        "ok": true,
+        "value": "11"
+      }
+    },
+    {
+      "action": "press",
+      "description": "press perps-order-view-keypad-done",
+      "finishedAt": "2026-04-16T08:08:11.989Z",
+      "id": "done-keypad",
+      "status": "pass",
+      "startedAt": "2026-04-16T08:08:10.040Z",
+      "durationMs": 1949,
+      "next": "wait-summary",
+      "result": {
+        "ok": true,
+        "testId": "perps-order-view-keypad-done",
+        "deviceName": "mm-1"
+      }
+    },
+    {
+      "action": "wait",
+      "description": "wait 500ms",
+      "finishedAt": "2026-04-16T08:08:12.815Z",
+      "id": "wait-summary",
+      "status": "pass",
+      "startedAt": "2026-04-16T08:08:11.989Z",
+      "durationMs": 826,
+      "next": "extract",
+      "result": {
+        "waitedMs": 500
+      }
+    },
+    {
+      "action": "eval_sync",
+      "description": "eval_sync",
+      "finishedAt": "2026-04-16T08:08:13.989Z",
+      "id": "extract",
+      "status": "pass",
+      "startedAt": "2026-04-16T08:08:12.815Z",
+      "durationMs": 1174,
+      "next": "done",
+      "result": {
+        "symbol": "BTC",
+        "screen": "order_entry",
+        "price": "$75,145",
+        "change": "+0.73%",
+        "margin": "$3.73",
+        "liquidationPrice": "$50,731",
+        "fees": "$0.02"
+      }
+    },
+    {
+      "action": "end",
+      "description": "pass end",
+      "finishedAt": "2026-04-16T08:08:13.990Z",
+      "id": "done",
+      "status": "pass",
+      "note": "",
+      "result": {
+        "message": "",
+        "status": "pass"
+      }
+    }
+  ],
+  "vars": {}
+}

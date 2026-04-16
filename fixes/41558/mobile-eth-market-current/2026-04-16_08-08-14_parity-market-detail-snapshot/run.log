@@ -1,0 +1,23 @@
+Running recipe: Parity snapshot — mobile market detail ETH
+Team: perps
+Pre-conditions: wallet.unlocked, perps.feature_enabled
+Workflow nodes: 4
+
+Pre-conditions: PASS
+
+[nav] navigate to PerpsMarketDetails
+  result: {"navigated":"PerpsMarketDetails","params":{"market":{"symbol":"ETH","name":"ETH","price":"0","change24h":"0","change24hPercent":"0","volume":"0","maxLeverage":"100"}},"previousRoute":{"key":"RedesignedConfirmations-dalY...
+  PASS
+
+[wait] wait for PerpsMarketDetails
+  result: {"route":"PerpsMarketDetails"}
+  PASS
+
+[extract] eval_sync
+  result: {"symbol":"ETH","screen":"market_detail","price":"$2,344.8","change":"+0.68%","oracle":"$2,338.2"}
+  PASS
+
+----------------------------------------
+Results: 3/3 passed
+Recipe: PASS
+

@@ -1,0 +1,22 @@
+flowchart TD
+  %% debug order submit
+  __entry__(["ENTRY"]) --> node_nav
+  node_nav["nav<br/>navigate"]
+  node_wait_detail["wait-detail<br/>wait_for"]
+  node_open["open<br/>press"]
+  node_wait_entry["wait-entry<br/>wait_for"]
+  node_set["set<br/>set_input"]
+  node_shot1["shot1<br/>screenshot"]
+  node_submit["submit<br/>press"]
+  node_wait["wait<br/>wait"]
+  node_shot2["shot2<br/>screenshot"]
+  node_done(["done<br/>PASS"])
+  node_nav --> node_wait_detail
+  node_wait_detail --> node_open
+  node_open --> node_wait_entry
+  node_wait_entry --> node_set
+  node_set --> node_shot1
+  node_shot1 --> node_submit
+  node_submit --> node_wait
+  node_wait --> node_shot2
+  node_shot2 --> node_done

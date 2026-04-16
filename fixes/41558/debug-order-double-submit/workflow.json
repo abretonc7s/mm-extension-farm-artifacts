@@ -1,0 +1,98 @@
+{
+  "description": "",
+  "hooks": {
+    "pre_conditions": [
+      "wallet.unlocked"
+    ],
+    "setup": [],
+    "teardown": []
+  },
+  "inputs": {},
+  "sourcePath": "",
+  "title": "debug order double submit",
+  "workflow": {
+    "entry": "nav",
+    "nodes": {
+      "nav": {
+        "action": "navigate",
+        "target": "PerpsMarketDetails",
+        "params": {
+          "market": {
+            "symbol": "ETH"
+          }
+        },
+        "next": "wait-detail",
+        "id": "nav"
+      },
+      "wait-detail": {
+        "action": "wait_for",
+        "test_id": "perps-market-detail-page",
+        "timeout_ms": 10000,
+        "next": "open",
+        "id": "wait-detail"
+      },
+      "open": {
+        "action": "press",
+        "test_id": "perps-long-cta-button",
+        "next": "wait-entry",
+        "id": "open"
+      },
+      "wait-entry": {
+        "action": "wait_for",
+        "test_id": "perps-order-entry-page",
+        "timeout_ms": 10000,
+        "next": "set",
+        "id": "wait-entry"
+      },
+      "set": {
+        "action": "set_input",
+        "test_id": "amount-input-field",
+        "value": "10",
+        "next": "submit1",
+        "id": "set"
+      },
+      "submit1": {
+        "action": "press",
+        "test_id": "submit-order-button",
+        "next": "wait-first",
+        "id": "submit1"
+      },
+      "wait-first": {
+        "action": "wait",
+        "ms": 2500,
+        "next": "shot1",
+        "id": "wait-first"
+      },
+      "shot1": {
+        "action": "screenshot",
+        "filename": "double-submit-after-first",
+        "next": "submit2",
+        "id": "shot1"
+      },
+      "submit2": {
+        "action": "press",
+        "test_id": "submit-order-button",
+        "next": "wait-position",
+        "id": "submit2"
+      },
+      "wait-position": {
+        "action": "wait_for",
+        "test_id": "perps-position-cta-buttons",
+        "timeout_ms": 15000,
+        "next": "shot2",
+        "id": "wait-position"
+      },
+      "shot2": {
+        "action": "screenshot",
+        "filename": "double-submit-after-second",
+        "next": "done",
+        "id": "shot2"
+      },
+      "done": {
+        "action": "end",
+        "status": "pass",
+        "id": "done"
+      }
+    }
+  }
+}

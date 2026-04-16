@@ -1,0 +1,98 @@
+[
+  {
+    "id": "nav",
+    "action": "navigate",
+    "ok": true,
+    "raw": {
+      "navigated": true,
+      "hash": "#/perps/market/ETH"
+    },
+    "durationMs": 4
+  },
+  {
+    "id": "wait-detail",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-market-detail-page"
+    },
+    "durationMs": 72
+  },
+  {
+    "id": "open",
+    "action": "press",
+    "ok": true,
+    "raw": {
+      "clicked": true,
+      "target": "testId:perps-long-cta-button"
+    },
+    "durationMs": 111
+  },
+  {
+    "id": "wait-entry",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-order-entry-page"
+    },
+    "durationMs": 70
+  },
+  {
+    "id": "set",
+    "action": "set_input",
+    "ok": true,
+    "raw": {
+      "filled": true,
+      "fallback": true
+    },
+    "durationMs": 163
+  },
+  {
+    "id": "submit1",
+    "action": "press",
+    "ok": true,
+    "raw": {
+      "clicked": true,
+      "target": "testId:submit-order-button"
+    },
+    "durationMs": 117
+  },
+  {
+    "id": "wait-first",
+    "action": "wait",
+    "ok": true,
+    "raw": null,
+    "durationMs": 2501
+  },
+  {
+    "id": "shot1",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "/Users/deeeed/dev/metamask/metamask-extension-3/temp/agentic/recipes/test-artifacts/screenshots/double-submit-after-first-1776270662352.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 99
+  },
+  {
+    "id": "submit2",
+    "action": "press",
+    "ok": true,
+    "raw": {
+      "clicked": true,
+      "target": "testId:submit-order-button"
+    },
+    "durationMs": 2589
+  },
+  {
+    "id": "wait-position",
+    "action": "wait_for",
+    "ok": false,
+    "raw": null,
+    "durationMs": 15075,
+    "error": "Wait timed out: locator.waitFor: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('[data-testid=\"perps-position-cta-buttons\"]') to be visible\u001b[22m\n"
+  }
+]

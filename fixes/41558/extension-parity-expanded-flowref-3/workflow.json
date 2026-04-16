@@ -1,0 +1,149 @@
+{
+  "description": "",
+  "hooks": {
+    "pre_conditions": [
+      "wallet.unlocked"
+    ],
+    "setup": [],
+    "teardown": []
+  },
+  "inputs": {},
+  "sourcePath": "",
+  "title": "PR #41558 extension decimal parity expanded",
+  "workflow": {
+    "entry": "btc-market",
+    "nodes": {
+      "btc-market": {
+        "action": "call",
+        "ref": "perps/parity-market-detail-snapshot",
+        "params": {
+          "symbol": "BTC"
+        },
+        "next": "btc-order",
+        "id": "btc-market"
+      },
+      "btc-order": {
+        "action": "call",
+        "ref": "perps/parity-order-entry-snapshot",
+        "params": {
+          "symbol": "BTC",
+          "amount": "11"
+        },
+        "next": "eth-market",
+        "id": "btc-order"
+      },
+      "eth-market": {
+        "action": "call",
+        "ref": "perps/parity-market-detail-snapshot",
+        "params": {
+          "symbol": "ETH"
+        },
+        "next": "eth-order",
+        "id": "eth-market"
+      },
+      "eth-order": {
+        "action": "call",
+        "ref": "perps/parity-order-entry-snapshot",
+        "params": {
+          "symbol": "ETH",
+          "amount": "11"
+        },
+        "next": "sol-market",
+        "id": "eth-order"
+      },
+      "sol-market": {
+        "action": "call",
+        "ref": "perps/parity-market-detail-snapshot",
+        "params": {
+          "symbol": "SOL"
+        },
+        "next": "sol-order",
+        "id": "sol-market"
+      },
+      "sol-order": {
+        "action": "call",
+        "ref": "perps/parity-order-entry-snapshot",
+        "params": {
+          "symbol": "SOL",
+          "amount": "11"
+        },
+        "next": "fart-market",
+        "id": "sol-order"
+      },
+      "fart-market": {
+        "action": "call",
+        "ref": "perps/parity-market-detail-snapshot",
+        "params": {
+          "symbol": "FARTCOIN"
+        },
+        "next": "fart-order",
+        "id": "fart-market"
+      },
+      "fart-order": {
+        "action": "call",
+        "ref": "perps/parity-order-entry-snapshot",
+        "params": {
+          "symbol": "FARTCOIN",
+          "amount": "11"
+        },
+        "next": "pump-market",
+        "id": "fart-order"
+      },
+      "pump-market": {
+        "action": "call",
+        "ref": "perps/parity-market-detail-snapshot",
+        "params": {
+          "symbol": "PUMP"
+        },
+        "next": "pump-order",
+        "id": "pump-market"
+      },
+      "pump-order": {
+        "action": "call",
+        "ref": "perps/parity-order-entry-snapshot",
+        "params": {
+          "symbol": "PUMP",
+          "amount": "11"
+        },
+        "next": "eth-position",
+        "id": "pump-order"
+      },
+      "eth-position": {
+        "action": "call",
+        "ref": "perps/parity-eth-position-detail",
+        "next": "eth-reverse",
+        "id": "eth-position"
+      },
+      "eth-reverse": {
+        "action": "call",
+        "ref": "perps/parity-eth-reverse-modal",
+        "next": "eth-remove-margin",
+        "id": "eth-reverse"
+      },
+      "eth-remove-margin": {
+        "action": "call",
+        "ref": "perps/parity-eth-remove-margin",
+        "next": "eth-close",
+        "id": "eth-remove-margin"
+      },
+      "eth-close": {
+        "action": "call",
+        "ref": "perps/parity-eth-close-position",
+        "next": "withdraw",
+        "id": "eth-close"
+      },
+      "withdraw": {
+        "action": "call",
+        "ref": "perps/parity-withdraw-snapshot",
+        "next": "done",
+        "id": "withdraw"
+      },
+      "done": {
+        "action": "end",
+        "status": "pass",
+        "message": "Captured expanded extension perps decimal parity values via composable flows.",
+        "id": "done"
+      }
+    }
+  }
+}

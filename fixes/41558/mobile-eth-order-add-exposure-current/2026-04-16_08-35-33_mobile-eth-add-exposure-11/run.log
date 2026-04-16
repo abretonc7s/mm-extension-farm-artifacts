@@ -1,0 +1,58 @@
+Running recipe: Mobile ETH add exposure with 11 USD
+Pre-conditions: wallet.unlocked, perps.feature_enabled
+Workflow nodes: 13
+
+Pre-conditions: PASS
+
+[nav] navigate to PerpsMarketDetails
+  result: {"navigated":"PerpsMarketDetails","params":{"market":{"symbol":"ETH","name":"ETH","price":"0","change24h":"0","change24hPercent":"0","volume":"0","maxLeverage":"100"}},"previousRoute":{"key":"RedesignedConfirmations-NEHf...
+  PASS
+
+[wait-market] wait for PerpsMarketDetails
+  result: {"route":"PerpsMarketDetails"}
+  PASS
+
+[open-modify] press perps-market-details-modify-button
+  result: {"ok":true,"testId":"perps-market-details-modify-button","deviceName":"mm-1"}
+  PASS
+
+[press-increase] eval_sync
+  result: {"ok":true,"text":"Increase exposure"}
+  PASS
+
+[wait-order] wait for perps-amount-display-touchable
+  result: {"visible":true}
+  PASS
+
+[press-amount] press perps-amount-display-touchable
+  result: {"ok":true,"testId":"perps-amount-display-touchable","deviceName":"mm-1"}
+  PASS
+
+[wait-keypad] wait for keypad-delete-button
+  result: {"visible":true}
+  PASS
+
+[clear] clear keypad x8
+  result: {"ok":true,"deleted":8}
+  PASS
+
+[type] type 11
+  result: {"ok":true,"value":"11"}
+  PASS
+
+[done-keypad] press perps-order-view-keypad-done
+  result: {"ok":true,"testId":"perps-order-view-keypad-done","deviceName":"mm-1"}
+  PASS
+
+[wait-summary] wait 1500ms
+  waited 1500ms
+  PASS
+
+[extract] eval_sync
+  result: {"symbol":"ETH","screen":"order_entry","price":"$2,348.5","change":"+0.86%","margin":"$3.67","liquidationPrice":"$1,597.6","fees":"$0.02"}
+  PASS
+
+----------------------------------------
+Results: 12/12 passed
+Recipe: PASS
+

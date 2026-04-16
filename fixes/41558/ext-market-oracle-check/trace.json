@@ -1,0 +1,42 @@
+[
+  {
+    "id": "nav",
+    "action": "navigate",
+    "ok": true,
+    "raw": {
+      "navigated": true,
+      "hash": "#/perps/market/ETH"
+    },
+    "durationMs": 6
+  },
+  {
+    "id": "wait",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-market-detail-page"
+    },
+    "durationMs": 67
+  },
+  {
+    "id": "wait-price",
+    "action": "wait_for",
+    "ok": true,
+    "raw": "{\"ready\":true}",
+    "durationMs": 0
+  },
+  {
+    "id": "extract",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"symbol\":\"ETH\",\"screen\":\"market_detail\",\"price\":\"$2,363.3\",\"change\":\"+0.79%\",\"oracle\":null}",
+    "durationMs": 1
+  },
+  {
+    "id": "done",
+    "action": "end",
+    "status": "pass",
+    "durationMs": 0
+  }
+]

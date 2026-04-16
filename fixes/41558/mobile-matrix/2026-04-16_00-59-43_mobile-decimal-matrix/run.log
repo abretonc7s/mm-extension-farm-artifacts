@@ -1,0 +1,95 @@
+Running recipe: Mobile perps decimal matrix
+Team: perps
+Pre-conditions: wallet.unlocked, perps.feature_enabled
+Workflow nodes: 22
+
+Pre-conditions: PASS
+
+[btc-nav-market] navigate to PerpsMarketDetails
+  result: {"navigated":"PerpsMarketDetails","params":{"market":{"symbol":"BTC","name":"BTC","price":"0","change24h":"0","change24hPercent":"0","volume":"0","maxLeverage":"100"}},"previousRoute":{"key":"RedesignedConfirmations-HNbV...
+  PASS
+
+[btc-wait-market] wait for PerpsMarketDetails
+  result: {"route":"PerpsMarketDetails"}
+  PASS
+
+[btc-market-data] eval_sync
+  result: {"symbol":"BTC","screen":"market_detail","title":"BTC-USD","price":"$75,037","change":"-1.06%","header":["BTC-USD","BTC-USD","BTC-USD","BTC-USD","BTC-USD","BTC-USD","BTC-USD","BTC-USD","BTC-USD","BTC-USD","BTC-USD","BTC-...
+  PASS
+
+[btc-open-order] press perps-market-details-long-button
+  result: {"ok":true,"testId":"perps-market-details-long-button","deviceName":"mm-1"}
+  PASS
+
+[btc-wait-order] wait for RedesignedConfirmations
+  result: {"route":"RedesignedConfirmations"}
+  PASS
+
+[btc-order-data] eval_sync
+  result: {"symbol":"BTC","screen":"order_entry","title":"Long BTC","price":"$75,043","change":"-1.06%","header":["Long BTC","$75,043","-1.06%","Market","Long BTC","$75,043","-1.06%","Market","Long BTC","$75,043","-1.06%","Long BT...
+  PASS
+
+[eth-nav-market] navigate to PerpsMarketDetails
+  result: {"navigated":"PerpsMarketDetails","params":{"market":{"symbol":"ETH","name":"ETH","price":"0","change24h":"0","change24hPercent":"0","volume":"0","maxLeverage":"100"}},"previousRoute":{"key":"RedesignedConfirmations-0KYK...
+  PASS
+
+[eth-wait-market] wait for PerpsMarketDetails
+  result: {"route":"PerpsMarketDetails"}
+  PASS
+
+[eth-market-data] eval_sync
+  result: {"symbol":"ETH","screen":"market_detail","title":"ETH-USD","price":"$2,368.1","change":"+1.12%","header":["ETH-USD","ETH-USD","ETH-USD","ETH-USD","ETH-USD","ETH-USD","ETH-USD","ETH-USD","ETH-USD","ETH-USD","ETH-USD","ETH...
+  PASS
+
+[eth-open-order] press perps-market-details-long-button
+  result: {"ok":true,"testId":"perps-market-details-long-button","deviceName":"mm-1"}
+  PASS
+
+[eth-wait-order] wait for RedesignedConfirmations
+  result: {"route":"RedesignedConfirmations"}
+  PASS
+
+[eth-order-data] eval_sync
+  result: {"symbol":"ETH","screen":"order_entry","title":"Long ETH","price":"$2,367.5","change":"+1.12%","header":["Long ETH","$2,367.5","+1.12%","Market","Long ETH","$2,367.5","+1.12%","Market","Long ETH","$2,367.5","+1.12%","Lon...
+  PASS
+
+[sol-nav-market] navigate to PerpsMarketDetails
+  result: {"navigated":"PerpsMarketDetails","params":{"market":{"symbol":"SOL","name":"SOL","price":"0","change24h":"0","change24hPercent":"0","volume":"0","maxLeverage":"100"}},"previousRoute":{"key":"RedesignedConfirmations-HtWY...
+  PASS
+
+[sol-wait-market] wait for PerpsMarketDetails
+  result: {"route":"PerpsMarketDetails"}
+  PASS
+
+[sol-market-data] eval_sync
+  result: {"symbol":"SOL","screen":"market_detail","title":"SOL-USD","price":"$85.06","change":"+1.36%","header":["SOL-USD","SOL-USD","SOL-USD","SOL-USD","SOL-USD","SOL-USD","SOL-USD","SOL-USD","SOL-USD","SOL-USD","SOL-USD","SOL-U...
+  PASS
+
+[fartcoin-nav-market] navigate to PerpsMarketDetails
+  result: {"navigated":"PerpsMarketDetails","params":{"market":{"symbol":"FARTCOIN","name":"FARTCOIN","price":"0","change24h":"0","change24hPercent":"0","volume":"0","maxLeverage":"100"}},"previousRoute":{"key":"PerpsMarketDetails...
+  PASS
+
+[fartcoin-wait-market] wait for PerpsMarketDetails
+  result: {"route":"PerpsMarketDetails"}
+  PASS
+
+[fartcoin-market-data] eval_sync
+  result: {"symbol":"FARTCOIN","screen":"market_detail","title":"FARTCOIN-USD","price":"$0.20519","change":"+6.46%","header":["FARTCOIN-USD","FARTCOIN-USD","FARTCOIN-USD","FARTCOIN-USD","FARTCOIN-USD","FARTCOIN-USD","FARTCOIN-USD"...
+  PASS
+
+[pump-nav-market] navigate to PerpsMarketDetails
+  result: {"navigated":"PerpsMarketDetails","params":{"market":{"symbol":"PUMP","name":"PUMP","price":"0","change24h":"0","change24hPercent":"0","volume":"0","maxLeverage":"100"}},"previousRoute":{"key":"PerpsMarketDetails-YQIU6Bn...
+  PASS
+
+[pump-wait-market] wait for PerpsMarketDetails
+  result: {"route":"PerpsMarketDetails"}
+  PASS
+
+[pump-market-data] eval_sync
+  result: {"symbol":"PUMP","screen":"market_detail","title":"PUMP-USD","price":"$0.001899","change":"+4.60%","header":["PUMP-USD","PUMP-USD","PUMP-USD","PUMP-USD","PUMP-USD","PUMP-USD","PUMP-USD","PUMP-USD","PUMP-USD","PUMP-USD","...
+  PASS
+
+----------------------------------------
+Results: 21/21 passed
+Recipe: PASS
+

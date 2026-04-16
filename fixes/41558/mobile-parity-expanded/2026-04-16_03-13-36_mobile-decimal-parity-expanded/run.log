@@ -1,0 +1,86 @@
+Running recipe: Mobile perps decimal parity expanded
+Team: perps
+Pre-conditions: wallet.unlocked, perps.feature_enabled
+Setup: 4 step(s)
+Teardown: 1 step(s)
+Workflow nodes: 89
+
+Pre-conditions: PASS
+
+Setup hooks:
+[setup-account] call perps/select-account
+  > Running recipe: Select — switch to account 0x8dc623e964475d4d669da601fd15ea9125469003 and verify
+  > Team: perps
+  > Pre-conditions: wallet.unlocked
+  > Workflow nodes: 3
+
+Pre-conditions: PASS
+
+[switch-account] select account 0x8dc623e964475d4d669da601fd15ea9125469003
+  result: {"address":"0x8dc623e964475d4d669da601fd15ea9125469003","id":"0285a92b-905c-4814-8a16-52fe1db60357","name":"","switched":true}
+  PASS
+
+[wait-switch] wait for condition
+  result: {"address":"0x8dc623e964475d4d669da601fd15ea9125469003"}
+  PASS
+
+----------------------------------------
+Results: 2/2 passed
+Recipe: PASS
+
+  flow: perps/select-account
+  PASS
+
+[setup-testnet] call perps/setup-testnet
+  > Running recipe: Setup — enable testnet and verify market data loads
+  > Team: perps
+  > Pre-conditions: wallet.unlocked, perps.feature_enabled
+  > Workflow nodes: 4
+
+Pre-conditions: PASS
+
+[enable-testnet] toggle testnet=true
+  result: {"ok":true,"already":true}
+  PASS
+
+[wait-reload] wait for condition
+  result: {"isTestnet":true}
+  PASS
+
+[verify-markets] eval ref markets
+  result: [{"symbol":"SOL","price":"$85.35","change24h":"+2.08%"},{"symbol":"APT","price":"$0.9032","change24h":"+4.22%"},{"symbol":"ATOM","price":"$1.7746","change24h":"+1.26%"},{"symbol":"BTC","price":"$75,204","change24h":"-0.5...
+  PASS
+
+----------------------------------------
+Results: 3/3 passed
+Recipe: PASS
+
+  flow: perps/setup-testnet
+  PASS
+
+[setup-clear-eth] eval_async
+  result: {"cleared":true}
+  PASS
+
+[setup-wait-no-eth] wait for condition
+  result: {"found":false}
+  PASS
+
+[btc-nav-market] navigate to PerpsMarketDetails
+  result: {"navigated":"PerpsMarketDetails","params":{"market":{"symbol":"BTC","name":"BTC","price":"0","change24h":"0","change24hPercent":"0","volume":"0","maxLeverage":"100"}},"previousRoute":{"key":"RedesignedConfirmations-I64F...
+  PASS
+
+[btc-wait-market] wait for PerpsMarketDetails
+  result: {"route":"PerpsMarketDetails"}
+  PASS
+
+[btc-market-extract] eval_sync
+  result: {"symbol":"BTC","screen":"market_detail","price":"$75,174","change":"-0.54%","oracle":null}
+  PASS
+
+[btc-open-order] navigate to RedesignedConfirmations
+  result: {"navigated":"RedesignedConfirmations","params":{"asset":"BTC","direction":"long","showPerpsHeader":false,"source":"perp_asset_screen"},"previousRoute":{"key":"PerpsMarketDetails-yg63UIrim3BIJDIHfumwP","name":"PerpsMarke...
+  PASS
+
+[btc-wait-order] wait for perps-amount-display-touchable
+Teardown hooks:

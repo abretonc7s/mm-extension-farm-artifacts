@@ -1,0 +1,28 @@
+flowchart TD
+  %% Mobile ETH add exposure with 11 USD
+  __entry__(["ENTRY"]) --> node_nav
+  node_nav["nav<br/>navigate"]
+  node_wait_market["wait-market<br/>wait_for"]
+  node_open_modify["open-modify<br/>press"]
+  node_press_increase["press-increase<br/>eval_sync"]
+  node_wait_order["wait-order<br/>wait_for"]
+  node_press_amount["press-amount<br/>press"]
+  node_wait_keypad["wait-keypad<br/>wait_for"]
+  node_clear["clear<br/>clear_keypad"]
+  node_type["type<br/>type_keypad"]
+  node_done_keypad["done-keypad<br/>press"]
+  node_wait_summary["wait-summary<br/>wait"]
+  node_extract["extract<br/>eval_sync"]
+  node_done(["done<br/>PASS"])
+  node_nav --> node_wait_market
+  node_wait_market --> node_open_modify
+  node_open_modify --> node_press_increase
+  node_press_increase --> node_wait_order
+  node_wait_order --> node_press_amount
+  node_press_amount --> node_wait_keypad
+  node_wait_keypad --> node_clear
+  node_clear --> node_type
+  node_type --> node_done_keypad
+  node_done_keypad --> node_wait_summary
+  node_wait_summary --> node_extract
+  node_extract --> node_done

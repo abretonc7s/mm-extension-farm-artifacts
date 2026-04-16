@@ -1,0 +1,703 @@
+{
+  "title": "Mobile perps decimal parity expanded",
+  "description": "",
+  "sourcePath": "/Users/deeeed/dev/metamask/metamask-mobile-1/scripts/perps/agentic/teams/perps/recipes/mobile-decimal-parity-expanded.json",
+  "hooks": {
+    "pre_conditions": [
+      "wallet.unlocked",
+      "perps.feature_enabled"
+    ],
+    "setup": [
+      {
+        "id": "setup-account",
+        "action": "call",
+        "ref": "perps/select-account",
+        "params": {
+          "address": "0x8dc623e964475d4d669da601fd15ea9125469003"
+        }
+      },
+      {
+        "id": "setup-testnet",
+        "action": "call",
+        "ref": "perps/setup-testnet"
+      },
+      {
+        "id": "setup-clear-eth",
+        "action": "eval_async",
+        "expression": "Engine.context.PerpsController.getPositions().then(function(ps){var p=ps.find(function(x){return x.symbol==='ETH'});if(!p){return JSON.stringify({cleared:true});}return Engine.context.PerpsController.closePosition({symbol:'ETH'}).then(function(){return JSON.stringify({cleared:true});});})",
+        "assert": {
+          "operator": "eq",
+          "field": "cleared",
+          "value": true
+        }
+      },
+      {
+        "id": "setup-wait-no-eth",
+        "action": "wait_for",
+        "expression": "Engine.context.PerpsController.getPositions().then(function(ps){var p=ps.find(function(x){return x.symbol==='ETH'});return JSON.stringify({found:!!p});})",
+        "assert": {
+          "operator": "eq",
+          "field": "found",
+          "value": false
+        },
+        "timeout_ms": 10000
+      }
+    ],
+    "teardown": [
+      {
+        "id": "teardown-close-eth",
+        "action": "eval_async",
+        "expression": "Engine.context.PerpsController.getPositions().then(function(ps){var p=ps.find(function(x){return x.symbol==='ETH'});if(!p){return JSON.stringify({cleared:true});}return Engine.context.PerpsController.closePosition({symbol:'ETH'}).then(function(){return JSON.stringify({cleared:true});});})",
+        "assert": {
+          "operator": "eq",
+          "field": "cleared",
+          "value": true
+        }
+      }
+    ]
+  },
+  "workflow": {
+    "entry": "btc-nav-market",
+    "nodes": {
+      "btc-nav-market": {
+        "action": "navigate",
+        "target": "PerpsMarketDetails",
+        "params": {
+          "market": {
+            "symbol": "BTC",
+            "name": "BTC",
+            "price": "0",
+            "change24h": "0",
+            "change24hPercent": "0",
+            "volume": "0",
+            "maxLeverage": "100"
+          }
+        },
+        "next": "btc-wait-market",
+        "id": "btc-nav-market"
+      },
+      "btc-wait-market": {
+        "action": "wait_for",
+        "route": "PerpsMarketDetails",
+        "next": "btc-market-extract",
+        "id": "btc-wait-market"
+      },
+      "btc-market-extract": {
+        "action": "eval_sync",
+        "expression": "(function(){\n    function flat(v,out){ if(v===null||v===undefined)return; if(typeof v==='string'||typeof v==='number'){ var s=String(v).trim(); if(s) out.push(s); return; } if(Array.isArray(v)){ for(var i=0;i<v.length;i++) flat(v[i],out); return; } if(v&&v.props&&v.props.children!==undefined){ flat(v.props.children,out); } }\n    function uniq(arr){ var out=[]; var seen=new Set(); for(var i=0;i<arr.length;i++){ var s=arr[i]; if(!s||seen.has(s)) continue; seen.add(s); out.push(s); } return out; }\n    function walkFibers(cb){ var hook=globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__; if(!hook||!hook.renderers||!hook.getFiberRoots) return; function walk(f){ if(!f) return; cb(f); walk(f.child); walk(f.sibling); } var it=hook.renderers.entries(); var step=it.next(); while(!step.done){ var roots=hook.getFiberRoots(step.value[0]); if(roots){ roots.forEach(function(r){ if(r.current) walk(r.current); }); } step=it.next(); } }\n    function collect(root){ var out=[]; function walk(f){ if(!f) return; var p=f.memoizedProps; if(p&&p.children!==undefined) flat(p.children,out); walk(f.child); walk(f.sibling); } walk(root); return uniq(out); }\n    function findTestId(testId){ var found=null; walkFibers(function(f){ if(found) return; var p=f.memoizedProps; if(p&&p.testID===testId){ found=f; } }); return found; }\n    function textByTestId(){ for(var i=0;i<arguments.length;i++){ var node=findTestId(arguments[i]); if(node){ var texts=collect(node); for(var j=0;j<texts.length;j++){ if(texts[j]) return texts[j]; } } } return null; }\n    function bestRow(label, pattern){ var re=new RegExp(pattern); var best=null; walkFibers(function(f){ var texts=collect(f); if(texts.indexOf(label)===-1) return; var matches=texts.filter(function(t){ return t!==label && re.test(t); }); if(!matches.length) return; if(texts.length>14) return; if(!best || texts.length<best.texts.length){ best={texts:texts, value:matches[matches.length-1]}; } }); return best; }\n    function rowValue(label, pattern){ var best=bestRow(label, pattern); return best?best.value:null; }\n    return JSON.stringify({symbol:'BTC',screen:'market_detail',price:textByTestId('perps-market-header-price-title-section','perps-market-header-price'),change:textByTestId('perps-market-header-price-change-title-section','perps-market-header-price-change'),oracle:rowValue('Oracle price','^\\$|^—$')});\n  })()",
+        "next": "btc-open-order",
+        "id": "btc-market-extract"
+      },
+      "btc-open-order": {
+        "action": "press",
+        "next": "btc-wait-order",
+        "test_id": "perps-market-details-long-button",
+        "id": "btc-open-order"
+      },
+      "btc-wait-order": {
+        "action": "wait_for",
+        "next": "btc-press-amount",
+        "test_id": "perps-amount-display-touchable",
+        "id": "btc-wait-order"
+      },
+      "btc-press-amount": {
+        "action": "press",
+        "test_id": "perps-amount-display-touchable",
+        "next": "btc-wait-keypad",
+        "id": "btc-press-amount"
+      },
+      "btc-wait-keypad": {
+        "action": "wait_for",
+        "test_id": "keypad-delete-button",
+        "next": "btc-clear-keypad",
+        "id": "btc-wait-keypad"
+      },
+      "btc-clear-keypad": {
+        "action": "clear_keypad",
+        "count": 8,
+        "next": "btc-type-amount",
+        "id": "btc-clear-keypad"
+      },
+      "btc-type-amount": {
+        "action": "type_keypad",
+        "value": "11",
+        "next": "btc-press-done",
+        "id": "btc-type-amount"
+      },
+      "btc-press-done": {
+        "action": "press",
+        "test_id": "perps-order-view-keypad-done",
+        "next": "btc-wait-summary",
+        "id": "btc-press-done"
+      },
+      "btc-wait-summary": {
+        "action": "wait",
+        "ms": 500,
+        "next": "btc-order-extract",
+        "id": "btc-wait-summary"
+      },
+      "btc-order-extract": {
+        "action": "eval_sync",
+        "expression": "(function(){\n  function flat(v,out){ if(v===null||v===undefined)return; if(typeof v==='string'||typeof v==='number'){ var s=String(v).trim(); if(s) out.push(s); return; } if(Array.isArray(v)){ for(var i=0;i<v.length;i++) flat(v[i],out); return; } if(v&&v.props&&v.props.children!==undefined){ flat(v.props.children,out); } }\n  function uniq(arr){ var out=[]; var seen=new Set(); for(var i=0;i<arr.length;i++){ var s=arr[i]; if(!s||seen.has(s)) continue; seen.add(s); out.push(s); } return out; }\n  function walkFibers(cb){ var hook=globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__; if(!hook||!hook.renderers||!hook.getFiberRoots) return; function walk(f){ if(!f) return; cb(f); walk(f.child); walk(f.sibling); } var it=hook.renderers.entries(); var step=it.next(); while(!step.done){ var roots=hook.getFiberRoots(step.value[0]); if(roots){ roots.forEach(function(r){ if(r.current) walk(r.current); }); } step=it.next(); } }\n  function collect(root){ var out=[]; function walk(f){ if(!f) return; var p=f.memoizedProps; if(p&&p.children!==undefined) flat(p.children,out); walk(f.child); walk(f.sibling); } walk(root); return uniq(out); }\n  function findTestId(testId){ var found=null; walkFibers(function(f){ if(found) return; var p=f.memoizedProps; if(p&&p.testID===testId){ found=f; } }); return found; }\n  function firstAfter(arr,label,re){ var idx=arr.indexOf(label); if(idx===-1) return null; for(var i=idx+1;i<arr.length;i++){ if(re.test(arr[i])) return arr[i]; } return null; }\n  function ancestorTexts(node){ var cur=node; while(cur){ var texts=collect(cur); if(texts.indexOf('Margin')!==-1 && texts.indexOf('Liquidation price')!==-1 && texts.indexOf('Fees')!==-1){ return texts; } cur=cur.return; } return collect(node); }\n  var headerNode=findTestId('perps-order-header');\n  var header=collect(headerNode);\n  var screenTexts=ancestorTexts(headerNode);\n  return JSON.stringify({symbol:'BTC',screen:'order_entry',price:header.find(function(t){ return /^\\$/.test(t); })||null,change:header.find(function(t){ return /%$/.test(t); })||null,margin:firstAfter(screenTexts,'Margin',/^\\$|^-$/),liquidationPrice:firstAfter(screenTexts,'Liquidation price',/^\\$|^-$/),fees:firstAfter(screenTexts,'Fees',/^\\$|^-\\$|^--$/)});\n})()",
+        "next": "eth-nav-market",
+        "id": "btc-order-extract"
+      },
+      "eth-nav-market": {
+        "action": "navigate",
+        "target": "PerpsMarketDetails",
+        "params": {
+          "market": {
+            "symbol": "ETH",
+            "name": "ETH",
+            "price": "0",
+            "change24h": "0",
+            "change24hPercent": "0",
+            "volume": "0",
+            "maxLeverage": "100"
+          }
+        },
+        "next": "eth-wait-market",
+        "id": "eth-nav-market"
+      },
+      "eth-wait-market": {
+        "action": "wait_for",
+        "route": "PerpsMarketDetails",
+        "next": "eth-market-extract",
+        "id": "eth-wait-market"
+      },
+      "eth-market-extract": {
+        "action": "eval_sync",
+        "expression": "(function(){\n    function flat(v,out){ if(v===null||v===undefined)return; if(typeof v==='string'||typeof v==='number'){ var s=String(v).trim(); if(s) out.push(s); return; } if(Array.isArray(v)){ for(var i=0;i<v.length;i++) flat(v[i],out); return; } if(v&&v.props&&v.props.children!==undefined){ flat(v.props.children,out); } }\n    function uniq(arr){ var out=[]; var seen=new Set(); for(var i=0;i<arr.length;i++){ var s=arr[i]; if(!s||seen.has(s)) continue; seen.add(s); out.push(s); } return out; }\n    function walkFibers(cb){ var hook=globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__; if(!hook||!hook.renderers||!hook.getFiberRoots) return; function walk(f){ if(!f) return; cb(f); walk(f.child); walk(f.sibling); } var it=hook.renderers.entries(); var step=it.next(); while(!step.done){ var roots=hook.getFiberRoots(step.value[0]); if(roots){ roots.forEach(function(r){ if(r.current) walk(r.current); }); } step=it.next(); } }\n    function collect(root){ var out=[]; function walk(f){ if(!f) return; var p=f.memoizedProps; if(p&&p.children!==undefined) flat(p.children,out); walk(f.child); walk(f.sibling); } walk(root); return uniq(out); }\n    function findTestId(testId){ var found=null; walkFibers(function(f){ if(found) return; var p=f.memoizedProps; if(p&&p.testID===testId){ found=f; } }); return found; }\n    function textByTestId(){ for(var i=0;i<arguments.length;i++){ var node=findTestId(arguments[i]); if(node){ var texts=collect(node); for(var j=0;j<texts.length;j++){ if(texts[j]) return texts[j]; } } } return null; }\n    function bestRow(label, pattern){ var re=new RegExp(pattern); var best=null; walkFibers(function(f){ var texts=collect(f); if(texts.indexOf(label)===-1) return; var matches=texts.filter(function(t){ return t!==label && re.test(t); }); if(!matches.length) return; if(texts.length>14) return; if(!best || texts.length<best.texts.length){ best={texts:texts, value:matches[matches.length-1]}; } }); return best; }\n    function rowValue(label, pattern){ var best=bestRow(label, pattern); return best?best.value:null; }\n    return JSON.stringify({symbol:'ETH',screen:'market_detail',price:textByTestId('perps-market-header-price-title-section','perps-market-header-price'),change:textByTestId('perps-market-header-price-change-title-section','perps-market-header-price-change'),oracle:rowValue('Oracle price','^\\$|^—$')});\n  })()",
+        "next": "eth-open-order",
+        "id": "eth-market-extract"
+      },
+      "eth-open-order": {
+        "action": "press",
+        "next": "eth-wait-order",
+        "test_id": "perps-market-details-long-button",
+        "id": "eth-open-order"
+      },
+      "eth-wait-order": {
+        "action": "wait_for",
+        "next": "eth-press-amount",
+        "test_id": "perps-amount-display-touchable",
+        "id": "eth-wait-order"
+      },
+      "eth-press-amount": {
+        "action": "press",
+        "test_id": "perps-amount-display-touchable",
+        "next": "eth-wait-keypad",
+        "id": "eth-press-amount"
+      },
+      "eth-wait-keypad": {
+        "action": "wait_for",
+        "test_id": "keypad-delete-button",
+        "next": "eth-clear-keypad",
+        "id": "eth-wait-keypad"
+      },
+      "eth-clear-keypad": {
+        "action": "clear_keypad",
+        "count": 8,
+        "next": "eth-type-amount",
+        "id": "eth-clear-keypad"
+      },
+      "eth-type-amount": {
+        "action": "type_keypad",
+        "value": "11",
+        "next": "eth-press-done",
+        "id": "eth-type-amount"
+      },
+      "eth-press-done": {
+        "action": "press",
+        "test_id": "perps-order-view-keypad-done",
+        "next": "eth-wait-summary",
+        "id": "eth-press-done"
+      },
+      "eth-wait-summary": {
+        "action": "wait",
+        "ms": 500,
+        "next": "eth-order-extract",
+        "id": "eth-wait-summary"
+      },
+      "eth-order-extract": {
+        "action": "eval_sync",
+        "expression": "(function(){\n  function flat(v,out){ if(v===null||v===undefined)return; if(typeof v==='string'||typeof v==='number'){ var s=String(v).trim(); if(s) out.push(s); return; } if(Array.isArray(v)){ for(var i=0;i<v.length;i++) flat(v[i],out); return; } if(v&&v.props&&v.props.children!==undefined){ flat(v.props.children,out); } }\n  function uniq(arr){ var out=[]; var seen=new Set(); for(var i=0;i<arr.length;i++){ var s=arr[i]; if(!s||seen.has(s)) continue; seen.add(s); out.push(s); } return out; }\n  function walkFibers(cb){ var hook=globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__; if(!hook||!hook.renderers||!hook.getFiberRoots) return; function walk(f){ if(!f) return; cb(f); walk(f.child); walk(f.sibling); } var it=hook.renderers.entries(); var step=it.next(); while(!step.done){ var roots=hook.getFiberRoots(step.value[0]); if(roots){ roots.forEach(function(r){ if(r.current) walk(r.current); }); } step=it.next(); } }\n  function collect(root){ var out=[]; function walk(f){ if(!f) return; var p=f.memoizedProps; if(p&&p.children!==undefined) flat(p.children,out); walk(f.child); walk(f.sibling); } walk(root); return uniq(out); }\n  function findTestId(testId){ var found=null; walkFibers(function(f){ if(found) return; var p=f.memoizedProps; if(p&&p.testID===testId){ found=f; } }); return found; }\n  function firstAfter(arr,label,re){ var idx=arr.indexOf(label); if(idx===-1) return null; for(var i=idx+1;i<arr.length;i++){ if(re.test(arr[i])) return arr[i]; } return null; }\n  function ancestorTexts(node){ var cur=node; while(cur){ var texts=collect(cur); if(texts.indexOf('Margin')!==-1 && texts.indexOf('Liquidation price')!==-1 && texts.indexOf('Fees')!==-1){ return texts; } cur=cur.return; } return collect(node); }\n  var headerNode=findTestId('perps-order-header');\n  var header=collect(headerNode);\n  var screenTexts=ancestorTexts(headerNode);\n  return JSON.stringify({symbol:'ETH',screen:'order_entry',price:header.find(function(t){ return /^\\$/.test(t); })||null,change:header.find(function(t){ return /%$/.test(t); })||null,margin:firstAfter(screenTexts,'Margin',/^\\$|^-$/),liquidationPrice:firstAfter(screenTexts,'Liquidation price',/^\\$|^-$/),fees:firstAfter(screenTexts,'Fees',/^\\$|^-\\$|^--$/)});\n})()",
+        "next": "sol-nav-market",
+        "id": "eth-order-extract"
+      },
+      "sol-nav-market": {
+        "action": "navigate",
+        "target": "PerpsMarketDetails",
+        "params": {
+          "market": {
+            "symbol": "SOL",
+            "name": "SOL",
+            "price": "0",
+            "change24h": "0",
+            "change24hPercent": "0",
+            "volume": "0",
+            "maxLeverage": "100"
+          }
+        },
+        "next": "sol-wait-market",
+        "id": "sol-nav-market"
+      },
+      "sol-wait-market": {
+        "action": "wait_for",
+        "route": "PerpsMarketDetails",
+        "next": "sol-market-extract",
+        "id": "sol-wait-market"
+      },
+      "sol-market-extract": {
+        "action": "eval_sync",
+        "expression": "(function(){\n    function flat(v,out){ if(v===null||v===undefined)return; if(typeof v==='string'||typeof v==='number'){ var s=String(v).trim(); if(s) out.push(s); return; } if(Array.isArray(v)){ for(var i=0;i<v.length;i++) flat(v[i],out); return; } if(v&&v.props&&v.props.children!==undefined){ flat(v.props.children,out); } }\n    function uniq(arr){ var out=[]; var seen=new Set(); for(var i=0;i<arr.length;i++){ var s=arr[i]; if(!s||seen.has(s)) continue; seen.add(s); out.push(s); } return out; }\n    function walkFibers(cb){ var hook=globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__; if(!hook||!hook.renderers||!hook.getFiberRoots) return; function walk(f){ if(!f) return; cb(f); walk(f.child); walk(f.sibling); } var it=hook.renderers.entries(); var step=it.next(); while(!step.done){ var roots=hook.getFiberRoots(step.value[0]); if(roots){ roots.forEach(function(r){ if(r.current) walk(r.current); }); } step=it.next(); } }\n    function collect(root){ var out=[]; function walk(f){ if(!f) return; var p=f.memoizedProps; if(p&&p.children!==undefined) flat(p.children,out); walk(f.child); walk(f.sibling); } walk(root); return uniq(out); }\n    function findTestId(testId){ var found=null; walkFibers(function(f){ if(found) return; var p=f.memoizedProps; if(p&&p.testID===testId){ found=f; } }); return found; }\n    function textByTestId(){ for(var i=0;i<arguments.length;i++){ var node=findTestId(arguments[i]); if(node){ var texts=collect(node); for(var j=0;j<texts.length;j++){ if(texts[j]) return texts[j]; } } } return null; }\n    function bestRow(label, pattern){ var re=new RegExp(pattern); var best=null; walkFibers(function(f){ var texts=collect(f); if(texts.indexOf(label)===-1) return; var matches=texts.filter(function(t){ return t!==label && re.test(t); }); if(!matches.length) return; if(texts.length>14) return; if(!best || texts.length<best.texts.length){ best={texts:texts, value:matches[matches.length-1]}; } }); return best; }\n    function rowValue(label, pattern){ var best=bestRow(label, pattern); return best?best.value:null; }\n    return JSON.stringify({symbol:'SOL',screen:'market_detail',price:textByTestId('perps-market-header-price-title-section','perps-market-header-price'),change:textByTestId('perps-market-header-price-change-title-section','perps-market-header-price-change'),oracle:rowValue('Oracle price','^\\$|^—$')});\n  })()",
+        "next": "sol-open-order",
+        "id": "sol-market-extract"
+      },
+      "sol-open-order": {
+        "action": "press",
+        "next": "sol-wait-order",
+        "test_id": "perps-market-details-long-button",
+        "id": "sol-open-order"
+      },
+      "sol-wait-order": {
+        "action": "wait_for",
+        "next": "sol-press-amount",
+        "test_id": "perps-amount-display-touchable",
+        "id": "sol-wait-order"
+      },
+      "sol-press-amount": {
+        "action": "press",
+        "test_id": "perps-amount-display-touchable",
+        "next": "sol-wait-keypad",
+        "id": "sol-press-amount"
+      },
+      "sol-wait-keypad": {
+        "action": "wait_for",
+        "test_id": "keypad-delete-button",
+        "next": "sol-clear-keypad",
+        "id": "sol-wait-keypad"
+      },
+      "sol-clear-keypad": {
+        "action": "clear_keypad",
+        "count": 8,
+        "next": "sol-type-amount",
+        "id": "sol-clear-keypad"
+      },
+      "sol-type-amount": {
+        "action": "type_keypad",
+        "value": "11",
+        "next": "sol-press-done",
+        "id": "sol-type-amount"
+      },
+      "sol-press-done": {
+        "action": "press",
+        "test_id": "perps-order-view-keypad-done",
+        "next": "sol-wait-summary",
+        "id": "sol-press-done"
+      },
+      "sol-wait-summary": {
+        "action": "wait",
+        "ms": 500,
+        "next": "sol-order-extract",
+        "id": "sol-wait-summary"
+      },
+      "sol-order-extract": {
+        "action": "eval_sync",
+        "expression": "(function(){\n  function flat(v,out){ if(v===null||v===undefined)return; if(typeof v==='string'||typeof v==='number'){ var s=String(v).trim(); if(s) out.push(s); return; } if(Array.isArray(v)){ for(var i=0;i<v.length;i++) flat(v[i],out); return; } if(v&&v.props&&v.props.children!==undefined){ flat(v.props.children,out); } }\n  function uniq(arr){ var out=[]; var seen=new Set(); for(var i=0;i<arr.length;i++){ var s=arr[i]; if(!s||seen.has(s)) continue; seen.add(s); out.push(s); } return out; }\n  function walkFibers(cb){ var hook=globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__; if(!hook||!hook.renderers||!hook.getFiberRoots) return; function walk(f){ if(!f) return; cb(f); walk(f.child); walk(f.sibling); } var it=hook.renderers.entries(); var step=it.next(); while(!step.done){ var roots=hook.getFiberRoots(step.value[0]); if(roots){ roots.forEach(function(r){ if(r.current) walk(r.current); }); } step=it.next(); } }\n  function collect(root){ var out=[]; function walk(f){ if(!f) return; var p=f.memoizedProps; if(p&&p.children!==undefined) flat(p.children,out); walk(f.child); walk(f.sibling); } walk(root); return uniq(out); }\n  function findTestId(testId){ var found=null; walkFibers(function(f){ if(found) return; var p=f.memoizedProps; if(p&&p.testID===testId){ found=f; } }); return found; }\n  function firstAfter(arr,label,re){ var idx=arr.indexOf(label); if(idx===-1) return null; for(var i=idx+1;i<arr.length;i++){ if(re.test(arr[i])) return arr[i]; } return null; }\n  function ancestorTexts(node){ var cur=node; while(cur){ var texts=collect(cur); if(texts.indexOf('Margin')!==-1 && texts.indexOf('Liquidation price')!==-1 && texts.indexOf('Fees')!==-1){ return texts; } cur=cur.return; } return collect(node); }\n  var headerNode=findTestId('perps-order-header');\n  var header=collect(headerNode);\n  var screenTexts=ancestorTexts(headerNode);\n  return JSON.stringify({symbol:'SOL',screen:'order_entry',price:header.find(function(t){ return /^\\$/.test(t); })||null,change:header.find(function(t){ return /%$/.test(t); })||null,margin:firstAfter(screenTexts,'Margin',/^\\$|^-$/),liquidationPrice:firstAfter(screenTexts,'Liquidation price',/^\\$|^-$/),fees:firstAfter(screenTexts,'Fees',/^\\$|^-\\$|^--$/)});\n})()",
+        "next": "fartcoin-nav-market",
+        "id": "sol-order-extract"
+      },
+      "fartcoin-nav-market": {
+        "action": "navigate",
+        "target": "PerpsMarketDetails",
+        "params": {
+          "market": {
+            "symbol": "FARTCOIN",
+            "name": "FARTCOIN",
+            "price": "0",
+            "change24h": "0",
+            "change24hPercent": "0",
+            "volume": "0",
+            "maxLeverage": "100"
+          }
+        },
+        "next": "fartcoin-wait-market",
+        "id": "fartcoin-nav-market"
+      },
+      "fartcoin-wait-market": {
+        "action": "wait_for",
+        "route": "PerpsMarketDetails",
+        "next": "fartcoin-market-extract",
+        "id": "fartcoin-wait-market"
+      },
+      "fartcoin-market-extract": {
+        "action": "eval_sync",
+        "expression": "(function(){\n    function flat(v,out){ if(v===null||v===undefined)return; if(typeof v==='string'||typeof v==='number'){ var s=String(v).trim(); if(s) out.push(s); return; } if(Array.isArray(v)){ for(var i=0;i<v.length;i++) flat(v[i],out); return; } if(v&&v.props&&v.props.children!==undefined){ flat(v.props.children,out); } }\n    function uniq(arr){ var out=[]; var seen=new Set(); for(var i=0;i<arr.length;i++){ var s=arr[i]; if(!s||seen.has(s)) continue; seen.add(s); out.push(s); } return out; }\n    function walkFibers(cb){ var hook=globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__; if(!hook||!hook.renderers||!hook.getFiberRoots) return; function walk(f){ if(!f) return; cb(f); walk(f.child); walk(f.sibling); } var it=hook.renderers.entries(); var step=it.next(); while(!step.done){ var roots=hook.getFiberRoots(step.value[0]); if(roots){ roots.forEach(function(r){ if(r.current) walk(r.current); }); } step=it.next(); } }\n    function collect(root){ var out=[]; function walk(f){ if(!f) return; var p=f.memoizedProps; if(p&&p.children!==undefined) flat(p.children,out); walk(f.child); walk(f.sibling); } walk(root); return uniq(out); }\n    function findTestId(testId){ var found=null; walkFibers(function(f){ if(found) return; var p=f.memoizedProps; if(p&&p.testID===testId){ found=f; } }); return found; }\n    function textByTestId(){ for(var i=0;i<arguments.length;i++){ var node=findTestId(arguments[i]); if(node){ var texts=collect(node); for(var j=0;j<texts.length;j++){ if(texts[j]) return texts[j]; } } } return null; }\n    function bestRow(label, pattern){ var re=new RegExp(pattern); var best=null; walkFibers(function(f){ var texts=collect(f); if(texts.indexOf(label)===-1) return; var matches=texts.filter(function(t){ return t!==label && re.test(t); }); if(!matches.length) return; if(texts.length>14) return; if(!best || texts.length<best.texts.length){ best={texts:texts, value:matches[matches.length-1]}; } }); return best; }\n    function rowValue(label, pattern){ var best=bestRow(label, pattern); return best?best.value:null; }\n    return JSON.stringify({symbol:'FARTCOIN',screen:'market_detail',price:textByTestId('perps-market-header-price-title-section','perps-market-header-price'),change:textByTestId('perps-market-header-price-change-title-section','perps-market-header-price-change'),oracle:rowValue('Oracle price','^\\$|^—$')});\n  })()",
+        "next": "fartcoin-open-order",
+        "id": "fartcoin-market-extract"
+      },
+      "fartcoin-open-order": {
+        "action": "press",
+        "next": "fartcoin-wait-order",
+        "test_id": "perps-market-details-long-button",
+        "id": "fartcoin-open-order"
+      },
+      "fartcoin-wait-order": {
+        "action": "wait_for",
+        "next": "fartcoin-press-amount",
+        "test_id": "perps-amount-display-touchable",
+        "id": "fartcoin-wait-order"
+      },
+      "fartcoin-press-amount": {
+        "action": "press",
+        "test_id": "perps-amount-display-touchable",
+        "next": "fartcoin-wait-keypad",
+        "id": "fartcoin-press-amount"
+      },
+      "fartcoin-wait-keypad": {
+        "action": "wait_for",
+        "test_id": "keypad-delete-button",
+        "next": "fartcoin-clear-keypad",
+        "id": "fartcoin-wait-keypad"
+      },
+      "fartcoin-clear-keypad": {
+        "action": "clear_keypad",
+        "count": 8,
+        "next": "fartcoin-type-amount",
+        "id": "fartcoin-clear-keypad"
+      },
+      "fartcoin-type-amount": {
+        "action": "type_keypad",
+        "value": "11",
+        "next": "fartcoin-press-done",
+        "id": "fartcoin-type-amount"
+      },
+      "fartcoin-press-done": {
+        "action": "press",
+        "test_id": "perps-order-view-keypad-done",
+        "next": "fartcoin-wait-summary",
+        "id": "fartcoin-press-done"
+      },
+      "fartcoin-wait-summary": {
+        "action": "wait",
+        "ms": 500,
+        "next": "fartcoin-order-extract",
+        "id": "fartcoin-wait-summary"
+      },
+      "fartcoin-order-extract": {
+        "action": "eval_sync",
+        "expression": "(function(){\n  function flat(v,out){ if(v===null||v===undefined)return; if(typeof v==='string'||typeof v==='number'){ var s=String(v).trim(); if(s) out.push(s); return; } if(Array.isArray(v)){ for(var i=0;i<v.length;i++) flat(v[i],out); return; } if(v&&v.props&&v.props.children!==undefined){ flat(v.props.children,out); } }\n  function uniq(arr){ var out=[]; var seen=new Set(); for(var i=0;i<arr.length;i++){ var s=arr[i]; if(!s||seen.has(s)) continue; seen.add(s); out.push(s); } return out; }\n  function walkFibers(cb){ var hook=globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__; if(!hook||!hook.renderers||!hook.getFiberRoots) return; function walk(f){ if(!f) return; cb(f); walk(f.child); walk(f.sibling); } var it=hook.renderers.entries(); var step=it.next(); while(!step.done){ var roots=hook.getFiberRoots(step.value[0]); if(roots){ roots.forEach(function(r){ if(r.current) walk(r.current); }); } step=it.next(); } }\n  function collect(root){ var out=[]; function walk(f){ if(!f) return; var p=f.memoizedProps; if(p&&p.children!==undefined) flat(p.children,out); walk(f.child); walk(f.sibling); } walk(root); return uniq(out); }\n  function findTestId(testId){ var found=null; walkFibers(function(f){ if(found) return; var p=f.memoizedProps; if(p&&p.testID===testId){ found=f; } }); return found; }\n  function firstAfter(arr,label,re){ var idx=arr.indexOf(label); if(idx===-1) return null; for(var i=idx+1;i<arr.length;i++){ if(re.test(arr[i])) return arr[i]; } return null; }\n  function ancestorTexts(node){ var cur=node; while(cur){ var texts=collect(cur); if(texts.indexOf('Margin')!==-1 && texts.indexOf('Liquidation price')!==-1 && texts.indexOf('Fees')!==-1){ return texts; } cur=cur.return; } return collect(node); }\n  var headerNode=findTestId('perps-order-header');\n  var header=collect(headerNode);\n  var screenTexts=ancestorTexts(headerNode);\n  return JSON.stringify({symbol:'FARTCOIN',screen:'order_entry',price:header.find(function(t){ return /^\\$/.test(t); })||null,change:header.find(function(t){ return /%$/.test(t); })||null,margin:firstAfter(screenTexts,'Margin',/^\\$|^-$/),liquidationPrice:firstAfter(screenTexts,'Liquidation price',/^\\$|^-$/),fees:firstAfter(screenTexts,'Fees',/^\\$|^-\\$|^--$/)});\n})()",
+        "next": "pump-nav-market",
+        "id": "fartcoin-order-extract"
+      },
+      "pump-nav-market": {
+        "action": "navigate",
+        "target": "PerpsMarketDetails",
+        "params": {
+          "market": {
+            "symbol": "PUMP",
+            "name": "PUMP",
+            "price": "0",
+            "change24h": "0",
+            "change24hPercent": "0",
+            "volume": "0",
+            "maxLeverage": "100"
+          }
+        },
+        "next": "pump-wait-market",
+        "id": "pump-nav-market"
+      },
+      "pump-wait-market": {
+        "action": "wait_for",
+        "route": "PerpsMarketDetails",
+        "next": "pump-market-extract",
+        "id": "pump-wait-market"
+      },
+      "pump-market-extract": {
+        "action": "eval_sync",
+        "expression": "(function(){\n    function flat(v,out){ if(v===null||v===undefined)return; if(typeof v==='string'||typeof v==='number'){ var s=String(v).trim(); if(s) out.push(s); return; } if(Array.isArray(v)){ for(var i=0;i<v.length;i++) flat(v[i],out); return; } if(v&&v.props&&v.props.children!==undefined){ flat(v.props.children,out); } }\n    function uniq(arr){ var out=[]; var seen=new Set(); for(var i=0;i<arr.length;i++){ var s=arr[i]; if(!s||seen.has(s)) continue; seen.add(s); out.push(s); } return out; }\n    function walkFibers(cb){ var hook=globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__; if(!hook||!hook.renderers||!hook.getFiberRoots) return; function walk(f){ if(!f) return; cb(f); walk(f.child); walk(f.sibling); } var it=hook.renderers.entries(); var step=it.next(); while(!step.done){ var roots=hook.getFiberRoots(step.value[0]); if(roots){ roots.forEach(function(r){ if(r.current) walk(r.current); }); } step=it.next(); } }\n    function collect(root){ var out=[]; function walk(f){ if(!f) return; var p=f.memoizedProps; if(p&&p.children!==undefined) flat(p.children,out); walk(f.child); walk(f.sibling); } walk(root); return uniq(out); }\n    function findTestId(testId){ var found=null; walkFibers(function(f){ if(found) return; var p=f.memoizedProps; if(p&&p.testID===testId){ found=f; } }); return found; }\n    function textByTestId(){ for(var i=0;i<arguments.length;i++){ var node=findTestId(arguments[i]); if(node){ var texts=collect(node); for(var j=0;j<texts.length;j++){ if(texts[j]) return texts[j]; } } } return null; }\n    function bestRow(label, pattern){ var re=new RegExp(pattern); var best=null; walkFibers(function(f){ var texts=collect(f); if(texts.indexOf(label)===-1) return; var matches=texts.filter(function(t){ return t!==label && re.test(t); }); if(!matches.length) return; if(texts.length>14) return; if(!best || texts.length<best.texts.length){ best={texts:texts, value:matches[matches.length-1]}; } }); return best; }\n    function rowValue(label, pattern){ var best=bestRow(label, pattern); return best?best.value:null; }\n    return JSON.stringify({symbol:'PUMP',screen:'market_detail',price:textByTestId('perps-market-header-price-title-section','perps-market-header-price'),change:textByTestId('perps-market-header-price-change-title-section','perps-market-header-price-change'),oracle:rowValue('Oracle price','^\\$|^—$')});\n  })()",
+        "next": "pump-open-order",
+        "id": "pump-market-extract"
+      },
+      "pump-open-order": {
+        "action": "press",
+        "next": "pump-wait-order",
+        "test_id": "perps-market-details-long-button",
+        "id": "pump-open-order"
+      },
+      "pump-wait-order": {
+        "action": "wait_for",
+        "next": "pump-press-amount",
+        "test_id": "perps-amount-display-touchable",
+        "id": "pump-wait-order"
+      },
+      "pump-press-amount": {
+        "action": "press",
+        "test_id": "perps-amount-display-touchable",
+        "next": "pump-wait-keypad",
+        "id": "pump-press-amount"
+      },
+      "pump-wait-keypad": {
+        "action": "wait_for",
+        "test_id": "keypad-delete-button",
+        "next": "pump-clear-keypad",
+        "id": "pump-wait-keypad"
+      },
+      "pump-clear-keypad": {
+        "action": "clear_keypad",
+        "count": 8,
+        "next": "pump-type-amount",
+        "id": "pump-clear-keypad"
+      },
+      "pump-type-amount": {
+        "action": "type_keypad",
+        "value": "11",
+        "next": "pump-press-done",
+        "id": "pump-type-amount"
+      },
+      "pump-press-done": {
+        "action": "press",
+        "test_id": "perps-order-view-keypad-done",
+        "next": "pump-wait-summary",
+        "id": "pump-press-done"
+      },
+      "pump-wait-summary": {
+        "action": "wait",
+        "ms": 500,
+        "next": "pump-order-extract",
+        "id": "pump-wait-summary"
+      },
+      "pump-order-extract": {
+        "action": "eval_sync",
+        "expression": "(function(){\n  function flat(v,out){ if(v===null||v===undefined)return; if(typeof v==='string'||typeof v==='number'){ var s=String(v).trim(); if(s) out.push(s); return; } if(Array.isArray(v)){ for(var i=0;i<v.length;i++) flat(v[i],out); return; } if(v&&v.props&&v.props.children!==undefined){ flat(v.props.children,out); } }\n  function uniq(arr){ var out=[]; var seen=new Set(); for(var i=0;i<arr.length;i++){ var s=arr[i]; if(!s||seen.has(s)) continue; seen.add(s); out.push(s); } return out; }\n  function walkFibers(cb){ var hook=globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__; if(!hook||!hook.renderers||!hook.getFiberRoots) return; function walk(f){ if(!f) return; cb(f); walk(f.child); walk(f.sibling); } var it=hook.renderers.entries(); var step=it.next(); while(!step.done){ var roots=hook.getFiberRoots(step.value[0]); if(roots){ roots.forEach(function(r){ if(r.current) walk(r.current); }); } step=it.next(); } }\n  function collect(root){ var out=[]; function walk(f){ if(!f) return; var p=f.memoizedProps; if(p&&p.children!==undefined) flat(p.children,out); walk(f.child); walk(f.sibling); } walk(root); return uniq(out); }\n  function findTestId(testId){ var found=null; walkFibers(function(f){ if(found) return; var p=f.memoizedProps; if(p&&p.testID===testId){ found=f; } }); return found; }\n  function firstAfter(arr,label,re){ var idx=arr.indexOf(label); if(idx===-1) return null; for(var i=idx+1;i<arr.length;i++){ if(re.test(arr[i])) return arr[i]; } return null; }\n  function ancestorTexts(node){ var cur=node; while(cur){ var texts=collect(cur); if(texts.indexOf('Margin')!==-1 && texts.indexOf('Liquidation price')!==-1 && texts.indexOf('Fees')!==-1){ return texts; } cur=cur.return; } return collect(node); }\n  var headerNode=findTestId('perps-order-header');\n  var header=collect(headerNode);\n  var screenTexts=ancestorTexts(headerNode);\n  return JSON.stringify({symbol:'PUMP',screen:'order_entry',price:header.find(function(t){ return /^\\$/.test(t); })||null,change:header.find(function(t){ return /%$/.test(t); })||null,margin:firstAfter(screenTexts,'Margin',/^\\$|^-$/),liquidationPrice:firstAfter(screenTexts,'Liquidation price',/^\\$|^-$/),fees:firstAfter(screenTexts,'Fees',/^\\$|^-\\$|^--$/)});\n})()",
+        "next": "eth-open-position",
+        "id": "pump-order-extract"
+      },
+      "eth-open-position": {
+        "action": "call",
+        "ref": "perps/trade-open-market",
+        "params": {
+          "symbol": "ETH",
+          "side": "long",
+          "usdAmount": "11",
+          "leverage": "2"
+        },
+        "next": "eth-wait-position",
+        "id": "eth-open-position"
+      },
+      "eth-wait-position": {
+        "action": "wait_for",
+        "expression": "Engine.context.PerpsController.getPositions().then(function(ps){var p=ps.find(function(x){return x.symbol==='ETH'});return JSON.stringify({found:!!p});})",
+        "assert": {
+          "operator": "eq",
+          "field": "found",
+          "value": true
+        },
+        "timeout_ms": 10000,
+        "next": "eth-position-nav",
+        "id": "eth-wait-position"
+      },
+      "eth-position-nav": {
+        "action": "navigate",
+        "target": "PerpsMarketDetails",
+        "params": {
+          "market": {
+            "symbol": "ETH",
+            "name": "ETH",
+            "price": "0",
+            "change24h": "0",
+            "change24hPercent": "0",
+            "volume": "0",
+            "maxLeverage": "100"
+          }
+        },
+        "next": "eth-position-wait",
+        "id": "eth-position-nav"
+      },
+      "eth-position-wait": {
+        "action": "wait_for",
+        "route": "PerpsMarketDetails",
+        "next": "eth-position-extract",
+        "id": "eth-position-wait"
+      },
+      "eth-position-extract": {
+        "action": "eval_sync",
+        "expression": "(function(){\n  function flat(v,out){ if(v===null||v===undefined)return; if(typeof v==='string'||typeof v==='number'){ var s=String(v).trim(); if(s) out.push(s); return; } if(Array.isArray(v)){ for(var i=0;i<v.length;i++) flat(v[i],out); return; } if(v&&v.props&&v.props.children!==undefined){ flat(v.props.children,out); } }\n  function uniq(arr){ var out=[]; var seen=new Set(); for(var i=0;i<arr.length;i++){ var s=arr[i]; if(!s||seen.has(s)) continue; seen.add(s); out.push(s); } return out; }\n  function walkFibers(cb){ var hook=globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__; if(!hook||!hook.renderers||!hook.getFiberRoots) return; function walk(f){ if(!f) return; cb(f); walk(f.child); walk(f.sibling); } var it=hook.renderers.entries(); var step=it.next(); while(!step.done){ var roots=hook.getFiberRoots(step.value[0]); if(roots){ roots.forEach(function(r){ if(r.current) walk(r.current); }); } step=it.next(); } }\n  function collect(root){ var out=[]; function walk(f){ if(!f) return; var p=f.memoizedProps; if(p&&p.children!==undefined) flat(p.children,out); walk(f.child); walk(f.sibling); } walk(root); return uniq(out); }\n  function findTestId(testId){ var found=null; walkFibers(function(f){ if(found) return; var p=f.memoizedProps; if(p&&p.testID===testId){ found=f; } }); return found; }\n  function textByTestId(){ for(var i=0;i<arguments.length;i++){ var node=findTestId(arguments[i]); if(node){ var texts=collect(node); for(var j=0;j<texts.length;j++){ if(texts[j]) return texts[j]; } } } return null; }\n  function bestRow(label, pattern){ var re=new RegExp(pattern); var best=null; walkFibers(function(f){ var texts=collect(f); if(texts.indexOf(label)===-1) return; var matches=texts.filter(function(t){ return t!==label && re.test(t); }); if(!matches.length) return; if(texts.length>14) return; if(!best || texts.length<best.texts.length){ best={texts:texts, value:matches[matches.length-1]}; } }); return best; }\n  function rowValue(label, pattern){ var best=bestRow(label, pattern); return best?best.value:null; }\n  return JSON.stringify({symbol:'ETH',screen:'position_detail',size:textByTestId('position-card-size-value'),margin:textByTestId('position-card-margin-value'),entry:rowValue('Entry price','^\\$'),liquidationPrice:rowValue('Liq. price','^\\$|^-$'),funding:rowValue('Funding payments','^\\$|^-\\$|^-$')});\n})()",
+        "next": "eth-reverse-open-modify",
+        "id": "eth-position-extract"
+      },
+      "eth-reverse-open-modify": {
+        "action": "press",
+        "test_id": "perps-market-details-modify-button",
+        "next": "eth-reverse-wait-sheet",
+        "id": "eth-reverse-open-modify"
+      },
+      "eth-reverse-wait-sheet": {
+        "action": "wait_for",
+        "test_id": "perps-market-details-modify-action-sheet",
+        "next": "eth-reverse-open-sheet",
+        "id": "eth-reverse-wait-sheet"
+      },
+      "eth-reverse-open-sheet": {
+        "action": "press",
+        "test_id": "perps-market-details-modify-action-sheet-flip_position",
+        "next": "eth-reverse-wait",
+        "id": "eth-reverse-open-sheet"
+      },
+      "eth-reverse-wait": {
+        "action": "wait_for",
+        "test_id": "perps-flip-position-confirm-sheet",
+        "next": "eth-reverse-extract",
+        "id": "eth-reverse-wait"
+      },
+      "eth-reverse-extract": {
+        "action": "eval_sync",
+        "expression": "(function(){\n  function flat(v,out){ if(v===null||v===undefined)return; if(typeof v==='string'||typeof v==='number'){ var s=String(v).trim(); if(s) out.push(s); return; } if(Array.isArray(v)){ for(var i=0;i<v.length;i++) flat(v[i],out); return; } if(v&&v.props&&v.props.children!==undefined){ flat(v.props.children,out); } }\n  function uniq(arr){ var out=[]; var seen=new Set(); for(var i=0;i<arr.length;i++){ var s=arr[i]; if(!s||seen.has(s)) continue; seen.add(s); out.push(s); } return out; }\n  function walkFibers(cb){ var hook=globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__; if(!hook||!hook.renderers||!hook.getFiberRoots) return; function walk(f){ if(!f) return; cb(f); walk(f.child); walk(f.sibling); } var it=hook.renderers.entries(); var step=it.next(); while(!step.done){ var roots=hook.getFiberRoots(step.value[0]); if(roots){ roots.forEach(function(r){ if(r.current) walk(r.current); }); } step=it.next(); } }\n  function collect(root){ var out=[]; function walk(f){ if(!f) return; var p=f.memoizedProps; if(p&&p.children!==undefined) flat(p.children,out); walk(f.child); walk(f.sibling); } walk(root); return uniq(out); }\n  function bestRow(label, pattern){ var re=new RegExp(pattern); var best=null; walkFibers(function(f){ var texts=collect(f); if(texts.indexOf(label)===-1) return; var matches=texts.filter(function(t){ return t!==label && re.test(t); }); if(!matches.length) return; if(texts.length>14) return; if(!best || texts.length<best.texts.length){ best={texts:texts, value:matches[matches.length-1]}; } }); return best; }\n  function rowValue(label, pattern){ var best=bestRow(label, pattern); return best?best.value:null; }\n  return JSON.stringify({symbol:'ETH',screen:'reverse_modal',estSize:rowValue('Est. Size','^[0-9.]+\\s+[A-Z]+$'),fees:rowValue('Fees','^\\$|^--$')});\n})()",
+        "next": "eth-reverse-close",
+        "id": "eth-reverse-extract"
+      },
+      "eth-reverse-close": {
+        "action": "press",
+        "test_id": "perps-flip-position-cancel-button",
+        "next": "eth-margin-nav",
+        "id": "eth-reverse-close"
+      },
+      "eth-margin-nav": {
+        "action": "navigate",
+        "target": "PerpsMarketDetails",
+        "params": {
+          "market": {
+            "symbol": "ETH",
+            "name": "ETH",
+            "price": "0",
+            "change24h": "0",
+            "change24hPercent": "0",
+            "volume": "0",
+            "maxLeverage": "100"
+          }
+        },
+        "next": "eth-margin-wait",
+        "id": "eth-margin-nav"
+      },
+      "eth-margin-wait": {
+        "action": "wait_for",
+        "test_id": "position-card-margin-chevron",
+        "next": "eth-margin-open",
+        "id": "eth-margin-wait"
+      },
+      "eth-margin-open": {
+        "action": "press",
+        "test_id": "position-card-margin-chevron",
+        "next": "eth-margin-wait-actions",
+        "id": "eth-margin-open"
+      },
+      "eth-margin-wait-actions": {
+        "action": "wait_for",
+        "test_id": "perps-adjust-margin-reduce-btn",
+        "next": "eth-margin-open-remove",
+        "id": "eth-margin-wait-actions"
+      },
+      "eth-margin-open-remove": {
+        "action": "press",
+        "test_id": "perps-adjust-margin-reduce-btn",
+        "next": "eth-margin-wait-view",
+        "id": "eth-margin-open-remove"
+      },
+      "eth-margin-wait-view": {
+        "action": "wait_for",
+        "route": "PerpsAdjustMargin",
+        "next": "eth-margin-extract",
+        "id": "eth-margin-wait-view"
+      },
+      "eth-margin-extract": {
+        "action": "eval_sync",
+        "expression": "(function(){\n  function flat(v,out){ if(v===null||v===undefined)return; if(typeof v==='string'||typeof v==='number'){ var s=String(v).trim(); if(s) out.push(s); return; } if(Array.isArray(v)){ for(var i=0;i<v.length;i++) flat(v[i],out); return; } if(v&&v.props&&v.props.children!==undefined){ flat(v.props.children,out); } }\n  function uniq(arr){ var out=[]; var seen=new Set(); for(var i=0;i<arr.length;i++){ var s=arr[i]; if(!s||seen.has(s)) continue; seen.add(s); out.push(s); } return out; }\n  function walkFibers(cb){ var hook=globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__; if(!hook||!hook.renderers||!hook.getFiberRoots) return; function walk(f){ if(!f) return; cb(f); walk(f.child); walk(f.sibling); } var it=hook.renderers.entries(); var step=it.next(); while(!step.done){ var roots=hook.getFiberRoots(step.value[0]); if(roots){ roots.forEach(function(r){ if(r.current) walk(r.current); }); } step=it.next(); } }\n  function collect(root){ var out=[]; function walk(f){ if(!f) return; var p=f.memoizedProps; if(p&&p.children!==undefined) flat(p.children,out); walk(f.child); walk(f.sibling); } walk(root); return uniq(out); }\n  function bestRow(label, pattern){ var re=new RegExp(pattern); var best=null; walkFibers(function(f){ var texts=collect(f); if(texts.indexOf(label)===-1) return; var matches=texts.filter(function(t){ return t!==label && re.test(t); }); if(!matches.length) return; if(texts.length>14) return; if(!best || texts.length<best.texts.length){ best={texts:texts, value:matches[matches.length-1]}; } }); return best; }\n  function rowValue(label, pattern){ var best=bestRow(label, pattern); return best?best.value:null; }\n  return JSON.stringify({symbol:'ETH',screen:'remove_margin',available:rowValue('Margin available to remove','^\\$'),liquidationPrice:rowValue('Liquidation price','^\\$'),liquidationDistance:rowValue('Liquidation distance','^[0-9.]+%')});\n})()",
+        "next": "eth-close-nav",
+        "id": "eth-margin-extract"
+      },
+      "eth-close-nav": {
+        "action": "navigate",
+        "target": "PerpsMarketDetails",
+        "params": {
+          "market": {
+            "symbol": "ETH",
+            "name": "ETH",
+            "price": "0",
+            "change24h": "0",
+            "change24hPercent": "0",
+            "volume": "0",
+            "maxLeverage": "100"
+          }
+        },
+        "next": "eth-close-wait",
+        "id": "eth-close-nav"
+      },
+      "eth-close-wait": {
+        "action": "wait_for",
+        "test_id": "perps-market-details-close-button",
+        "next": "eth-close-open",
+        "id": "eth-close-wait"
+      },
+      "eth-close-open": {
+        "action": "press",
+        "test_id": "perps-market-details-close-button",
+        "next": "eth-close-view",
+        "id": "eth-close-open"
+      },
+      "eth-close-view": {
+        "action": "wait_for",
+        "route": "PerpsClosePosition",
+        "next": "eth-close-extract",
+        "id": "eth-close-view"
+      },
+      "eth-close-extract": {
+        "action": "eval_sync",
+        "expression": "(function(){\n  function flat(v,out){ if(v===null||v===undefined)return; if(typeof v==='string'||typeof v==='number'){ var s=String(v).trim(); if(s) out.push(s); return; } if(Array.isArray(v)){ for(var i=0;i<v.length;i++) flat(v[i],out); return; } if(v&&v.props&&v.props.children!==undefined){ flat(v.props.children,out); } }\n  function uniq(arr){ var out=[]; var seen=new Set(); for(var i=0;i<arr.length;i++){ var s=arr[i]; if(!s||seen.has(s)) continue; seen.add(s); out.push(s); } return out; }\n  function walkFibers(cb){ var hook=globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__; if(!hook||!hook.renderers||!hook.getFiberRoots) return; function walk(f){ if(!f) return; cb(f); walk(f.child); walk(f.sibling); } var it=hook.renderers.entries(); var step=it.next(); while(!step.done){ var roots=hook.getFiberRoots(step.value[0]); if(roots){ roots.forEach(function(r){ if(r.current) walk(r.current); }); } step=it.next(); } }\n  function collect(root){ var out=[]; function walk(f){ if(!f) return; var p=f.memoizedProps; if(p&&p.children!==undefined) flat(p.children,out); walk(f.child); walk(f.sibling); } walk(root); return uniq(out); }\n  function findTestId(testId){ var found=null; walkFibers(function(f){ if(found) return; var p=f.memoizedProps; if(p&&p.testID===testId){ found=f; } }); return found; }\n  function textByTestId(){ for(var i=0;i<arguments.length;i++){ var node=findTestId(arguments[i]); if(node){ var texts=collect(node); for(var j=0;j<texts.length;j++){ if(texts[j]) return texts[j]; } } } return null; }\n  function bestRow(label, pattern){ var re=new RegExp(pattern); var best=null; walkFibers(function(f){ var texts=collect(f); if(texts.indexOf(label)===-1) return; var matches=texts.filter(function(t){ return t!==label && re.test(t); }); if(!matches.length) return; if(texts.length>14) return; if(!best || texts.length<best.texts.length){ best={texts:texts, value:matches[matches.length-1]}; } }); return best; }\n  function rowValue(label, pattern){ var best=bestRow(label, pattern); return best?best.value:null; }\n  return JSON.stringify({symbol:'ETH',screen:'close_position',closeAmount:textByTestId('perps-amount-display-amount'),margin:rowValue('Margin','^\\$'),fees:rowValue('Fees','^\\$|^-\\$|^--$'),receive:rowValue(\"You'll receive\",'^\\$|^-\\$|^--$')});\n})()",
+        "next": "withdraw-nav",
+        "id": "eth-close-extract"
+      },
+      "withdraw-nav": {
+        "action": "navigate",
+        "target": "PerpsWithdraw",
+        "next": "withdraw-wait",
+        "id": "withdraw-nav"
+      },
+      "withdraw-wait": {
+        "action": "wait_for",
+        "route": "PerpsWithdraw",
+        "next": "withdraw-preset-25",
+        "id": "withdraw-wait"
+      },
+      "withdraw-preset-25": {
+        "action": "eval_sync",
+        "expression": "(function(){\n  function flat(v,out){ if(v===null||v===undefined)return; if(typeof v==='string'||typeof v==='number'){ var s=String(v).trim(); if(s) out.push(s); return; } if(Array.isArray(v)){ for(var i=0;i<v.length;i++) flat(v[i],out); return; } if(v&&v.props&&v.props.children!==undefined){ flat(v.props.children,out); } }\n  function uniq(arr){ var out=[]; var seen=new Set(); for(var i=0;i<arr.length;i++){ var s=arr[i]; if(!s||seen.has(s)) continue; seen.add(s); out.push(s); } return out; }\n  function walkFibers(cb){ var hook=globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__; if(!hook||!hook.renderers||!hook.getFiberRoots) return; function walk(f){ if(!f) return; cb(f); walk(f.child); walk(f.sibling); } var it=hook.renderers.entries(); var step=it.next(); while(!step.done){ var roots=hook.getFiberRoots(step.value[0]); if(roots){ roots.forEach(function(r){ if(r.current) walk(r.current); }); } step=it.next(); } }\n  function collect(root){ var out=[]; function walk(f){ if(!f) return; var p=f.memoizedProps; if(p&&p.children!==undefined) flat(p.children,out); walk(f.child); walk(f.sibling); } walk(root); return uniq(out); }\n  var pressed=false; walkFibers(function(f){ if(pressed) return; var p=f.memoizedProps; if(!p||typeof p.onPress!=='function') return; var texts=collect(f); if(texts.indexOf('25%')!==-1){ p.onPress(); pressed=true; } }); return JSON.stringify({pressed:pressed});\n})()",
+        "assert": {
+          "operator": "eq",
+          "field": "pressed",
+          "value": true
+        },
+        "next": "withdraw-wait-values",
+        "id": "withdraw-preset-25"
+      },
+      "withdraw-wait-values": {
+        "action": "wait",
+        "ms": 500,
+        "next": "withdraw-extract",
+        "id": "withdraw-wait-values"
+      },
+      "withdraw-extract": {
+        "action": "eval_sync",
+        "expression": "(function(){\n  function flat(v,out){ if(v===null||v===undefined)return; if(typeof v==='string'||typeof v==='number'){ var s=String(v).trim(); if(s) out.push(s); return; } if(Array.isArray(v)){ for(var i=0;i<v.length;i++) flat(v[i],out); return; } if(v&&v.props&&v.props.children!==undefined){ flat(v.props.children,out); } }\n  function uniq(arr){ var out=[]; var seen=new Set(); for(var i=0;i<arr.length;i++){ var s=arr[i]; if(!s||seen.has(s)) continue; seen.add(s); out.push(s); } return out; }\n  function walkFibers(cb){ var hook=globalThis.__REACT_DEVTOOLS_GLOBAL_HOOK__; if(!hook||!hook.renderers||!hook.getFiberRoots) return; function walk(f){ if(!f) return; cb(f); walk(f.child); walk(f.sibling); } var it=hook.renderers.entries(); var step=it.next(); while(!step.done){ var roots=hook.getFiberRoots(step.value[0]); if(roots){ roots.forEach(function(r){ if(r.current) walk(r.current); }); } step=it.next(); } }\n  function collect(root){ var out=[]; function walk(f){ if(!f) return; var p=f.memoizedProps; if(p&&p.children!==undefined) flat(p.children,out); walk(f.child); walk(f.sibling); } walk(root); return uniq(out); }\n  function bestRow(label, pattern){ var re=new RegExp(pattern); var best=null; walkFibers(function(f){ var texts=collect(f); if(texts.indexOf(label)===-1) return; var matches=texts.filter(function(t){ return t!==label && re.test(t); }); if(!matches.length) return; if(texts.length>14) return; if(!best || texts.length<best.texts.length){ best={texts:texts, value:matches[matches.length-1]}; } }); return best; }\n  function rowValue(label, pattern){ var best=bestRow(label, pattern); return best?best.value:null; }\n  return JSON.stringify({screen:'withdraw',preset10:'10%',preset25:'25%',preset50:'50%',receive:rowValue('You receive','^\\$'),providerFee:rowValue('Provider Fee','^\\$'),estimatedTime:rowValue('Estimated Time','^[0-9]')});\n})()",
+        "next": "done",
+        "id": "withdraw-extract"
+      },
+      "done": {
+        "action": "end",
+        "status": "pass",
+        "message": "Captured expanded mobile perps decimal parity values.",
+        "id": "done"
+      }
+    }
+  }
+}

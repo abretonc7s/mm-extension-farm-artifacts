@@ -1,0 +1,29 @@
+flowchart TD
+  %% Parity snapshot — extension order entry FARTCOIN
+  __entry__(["ENTRY"]) --> node_nav
+  node_nav["nav<br/>navigate"]
+  node_wait_market["wait-market<br/>wait_for"]
+  node_check_position["check-position<br/>ext_check_dom"]
+  node_branch{"branch<br/>switch"}
+  node_open_modify_menu["open-modify-menu<br/>press"]
+  node_wait_modify_menu["wait-modify-menu<br/>wait_for"]
+  node_open_add_exposure["open-add-exposure<br/>press"]
+  node_open_order["open-order<br/>press"]
+  node_wait_order["wait-order<br/>wait_for"]
+  node_set_amount["set-amount<br/>eval_sync"]
+  node_wait_summary["wait-summary<br/>wait_for"]
+  node_extract["extract<br/>eval_sync"]
+  node_done(["done<br/>PASS"])
+  node_nav --> node_wait_market
+  node_wait_market --> node_check_position
+  node_check_position --> node_branch
+  node_branch -->|vars.position_state.visible truthy| node_open_modify_menu
+  node_branch -->|default| node_open_order
+  node_open_modify_menu --> node_wait_modify_menu
+  node_wait_modify_menu --> node_open_add_exposure
+  node_open_add_exposure --> node_wait_order
+  node_open_order --> node_wait_order
+  node_wait_order --> node_set_amount
+  node_set_amount --> node_wait_summary
+  node_wait_summary --> node_extract
+  node_extract --> node_done

@@ -1,0 +1,101 @@
+flowchart TD
+  %% Validate PR #41558 perps decimal formatting with screenshots
+  __entry__(["ENTRY"]) --> node_ac1_nav_home
+  node_ac1_nav_home["ac1-nav-home<br/>navigate"]
+  node_ac1_wait_home["ac1-wait-home<br/>wait_for"]
+  node_ac1_shot_home["ac1-shot-home<br/>screenshot"]
+  node_ac2_nav_detail["ac2-nav-detail<br/>navigate"]
+  node_ac2_wait_detail["ac2-wait-detail<br/>wait_for"]
+  node_ac2_check_position["ac2-check-position<br/>ext_check_dom"]
+  node_ac2_branch_position{"ac2-branch-position<br/>switch"}
+  node_ac2_open_order_entry["ac2-open-order-entry<br/>press"]
+  node_ac2_wait_order_entry["ac2-wait-order-entry<br/>wait_for"]
+  node_ac2_set_amount["ac2-set-amount<br/>set_input"]
+  node_ac2_submit_order["ac2-submit-order<br/>press"]
+  node_ac2_wait_position["ac2-wait-position<br/>wait_for"]
+  node_ac3_shot_market_detail["ac3-shot-market-detail<br/>screenshot"]
+  node_ac4_open_modify_menu["ac4-open-modify-menu<br/>press"]
+  node_ac4_wait_modify_menu["ac4-wait-modify-menu<br/>wait_for"]
+  node_ac4_shot_modify_menu["ac4-shot-modify-menu<br/>screenshot"]
+  node_ac5_open_reverse["ac5-open-reverse<br/>press"]
+  node_ac5_wait_reverse_modal["ac5-wait-reverse-modal<br/>wait_for"]
+  node_ac5_shot_reverse_modal["ac5-shot-reverse-modal<br/>screenshot"]
+  node_ac5_close_reverse_modal["ac5-close-reverse-modal<br/>press"]
+  node_ac6_nav_detail["ac6-nav-detail<br/>navigate"]
+  node_ac6_wait_detail["ac6-wait-detail<br/>wait_for"]
+  node_ac6_open_margin_menu["ac6-open-margin-menu<br/>press"]
+  node_ac6_wait_margin_menu["ac6-wait-margin-menu<br/>wait_for"]
+  node_ac6_open_remove_margin["ac6-open-remove-margin<br/>press"]
+  node_ac6_wait_remove_margin_modal["ac6-wait-remove-margin-modal<br/>wait_for"]
+  node_ac6_shot_remove_margin_modal["ac6-shot-remove-margin-modal<br/>screenshot"]
+  node_ac6_close_remove_margin_modal["ac6-close-remove-margin-modal<br/>press"]
+  node_ac7_nav_detail["ac7-nav-detail<br/>navigate"]
+  node_ac7_wait_detail["ac7-wait-detail<br/>wait_for"]
+  node_ac7_open_close_modal["ac7-open-close-modal<br/>press"]
+  node_ac7_wait_close_modal["ac7-wait-close-modal<br/>wait_for"]
+  node_ac7_shot_close_modal["ac7-shot-close-modal<br/>screenshot"]
+  node_ac7_close_close_modal["ac7-close-close-modal<br/>eval_sync"]
+  node_ac8_nav_detail["ac8-nav-detail<br/>navigate"]
+  node_ac8_wait_detail["ac8-wait-detail<br/>wait_for"]
+  node_ac8_open_modify_menu["ac8-open-modify-menu<br/>press"]
+  node_ac8_wait_modify_menu["ac8-wait-modify-menu<br/>wait_for"]
+  node_ac8_open_add_exposure["ac8-open-add-exposure<br/>press"]
+  node_ac8_wait_order_entry["ac8-wait-order-entry<br/>wait_for"]
+  node_ac8_shot_order_entry["ac8-shot-order-entry<br/>screenshot"]
+  node_ac9_nav_withdraw["ac9-nav-withdraw<br/>navigate"]
+  node_ac9_wait_home["ac9-wait-home<br/>wait_for"]
+  node_ac9_open_balance_dropdown["ac9-open-balance-dropdown<br/>press"]
+  node_ac9_wait_balance_dropdown_panel["ac9-wait-balance-dropdown-panel<br/>wait_for"]
+  node_ac9_open_withdraw["ac9-open-withdraw<br/>press"]
+  node_ac9_wait_withdraw["ac9-wait-withdraw<br/>wait_for"]
+  node_ac9_shot_withdraw["ac9-shot-withdraw<br/>screenshot"]
+  node_done(["done<br/>PASS"])
+  node_ac1_nav_home --> node_ac1_wait_home
+  node_ac1_wait_home --> node_ac1_shot_home
+  node_ac1_shot_home --> node_ac2_nav_detail
+  node_ac2_nav_detail --> node_ac2_wait_detail
+  node_ac2_wait_detail --> node_ac2_check_position
+  node_ac2_check_position --> node_ac2_branch_position
+  node_ac2_branch_position -->|position exists| node_ac3_shot_market_detail
+  node_ac2_branch_position -->|default| node_ac2_open_order_entry
+  node_ac2_open_order_entry --> node_ac2_wait_order_entry
+  node_ac2_wait_order_entry --> node_ac2_set_amount
+  node_ac2_set_amount --> node_ac2_submit_order
+  node_ac2_submit_order --> node_ac2_wait_position
+  node_ac2_wait_position --> node_ac3_shot_market_detail
+  node_ac3_shot_market_detail --> node_ac4_open_modify_menu
+  node_ac4_open_modify_menu --> node_ac4_wait_modify_menu
+  node_ac4_wait_modify_menu --> node_ac4_shot_modify_menu
+  node_ac4_shot_modify_menu --> node_ac5_open_reverse
+  node_ac5_open_reverse --> node_ac5_wait_reverse_modal
+  node_ac5_wait_reverse_modal --> node_ac5_shot_reverse_modal
+  node_ac5_shot_reverse_modal --> node_ac5_close_reverse_modal
+  node_ac5_close_reverse_modal --> node_ac6_nav_detail
+  node_ac6_nav_detail --> node_ac6_wait_detail
+  node_ac6_wait_detail --> node_ac6_open_margin_menu
+  node_ac6_open_margin_menu --> node_ac6_wait_margin_menu
+  node_ac6_wait_margin_menu --> node_ac6_open_remove_margin
+  node_ac6_open_remove_margin --> node_ac6_wait_remove_margin_modal
+  node_ac6_wait_remove_margin_modal --> node_ac6_shot_remove_margin_modal
+  node_ac6_shot_remove_margin_modal --> node_ac6_close_remove_margin_modal
+  node_ac6_close_remove_margin_modal --> node_ac7_nav_detail
+  node_ac7_nav_detail --> node_ac7_wait_detail
+  node_ac7_wait_detail --> node_ac7_open_close_modal
+  node_ac7_open_close_modal --> node_ac7_wait_close_modal
+  node_ac7_wait_close_modal --> node_ac7_shot_close_modal
+  node_ac7_shot_close_modal --> node_ac7_close_close_modal
+  node_ac7_close_close_modal --> node_ac8_nav_detail
+  node_ac8_nav_detail --> node_ac8_wait_detail
+  node_ac8_wait_detail --> node_ac8_open_modify_menu
+  node_ac8_open_modify_menu --> node_ac8_wait_modify_menu
+  node_ac8_wait_modify_menu --> node_ac8_open_add_exposure
+  node_ac8_open_add_exposure --> node_ac8_wait_order_entry
+  node_ac8_wait_order_entry --> node_ac8_shot_order_entry
+  node_ac8_shot_order_entry --> node_ac9_nav_withdraw
+  node_ac9_nav_withdraw --> node_ac9_wait_home
+  node_ac9_wait_home --> node_ac9_open_balance_dropdown
+  node_ac9_open_balance_dropdown --> node_ac9_wait_balance_dropdown_panel
+  node_ac9_wait_balance_dropdown_panel --> node_ac9_open_withdraw
+  node_ac9_open_withdraw --> node_ac9_wait_withdraw
+  node_ac9_wait_withdraw --> node_ac9_shot_withdraw
+  node_ac9_shot_withdraw --> node_done

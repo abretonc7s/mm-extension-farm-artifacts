@@ -1,0 +1,22 @@
+flowchart TD
+  %% Parity snapshot — extension withdraw
+  __entry__(["ENTRY"]) --> node_nav_home
+  node_nav_home["nav-home<br/>navigate"]
+  node_wait_home["wait-home<br/>wait_for"]
+  node_open_balance["open-balance<br/>press"]
+  node_wait_panel["wait-panel<br/>wait_for"]
+  node_open_page["open-page<br/>press"]
+  node_wait_page["wait-page<br/>wait_for"]
+  node_preset_25["preset-25<br/>press"]
+  node_wait_values["wait-values<br/>wait"]
+  node_extract["extract<br/>eval_sync"]
+  node_done(["done<br/>PASS"])
+  node_nav_home --> node_wait_home
+  node_wait_home --> node_open_balance
+  node_open_balance --> node_wait_panel
+  node_wait_panel --> node_open_page
+  node_open_page --> node_wait_page
+  node_wait_page --> node_preset_25
+  node_preset_25 --> node_wait_values
+  node_wait_values --> node_extract
+  node_extract --> node_done
