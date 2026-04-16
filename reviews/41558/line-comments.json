@@ -1,0 +1,31 @@
+{
+  "pr_number": "41558",
+  "recommendation": "COMMENT",
+  "summary": "Well-structured migration from hardcoded decimal formatting to shared controller exports (formatPerpsFiat, formatPositionSize, PRICE_RANGES_*). One test failure needs fixing before merge.",
+  "comments": [
+    {
+      "path": "ui/pages/perps/perps-market-detail-page.test.tsx",
+      "line": 655,
+      "body": "Test failure: `getByText('$8.3')` fails because the component prepends a sign prefix to the formatted funding value. The rendered text is `-$8.3` (line 1548-1552 of the source: `${signPrefix}${formatPerpsFiat(...)}`). This assertion should be `-$8.3` to match the actual rendered output.",
+      "severity": "must_fix"
+    },
+    {
+      "path": "app/scripts/controllers/perps/infrastructure.ts",
+      "line": 256,
+      "body": "The `memoryCache` has no key namespace prefix and no size limit. While the controller package likely owns key naming, consider verifying there's no collision risk with other `browser.storage.local` consumers in the extension (e.g., `SnapController`, `PhishingController`). A `perps:` prefix on keys written to `browser.storage.local` would make debugging and cleanup easier.",
+      "severity": "suggestion"
+    },
+    {
+      "path": "ui/hooks/perps/usePerpsOrderFees.ts",
+      "line": 83,
+      "body": "The fallback fee rates `{ feeRate: 0.00145, protocolFeeRate: 0.00045, metamaskFeeRate: 0.001 }` are hardcoded in two places (timeout at line 82-86 and catch at line 108-112). Consider extracting to a named constant (e.g. `FALLBACK_FEE_RATES`) to avoid divergence if these values change.",
+      "severity": "suggestion"
+    },
+    {
+      "path": "ui/components/app/perps/edit-margin/edit-margin-modal-content.tsx",
+      "line": 208,
+      "body": "New `.toFixed(0)` for liquidation distance percentage. This is a hardcoded format — consider whether mobile uses a shared percentage formatter here for parity. Not blocking but worth aligning with the controller formatting pattern used elsewhere in this PR.",
+      "severity": "nitpick"
+    }
+  ]
+}
