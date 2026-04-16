@@ -1,0 +1,54 @@
+flowchart TD
+  %% PR #41728 — Verify perps connectivity recovery and HIP-3 market stability
+  __entry__(["ENTRY"]) --> node_setup_navigate_perps
+  node_setup_navigate_perps[["setup-navigate-perps<br/>perps/navigate-perps-tab"]]
+  node_setup_wait_perps_tab["setup-wait-perps-tab<br/>wait_for"]
+  node_ac3_screenshot_perps_tab["ac3-screenshot-perps-tab<br/>screenshot"]
+  node_ac3_navigate_eth_market[["ac3-navigate-eth-market<br/>perps/navigate-to-market-detail"]]
+  node_ac3_wait_eth_price["ac3-wait-eth-price<br/>wait_for"]
+  node_ac3_assert_eth_price["ac3-assert-eth-price<br/>ext_check_dom"]
+  node_ac3_screenshot_eth_price["ac3-screenshot-eth-price<br/>screenshot"]
+  node_ac4_navigate_btc[["ac4-navigate-btc<br/>perps/navigate-to-market-detail"]]
+  node_ac4_wait_btc["ac4-wait-btc<br/>wait_for"]
+  node_ac4_assert_btc_price["ac4-assert-btc-price<br/>ext_check_dom"]
+  node_ac4_navigate_back_eth[["ac4-navigate-back-eth<br/>perps/navigate-to-market-detail"]]
+  node_ac4_wait_eth_again["ac4-wait-eth-again<br/>wait_for"]
+  node_ac4_assert_eth_stable["ac4-assert-eth-stable<br/>ext_check_dom"]
+  node_ac4_navigate_atom[["ac4-navigate-atom<br/>perps/navigate-to-market-detail"]]
+  node_ac4_wait_atom["ac4-wait-atom<br/>wait_for"]
+  node_ac4_assert_atom_price["ac4-assert-atom-price<br/>ext_check_dom"]
+  node_ac4_screenshot_rapid_nav["ac4-screenshot-rapid-nav<br/>screenshot"]
+  node_ac1_eval_connection_state["ac1-eval-connection-state<br/>eval_async"]
+  node_ac1_screenshot_connection["ac1-screenshot-connection<br/>screenshot"]
+  node_ac5_eval_perps_check_health["ac5-eval-perps-check-health<br/>eval_async"]
+  node_ac5_screenshot_health_check["ac5-screenshot-health-check<br/>screenshot"]
+  node_ac6_eval_reconnect_api["ac6-eval-reconnect-api<br/>eval_async"]
+  node_ac6_screenshot_reconnect["ac6-screenshot-reconnect<br/>screenshot"]
+  node_ac3_eval_hip3_markets["ac3-eval-hip3-markets<br/>eval_async"]
+  node_ac3_screenshot_hip3_eval["ac3-screenshot-hip3-eval<br/>screenshot"]
+  node_gate_done(["gate-done<br/>PASS"])
+  node_setup_navigate_perps --> node_setup_wait_perps_tab
+  node_setup_wait_perps_tab --> node_ac3_screenshot_perps_tab
+  node_ac3_screenshot_perps_tab --> node_ac3_navigate_eth_market
+  node_ac3_navigate_eth_market --> node_ac3_wait_eth_price
+  node_ac3_wait_eth_price --> node_ac3_assert_eth_price
+  node_ac3_assert_eth_price --> node_ac3_screenshot_eth_price
+  node_ac3_screenshot_eth_price --> node_ac4_navigate_btc
+  node_ac4_navigate_btc --> node_ac4_wait_btc
+  node_ac4_wait_btc --> node_ac4_assert_btc_price
+  node_ac4_assert_btc_price --> node_ac4_navigate_back_eth
+  node_ac4_navigate_back_eth --> node_ac4_wait_eth_again
+  node_ac4_wait_eth_again --> node_ac4_assert_eth_stable
+  node_ac4_assert_eth_stable --> node_ac4_navigate_atom
+  node_ac4_navigate_atom --> node_ac4_wait_atom
+  node_ac4_wait_atom --> node_ac4_assert_atom_price
+  node_ac4_assert_atom_price --> node_ac4_screenshot_rapid_nav
+  node_ac4_screenshot_rapid_nav --> node_ac1_eval_connection_state
+  node_ac1_eval_connection_state --> node_ac1_screenshot_connection
+  node_ac1_screenshot_connection --> node_ac5_eval_perps_check_health
+  node_ac5_eval_perps_check_health --> node_ac5_screenshot_health_check
+  node_ac5_screenshot_health_check --> node_ac6_eval_reconnect_api
+  node_ac6_eval_reconnect_api --> node_ac6_screenshot_reconnect
+  node_ac6_screenshot_reconnect --> node_ac3_eval_hip3_markets
+  node_ac3_eval_hip3_markets --> node_ac3_screenshot_hip3_eval
+  node_ac3_screenshot_hip3_eval --> node_gate_done

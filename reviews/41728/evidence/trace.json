@@ -1,0 +1,422 @@
+[
+  {
+    "id": "setup-navigate-perps",
+    "action": "call",
+    "ok": true,
+    "raw": {
+      "passed": 4,
+      "failed": 0,
+      "trace": [
+        {
+          "id": "nav-perps",
+          "action": "navigate",
+          "ok": true,
+          "raw": {
+            "navigated": true,
+            "hash": "#/?tab=perps"
+          },
+          "durationMs": 4
+        },
+        {
+          "id": "check-tutorial",
+          "action": "eval_sync",
+          "ok": true,
+          "raw": "{\"visible\":false}",
+          "durationMs": 5
+        },
+        {
+          "id": "tutorial-switch",
+          "action": "switch",
+          "next": "wait-perps",
+          "durationMs": 0
+        },
+        {
+          "id": "wait-perps",
+          "action": "wait_for",
+          "ok": true,
+          "raw": {
+            "found": true,
+            "target": "testId:perps-balance-dropdown"
+          },
+          "durationMs": 131
+        },
+        {
+          "id": "screenshot-perps",
+          "action": "screenshot",
+          "ok": true,
+          "raw": {
+            "path": "/Users/deeeed/dev/metamask/metamask-extension-2/temp/agentic/recipes/test-artifacts/screenshots/perps-tab-1776298671434.png",
+            "width": 500,
+            "height": 713
+          },
+          "durationMs": 165
+        },
+        {
+          "id": "done",
+          "action": "end",
+          "status": "pass",
+          "durationMs": 0
+        }
+      ],
+      "vars": {
+        "tutorial_state": {
+          "visible": false
+        }
+      }
+    },
+    "durationMs": 349
+  },
+  {
+    "id": "setup-wait-perps-tab",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:account-overview__perps-tab"
+    },
+    "durationMs": 134
+  },
+  {
+    "id": "ac3-screenshot-perps-tab",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "/Users/deeeed/dev/metamask/metamask-extension-2/temp/agentic/recipes/test-artifacts/screenshots/evidence-ac3-perps-tab-hip3.png-1776298671737.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 91
+  },
+  {
+    "id": "ac3-navigate-eth-market",
+    "action": "call",
+    "ok": true,
+    "raw": {
+      "passed": 2,
+      "failed": 0,
+      "trace": [
+        {
+          "id": "nav-detail",
+          "action": "navigate",
+          "ok": true,
+          "raw": {
+            "navigated": true,
+            "hash": "#/perps/market/ETH"
+          },
+          "durationMs": 14
+        },
+        {
+          "id": "wait-detail",
+          "action": "wait_for",
+          "ok": true,
+          "raw": {
+            "found": true,
+            "target": "testId:perps-market-detail-page"
+          },
+          "durationMs": 74
+        },
+        {
+          "id": "done",
+          "action": "end",
+          "status": "pass",
+          "durationMs": 0
+        }
+      ],
+      "vars": {}
+    },
+    "durationMs": 111
+  },
+  {
+    "id": "ac3-wait-eth-price",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-market-detail-price"
+    },
+    "durationMs": 56
+  },
+  {
+    "id": "ac3-assert-eth-price",
+    "action": "ext_check_dom",
+    "ok": true,
+    "raw": {
+      "visible": true
+    },
+    "durationMs": 1
+  },
+  {
+    "id": "ac3-screenshot-eth-price",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "/Users/deeeed/dev/metamask/metamask-extension-2/temp/agentic/recipes/test-artifacts/screenshots/evidence-ac3-eth-price.png-1776298672003.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 100
+  },
+  {
+    "id": "ac4-navigate-btc",
+    "action": "call",
+    "ok": true,
+    "raw": {
+      "passed": 2,
+      "failed": 0,
+      "trace": [
+        {
+          "id": "nav-detail",
+          "action": "navigate",
+          "ok": true,
+          "raw": {
+            "navigated": true,
+            "hash": "#/perps/market/BTC"
+          },
+          "durationMs": 4
+        },
+        {
+          "id": "wait-detail",
+          "action": "wait_for",
+          "ok": true,
+          "raw": {
+            "found": true,
+            "target": "testId:perps-market-detail-page"
+          },
+          "durationMs": 64
+        },
+        {
+          "id": "done",
+          "action": "end",
+          "status": "pass",
+          "durationMs": 0
+        }
+      ],
+      "vars": {}
+    },
+    "durationMs": 74
+  },
+  {
+    "id": "ac4-wait-btc",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-market-detail-price"
+    },
+    "durationMs": 46
+  },
+  {
+    "id": "ac4-assert-btc-price",
+    "action": "ext_check_dom",
+    "ok": true,
+    "raw": {
+      "visible": true
+    },
+    "durationMs": 1
+  },
+  {
+    "id": "ac4-navigate-back-eth",
+    "action": "call",
+    "ok": true,
+    "raw": {
+      "passed": 2,
+      "failed": 0,
+      "trace": [
+        {
+          "id": "nav-detail",
+          "action": "navigate",
+          "ok": true,
+          "raw": {
+            "navigated": true,
+            "hash": "#/perps/market/ETH"
+          },
+          "durationMs": 3
+        },
+        {
+          "id": "wait-detail",
+          "action": "wait_for",
+          "ok": true,
+          "raw": {
+            "found": true,
+            "target": "testId:perps-market-detail-page"
+          },
+          "durationMs": 50
+        },
+        {
+          "id": "done",
+          "action": "end",
+          "status": "pass",
+          "durationMs": 0
+        }
+      ],
+      "vars": {}
+    },
+    "durationMs": 62
+  },
+  {
+    "id": "ac4-wait-eth-again",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-market-detail-price"
+    },
+    "durationMs": 46
+  },
+  {
+    "id": "ac4-assert-eth-stable",
+    "action": "ext_check_dom",
+    "ok": true,
+    "raw": {
+      "visible": true
+    },
+    "durationMs": 1
+  },
+  {
+    "id": "ac4-navigate-atom",
+    "action": "call",
+    "ok": true,
+    "raw": {
+      "passed": 2,
+      "failed": 0,
+      "trace": [
+        {
+          "id": "nav-detail",
+          "action": "navigate",
+          "ok": true,
+          "raw": {
+            "navigated": true,
+            "hash": "#/perps/market/ATOM"
+          },
+          "durationMs": 3
+        },
+        {
+          "id": "wait-detail",
+          "action": "wait_for",
+          "ok": true,
+          "raw": {
+            "found": true,
+            "target": "testId:perps-market-detail-page"
+          },
+          "durationMs": 50
+        },
+        {
+          "id": "done",
+          "action": "end",
+          "status": "pass",
+          "durationMs": 0
+        }
+      ],
+      "vars": {}
+    },
+    "durationMs": 57
+  },
+  {
+    "id": "ac4-wait-atom",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-market-detail-price"
+    },
+    "durationMs": 36
+  },
+  {
+    "id": "ac4-assert-atom-price",
+    "action": "ext_check_dom",
+    "ok": true,
+    "raw": {
+      "visible": true
+    },
+    "durationMs": 1
+  },
+  {
+    "id": "ac4-screenshot-rapid-nav",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "/Users/deeeed/dev/metamask/metamask-extension-2/temp/agentic/recipes/test-artifacts/screenshots/evidence-ac4-rapid-navigation-atom.png-1776298672436.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 85
+  },
+  {
+    "id": "ac1-eval-connection-state",
+    "action": "eval_async",
+    "ok": true,
+    "raw": "{\"connectionState\":\"connected\"}",
+    "durationMs": 1
+  },
+  {
+    "id": "ac1-screenshot-connection",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "/Users/deeeed/dev/metamask/metamask-extension-2/temp/agentic/recipes/test-artifacts/screenshots/evidence-ac1-connection-state.png-1776298672526.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 93
+  },
+  {
+    "id": "ac5-eval-perps-check-health",
+    "action": "eval_async",
+    "ok": true,
+    "raw": "{\"healthCheckAvailable\":true}",
+    "durationMs": 2
+  },
+  {
+    "id": "ac5-screenshot-health-check",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "/Users/deeeed/dev/metamask/metamask-extension-2/temp/agentic/recipes/test-artifacts/screenshots/evidence-ac5-health-check-api.png-1776298672626.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 178
+  },
+  {
+    "id": "ac6-eval-reconnect-api",
+    "action": "eval_async",
+    "ok": true,
+    "raw": "{\"reconnectApiAvailable\":true,\"currentState\":\"connected\"}",
+    "durationMs": 2
+  },
+  {
+    "id": "ac6-screenshot-reconnect",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "/Users/deeeed/dev/metamask/metamask-extension-2/temp/agentic/recipes/test-artifacts/screenshots/evidence-ac6-reconnect-api.png-1776298672810.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 101
+  },
+  {
+    "id": "ac3-eval-hip3-markets",
+    "action": "eval_async",
+    "ok": true,
+    "raw": "{\"hip3Count\":64,\"hip3HasPrices\":0}",
+    "durationMs": 124
+  },
+  {
+    "id": "ac3-screenshot-hip3-eval",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "/Users/deeeed/dev/metamask/metamask-extension-2/temp/agentic/recipes/test-artifacts/screenshots/evidence-ac3-hip3-markets-eval.png-1776298673037.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 89
+  },
+  {
+    "id": "gate-done",
+    "action": "end",
+    "status": "pass",
+    "durationMs": 0
+  }
+]

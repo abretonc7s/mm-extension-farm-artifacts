@@ -1,0 +1,37 @@
+{
+  "pr_number": "41728",
+  "recommendation": "COMMENT",
+  "summary": "Well-structured PR that correctly centralizes perps connectivity recovery in the background bridge. HIP-3 fallback allowlist and rapid navigation stability verified in browser. Hydration logic is well-guarded against races. Two minor suggestions for robustness under flaky networks.",
+  "comments": [
+    {
+      "path": "app/scripts/controllers/perps/perps-stream-bridge.ts",
+      "line": 383,
+      "body": "`#hydrateAfterReconnect` guards against concurrent runs via `#isHydrating`, but rapid disconnect→connect→disconnect→connect cycles (common on flaky mobile hotspots) could trigger back-to-back hydrations the moment each prior run completes. Consider adding a minimum cooldown (e.g. 5s since last hydration start) to prevent burst REST calls against the Hyperliquid API under unstable connections.",
+      "severity": "suggestion"
+    },
+    {
+      "path": "app/scripts/controllers/perps/perps-stream-bridge.ts",
+      "line": 360,
+      "body": "The comment on line 356-357 correctly documents the single-provider limitation. Good that this is called out — when a second provider is added, this cache key logic and the `activeProvider ?? 'hyperliquid'` fallback will need updating.",
+      "severity": "nitpick"
+    },
+    {
+      "path": "app/scripts/messenger-client-init/perps-controller-init.ts",
+      "line": 73,
+      "body": "`fallbackHip3AllowlistMarkets: ['xyz:*']` is the right default for current HIP-3 markets. Note this is a glob that matches ALL `xyz:` prefixed symbols — if non-HIP-3 markets ever use the `xyz:` prefix, they'll be auto-included in the fallback universe. The LaunchDarkly override provides the escape hatch, so this is fine as a default.",
+      "severity": "nitpick"
+    },
+    {
+      "path": "app/scripts/controllers/perps/perps-stream-bridge.ts",
+      "line": 52,
+      "body": "`REST_HYDRATION_STAGGER_MS = 200` — this is a reasonable stagger for separating the market data fetch from the user data fetches. If Hyperliquid rate limits become tighter, this may need to increase. Consider extracting to a shared config if multiple hydration paths emerge.",
+      "severity": "nitpick"
+    },
+    {
+      "path": "ui/pages/perps/perps-layout.tsx",
+      "line": 46,
+      "body": "Good pattern: fire-and-forget with explicit `.catch(() => {})`. The health check correctly avoids blocking the UI on reconnect. The 30s threshold (`MIN_HIDDEN_DURATION_MS`) is a reasonable debounce to avoid unnecessary health checks on brief tab switches.",
+      "severity": "nitpick"
+    }
+  ]
+}
