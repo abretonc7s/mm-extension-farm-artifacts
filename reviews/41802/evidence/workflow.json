@@ -1,0 +1,81 @@
+{
+  "description": "Validates AC1 (market list page loads with live data), AC6 (Perps tab explore preview renders from usePerpsTabExploreData). AC2/AC3/AC4/AC5 UNTESTABLE.",
+  "hooks": {
+    "pre_conditions": [
+      "wallet.unlocked",
+      "perps.feature_enabled"
+    ],
+    "setup": [],
+    "teardown": []
+  },
+  "inputs": {},
+  "sourcePath": "",
+  "title": "Review: PR #41802 — keep explore markets live",
+  "workflow": {
+    "entry": "setup-navigate-perps-tab",
+    "nodes": {
+      "setup-navigate-perps-tab": {
+        "action": "call",
+        "ref": "perps/navigate-perps-tab",
+        "next": "ac1-screenshot-perps-tab-entry",
+        "id": "setup-navigate-perps-tab"
+      },
+      "ac1-screenshot-perps-tab-entry": {
+        "action": "screenshot",
+        "filename": "evidence-ac1-perps-tab-entry.png",
+        "next": "ac6-check-explore-preview-count",
+        "id": "ac1-screenshot-perps-tab-entry"
+      },
+      "ac6-check-explore-preview-count": {
+        "action": "eval_sync",
+        "expression": "(function(){ const items = document.querySelectorAll('[data-testid^=\"explore-markets-\"]'); return items.length; })()",
+        "assert": {
+          "operator": "gt",
+          "value": 0
+        },
+        "next": "ac6-screenshot-perps-tab-explore",
+        "id": "ac6-check-explore-preview-count"
+      },
+      "ac6-screenshot-perps-tab-explore": {
+        "action": "screenshot",
+        "filename": "evidence-ac6-perps-tab-explore-preview.png",
+        "next": "ac1-navigate-explore-list",
+        "id": "ac6-screenshot-perps-tab-explore"
+      },
+      "ac1-navigate-explore-list": {
+        "action": "navigate",
+        "target": "PerpsMarketList",
+        "next": "ac1-wait-for-market-list",
+        "id": "ac1-navigate-explore-list"
+      },
+      "ac1-wait-for-market-list": {
+        "action": "wait_for",
+        "test_id": "market-list-view",
+        "timeout_ms": 8000,
+        "next": "ac1-check-market-rows-loaded",
+        "id": "ac1-wait-for-market-list"
+      },
+      "ac1-check-market-rows-loaded": {
+        "action": "eval_sync",
+        "expression": "(function(){ const items = document.querySelectorAll('[data-testid^=\"market-row-\"]'); return items.length; })()",
+        "assert": {
+          "operator": "gt",
+          "value": 0
+        },
+        "next": "ac1-screenshot-explore-list",
+        "id": "ac1-check-market-rows-loaded"
+      },
+      "ac1-screenshot-explore-list": {
+        "action": "screenshot",
+        "filename": "evidence-ac1-explore-list-loaded.png",
+        "next": "done",
+        "id": "ac1-screenshot-explore-list"
+      },
+      "done": {
+        "action": "end",
+        "status": "pass",
+        "id": "done"
+      }
+    }
+  }
+}

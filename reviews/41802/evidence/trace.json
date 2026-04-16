@@ -1,0 +1,142 @@
+[
+  {
+    "id": "setup-navigate-perps-tab",
+    "action": "call",
+    "ok": true,
+    "raw": {
+      "passed": 4,
+      "failed": 0,
+      "trace": [
+        {
+          "id": "nav-perps",
+          "action": "navigate",
+          "ok": true,
+          "raw": {
+            "navigated": true,
+            "hash": "#/?tab=perps"
+          },
+          "durationMs": 4
+        },
+        {
+          "id": "check-tutorial",
+          "action": "eval_sync",
+          "ok": true,
+          "raw": "{\"visible\":false}",
+          "durationMs": 0
+        },
+        {
+          "id": "tutorial-switch",
+          "action": "switch",
+          "next": "wait-perps",
+          "durationMs": 0
+        },
+        {
+          "id": "wait-perps",
+          "action": "wait_for",
+          "ok": true,
+          "raw": {
+            "found": true,
+            "target": "testId:perps-balance-dropdown"
+          },
+          "durationMs": 85
+        },
+        {
+          "id": "screenshot-perps",
+          "action": "screenshot",
+          "ok": true,
+          "raw": {
+            "path": "/Users/deeeed/dev/metamask/metamask-extension-1/temp/agentic/recipes/test-artifacts/screenshots/perps-tab-1776324776179.png",
+            "width": 500,
+            "height": 713
+          },
+          "durationMs": 305
+        },
+        {
+          "id": "done",
+          "action": "end",
+          "status": "pass",
+          "durationMs": 0
+        }
+      ],
+      "vars": {
+        "tutorial_state": {
+          "visible": false
+        }
+      }
+    },
+    "durationMs": 403
+  },
+  {
+    "id": "ac1-screenshot-perps-tab-entry",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "/Users/deeeed/dev/metamask/metamask-extension-1/temp/agentic/recipes/test-artifacts/screenshots/evidence-ac1-perps-tab-entry.png-1776324776487.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 123
+  },
+  {
+    "id": "ac6-check-explore-preview-count",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": 8,
+    "durationMs": 1
+  },
+  {
+    "id": "ac6-screenshot-perps-tab-explore",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "/Users/deeeed/dev/metamask/metamask-extension-1/temp/agentic/recipes/test-artifacts/screenshots/evidence-ac6-perps-tab-explore-preview.png-1776324776615.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 106
+  },
+  {
+    "id": "ac1-navigate-explore-list",
+    "action": "navigate",
+    "ok": true,
+    "raw": {
+      "navigated": true,
+      "hash": "#/perps/market-list"
+    },
+    "durationMs": 7
+  },
+  {
+    "id": "ac1-wait-for-market-list",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:market-list-view"
+    },
+    "durationMs": 305
+  },
+  {
+    "id": "ac1-check-market-rows-loaded",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": 237,
+    "durationMs": 1
+  },
+  {
+    "id": "ac1-screenshot-explore-list",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "/Users/deeeed/dev/metamask/metamask-extension-1/temp/agentic/recipes/test-artifacts/screenshots/evidence-ac1-explore-list-loaded.png-1776324777143.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 126
+  },
+  {
+    "id": "done",
+    "action": "end",
+    "status": "pass",
+    "durationMs": 0
+  }
+]

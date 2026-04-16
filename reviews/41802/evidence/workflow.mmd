@@ -1,0 +1,20 @@
+flowchart TD
+  %% Review: PR #41802 — keep explore markets live
+  __entry__(["ENTRY"]) --> node_setup_navigate_perps_tab
+  node_setup_navigate_perps_tab[["setup-navigate-perps-tab<br/>perps/navigate-perps-tab"]]
+  node_ac1_screenshot_perps_tab_entry["ac1-screenshot-perps-tab-entry<br/>screenshot"]
+  node_ac6_check_explore_preview_count["ac6-check-explore-preview-count<br/>eval_sync"]
+  node_ac6_screenshot_perps_tab_explore["ac6-screenshot-perps-tab-explore<br/>screenshot"]
+  node_ac1_navigate_explore_list["ac1-navigate-explore-list<br/>navigate"]
+  node_ac1_wait_for_market_list["ac1-wait-for-market-list<br/>wait_for"]
+  node_ac1_check_market_rows_loaded["ac1-check-market-rows-loaded<br/>eval_sync"]
+  node_ac1_screenshot_explore_list["ac1-screenshot-explore-list<br/>screenshot"]
+  node_done(["done<br/>PASS"])
+  node_setup_navigate_perps_tab --> node_ac1_screenshot_perps_tab_entry
+  node_ac1_screenshot_perps_tab_entry --> node_ac6_check_explore_preview_count
+  node_ac6_check_explore_preview_count --> node_ac6_screenshot_perps_tab_explore
+  node_ac6_screenshot_perps_tab_explore --> node_ac1_navigate_explore_list
+  node_ac1_navigate_explore_list --> node_ac1_wait_for_market_list
+  node_ac1_wait_for_market_list --> node_ac1_check_market_rows_loaded
+  node_ac1_check_market_rows_loaded --> node_ac1_screenshot_explore_list
+  node_ac1_screenshot_explore_list --> node_done

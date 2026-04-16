@@ -1,0 +1,19 @@
+{
+  "pr_number": "41802",
+  "recommendation": "COMMENT",
+  "summary": "The PR correctly fixes stale market data on the Explore page and Perps tab via a clean dual-channel composition: live price stream overlay + 30s snapshot refresh. Tests are solid and no blocking issues found.",
+  "comments": [
+    {
+      "path": "ui/providers/perps/PerpsDataChannel.ts",
+      "line": 133,
+      "body": "When `refresh()` is called while a prior `connectFn` async fetch is still in-flight, `disconnect()` calls `unsubscribeFromSource()` which is `() => {}` for the markets channel — so the in-flight RPC is not cancelled. Both the old and new fetch will push to subscribers when they resolve (last write wins). This is benign for current callers (markets data is idempotent), but worth a comment for future maintainers who might add a cancellable connectFn.",
+      "severity": "nitpick"
+    },
+    {
+      "path": "ui/hooks/perps/stream/usePerpsLivePrices.ts",
+      "line": 79,
+      "body": "`perpsDeactivatePriceStream` is called with no arguments and deactivates the price stream globally. If `usePerpsLiveMarketListData` is mounted in multiple places simultaneously (e.g., Explore list + Perps tab both mounted), unmounting one would deactivate the stream for both. Current usage has only one consumer active at a time, so this is fine — but if parallelism increases, this cleanup behavior could cause unexpected stream drops.",
+      "severity": "suggestion"
+    }
+  ]
+}
