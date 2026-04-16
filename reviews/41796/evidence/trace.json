@@ -1,0 +1,103 @@
+[
+  {
+    "id": "setup-navigate-perps",
+    "action": "call",
+    "ok": true,
+    "raw": {
+      "passed": 4,
+      "failed": 0,
+      "trace": [
+        {
+          "id": "nav-perps",
+          "action": "navigate",
+          "ok": true,
+          "raw": {
+            "navigated": true,
+            "hash": "#/?tab=perps"
+          },
+          "durationMs": 5
+        },
+        {
+          "id": "check-tutorial",
+          "action": "eval_sync",
+          "ok": true,
+          "raw": "{\"visible\":false}",
+          "durationMs": 5
+        },
+        {
+          "id": "tutorial-switch",
+          "action": "switch",
+          "next": "wait-perps",
+          "durationMs": 0
+        },
+        {
+          "id": "wait-perps",
+          "action": "wait_for",
+          "ok": true,
+          "raw": {
+            "found": true,
+            "target": "testId:perps-balance-dropdown"
+          },
+          "durationMs": 81
+        },
+        {
+          "id": "screenshot-perps",
+          "action": "screenshot",
+          "ok": true,
+          "raw": {
+            "path": "/Users/deeeed/dev/metamask/metamask-extension-2/temp/agentic/recipes/test-artifacts/screenshots/perps-tab-1776298846652.png",
+            "width": 500,
+            "height": 713
+          },
+          "durationMs": 241
+        },
+        {
+          "id": "done",
+          "action": "end",
+          "status": "pass",
+          "durationMs": 0
+        }
+      ],
+      "vars": {
+        "tutorial_state": {
+          "visible": false
+        }
+      }
+    },
+    "durationMs": 394
+  },
+  {
+    "id": "ac1-wait-balance-dropdown",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-balance-dropdown"
+    },
+    "durationMs": 82
+  },
+  {
+    "id": "ac1-eval-balance-state",
+    "action": "eval_ref",
+    "ok": true,
+    "raw": "{\"availableBalance\":\"25.958971\",\"totalBalance\":\"11246.784042509998\",\"marginUsed\":\"3.402992\",\"unrealizedPnl\":\"0.06837\",\"returnOnEquity\":\"2.0091143323287275\",\"subAccountBreakdown\":{\"\":{\"availableBalance\":\"25.958971\",\"totalBalance\":\"29.361963\"},\"xyz\":{\"availableBalance\":\"0.0\",\"totalBalance\":\"0\"}}}",
+    "durationMs": 759
+  },
+  {
+    "id": "ac1-screenshot-balance-dropdown",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "/Users/deeeed/dev/metamask/metamask-extension-2/temp/agentic/recipes/test-artifacts/screenshots/evidence-ac1-perps-balance-dropdown.png-1776298847742.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 112
+  },
+  {
+    "id": "done",
+    "action": "end",
+    "status": "pass",
+    "durationMs": 0
+  }
+]

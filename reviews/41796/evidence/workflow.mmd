@@ -1,0 +1,12 @@
+flowchart TD
+  %% Verify fix: balance not double-counting PnL
+  __entry__(["ENTRY"]) --> node_setup_navigate_perps
+  node_setup_navigate_perps[["setup-navigate-perps<br/>perps/navigate-perps-tab"]]
+  node_ac1_wait_balance_dropdown["ac1-wait-balance-dropdown<br/>wait_for"]
+  node_ac1_eval_balance_state["ac1-eval-balance-state<br/>perps-balance"]
+  node_ac1_screenshot_balance_dropdown["ac1-screenshot-balance-dropdown<br/>screenshot"]
+  node_done(["done<br/>PASS"])
+  node_setup_navigate_perps --> node_ac1_wait_balance_dropdown
+  node_ac1_wait_balance_dropdown --> node_ac1_eval_balance_state
+  node_ac1_eval_balance_state --> node_ac1_screenshot_balance_dropdown
+  node_ac1_screenshot_balance_dropdown --> node_done

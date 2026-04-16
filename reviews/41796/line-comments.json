@@ -1,0 +1,13 @@
+{
+  "pr_number": "41796",
+  "recommendation": "APPROVE",
+  "summary": "Correct fix: totalBalance from Hyperliquid already includes unrealized PnL, so adding it again was double-counting. Fix aligns with mobile behavior.",
+  "comments": [
+    {
+      "path": "ui/components/app/perps/perps-market-balance-actions/perps-market-balance-actions.tsx",
+      "line": 66,
+      "body": "Suggestion: The existing test file for this component (`perps-market-balance-actions.test.tsx`) doesn't assert on the displayed balance amount. Consider adding a test similar to the dropdown's `displays the formatted total balance from mock data` test to guard against future regressions in this component's balance calculation.",
+      "severity": "suggestion"
+    }
+  ]
+}

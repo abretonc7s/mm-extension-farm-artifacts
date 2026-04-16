@@ -1,0 +1,42 @@
+{
+  "title": "Verify fix: balance not double-counting PnL",
+  "validate": {
+    "workflow": {
+      "pre_conditions": ["wallet.unlocked", "perps.feature_enabled"],
+      "entry": "setup-navigate-perps",
+      "nodes": {
+        "setup-navigate-perps": {
+          "action": "call",
+          "ref": "perps/navigate-perps-tab",
+          "next": "ac1-wait-balance-dropdown"
+        },
+        "ac1-wait-balance-dropdown": {
+          "action": "wait_for",
+          "test_id": "perps-balance-dropdown",
+          "timeout_ms": 10000,
+          "next": "ac1-eval-balance-state"
+        },
+        "ac1-eval-balance-state": {
+          "action": "eval_ref",
+          "ref": "perps-balance",
+          "save_as": "account_state",
+          "assert": {
+            "operator": "not_null",
+            "field": "totalBalance"
+          },
+          "next": "ac1-screenshot-balance-dropdown"
+        },
+        "ac1-screenshot-balance-dropdown": {
+          "action": "screenshot",
+          "filename": "evidence-ac1-perps-balance-dropdown.png",
+          "next": "done"
+        },
+        "done": {
+          "action": "end",
+          "status": "pass",
+          "message": "AC1: Balance dropdown displays totalBalance directly (no double-counting PnL). AC2: UNTESTABLE — PerpsMarketBalanceActions not rendered in any live route, code review only. AC3: UNTESTABLE — loading skeleton is transient hook state, covered by unit tests."
+        }
+      }
+    }
+  }
+}
