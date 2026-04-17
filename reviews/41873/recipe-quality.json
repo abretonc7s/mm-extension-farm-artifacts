@@ -1,0 +1,25 @@
+{
+  "verdict": "pass",
+  "compact_projection": "PASS",
+  "reasons": [
+    {
+      "verdict": "pass",
+      "dimension": "coverage_honesty",
+      "reason": "All 4 acceptance criteria are proven with concrete evidence: AC1 from a cold-target CDP skeleton capture plus populated-state proof, AC2-AC4 from trace-backed assertions and in-frame screenshots."
+    },
+    {
+      "verdict": "pass",
+      "dimension": "proof_matches_claim",
+      "reason": "The final screenshots show the exact claimed UI states in frame: loading skeleton, populated recent activity, activity-route navigation, and no-transactions empty state."
+    },
+    {
+      "verdict": "warn",
+      "dimension": "evidence_efficiency",
+      "reason": "The recipe runner consistently attached after the transient cold-load skeleton in this warmed slot, so AC1 required one direct CDP cold-target capture outside the traced recipe path."
+    }
+  ],
+  "better_version_guidance": [
+    "Add a first-class recipe action for opening a fresh extension page target so transient cold-load states can be captured inside the trace rather than with a sidecar CDP step.",
+    "Honor --artifacts-dir for screenshot output paths directly so review artifacts do not need manual copying from test-artifacts/screenshots."
+  ]
+}

@@ -1,0 +1,50 @@
+{
+  "title": "Preflight probe for PR 41873 recent activity review",
+  "validate": {
+    "workflow": {
+      "pre_conditions": [
+        "wallet.unlocked",
+        "perps.feature_enabled"
+      ],
+      "entry": "setup-nav-detail",
+      "nodes": {
+        "setup-nav-detail": {
+          "action": "call",
+          "ref": "perps/navigate-to-market-detail",
+          "params": {
+            "symbol": "ETH"
+          },
+          "next": "setup-probe-accounts"
+        },
+        "setup-probe-accounts": {
+          "action": "eval_ref",
+          "ref": "accounts",
+          "save_as": "accounts",
+          "next": "setup-probe-balance"
+        },
+        "setup-probe-balance": {
+          "action": "eval_ref",
+          "ref": "perps-balance",
+          "save_as": "perps_balance",
+          "next": "setup-probe-positions"
+        },
+        "setup-probe-positions": {
+          "action": "eval_ref",
+          "ref": "perps-positions",
+          "save_as": "perps_positions",
+          "next": "setup-probe-fills"
+        },
+        "setup-probe-fills": {
+          "action": "eval_async",
+          "expression": "(async()=>{const fills=await stateHooks.submitRequestToBackground('perpsGetOrderFills',[{aggregateByTime:false,startTime:Date.now()-90*24*60*60*1000}]);const ethFills=(fills??[]).filter((fill)=>fill.symbol==='ETH');return JSON.stringify({totalCount:(fills??[]).length,ethCount:ethFills.length,latestSymbol:(fills??[])[0]?.symbol??null,latestFill:(fills??[])[0]??null})})()",
+          "save_as": "fills_probe",
+          "next": "done"
+        },
+        "done": {
+          "action": "end",
+          "status": "pass"
+        }
+      }
+    }
+  }
+}

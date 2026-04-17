@@ -1,0 +1,26 @@
+flowchart TD
+  %% PR 41873 recent activity validation
+  __entry__(["ENTRY"]) --> node_setup_nav_eth_detail
+  node_setup_nav_eth_detail["setup-nav-eth-detail<br/>navigate"]
+  node_ac2_wait_recent_activity_populated["ac2-wait-recent-activity-populated<br/>wait_for"]
+  node_ac2_scroll_recent_activity["ac2-scroll-recent-activity<br/>scroll"]
+  node_ac2_screenshot_loading_cleared["ac2-screenshot-loading-cleared<br/>screenshot"]
+  node_ac3_open_activity_page["ac3-open-activity-page<br/>press"]
+  node_ac3_assert_activity_route["ac3-assert-activity-route<br/>wait_for"]
+  node_ac3_screenshot_activity_page["ac3-screenshot-activity-page<br/>screenshot"]
+  node_setup_nav_doge_detail["setup-nav-doge-detail<br/>navigate"]
+  node_ac4_assert_empty_state["ac4-assert-empty-state<br/>wait_for"]
+  node_ac4_scroll_empty_state["ac4-scroll-empty-state<br/>scroll"]
+  node_ac4_screenshot_empty_state["ac4-screenshot-empty-state<br/>screenshot"]
+  node_done(["done<br/>PASS"])
+  node_setup_nav_eth_detail --> node_ac2_wait_recent_activity_populated
+  node_ac2_wait_recent_activity_populated --> node_ac2_scroll_recent_activity
+  node_ac2_scroll_recent_activity --> node_ac2_screenshot_loading_cleared
+  node_ac2_screenshot_loading_cleared --> node_ac3_open_activity_page
+  node_ac3_open_activity_page --> node_ac3_assert_activity_route
+  node_ac3_assert_activity_route --> node_ac3_screenshot_activity_page
+  node_ac3_screenshot_activity_page --> node_setup_nav_doge_detail
+  node_setup_nav_doge_detail --> node_ac4_assert_empty_state
+  node_ac4_assert_empty_state --> node_ac4_scroll_empty_state
+  node_ac4_scroll_empty_state --> node_ac4_screenshot_empty_state
+  node_ac4_screenshot_empty_state --> node_done

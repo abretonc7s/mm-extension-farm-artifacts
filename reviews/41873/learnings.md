@@ -1,0 +1,8 @@
+- The recent-activity cold-load skeleton is easiest to capture from a brand-new extension page target; the recipe runner consistently attached after that transient state in an already-warmed page context.
+- `navigate` to `PerpsMarketDetails` performs a full `page.goto` to `home.html#/perps/market/:symbol`, while the reusable `perps/navigate-to-market-detail` flow waits until the page is fully mounted and is therefore too late for transient loading-state capture.
+- `DOGE` and `ARB` were reliable mainnet no-fill markets in this slot; `ETH`, `BTC`, and `SOL` all had existing recent-activity entries.
+- Visual proof needs framing, not just capture: the first ETH/DOGE screenshots were valid files but did not show the Recent Activity section until the recipe explicitly scrolled lower before capturing.
+- The mobile equivalent for this surface is `PerpsMarketTradesList`, and it also transforms all fills before slicing; that is the right comparison point for review comments about aggregation and loading behavior.
+- The slot environment is currently pinned to Node `22.15.0`, so any `yarn lint:tsc` or `yarn jest ...` step in this repo will fail before execution because the repo now requires `>=24.13.0`.
+- The generated recipe stores `trace.json`, `workflow.json`, and `summary.json` under the requested `--artifacts-dir`, but screenshot PNGs still land in `temp/agentic/recipes/test-artifacts/screenshots/` and need manual copying into the task evidence folder.
+- `perps-market-detail-view-all-activity` is a useful anchor for populated-state proof, but `perps-learn-basics` is a better scroll target when the goal is to bring the Recent Activity section fully into frame.

@@ -1,0 +1,167 @@
+{
+  "description": "Validates recent activity skeleton, populated state, activity navigation, and empty-state behavior for perps market detail.",
+  "hooks": {
+    "pre_conditions": [
+      "wallet.unlocked",
+      "perps.feature_enabled"
+    ],
+    "setup": [],
+    "teardown": []
+  },
+  "inputs": {},
+  "sourcePath": "",
+  "title": "PR 41873 recent activity validation",
+  "workflow": {
+    "entry": "setup-nav-eth-detail",
+    "nodes": {
+      "setup-nav-eth-detail": {
+        "action": "navigate",
+        "target": "PerpsMarketDetails",
+        "params": {
+          "symbol": "ETH"
+        },
+        "next": "ac2-wait-recent-activity-populated",
+        "id": "setup-nav-eth-detail"
+      },
+      "ac2-wait-recent-activity-populated": {
+        "action": "wait_for",
+        "target": "active",
+        "expression": "(function(){return JSON.stringify({txCount:document.querySelectorAll('[data-testid^=\"transaction-card-\"]').length,hasSeeAll:!!document.querySelector('[data-testid=\"perps-market-detail-view-all-activity\"]'),skeletonCount:document.querySelectorAll('.mm-skeleton').length})})()",
+        "assert": {
+          "all": [
+            {
+              "operator": "gt",
+              "field": "txCount",
+              "value": 0
+            },
+            {
+              "operator": "eq",
+              "field": "hasSeeAll",
+              "value": true
+            },
+            {
+              "operator": "eq",
+              "field": "skeletonCount",
+              "value": 0
+            }
+          ]
+        },
+        "timeout_ms": 15000,
+        "poll_ms": 250,
+        "next": "ac2-scroll-recent-activity",
+        "id": "ac2-wait-recent-activity-populated"
+      },
+      "ac2-scroll-recent-activity": {
+        "action": "scroll",
+        "test_id": "perps-learn-basics",
+        "next": "ac2-screenshot-loading-cleared",
+        "id": "ac2-scroll-recent-activity"
+      },
+      "ac2-screenshot-loading-cleared": {
+        "action": "screenshot",
+        "filename": "evidence-ac2-loading-cleared.png",
+        "next": "ac3-open-activity-page",
+        "id": "ac2-screenshot-loading-cleared"
+      },
+      "ac3-open-activity-page": {
+        "action": "press",
+        "test_id": "perps-market-detail-view-all-activity",
+        "next": "ac3-assert-activity-route",
+        "id": "ac3-open-activity-page"
+      },
+      "ac3-assert-activity-route": {
+        "action": "wait_for",
+        "target": "active",
+        "expression": "(function(){return JSON.stringify({hash:location.hash,hasActivityPage:!!document.querySelector('[data-testid=\"perps-activity-page\"]')})})()",
+        "assert": {
+          "all": [
+            {
+              "operator": "matches",
+              "field": "hash",
+              "pattern": "/perps/activity"
+            },
+            {
+              "operator": "eq",
+              "field": "hasActivityPage",
+              "value": true
+            }
+          ]
+        },
+        "timeout_ms": 10000,
+        "poll_ms": 250,
+        "next": "ac3-screenshot-activity-page",
+        "id": "ac3-assert-activity-route"
+      },
+      "ac3-screenshot-activity-page": {
+        "action": "screenshot",
+        "filename": "evidence-ac3-activity-route.png",
+        "next": "setup-nav-doge-detail",
+        "id": "ac3-screenshot-activity-page"
+      },
+      "setup-nav-doge-detail": {
+        "action": "navigate",
+        "target": "PerpsMarketDetails",
+        "params": {
+          "symbol": "DOGE"
+        },
+        "next": "ac4-assert-empty-state",
+        "id": "setup-nav-doge-detail"
+      },
+      "ac4-assert-empty-state": {
+        "action": "wait_for",
+        "target": "active",
+        "expression": "(function(){return JSON.stringify({href:location.href,txCount:document.querySelectorAll('[data-testid^=\"transaction-card-\"]').length,hasSeeAll:!!document.querySelector('[data-testid=\"perps-market-detail-view-all-activity\"]'),noTransactions:document.body.innerText.includes('No transactions'),skeletonCount:document.querySelectorAll('.mm-skeleton').length})})()",
+        "assert": {
+          "all": [
+            {
+              "operator": "matches",
+              "field": "href",
+              "pattern": "perps/market/DOGE"
+            },
+            {
+              "operator": "eq",
+              "field": "txCount",
+              "value": 0
+            },
+            {
+              "operator": "eq",
+              "field": "hasSeeAll",
+              "value": false
+            },
+            {
+              "operator": "eq",
+              "field": "noTransactions",
+              "value": true
+            },
+            {
+              "operator": "eq",
+              "field": "skeletonCount",
+              "value": 0
+            }
+          ]
+        },
+        "timeout_ms": 15000,
+        "poll_ms": 250,
+        "next": "ac4-scroll-empty-state",
+        "id": "ac4-assert-empty-state"
+      },
+      "ac4-scroll-empty-state": {
+        "action": "scroll",
+        "test_id": "perps-learn-basics",
+        "next": "ac4-screenshot-empty-state",
+        "id": "ac4-scroll-empty-state"
+      },
+      "ac4-screenshot-empty-state": {
+        "action": "screenshot",
+        "filename": "evidence-ac4-empty-state.png",
+        "next": "done",
+        "id": "ac4-screenshot-empty-state"
+      },
+      "done": {
+        "action": "end",
+        "status": "pass",
+        "id": "done"
+      }
+    }
+  }
+}

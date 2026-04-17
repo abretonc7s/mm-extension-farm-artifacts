@@ -1,0 +1,106 @@
+[
+  {
+    "id": "setup-nav-eth-detail",
+    "action": "navigate",
+    "ok": true,
+    "raw": {
+      "navigated": true,
+      "hash": "#/perps/market/ETH"
+    },
+    "durationMs": 3
+  },
+  {
+    "id": "ac2-wait-recent-activity-populated",
+    "action": "wait_for",
+    "ok": true,
+    "raw": "{\"txCount\":3,\"hasSeeAll\":true,\"skeletonCount\":0}",
+    "durationMs": 1
+  },
+  {
+    "id": "ac2-scroll-recent-activity",
+    "action": "scroll",
+    "ok": true,
+    "raw": null,
+    "durationMs": 47
+  },
+  {
+    "id": "ac2-screenshot-loading-cleared",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "/Users/deeeed/dev/metamask/metamask-extension-6/temp/agentic/recipes/test-artifacts/screenshots/evidence-ac2-loading-cleared.png-1776424430058.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 102
+  },
+  {
+    "id": "ac3-open-activity-page",
+    "action": "press",
+    "ok": true,
+    "raw": {
+      "clicked": true,
+      "target": "testId:perps-market-detail-view-all-activity"
+    },
+    "durationMs": 66
+  },
+  {
+    "id": "ac3-assert-activity-route",
+    "action": "wait_for",
+    "ok": true,
+    "raw": "{\"hash\":\"#/perps/activity\",\"hasActivityPage\":true}",
+    "durationMs": 1
+  },
+  {
+    "id": "ac3-screenshot-activity-page",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "/Users/deeeed/dev/metamask/metamask-extension-6/temp/agentic/recipes/test-artifacts/screenshots/evidence-ac3-activity-route.png-1776424430230.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 60
+  },
+  {
+    "id": "setup-nav-doge-detail",
+    "action": "navigate",
+    "ok": true,
+    "raw": {
+      "navigated": true,
+      "hash": "#/perps/market/DOGE"
+    },
+    "durationMs": 3
+  },
+  {
+    "id": "ac4-assert-empty-state",
+    "action": "wait_for",
+    "ok": true,
+    "raw": "{\"href\":\"chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/DOGE\",\"txCount\":0,\"hasSeeAll\":false,\"noTransactions\":true,\"skeletonCount\":0}",
+    "durationMs": 1
+  },
+  {
+    "id": "ac4-scroll-empty-state",
+    "action": "scroll",
+    "ok": true,
+    "raw": null,
+    "durationMs": 28
+  },
+  {
+    "id": "ac4-screenshot-empty-state",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "/Users/deeeed/dev/metamask/metamask-extension-6/temp/agentic/recipes/test-artifacts/screenshots/evidence-ac4-empty-state.png-1776424430342.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 113
+  },
+  {
+    "id": "done",
+    "action": "end",
+    "status": "pass",
+    "durationMs": 0
+  }
+]
