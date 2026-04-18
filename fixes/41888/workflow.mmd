@@ -1,16 +1,39 @@
 flowchart TD
   %% TAT-2831: Submit button disabled when user has no perps balance
-  __entry__(["ENTRY"]) --> node_setup_nav_order_entry
+  __entry__(["ENTRY"]) --> node_setup_unlock
+  node_setup_unlock["setup-unlock<br/>eval_sync"]
+  node_setup_unlock_branch{"setup-unlock-branch<br/>switch"}
+  node_setup_unlock_type_password["setup-unlock-type-password<br/>set_input"]
+  node_setup_unlock_submit["setup-unlock-submit<br/>press"]
+  node_setup_unlock_wait["setup-unlock-wait<br/>wait_for"]
   node_setup_nav_order_entry["setup-nav-order-entry<br/>ext_navigate_hash"]
   node_setup_wait_page_load["setup-wait-page-load<br/>wait_for"]
   node_setup_inject_zero_balance["setup-inject-zero-balance<br/>eval_sync"]
   node_setup_wait_add_funds["setup-wait-add-funds<br/>wait_for"]
   node_ac1_screenshot_submit_button["ac1-screenshot-submit-button<br/>screenshot"]
   node_ac1_assert_button_disabled["ac1-assert-button-disabled<br/>eval_sync"]
+  node_ac2_nav_market_detail["ac2-nav-market-detail<br/>ext_navigate_hash"]
+  node_ac2_wait_page_load["ac2-wait-page-load<br/>wait_for"]
+  node_ac2_inject_zero_balance["ac2-inject-zero-balance<br/>eval_sync"]
+  node_ac2_wait_cta_buttons["ac2-wait-cta-buttons<br/>wait_for"]
+  node_ac2_screenshot_market_detail["ac2-screenshot-market-detail<br/>screenshot"]
+  node_ac2_assert_buttons_restored["ac2-assert-buttons-restored<br/>eval_sync"]
   node_done(["done<br/>PASS"])
+  node_setup_unlock --> node_setup_unlock_branch
+  node_setup_unlock_branch -->|locked| node_setup_unlock_type_password
+  node_setup_unlock_branch -->|default| node_setup_nav_order_entry
+  node_setup_unlock_type_password --> node_setup_unlock_submit
+  node_setup_unlock_submit --> node_setup_unlock_wait
+  node_setup_unlock_wait --> node_setup_nav_order_entry
   node_setup_nav_order_entry --> node_setup_wait_page_load
   node_setup_wait_page_load --> node_setup_inject_zero_balance
   node_setup_inject_zero_balance --> node_setup_wait_add_funds
   node_setup_wait_add_funds --> node_ac1_screenshot_submit_button
   node_ac1_screenshot_submit_button --> node_ac1_assert_button_disabled
-  node_ac1_assert_button_disabled --> node_done
+  node_ac1_assert_button_disabled --> node_ac2_nav_market_detail
+  node_ac2_nav_market_detail --> node_ac2_wait_page_load
+  node_ac2_wait_page_load --> node_ac2_inject_zero_balance
+  node_ac2_inject_zero_balance --> node_ac2_wait_cta_buttons
+  node_ac2_wait_cta_buttons --> node_ac2_screenshot_market_detail
+  node_ac2_screenshot_market_detail --> node_ac2_assert_buttons_restored
+  node_ac2_assert_buttons_restored --> node_done

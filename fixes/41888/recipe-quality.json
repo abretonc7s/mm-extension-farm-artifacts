@@ -2,13 +2,19 @@
   "verdict": "pass",
   "recipe": "temp/.task/fix/tat-2831-0417-1845/artifacts/recipe.json",
   "checks": {
-    "node_naming": { "verdict": "pass", "reason": "All AC nodes prefixed ac1-, setup nodes prefixed setup-" },
-    "assertions": { "verdict": "pass", "reason": "ac1-assert-button-disabled uses strict eq on both found and disabled fields" },
-    "screenshots": { "verdict": "pass", "reason": "ac1-screenshot-submit-button taken before assertion; before/after pair captured" },
+    "node_naming": { "verdict": "pass", "reason": "All AC nodes prefixed ac1-/ac2-, setup nodes prefixed setup-" },
+    "assertions": { "verdict": "pass", "reason": "ac1-assert-button-disabled uses strict eq on found+disabled; ac2-assert-buttons-restored uses strict eq on hasLong, hasShort, hasAddFunds" },
+    "screenshots": { "verdict": "pass", "reason": "ac1-screenshot-submit-button and ac2-screenshot-market-detail both taken before assertions; before/after pairs captured for both ACs" },
     "no_forbidden_patterns": { "verdict": "pass", "reason": "No wait>500ms, no switch default skipping AC, no DOM-only visual claim" },
-    "ac_coverage": { "verdict": "pass", "reason": "1/1 ACs covered with PROVEN verdict" },
-    "setup_via_eval": { "verdict": "pass", "reason": "Zero balance injected via sm.account.pushData() — no UI navigation for setup" },
-    "reverts_on_fix_revert": { "verdict": "pass", "reason": "With fix reverted, ac1-assert-button-disabled FAILS (disabled=false confirmed in before run)" }
+    "ac_coverage": { "verdict": "pass", "reason": "2/2 ACs covered with PROVEN verdict" },
+    "setup_via_eval": { "verdict": "pass", "reason": "Zero balance injected via sm.account.pushData() for both ACs — no UI navigation for setup" },
+    "reverts_on_fix_revert": { "verdict": "pass", "reason": "With market-detail fix reverted, ac2-wait-cta-buttons times out (perps-trade-cta-buttons absent); with order-entry fix reverted, ac1-assert-button-disabled fails (disabled=false)" }
   },
-  "better_version_guidance": "Recipe is minimal and focused. A stronger version could also verify the button remains disabled after a short delay (stream data doesn't re-enable it), but that is not required for this AC."
+  "compact": {
+    "reasons": [
+      "AC1 (order-entry submit disabled at zero balance) covered by ac1-* nodes with before/after screenshot pair",
+      "AC2 (market-detail Long/Short restoration) now covered by ac2-* nodes with before/after screenshot pair"
+    ]
+  },
+  "better_version_guidance": "Recipe covers both ACs with strict assertions and screenshot evidence. A stronger version could also verify that clicking Long/Short on market-detail navigates to the order-entry page, completing the full user journey."
 }
