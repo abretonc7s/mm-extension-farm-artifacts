@@ -1,6 +1,6 @@
 {
   "title": "TAT-2831: Submit button disabled when user has no perps balance",
-  "description": "Verifies that the Long/Short submit button on the perps order entry page is disabled when the user has zero perps balance. Uses stream manager pushData to inject a zero-balance account state, bypassing the Hyperliquid connection requirement.",
+  "description": "Verifies that (AC1) the Long/Short submit button on the perps order entry page is disabled when the user has zero perps balance, and (AC2) the market-detail page still shows Long/Short CTAs at zero balance so users can navigate to the order entry page. Uses stream manager pushData to inject a zero-balance account state, bypassing the Hyperliquid connection requirement.",
   "validate": {
     "workflow": {
       "entry": "setup-unlock",
@@ -82,12 +82,54 @@
             ]
           },
           "save_as": "submit_button_state",
+          "next": "ac2-nav-market-detail"
+        },
+        "ac2-nav-market-detail": {
+          "action": "ext_navigate_hash",
+          "hash": "/perps/market/BTC",
+          "next": "ac2-wait-page-load"
+        },
+        "ac2-wait-page-load": {
+          "action": "wait_for",
+          "test_id": "perps-market-detail-page",
+          "timeout_ms": 30000,
+          "next": "ac2-inject-zero-balance"
+        },
+        "ac2-inject-zero-balance": {
+          "action": "eval_sync",
+          "expression": "(function(){var sm=stateHooks.getPerpsStreamManager&&stateHooks.getPerpsStreamManager();if(!sm||!sm.account||typeof sm.account.pushData!=='function')return JSON.stringify({injected:false,reason:'no pushData'});sm.account.pushData({availableBalance:'0',totalBalance:'0',unrealizedPnl:'0',positions:[],openOrders:[]});return JSON.stringify({injected:true});})()",
+          "assert": { "all": [{ "operator": "eq", "field": "injected", "value": true }] },
+          "save_as": "inject_result_ac2",
+          "next": "ac2-wait-cta-buttons"
+        },
+        "ac2-wait-cta-buttons": {
+          "action": "wait_for",
+          "test_id": "perps-trade-cta-buttons",
+          "timeout_ms": 10000,
+          "next": "ac2-screenshot-market-detail"
+        },
+        "ac2-screenshot-market-detail": {
+          "action": "screenshot",
+          "filename": "evidence-ac2-market-detail-cta-state.png",
+          "next": "ac2-assert-buttons-restored"
+        },
+        "ac2-assert-buttons-restored": {
+          "action": "eval_sync",
+          "expression": "(function(){var longBtn=document.querySelector('[data-testid=\"perps-long-cta-button\"]');var shortBtn=document.querySelector('[data-testid=\"perps-short-cta-button\"]');var addFunds=document.querySelector('[data-testid=\"perps-add-funds-cta-button\"]');return JSON.stringify({hasLong:!!longBtn,hasShort:!!shortBtn,hasAddFunds:!!addFunds});})()",
+          "assert": {
+            "all": [
+              { "operator": "eq", "field": "hasLong", "value": true },
+              { "operator": "eq", "field": "hasShort", "value": true },
+              { "operator": "eq", "field": "hasAddFunds", "value": false }
+            ]
+          },
+          "save_as": "market_detail_cta_state",
           "next": "done"
         },
         "done": {
           "action": "end",
           "status": "pass",
-          "message": "Submit button is correctly disabled when user has no perps balance"
+          "message": "Order-entry submit correctly disabled (AC1) and market-detail Long/Short CTAs remain accessible at zero balance (AC2)."
         }
       }
     }

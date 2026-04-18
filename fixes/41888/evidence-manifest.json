@@ -1,7 +1,7 @@
 {
   "version": 1,
   "preferred_mode": "screenshots",
-  "summary": "Submit button disabled when balance is zero — before (enabled, bug) vs after (disabled, fixed).",
+  "summary": "Two-AC fix: (AC1) submit button disabled at zero balance on order-entry; (AC2) Long/Short CTAs restored on market-detail at zero balance.",
   "before_after_pairs": [
     {
       "label": "Submit button state with 0.00 USDC balance",
@@ -9,6 +9,13 @@
       "before": "before-ac1-submit-button-state.png",
       "after": "after-ac1-submit-button-state.png",
       "note": "Before: 'Add funds' button is enabled (tappable). After: 'Add funds' button is disabled (opacity reduced, not tappable)."
+    },
+    {
+      "label": "Market-detail page with 0.00 USDC balance — Before: single 'Add funds' CTA blocks access (bug). After: Long/Short CTAs remain available, matching the ticket's expected behavior.",
+      "covers": ["ac2"],
+      "before": "before-ac2-market-detail-cta-state.png",
+      "after": "after-ac2-market-detail-cta-state.png",
+      "note": "Proves Matthieu's expected behavior: zero-balance users retain access to the trade screen; the Long/Short disable happens downstream on order-entry (AC1)."
     }
   ],
   "standalone": [],
