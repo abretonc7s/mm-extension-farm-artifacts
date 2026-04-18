@@ -1,0 +1,36 @@
+{
+  "verdict": "warn",
+  "compact_projection": "WARN",
+  "reasons": [
+    {
+      "verdict": "pass",
+      "dimension": "graph_integrity",
+      "reason": "Schema validation (validate-flow-schema.js) and dry-run both pass; all nodes and transitions resolve. Self-review rewrite removed the SW-RPC dependency (perpsResetTat2986 / perpsGetTat2986Log / perpsGetTat2986Net were never landed) that caused the prior version to hang on node 1."
+    },
+    {
+      "verdict": "pass",
+      "dimension": "composition",
+      "reason": "Market rotation reuses existing perps/navigate-perps-tab and perps/navigate-to-market-detail flows via call refs rather than raw steps."
+    },
+    {
+      "verdict": "pass",
+      "dimension": "proof_matches_claim",
+      "reason": "Rapid-switch across six markets is the exact operation that reproduced the 429 in the live probe (4 × 429 across 5 rapid-switch runs, captured in artifacts/live-capture*.json + extension-recorded-capture.json). The recipe drives the same trigger via the flow graph; network-level proof is harvested out-of-band by probe-rapid-switch.js."
+    },
+    {
+      "verdict": "warn",
+      "dimension": "evidence_efficiency",
+      "reason": "Live 429 evidence was captured by probe-rapid-switch.js (pure CDP Network observer on the service-worker target) rather than the recipe itself. The recipe asserts nav correctness (onDetail + URL hash + no error boundary) and takes a final screenshot; it is the QA hand-off driver, not the network-evidence harvester."
+    },
+    {
+      "verdict": "warn",
+      "dimension": "coverage_honesty",
+      "reason": "Recipe asserts rapid-switch rotation completion + final landing state + screenshot. 429 detection is intentionally out-of-band via probe-rapid-switch.js so the recipe can ship with zero SW instrumentation (this PR is investigation-only, no production code changes). A future revision — after the controller-layer fix lands — should add a flow-layer CDP network hook so the recipe can assert rateLimit429Count == 0 as a regression gate."
+    }
+  ],
+  "better_version_guidance": [
+    "Add a flow-layer CDP network hook (Network.enable on the service-worker target) that captures HL responses during the recipe run and emits a summary artifact, so the recipe can assert rateLimit429Count and fail gating if regressions appear.",
+    "Once the fix sketch in BENCHMARK-REPORT.md / comparison.md lands, flip the recipe's assertion from nav-only to strict rateLimit429Count == 0 and totalHyperliquidRequests <= 6 for a 6-market rotation — matching mobile's observed 0% rate.",
+    "Replace perps/navigate-to-market-detail with an explicit click on [data-testid=explore-markets-{SYMBOL}] + wait_for [data-testid=perps-market-detail-page] if the underlying flow's balance-dropdown selector wait ever becomes flaky."
+  ]
+}

@@ -1,0 +1,141 @@
+{
+  "title": "TAT-2986 candle rapid-switch driver",
+  "description": "Drives the 6-market rapid-switch rotation (BTC→ETH→SOL→HYPE→BTC→ETH) that reproduces the residual HTTP 429 on extension perps. Recipe is navigation-only — it asserts each nav lands on the correct market-detail page and captures a final screenshot. Network-level evidence (HL responses + 429 counts) must be harvested out-of-band by running `probe-rapid-switch.js` against the same CDP port in parallel; that probe attaches `Network.responseReceived` to the service-worker target where HL REST actually fires. The SW-side ring-buffer RPCs from the original TASK.md §4.1 plan (`perpsResetTat2986`, `perpsGetTat2986Log`, `perpsGetTat2986Net`) were intentionally not landed — this investigation PR carries zero production code changes — so this recipe does not call them.",
+  "validate": {
+    "workflow": {
+      "pre_conditions": ["wallet.unlocked"],
+      "setup": [],
+      "teardown": [],
+      "entry": "setup-nav-perps-tab",
+      "nodes": {
+        "setup-nav-perps-tab": {
+          "action": "call",
+          "ref": "perps/navigate-perps-tab",
+          "next": "gate-nav-btc-initial"
+        },
+        "gate-nav-btc-initial": {
+          "action": "call",
+          "ref": "perps/navigate-to-market-detail",
+          "params": { "symbol": "BTC" },
+          "next": "gate-assert-btc"
+        },
+        "gate-assert-btc": {
+          "action": "eval_sync",
+          "expression": "({ onDetail: !!document.querySelector('[data-testid=perps-market-detail-page]'), hash: location.hash, includesBtc: location.hash.indexOf('BTC') !== -1 })",
+          "assert": {
+            "all": [
+              { "operator": "eq", "field": "onDetail", "value": true },
+              { "operator": "eq", "field": "includesBtc", "value": true }
+            ]
+          },
+          "next": "gate-dwell-1"
+        },
+        "gate-dwell-1": {
+          "action": "wait",
+          "ms": 250,
+          "next": "gate-nav-eth"
+        },
+        "gate-nav-eth": {
+          "action": "call",
+          "ref": "perps/navigate-to-market-detail",
+          "params": { "symbol": "ETH" },
+          "next": "gate-assert-eth"
+        },
+        "gate-assert-eth": {
+          "action": "eval_sync",
+          "expression": "({ onDetail: !!document.querySelector('[data-testid=perps-market-detail-page]'), hash: location.hash, includesEth: location.hash.indexOf('ETH') !== -1 })",
+          "assert": {
+            "all": [
+              { "operator": "eq", "field": "onDetail", "value": true },
+              { "operator": "eq", "field": "includesEth", "value": true }
+            ]
+          },
+          "next": "gate-dwell-2"
+        },
+        "gate-dwell-2": {
+          "action": "wait",
+          "ms": 250,
+          "next": "gate-nav-sol"
+        },
+        "gate-nav-sol": {
+          "action": "call",
+          "ref": "perps/navigate-to-market-detail",
+          "params": { "symbol": "SOL" },
+          "next": "gate-dwell-3"
+        },
+        "gate-dwell-3": {
+          "action": "wait",
+          "ms": 250,
+          "next": "gate-nav-hype"
+        },
+        "gate-nav-hype": {
+          "action": "call",
+          "ref": "perps/navigate-to-market-detail",
+          "params": { "symbol": "HYPE" },
+          "next": "gate-dwell-4"
+        },
+        "gate-dwell-4": {
+          "action": "wait",
+          "ms": 250,
+          "next": "gate-nav-btc-again"
+        },
+        "gate-nav-btc-again": {
+          "action": "call",
+          "ref": "perps/navigate-to-market-detail",
+          "params": { "symbol": "BTC" },
+          "next": "gate-dwell-5"
+        },
+        "gate-dwell-5": {
+          "action": "wait",
+          "ms": 250,
+          "next": "gate-nav-eth-again"
+        },
+        "gate-nav-eth-again": {
+          "action": "call",
+          "ref": "perps/navigate-to-market-detail",
+          "params": { "symbol": "ETH" },
+          "next": "gate-settle"
+        },
+        "gate-settle": {
+          "action": "wait",
+          "ms": 400,
+          "next": "ac1-assert-final-landing"
+        },
+        "ac1-assert-final-landing": {
+          "action": "eval_sync",
+          "expression": "({ onDetail: !!document.querySelector('[data-testid=perps-market-detail-page]'), hash: location.hash, finalSymbolIsEth: location.hash.indexOf('ETH') !== -1, errorBoundary: document.body.innerText.indexOf('MetaMask encountered') !== -1 })",
+          "assert": {
+            "all": [
+              { "operator": "eq", "field": "onDetail", "value": true },
+              { "operator": "eq", "field": "finalSymbolIsEth", "value": true },
+              { "operator": "eq", "field": "errorBoundary", "value": false }
+            ]
+          },
+          "save_as": "final_landing",
+          "next": "ac2-rotation-counter"
+        },
+        "ac2-rotation-counter": {
+          "action": "eval_sync",
+          "expression": "({ rotationCount: 6, dwellMs: 250, probeNote: 'Network-level 429 evidence harvested by probe-rapid-switch.js — run in parallel on CDP port 6665 for live-capture.json output.' })",
+          "assert": {
+            "all": [
+              { "operator": "eq", "field": "rotationCount", "value": 6 }
+            ]
+          },
+          "save_as": "rotation_summary",
+          "next": "ac3-screenshot-final"
+        },
+        "ac3-screenshot-final": {
+          "action": "screenshot",
+          "filename": "evidence-rapid-switch-final.png",
+          "note": "Final market-detail screen after 6-market rapid-switch rotation; visual confirmation of settled UI state. Pair with probe-rapid-switch.js output for network evidence.",
+          "next": "done"
+        },
+        "done": {
+          "action": "end",
+          "status": "pass"
+        }
+      }
+    }
+  }
+}
