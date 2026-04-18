@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "preferred_mode": "screenshots",
+  "summary": "Before: + prefix rejected, SL sign inverted. After: +15 accepted in TP, -5 creates SL below entry.",
+  "before_after_pairs": [
+    {
+      "label": "TP accepts + prefix and populates price above entry",
+      "covers": ["ac1"],
+      "before": "before-state.png",
+      "after": "after-ac1-tp-plus-sign-accepted.png",
+      "note": "Before: + was rejected (blocked by regex). After: +15 accepted, price $2541.84 set above entry."
+    },
+    {
+      "label": "SL with -5% creates price below entry (correct loss direction)",
+      "covers": ["ac2"],
+      "before": "before-state.png",
+      "after": "after-ac2-sl-minus-sign-below-entry.png",
+      "note": "Before: -5 inverted to place SL above entry. After: -5% RoE → $2380.45, below entry ~$2384."
+    }
+  ],
+  "standalone": [],
+  "omit": ["after-ac3-tpsl-modal-signed-inputs.png"],
+  "videos": {
+    "before": null,
+    "after": null,
+    "preferred": false,
+    "note": "Recording unavailable in headless environment."
+  }
+}

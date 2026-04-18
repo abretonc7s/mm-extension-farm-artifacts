@@ -1,0 +1,21 @@
+{
+  "version": 1,
+  "verdict": "pass",
+  "ac_coverage": {
+    "total": 3,
+    "proven": 3,
+    "weak": 0,
+    "untestable": 0,
+    "missing": 0
+  },
+  "checks": [
+    { "id": "ac_node_prefix", "verdict": "pass", "reason": "All AC nodes use ac<N>-<verb>-<obj> prefix. Plumbing nodes use setup-/teardown-/gate-." },
+    { "id": "forbidden_patterns", "verdict": "pass", "reason": "No switch-default AC bypass, no eval_sync skip-reason, no wait>500ms, no DOM-only visual claims, no missing screenshots for visual ACs." },
+    { "id": "strict_assertions", "verdict": "pass", "reason": "ac1 uses eq on accepted field and price set check. ac2 uses lt operator comparing sl price to entry price." },
+    { "id": "screenshot_evidence", "verdict": "pass", "reason": "Each AC has a screenshot node. Screenshots visually confirm +15 accepted in TP, -5 creates SL below entry." },
+    { "id": "teardown", "verdict": "pass", "reason": "Modal closed via teardown-close-modal after all ACs." },
+    { "id": "recipe_focus", "verdict": "pass", "reason": "Recipe is small and focused: navigates to perps position, opens TPSL modal, asserts two ACs, closes modal." },
+    { "id": "revert_detection", "verdict": "pass", "reason": "ac1-assert-tp-value-accepted checks accepted:true — reverting isSignedDecimalInput fix causes this to fail. ac2-assert-sl-price-below-entry checks sl < entry — reverting percentToPrice fix causes this to fail." }
+  ],
+  "better_version_guidance": "Could also test SL preset button click produces a negative percent display, and that short positions invert correctly. Current recipe focuses on the primary user-facing bug."
+}

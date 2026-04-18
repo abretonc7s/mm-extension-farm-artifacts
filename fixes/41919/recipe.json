@@ -1,0 +1,117 @@
+{
+  "title": "TAT-2947: TP/SL signed percent input — +/- sign acceptance and correct price derivation",
+  "description": "Verifies that the TP/SL modal accepts + prefix and that - prefix sets prices on the correct side of entry. Requires an open ETH long position.",
+  "initial_conditions": {},
+  "validate": {
+    "workflow": {
+      "pre_conditions": ["wallet.unlocked", "perps.feature_enabled"],
+      "entry": "setup-dismiss-any-modal",
+      "teardown": [
+        {
+          "id": "teardown-close-modal",
+          "action": "eval_sync",
+          "expression": "(()=>{const closeBtn=document.querySelector('[data-testid=\"perps-update-tpsl-modal\"] [aria-label=\"Close\"]');if(closeBtn)closeBtn.click();return JSON.stringify({ok:true});})()",
+          "assert": { "operator": "eq", "field": "ok", "value": true }
+        }
+      ],
+      "nodes": {
+        "setup-dismiss-any-modal": {
+          "action": "eval_sync",
+          "expression": "(()=>{const modal=document.querySelector('[data-testid=\"perps-update-tpsl-modal\"]');if(modal){const closeBtn=modal.querySelector('[aria-label=\"Close\"]')||modal.querySelector('button[data-testid*=\"close\"]');if(closeBtn){closeBtn.click();}}return JSON.stringify({ok:true});})()",
+          "assert": { "operator": "eq", "field": "ok", "value": true },
+          "save_as": "dismiss_state",
+          "next": "setup-navigate-market"
+        },
+        "setup-navigate-market": {
+          "action": "call",
+          "ref": "perps/navigate-to-market-detail",
+          "params": { "symbol": "ETH" },
+          "next": "setup-read-entry-price"
+        },
+        "setup-read-entry-price": {
+          "action": "eval_async",
+          "expression": "(async()=>{const r=await stateHooks.submitRequestToBackground('perpsGetPositions',[{}]);const eth=(r||[]).find(p=>p.symbol==='ETH');if(!eth)return JSON.stringify({found:false,entry:0,leverage:1});return JSON.stringify({found:true,entry:parseFloat(eth.entryPrice||'0'),leverage:eth.leverage?.value??1});})()",
+          "assert": { "operator": "eq", "field": "found", "value": true },
+          "save_as": "position_info",
+          "next": "setup-open-tpsl-modal"
+        },
+        "setup-open-tpsl-modal": {
+          "action": "press",
+          "test_id": "perps-auto-close-row",
+          "next": "setup-wait-modal"
+        },
+        "setup-wait-modal": {
+          "action": "wait_for",
+          "test_id": "perps-update-tpsl-modal-submit",
+          "timeout_ms": 8000,
+          "next": "ac1-type-plus-in-tp"
+        },
+        "ac1-type-plus-in-tp": {
+          "action": "eval_sync",
+          "expression": "(()=>{const modal=document.querySelector('[data-testid=\"perps-update-tpsl-modal\"]');if(!modal)return JSON.stringify({ok:false,reason:'modal not found'});const pctInputs=Array.from(modal.querySelectorAll('input[placeholder=\"0\"]'));const tpPct=pctInputs[0];if(!tpPct)return JSON.stringify({ok:false,reason:'tp pct input not found'});tpPct.focus();const nativeInputValueSetter=Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype,'value').set;nativeInputValueSetter.call(tpPct,'+15');tpPct.dispatchEvent(new Event('input',{bubbles:true}));tpPct.dispatchEvent(new Event('change',{bubbles:true}));return JSON.stringify({ok:true,currentValue:tpPct.value});})()",
+          "assert": { "operator": "eq", "field": "ok", "value": true },
+          "save_as": "ac1_tp_input_state",
+          "next": "ac1-assert-tp-value-accepted"
+        },
+        "ac1-assert-tp-value-accepted": {
+          "action": "eval_sync",
+          "expression": "(()=>{const modal=document.querySelector('[data-testid=\"perps-update-tpsl-modal\"]');if(!modal)return JSON.stringify({accepted:false});const pctInputs=Array.from(modal.querySelectorAll('input[placeholder=\"0\"]'));const tpPct=pctInputs[0];return JSON.stringify({accepted:tpPct&&tpPct.value!==''&&tpPct.value!=='0',value:tpPct?tpPct.value:''});})()",
+          "assert": { "operator": "eq", "field": "accepted", "value": true },
+          "save_as": "ac1_result",
+          "next": "ac1-assert-tp-price-set"
+        },
+        "ac1-assert-tp-price-set": {
+          "action": "eval_sync",
+          "expression": "(()=>{const modal=document.querySelector('[data-testid=\"perps-update-tpsl-modal\"]');if(!modal)return JSON.stringify({priceSet:false,price:0});const priceInputs=Array.from(modal.querySelectorAll('input[placeholder=\"0.00\"]'));const tpPrice=priceInputs[0];const priceVal=parseFloat((tpPrice?.value||'0').replace(/,/g,''));return JSON.stringify({priceSet:priceVal>0,price:priceVal});})()",
+          "assert": { "operator": "eq", "field": "priceSet", "value": true },
+          "save_as": "ac1_tp_price",
+          "next": "ac1-screenshot-tp"
+        },
+        "ac1-screenshot-tp": {
+          "action": "screenshot",
+          "filename": "evidence-ac1-tp-plus-sign-accepted.png",
+          "note": "AC1: TP percent field showing value after typing +15 — proves + sign is accepted",
+          "next": "gate-clear-tp"
+        },
+        "gate-clear-tp": {
+          "action": "eval_sync",
+          "expression": "(()=>{const modal=document.querySelector('[data-testid=\"perps-update-tpsl-modal\"]');if(!modal)return JSON.stringify({ok:false});const priceInputs=Array.from(modal.querySelectorAll('input[placeholder=\"0.00\"]'));const tpPrice=priceInputs[0];if(tpPrice){const setter=Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype,'value').set;setter.call(tpPrice,'');tpPrice.dispatchEvent(new Event('input',{bubbles:true}));tpPrice.dispatchEvent(new Event('change',{bubbles:true}));}return JSON.stringify({ok:true});})()",
+          "assert": { "operator": "eq", "field": "ok", "value": true },
+          "save_as": "gate_clear",
+          "next": "ac2-type-minus-in-sl"
+        },
+        "ac2-type-minus-in-sl": {
+          "action": "eval_sync",
+          "expression": "(()=>{const modal=document.querySelector('[data-testid=\"perps-update-tpsl-modal\"]');if(!modal)return JSON.stringify({ok:false,reason:'modal not found'});const pctInputs=Array.from(modal.querySelectorAll('input[placeholder=\"0\"]'));const slPct=pctInputs[1];if(!slPct)return JSON.stringify({ok:false,reason:'sl pct input not found'});slPct.focus();const nativeInputValueSetter=Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype,'value').set;nativeInputValueSetter.call(slPct,'-5');slPct.dispatchEvent(new Event('input',{bubbles:true}));slPct.dispatchEvent(new Event('change',{bubbles:true}));return JSON.stringify({ok:true,currentValue:slPct.value});})()",
+          "assert": { "operator": "eq", "field": "ok", "value": true },
+          "save_as": "ac2_sl_input_state",
+          "next": "ac2-assert-sl-price-below-entry"
+        },
+        "ac2-assert-sl-price-below-entry": {
+          "action": "eval_sync",
+          "expression": "(()=>{const modal=document.querySelector('[data-testid=\"perps-update-tpsl-modal\"]');if(!modal)return JSON.stringify({ok:false,slPrice:0,entryPrice:0,belowEntry:false});const priceInputs=Array.from(modal.querySelectorAll('input[placeholder=\"0.00\"]'));const slPriceInput=priceInputs[1];const slPrice=parseFloat((slPriceInput?.value||'0').replace(/,/g,''));const entryPrice={{vars.position_info.entry}};return JSON.stringify({ok:slPrice>0,slPrice,entryPrice,belowEntry:slPrice>0&&entryPrice>0&&slPrice<entryPrice});})()",
+          "assert": { "operator": "eq", "field": "belowEntry", "value": true },
+          "save_as": "ac2_result",
+          "next": "ac2-screenshot-sl"
+        },
+        "ac2-screenshot-sl": {
+          "action": "screenshot",
+          "filename": "evidence-ac2-sl-minus-sign-below-entry.png",
+          "note": "AC2: SL price field showing value below entry after typing -5 — proves minus sign creates correct SL below entry",
+          "next": "ac3-screenshot-final"
+        },
+        "ac3-screenshot-final": {
+          "action": "screenshot",
+          "filename": "evidence-ac3-tpsl-modal-signed-inputs.png",
+          "note": "AC3-5: TP/SL modal showing both signed inputs accepted correctly",
+          "next": "done"
+        },
+        "done": {
+          "action": "end",
+          "status": "pass",
+          "message": "TPSL signed percent input verified: + accepted for TP, - creates SL below entry"
+        }
+      }
+    }
+  }
+}
