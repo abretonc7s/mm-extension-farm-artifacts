@@ -1,0 +1,19 @@
+{
+  "title": "Check if perps experience is available",
+  "validate": {
+    "workflow": {
+      "pre_conditions": ["wallet.unlocked"],
+      "entry": "check-enabled",
+      "nodes": {
+        "check-enabled": {
+          "action": "eval_sync",
+          "expression": "(function(){var m=stateHooks.store.getState().metamask;var rf=m.remoteFeatureFlags||{};var v=rf.perpsEnabledVersion;var vStr=typeof v==='object'?JSON.stringify(v):String(v);document.title='PERPS_FLAG:'+vStr;return JSON.stringify({perpsEnabledVersion:v,type:typeof v,str:vStr});})()",
+          "assert": {"all":[{"operator":"neq","field":"str","value":"undefined"}]},
+          "save_as": "enabled_check",
+          "next": "done"
+        },
+        "done": {"action":"end","status":"pass"}
+      }
+    }
+  }
+}

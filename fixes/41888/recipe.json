@@ -1,0 +1,95 @@
+{
+  "title": "TAT-2831: Submit button disabled when user has no perps balance",
+  "description": "Verifies that the Long/Short submit button on the perps order entry page is disabled when the user has zero perps balance. Uses stream manager pushData to inject a zero-balance account state, bypassing the Hyperliquid connection requirement.",
+  "validate": {
+    "workflow": {
+      "entry": "setup-unlock",
+      "nodes": {
+        "setup-unlock": {
+          "action": "eval_sync",
+          "expression": "(function(){var p=document.querySelector('[data-testid=\"unlock-password\"]');return JSON.stringify({locked:!!p});})()",
+          "save_as": "lock_state",
+          "next": "setup-unlock-branch"
+        },
+        "setup-unlock-branch": {
+          "action": "switch",
+          "cases": [
+            { "label": "locked", "when": { "field": "vars.lock_state.locked", "operator": "truthy" }, "next": "setup-unlock-type-password" }
+          ],
+          "default": "setup-nav-order-entry"
+        },
+        "setup-unlock-type-password": {
+          "action": "set_input",
+          "test_id": "unlock-password",
+          "value": "qwerasdf",
+          "next": "setup-unlock-submit"
+        },
+        "setup-unlock-submit": {
+          "action": "press",
+          "test_id": "unlock-submit",
+          "next": "setup-unlock-wait"
+        },
+        "setup-unlock-wait": {
+          "action": "wait_for",
+          "expression": "(function(){var p=document.querySelector('[data-testid=\"unlock-password\"]');return JSON.stringify({stillLocked:!!p});})()",
+          "assert": { "operator": "eq", "field": "stillLocked", "value": false },
+          "timeout_ms": 10000,
+          "poll_ms": 200,
+          "next": "setup-nav-order-entry"
+        },
+        "setup-nav-order-entry": {
+          "action": "ext_navigate_hash",
+          "hash": "/perps/trade/BTC?direction=long&mode=new",
+          "next": "setup-wait-page-load"
+        },
+        "setup-wait-page-load": {
+          "action": "wait_for",
+          "test_id": "perps-order-entry-page",
+          "timeout_ms": 30000,
+          "next": "setup-inject-zero-balance"
+        },
+        "setup-inject-zero-balance": {
+          "action": "eval_sync",
+          "expression": "(function(){var sm=stateHooks.getPerpsStreamManager&&stateHooks.getPerpsStreamManager();if(!sm||!sm.account||typeof sm.account.pushData!=='function')return JSON.stringify({injected:false,reason:'no pushData'});sm.account.pushData({availableBalance:'0',totalBalance:'0',unrealizedPnl:'0',positions:[],openOrders:[]});return JSON.stringify({injected:true});})()",
+          "assert": {
+            "all": [
+              { "operator": "eq", "field": "injected", "value": true }
+            ]
+          },
+          "save_as": "inject_result",
+          "next": "setup-wait-add-funds"
+        },
+        "setup-wait-add-funds": {
+          "action": "wait_for",
+          "expression": "(function(){var btn=document.querySelector('[data-testid=\"submit-order-button\"]');if(!btn)return JSON.stringify({ready:false});var txt=btn.textContent.trim().toLowerCase();return JSON.stringify({ready:txt.includes('add funds'),txt:txt});})()",
+          "assert": { "operator": "eq", "field": "ready", "value": true },
+          "timeout_ms": 5000,
+          "poll_ms": 200,
+          "next": "ac1-screenshot-submit-button"
+        },
+        "ac1-screenshot-submit-button": {
+          "action": "screenshot",
+          "filename": "evidence-ac1-submit-button-state.png",
+          "next": "ac1-assert-button-disabled"
+        },
+        "ac1-assert-button-disabled": {
+          "action": "eval_sync",
+          "expression": "(function(){var btn=document.querySelector('[data-testid=\"submit-order-button\"]');if(!btn)return JSON.stringify({found:false,disabled:null});return JSON.stringify({found:true,disabled:btn.disabled,text:btn.textContent.trim()});})()",
+          "assert": {
+            "all": [
+              { "operator": "eq", "field": "found", "value": true },
+              { "operator": "eq", "field": "disabled", "value": true }
+            ]
+          },
+          "save_as": "submit_button_state",
+          "next": "done"
+        },
+        "done": {
+          "action": "end",
+          "status": "pass",
+          "message": "Submit button is correctly disabled when user has no perps balance"
+        }
+      }
+    }
+  }
+}

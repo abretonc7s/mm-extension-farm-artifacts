@@ -1,0 +1,35 @@
+{
+  "title": "Check Account 1 perps balance",
+  "validate": {
+    "workflow": {
+      "pre_conditions": ["wallet.unlocked"],
+      "entry": "setup-nav-home",
+      "nodes": {
+        "setup-nav-home": {
+          "action": "ext_navigate_hash",
+          "hash": "/",
+          "next": "setup-wait-home"
+        },
+        "setup-wait-home": {
+          "action": "wait_for",
+          "test_id": "account-menu-icon",
+          "timeout_ms": 8000,
+          "next": "setup-switch-acct1"
+        },
+        "setup-switch-acct1": {
+          "action": "call",
+          "ref": "extension-core/select-account",
+          "params": { "address": "0x8dc623e964475d4d669da601fd15ea9125469003" },
+          "next": "check-balance"
+        },
+        "check-balance": {
+          "action": "eval_sync",
+          "expression": "(function(){ var sm = stateHooks.getPerpsStreamManager(); var acct = sm && sm.account && sm.account.getCachedData ? sm.account.getCachedData() : null; return JSON.stringify({ account: acct, availableBalance: acct ? acct.availableBalance : null }); })()",
+          "save_as": "acct1_balance",
+          "next": "done"
+        },
+        "done": { "action": "end", "status": "pass" }
+      }
+    }
+  }
+}

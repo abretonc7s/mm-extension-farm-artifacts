@@ -1,0 +1,29 @@
+{
+  "title": "Check perps stream after navigating to order entry route",
+  "validate": {
+    "workflow": {
+      "pre_conditions": ["wallet.unlocked"],
+      "entry": "nav-order-entry",
+      "nodes": {
+        "nav-order-entry": {
+          "action": "ext_navigate_hash",
+          "hash": "/perps/trade/BTC?direction=long&mode=new",
+          "next": "wait-10s"
+        },
+        "wait-10s": {
+          "action": "wait",
+          "ms": 10000,
+          "next": "check-stream"
+        },
+        "check-stream": {
+          "action": "eval_sync",
+          "expression": "(function(){var sm=stateHooks.getPerpsStreamManager&&stateHooks.getPerpsStreamManager();if(!sm)return JSON.stringify({hasManager:false});var markets=sm.markets&&sm.markets.getCachedData?sm.markets.getCachedData():null;var acct=sm.account&&sm.account.getCachedData?sm.account.getCachedData():null;var testids=Array.from(document.querySelectorAll('[data-testid]')).map(function(e){return e.getAttribute('data-testid')}).filter(function(t){return t&&t.indexOf('perps')>=0}).slice(0,10);document.title='STREAM2:mkt='+JSON.stringify(markets?markets.length:null)+',testids='+testids.join(',');return JSON.stringify({mktCount:markets?markets.length:null,hasAcct:!!acct,testids:testids});})()",
+          "assert": {"all":[{"operator":"eq","field":"hasManager","value":null}]},
+          "save_as": "stream2",
+          "next": "done"
+        },
+        "done": {"action":"end","status":"pass"}
+      }
+    }
+  }
+}

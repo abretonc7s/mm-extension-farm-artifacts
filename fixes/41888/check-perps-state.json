@@ -1,0 +1,26 @@
+{
+  "title": "Check current perps state",
+  "validate": {
+    "workflow": {
+      "pre_conditions": ["wallet.unlocked"],
+      "entry": "check-state",
+      "nodes": {
+        "check-state": {
+          "action": "eval_sync",
+          "expression": "(function(){var m=stateHooks.store.getState().metamask;var perpsEnabled=m.isPerpsExperienceAvailable;var isTestnet=m.isTestnet;var activeProvider=m.activeProvider;var selectedAcct=(m.internalAccounts||{}).selectedAccount;var byId=(m.internalAccounts||{}).accounts||{};var acct=byId[selectedAcct]||{};return JSON.stringify({perpsEnabled:perpsEnabled,isTestnet:isTestnet,activeProvider:activeProvider,selectedAccount:acct.address,selectedName:(acct.metadata||{}).name});})()",
+          "assert": {"all":[{"operator":"eq","field":"perpsEnabled","value":true}]},
+          "save_as": "perps_state",
+          "next": "check-markets"
+        },
+        "check-markets": {
+          "action": "eval_async",
+          "expression": "(async function(){try{var r=await stateHooks.submitRequestToBackground('perpsGetMarketDataWithPrices',[]);return JSON.stringify({count:(r||[]).length,firstMarket:r&&r[0]?r[0].symbol:'none'});}catch(e){return JSON.stringify({error:e.message,count:0});}})()",
+          "assert": {"all":[{"operator":"gt","field":"count","value":0}]},
+          "save_as": "markets_state",
+          "next": "done"
+        },
+        "done": {"action":"end","status":"pass"}
+      }
+    }
+  }
+}

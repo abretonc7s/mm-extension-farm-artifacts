@@ -1,0 +1,58 @@
+{
+  "title": "Check dev1 perps order entry page",
+  "validate": {
+    "workflow": {
+      "pre_conditions": ["wallet.unlocked"],
+      "entry": "setup-nav-home",
+      "nodes": {
+        "setup-nav-home": {
+          "action": "ext_navigate_hash",
+          "hash": "/",
+          "next": "setup-wait-home"
+        },
+        "setup-wait-home": {
+          "action": "wait_for",
+          "test_id": "account-menu-icon",
+          "timeout_ms": 8000,
+          "next": "setup-switch-dev1"
+        },
+        "setup-switch-dev1": {
+          "action": "eval_sync",
+          "expression": "(function(){var m=stateHooks.store.getState().metamask;var byId=(m.internalAccounts||{}).accounts||{};var addr='0x8dc623e964475d4d669da601fd15ea9125469003';var id=Object.keys(byId).find(function(k){return (byId[k].address||'').toLowerCase()===addr;});if(!id)return JSON.stringify({switched:false,error:'not found'});stateHooks.submitRequestToBackground('setSelectedAccount',[id]);return JSON.stringify({switched:true,id:id});})()",
+          "assert": {"all":[{"operator":"eq","field":"switched","value":true}]},
+          "save_as": "switch_result",
+          "next": "setup-wait-switch"
+        },
+        "setup-wait-switch": {
+          "action": "wait",
+          "ms": 1000,
+          "next": "setup-nav-order-entry"
+        },
+        "setup-nav-order-entry": {
+          "action": "ext_navigate_hash",
+          "hash": "/perps/trade/BTC?direction=long&mode=new",
+          "next": "setup-wait-order-entry"
+        },
+        "setup-wait-order-entry": {
+          "action": "wait_for",
+          "test_id": "perps-order-entry-page",
+          "timeout_ms": 20000,
+          "next": "check-perps-balance"
+        },
+        "check-perps-balance": {
+          "action": "eval_sync",
+          "expression": "(function(){var sm=stateHooks.getPerpsStreamManager&&stateHooks.getPerpsStreamManager();var acct=sm&&sm.account&&sm.account.getCachedData?sm.account.getCachedData():null;var btn=document.querySelector('[data-testid=\"submit-order-button\"]');return JSON.stringify({availableBalance:acct?acct.availableBalance:null,buttonDisabled:btn?btn.disabled:null,buttonFound:!!btn});})()",
+          "assert": {"all":[{"operator":"eq","field":"buttonFound","value":true}]},
+          "save_as": "perps_state",
+          "next": "screenshot"
+        },
+        "screenshot": {
+          "action": "screenshot",
+          "filename": "evidence-dev1-order-entry.png",
+          "next": "done"
+        },
+        "done": {"action": "end", "status": "pass"}
+      }
+    }
+  }
+}

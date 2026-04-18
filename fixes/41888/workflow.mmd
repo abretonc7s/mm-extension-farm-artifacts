@@ -1,0 +1,16 @@
+flowchart TD
+  %% TAT-2831: Submit button disabled when user has no perps balance
+  __entry__(["ENTRY"]) --> node_setup_nav_order_entry
+  node_setup_nav_order_entry["setup-nav-order-entry<br/>ext_navigate_hash"]
+  node_setup_wait_page_load["setup-wait-page-load<br/>wait_for"]
+  node_setup_inject_zero_balance["setup-inject-zero-balance<br/>eval_sync"]
+  node_setup_wait_add_funds["setup-wait-add-funds<br/>wait_for"]
+  node_ac1_screenshot_submit_button["ac1-screenshot-submit-button<br/>screenshot"]
+  node_ac1_assert_button_disabled["ac1-assert-button-disabled<br/>eval_sync"]
+  node_done(["done<br/>PASS"])
+  node_setup_nav_order_entry --> node_setup_wait_page_load
+  node_setup_wait_page_load --> node_setup_inject_zero_balance
+  node_setup_inject_zero_balance --> node_setup_wait_add_funds
+  node_setup_wait_add_funds --> node_ac1_screenshot_submit_button
+  node_ac1_screenshot_submit_button --> node_ac1_assert_button_disabled
+  node_ac1_assert_button_disabled --> node_done

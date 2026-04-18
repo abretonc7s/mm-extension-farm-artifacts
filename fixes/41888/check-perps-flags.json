@@ -1,0 +1,19 @@
+{
+  "title": "Check perps feature flags",
+  "validate": {
+    "workflow": {
+      "pre_conditions": ["wallet.unlocked"],
+      "entry": "check-flags",
+      "nodes": {
+        "check-flags": {
+          "action": "eval_sync",
+          "expression": "(function(){var m=stateHooks.store.getState().metamask;var rf=m.remoteFeatureFlags||{};return JSON.stringify({perpsEnabledVersion:rf.perpsEnabledVersion,allPerpsKeys:Object.keys(rf).filter(function(k){return k.toLowerCase().indexOf('perps')>=0})});})()",
+          "assert": {"all":[{"operator":"neq","field":"perpsEnabledVersion","value":null}]},
+          "save_as": "flags",
+          "next": "done"
+        },
+        "done": {"action":"end","status":"pass"}
+      }
+    }
+  }
+}

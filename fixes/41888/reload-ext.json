@@ -1,0 +1,25 @@
+{
+  "title": "Reload extension page",
+  "validate": {
+    "workflow": {
+      "pre_conditions": ["wallet.unlocked"],
+      "entry": "reload",
+      "nodes": {
+        "reload": {
+          "action": "eval_async",
+          "expression": "(async()=>{location.reload();return JSON.stringify({reloaded:true});})()",
+          "assert": {"all":[{"operator":"eq","field":"reloaded","value":true}]},
+          "save_as": "reload_result",
+          "next": "wait-ready"
+        },
+        "wait-ready": {
+          "action": "wait_for",
+          "test_id": "account-menu-icon",
+          "timeout_ms": 15000,
+          "next": "done"
+        },
+        "done": {"action":"end","status":"pass"}
+      }
+    }
+  }
+}

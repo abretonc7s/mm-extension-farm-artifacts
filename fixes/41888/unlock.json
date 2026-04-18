@@ -1,0 +1,18 @@
+{
+  "title": "Unlock wallet",
+  "validate": {
+    "workflow": {
+      "pre_conditions": [],
+      "entry": "unlock",
+      "nodes": {
+        "unlock": {
+          "action": "call",
+          "ref": "extension-core/unlock-wallet",
+          "params": {"password": "qwerasdf"},
+          "next": "done"
+        },
+        "done": {"action":"end","status":"pass"}
+      }
+    }
+  }
+}

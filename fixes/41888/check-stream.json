@@ -1,0 +1,29 @@
+{
+  "title": "Check perps stream state",
+  "validate": {
+    "workflow": {
+      "pre_conditions": ["wallet.unlocked"],
+      "entry": "nav-perps",
+      "nodes": {
+        "nav-perps": {
+          "action": "navigate",
+          "target": "PerpsHome",
+          "next": "wait-5s"
+        },
+        "wait-5s": {
+          "action": "wait",
+          "ms": 5000,
+          "next": "check-stream"
+        },
+        "check-stream": {
+          "action": "eval_sync",
+          "expression": "(function(){var sm=stateHooks.getPerpsStreamManager&&stateHooks.getPerpsStreamManager();if(!sm)return JSON.stringify({error:'no stream manager'});var status=sm.getStatus?sm.getStatus():'no getStatus';var markets=sm.markets&&sm.markets.getCachedData?sm.markets.getCachedData():null;var acct=sm.account&&sm.account.getCachedData?sm.account.getCachedData():null;document.title='STREAM:'+JSON.stringify({status:status,mktCount:markets?markets.length:null,hasAcct:!!acct});return JSON.stringify({status:status,mktCount:markets?markets.length:null,hasAcct:!!acct});})()",
+          "assert": {"all":[{"operator":"neq","field":"error","value":"no stream manager"}]},
+          "save_as": "stream_state",
+          "next": "done"
+        },
+        "done": {"action":"end","status":"pass"}
+      }
+    }
+  }
+}

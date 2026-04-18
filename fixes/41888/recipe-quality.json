@@ -1,0 +1,14 @@
+{
+  "verdict": "pass",
+  "recipe": "temp/.task/fix/tat-2831-0417-1845/artifacts/recipe.json",
+  "checks": {
+    "node_naming": { "verdict": "pass", "reason": "All AC nodes prefixed ac1-, setup nodes prefixed setup-" },
+    "assertions": { "verdict": "pass", "reason": "ac1-assert-button-disabled uses strict eq on both found and disabled fields" },
+    "screenshots": { "verdict": "pass", "reason": "ac1-screenshot-submit-button taken before assertion; before/after pair captured" },
+    "no_forbidden_patterns": { "verdict": "pass", "reason": "No wait>500ms, no switch default skipping AC, no DOM-only visual claim" },
+    "ac_coverage": { "verdict": "pass", "reason": "1/1 ACs covered with PROVEN verdict" },
+    "setup_via_eval": { "verdict": "pass", "reason": "Zero balance injected via sm.account.pushData() — no UI navigation for setup" },
+    "reverts_on_fix_revert": { "verdict": "pass", "reason": "With fix reverted, ac1-assert-button-disabled FAILS (disabled=false confirmed in before run)" }
+  },
+  "better_version_guidance": "Recipe is minimal and focused. A stronger version could also verify the button remains disabled after a short delay (stream data doesn't re-enable it), but that is not required for this AC."
+}

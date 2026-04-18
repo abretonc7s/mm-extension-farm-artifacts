@@ -1,0 +1,18 @@
+{
+  "title": "Check available accounts",
+  "validate": {
+    "workflow": {
+      "pre_conditions": ["wallet.unlocked"],
+      "entry": "check-accounts",
+      "nodes": {
+        "check-accounts": {
+          "action": "eval_sync",
+          "expression": "(function(){var m=(stateHooks.store.getState()||{}).metamask||{};var byId=(m.internalAccounts||{}).accounts||{};var list=Object.keys(byId).map(function(id){var a=byId[id]||{};return (a.metadata||{}).name+'='+a.address;});document.title='ACCOUNTS:'+list.join('|');return JSON.stringify(list);})()",
+          "save_as": "accounts_list",
+          "next": "done"
+        },
+        "done": { "action": "end", "status": "pass" }
+      }
+    }
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "title": "Force navigate home and unlock",
+  "validate": {
+    "workflow": {
+      "pre_conditions": [],
+      "entry": "nav-home",
+      "nodes": {
+        "nav-home": {
+          "action": "ext_navigate_hash",
+          "hash": "/",
+          "next": "wait-for-screen"
+        },
+        "wait-for-screen": {
+          "action": "wait_for",
+          "expression": "document.querySelector('[data-testid=\"unlock-password\"]') || document.querySelector('[data-testid=\"account-menu-icon\"]')",
+          "timeout_ms": 15000,
+          "next": "check-state"
+        },
+        "check-state": {
+          "action": "eval_sync",
+          "expression": "(function(){var locked=!!document.querySelector('[data-testid=\"unlock-password\"]');var home=!!document.querySelector('[data-testid=\"account-menu-icon\"]');return JSON.stringify({locked:locked,home:home});})()",
+          "assert": {"any":[{"operator":"eq","field":"locked","value":true},{"operator":"eq","field":"home","value":true}]},
+          "save_as": "screen_state",
+          "next": "branch"
+        },
+        "branch": {
+          "action": "switch",
+          "cases": [{"when":{"field":"vars.screen_state.locked","operator":"eq","value":true},"next":"type-pass"}],
+          "default": "done"
+        },
+        "type-pass": {
+          "action": "set_input",
+          "test_id": "unlock-password",
+          "value": "qwerasdf",
+          "next": "press-unlock"
+        },
+        "press-unlock": {
+          "action": "press",
+          "test_id": "unlock-submit",
+          "next": "wait-home"
+        },
+        "wait-home": {
+          "action": "wait_for",
+          "test_id": "account-menu-icon",
+          "timeout_ms": 15000,
+          "next": "done"
+        },
+        "done": {"action":"end","status":"pass"}
+      }
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "version": 1,
+  "preferred_mode": "screenshots",
+  "summary": "Submit button disabled when balance is zero — before (enabled, bug) vs after (disabled, fixed).",
+  "before_after_pairs": [
+    {
+      "label": "Submit button state with 0.00 USDC balance",
+      "covers": ["ac1"],
+      "before": "before-ac1-submit-button-state.png",
+      "after": "after-ac1-submit-button-state.png",
+      "note": "Before: 'Add funds' button is enabled (tappable). After: 'Add funds' button is disabled (opacity reduced, not tappable)."
+    }
+  ],
+  "standalone": [],
+  "omit": [],
+  "videos": {
+    "preferred": false,
+    "note": "Screen recording unavailable in this environment (macOS permissions). Screenshots provide sufficient proof."
+  }
+}

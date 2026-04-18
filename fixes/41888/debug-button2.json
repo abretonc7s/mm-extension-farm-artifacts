@@ -1,0 +1,42 @@
+{
+  "title": "Debug button state 2",
+  "validate": {
+    "workflow": {
+      "pre_conditions": ["wallet.unlocked"],
+      "entry": "nav",
+      "nodes": {
+        "nav": {
+          "action": "ext_navigate_hash",
+          "hash": "/perps/trade/BTC?direction=long&mode=new",
+          "next": "wait-page"
+        },
+        "wait-page": {
+          "action": "wait_for",
+          "test_id": "perps-order-entry-page",
+          "timeout_ms": 30000,
+          "next": "switch-acct"
+        },
+        "switch-acct": {
+          "action": "eval_sync",
+          "expression": "(function(){var m=stateHooks.store.getState().metamask;var byId=(m.internalAccounts||{}).accounts||{};var addr='0xb9b9e1c2d011c8edbef8f56b40c1901d1a0742c2';var id=Object.keys(byId).find(function(k){return (byId[k].address||'').toLowerCase()===addr;});stateHooks.submitRequestToBackground('setSelectedAccount',[id]);return JSON.stringify({switched:true});})()",
+          "assert": {"all":[{"operator":"eq","field":"switched","value":true}]},
+          "save_as": "sw",
+          "next": "wait3"
+        },
+        "wait3": {
+          "action": "wait",
+          "ms": 3000,
+          "next": "debug"
+        },
+        "debug": {
+          "action": "eval_sync",
+          "expression": "(function(){var sm=stateHooks.getPerpsStreamManager&&stateHooks.getPerpsStreamManager();var acct=sm&&sm.account&&sm.account.getCachedData?sm.account.getCachedData():null;var btn=document.querySelector('[data-testid=\"submit-order-button\"]');var info={acctBal:acct?acct.availableBalance:'NO_ACCT',btnDisabled:btn?btn.disabled:'NO_BTN',btnText:btn?btn.textContent.trim().slice(0,20):'NONE'};document.title='DEBUG:'+JSON.stringify(info);return JSON.stringify(info);})()",
+          "assert": {"all":[{"operator":"neq","field":"btnDisabled","value":"NO_BTN"}]},
+          "save_as": "debug_state",
+          "next": "done"
+        },
+        "done": {"action":"end","status":"pass"}
+      }
+    }
+  }
+}
