@@ -1,0 +1,34 @@
+{
+  "version": 1,
+  "preferred_mode": "screenshots",
+  "summary": "Back button now returns to previous screen (market list or home) instead of always navigating to home.",
+  "before_after_pairs": [
+    {
+      "label": "AC1: Back from market detail returns to market list (not home)",
+      "covers": ["ac1"],
+      "before": "before-ac1-on-market-detail.png",
+      "after": "after-ac1-after-back-on-market-list.png",
+      "note": "Before: back button always navigated to home, losing the market list context. After: back button navigates to market list."
+    },
+    {
+      "label": "AC2: Back from market detail returns to wallet home",
+      "covers": ["ac2"],
+      "before": "before-ac1-before-market-list.png",
+      "after": "after-ac2-after-back-on-home.png",
+      "note": "After fix, back from market detail (when arrived from home) correctly returns to wallet home with Perps tab visible."
+    }
+  ],
+  "standalone": [],
+  "omit": [
+    "after-ac1-before-market-list.png",
+    "after-ac1-on-market-detail.png",
+    "after-ac2-on-home.png",
+    "after-ac2-on-market-detail.png"
+  ],
+  "videos": {
+    "before": "before.mp4",
+    "after": "after.mp4",
+    "preferred": false,
+    "note": "Videos show the full recipe run. Screenshots are sufficient to prove the fix."
+  }
+}

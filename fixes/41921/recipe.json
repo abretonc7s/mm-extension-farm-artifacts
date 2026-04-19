@@ -1,0 +1,143 @@
+{
+  "title": "Perps back navigation — market list and home scroll position",
+  "description": "Proves that pressing back on the market detail page returns the user to the correct previous screen (market list or wallet home) rather than always navigating to DEFAULT_ROUTE.",
+  "validate": {
+    "workflow": {
+      "pre_conditions": ["wallet.unlocked", "perps.feature_enabled"],
+      "entry": "setup-nav-perps",
+      "nodes": {
+        "setup-nav-perps": {
+          "action": "call",
+          "ref": "perps/navigate-perps-tab",
+          "next": "setup-nav-market-list"
+        },
+        "setup-nav-market-list": {
+          "action": "navigate",
+          "target": "PerpsMarketList",
+          "next": "setup-wait-market-list"
+        },
+        "setup-wait-market-list": {
+          "action": "wait_for",
+          "test_id": "market-list-view",
+          "timeout_ms": 10000,
+          "next": "setup-screenshot-market-list"
+        },
+        "setup-screenshot-market-list": {
+          "action": "screenshot",
+          "filename": "evidence-ac1-before-market-list.png",
+          "next": "setup-nav-to-detail"
+        },
+        "setup-nav-to-detail": {
+          "action": "call",
+          "ref": "perps/navigate-to-market-detail",
+          "params": { "symbol": "ETH" },
+          "next": "gate-wait-detail"
+        },
+        "gate-wait-detail": {
+          "action": "wait_for",
+          "test_id": "perps-market-detail-page",
+          "timeout_ms": 10000,
+          "next": "ac1-screenshot-on-detail"
+        },
+        "ac1-screenshot-on-detail": {
+          "action": "screenshot",
+          "filename": "evidence-ac1-on-market-detail.png",
+          "next": "ac1-press-back"
+        },
+        "ac1-press-back": {
+          "action": "press",
+          "test_id": "perps-market-detail-back-button",
+          "next": "ac1-wait-for-market-list"
+        },
+        "ac1-wait-for-market-list": {
+          "action": "wait_for",
+          "test_id": "market-list-view",
+          "timeout_ms": 5000,
+          "next": "ac1-assert-on-market-list"
+        },
+        "ac1-assert-on-market-list": {
+          "action": "eval_sync",
+          "expression": "JSON.stringify({ onMarketList: !!document.querySelector('[data-testid=\"market-list-view\"]'), hash: window.location.hash })",
+          "assert": {
+            "all": [
+              { "operator": "eq", "field": "onMarketList", "value": true }
+            ]
+          },
+          "save_as": "back_nav_result",
+          "next": "ac1-screenshot-back-result"
+        },
+        "ac1-screenshot-back-result": {
+          "action": "screenshot",
+          "filename": "evidence-ac1-after-back-on-market-list.png",
+          "next": "setup-nav-home-for-ac2"
+        },
+        "setup-nav-home-for-ac2": {
+          "action": "navigate",
+          "target": "Home",
+          "next": "setup-wait-home"
+        },
+        "setup-wait-home": {
+          "action": "wait_for",
+          "test_id": "account-menu-icon",
+          "timeout_ms": 10000,
+          "next": "setup-screenshot-home"
+        },
+        "setup-screenshot-home": {
+          "action": "screenshot",
+          "filename": "evidence-ac2-on-home.png",
+          "next": "setup-nav-detail-from-home"
+        },
+        "setup-nav-detail-from-home": {
+          "action": "call",
+          "ref": "perps/navigate-to-market-detail",
+          "params": { "symbol": "BTC" },
+          "next": "gate-wait-detail-ac2"
+        },
+        "gate-wait-detail-ac2": {
+          "action": "wait_for",
+          "test_id": "perps-market-detail-page",
+          "timeout_ms": 10000,
+          "next": "ac2-screenshot-detail"
+        },
+        "ac2-screenshot-detail": {
+          "action": "screenshot",
+          "filename": "evidence-ac2-on-market-detail.png",
+          "next": "ac2-press-back"
+        },
+        "ac2-press-back": {
+          "action": "press",
+          "test_id": "perps-market-detail-back-button",
+          "next": "ac2-wait-for-home"
+        },
+        "ac2-wait-for-home": {
+          "action": "wait_for",
+          "test_id": "account-menu-icon",
+          "timeout_ms": 5000,
+          "next": "ac2-assert-on-home"
+        },
+        "ac2-assert-on-home": {
+          "action": "eval_sync",
+          "expression": "JSON.stringify({ onHome: !!document.querySelector('[data-testid=\"account-menu-icon\"]'), notOnDetail: !document.querySelector('[data-testid=\"perps-market-detail-page\"]'), hash: window.location.hash })",
+          "assert": {
+            "all": [
+              { "operator": "eq", "field": "onHome", "value": true },
+              { "operator": "eq", "field": "notOnDetail", "value": true }
+            ]
+          },
+          "save_as": "home_back_nav_result",
+          "next": "ac2-screenshot-back-home"
+        },
+        "ac2-screenshot-back-home": {
+          "action": "screenshot",
+          "filename": "evidence-ac2-after-back-on-home.png",
+          "next": "done"
+        },
+        "done": {
+          "action": "end",
+          "status": "pass",
+          "message": "Back navigation from market detail returns to correct previous screen"
+        }
+      }
+    }
+  }
+}

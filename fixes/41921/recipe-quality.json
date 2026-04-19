@@ -1,0 +1,37 @@
+{
+  "verdict": "pass",
+  "summary": "Recipe correctly proves both back-navigation scenarios: market list → detail → back, and home → detail → back. All 21 nodes pass. All ACs are PROVEN with visual evidence.",
+  "checks": [
+    {
+      "check": "ac_coverage",
+      "verdict": "pass",
+      "reason": "2/2 ACs covered by dedicated ac<N>-prefixed nodes with assertions and screenshots."
+    },
+    {
+      "check": "node_naming",
+      "verdict": "pass",
+      "reason": "All AC nodes use ac<N>-* prefix. Setup nodes use setup-* and gate-* prefixes."
+    },
+    {
+      "check": "assertions",
+      "verdict": "pass",
+      "reason": "AC1 asserts market-list-view testID present. AC2 asserts account-menu-icon present and detail page absent. Both use strict eq operator."
+    },
+    {
+      "check": "screenshots",
+      "verdict": "pass",
+      "reason": "Evidence screenshots captured for both ACs at the post-navigation moment. Screenshots are visually conclusive."
+    },
+    {
+      "check": "forbidden_patterns",
+      "verdict": "pass",
+      "reason": "No switch defaults routing around ACs, no wait > 500ms, no DOM-only assertions for visual claims, no UNTESTABLE markers."
+    },
+    {
+      "check": "flow_reuse",
+      "verdict": "pass",
+      "reason": "Uses perps/navigate-perps-tab and perps/navigate-to-market-detail flows via call. Raw steps only for the specific back-button assertion."
+    }
+  ],
+  "better_version_guidance": "A stronger version could also verify the scroll position is preserved (requires custom CDP scrollHeight comparison before/after). Current recipe proves the route destination which is the primary AC."
+}
