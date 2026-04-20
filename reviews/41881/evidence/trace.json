@@ -1,0 +1,265 @@
+[
+  {
+    "id": "setup-navigate-market-detail",
+    "action": "call",
+    "ok": true,
+    "raw": {
+      "passed": 2,
+      "failed": 0,
+      "trace": [
+        {
+          "id": "nav-detail",
+          "action": "navigate",
+          "ok": true,
+          "raw": {
+            "navigated": true,
+            "hash": "#/perps/market/ETH"
+          },
+          "durationMs": 4
+        },
+        {
+          "id": "wait-detail",
+          "action": "wait_for",
+          "ok": true,
+          "raw": {
+            "found": true,
+            "target": "testId:perps-market-detail-page"
+          },
+          "durationMs": 42
+        },
+        {
+          "id": "done",
+          "action": "end",
+          "status": "pass",
+          "durationMs": 0
+        }
+      ],
+      "vars": {}
+    },
+    "durationMs": 66
+  },
+  {
+    "id": "setup-wait-page-loaded",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-market-detail-page"
+    },
+    "durationMs": 41
+  },
+  {
+    "id": "ac1-check-heading-md",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"found\":true,\"text\":\"ETH-USD\",\"tagName\":\"H3\"}",
+    "durationMs": 0
+  },
+  {
+    "id": "ac1-screenshot-heading",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "/Users/deeeed/dev/metamask/metamask-extension-1/temp/agentic/recipes/test-artifacts/screenshots/evidence-ac1-heading-md.png-1776680178335.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 106
+  },
+  {
+    "id": "ac10-check-change-display",
+    "action": "ext_check_dom",
+    "ok": true,
+    "raw": {
+      "visible": true
+    },
+    "durationMs": 1
+  },
+  {
+    "id": "ac10-eval-change-format",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"found\":true,\"text\":\"+0.31%\",\"hasPrefixSign\":true}",
+    "durationMs": 0
+  },
+  {
+    "id": "ac10-screenshot-change",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "/Users/deeeed/dev/metamask/metamask-extension-1/temp/agentic/recipes/test-artifacts/screenshots/evidence-ac10-change-percentage.png-1776680178444.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 86
+  },
+  {
+    "id": "ac9-check-hover-class",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"found\":true,\"hasHoverScale\":true}",
+    "durationMs": 0
+  },
+  {
+    "id": "ac9-screenshot-star",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "/Users/deeeed/dev/metamask/metamask-extension-1/temp/agentic/recipes/test-artifacts/screenshots/evidence-ac9-favorite-star.png-1776680178532.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 85
+  },
+  {
+    "id": "setup-scroll-to-stats",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"scrolled\":true}",
+    "durationMs": 0
+  },
+  {
+    "id": "setup-wait-after-scroll",
+    "action": "wait",
+    "ok": true,
+    "raw": null,
+    "durationMs": 302
+  },
+  {
+    "id": "ac2-check-sentence-case",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"pass\":true}",
+    "durationMs": 2
+  },
+  {
+    "id": "ac2-screenshot-stats",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "/Users/deeeed/dev/metamask/metamask-extension-1/temp/agentic/recipes/test-artifacts/screenshots/evidence-ac2-sentence-case-stats.png-1776680178933.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 114
+  },
+  {
+    "id": "ac4-check-info-icon-size",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"count\":0,\"sizes\":[]}",
+    "durationMs": 2
+  },
+  {
+    "id": "ac4-screenshot-icons",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "/Users/deeeed/dev/metamask/metamask-extension-1/temp/agentic/recipes/test-artifacts/screenshots/evidence-ac4-info-icons.png-1776680179056.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 111
+  },
+  {
+    "id": "ac5-check-arrow-icon",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"found\":true,\"hasText\":false,\"hasSvg\":true}",
+    "durationMs": 1
+  },
+  {
+    "id": "ac5-screenshot-arrow",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "/Users/deeeed/dev/metamask/metamask-extension-1/temp/agentic/recipes/test-artifacts/screenshots/evidence-ac5-arrow-icon.png-1776680179171.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 102
+  },
+  {
+    "id": "setup-scroll-to-chart",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"found\":true}",
+    "durationMs": 0
+  },
+  {
+    "id": "setup-wait-chart-scroll",
+    "action": "wait",
+    "ok": true,
+    "raw": null,
+    "durationMs": 302
+  },
+  {
+    "id": "ac6-check-left-align",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"found\":true,\"justifyContent\":\"flex-start\",\"classes\":\"flex flex-row gap-1 items-center justify-start pt-2 pr-4 pb-2 pl-4\",\"hasStartClass\":true}",
+    "durationMs": 2
+  },
+  {
+    "id": "ac6-screenshot-candle",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "/Users/deeeed/dev/metamask/metamask-extension-1/temp/agentic/recipes/test-artifacts/screenshots/evidence-ac6-candle-left-aligned.png-1776680179585.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 114
+  },
+  {
+    "id": "gate-navigate-order-entry",
+    "action": "navigate",
+    "ok": true,
+    "raw": {
+      "navigated": true,
+      "hash": "#/perps/trade/ETH?direction=long&mode=new"
+    },
+    "durationMs": 7
+  },
+  {
+    "id": "gate-wait-order-entry",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:submit-order-button"
+    },
+    "durationMs": 77
+  },
+  {
+    "id": "ac3-check-submit-text",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"text\":\"Open long ETH\"}",
+    "durationMs": 1
+  },
+  {
+    "id": "ac8-check-button-size",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"found\":true,\"height\":48}",
+    "durationMs": 1
+  },
+  {
+    "id": "ac3-screenshot-order-entry",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "/Users/deeeed/dev/metamask/metamask-extension-1/temp/agentic/recipes/test-artifacts/screenshots/evidence-ac3-ac8-order-entry.png-1776680179813.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 92
+  },
+  {
+    "id": "teardown-done",
+    "action": "end",
+    "status": "pass",
+    "durationMs": 0
+  }
+]

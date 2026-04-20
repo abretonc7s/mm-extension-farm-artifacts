@@ -1,0 +1,169 @@
+{
+  "title": "PR #41881 — perps market detail page UI polish validation",
+  "validate": {
+    "workflow": {
+      "pre_conditions": ["wallet.unlocked"],
+      "entry": "setup-navigate-market-detail",
+      "nodes": {
+        "setup-navigate-market-detail": {
+          "action": "call",
+          "ref": "perps/navigate-to-market-detail",
+          "params": { "symbol": "ETH" },
+          "next": "setup-wait-page-loaded"
+        },
+        "setup-wait-page-loaded": {
+          "action": "wait_for",
+          "test_id": "perps-market-detail-page",
+          "timeout_ms": 10000,
+          "next": "ac1-check-heading-md"
+        },
+
+        "ac1-check-heading-md": {
+          "action": "eval_sync",
+          "expression": "(() => { const page = document.querySelector('[data-testid=\"perps-market-detail-page\"]'); const h3 = page && page.querySelector('h3'); return JSON.stringify({ found: !!h3, text: h3 ? h3.textContent.trim() : '', tagName: h3 ? h3.tagName : '' }); })()",
+          "assert": { "field": "text", "operator": "contains", "value": "ETH-USD" },
+          "next": "ac1-screenshot-heading"
+        },
+        "ac1-screenshot-heading": {
+          "action": "screenshot",
+          "filename": "evidence-ac1-heading-md.png",
+          "next": "ac10-check-change-display"
+        },
+
+        "ac10-check-change-display": {
+          "action": "ext_check_dom",
+          "test_id": "perps-market-detail-change",
+          "visible": true,
+          "next": "ac10-eval-change-format"
+        },
+        "ac10-eval-change-format": {
+          "action": "eval_sync",
+          "expression": "(() => { const el = document.querySelector('[data-testid=\"perps-market-detail-change\"]'); if (!el) return JSON.stringify({ found: false }); return JSON.stringify({ found: true, text: el.textContent.trim(), hasPrefixSign: /^[+-]/.test(el.textContent.trim()) }); })()",
+          "assert": { "field": "hasPrefixSign", "operator": "eq", "value": true },
+          "next": "ac10-screenshot-change"
+        },
+        "ac10-screenshot-change": {
+          "action": "screenshot",
+          "filename": "evidence-ac10-change-percentage.png",
+          "next": "ac9-check-hover-class"
+        },
+
+        "ac9-check-hover-class": {
+          "action": "eval_sync",
+          "expression": "(() => { const btn = document.querySelector('[data-testid=\"perps-market-detail-favorite-button\"]'); if (!btn) return JSON.stringify({ found: false }); const classes = btn.className; return JSON.stringify({ found: true, hasHoverScale: classes.includes('hover:scale-110') }); })()",
+          "assert": { "field": "hasHoverScale", "operator": "eq", "value": true },
+          "next": "ac9-screenshot-star"
+        },
+        "ac9-screenshot-star": {
+          "action": "screenshot",
+          "filename": "evidence-ac9-favorite-star.png",
+          "next": "setup-scroll-to-stats"
+        },
+
+        "setup-scroll-to-stats": {
+          "action": "eval_sync",
+          "expression": "(() => { const el = document.querySelector('[data-testid=\"perps-market-detail-view-all-activity\"]') || document.querySelector('[data-testid=\"perps-learn-basics\"]'); if (el) el.scrollIntoView({ block: 'center' }); return JSON.stringify({ scrolled: !!el }); })()",
+          "next": "setup-wait-after-scroll"
+        },
+        "setup-wait-after-scroll": {
+          "action": "wait",
+          "ms": 300,
+          "next": "ac2-check-sentence-case"
+        },
+
+        "ac2-check-sentence-case": {
+          "action": "eval_sync",
+          "expression": "(() => { const page = document.querySelector('[data-testid=\"perps-market-detail-page\"]'); if (!page) return JSON.stringify({ pass: false }); const text = page.textContent; const hasSentenceCase = text.includes('Open interest') && text.includes('Oracle price') && text.includes('Recent activity'); const noTitleCase = !text.includes('Open Interest') && !text.includes('Oracle Price') && !text.includes('Recent Activity'); return JSON.stringify({ pass: hasSentenceCase && noTitleCase }); })()",
+          "assert": { "field": "pass", "operator": "eq", "value": true },
+          "next": "ac2-screenshot-stats"
+        },
+        "ac2-screenshot-stats": {
+          "action": "screenshot",
+          "filename": "evidence-ac2-sentence-case-stats.png",
+          "next": "ac4-check-info-icon-size"
+        },
+
+        "ac4-check-info-icon-size": {
+          "action": "eval_sync",
+          "expression": "(() => { const page = document.querySelector('[data-testid=\"perps-market-detail-page\"]'); const infoIcons = page ? page.querySelectorAll('svg[data-icon-name=\"info\"], svg.mm-icon--size-xs') : []; const sizes = Array.from(infoIcons).slice(0, 5).map(i => { const r = i.getBoundingClientRect(); return { w: Math.round(r.width), h: Math.round(r.height) }; }); return JSON.stringify({ count: infoIcons.length, sizes }); })()",
+          "save_as": "icon_sizes",
+          "next": "ac4-screenshot-icons"
+        },
+        "ac4-screenshot-icons": {
+          "action": "screenshot",
+          "filename": "evidence-ac4-info-icons.png",
+          "next": "ac5-check-arrow-icon"
+        },
+
+        "ac5-check-arrow-icon": {
+          "action": "eval_sync",
+          "expression": "(() => { const btn = document.querySelector('[data-testid=\"perps-market-detail-view-all-activity\"]'); if (!btn) return JSON.stringify({ found: false, hasText: false, hasSvg: false }); const textContent = btn.textContent.trim(); const hasSvg = btn.querySelector('svg') !== null; return JSON.stringify({ found: true, hasText: textContent.length > 0, hasSvg }); })()",
+          "assert": { "field": "hasSvg", "operator": "eq", "value": true },
+          "next": "ac5-screenshot-arrow"
+        },
+        "ac5-screenshot-arrow": {
+          "action": "screenshot",
+          "filename": "evidence-ac5-arrow-icon.png",
+          "next": "setup-scroll-to-chart"
+        },
+
+        "setup-scroll-to-chart": {
+          "action": "eval_sync",
+          "expression": "(() => { const el = document.querySelector('[data-testid=\"perps-candle-period-selector\"]'); if (el) el.scrollIntoView({ block: 'center' }); return JSON.stringify({ found: !!el }); })()",
+          "next": "setup-wait-chart-scroll"
+        },
+        "setup-wait-chart-scroll": {
+          "action": "wait",
+          "ms": 300,
+          "next": "ac6-check-left-align"
+        },
+        "ac6-check-left-align": {
+          "action": "eval_sync",
+          "expression": "(() => { const sel = document.querySelector('[data-testid=\"perps-candle-period-selector\"]'); if (!sel) return JSON.stringify({ found: false }); const cs = getComputedStyle(sel); const classes = sel.className || ''; const hasStartClass = classes.includes('justify-start') || classes.includes('flex-start'); return JSON.stringify({ found: true, justifyContent: cs.justifyContent, classes: classes.substring(0, 200), hasStartClass }); })()",
+          "assert": { "field": "justifyContent", "operator": "neq", "value": "center" },
+          "next": "ac6-screenshot-candle"
+        },
+        "ac6-screenshot-candle": {
+          "action": "screenshot",
+          "filename": "evidence-ac6-candle-left-aligned.png",
+          "next": "gate-navigate-order-entry"
+        },
+
+        "gate-navigate-order-entry": {
+          "action": "navigate",
+          "target": "PerpsOrderEntry",
+          "params": { "symbol": "ETH" },
+          "next": "gate-wait-order-entry"
+        },
+        "gate-wait-order-entry": {
+          "action": "wait_for",
+          "test_id": "submit-order-button",
+          "timeout_ms": 15000,
+          "next": "ac3-check-submit-text"
+        },
+        "ac3-check-submit-text": {
+          "action": "eval_sync",
+          "expression": "(() => { const btn = document.querySelector('[data-testid=\"submit-order-button\"]'); return JSON.stringify({ text: btn ? btn.textContent.trim() : '' }); })()",
+          "assert": { "field": "text", "operator": "matches", "value": "^Open (long|short)" },
+          "next": "ac8-check-button-size"
+        },
+        "ac8-check-button-size": {
+          "action": "eval_sync",
+          "expression": "(() => { const btn = document.querySelector('[data-testid=\"submit-order-button\"]'); if (!btn) return JSON.stringify({ found: false }); const h = Math.round(btn.getBoundingClientRect().height); return JSON.stringify({ found: true, height: h }); })()",
+          "save_as": "btn_size",
+          "next": "ac3-screenshot-order-entry"
+        },
+        "ac3-screenshot-order-entry": {
+          "action": "screenshot",
+          "filename": "evidence-ac3-ac8-order-entry.png",
+          "next": "teardown-done"
+        },
+
+        "teardown-done": {
+          "action": "end",
+          "status": "pass"
+        }
+      }
+    }
+  }
+}

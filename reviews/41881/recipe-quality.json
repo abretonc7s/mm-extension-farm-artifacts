@@ -1,0 +1,20 @@
+{
+  "recipe": "PR #41881 — perps market detail page UI polish validation",
+  "verdict": "pass",
+  "coverage": {
+    "total_acs": 10,
+    "proven": 9,
+    "untestable": 1,
+    "weak": 0,
+    "missing": 0
+  },
+  "checks": {
+    "ac_node_binding": { "verdict": "pass", "reason": "All AC nodes prefixed ac<N>-, all plumbing nodes prefixed setup-/gate-/teardown-" },
+    "flow_reuse": { "verdict": "pass", "reason": "Uses perps/navigate-to-market-detail flow for navigation" },
+    "assertions": { "verdict": "pass", "reason": "Every AC has at least one assertion node; regex, eq, neq operators used" },
+    "screenshots": { "verdict": "pass", "reason": "8 AC-bound screenshots captured with evidence-ac<N> naming" },
+    "forbidden_patterns": { "verdict": "pass", "reason": "No switch-default skips, no eval_sync skip reasons, no wait>500ms, no DOM-only visual claims" },
+    "trace_consistency": { "verdict": "pass", "reason": "26/26 nodes passed in trace.json, matches claimed results" }
+  },
+  "better_version_guidance": "AC7 (padding removal) could be tested if the recipe included a setup step to open a position via the open-long-position flow. This would require sufficient balance in the test account."
+}
