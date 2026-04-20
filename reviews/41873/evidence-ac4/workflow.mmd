@@ -1,0 +1,14 @@
+flowchart TD
+  %% PR #41873 review — AC4 empty-state proof on untraded symbol
+  __entry__(["ENTRY"]) --> node_setup_nav_atom_market
+  node_setup_nav_atom_market[["setup-nav-atom-market<br/>perps/navigate-to-market-detail"]]
+  node_ac4_assert_market_detail_page["ac4-assert-market-detail-page<br/>ext_check_dom"]
+  node_ac4_wait_activity_resolved["ac4-wait-activity-resolved<br/>wait_for"]
+  node_ac4_assert_empty["ac4-assert-empty<br/>eval_sync"]
+  node_ac4_screenshot_empty["ac4-screenshot-empty<br/>screenshot"]
+  node_done(["done<br/>PASS"])
+  node_setup_nav_atom_market --> node_ac4_assert_market_detail_page
+  node_ac4_assert_market_detail_page --> node_ac4_wait_activity_resolved
+  node_ac4_wait_activity_resolved --> node_ac4_assert_empty
+  node_ac4_assert_empty --> node_ac4_screenshot_empty
+  node_ac4_screenshot_empty --> node_done

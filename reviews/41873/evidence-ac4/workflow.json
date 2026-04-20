@@ -1,0 +1,64 @@
+{
+  "description": "Navigate to ATOM market (no user fills) and assert that Recent Activity shows empty state (no stuck skeleton).",
+  "hooks": {
+    "pre_conditions": [
+      "wallet.unlocked",
+      "perps.feature_enabled"
+    ],
+    "setup": [],
+    "teardown": []
+  },
+  "inputs": {},
+  "sourcePath": "",
+  "title": "PR #41873 review — AC4 empty-state proof on untraded symbol",
+  "workflow": {
+    "entry": "setup-nav-atom-market",
+    "nodes": {
+      "setup-nav-atom-market": {
+        "action": "call",
+        "ref": "perps/navigate-to-market-detail",
+        "params": {
+          "symbol": "ATOM"
+        },
+        "next": "ac4-assert-market-detail-page",
+        "id": "setup-nav-atom-market"
+      },
+      "ac4-assert-market-detail-page": {
+        "action": "ext_check_dom",
+        "test_id": "perps-market-detail-page",
+        "visible": true,
+        "next": "ac4-wait-activity-resolved",
+        "id": "ac4-assert-market-detail-page"
+      },
+      "ac4-wait-activity-resolved": {
+        "action": "wait_for",
+        "expression": "(function(){var t=document.querySelectorAll('[data-testid^=\"transaction-card-\"]');var hasEmpty=document.body.innerText.includes('No transactions');return t.length>0||hasEmpty;})()",
+        "timeout_ms": 15000,
+        "next": "ac4-assert-empty",
+        "id": "ac4-wait-activity-resolved"
+      },
+      "ac4-assert-empty": {
+        "action": "eval_sync",
+        "expression": "(function(){var tx=document.querySelectorAll('[data-testid^=\"transaction-card-\"]').length;var hasEmpty=document.body.innerText.includes('No transactions');var seeAll=!!document.querySelector('[data-testid=\"perps-market-detail-view-all-activity\"]');return JSON.stringify({transactions:tx,hasEmpty:hasEmpty,seeAll:seeAll});})()",
+        "assert": {
+          "operator": "eq",
+          "field": "hasEmpty",
+          "value": true
+        },
+        "next": "ac4-screenshot-empty",
+        "id": "ac4-assert-empty"
+      },
+      "ac4-screenshot-empty": {
+        "action": "screenshot",
+        "filename": "evidence-ac4-empty-state.png",
+        "next": "done",
+        "id": "ac4-screenshot-empty"
+      },
+      "done": {
+        "action": "end",
+        "status": "pass",
+        "id": "done"
+      }
+    }
+  }
+}

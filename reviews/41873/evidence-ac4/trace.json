@@ -1,0 +1,81 @@
+[
+  {
+    "id": "setup-nav-atom-market",
+    "action": "call",
+    "ok": true,
+    "raw": {
+      "passed": 2,
+      "failed": 0,
+      "trace": [
+        {
+          "id": "nav-detail",
+          "action": "navigate",
+          "ok": true,
+          "raw": {
+            "navigated": true,
+            "hash": "#/perps/market/ATOM"
+          },
+          "durationMs": 7
+        },
+        {
+          "id": "wait-detail",
+          "action": "wait_for",
+          "ok": true,
+          "raw": {
+            "found": true,
+            "target": "testId:perps-market-detail-page"
+          },
+          "durationMs": 72
+        },
+        {
+          "id": "done",
+          "action": "end",
+          "status": "pass",
+          "durationMs": 0
+        }
+      ],
+      "vars": {}
+    },
+    "durationMs": 95
+  },
+  {
+    "id": "ac4-assert-market-detail-page",
+    "action": "ext_check_dom",
+    "ok": true,
+    "raw": {
+      "visible": true
+    },
+    "durationMs": 2
+  },
+  {
+    "id": "ac4-wait-activity-resolved",
+    "action": "wait_for",
+    "ok": true,
+    "raw": true,
+    "durationMs": 1
+  },
+  {
+    "id": "ac4-assert-empty",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"transactions\":0,\"hasEmpty\":true,\"seeAll\":false}",
+    "durationMs": 1
+  },
+  {
+    "id": "ac4-screenshot-empty",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "/Users/deeeed/dev/metamask/metamask-extension-6/temp/agentic/recipes/test-artifacts/screenshots/evidence-ac4-empty-state.png-1776679995226.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 131
+  },
+  {
+    "id": "done",
+    "action": "end",
+    "status": "pass",
+    "durationMs": 0
+  }
+]
