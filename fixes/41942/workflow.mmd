@@ -1,0 +1,16 @@
+flowchart TD
+  %% Perps withdraw input centering proof
+  __entry__(["ENTRY"]) --> node_setup_navigate_withdraw
+  node_setup_navigate_withdraw["setup-navigate-withdraw<br/>ext_navigate_hash"]
+  node_setup_wait_withdraw_page["setup-wait-withdraw-page<br/>wait_for"]
+  node_ac1_click_ten_percent["ac1-click-ten-percent<br/>press"]
+  node_ac1_wait_non_zero_amount["ac1-wait-non-zero-amount<br/>wait_for"]
+  node_ac1_assert_full_width_centered["ac1-assert-full-width-centered<br/>eval_sync"]
+  node_ac1_screenshot_centered["ac1-screenshot-centered<br/>screenshot"]
+  node_teardown_navigate_home["teardown-navigate-home<br/>ext_navigate_hash"]
+  node_setup_navigate_withdraw --> node_setup_wait_withdraw_page
+  node_setup_wait_withdraw_page --> node_ac1_click_ten_percent
+  node_ac1_click_ten_percent --> node_ac1_wait_non_zero_amount
+  node_ac1_wait_non_zero_amount --> node_ac1_assert_full_width_centered
+  node_ac1_assert_full_width_centered --> node_ac1_screenshot_centered
+  node_ac1_screenshot_centered --> node_teardown_navigate_home

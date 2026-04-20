@@ -1,0 +1,56 @@
+{
+  "title": "Perps withdraw input centering proof",
+  "description": "Validates that the hero fiat amount input container is full-width and content is centered in the perps withdraw flow. Without w-full, the container is content-sized (~82% of parent) causing left-alignment in narrow popup viewports.",
+  "validate": {
+    "workflow": {
+      "pre_conditions": ["wallet.unlocked", "perps.feature_enabled"],
+      "entry": "setup-navigate-withdraw",
+      "nodes": {
+        "setup-navigate-withdraw": {
+          "action": "ext_navigate_hash",
+          "hash": "/perps/withdraw",
+          "next": "setup-wait-withdraw-page"
+        },
+        "setup-wait-withdraw-page": {
+          "action": "wait_for",
+          "test_id": "perps-withdraw-page",
+          "timeout": 5000,
+          "next": "ac1-click-ten-percent"
+        },
+        "ac1-click-ten-percent": {
+          "action": "press",
+          "test_id": "perps-withdraw-percentage-10",
+          "next": "ac1-wait-non-zero-amount"
+        },
+        "ac1-wait-non-zero-amount": {
+          "action": "wait_for",
+          "test_id": "perps-fiat-hero-amount-input",
+          "timeout": 3000,
+          "next": "ac1-assert-full-width-centered"
+        },
+        "ac1-assert-full-width-centered": {
+          "action": "eval_sync",
+          "expression": "(function(){var input=document.querySelector('[data-testid=\"perps-fiat-hero-amount-input\"]');var symbol=document.querySelector('[data-testid=\"perps-fiat-hero-amount-symbol\"]');if(!input||!symbol){return JSON.stringify({error:'elements not found',heroFillsParent:false,contentCentered:false});}var heroBox=input.parentElement;var parentBox=heroBox.parentElement;var heroRect=heroBox.getBoundingClientRect();var parentRect=parentBox.getBoundingClientRect();var widthRatio=heroRect.width/parentRect.width;var heroFillsParent=widthRatio>=0.95;var symRect=symbol.getBoundingClientRect();var inputRect=input.getBoundingClientRect();var contentLeft=symRect.left;var contentRight=inputRect.right;var contentCenter=(contentLeft+contentRight)/2;var boxCenter=heroRect.left+heroRect.width/2;var contentOffset=Math.abs(contentCenter-boxCenter);var contentCentered=contentOffset<=20;return JSON.stringify({heroW:Math.round(heroRect.width),parentW:Math.round(parentRect.width),widthRatio:+widthRatio.toFixed(2),heroFillsParent:heroFillsParent,contentCenter:Math.round(contentCenter),boxCenter:Math.round(boxCenter),contentOffset:Math.round(contentOffset),contentCentered:contentCentered});})()",
+          "assert": {
+            "all": [
+              { "operator": "eq", "field": "heroFillsParent", "value": true },
+              { "operator": "eq", "field": "contentCentered", "value": true }
+            ]
+          },
+          "save_as": "centering_result",
+          "next": "ac1-screenshot-centered"
+        },
+        "ac1-screenshot-centered": {
+          "action": "screenshot",
+          "filename": "evidence-ac1-withdraw-input-centered.png",
+          "next": "teardown-navigate-home"
+        },
+        "teardown-navigate-home": {
+          "action": "ext_navigate_hash",
+          "hash": "/",
+          "end": true
+        }
+      }
+    }
+  }
+}

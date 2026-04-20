@@ -1,0 +1,19 @@
+{
+  "verdict": "pass",
+  "recipe_id": "tat-2847-withdraw-input-centered",
+  "reasons": [
+    "All AC nodes prefixed correctly (ac1-*), setup/teardown nodes prefixed correctly.",
+    "Single AC assertion uses bounding-box eval: checks heroFillsParent (widthRatio >= 0.95) AND contentCentered (offset <= 20px). Recipe FAILS before fix (ratio=0.82) and PASSES after (ratio=1.0).",
+    "Screenshot node immediately follows assertion. Screenshot shows the fix visually.",
+    "No forbidden patterns: no switch default bypassing assertions, no wait > 500ms, no DOM-only proof for visual claim (bounding-box eval + screenshot both present).",
+    "Minimal recipe: navigate → set value → assert centering → screenshot → teardown. Focused on the exact fix condition."
+  ],
+  "better_version_guidance": "N/A — verdict is pass. Optional enhancement: test in a narrower viewport via Chrome DevTools emulation (page.setViewport({width: 360})) to directly prove the popup-mode fix. Not possible with current recipe actions.",
+  "ac_coverage": {
+    "total": 1,
+    "proven": 1,
+    "weak": 0,
+    "missing": 0,
+    "untestable": 0
+  }
+}
