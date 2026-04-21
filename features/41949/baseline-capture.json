@@ -1,0 +1,70 @@
+{
+  "title": "TAT-2802 baseline — capture current order entry before feature",
+  "description": "Navigates to ETH trade screen (market mode) and captures a baseline screenshot to compare against post-implementation behavior.",
+  "validate": {
+    "workflow": {
+      "pre_conditions": ["wallet.unlocked", "perps.feature_enabled"],
+      "entry": "ensure-testnet",
+      "nodes": {
+        "ensure-testnet": {
+          "action": "call",
+          "ref": "perps/ensure-perps-network",
+          "params": { "network": "testnet", "provider": "hyperliquid" },
+          "next": "prime"
+        },
+        "prime": {
+          "action": "call",
+          "ref": "perps/prime-perps-state",
+          "next": "nav-market"
+        },
+        "nav-market": {
+          "action": "call",
+          "ref": "perps/navigate-to-market-detail",
+          "params": { "symbol": "ETH" },
+          "next": "check-position"
+        },
+        "check-position": {
+          "action": "eval_sync",
+          "expression": "JSON.stringify({ hasPosition: !!document.querySelector('[data-testid=\"perps-position-cta-buttons\"]') })",
+          "assert": { "operator": "exists", "field": "hasPosition" },
+          "save_as": "pos_check",
+          "next": "position-branch"
+        },
+        "position-branch": {
+          "action": "switch",
+          "cases": [
+            { "when": { "field": "pos_check.hasPosition", "operator": "eq", "value": true }, "next": "close-existing" }
+          ],
+          "default": "press-long"
+        },
+        "close-existing": {
+          "action": "call",
+          "ref": "perps/close-position",
+          "params": { "symbol": "ETH", "percent": "100" },
+          "next": "press-long"
+        },
+        "press-long": {
+          "action": "press",
+          "test_id": "perps-long-cta-button",
+          "next": "wait-order-form"
+        },
+        "wait-order-form": {
+          "action": "wait_for",
+          "test_id": "perps-order-entry-page",
+          "timeout_ms": 10000,
+          "next": "screenshot-baseline"
+        },
+        "screenshot-baseline": {
+          "action": "screenshot",
+          "filename": "baseline-trade-empty",
+          "note": "Baseline — current order entry state prior to TAT-2802 keyboard-first UX",
+          "next": "done"
+        },
+        "done": {
+          "action": "end",
+          "status": "pass"
+        }
+      }
+    }
+  }
+}

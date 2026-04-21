@@ -1,0 +1,30 @@
+{
+  "title": "AC3 — Size input contextual 'min $10' placeholder ({{side}} {{symbol}})",
+  "description": "Self-runnable. Opens a fresh {{side}} order form on {{symbol}}, asserts the amount-input-field inner input has placeholder='min $10'.",
+  "inputs": {
+    "symbol": { "type": "string", "default": "ETH", "description": "Market symbol" },
+    "side": { "type": "string", "default": "long", "description": "Trade side: long or short" }
+  },
+  "validate": {
+    "workflow": {
+      "pre_conditions": [
+        "wallet.unlocked",
+        "perps.feature_enabled"
+      ],
+      "setup": [
+        { "id": "open-form", "action": "call", "ref": "perps/open-order-form", "params": { "symbol": "{{symbol}}", "side": "{{side}}" } }
+      ],
+      "entry": "assert-placeholder",
+      "nodes": {
+        "assert-placeholder": {
+          "action": "eval_sync",
+          "expression": "JSON.stringify({ placeholder: document.querySelector('[data-testid=\"amount-input-field\"] input')?.getAttribute('placeholder') })",
+          "assert": { "operator": "eq", "field": "placeholder", "value": "min $10" },
+          "save_as": "ac3_placeholder",
+          "next": "done"
+        },
+        "done": { "action": "end", "status": "pass" }
+      }
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "preferred_mode": "screenshots",
+  "summary": "Auto-focus, select-all, min-order-size gating, contextual placeholder, limit-mode auto-focus, Enter-blocked-when-disabled (empty + below-min), and Enter-to-submit with UI-success proof (redirect to market detail + live position visible) are all exercised by the live recipe (40/40 nodes passed).",
+  "standalone": [
+    {
+      "label": "Trade screen with empty size shows disabled 'Minimum order size $10' button and 'min $10' placeholder",
+      "file": "evidence-min-order-empty.png"
+    },
+    {
+      "label": "Entering a valid amount ($15) enables the Open Long ETH button",
+      "file": "evidence-valid-amount.png"
+    },
+    {
+      "label": "Switching to limit order type auto-focuses the limit price input",
+      "file": "evidence-limit-autofocus.png"
+    },
+    {
+      "label": "AC7 — Enter from focused amount input ($15) submits the order and redirects to the market detail page with the new ETH position visible",
+      "file": "evidence-enter-submit-redirect.png"
+    }
+  ]
+}

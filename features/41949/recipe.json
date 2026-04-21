@@ -1,0 +1,87 @@
+{
+  "title": "TAT-2802 — Keyboard-first order entry UX (composable bundle)",
+  "description": "Orchestrator recipe. Each AC subflow under recipe-flows/ is fully self-contained (pre_conditions + setup that primes perps, navigates, closes any lingering ETH position, opens a fresh order form). The main recipe just calls each subflow in sequence via bundle/<name> refs and runs a safety teardown to close any ETH position left behind.",
+  "validate": {
+    "workflow": {
+      "pre_conditions": [
+        "wallet.unlocked",
+        "perps.feature_enabled"
+      ],
+      "teardown": [
+        {
+          "id": "teardown-close-eth",
+          "action": "call",
+          "ref": "perps/close-position",
+          "params": { "symbol": "ETH", "percent": "100" }
+        }
+      ],
+      "entry": "ac1-size-autofocus",
+      "nodes": {
+        "ac1-size-autofocus": {
+          "action": "call",
+          "ref": "bundle/ac1-size-autofocus",
+          "description": "AC1 — size input auto-focus + focused testid proof (self-contained)",
+          "next": "ac3-placeholder"
+        },
+        "ac3-placeholder": {
+          "action": "call",
+          "ref": "bundle/ac3-placeholder",
+          "description": "AC3 — 'min $10' placeholder on amount-input-field (self-contained)",
+          "next": "ac6-empty-button"
+        },
+        "ac6-empty-button": {
+          "action": "call",
+          "ref": "bundle/ac6-empty-button",
+          "description": "AC6 — 'Minimum order size $10' disabled button copy while size empty + screenshot (self-contained)",
+          "next": "ac7-neg-empty"
+        },
+        "ac7-neg-empty": {
+          "action": "call",
+          "ref": "bundle/ac7-enter-blocked-assert",
+          "description": "AC7 negative — Enter blocked while button disabled (empty case, self-contained)",
+          "next": "ac5-below-min"
+        },
+        "ac5-below-min": {
+          "action": "call",
+          "ref": "bundle/ac5-below-min",
+          "description": "AC5 — typing $5 keeps button disabled with min-order copy (self-contained)",
+          "next": "ac5-valid-amount"
+        },
+        "ac5-valid-amount": {
+          "action": "call",
+          "ref": "bundle/ac5-valid-amount",
+          "description": "AC5/AC6 — typing $15 enables button with 'Open Long ETH' copy + screenshot (self-contained)",
+          "next": "ac2-select-on-focus"
+        },
+        "ac2-select-on-focus": {
+          "action": "call",
+          "ref": "bundle/ac2-select-on-focus",
+          "description": "AC2 — blur + refocus selects existing value in full (self-contained, types $15 first)",
+          "next": "leverage-keyboard"
+        },
+        "leverage-keyboard": {
+          "action": "call",
+          "ref": "bundle/leverage-keyboard",
+          "description": "Leverage input — select-on-focus + ArrowUp/ArrowDown step (self-contained)",
+          "next": "ac1-limit-autofocus"
+        },
+        "ac1-limit-autofocus": {
+          "action": "call",
+          "ref": "bundle/ac1-limit-autofocus",
+          "description": "AC1 (limit variant) — switching to limit order type auto-focuses limit-price-input + screenshot (self-contained)",
+          "next": "ac7-enter-submit-success"
+        },
+        "ac7-enter-submit-success": {
+          "action": "call",
+          "ref": "bundle/ac7-enter-submit-success",
+          "description": "AC7 positive — resilient idempotent. Pre-conditions + balance gate + branch-position: if ETH position already exists from a prior run, treat as prior AC7 proof and skip resubmission; otherwise press Long CTA → open order form → switch to market → type $15 → focus size input → press Enter → wait market-detail → state-based wait on perpsGetPositions until ETH position appears → verify position DOM + direction regex + route lock + screenshot",
+          "next": "done"
+        },
+        "done": {
+          "action": "end",
+          "status": "pass"
+        }
+      }
+    }
+  }
+}

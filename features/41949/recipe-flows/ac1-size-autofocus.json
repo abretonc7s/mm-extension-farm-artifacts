@@ -1,0 +1,37 @@
+{
+  "title": "AC1 — Size input auto-focus on order form mount ({{side}} {{symbol}})",
+  "description": "Self-runnable. Opens a fresh {{side}} order form on {{symbol}} via perps/open-order-form, then asserts document.activeElement is inside amount-input-field (market mode default).",
+  "inputs": {
+    "symbol": { "type": "string", "default": "ETH", "description": "Market symbol" },
+    "side": { "type": "string", "default": "long", "description": "Trade side: long or short" }
+  },
+  "validate": {
+    "workflow": {
+      "pre_conditions": [
+        "wallet.unlocked",
+        "perps.feature_enabled"
+      ],
+      "setup": [
+        { "id": "open-form", "action": "call", "ref": "perps/open-order-form", "params": { "symbol": "{{symbol}}", "side": "{{side}}" } }
+      ],
+      "entry": "wait-autofocus",
+      "nodes": {
+        "wait-autofocus": {
+          "action": "wait_for",
+          "expression": "!!document.activeElement && document.activeElement.closest('[data-testid=\"amount-input-field\"]') !== null",
+          "assert": { "operator": "eq", "value": true },
+          "timeout_ms": 3000,
+          "next": "autofocus-proof"
+        },
+        "autofocus-proof": {
+          "action": "eval_sync",
+          "expression": "JSON.stringify({ focusedTestId: document.activeElement?.closest('[data-testid]')?.getAttribute('data-testid'), tag: document.activeElement?.tagName })",
+          "assert": { "operator": "eq", "field": "focusedTestId", "value": "amount-input-field" },
+          "save_as": "ac1_market",
+          "next": "done"
+        },
+        "done": { "action": "end", "status": "pass" }
+      }
+    }
+  }
+}

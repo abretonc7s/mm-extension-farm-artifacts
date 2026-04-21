@@ -1,0 +1,24 @@
+flowchart TD
+  %% TAT-2802 — Keyboard-first order entry UX (composable bundle)
+  __entry__(["ENTRY"]) --> node_ac1_size_autofocus
+  node_ac1_size_autofocus[["ac1-size-autofocus<br/>AC1 — size input auto-focus + focused testid proof (self-contained)"]]
+  node_ac3_placeholder[["ac3-placeholder<br/>AC3 — 'min $10' placeholder on amount-input-field (self-contained)"]]
+  node_ac6_empty_button[["ac6-empty-button<br/>AC6 — 'Minimum order size $10' disabled button copy while size empty + screenshot (self-contained)"]]
+  node_ac7_neg_empty[["ac7-neg-empty<br/>AC7 negative — Enter blocked while button disabled (empty case, self-contained)"]]
+  node_ac5_below_min[["ac5-below-min<br/>AC5 — typing $5 keeps button disabled with min-order copy (self-contained)"]]
+  node_ac5_valid_amount[["ac5-valid-amount<br/>AC5/AC6 — typing $15 enables button with 'Open Long ETH' copy + screenshot (self-contained)"]]
+  node_ac2_select_on_focus[["ac2-select-on-focus<br/>AC2 — blur + refocus selects existing value in full (self-contained, types $15 first)"]]
+  node_leverage_keyboard[["leverage-keyboard<br/>Leverage input — select-on-focus + ArrowUp/ArrowDown step (self-contained)"]]
+  node_ac1_limit_autofocus[["ac1-limit-autofocus<br/>AC1 (limit variant) — switching to limit order type auto-focuses limit-price-input + screenshot (self-contained)"]]
+  node_ac7_enter_submit_success[["ac7-enter-submit-success<br/>AC7 positive — resilient idempotent. Pre-conditions + balance gate + branch-position: if ETH position already exists from a prior run, treat as prior AC7 proof and skip resubmission; otherwise press Long CTA → open order form → switch to market → type $15 → focus size input → press Enter → wait market-detail → state-based wait on perpsGetPositions until ETH position appears → verify position DOM + direction regex + route lock + screenshot"]]
+  node_done(["done<br/>PASS"])
+  node_ac1_size_autofocus --> node_ac3_placeholder
+  node_ac3_placeholder --> node_ac6_empty_button
+  node_ac6_empty_button --> node_ac7_neg_empty
+  node_ac7_neg_empty --> node_ac5_below_min
+  node_ac5_below_min --> node_ac5_valid_amount
+  node_ac5_valid_amount --> node_ac2_select_on_focus
+  node_ac2_select_on_focus --> node_leverage_keyboard
+  node_leverage_keyboard --> node_ac1_limit_autofocus
+  node_ac1_limit_autofocus --> node_ac7_enter_submit_success
+  node_ac7_enter_submit_success --> node_done

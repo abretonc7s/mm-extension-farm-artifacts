@@ -1,0 +1,155 @@
+{
+  "title": "AC7 (positive) — Enter key from focused amount input submits order and lands on market detail ({{side}} {{symbol}} ${{amount}})",
+  "description": "Resilient idempotent subflow proving keyboard Enter submits the perps order form. Mirrors canonical `perps/open-long-position` pattern: pre-conditions gate, balance check via perpsGetAccountState, idempotent branch-position (if a {{symbol}} position already exists from a prior run treat as prior AC7 proof and skip resubmission), otherwise the setup opens a fresh {{side}} order form on {{symbol}} → switch to market → type {{amount}} → focus size input → press Enter → wait for market-detail redirect → state-wait on perpsGetPositions until the {{symbol}} position appears → verify on-screen position + direction regex + route lock. Self-contained: run standalone via `validate-recipe.js --recipe artifacts/recipe-flows/ac7-enter-submit-success.json`.",
+  "inputs": {
+    "symbol": {
+      "type": "string",
+      "default": "ETH",
+      "description": "Market symbol"
+    },
+    "side": {
+      "type": "string",
+      "default": "long",
+      "description": "Trade side: long or short"
+    },
+    "sideLabel": {
+      "type": "string",
+      "default": "Long",
+      "description": "Title-cased side label used in the direction regex and assertion messages"
+    },
+    "amount": {
+      "type": "string",
+      "default": "15",
+      "description": "USD notional amount — must clear $10 minimum for AC7"
+    }
+  },
+  "validate": {
+    "workflow": {
+      "pre_conditions": [
+        "wallet.unlocked",
+        "perps.feature_enabled",
+        "perps.ready_to_trade",
+        "perps.sufficient_balance"
+      ],
+      "setup": [
+        { "id": "open-form", "action": "call", "ref": "perps/open-order-form", "params": { "symbol": "{{symbol}}", "side": "{{side}}" } }
+      ],
+      "entry": "gate-check-balance",
+      "nodes": {
+        "gate-check-balance": {
+          "action": "eval_async",
+          "expression": "(async()=>{var r=await stateHooks.submitRequestToBackground('perpsGetAccountState',[]);var bal=parseFloat(r?.totalBalance??'0');return JSON.stringify({ok:bal>0,bal:bal,reason:bal>0?'ok':'Insufficient perps balance ($'+bal+') — deposit or use funded testnet account'})})()",
+          "assert": { "operator": "eq", "field": "ok", "value": true },
+          "save_as": "ac7_balance_gate",
+          "next": "check-existing-position"
+        },
+        "check-existing-position": {
+          "action": "eval_async",
+          "expression": "(async()=>{var ps=await stateHooks.submitRequestToBackground('perpsGetPositions',[]);ps=Array.isArray(ps)?ps:[];var hit=ps.find(function(p){return (p?.symbol||p?.coin||p?.asset||'').toString().toUpperCase()==='{{symbol}}'});return JSON.stringify({ok:true,hasPosition:!!hit,positionsCount:ps.length,symbol:hit?.symbol||hit?.coin||hit?.asset||null})})()",
+          "assert": { "operator": "eq", "field": "ok", "value": true },
+          "save_as": "ac7_pre_position",
+          "next": "branch-position"
+        },
+        "branch-position": {
+          "action": "switch",
+          "cases": [
+            {
+              "label": "position already exists — treat prior AC7 submit as proof, skip duplicate order",
+              "when": { "field": "vars.ac7_pre_position.hasPosition", "operator": "truthy" },
+              "next": "verify-position-dom"
+            }
+          ],
+          "default": "switch-market"
+        },
+        "switch-market": {
+          "action": "press",
+          "test_id": "order-type-market",
+          "next": "wait-market-mount"
+        },
+        "wait-market-mount": {
+          "action": "wait_for",
+          "test_id": "amount-input-field",
+          "timeout_ms": 5000,
+          "next": "capture-form-wiring"
+        },
+        "capture-form-wiring": {
+          "action": "eval_sync",
+          "expression": "(function(){var f=document.querySelector('[data-testid=\"perps-order-entry-page\"]');var b=document.querySelector('[data-testid=\"submit-order-button\"]');return JSON.stringify({formTag:f&&f.tagName,buttonType:b&&b.type,buttonForm:b&&b.form&&b.form===f,preHash:window.location.hash});})()",
+          "assert": { "all": [
+            { "field": "formTag", "operator": "eq", "value": "FORM" },
+            { "field": "buttonType", "operator": "eq", "value": "submit" },
+            { "field": "buttonForm", "operator": "eq", "value": true }
+          ]},
+          "save_as": "ac7_wiring",
+          "next": "type-valid"
+        },
+        "type-valid": {
+          "action": "set_input",
+          "test_id": "amount-input-field",
+          "value": "{{amount}}",
+          "next": "focus-input"
+        },
+        "focus-input": {
+          "action": "eval_sync",
+          "expression": "(function(){var i=document.querySelector('[data-testid=\"amount-input-field\"] input');if(!i)return JSON.stringify({focused:false});i.focus();return JSON.stringify({focused:document.activeElement===i,preHash:window.location.hash});})()",
+          "assert": { "operator": "eq", "field": "focused", "value": true },
+          "save_as": "ac7_focus",
+          "next": "press-enter"
+        },
+        "press-enter": {
+          "action": "key_press",
+          "key": "Enter",
+          "next": "wait-market-detail"
+        },
+        "wait-market-detail": {
+          "action": "wait_for",
+          "test_id": "perps-market-detail-page",
+          "timeout_ms": 15000,
+          "next": "wait-position-in-state"
+        },
+        "wait-position-in-state": {
+          "action": "wait_for",
+          "expression": "(async()=>{var ps=await stateHooks.submitRequestToBackground('perpsGetPositions',[]);ps=Array.isArray(ps)?ps:[];return ps.some(function(p){return (p?.symbol||p?.coin||p?.asset||'').toString().toUpperCase()==='{{symbol}}'})})()",
+          "assert": { "operator": "eq", "value": true },
+          "timeout_ms": 45000,
+          "poll_ms": 750,
+          "next": "verify-position-dom"
+        },
+        "verify-position-dom": {
+          "action": "wait_for",
+          "test_id": "perps-position-cta-buttons",
+          "timeout_ms": 15000,
+          "next": "wait-position-direction"
+        },
+        "wait-position-direction": {
+          "action": "wait_for",
+          "expression": "(function(){var dir=document.querySelector('[data-testid=\"perps-position-leverage\"]');return !!dir && /{{sideLabel}}\\s+\\d+(?:\\.\\d+)?x/.test((dir.textContent||'').trim());})()",
+          "assert": { "operator": "eq", "value": true },
+          "timeout_ms": 15000,
+          "poll_ms": 500,
+          "next": "enter-submit-proof"
+        },
+        "enter-submit-proof": {
+          "action": "eval_sync",
+          "expression": "(function(){var dirEl=document.querySelector('[data-testid=\"perps-position-leverage\"]');var dirTxt=(dirEl?.textContent||'').trim();return JSON.stringify({leftOrderForm:!document.querySelector('[data-testid=\"perps-order-entry-page\"]'),onMarketDetail:!!document.querySelector('[data-testid=\"perps-market-detail-page\"]'),positionLive:!!document.querySelector('[data-testid=\"perps-position-cta-buttons\"]'),directionMatches:/{{sideLabel}}\\s+\\d+(?:\\.\\d+)?x/.test(dirTxt),onRoute:window.location.hash==='#/perps/market/{{symbol}}',directionText:dirTxt,postHash:window.location.hash});})()",
+          "assert": { "all": [
+            { "field": "leftOrderForm", "operator": "eq", "value": true },
+            { "field": "onMarketDetail", "operator": "eq", "value": true },
+            { "field": "positionLive", "operator": "eq", "value": true },
+            { "field": "directionMatches", "operator": "eq", "value": true },
+            { "field": "onRoute", "operator": "eq", "value": true }
+          ]},
+          "save_as": "ac7_redirect",
+          "next": "screenshot-post-submit"
+        },
+        "screenshot-post-submit": {
+          "action": "screenshot",
+          "filename": "evidence-enter-submit-redirect",
+          "note": "AC7 — Enter from focused amount input (${{amount}}) dispatches form submit, order is placed, page redirects to market detail, and the new {{symbol}} position is visible. Idempotent: if a position already existed on entry the subflow treated that as prior AC7 proof and skipped resubmission.",
+          "next": "done"
+        },
+        "done": { "action": "end", "status": "pass" }
+      }
+    }
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "status": "review",
+  "note": "Observed 3 unexpected warning/error/exception event(s) during validation. Relation to the recipe or current change is not determined; review the artifacts.",
+  "observed": {
+    "total": 3,
+    "warning": 1,
+    "error": 2,
+    "exception": 0,
+    "other": 0
+  },
+  "gating": {
+    "total": 0,
+    "warning": 0,
+    "error": 0,
+    "exception": 0,
+    "other": 0
+  },
+  "informational": {
+    "total": 0
+  },
+  "topIssues": [
+    {
+      "level": "error",
+      "channel": "console",
+      "source": "home",
+      "targetRole": "home",
+      "text": "Unknown action Object",
+      "count": 42,
+      "allowlistMatch": null
+    },
+    {
+      "level": "warning",
+      "channel": "console",
+      "source": "sw",
+      "targetRole": "service-worker",
+      "text": "Sentry not initialized",
+      "count": 20,
+      "allowlistMatch": null
+    },
+    {
+      "level": "error",
+      "channel": "console",
+      "source": "sw",
+      "targetRole": "service-worker",
+      "text": "WebSocketRequestError: Unknown error while making a WebSocket request: AbortError: signal is aborted without reason",
+      "count": 20,
+      "allowlistMatch": null
+    }
+  ],
+  "artifactFiles": {
+    "allIssues": "/Users/deeeed/dev/metamask/metamask-extension-2/temp/.task/feat/tat-2802-0420-210839/artifacts/recipe-runs/manual-1776776109493/recipe-issues.json",
+    "consoleWarnings": "/Users/deeeed/dev/metamask/metamask-extension-2/temp/.task/feat/tat-2802-0420-210839/artifacts/recipe-runs/manual-1776776109493/console-warnings.json",
+    "consoleErrors": "/Users/deeeed/dev/metamask/metamask-extension-2/temp/.task/feat/tat-2802-0420-210839/artifacts/recipe-runs/manual-1776776109493/console-errors.json",
+    "runtimeExceptions": "/Users/deeeed/dev/metamask/metamask-extension-2/temp/.task/feat/tat-2802-0420-210839/artifacts/recipe-runs/manual-1776776109493/runtime-exceptions.json",
+    "reviewJson": "/Users/deeeed/dev/metamask/metamask-extension-2/temp/.task/feat/tat-2802-0420-210839/artifacts/recipe-runs/manual-1776776109493/recipe-issues-review.json",
+    "reviewMd": "/Users/deeeed/dev/metamask/metamask-extension-2/temp/.task/feat/tat-2802-0420-210839/artifacts/recipe-runs/manual-1776776109493/recipe-issues-review.md"
+  }
+}

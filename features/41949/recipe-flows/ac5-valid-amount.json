@@ -1,0 +1,47 @@
+{
+  "title": "AC5/AC6 — Valid amount enables submit with action-specific copy ({{side}} {{symbol}} ${{amount}})",
+  "description": "Self-runnable. Opens a fresh {{side}} order form on {{symbol}}, types {{amount}} into the amount-input-field and asserts submit-order-button enables and reads the expected side+symbol copy. Captures evidence screenshot. expectedCopy is derived from side+symbol so BTC short still asserts correctly.",
+  "inputs": {
+    "symbol": { "type": "string", "default": "ETH", "description": "Market symbol" },
+    "side": { "type": "string", "default": "long", "description": "Trade side: long or short" },
+    "amount": { "type": "string", "default": "15", "description": "Valid USD notional at or above the minimum" },
+    "sideLabel": { "type": "string", "default": "Long", "description": "Title-cased side label used in the submit button copy" }
+  },
+  "validate": {
+    "workflow": {
+      "pre_conditions": [
+        "wallet.unlocked",
+        "perps.feature_enabled"
+      ],
+      "setup": [
+        { "id": "open-form", "action": "call", "ref": "perps/open-order-form", "params": { "symbol": "{{symbol}}", "side": "{{side}}" } }
+      ],
+      "entry": "type-valid",
+      "nodes": {
+        "type-valid": {
+          "action": "set_input",
+          "test_id": "amount-input-field",
+          "value": "{{amount}}",
+          "next": "assert-enabled"
+        },
+        "assert-enabled": {
+          "action": "eval_sync",
+          "expression": "(function(){var b=document.querySelector('[data-testid=\"submit-order-button\"]');return JSON.stringify({ text: (b?.textContent||'').trim(), disabled: !!b?.disabled });})()",
+          "assert": { "all": [
+            { "field": "text", "operator": "eq", "value": "Open {{sideLabel}} {{symbol}}" },
+            { "field": "disabled", "operator": "eq", "value": false }
+          ]},
+          "save_as": "ac5_enabled",
+          "next": "screenshot-valid"
+        },
+        "screenshot-valid": {
+          "action": "screenshot",
+          "filename": "evidence-valid-amount",
+          "note": "AC5 — submit button reads 'Open {{sideLabel}} {{symbol}}' and is enabled after a valid amount (>= $10)",
+          "next": "done"
+        },
+        "done": { "action": "end", "status": "pass" }
+      }
+    }
+  }
+}

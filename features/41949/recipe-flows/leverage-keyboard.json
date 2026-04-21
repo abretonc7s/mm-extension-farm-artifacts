@@ -1,0 +1,81 @@
+{
+  "title": "Leverage input — select-on-focus + ArrowUp/ArrowDown step ({{side}} {{symbol}})",
+  "description": "Self-runnable. Opens a fresh {{side}} order form on {{symbol}}, then proves the leverage-input (1) auto-selects its current value on focus so typing replaces it, (2) steps up by 1 on ArrowUp, (3) steps down by 1 on ArrowDown. State-agnostic about the initial leverage value.",
+  "inputs": {
+    "symbol": { "type": "string", "default": "ETH", "description": "Market symbol" },
+    "side": { "type": "string", "default": "long", "description": "Trade side: long or short" }
+  },
+  "validate": {
+    "workflow": {
+      "pre_conditions": [
+        "wallet.unlocked",
+        "perps.feature_enabled"
+      ],
+      "setup": [
+        { "id": "open-form", "action": "call", "ref": "perps/open-order-form", "params": { "symbol": "{{symbol}}", "side": "{{side}}" } }
+      ],
+      "entry": "capture-initial",
+      "nodes": {
+        "capture-initial": {
+          "action": "eval_sync",
+          "expression": "(function(){var i=document.querySelector('[data-testid=\"leverage-input\"] input');return JSON.stringify({hasInput:!!i,initial:i?parseInt(i.value,10):null});})()",
+          "assert": { "all": [
+            { "field": "hasInput", "operator": "eq", "value": true },
+            { "field": "initial", "operator": "gt", "value": 0 }
+          ]},
+          "save_as": "lev_initial",
+          "next": "focus-leverage"
+        },
+        "focus-leverage": {
+          "action": "eval_sync",
+          "expression": "(function(){var i=document.querySelector('[data-testid=\"leverage-input\"] input');if(!i)return JSON.stringify({focused:false});i.blur();i.focus();return JSON.stringify({focused:document.activeElement===i});})()",
+          "assert": { "operator": "eq", "field": "focused", "value": true },
+          "next": "assert-select-on-focus"
+        },
+        "assert-select-on-focus": {
+          "action": "wait_for",
+          "expression": "(function(){var i=document.querySelector('[data-testid=\"leverage-input\"] input');var len=(i&&i.value||'').length;return JSON.stringify({selected:!!i && len>0 && i.selectionStart===0 && i.selectionEnd===len, len:len, start:i&&i.selectionStart, end:i&&i.selectionEnd});})()",
+          "assert": { "operator": "eq", "field": "selected", "value": true },
+          "timeout_ms": 2000,
+          "poll_ms": 100,
+          "next": "press-arrow-up"
+        },
+        "press-arrow-up": {
+          "action": "key_press",
+          "key": "ArrowUp",
+          "next": "assert-arrow-up"
+        },
+        "assert-arrow-up": {
+          "action": "wait_for",
+          "expression": "(function(){var i=document.querySelector('[data-testid=\"leverage-input\"] input');var cur=i?parseInt(i.value,10):NaN;return JSON.stringify({current:cur,matches:cur==={{vars.lev_initial.initial}}+1 || cur==={{vars.lev_initial.initial}}});})()",
+          "assert": { "operator": "eq", "field": "matches", "value": true },
+          "timeout_ms": 2000,
+          "poll_ms": 100,
+          "save_as": "lev_after_up",
+          "next": "refocus-leverage"
+        },
+        "refocus-leverage": {
+          "action": "eval_sync",
+          "expression": "(function(){var i=document.querySelector('[data-testid=\"leverage-input\"] input');if(!i)return JSON.stringify({focused:false});i.focus();return JSON.stringify({focused:document.activeElement===i,value:parseInt(i.value,10)});})()",
+          "assert": { "operator": "eq", "field": "focused", "value": true },
+          "save_as": "lev_pre_down",
+          "next": "press-arrow-down"
+        },
+        "press-arrow-down": {
+          "action": "key_press",
+          "key": "ArrowDown",
+          "next": "assert-arrow-down"
+        },
+        "assert-arrow-down": {
+          "action": "wait_for",
+          "expression": "(function(){var i=document.querySelector('[data-testid=\"leverage-input\"] input');var cur=i?parseInt(i.value,10):NaN;return JSON.stringify({current:cur,matches:cur==={{vars.lev_pre_down.value}}-1 || cur==={{vars.lev_pre_down.value}}});})()",
+          "assert": { "operator": "eq", "field": "matches", "value": true },
+          "timeout_ms": 2000,
+          "poll_ms": 100,
+          "next": "done"
+        },
+        "done": { "action": "end", "status": "pass" }
+      }
+    }
+  }
+}

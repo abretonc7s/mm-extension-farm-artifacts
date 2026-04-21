@@ -1,0 +1,54 @@
+{
+  "title": "AC1 (limit variant) — Switching to limit order type auto-focuses limit price input ({{side}} {{symbol}})",
+  "description": "Self-runnable. Opens a fresh {{side}} order form on {{symbol}}, presses the limit toggle, waits for limit-price-input to mount, asserts focus lands inside it, screenshots evidence.",
+  "inputs": {
+    "symbol": { "type": "string", "default": "ETH", "description": "Market symbol" },
+    "side": { "type": "string", "default": "long", "description": "Trade side: long or short" }
+  },
+  "validate": {
+    "workflow": {
+      "pre_conditions": [
+        "wallet.unlocked",
+        "perps.feature_enabled"
+      ],
+      "setup": [
+        { "id": "open-form", "action": "call", "ref": "perps/open-order-form", "params": { "symbol": "{{symbol}}", "side": "{{side}}" } }
+      ],
+      "entry": "switch-limit",
+      "nodes": {
+        "switch-limit": {
+          "action": "press",
+          "test_id": "order-type-limit",
+          "next": "wait-limit-mount"
+        },
+        "wait-limit-mount": {
+          "action": "wait_for",
+          "test_id": "limit-price-input",
+          "timeout_ms": 5000,
+          "next": "wait-limit-autofocus"
+        },
+        "wait-limit-autofocus": {
+          "action": "wait_for",
+          "expression": "!!document.activeElement && document.activeElement.closest('[data-testid=\"limit-price-input\"]') !== null",
+          "assert": { "operator": "eq", "value": true },
+          "timeout_ms": 3000,
+          "next": "limit-autofocus-proof"
+        },
+        "limit-autofocus-proof": {
+          "action": "eval_sync",
+          "expression": "JSON.stringify({ focusedTestId: document.activeElement?.closest('[data-testid]')?.getAttribute('data-testid') })",
+          "assert": { "operator": "eq", "field": "focusedTestId", "value": "limit-price-input" },
+          "save_as": "ac1_limit",
+          "next": "screenshot-limit"
+        },
+        "screenshot-limit": {
+          "action": "screenshot",
+          "filename": "evidence-limit-autofocus",
+          "note": "AC1 (limit variant) — switching to limit order type auto-focuses the limit price input",
+          "next": "done"
+        },
+        "done": { "action": "end", "status": "pass" }
+      }
+    }
+  }
+}

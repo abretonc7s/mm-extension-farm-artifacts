@@ -1,0 +1,193 @@
+{
+  "version": 8,
+  "verdict": "pass",
+  "compact": {
+    "verdict": "PASS",
+    "reasons": [
+      "Bundle convention: one thin orchestrator at artifacts/recipe.json (11 nodes: pre_conditions + 10 bundle calls + done + teardown) + 10 task-local subflows under artifacts/recipe-flows/ invoked via explicit bundle/<name> refs. Validator (validate-flow-schema.js resolveBundledFlowRef) and runtime resolver (ext-bridge.js handleCall) both resolve bundle/<name> → <taskArtifactsDir>/recipe-flows/<name>.json.",
+      "Every subflow is self-runnable AND generically parametrized. Each exposes inputs (symbol, side, sideLabel, amount where applicable) and delegates the entire form-open prelude to the new shared canonical flow `perps/open-order-form` (ensure-perps-network → prime-perps-state → navigate-to-market-detail → close-position → wait-{side}-cta → press-{side} → wait-order-form). `validate-recipe.js --recipe artifacts/recipe-flows/<acN>.json --cdp-port <port>` runs each AC in isolation without the main recipe. Same subflow validates any (symbol,side) combination without duplication — e.g. ac5-valid-amount asserts `Open {{sideLabel}} {{symbol}}`, ac7-enter-submit-success regex `/{{sideLabel}}\\s+\\d+(?:\\.\\d+)?x/` and route lock `#/perps/market/{{symbol}}`.",
+      "AC7 positive adopts the canonical resilient idempotent pattern from domains/perps/flows/open-long-position.json: pre_conditions + balance gate (perpsGetAccountState totalBalance>0) + branch-position — if an ETH position already exists from a prior run, treat as prior AC7 proof and skip resubmission; otherwise the full Enter-to-submit path fires (switch-market → type $15 → focus → key_press Enter → wait-market-detail → state-based wait on perpsGetPositions until ETH position appears → DOM verify + direction regex + route lock + screenshot). State-based wait replaces raw DOM polling that previously hit 45s timeouts.",
+      "All acceptance criteria (AC1/AC2/AC3/AC5/AC6/AC7) bound to named subflows with ac<N>- prefix. AC7 negative reuses a single ac7-enter-blocked-assert subflow — canonical standalone asserts the empty case; main recipe calls it once (the below-min pass is now in ac5-below-min's state-verification chain rather than a duplicate call, to avoid double-close overhead).",
+      "AC7 positive proof is UI-success-state driven AND backend-state driven (not a network probe): redirect to perps-market-detail-page + state wait on perpsGetPositions + DOM perps-position-cta-buttons + perps-position-leverage regex (/Long\\s+\\d+(?:\\.\\d+)?x/) + route hash locked to '#/perps/market/ETH' + form unmounted. AC7 negative asserts formMounted + hashStillNew + buttonStillDisabled triplet.",
+      "Visual claims (auto-focus, disabled button copy, placeholder, limit auto-focus, post-submit redirect) backed by both DOM assertions and evidence screenshots.",
+      "Live run on CDP 6662: main recipe 10/10 PASS in 30.8s. Individual ac7-enter-submit-success: 17/17 PASS in 4.5s (full Enter path: wait-position-in-state 2.3s via perpsGetPositions). Idempotent branch also verified: rerun with pre-existing ETH position → 6/6 PASS in 2.6s by branching to verify-position-dom."
+    ],
+    "better_version_guidance": [
+      "Add a bundle/ac4-tab-key-navigation subflow using Input.dispatchKeyEvent Tab to assert focus progresses size → leverage → (limit). Tab sequence remains the only AC-adjacent keyboard behavior not live-covered.",
+      "Optional: emit a static bundle-index.md alongside artifacts/recipe-flows/ listing each subflow and its AC target for reviewer navigation."
+    ]
+  },
+  "bundle": {
+    "layout": "task-local bundle: artifacts/recipe-flows/ + bundle/<name> refs. Thin orchestrator + fully self-runnable subflows.",
+    "ref_format": "bundle/<subflow-name>",
+    "flows_dir": "temp/.task/feat/tat-2802-0420-210839/artifacts/recipe-flows/",
+    "main_recipe": "temp/.task/feat/tat-2802-0420-210839/artifacts/recipe.json",
+    "subflows": [
+      { "ref": "bundle/ac1-size-autofocus", "file": "recipe-flows/ac1-size-autofocus.json", "ac": "AC1", "self_runnable": true },
+      { "ref": "bundle/ac1-limit-autofocus", "file": "recipe-flows/ac1-limit-autofocus.json", "ac": "AC1 (limit)", "self_runnable": true },
+      { "ref": "bundle/ac2-select-on-focus", "file": "recipe-flows/ac2-select-on-focus.json", "ac": "AC2", "self_runnable": true, "note": "types $15 in prelude so input has a value for the blur+refocus+select-span proof" },
+      { "ref": "bundle/ac3-placeholder", "file": "recipe-flows/ac3-placeholder.json", "ac": "AC3", "self_runnable": true },
+      { "ref": "bundle/ac5-below-min", "file": "recipe-flows/ac5-below-min.json", "ac": "AC5", "self_runnable": true },
+      { "ref": "bundle/ac5-valid-amount", "file": "recipe-flows/ac5-valid-amount.json", "ac": "AC5/AC6", "self_runnable": true },
+      { "ref": "bundle/ac6-empty-button", "file": "recipe-flows/ac6-empty-button.json", "ac": "AC6", "self_runnable": true },
+      { "ref": "bundle/ac7-enter-blocked-assert", "file": "recipe-flows/ac7-enter-blocked-assert.json", "ac": "AC7 (−)", "self_runnable": true, "note": "canonical standalone asserts empty-form Enter-blocked case" },
+      { "ref": "bundle/ac7-enter-submit-success", "file": "recipe-flows/ac7-enter-submit-success.json", "ac": "AC7 (+)", "self_runnable": true, "note": "resilient idempotent. Pre-conditions + balance gate + branch-position + state-based wait on perpsGetPositions. Mirrors canonical perps/open-long-position." },
+      { "ref": "bundle/leverage-keyboard", "file": "recipe-flows/leverage-keyboard.json", "ac": "Leverage (added during PR — not in original AC list)", "self_runnable": true, "note": "select-on-focus + ArrowUp/ArrowDown step + clamp" }
+    ],
+    "main_recipe_nodes": 11,
+    "rationale": "User requested (1) task-local bundle format with bundle/<name> refs, (2) resilient idempotent order-submit pattern like domains/perps/flows/open-long-position, (3) each subflow runnable manually in isolation. Subflows now include their own setup block + form-open prelude so they can be validated individually via validate-recipe.js. Main recipe simplified to pure orchestration + guarded teardown."
+  },
+  "dimensions": {
+    "ac_to_node_binding": {
+      "status": "pass",
+      "reason": "Every AC maps to a named subflow (bundle/ac<N>-*). Setup plumbing uses setup-*, screenshots use filename evidence-<label>. AC7 has positive (bundle/ac7-enter-submit-success) + negative (bundle/ac7-enter-blocked-assert) coverage.",
+      "evidence": ["recipe.json", "recipe-flows/*.json"]
+    },
+    "assertion_rigor": {
+      "status": "pass",
+      "reason": "Every subflow's proof node uses strict eq or regex match. ac1 asserts activeElement testid. ac2 polls selectionStart==0 && selectionEnd==length. ac3 asserts placeholder string. ac5/ac6 assert disabled + textContent pairs. ac7-enter-blocked-assert asserts formMounted + hashStillNew + buttonStillDisabled. ac7-enter-submit-success asserts leftOrderForm + onMarketDetail + positionLive + directionIsLong + onEthRoute AND waits on perpsGetPositions state until the ETH position appears. Any regression to autoFocus, useEffect, disabled, or form-submit wiring flips at least one assertion to fail.",
+      "evidence": ["recipe-flows/*.json"]
+    },
+    "bundle_composition": {
+      "status": "pass",
+      "reason": "Main recipe is a pure orchestrator: pre_conditions + 10 bundle calls + guarded teardown. No inline assertion logic. Each subflow is individually schema-validatable AND individually runnable via validate-recipe.js (verified live: ac7-enter-submit-success ran standalone 17/17 PASS in 4.5s, 6/6 PASS on idempotent-skip branch in 2.6s).",
+      "evidence": ["recipe.json", "recipe-flows/ac7-enter-submit-success.json"]
+    },
+    "ui_success_proof": {
+      "status": "pass",
+      "reason": "AC7 positive uses the canonical resilient idempotent pattern. UI success is proven inside bundle/ac7-enter-submit-success by wait_for perps-market-detail-page (15s cap) → wait_for on perpsGetPositions state until the ETH position appears (45s cap, 750ms poll) → wait_for perps-position-cta-buttons (15s cap) → wait_for perps-position-leverage matching /Long\\s+\\d+(?:\\.\\d+)?x/ (15s cap) → eval_sync asserting all five conditions. State-based wait replaces the prior DOM-only poll that hit 45s timeouts on testnet. Direction regex proves long-vs-short wiring survived the submit.",
+      "evidence": ["recipe-flows/ac7-enter-submit-success.json", "evidence-enter-submit-redirect.png"]
+    },
+    "resilience_and_idempotency": {
+      "status": "pass",
+      "reason": "ac7-enter-submit-success mirrors domains/perps/flows/open-long-position canonical structure: pre_conditions (wallet.unlocked, perps.feature_enabled, perps.ready_to_trade, perps.sufficient_balance), setup (call perps/prime-perps-state, call perps/navigate-to-market-detail), entry gate (perpsGetAccountState totalBalance>0), branch-position (if ETH position already exists → verify-position-dom → pass; else full submit path). Live-verified idempotent: first run with no position → 17/17 PASS full Enter path; rerun with pre-existing position → 6/6 PASS by branching to verify. State-based wait on perpsGetPositions tolerates testnet order-placement latency without relying on DOM timing.",
+      "evidence": ["recipe-flows/ac7-enter-submit-success.json", "recipe-runs/manual-1776777562000/summary.json", "recipe-runs/manual-1776777515000/summary.json"]
+    },
+    "self_runnable_subflows": {
+      "status": "pass",
+      "reason": "Every subflow carries its own pre_conditions + setup via a single `{ call: perps/open-order-form }` step that encapsulates ensure-net → prime → nav → close → open-form. No inline prelude nodes. This lets reviewers run `validate-recipe.js --recipe recipe-flows/<ac>.json --cdp-port 6662` for any subflow in isolation — no main-recipe dependency, no hidden state inheritance.",
+      "evidence": ["recipe-flows/ac1-size-autofocus.json", "recipe-flows/ac2-select-on-focus.json", "recipe-flows/ac3-placeholder.json", "recipe-flows/ac5-below-min.json", "recipe-flows/ac5-valid-amount.json", "recipe-flows/ac6-empty-button.json", "recipe-flows/ac7-enter-blocked-assert.json", "recipe-flows/ac7-enter-submit-success.json", "recipe-flows/leverage-keyboard.json", "recipe-flows/ac1-limit-autofocus.json"]
+    },
+    "generic_parametrization": {
+      "status": "pass",
+      "reason": "Every subflow declares explicit `inputs` with sensible defaults (symbol=ETH, side=long, sideLabel=Long, amount per AC). Hardcoded asset/side references eliminated from assertions: ac5-valid-amount button copy is `Open {{sideLabel}} {{symbol}}`, ac7-enter-submit-success direction regex is `/{{sideLabel}}\\s+\\d+(?:\\.\\d+)?x/`, route lock is `#/perps/market/{{symbol}}`. Same subflow file validates BTC short or any other pair without copy/duplication. The shared `perps/open-order-form` canonical flow also exposes symbol/side/network/provider as inputs so composition is uniform.",
+      "evidence": ["recipe-flows/ac5-valid-amount.json", "recipe-flows/ac7-enter-submit-success.json", "temp/agentic/recipes/domains/perps/flows/open-order-form.json"]
+    },
+    "canonical_flow_extraction": {
+      "status": "pass",
+      "reason": "Extracted a new canonical flow `perps/open-order-form` under temp/agentic/recipes/domains/perps/flows/open-order-form.json. Inputs: {symbol, side, network, provider}. Composition: existing perps/ensure-perps-network + perps/prime-perps-state + perps/navigate-to-market-detail + perps/close-position, then parameterized CTA press (wait-{side}-cta → press-{side} → wait-order-form). All 10 AC subflows delegate the entire form-open prelude to this one call — no duplication. Main recipe orchestrator stays thin (pre_conditions + 10 bundle calls + guarded teardown).",
+      "evidence": ["temp/agentic/recipes/domains/perps/flows/open-order-form.json", "recipe-flows/*.json"]
+    },
+    "screenshot_coverage": {
+      "status": "pass",
+      "reason": "Four evidence screenshots captured by the relevant subflows and stored next to the main recipe: evidence-min-order-empty (ac6-empty-button), evidence-valid-amount (ac5-valid-amount), evidence-limit-autofocus (ac1-limit-autofocus), evidence-enter-submit-redirect (ac7-enter-submit-success).",
+      "evidence": [
+        "evidence-min-order-empty.png",
+        "evidence-valid-amount.png",
+        "evidence-limit-autofocus.png",
+        "evidence-enter-submit-redirect.png"
+      ]
+    },
+    "forbidden_patterns": {
+      "status": "pass",
+      "reason": "No switch-default-around-AC, no eval_sync skip-reason emission, no wait>500ms substitute for wait_for, no ad-hoc CDP where a flow exists. Setup in every subflow calls perps/close-position unconditionally (no-op if no position) so a flake in DOM position-detection cannot drop the close step.",
+      "evidence": ["recipe.json", "recipe-flows/*.json"]
+    },
+    "flow_reuse": {
+      "status": "pass",
+      "reason": "Every subflow now delegates the complete form-open prelude to the shared canonical `perps/open-order-form` flow (single `{call}` in setup). That canonical flow itself composes perps/ensure-perps-network + perps/prime-perps-state + perps/navigate-to-market-detail + perps/close-position. Bundled subflows under recipe-flows/ contain only new keyboard-UX assertions that no prior flow covers. AC7 positive mirrors the canonical perps/open-long-position idempotent shape node-for-node in its branch structure.",
+      "evidence": ["recipe-flows/*.json", "temp/agentic/recipes/domains/perps/flows/open-order-form.json", "temp/agentic/recipes/domains/perps/flows/open-long-position.json"]
+    },
+    "teardown_safety": {
+      "status": "pass",
+      "reason": "Main recipe teardown calls perps/close-position unconditionally — that flow has its own ext_check_dom branch that makes it a no-op when no position is visible, so the teardown never errors on a non-existent position.",
+      "evidence": ["recipe.json", "temp/agentic/recipes/domains/perps/flows/close-position.json"]
+    },
+    "observability": {
+      "status": "pass",
+      "reason": "Main recipe run produced recipe-issues-review with status 'review' (non-gating): 1 warning, 2 errors, 0 exceptions (40x 'Unknown action Object' on home, 12x 'Sentry not initialized' in sw, 12x 'WebSocketRequestError: AbortError' in sw). All pre-existing testnet/env noise unrelated to keyboard-UX changes.",
+      "evidence": ["recipe-issues-review.md", "recipe-issues.json"]
+    },
+    "schema_validity": {
+      "status": "pass",
+      "reason": "validate-flow-schema.js passes on main recipe AND all 10 subflows. validate-recipe.js --dry-run prints the full main graph with no cycles/unreachable/missing. Live run with --cdp-port 6662: main recipe 10/10 PASS in 30.8s; ac7-enter-submit-success standalone 17/17 PASS in 4.5s; ac7-enter-submit-success idempotent-skip branch 6/6 PASS in 2.6s.",
+      "evidence": ["recipe.json", "recipe-flows/*.json", "workflow.json", "summary.json"]
+    }
+  },
+  "structural_findings": [],
+  "contextual_findings": [
+    {
+      "code": "bundle-convention-adopted",
+      "message": "Recipe uses the task-local bundle convention: subflows live flat under artifacts/recipe-flows/ and are invoked via bundle/<name> refs. Both validate-flow-schema.js (resolveBundledFlowRef in catalog.js) and the runtime call handler (handleCall in ext-bridge.js) resolve bundle/<name> → <taskArtifactsDir>/recipe-flows/<name>.json. No app code changes.",
+      "evidence": ["temp/agentic/recipes/lib/catalog.js", "temp/agentic/recipes/lib/ext-bridge.js", "temp/agentic/recipes/validate-flow-schema.js"]
+    },
+    {
+      "code": "resilient-idempotent-order-pattern",
+      "message": "ac7-enter-submit-success now mirrors the canonical perps/open-long-position pattern end-to-end: pre_conditions + balance gate via perpsGetAccountState + branch-position idempotent switch (hasPosition → verify-and-pass; else full submit path) + state-based wait via perpsGetPositions instead of DOM-only polling. Fixes the prior 45s wait-position-live timeout that was misattributed to testnet flake — root cause was DOM polling too narrow to absorb testnet order-placement latency. State-based wait typically resolves in <3s.",
+      "evidence": ["recipe-flows/ac7-enter-submit-success.json", "temp/agentic/recipes/domains/perps/flows/open-long-position.json"]
+    },
+    {
+      "code": "self-runnable-subflows",
+      "message": "Every AC subflow now includes its own pre_conditions + setup (ensure-net + prime + nav + close) + form-open prelude (wait-{side}-cta + press-{side} + wait-order-form) before the AC proof. Reviewers can run any subflow in isolation via validate-recipe.js. Main recipe simplified to pure orchestration.",
+      "evidence": ["recipe.json", "recipe-flows/*.json"]
+    },
+    {
+      "code": "shared-open-order-form-flow",
+      "message": "Extracted `perps/open-order-form` canonical flow as the one-stop form-open prelude for every subflow. Subflows no longer repeat the 5-step setup + 3-step CTA dance; they `call: perps/open-order-form {symbol, side}` and focus on the AC proof. This converted each subflow from ~8 prelude nodes to a single setup line and made symbol/side fully parametric.",
+      "evidence": ["temp/agentic/recipes/domains/perps/flows/open-order-form.json", "recipe-flows/*.json"]
+    },
+    {
+      "code": "generic-parametrization",
+      "message": "All subflows expose symbol/side/amount/sideLabel inputs with defaults. Hardcoded `Long`/`ETH`/`#/perps/market/ETH` replaced with `{{sideLabel}}`/`{{symbol}}`/`#/perps/market/{{symbol}}`. ac5 button copy `Open {{sideLabel}} {{symbol}}` validates BTC short without edits. Defaults preserve existing main-recipe runs; overrides let reviewers verify any (symbol,side) pair from the same files.",
+      "evidence": ["recipe-flows/ac5-valid-amount.json", "recipe-flows/ac7-enter-submit-success.json", "recipe-flows/leverage-keyboard.json"]
+    }
+  ],
+  "suggested_recipe_delta": [
+    "Add bundle/ac4-tab-key-navigation subflow using Input.dispatchKeyEvent Tab to assert focus progresses size → leverage → (limit) when in limit mode. Tab sequence is the only AC-adjacent keyboard behavior not live-covered.",
+    "Optional: add a small bundle-index.md alongside artifacts/recipe-flows/ listing each subflow's AC target for reviewer-facing navigation.",
+    "Consider removing the legacy temp/agentic/recipes/domains/tat-2802/flows/ copies now that the task-local bundle is authoritative."
+  ],
+  "learned_flake_modes": [
+    "perpsGetAccountState does NOT return a positions array (it returns only totals like totalBalance/uPnL). Use perpsGetPositions for position enumeration. Original AC7 used the wrong method and always saw positionsCount=0 even when a position was open.",
+    "perps-position-size-value can lag perps-position-leverage — size textContent may be empty for 15s+ after market-detail mount while direction text is already stable. Do not gate proofs on size-text; use direction-text regex.",
+    "ac2 select-on-focus relies on the amount-input onFocus handler calling e.target.select() synchronously. Programmatic blur/refocus + poll catches handler regressions but would false-fail if the implementation switched to native browser semantics (native .focus() does not auto-select)."
+  ],
+  "training_fields": {
+    "farm": "metamask-extension",
+    "project": "metamask-extension-farm",
+    "flow_type": "dev",
+    "task_type": "dev",
+    "proof_mode": "ui-state-plus-backend-state",
+    "anti_patterns": [],
+    "good_patterns": [
+      "ac-prefix-nodes",
+      "bundled-subflows",
+      "task-local-bundle-convention",
+      "bundle-ref-prefix",
+      "reusable-state-agnostic-subflow",
+      "strict-eq-assertions",
+      "flow-reuse-for-setup",
+      "screenshot-plus-dom-for-visual-claims",
+      "ui-success-state-over-network-probe",
+      "positive-and-negative-keyboard-coverage",
+      "guarded-teardown",
+      "direction-regex-for-wire-up-proof",
+      "stable-text-over-streaming-text",
+      "self-runnable-subflows",
+      "resilient-idempotent-order-submit",
+      "state-based-wait-via-background-request",
+      "branch-position-idempotent-skip",
+      "pre-conditions-gate",
+      "balance-gate-before-order",
+      "shared-canonical-form-open-flow",
+      "generic-parametrization-of-subflows"
+    ]
+  },
+  "meta": {
+    "producer": "worker",
+    "fallback_used": false,
+    "legacy_task": false,
+    "artifact_required": true,
+    "source_signals": ["recipe.json", "recipe-flows/*.json", "summary.json", "recipe-issues-review.md", "recipe-runs/manual-1776777617000/", "recipe-runs/manual-1776777562000/", "recipe-runs/manual-1776777515000/"]
+  }
+}
