@@ -1,0 +1,49 @@
+{
+  "status": "review",
+  "note": "Observed 2 unexpected warning/error/exception event(s) during validation. Relation to the recipe or current change is not determined; review the artifacts.",
+  "observed": {
+    "total": 2,
+    "warning": 1,
+    "error": 1,
+    "exception": 0,
+    "other": 0
+  },
+  "gating": {
+    "total": 0,
+    "warning": 0,
+    "error": 0,
+    "exception": 0,
+    "other": 0
+  },
+  "informational": {
+    "total": 0
+  },
+  "topIssues": [
+    {
+      "level": "error",
+      "channel": "console",
+      "source": "sw",
+      "targetRole": "service-worker",
+      "text": "HttpRequestError: Unknown HTTP request error: AbortError: signal is aborted without reason",
+      "count": 1,
+      "allowlistMatch": null
+    },
+    {
+      "level": "warning",
+      "channel": "console",
+      "source": "sw",
+      "targetRole": "service-worker",
+      "text": "Sentry not initialized",
+      "count": 1,
+      "allowlistMatch": null
+    }
+  ],
+  "artifactFiles": {
+    "allIssues": "/Users/deeeed/dev/metamask/metamask-extension-1/temp/.task/feat/tat-2691-0421-231135/artifacts/recipe-issues.json",
+    "consoleWarnings": "/Users/deeeed/dev/metamask/metamask-extension-1/temp/.task/feat/tat-2691-0421-231135/artifacts/console-warnings.json",
+    "consoleErrors": "/Users/deeeed/dev/metamask/metamask-extension-1/temp/.task/feat/tat-2691-0421-231135/artifacts/console-errors.json",
+    "runtimeExceptions": "/Users/deeeed/dev/metamask/metamask-extension-1/temp/.task/feat/tat-2691-0421-231135/artifacts/runtime-exceptions.json",
+    "reviewJson": "/Users/deeeed/dev/metamask/metamask-extension-1/temp/.task/feat/tat-2691-0421-231135/artifacts/recipe-issues-review.json",
+    "reviewMd": "/Users/deeeed/dev/metamask/metamask-extension-1/temp/.task/feat/tat-2691-0421-231135/artifacts/recipe-issues-review.md"
+  }
+}

@@ -1,0 +1,179 @@
+[
+  {
+    "id": "setup-unlock",
+    "action": "call",
+    "ok": true,
+    "raw": {
+      "passed": 2,
+      "failed": 0,
+      "trace": [
+        {
+          "id": "check-locked",
+          "action": "ext_check_dom",
+          "ok": true,
+          "raw": {
+            "visible": false
+          },
+          "durationMs": 1
+        },
+        {
+          "id": "branch-locked",
+          "action": "switch",
+          "next": "verify-unlocked",
+          "durationMs": 0
+        },
+        {
+          "id": "verify-unlocked",
+          "action": "ext_check_dom",
+          "ok": true,
+          "raw": {
+            "visible": true
+          },
+          "durationMs": 1
+        },
+        {
+          "id": "done",
+          "action": "end",
+          "status": "pass",
+          "durationMs": 0
+        }
+      ],
+      "vars": {
+        "lock_check": {
+          "visible": false
+        }
+      }
+    },
+    "durationMs": 4
+  },
+  {
+    "id": "setup-clear-stale",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"cleared\":true}",
+    "durationMs": 1
+  },
+  {
+    "id": "ac1-navigate-perps",
+    "action": "call",
+    "ok": true,
+    "raw": {
+      "passed": 2,
+      "failed": 0,
+      "trace": [
+        {
+          "id": "nav-detail",
+          "action": "navigate",
+          "ok": true,
+          "raw": {
+            "navigated": true,
+            "hash": "#/perps/market/BTC"
+          },
+          "durationMs": 4
+        },
+        {
+          "id": "wait-detail",
+          "action": "wait_for",
+          "ok": true,
+          "raw": {
+            "found": true,
+            "target": "testId:perps-market-detail-page"
+          },
+          "durationMs": 55
+        },
+        {
+          "id": "done",
+          "action": "end",
+          "status": "pass",
+          "durationMs": 0
+        }
+      ],
+      "vars": {}
+    },
+    "durationMs": 135
+  },
+  {
+    "id": "ac1-wait-persisted",
+    "action": "wait_for",
+    "ok": true,
+    "raw": true,
+    "durationMs": 0
+  },
+  {
+    "id": "ac1-assert-state",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"hasEntry\":true,\"isPerpsPath\":true,\"timestampIsNumber\":true,\"withinTtlMs\":true}",
+    "durationMs": 0
+  },
+  {
+    "id": "ac1-screenshot",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "screenshots/evidence-persisted-after-visit-1776848357470.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 130
+  },
+  {
+    "id": "ac2-nav-home",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"navigated\":true}",
+    "durationMs": 27
+  },
+  {
+    "id": "ac2-wait-cleared",
+    "action": "wait_for",
+    "ok": true,
+    "raw": true,
+    "durationMs": 4
+  },
+  {
+    "id": "ac2-assert-cleared",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"cleared\":true}",
+    "durationMs": 1
+  },
+  {
+    "id": "ac3-seed-while-on-home",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"dispatched\":true}",
+    "durationMs": 1
+  },
+  {
+    "id": "ac3-wait-on-perps",
+    "action": "wait_for",
+    "ok": true,
+    "raw": true,
+    "durationMs": 502
+  },
+  {
+    "id": "ac3-assert-consumed",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"onPerpsRoute\":true,\"redirectCleared\":true}",
+    "durationMs": 1
+  },
+  {
+    "id": "ac3-screenshot",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "screenshots/evidence-home-consumed-entry-1776848358151.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 98
+  },
+  {
+    "id": "done",
+    "action": "end",
+    "status": "pass",
+    "durationMs": 0
+  }
+]

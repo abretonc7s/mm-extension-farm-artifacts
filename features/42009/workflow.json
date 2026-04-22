@@ -1,0 +1,211 @@
+{
+  "description": "",
+  "hooks": {
+    "pre_conditions": [
+      "wallet.unlocked"
+    ],
+    "setup": [],
+    "teardown": [
+      {
+        "id": "teardown-clear",
+        "action": "eval_sync",
+        "expression": "(async()=>{ try { await stateHooks.submitRequestToBackground('setLastVisitedPerpsRoute',[null]); } catch(e) {} return JSON.stringify({ done: true }); })()",
+        "assert": {
+          "all": [
+            {
+              "field": "done",
+              "operator": "eq",
+              "value": true
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "inputs": {},
+  "playback": {
+    "mode": "off",
+    "slow_ms": 1000
+  },
+  "sourcePath": "",
+  "title": "TAT-2691 — Persist last-visited Perps route across close/reopen",
+  "workflow": {
+    "entry": "setup-unlock",
+    "nodes": {
+      "setup-unlock": {
+        "action": "call",
+        "ref": "extension-core/unlock-wallet",
+        "next": "setup-clear-stale",
+        "id": "setup-unlock"
+      },
+      "setup-clear-stale": {
+        "action": "eval_sync",
+        "expression": "(async()=>{ await stateHooks.submitRequestToBackground('setLastVisitedPerpsRoute',[null]); return JSON.stringify({cleared: stateHooks.store.getState().metamask.lastVisitedPerpsRoute===null}); })()",
+        "assert": {
+          "all": [
+            {
+              "field": "cleared",
+              "operator": "eq",
+              "value": true
+            }
+          ]
+        },
+        "next": "ac1-navigate-perps",
+        "id": "setup-clear-stale"
+      },
+      "ac1-navigate-perps": {
+        "action": "call",
+        "ref": "perps/navigate-to-market-detail",
+        "params": {
+          "symbol": "BTC"
+        },
+        "next": "ac1-wait-persisted",
+        "id": "ac1-navigate-perps"
+      },
+      "ac1-wait-persisted": {
+        "action": "wait_for",
+        "expression": "!!(stateHooks.store.getState().metamask.lastVisitedPerpsRoute && typeof stateHooks.store.getState().metamask.lastVisitedPerpsRoute.path === 'string' && stateHooks.store.getState().metamask.lastVisitedPerpsRoute.path.indexOf('/perps')===0)",
+        "timeout_ms": 5000,
+        "assert": {
+          "operator": "truthy"
+        },
+        "next": "ac1-assert-state",
+        "id": "ac1-wait-persisted"
+      },
+      "ac1-assert-state": {
+        "action": "eval_sync",
+        "expression": "(function(){ var v = stateHooks.store.getState().metamask.lastVisitedPerpsRoute; return JSON.stringify({ hasEntry: !!v, isPerpsPath: !!(v && typeof v.path === 'string' && v.path.indexOf('/perps')===0), timestampIsNumber: !!(v && typeof v.timestamp === 'number'), withinTtlMs: !!(v && typeof v.timestamp === 'number' && Date.now() - v.timestamp < 5 * 60 * 1000) }); })()",
+        "assert": {
+          "all": [
+            {
+              "field": "hasEntry",
+              "operator": "eq",
+              "value": true
+            },
+            {
+              "field": "isPerpsPath",
+              "operator": "eq",
+              "value": true
+            },
+            {
+              "field": "timestampIsNumber",
+              "operator": "eq",
+              "value": true
+            },
+            {
+              "field": "withinTtlMs",
+              "operator": "eq",
+              "value": true
+            }
+          ]
+        },
+        "next": "ac1-screenshot",
+        "id": "ac1-assert-state"
+      },
+      "ac1-screenshot": {
+        "action": "screenshot",
+        "filename": "evidence-persisted-after-visit",
+        "note": "AC1: lastVisitedPerpsRoute populated with /perps/market/BTC path + fresh timestamp after visiting market detail",
+        "next": "ac2-nav-home",
+        "id": "ac1-screenshot"
+      },
+      "ac2-nav-home": {
+        "action": "eval_sync",
+        "expression": "(function(){ location.hash = '#/'; return JSON.stringify({ navigated: true }); })()",
+        "assert": {
+          "all": [
+            {
+              "field": "navigated",
+              "operator": "eq",
+              "value": true
+            }
+          ]
+        },
+        "next": "ac2-wait-cleared",
+        "id": "ac2-nav-home"
+      },
+      "ac2-wait-cleared": {
+        "action": "wait_for",
+        "expression": "stateHooks.store.getState().metamask.lastVisitedPerpsRoute === null",
+        "timeout_ms": 5000,
+        "assert": {
+          "operator": "truthy"
+        },
+        "next": "ac2-assert-cleared",
+        "id": "ac2-wait-cleared"
+      },
+      "ac2-assert-cleared": {
+        "action": "eval_sync",
+        "expression": "JSON.stringify({ cleared: stateHooks.store.getState().metamask.lastVisitedPerpsRoute === null })",
+        "assert": {
+          "all": [
+            {
+              "field": "cleared",
+              "operator": "eq",
+              "value": true
+            }
+          ]
+        },
+        "next": "ac3-seed-while-on-home",
+        "id": "ac2-assert-cleared"
+      },
+      "ac3-seed-while-on-home": {
+        "action": "eval_sync",
+        "expression": "(async()=>{ await stateHooks.submitRequestToBackground('setLastVisitedPerpsRoute',['/perps/market/BTC']); return JSON.stringify({ dispatched: true }); })()",
+        "assert": {
+          "all": [
+            {
+              "field": "dispatched",
+              "operator": "eq",
+              "value": true
+            }
+          ]
+        },
+        "next": "ac3-wait-on-perps",
+        "id": "ac3-seed-while-on-home"
+      },
+      "ac3-wait-on-perps": {
+        "action": "wait_for",
+        "expression": "typeof location !== 'undefined' && location.hash.indexOf('#/perps/market/BTC') === 0",
+        "timeout_ms": 10000,
+        "assert": {
+          "operator": "truthy"
+        },
+        "next": "ac3-assert-consumed",
+        "id": "ac3-wait-on-perps"
+      },
+      "ac3-assert-consumed": {
+        "action": "eval_sync",
+        "expression": "(function(){ var s = stateHooks.store.getState(); return JSON.stringify({ onPerpsRoute: typeof location !== 'undefined' && location.hash.indexOf('#/perps/market/BTC') === 0, redirectCleared: (s.history && s.history.redirectAfterDefaultPage) === null }); })()",
+        "assert": {
+          "all": [
+            {
+              "field": "onPerpsRoute",
+              "operator": "eq",
+              "value": true
+            },
+            {
+              "field": "redirectCleared",
+              "operator": "eq",
+              "value": true
+            }
+          ]
+        },
+        "next": "ac3-screenshot",
+        "id": "ac3-assert-consumed"
+      },
+      "ac3-screenshot": {
+        "action": "screenshot",
+        "filename": "evidence-home-consumed-entry",
+        "note": "AC3: Home (componentDidUpdate) consumed the seeded /perps/market/BTC entry — same wiring fires on a fresh home mount after popup close/reopen",
+        "next": "done",
+        "id": "ac3-screenshot"
+      },
+      "done": {
+        "action": "end",
+        "status": "pass",
+        "id": "done"
+      }
+    }
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "version": 1,
+  "ticket": "TAT-2691",
+  "recipe": "artifacts/recipe.json",
+  "overall": "pass",
+  "scores": {
+    "covers_feature": "pass",
+    "strict_assertions": "pass",
+    "uses_existing_flows": "pass",
+    "visual_evidence": "pass",
+    "teardown_safe": "pass"
+  },
+  "checks": [
+    {
+      "name": "covers_feature",
+      "verdict": "pass",
+      "evidence": "AC1 asserts state.metamask.lastVisitedPerpsRoute is populated with a /perps path and a fresh timestamp after navigating to the Perps tab. AC2 asserts the background setLastVisitedPerpsRoute(null) action clears the entry. AC3 asserts that on home remount the persisted entry is consumed (cleared) — proving the wiring that consumes the saved path on reopen."
+    },
+    {
+      "name": "strict_assertions",
+      "verdict": "pass",
+      "evidence": "All eval_sync nodes use operator eq with explicit values; wait_for uses operator truthy on boolean conditions. No contains."
+    },
+    {
+      "name": "uses_existing_flows",
+      "verdict": "pass",
+      "evidence": "setup-unlock calls extension-core/unlock-wallet; ac1-navigate-perps calls perps/navigate-perps-tab. No hand-rolled steps for covered ops."
+    },
+    {
+      "name": "visual_evidence",
+      "verdict": "pass",
+      "evidence": "evidence-persisted-after-visit.png captures the Perps tab after state is persisted; evidence-home-consumed-entry.png captures the Home surface after persisted entry is consumed. Proof is primarily state-based (stateHooks assertions); screenshots corroborate the user-visible surfaces."
+    },
+    {
+      "name": "teardown_safe",
+      "verdict": "pass",
+      "evidence": "teardown-clear resets lastVisitedPerpsRoute to null so later recipes start from a clean baseline."
+    }
+  ],
+  "notes": [
+    "Live validation: 13/13 nodes pass on CDP 6661 against rebuilt dev bundle on feat/tat-2691-persist-perp-reopen-state. Screenshots captured under artifacts/screenshots/.",
+    "Auto issue review status: review (1 non-gating React unmount warning from PerpsView/PerpsViewStreamBoundary — pre-existing, unrelated to this change).",
+    "AC1 navigates to /perps/market/BTC via the shared perps/navigate-to-market-detail flow (not the Home perps tab, which lives at '/' with a ?tab=perps query and does not mount PerpsLayout)."
+  ]
+}

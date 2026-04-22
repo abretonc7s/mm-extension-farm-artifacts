@@ -1,0 +1,30 @@
+flowchart TD
+  %% TAT-2691 — Persist last-visited Perps route across close/reopen
+  __entry__(["ENTRY"]) --> node_setup_unlock
+  node_setup_unlock[["setup-unlock<br/>extension-core/unlock-wallet"]]
+  node_setup_clear_stale["setup-clear-stale<br/>eval_sync"]
+  node_ac1_navigate_perps[["ac1-navigate-perps<br/>perps/navigate-to-market-detail"]]
+  node_ac1_wait_persisted["ac1-wait-persisted<br/>wait_for"]
+  node_ac1_assert_state["ac1-assert-state<br/>eval_sync"]
+  node_ac1_screenshot["ac1-screenshot<br/>screenshot"]
+  node_ac2_nav_home["ac2-nav-home<br/>eval_sync"]
+  node_ac2_wait_cleared["ac2-wait-cleared<br/>wait_for"]
+  node_ac2_assert_cleared["ac2-assert-cleared<br/>eval_sync"]
+  node_ac3_seed_while_on_home["ac3-seed-while-on-home<br/>eval_sync"]
+  node_ac3_wait_on_perps["ac3-wait-on-perps<br/>wait_for"]
+  node_ac3_assert_consumed["ac3-assert-consumed<br/>eval_sync"]
+  node_ac3_screenshot["ac3-screenshot<br/>screenshot"]
+  node_done(["done<br/>PASS"])
+  node_setup_unlock --> node_setup_clear_stale
+  node_setup_clear_stale --> node_ac1_navigate_perps
+  node_ac1_navigate_perps --> node_ac1_wait_persisted
+  node_ac1_wait_persisted --> node_ac1_assert_state
+  node_ac1_assert_state --> node_ac1_screenshot
+  node_ac1_screenshot --> node_ac2_nav_home
+  node_ac2_nav_home --> node_ac2_wait_cleared
+  node_ac2_wait_cleared --> node_ac2_assert_cleared
+  node_ac2_assert_cleared --> node_ac3_seed_while_on_home
+  node_ac3_seed_while_on_home --> node_ac3_wait_on_perps
+  node_ac3_wait_on_perps --> node_ac3_assert_consumed
+  node_ac3_assert_consumed --> node_ac3_screenshot
+  node_ac3_screenshot --> node_done

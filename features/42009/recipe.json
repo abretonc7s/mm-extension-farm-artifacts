@@ -1,0 +1,136 @@
+{
+  "title": "TAT-2691 — Persist last-visited Perps route across close/reopen",
+  "summary": "AC1: visiting a /perps/* screen populates state.metamask.lastVisitedPerpsRoute with path + timestamp. AC2: intentional in-app navigation out of /perps triggers PerpsLayout useEffect cleanup and clears the entry. AC3: while on home, seeding the entry via the background action causes the Home component to consume it (componentDidUpdate branch) — the same wiring that fires on a fresh home mount after popup close/reopen.",
+  "validate": {
+    "workflow": {
+      "pre_conditions": ["wallet.unlocked"],
+      "entry": "setup-unlock",
+      "nodes": {
+        "setup-unlock": {
+          "action": "call",
+          "ref": "extension-core/unlock-wallet",
+          "next": "setup-clear-stale"
+        },
+        "setup-clear-stale": {
+          "action": "eval_sync",
+          "expression": "(async()=>{ await stateHooks.submitRequestToBackground('setLastVisitedPerpsRoute',[null]); return JSON.stringify({cleared: stateHooks.store.getState().metamask.lastVisitedPerpsRoute===null}); })()",
+          "assert": {
+            "all": [
+              { "field": "cleared", "operator": "eq", "value": true }
+            ]
+          },
+          "next": "ac1-navigate-perps"
+        },
+        "ac1-navigate-perps": {
+          "action": "call",
+          "ref": "perps/navigate-to-market-detail",
+          "params": { "symbol": "BTC" },
+          "next": "ac1-wait-persisted"
+        },
+        "ac1-wait-persisted": {
+          "action": "wait_for",
+          "expression": "!!(stateHooks.store.getState().metamask.lastVisitedPerpsRoute && typeof stateHooks.store.getState().metamask.lastVisitedPerpsRoute.path === 'string' && stateHooks.store.getState().metamask.lastVisitedPerpsRoute.path.indexOf('/perps')===0)",
+          "timeout_ms": 5000,
+          "assert": { "operator": "truthy" },
+          "next": "ac1-assert-state"
+        },
+        "ac1-assert-state": {
+          "action": "eval_sync",
+          "expression": "(function(){ var v = stateHooks.store.getState().metamask.lastVisitedPerpsRoute; return JSON.stringify({ hasEntry: !!v, isPerpsPath: !!(v && typeof v.path === 'string' && v.path.indexOf('/perps')===0), timestampIsNumber: !!(v && typeof v.timestamp === 'number'), withinTtlMs: !!(v && typeof v.timestamp === 'number' && Date.now() - v.timestamp < 5 * 60 * 1000) }); })()",
+          "assert": {
+            "all": [
+              { "field": "hasEntry", "operator": "eq", "value": true },
+              { "field": "isPerpsPath", "operator": "eq", "value": true },
+              { "field": "timestampIsNumber", "operator": "eq", "value": true },
+              { "field": "withinTtlMs", "operator": "eq", "value": true }
+            ]
+          },
+          "next": "ac1-screenshot"
+        },
+        "ac1-screenshot": {
+          "action": "screenshot",
+          "filename": "evidence-persisted-after-visit",
+          "note": "AC1: lastVisitedPerpsRoute populated with /perps/market/BTC path + fresh timestamp after visiting market detail",
+          "next": "ac2-nav-home"
+        },
+        "ac2-nav-home": {
+          "action": "eval_sync",
+          "expression": "(function(){ location.hash = '#/'; return JSON.stringify({ navigated: true }); })()",
+          "assert": {
+            "all": [
+              { "field": "navigated", "operator": "eq", "value": true }
+            ]
+          },
+          "next": "ac2-wait-cleared"
+        },
+        "ac2-wait-cleared": {
+          "action": "wait_for",
+          "expression": "stateHooks.store.getState().metamask.lastVisitedPerpsRoute === null",
+          "timeout_ms": 5000,
+          "assert": { "operator": "truthy" },
+          "next": "ac2-assert-cleared"
+        },
+        "ac2-assert-cleared": {
+          "action": "eval_sync",
+          "expression": "JSON.stringify({ cleared: stateHooks.store.getState().metamask.lastVisitedPerpsRoute === null })",
+          "assert": {
+            "all": [
+              { "field": "cleared", "operator": "eq", "value": true }
+            ]
+          },
+          "next": "ac3-seed-while-on-home"
+        },
+        "ac3-seed-while-on-home": {
+          "action": "eval_sync",
+          "expression": "(async()=>{ await stateHooks.submitRequestToBackground('setLastVisitedPerpsRoute',['/perps/market/BTC']); return JSON.stringify({ dispatched: true }); })()",
+          "assert": {
+            "all": [
+              { "field": "dispatched", "operator": "eq", "value": true }
+            ]
+          },
+          "next": "ac3-wait-on-perps"
+        },
+        "ac3-wait-on-perps": {
+          "action": "wait_for",
+          "expression": "typeof location !== 'undefined' && location.hash.indexOf('#/perps/market/BTC') === 0",
+          "timeout_ms": 10000,
+          "assert": { "operator": "truthy" },
+          "next": "ac3-assert-consumed"
+        },
+        "ac3-assert-consumed": {
+          "action": "eval_sync",
+          "expression": "(function(){ var s = stateHooks.store.getState(); return JSON.stringify({ onPerpsRoute: typeof location !== 'undefined' && location.hash.indexOf('#/perps/market/BTC') === 0, redirectCleared: (s.history && s.history.redirectAfterDefaultPage) === null }); })()",
+          "assert": {
+            "all": [
+              { "field": "onPerpsRoute", "operator": "eq", "value": true },
+              { "field": "redirectCleared", "operator": "eq", "value": true }
+            ]
+          },
+          "next": "ac3-screenshot"
+        },
+        "ac3-screenshot": {
+          "action": "screenshot",
+          "filename": "evidence-home-consumed-entry",
+          "note": "AC3: Home (componentDidUpdate) consumed the seeded /perps/market/BTC entry — same wiring fires on a fresh home mount after popup close/reopen",
+          "next": "done"
+        },
+        "done": {
+          "action": "end",
+          "status": "pass"
+        }
+      },
+      "teardown": [
+        {
+          "id": "teardown-clear",
+          "action": "eval_sync",
+          "expression": "(async()=>{ try { await stateHooks.submitRequestToBackground('setLastVisitedPerpsRoute',[null]); } catch(e) {} return JSON.stringify({ done: true }); })()",
+          "assert": {
+            "all": [
+              { "field": "done", "operator": "eq", "value": true }
+            ]
+          }
+        }
+      ]
+    }
+  }
+}
