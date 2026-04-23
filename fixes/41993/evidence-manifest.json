@@ -1,0 +1,81 @@
+{
+  "pr_number": 41993,
+  "pr_url": "https://github.com/MetaMask/metamask-extension/pull/41993",
+  "branch": "fix/tat-2699-fix-perps-decimal-format",
+  "tickets": ["TAT-2699", "TAT-3009"],
+  "captured_at": "2026-04-23",
+  "evidence": [
+    {
+      "ac": "AC-3009-1/2",
+      "surface": "Market detail — candlestick chart Y-axis labels (PUMP)",
+      "before": "before-ac3009-1-chart-yaxis-pump.png",
+      "after": "after-ac3009-1-chart-yaxis-pump.png",
+      "before_caption": "TAT-3009 bug: PUMP Y-axis labels render as $0.00 / $0.00",
+      "after_caption": "Post-fix: Y-axis labels render real 6-decimal prices (0.001802, 0.001800, 0.001790, 0.001780)",
+      "before_source": "Jira TAT-3009 (image-20260420-165734.png)"
+    },
+    {
+      "ac": "AC-3009-3",
+      "surface": "Market detail — OrderCard trigger price (PUMP TP/SL row)",
+      "before": "before-ac3009-3-trigger-order-card-pump.png",
+      "after": "after-ac3009-3-trigger-order-card-pump.png",
+      "before_caption": "TAT-3009 bug: trigger price on PUMP orders shows <$0.01",
+      "after_caption": "Post-fix: trigger price renders $0.0016 via formatPerpsFiatUniversal",
+      "before_source": "Jira TAT-3009 (image-20260421-171736.png)"
+    },
+    {
+      "ac": "AC-3009-4",
+      "surface": "CancelOrderModal — Limit Price (PUMP limit short)",
+      "before": "before-ac3009-4-cancel-modal-pump-limit.png",
+      "after": "after-ac3009-4-cancel-modal-pump-limit.png",
+      "before_caption": "TAT-3009 bug: Limit Price <$0.01, Order value rounded",
+      "after_caption": "Post-fix: Limit Price $0.001824, Order value $12.02 (already migrated by TAT-2699 closure; PUMP live-verified here)",
+      "before_source": "Jira TAT-3009 (image-20260421-171816.png)"
+    },
+    {
+      "ac": "AC-3009-6",
+      "surface": "Market detail — Position Size in $ (after fiat toggle)",
+      "before": "before-ac3009-6-position-size-fiat.png",
+      "after": "after-ac3009-6-position-size-fiat.png",
+      "before_caption": "TAT-3009 bug: Size displays 3 decimals ($15.005)",
+      "after_caption": "Post-fix assertion eval: `perps-position-size-value` → $7,125 (formatPerpsFiatMinimal fiat-style stripping). Screenshot scrolled past Size card, but node-level assertion verified the string.",
+      "before_source": "Jira TAT-3009 (Capturedecran2026-04-20a7.17.34PM.png)"
+    },
+    {
+      "ac": "AC-3009-13",
+      "surface": "Home — Recent Activity row subtitles",
+      "before": "before-ac3009-13-activity-token-size.png",
+      "after": "after-ac3009-13-activity-token-size.png",
+      "before_caption": "TAT-3009 bug: PUMP activity rows show 6601.0 PUMP (trailing .0)",
+      "after_caption": "Post-fix: token size routed through formatPositionSize — ETH rows render 0.0048 ETH / 0.0043 ETH with no trailing zeros",
+      "before_source": "Jira TAT-3009 (Capturedecran2026-04-20a7.10.50PM.png)"
+    }
+  ],
+  "assertion_only_acs": [
+    {
+      "ac": "AC-3009-5/14",
+      "surface": "Open Interest ($2.00B vs $2B)",
+      "evidence": "Unit tests in shared/lib/perps-formatters.test.ts — 17 new assertions lock in mobile output"
+    },
+    {
+      "ac": "AC-3009-7",
+      "surface": "Trade-screen order size in tokens",
+      "evidence": "Component tests for AmountInput + integration via usePerpsMarketInfo"
+    },
+    {
+      "ac": "AC-3009-8",
+      "surface": "Close-position modal P&L in margin",
+      "evidence": "close-position-modal tests (formatPnl already validated via the existing suite)"
+    },
+    {
+      "ac": "AC-3009-9/10",
+      "surface": "TP/SL preset inputs",
+      "evidence": "perps-market-detail-page tests updated for new preset output (3087.5, 2612.5, 44700, 45300)"
+    },
+    {
+      "ac": "AC-3009-11/12",
+      "surface": "Adjust-margin Available",
+      "evidence": "edit-margin tests pass with PRICE_RANGES_MINIMAL_VIEW swap"
+    }
+  ]
+}
