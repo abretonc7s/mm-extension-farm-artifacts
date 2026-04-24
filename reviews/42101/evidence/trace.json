@@ -1,0 +1,307 @@
+[
+  {
+    "id": "setup-probe-account",
+    "action": "eval_async",
+    "ok": true,
+    "raw": "{\"availableBalance\":\"0\",\"availableToTradeBalance\":\"29.6726825\",\"totalBalance\":\"29.6726825\",\"marginUsed\":\"0\",\"unrealizedPnl\":\"0\",\"returnOnEquity\":\"0\",\"subAccountBreakdown\":{\"\":{\"availableBalance\":\"0.0\",\"totalBalance\":\"0\"},\"xyz\":{\"availableBalance\":\"0.0\",\"totalBalance\":\"0\"}}}",
+    "durationMs": 131
+  },
+  {
+    "id": "setup-assert-tradeable-positive",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"tradeableGt0\":true}",
+    "durationMs": 1
+  },
+  {
+    "id": "ac1-nav-perps-home",
+    "action": "call",
+    "ok": true,
+    "raw": {
+      "passed": 4,
+      "failed": 0,
+      "trace": [
+        {
+          "id": "nav-perps",
+          "action": "navigate",
+          "ok": true,
+          "raw": {
+            "navigated": true,
+            "hash": "#/?tab=perps"
+          },
+          "durationMs": 4
+        },
+        {
+          "id": "check-tutorial",
+          "action": "eval_sync",
+          "ok": true,
+          "raw": "{\"visible\":false}",
+          "durationMs": 0
+        },
+        {
+          "id": "tutorial-switch",
+          "action": "switch",
+          "next": "wait-perps",
+          "durationMs": 0
+        },
+        {
+          "id": "wait-perps",
+          "action": "wait_for",
+          "ok": true,
+          "raw": {
+            "found": true,
+            "target": "testId:perps-balance-dropdown"
+          },
+          "durationMs": 103
+        },
+        {
+          "id": "screenshot-perps",
+          "action": "screenshot",
+          "ok": true,
+          "raw": {
+            "path": "screenshots/perps-tab-1777027658828.png",
+            "width": 500,
+            "height": 713
+          },
+          "durationMs": 175
+        },
+        {
+          "id": "done",
+          "action": "end",
+          "status": "pass",
+          "durationMs": 0
+        }
+      ],
+      "vars": {
+        "tutorial_state": {
+          "visible": false
+        }
+      }
+    },
+    "durationMs": 294
+  },
+  {
+    "id": "ac1-read-home-available",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"availableText\":\"Total balance$29.67\"}",
+    "durationMs": 1
+  },
+  {
+    "id": "ac1-assert-home-shows-tradeable",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"hasDollar\":true}",
+    "durationMs": 1
+  },
+  {
+    "id": "ac1-screenshot-home-funded",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "screenshots/evidence-ac1-home-funded-1777027659015.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 89
+  },
+  {
+    "id": "ac1-nav-order-entry",
+    "action": "call",
+    "ok": true,
+    "raw": {
+      "passed": 2,
+      "failed": 0,
+      "trace": [
+        {
+          "id": "nav-detail",
+          "action": "navigate",
+          "ok": true,
+          "raw": {
+            "navigated": true,
+            "hash": "#/perps/market/ETH"
+          },
+          "durationMs": 3
+        },
+        {
+          "id": "wait-detail",
+          "action": "wait_for",
+          "ok": true,
+          "raw": {
+            "found": true,
+            "target": "testId:perps-market-detail-page"
+          },
+          "durationMs": 66
+        },
+        {
+          "id": "done",
+          "action": "end",
+          "status": "pass",
+          "durationMs": 0
+        }
+      ],
+      "vars": {}
+    },
+    "durationMs": 91
+  },
+  {
+    "id": "ac1-screenshot-market-detail",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "screenshots/evidence-ac1-market-detail-funded-1777027659199.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 96
+  },
+  {
+    "id": "ac1-open-order-entry",
+    "action": "navigate",
+    "ok": true,
+    "raw": {
+      "navigated": true,
+      "hash": "#/perps/trade/ETH?direction=long&mode=new"
+    },
+    "durationMs": 3
+  },
+  {
+    "id": "ac1-wait-order-entry",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-order-entry-page"
+    },
+    "durationMs": 54
+  },
+  {
+    "id": "ac1-read-submit-button",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"submitDisabled\":false,\"hasNoBalanceCta\":false}",
+    "durationMs": 0
+  },
+  {
+    "id": "ac1-screenshot-order-entry",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "screenshots/evidence-ac1-order-entry-enabled-1777027659370.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 76
+  },
+  {
+    "id": "ac3-nav-withdraw",
+    "action": "ext_navigate_hash",
+    "ok": true,
+    "raw": {
+      "navigated": true,
+      "hash": "perps/withdraw"
+    },
+    "durationMs": 3
+  },
+  {
+    "id": "ac3-wait-withdraw",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-withdraw-page"
+    },
+    "durationMs": 49
+  },
+  {
+    "id": "ac3-read-withdraw-available",
+    "action": "eval_async",
+    "ok": true,
+    "raw": "{\"availableBalance\":\"0\",\"availableToTradeBalance\":\"29.6726825\",\"submitDisabled\":true}",
+    "durationMs": 270
+  },
+  {
+    "id": "ac3-screenshot-withdraw",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "screenshots/evidence-ac3-withdraw-zero-balance-1777027659787.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 73
+  },
+  {
+    "id": "teardown-return-home",
+    "action": "call",
+    "ok": true,
+    "raw": {
+      "passed": 4,
+      "failed": 0,
+      "trace": [
+        {
+          "id": "nav-perps",
+          "action": "navigate",
+          "ok": true,
+          "raw": {
+            "navigated": true,
+            "hash": "#/?tab=perps"
+          },
+          "durationMs": 3
+        },
+        {
+          "id": "check-tutorial",
+          "action": "eval_sync",
+          "ok": true,
+          "raw": "{\"visible\":false}",
+          "durationMs": 8
+        },
+        {
+          "id": "tutorial-switch",
+          "action": "switch",
+          "next": "wait-perps",
+          "durationMs": 0
+        },
+        {
+          "id": "wait-perps",
+          "action": "wait_for",
+          "ok": true,
+          "raw": {
+            "found": true,
+            "target": "testId:perps-balance-dropdown"
+          },
+          "durationMs": 112
+        },
+        {
+          "id": "screenshot-perps",
+          "action": "screenshot",
+          "ok": true,
+          "raw": {
+            "path": "screenshots/perps-tab-1777027660026.png",
+            "width": 500,
+            "height": 713
+          },
+          "durationMs": 93
+        },
+        {
+          "id": "done",
+          "action": "end",
+          "status": "pass",
+          "durationMs": 0
+        }
+      ],
+      "vars": {
+        "tutorial_state": {
+          "visible": false
+        }
+      }
+    },
+    "durationMs": 256
+  },
+  {
+    "id": "done",
+    "action": "end",
+    "status": "pass",
+    "durationMs": 0
+  }
+]

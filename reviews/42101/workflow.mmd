@@ -1,0 +1,38 @@
+flowchart TD
+  %% PR #42101 — HL unified account tradeable balance
+  __entry__(["ENTRY"]) --> node_setup_probe_account
+  node_setup_probe_account["setup-probe-account<br/>eval_async"]
+  node_setup_assert_tradeable_positive["setup-assert-tradeable-positive<br/>eval_sync"]
+  node_ac1_nav_perps_home[["ac1-nav-perps-home<br/>perps/navigate-perps-tab"]]
+  node_ac1_read_home_available["ac1-read-home-available<br/>eval_sync"]
+  node_ac1_assert_home_shows_tradeable["ac1-assert-home-shows-tradeable<br/>eval_sync"]
+  node_ac1_screenshot_home_funded["ac1-screenshot-home-funded<br/>screenshot"]
+  node_ac1_nav_order_entry[["ac1-nav-order-entry<br/>perps/navigate-to-market-detail"]]
+  node_ac1_screenshot_market_detail["ac1-screenshot-market-detail<br/>screenshot"]
+  node_ac1_open_order_entry["ac1-open-order-entry<br/>navigate"]
+  node_ac1_wait_order_entry["ac1-wait-order-entry<br/>wait_for"]
+  node_ac1_read_submit_button["ac1-read-submit-button<br/>eval_sync"]
+  node_ac1_screenshot_order_entry["ac1-screenshot-order-entry<br/>screenshot"]
+  node_ac3_nav_withdraw["ac3-nav-withdraw<br/>ext_navigate_hash"]
+  node_ac3_wait_withdraw["ac3-wait-withdraw<br/>wait_for"]
+  node_ac3_read_withdraw_available["ac3-read-withdraw-available<br/>eval_async"]
+  node_ac3_screenshot_withdraw["ac3-screenshot-withdraw<br/>screenshot"]
+  node_teardown_return_home[["teardown-return-home<br/>perps/navigate-perps-tab"]]
+  node_done(["done<br/>PASS"])
+  node_setup_probe_account --> node_setup_assert_tradeable_positive
+  node_setup_assert_tradeable_positive --> node_ac1_nav_perps_home
+  node_ac1_nav_perps_home --> node_ac1_read_home_available
+  node_ac1_read_home_available --> node_ac1_assert_home_shows_tradeable
+  node_ac1_assert_home_shows_tradeable --> node_ac1_screenshot_home_funded
+  node_ac1_screenshot_home_funded --> node_ac1_nav_order_entry
+  node_ac1_nav_order_entry --> node_ac1_screenshot_market_detail
+  node_ac1_screenshot_market_detail --> node_ac1_open_order_entry
+  node_ac1_open_order_entry --> node_ac1_wait_order_entry
+  node_ac1_wait_order_entry --> node_ac1_read_submit_button
+  node_ac1_read_submit_button --> node_ac1_screenshot_order_entry
+  node_ac1_screenshot_order_entry --> node_ac3_nav_withdraw
+  node_ac3_nav_withdraw --> node_ac3_wait_withdraw
+  node_ac3_wait_withdraw --> node_ac3_read_withdraw_available
+  node_ac3_read_withdraw_available --> node_ac3_screenshot_withdraw
+  node_ac3_screenshot_withdraw --> node_teardown_return_home
+  node_teardown_return_home --> node_done

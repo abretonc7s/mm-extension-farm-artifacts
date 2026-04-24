@@ -1,0 +1,120 @@
+{
+  "title": "PR #42101 — HL unified account tradeable balance",
+  "description": "Proves that HyperLiquid unified accounts funded by spot USDC only (availableBalance=0, availableToTradeBalance>0) are recognized as tradeable on perps home, market detail, order entry; while withdraw still reads availableBalance-only. Covers AC1 + AC3 live; AC2 and AC4 UNTESTABLE here (see recipe-coverage.md).",
+  "validate": {
+    "workflow": {
+      "pre_conditions": ["wallet.unlocked", "perps.feature_enabled"],
+      "entry": "setup-probe-account",
+      "nodes": {
+        "setup-probe-account": {
+          "action": "eval_async",
+          "expression": "(async()=>{var r=await stateHooks.submitRequestToBackground('perpsGetAccountState',[]);return JSON.stringify(r??{})})()",
+          "save_as": "account_state",
+          "assert": {
+            "all": [
+              { "field": "availableBalance", "operator": "eq", "value": "0" },
+              { "field": "availableToTradeBalance", "operator": "not_null" }
+            ]
+          },
+          "next": "setup-assert-tradeable-positive"
+        },
+        "setup-assert-tradeable-positive": {
+          "action": "eval_sync",
+          "expression": "JSON.stringify({ tradeableGt0: parseFloat('{{vars.account_state.availableToTradeBalance}}' || '0') > 0 })",
+          "save_as": "tradeable_check",
+          "assert": { "field": "tradeableGt0", "operator": "truthy" },
+          "next": "ac1-nav-perps-home"
+        },
+        "ac1-nav-perps-home": {
+          "action": "call",
+          "ref": "perps/navigate-perps-tab",
+          "next": "ac1-read-home-available"
+        },
+        "ac1-read-home-available": {
+          "action": "eval_sync",
+          "expression": "JSON.stringify({ availableText: (document.querySelector('[data-testid=\"perps-balance-actions-available\"]')?.textContent || document.querySelector('[data-testid=\"perps-balance-dropdown\"]')?.textContent || '') })",
+          "save_as": "home_available",
+          "next": "ac1-assert-home-shows-tradeable"
+        },
+        "ac1-assert-home-shows-tradeable": {
+          "action": "eval_sync",
+          "expression": "JSON.stringify({ hasDollar: /29\\.6/.test('{{vars.home_available.availableText}}' || '') })",
+          "save_as": "home_match",
+          "assert": { "field": "hasDollar", "operator": "truthy" },
+          "next": "ac1-screenshot-home-funded"
+        },
+        "ac1-screenshot-home-funded": {
+          "action": "screenshot",
+          "filename": "evidence-ac1-home-funded",
+          "next": "ac1-nav-order-entry"
+        },
+        "ac1-nav-order-entry": {
+          "action": "call",
+          "ref": "perps/navigate-to-market-detail",
+          "params": { "symbol": "ETH" },
+          "next": "ac1-screenshot-market-detail"
+        },
+        "ac1-screenshot-market-detail": {
+          "action": "screenshot",
+          "filename": "evidence-ac1-market-detail-funded",
+          "next": "ac1-open-order-entry"
+        },
+        "ac1-open-order-entry": {
+          "action": "navigate",
+          "target": "PerpsOrderEntry",
+          "params": { "symbol": "ETH", "direction": "long" },
+          "next": "ac1-wait-order-entry"
+        },
+        "ac1-wait-order-entry": {
+          "action": "wait_for",
+          "test_id": "perps-order-entry-page",
+          "timeout_ms": 10000,
+          "next": "ac1-read-submit-button"
+        },
+        "ac1-read-submit-button": {
+          "action": "eval_sync",
+          "expression": "JSON.stringify({ submitDisabled: document.querySelector('[data-testid=\"submit-order-button\"]')?.disabled, hasNoBalanceCta: Boolean(document.querySelector('[data-testid=\"perps-order-entry-add-funds-cta\"]')) })",
+          "save_as": "order_entry_state",
+          "next": "ac1-screenshot-order-entry"
+        },
+        "ac1-screenshot-order-entry": {
+          "action": "screenshot",
+          "filename": "evidence-ac1-order-entry-enabled",
+          "next": "ac3-nav-withdraw"
+        },
+        "ac3-nav-withdraw": {
+          "action": "ext_navigate_hash",
+          "hash": "perps/withdraw",
+          "next": "ac3-wait-withdraw"
+        },
+        "ac3-wait-withdraw": {
+          "action": "wait_for",
+          "test_id": "perps-withdraw-page",
+          "timeout_ms": 10000,
+          "next": "ac3-read-withdraw-available"
+        },
+        "ac3-read-withdraw-available": {
+          "action": "eval_async",
+          "expression": "(async()=>{var r=await stateHooks.submitRequestToBackground('perpsGetAccountState',[]);return JSON.stringify({availableBalance:r?.availableBalance,availableToTradeBalance:r?.availableToTradeBalance,submitDisabled:document.querySelector('[data-testid=\"perps-withdraw-submit\"]')?.disabled})})()",
+          "save_as": "withdraw_state",
+          "assert": { "field": "availableBalance", "operator": "eq", "value": "0" },
+          "next": "ac3-screenshot-withdraw"
+        },
+        "ac3-screenshot-withdraw": {
+          "action": "screenshot",
+          "filename": "evidence-ac3-withdraw-zero-balance",
+          "next": "teardown-return-home"
+        },
+        "teardown-return-home": {
+          "action": "call",
+          "ref": "perps/navigate-perps-tab",
+          "next": "done"
+        },
+        "done": {
+          "action": "end",
+          "status": "pass"
+        }
+      }
+    }
+  }
+}

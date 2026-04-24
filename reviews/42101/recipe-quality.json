@@ -1,0 +1,29 @@
+{
+  "pr": "42101",
+  "verdict": "pass",
+  "coverage": {
+    "total_acs": 4,
+    "proven": 2,
+    "untestable": 2,
+    "weak": 0,
+    "missing": 0
+  },
+  "reasons": [
+    "AC1 proven: order-entry screenshot shows 'Available to trade: 29.67 USDC' and enabled 'Open long ETH' CTA while availableBalance=0 — exactly the scenario the PR claims to fix.",
+    "AC3 proven: withdraw screen shows 'Available balance: $0.00' on the same account, disabled Withdraw button — confirms withdraw still reads availableBalance-only.",
+    "AC2 untestable but validated by diff review — no new setInterval/polling hook added, new availableToTradeBalance flows through existing usePerpsLiveAccount channel.",
+    "AC4 untestable live (only HL provider present in slot) — covered by PR's new unit test asserting fallback to availableBalance when availableToTradeBalance is absent.",
+    "Recipe uses 'call' for navigate-perps-tab and navigate-to-market-detail rather than reinventing them.",
+    "Zero forbidden patterns (no switch-default around assertion, no skip-reason eval_sync, no long wait, all node IDs ac<N>/setup/teardown/done)."
+  ],
+  "better_version_guidance": [
+    "Provider fallback (AC4) could be exercised live by toggling to the aggregated/myx provider mode via switch_provider if a non-HL fixture becomes available in a future slot.",
+    "AC2's no-polling claim could be hardened with a cdp_probe that watches background-page network activity for a window and asserts no /spotClearinghouseState polls originate from the extension bundle."
+  ],
+  "artifacts": {
+    "recipe": "artifacts/recipe.json",
+    "coverage_matrix": "artifacts/recipe-coverage.md",
+    "trace": "artifacts/evidence/trace.json",
+    "evidence_dir": "artifacts/evidence/"
+  }
+}

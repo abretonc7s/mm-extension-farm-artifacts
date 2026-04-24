@@ -1,0 +1,6 @@
+{
+  "pr_number": "42101",
+  "recommendation": "COMMENT",
+  "summary": "Narrow, well-scoped fix that moves the 'can this account trade?' decision behind a single getTradeableBalance helper and bumps perps-controller to v4 for the new availableToTradeBalance field. Live-tested against an HL unified account with availableBalance=0 / availableToTradeBalance=29.67 — order entry shows 'Available to trade: 29.67 USDC' and enabled Open Long CTA, while the withdraw screen on the same account correctly shows $0.00 and a disabled Withdraw. Tests added would fail if the change were reverted.",
+  "comments": []
+}
