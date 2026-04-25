@@ -1,0 +1,216 @@
+[
+  {
+    "id": "setup-prime-perps",
+    "action": "call",
+    "ok": true,
+    "raw": {
+      "passed": 4,
+      "failed": 0,
+      "trace": [
+        {
+          "id": "nav-perps-tab",
+          "action": "navigate",
+          "ok": true,
+          "raw": {
+            "navigated": true,
+            "hash": "#/?tab=perps"
+          },
+          "durationMs": 5
+        },
+        {
+          "id": "check-tutorial",
+          "action": "eval_sync",
+          "ok": true,
+          "raw": "{\"visible\":false}",
+          "durationMs": 1
+        },
+        {
+          "id": "tutorial-switch",
+          "action": "switch",
+          "next": "wait-tab-mount",
+          "durationMs": 0
+        },
+        {
+          "id": "wait-tab-mount",
+          "action": "wait_for",
+          "ok": true,
+          "raw": {
+            "found": true,
+            "target": "testId:perps-balance-dropdown"
+          },
+          "durationMs": 105
+        },
+        {
+          "id": "fetch-account-state",
+          "action": "eval_async",
+          "ok": true,
+          "raw": "{\"ready\":true,\"bal\":11247.09399351,\"accountState\":{\"availableBalance\":\"0\",\"totalBalance\":\"11247.09399351\",\"marginUsed\":\"0\",\"unrealizedPnl\":\"0\",\"returnOnEquity\":\"0\",\"subAccountBreakdown\":{\"\":{\"availableBalance\":\"0.0\",\"totalBalance\":\"0\"},\"xyz\":{\"availableBalance\":\"0.0\",\"totalBalance\":\"0\"}}}}",
+          "durationMs": 142
+        },
+        {
+          "id": "done",
+          "action": "end",
+          "status": "pass",
+          "durationMs": 0
+        }
+      ],
+      "vars": {
+        "tutorial_state": {
+          "visible": false
+        },
+        "prime_balance": {
+          "ready": true,
+          "bal": 11247.09399351,
+          "accountState": {
+            "availableBalance": "0",
+            "totalBalance": "11247.09399351",
+            "marginUsed": "0",
+            "unrealizedPnl": "0",
+            "returnOnEquity": "0",
+            "subAccountBreakdown": {
+              "": {
+                "availableBalance": "0.0",
+                "totalBalance": "0"
+              },
+              "xyz": {
+                "availableBalance": "0.0",
+                "totalBalance": "0"
+              }
+            }
+          }
+        }
+      }
+    },
+    "durationMs": 301
+  },
+  {
+    "id": "setup-navigate-btc",
+    "action": "call",
+    "ok": true,
+    "raw": {
+      "passed": 2,
+      "failed": 0,
+      "trace": [
+        {
+          "id": "nav-detail",
+          "action": "navigate",
+          "ok": true,
+          "raw": {
+            "navigated": true,
+            "hash": "#/perps/market/BTC"
+          },
+          "durationMs": 4
+        },
+        {
+          "id": "wait-detail",
+          "action": "wait_for",
+          "ok": true,
+          "raw": {
+            "found": true,
+            "target": "testId:perps-market-detail-page"
+          },
+          "durationMs": 55
+        },
+        {
+          "id": "done",
+          "action": "end",
+          "status": "pass",
+          "durationMs": 0
+        }
+      ],
+      "vars": {}
+    },
+    "durationMs": 80
+  },
+  {
+    "id": "ac1-wait-chart-mount",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-candlestick-chart"
+    },
+    "durationMs": 49
+  },
+  {
+    "id": "setup-wait-render",
+    "action": "wait",
+    "ok": true,
+    "raw": null,
+    "durationMs": 2500
+  },
+  {
+    "id": "ac1-assert-locale-formatter",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"tz\":\"Asia/Hong_Kong\",\"sample\":\"22:20\",\"hourCycle\":\"h23\"}",
+    "durationMs": 1
+  },
+  {
+    "id": "ac1-screenshot-chart-default",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "screenshots/evidence-ac1-chart-default-zoom-1777125710771.png",
+      "width": 516,
+      "height": 776
+    },
+    "durationMs": 110
+  },
+  {
+    "id": "ac2-trigger-crosshair",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"ok\":true,\"cx\":258,\"cy\":178,\"w\":484,\"h\":250}",
+    "durationMs": 2
+  },
+  {
+    "id": "ac2-wait-crosshair",
+    "action": "wait",
+    "ok": true,
+    "raw": null,
+    "durationMs": 400
+  },
+  {
+    "id": "ac2-screenshot-crosshair",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "screenshots/evidence-ac2-crosshair-tooltip-1777125711288.png",
+      "width": 516,
+      "height": 776
+    },
+    "durationMs": 81
+  },
+  {
+    "id": "ac3-probe-year-formatter",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"locale\":\"en-US\",\"value\":\"2025\"}",
+    "durationMs": 0
+  },
+  {
+    "id": "ac4-probe-month-formatter",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"locale\":\"en-US\",\"value\":\"Mar\"}",
+    "durationMs": 1
+  },
+  {
+    "id": "teardown-final-screenshot",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "screenshots/evidence-final-state-1777125711374.png",
+      "width": 516,
+      "height": 776
+    },
+    "durationMs": 95
+  },
+  {
+    "id": "done",
+    "action": "end",
+    "status": "pass",
+    "durationMs": 0
+  }
+]

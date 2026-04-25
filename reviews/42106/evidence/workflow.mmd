@@ -1,0 +1,28 @@
+flowchart TD
+  %% PR #42106 — perps chart x-axis local timezone & locale-aware formatters
+  __entry__(["ENTRY"]) --> node_setup_prime_perps
+  node_setup_prime_perps[["setup-prime-perps<br/>perps/prime-perps-state"]]
+  node_setup_navigate_btc[["setup-navigate-btc<br/>perps/navigate-to-market-detail"]]
+  node_ac1_wait_chart_mount["ac1-wait-chart-mount<br/>wait_for"]
+  node_setup_wait_render["setup-wait-render<br/>wait"]
+  node_ac1_assert_locale_formatter["ac1-assert-locale-formatter<br/>eval_sync"]
+  node_ac1_screenshot_chart_default["ac1-screenshot-chart-default<br/>screenshot"]
+  node_ac2_trigger_crosshair["ac2-trigger-crosshair<br/>eval_sync"]
+  node_ac2_wait_crosshair["ac2-wait-crosshair<br/>wait"]
+  node_ac2_screenshot_crosshair["ac2-screenshot-crosshair<br/>screenshot"]
+  node_ac3_probe_year_formatter["ac3-probe-year-formatter<br/>eval_sync"]
+  node_ac4_probe_month_formatter["ac4-probe-month-formatter<br/>eval_sync"]
+  node_teardown_final_screenshot["teardown-final-screenshot<br/>screenshot"]
+  node_done(["done<br/>PASS"])
+  node_setup_prime_perps --> node_setup_navigate_btc
+  node_setup_navigate_btc --> node_ac1_wait_chart_mount
+  node_ac1_wait_chart_mount --> node_setup_wait_render
+  node_setup_wait_render --> node_ac1_assert_locale_formatter
+  node_ac1_assert_locale_formatter --> node_ac1_screenshot_chart_default
+  node_ac1_screenshot_chart_default --> node_ac2_trigger_crosshair
+  node_ac2_trigger_crosshair --> node_ac2_wait_crosshair
+  node_ac2_wait_crosshair --> node_ac2_screenshot_crosshair
+  node_ac2_screenshot_crosshair --> node_ac3_probe_year_formatter
+  node_ac3_probe_year_formatter --> node_ac4_probe_month_formatter
+  node_ac4_probe_month_formatter --> node_teardown_final_screenshot
+  node_teardown_final_screenshot --> node_done

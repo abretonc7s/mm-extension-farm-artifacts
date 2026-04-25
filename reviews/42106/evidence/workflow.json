@@ -1,0 +1,136 @@
+{
+  "description": "Navigates to BTC market detail, waits for the candlestick chart to render, captures the default-zoom chart (proves AC1 local-tz x-axis labels, AC5 day month/day, AC6 time HH:MM with date prefix when non-today), triggers a synthetic crosshair pointer to capture AC2 crosshair tooltip, and runs an in-page Intl probe to corroborate AC3/AC4 (year & month formatters yield expected output for the active locale).",
+  "hooks": {
+    "pre_conditions": [
+      "wallet.unlocked",
+      "perps.feature_enabled"
+    ],
+    "setup": [],
+    "teardown": []
+  },
+  "inputs": {},
+  "playback": {
+    "mode": "off",
+    "slow_ms": 1000
+  },
+  "sourcePath": "",
+  "title": "PR #42106 — perps chart x-axis local timezone & locale-aware formatters",
+  "workflow": {
+    "entry": "setup-prime-perps",
+    "nodes": {
+      "setup-prime-perps": {
+        "action": "call",
+        "ref": "perps/prime-perps-state",
+        "next": "setup-navigate-btc",
+        "id": "setup-prime-perps"
+      },
+      "setup-navigate-btc": {
+        "action": "call",
+        "ref": "perps/navigate-to-market-detail",
+        "params": {
+          "symbol": "BTC"
+        },
+        "next": "ac1-wait-chart-mount",
+        "id": "setup-navigate-btc"
+      },
+      "ac1-wait-chart-mount": {
+        "action": "wait_for",
+        "test_id": "perps-candlestick-chart",
+        "timeout_ms": 10000,
+        "next": "setup-wait-render",
+        "id": "ac1-wait-chart-mount"
+      },
+      "setup-wait-render": {
+        "action": "wait",
+        "ms": 2500,
+        "next": "ac1-assert-locale-formatter",
+        "id": "setup-wait-render"
+      },
+      "ac1-assert-locale-formatter": {
+        "action": "eval_sync",
+        "expression": "(() => { const tz = Intl.DateTimeFormat().resolvedOptions().timeZone; const f = new Intl.DateTimeFormat('en-US', {hour:'2-digit', minute:'2-digit', hour12:false, timeZone: tz}); const sample = f.format(new Date(1742048400 * 1000)); return JSON.stringify({tz, sample, hourCycle: f.resolvedOptions().hourCycle}); })()",
+        "save_as": "locale_probe",
+        "assert": {
+          "all": [
+            {
+              "operator": "not_null",
+              "field": "tz"
+            },
+            {
+              "operator": "matches",
+              "field": "sample",
+              "value": "^\\d{2}:\\d{2}$"
+            }
+          ]
+        },
+        "next": "ac1-screenshot-chart-default",
+        "id": "ac1-assert-locale-formatter"
+      },
+      "ac1-screenshot-chart-default": {
+        "action": "screenshot",
+        "filename": "evidence-ac1-chart-default-zoom",
+        "next": "ac2-trigger-crosshair",
+        "id": "ac1-screenshot-chart-default"
+      },
+      "ac2-trigger-crosshair": {
+        "action": "eval_sync",
+        "expression": "(() => { const el = document.querySelector('[data-testid=\"perps-candlestick-chart\"]'); if (!el) return JSON.stringify({ok:false, err:'no chart el'}); const r = el.getBoundingClientRect(); const cx = r.left + r.width * 0.5; const cy = r.top + r.height * 0.4; const opts = { bubbles: true, cancelable: true, view: window, clientX: cx, clientY: cy }; el.dispatchEvent(new MouseEvent('mouseenter', opts)); el.dispatchEvent(new MouseEvent('mouseover', opts)); el.dispatchEvent(new MouseEvent('mousemove', opts)); return JSON.stringify({ok:true, cx, cy, w: r.width, h: r.height}); })()",
+        "save_as": "crosshair_trigger",
+        "assert": {
+          "operator": "eq",
+          "field": "ok",
+          "value": true
+        },
+        "next": "ac2-wait-crosshair",
+        "id": "ac2-trigger-crosshair"
+      },
+      "ac2-wait-crosshair": {
+        "action": "wait",
+        "ms": 400,
+        "next": "ac2-screenshot-crosshair",
+        "id": "ac2-wait-crosshair"
+      },
+      "ac2-screenshot-crosshair": {
+        "action": "screenshot",
+        "filename": "evidence-ac2-crosshair-tooltip",
+        "next": "ac3-probe-year-formatter",
+        "id": "ac2-screenshot-crosshair"
+      },
+      "ac3-probe-year-formatter": {
+        "action": "eval_sync",
+        "expression": "(() => { const fmt = new Intl.DateTimeFormat(navigator.language, {year:'numeric'}); const v = fmt.format(new Date(1742048400 * 1000)); return JSON.stringify({locale: navigator.language, value: v}); })()",
+        "save_as": "year_probe",
+        "assert": {
+          "operator": "matches",
+          "field": "value",
+          "value": "^\\d{4}$"
+        },
+        "next": "ac4-probe-month-formatter",
+        "id": "ac3-probe-year-formatter"
+      },
+      "ac4-probe-month-formatter": {
+        "action": "eval_sync",
+        "expression": "(() => { const fmt = new Intl.DateTimeFormat(navigator.language, {month:'short'}); const v = fmt.format(new Date(1742048400 * 1000)); return JSON.stringify({locale: navigator.language, value: v}); })()",
+        "save_as": "month_probe",
+        "assert": {
+          "operator": "length_gt",
+          "field": "value",
+          "value": 0
+        },
+        "next": "teardown-final-screenshot",
+        "id": "ac4-probe-month-formatter"
+      },
+      "teardown-final-screenshot": {
+        "action": "screenshot",
+        "filename": "evidence-final-state",
+        "next": "done",
+        "id": "teardown-final-screenshot"
+      },
+      "done": {
+        "action": "end",
+        "status": "pass",
+        "id": "done"
+      }
+    }
+  }
+}

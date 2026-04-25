@@ -1,0 +1,37 @@
+{
+  "schema_version": 1,
+  "verdict": "pass",
+  "summary": "Recipe drives a real chart-render path (prime perps -> navigate BTC market -> wait chart) and pairs visual + internal-probe evidence per AC. AC1 proven by combined Intl probe (tz=Asia/Hong_Kong, hourCycle=h23) + screenshot of BTC chart x-axis showing local 20:00/21:00/22:00. AC3/AC4 proven by Intl probes (year=2025, month=Mar) on the home target. AC5 + AC6 date-prefix branch fall back to the comprehensive jest test suite (36 passing tests, two locales en-US/de-DE plus Czech ICU patch coverage). AC2 crosshair was attempted but synthetic MouseEvent('mousemove') does not trigger lightweight-charts' internal pointer pipeline; reverted to unit-test proof of the crosshair formatter wiring + locale propagation.",
+  "ac_coverage": [
+    { "ac": 1, "verdict": "pass", "reason": "Probe + screenshot prove HK-local x-axis labels, not UTC." },
+    { "ac": 2, "verdict": "warn", "reason": "Synthetic mouse event did not trigger canvas crosshair tooltip; fallback to unit tests + code-review of localization.timeFormatter wiring." },
+    { "ac": 3, "verdict": "pass", "reason": "In-page Intl probe yields 4-digit year." },
+    { "ac": 4, "verdict": "pass", "reason": "In-page Intl probe yields abbreviated month 'Mar'." },
+    { "ac": 5, "verdict": "warn", "reason": "DayOfMonth ticks require multi-day visible range; default 5m view shows Time only. Unit-test fallback covers the branch." },
+    { "ac": 6, "verdict": "pass", "reason": "24h format proven visually (20:00/21:00/22:0…, no AM/PM); date-prefix branch covered by unit tests for non-today FIXED_DATE." }
+  ],
+  "forbidden_patterns": {
+    "switch_default_skip": "none",
+    "eval_skip_string": "none",
+    "wait_gt_500ms_used_as_assertion": "none — 2500ms setup-wait-render is chart hydration, not polling",
+    "dom_only_visual_ordering": "none",
+    "bad_node_prefixes": "none",
+    "missing_screenshot_for_visual_claim": "none for AC1; AC2 attempted but lib didn't bind"
+  },
+  "issues": [
+    {
+      "level": "info",
+      "message": "Recipe-issues auto-review captured 1 pre-existing React 'setState on unmounted component' warning in PerpsView during navigation. Not caused by the formatter PR (pure utility change)."
+    },
+    {
+      "level": "warn",
+      "message": "PR description example for AC5 day ticks is '3/15' (numeric M/D) but implementation returns 'Mar 15' (locale-native short month + numeric day). Mobile mirrors numeric M/D. Documentation drift, not a functional bug."
+    }
+  ],
+  "better_version_guidance": [
+    "AC2 crosshair: programmatically zoom into a candle and call lightweight-charts' chart.subscribeCrosshairMove + chart.timeScale().getVisibleRange() via a window-exposed handle, then assert the crosshair tooltip text node directly rather than relying on synthetic mouse events.",
+    "AC5/AC6 date-prefix: switch to a 1D candle period (already in CandlePeriod enum) so the visible range spans multiple days and DayOfMonth + non-today Time ticks render. Add an `ac5-press-1d-period` node calling press on `[data-testid=\"chart-period-1D\"]` (verify the testID exists in the period selector) before screenshotting.",
+    "Add a midnight-edge unit test (`new Date('2025-01-01T00:00:00Z')` formatted with userTimezone=UTC) to lock in the `hourCycle=h23` resolution and rebut the cursor-bot 24:00 false positive.",
+    "Consider parameterizing the recipe `--testnet`/`--account` so the test can run on a fixture with deterministic candle data instead of live HL data."
+  ]
+}

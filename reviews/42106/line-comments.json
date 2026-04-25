@@ -1,0 +1,25 @@
+{
+  "pr_number": "42106",
+  "recommendation": "COMMENT",
+  "summary": "Solid pure-formatter PR. Cached Intl.DateTimeFormat + locale threading is the right shape and is an upgrade over the mobile equivalent. Three non-blocking suggestions: lock in midnight 00:00 with a unit test, align AC5 example with implementation (or vice versa), and mirror the locale dep into the data-update effect for safety.",
+  "comments": [
+    {
+      "path": "ui/components/app/perps/perps-candlestick-chart/perps-candlestick-chart.tsx",
+      "line": 472,
+      "body": "Adding `locale` to this init effect's deps will fully destroy and rebuild the chart on locale change, but the data-update effect (deps: `candleData, selectedPeriod, onPeriodDataRequest, volumeUpColor, volumeDownColor`) does not include `locale`, so the freshly recreated chart will sit empty until the next `candleData` update arrives. Today this is masked because the locale picker lives outside the perps tab and any locale switch unmounts this component anyway. To make the component robust to a future routing change, add `locale` to the data-effect deps too. Zero-cost insurance.",
+      "severity": "suggestion"
+    },
+    {
+      "path": "ui/components/app/perps/perps-candlestick-chart/chart-utils.test.ts",
+      "line": 310,
+      "body": "Consider adding a midnight-edge test, e.g. `formatChartTimestamp(new Date('2025-01-01T00:00:00Z').getTime() / 1000, 3, false, 'en-US')` with `userTimezone` pinned to UTC, asserting the result starts with `00:00`. This locks in the V8 behavior `Intl.DateTimeFormat('en-US', {hour12:false}).resolvedOptions().hourCycle === 'h23'` and pre-empts the cursor-bot \"24:00\" false positive that was already raised on this PR.",
+      "severity": "suggestion"
+    },
+    {
+      "path": "ui/components/app/perps/perps-candlestick-chart/chart-utils.ts",
+      "line": 360,
+      "body": "PR description's day-tick example is `\"3/15\"` (numeric `M/D`, matching mobile `TradingViewChartTemplate`), but `formatMonthDay` returns `\"Mar 15\"` for en-US (short month + numeric day). Two options: (a) change the formatter to `month: 'numeric'` to match mobile and the PR description, or (b) update the PR description to the actual `\"Mar 15\"` shape. Pick one — the inconsistency between description and implementation makes it harder for the next reviewer to tell intent from accident.",
+      "severity": "nitpick"
+    }
+  ]
+}
