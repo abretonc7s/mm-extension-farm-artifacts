@@ -1,0 +1,39 @@
+{
+  "title": "AC6 — 'Order size must be at least $10' disabled button copy when size empty ({{side}} {{symbol}})",
+  "description": "Self-runnable. Opens a fresh {{side}} order form on {{symbol}}, asserts submit-order-button textContent equals 'Order size must be at least $10' and the button is disabled while the amount input is empty. Captures evidence screenshot.",
+  "inputs": {
+    "symbol": { "type": "string", "default": "ETH", "description": "Market symbol" },
+    "side": { "type": "string", "default": "long", "description": "Trade side: long or short" }
+  },
+  "validate": {
+    "workflow": {
+      "pre_conditions": [
+        "wallet.unlocked",
+        "perps.feature_enabled"
+      ],
+      "setup": [
+        { "id": "open-form", "action": "call", "ref": "perps/open-order-form", "params": { "symbol": "{{symbol}}", "side": "{{side}}" } }
+      ],
+      "entry": "assert-empty-copy",
+      "nodes": {
+        "assert-empty-copy": {
+          "action": "eval_sync",
+          "expression": "(function(){var b=document.querySelector('[data-testid=\"submit-order-button\"]');return JSON.stringify({ text: (b?.textContent||'').trim(), disabled: !!b?.disabled });})()",
+          "assert": { "all": [
+            { "field": "text", "operator": "eq", "value": "Order size must be at least $10" },
+            { "field": "disabled", "operator": "eq", "value": true }
+          ]},
+          "save_as": "ac6_empty",
+          "next": "screenshot-min-order-copy"
+        },
+        "screenshot-min-order-copy": {
+          "action": "screenshot",
+          "filename": "evidence-min-order-empty",
+          "note": "AC6 — submit button shows 'Order size must be at least $10' and is disabled while size is empty",
+          "next": "done"
+        },
+        "done": { "action": "end", "status": "pass" }
+      }
+    }
+  }
+}

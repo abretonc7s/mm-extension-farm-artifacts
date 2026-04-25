@@ -1,0 +1,622 @@
+[
+  {
+    "id": "ac1-size-autofocus",
+    "action": "call",
+    "ok": true,
+    "raw": {
+      "passed": 2,
+      "failed": 0,
+      "trace": [
+        {
+          "id": "wait-autofocus",
+          "action": "wait_for",
+          "ok": true,
+          "raw": true,
+          "durationMs": 0
+        },
+        {
+          "id": "autofocus-proof",
+          "action": "eval_sync",
+          "ok": true,
+          "raw": "{\"focusedTestId\":\"amount-input-field\",\"tag\":\"INPUT\"}",
+          "durationMs": 0
+        },
+        {
+          "id": "done",
+          "action": "end",
+          "status": "pass",
+          "durationMs": 0
+        }
+      ],
+      "vars": {
+        "ac1_market": {
+          "focusedTestId": "amount-input-field",
+          "tag": "INPUT"
+        }
+      }
+    },
+    "durationMs": 1325
+  },
+  {
+    "id": "ac6-empty-button",
+    "action": "call",
+    "ok": true,
+    "raw": {
+      "passed": 2,
+      "failed": 0,
+      "trace": [
+        {
+          "id": "assert-empty-copy",
+          "action": "eval_sync",
+          "ok": true,
+          "raw": "{\"text\":\"Order size must be at least $10\",\"disabled\":true}",
+          "durationMs": 0
+        },
+        {
+          "id": "screenshot-min-order-copy",
+          "action": "screenshot",
+          "ok": true,
+          "raw": {
+            "path": "screenshots/evidence-min-order-empty-1777106024763.png",
+            "width": 500,
+            "height": 713
+          },
+          "durationMs": 117
+        },
+        {
+          "id": "done",
+          "action": "end",
+          "status": "pass",
+          "durationMs": 0
+        }
+      ],
+      "vars": {
+        "ac6_empty": {
+          "text": "Order size must be at least $10",
+          "disabled": true
+        }
+      }
+    },
+    "durationMs": 1373
+  },
+  {
+    "id": "ac7-neg-empty",
+    "action": "call",
+    "ok": true,
+    "raw": {
+      "passed": 3,
+      "failed": 0,
+      "trace": [
+        {
+          "id": "focus-input",
+          "action": "eval_sync",
+          "ok": true,
+          "raw": "{\"focused\":true,\"preHash\":\"#/perps/trade/ETH?direction=long&mode=new\"}",
+          "durationMs": 0
+        },
+        {
+          "id": "press-enter",
+          "action": "key_press",
+          "ok": true,
+          "raw": {
+            "pressed": "Enter",
+            "test_id": null
+          },
+          "durationMs": 1
+        },
+        {
+          "id": "assert-blocked",
+          "action": "eval_sync",
+          "ok": true,
+          "raw": "{\"formMounted\":true,\"hashStillNew\":true,\"buttonStillDisabled\":true}",
+          "durationMs": 1
+        },
+        {
+          "id": "done",
+          "action": "end",
+          "status": "pass",
+          "durationMs": 0
+        }
+      ],
+      "vars": {
+        "ac7_neg_pre": {
+          "focused": true,
+          "preHash": "#/perps/trade/ETH?direction=long&mode=new"
+        },
+        "ac7_neg_proof": {
+          "formMounted": true,
+          "hashStillNew": true,
+          "buttonStillDisabled": true
+        }
+      }
+    },
+    "durationMs": 1251
+  },
+  {
+    "id": "ac5-below-min",
+    "action": "call",
+    "ok": true,
+    "raw": {
+      "passed": 2,
+      "failed": 0,
+      "trace": [
+        {
+          "id": "type-below-min",
+          "action": "set_input",
+          "ok": true,
+          "raw": {
+            "filled": true,
+            "fallback": true
+          },
+          "durationMs": 50
+        },
+        {
+          "id": "assert-still-disabled",
+          "action": "eval_sync",
+          "ok": true,
+          "raw": "{\"text\":\"Order size must be at least $10\",\"disabled\":true}",
+          "durationMs": 1
+        },
+        {
+          "id": "done",
+          "action": "end",
+          "status": "pass",
+          "durationMs": 0
+        }
+      ],
+      "vars": {
+        "ac5_below_min": {
+          "text": "Order size must be at least $10",
+          "disabled": true
+        }
+      }
+    },
+    "durationMs": 1369
+  },
+  {
+    "id": "ac5-valid-amount",
+    "action": "call",
+    "ok": true,
+    "raw": {
+      "passed": 3,
+      "failed": 0,
+      "trace": [
+        {
+          "id": "type-valid",
+          "action": "set_input",
+          "ok": true,
+          "raw": {
+            "filled": true,
+            "fallback": true
+          },
+          "durationMs": 47
+        },
+        {
+          "id": "assert-enabled",
+          "action": "eval_sync",
+          "ok": true,
+          "raw": "{\"text\":\"Open long ETH\",\"disabled\":false}",
+          "durationMs": 1
+        },
+        {
+          "id": "screenshot-valid",
+          "action": "screenshot",
+          "ok": true,
+          "raw": {
+            "path": "screenshots/evidence-valid-amount-1777106028800.png",
+            "width": 500,
+            "height": 713
+          },
+          "durationMs": 96
+        },
+        {
+          "id": "done",
+          "action": "end",
+          "status": "pass",
+          "durationMs": 0
+        }
+      ],
+      "vars": {
+        "ac5_enabled": {
+          "text": "Open long ETH",
+          "disabled": false
+        }
+      }
+    },
+    "durationMs": 1393
+  },
+  {
+    "id": "ac2-select-on-focus",
+    "action": "call",
+    "ok": true,
+    "raw": {
+      "passed": 4,
+      "failed": 0,
+      "trace": [
+        {
+          "id": "prelude-type-value",
+          "action": "set_input",
+          "ok": true,
+          "raw": {
+            "filled": true,
+            "fallback": true
+          },
+          "durationMs": 51
+        },
+        {
+          "id": "blur-input",
+          "action": "eval_sync",
+          "ok": true,
+          "raw": "{\"blurred\":true}",
+          "durationMs": 1
+        },
+        {
+          "id": "refocus-input",
+          "action": "eval_sync",
+          "ok": true,
+          "raw": "{\"focused\":true}",
+          "durationMs": 1
+        },
+        {
+          "id": "select-on-focus",
+          "action": "wait_for",
+          "ok": true,
+          "raw": "{\"selected\":true,\"len\":5,\"start\":0,\"end\":5}",
+          "durationMs": 0
+        },
+        {
+          "id": "done",
+          "action": "end",
+          "status": "pass",
+          "durationMs": 0
+        }
+      ],
+      "vars": {}
+    },
+    "durationMs": 1280
+  },
+  {
+    "id": "leverage-keyboard",
+    "action": "call",
+    "ok": true,
+    "raw": {
+      "passed": 8,
+      "failed": 0,
+      "trace": [
+        {
+          "id": "capture-initial",
+          "action": "eval_sync",
+          "ok": true,
+          "raw": "{\"hasInput\":true,\"initial\":3}",
+          "durationMs": 0
+        },
+        {
+          "id": "focus-leverage",
+          "action": "eval_sync",
+          "ok": true,
+          "raw": "{\"focused\":true}",
+          "durationMs": 3
+        },
+        {
+          "id": "assert-select-on-focus",
+          "action": "wait_for",
+          "ok": true,
+          "raw": "{\"selected\":true,\"len\":1,\"start\":0,\"end\":1}",
+          "durationMs": 1
+        },
+        {
+          "id": "press-arrow-up",
+          "action": "key_press",
+          "ok": true,
+          "raw": {
+            "pressed": "ArrowUp",
+            "test_id": null
+          },
+          "durationMs": 4
+        },
+        {
+          "id": "assert-arrow-up",
+          "action": "wait_for",
+          "ok": true,
+          "raw": "{\"current\":4,\"matches\":true}",
+          "durationMs": 0
+        },
+        {
+          "id": "refocus-leverage",
+          "action": "eval_sync",
+          "ok": true,
+          "raw": "{\"focused\":true,\"value\":4}",
+          "durationMs": 1
+        },
+        {
+          "id": "press-arrow-down",
+          "action": "key_press",
+          "ok": true,
+          "raw": {
+            "pressed": "ArrowDown",
+            "test_id": null
+          },
+          "durationMs": 3
+        },
+        {
+          "id": "assert-arrow-down",
+          "action": "wait_for",
+          "ok": true,
+          "raw": "{\"current\":3,\"matches\":true}",
+          "durationMs": 1
+        },
+        {
+          "id": "done",
+          "action": "end",
+          "status": "pass",
+          "durationMs": 0
+        }
+      ],
+      "vars": {
+        "lev_initial": {
+          "hasInput": true,
+          "initial": 3
+        },
+        "lev_after_up": {
+          "current": 4,
+          "matches": true
+        },
+        "lev_pre_down": {
+          "focused": true,
+          "value": 4
+        }
+      }
+    },
+    "durationMs": 1372
+  },
+  {
+    "id": "ac1-limit-autofocus",
+    "action": "call",
+    "ok": true,
+    "raw": {
+      "passed": 5,
+      "failed": 0,
+      "trace": [
+        {
+          "id": "switch-limit",
+          "action": "press",
+          "ok": true,
+          "raw": {
+            "clicked": true,
+            "target": "testId:order-type-limit"
+          },
+          "durationMs": 77
+        },
+        {
+          "id": "wait-limit-mount",
+          "action": "wait_for",
+          "ok": true,
+          "raw": {
+            "found": true,
+            "target": "testId:limit-price-input"
+          },
+          "durationMs": 38
+        },
+        {
+          "id": "wait-limit-autofocus",
+          "action": "wait_for",
+          "ok": true,
+          "raw": true,
+          "durationMs": 0
+        },
+        {
+          "id": "limit-autofocus-proof",
+          "action": "eval_sync",
+          "ok": true,
+          "raw": "{\"focusedTestId\":\"limit-price-input\"}",
+          "durationMs": 0
+        },
+        {
+          "id": "screenshot-limit",
+          "action": "screenshot",
+          "ok": true,
+          "raw": {
+            "path": "screenshots/evidence-limit-autofocus-1777106032849.png",
+            "width": 500,
+            "height": 713
+          },
+          "durationMs": 92
+        },
+        {
+          "id": "done",
+          "action": "end",
+          "status": "pass",
+          "durationMs": 0
+        }
+      ],
+      "vars": {
+        "ac1_limit": {
+          "focusedTestId": "limit-price-input"
+        }
+      }
+    },
+    "durationMs": 1391
+  },
+  {
+    "id": "ac7-enter-submit-success",
+    "action": "call",
+    "ok": true,
+    "raw": {
+      "passed": 14,
+      "failed": 0,
+      "trace": [
+        {
+          "id": "gate-check-balance",
+          "action": "eval_async",
+          "ok": true,
+          "raw": "{\"ok\":true,\"bal\":864.426031,\"reason\":\"ok\"}",
+          "durationMs": 118
+        },
+        {
+          "id": "check-existing-position",
+          "action": "eval_async",
+          "ok": true,
+          "raw": "{\"ok\":true,\"hasPosition\":false,\"positionsCount\":1,\"symbol\":null}",
+          "durationMs": 0
+        },
+        {
+          "id": "branch-position",
+          "action": "switch",
+          "next": "switch-market",
+          "durationMs": 0
+        },
+        {
+          "id": "switch-market",
+          "action": "press",
+          "ok": true,
+          "raw": {
+            "clicked": true,
+            "target": "testId:order-type-market"
+          },
+          "durationMs": 83
+        },
+        {
+          "id": "wait-market-mount",
+          "action": "wait_for",
+          "ok": true,
+          "raw": {
+            "found": true,
+            "target": "testId:amount-input-field"
+          },
+          "durationMs": 37
+        },
+        {
+          "id": "capture-form-wiring",
+          "action": "eval_sync",
+          "ok": true,
+          "raw": "{\"formTag\":\"FORM\",\"buttonType\":\"submit\",\"buttonForm\":true,\"preHash\":\"#/perps/trade/ETH?direction=long&mode=new\"}",
+          "durationMs": 1
+        },
+        {
+          "id": "type-valid",
+          "action": "set_input",
+          "ok": true,
+          "raw": {
+            "filled": true,
+            "fallback": true
+          },
+          "durationMs": 43
+        },
+        {
+          "id": "focus-input",
+          "action": "eval_sync",
+          "ok": true,
+          "raw": "{\"focused\":true,\"preHash\":\"#/perps/trade/ETH?direction=long&mode=new\"}",
+          "durationMs": 0
+        },
+        {
+          "id": "press-enter",
+          "action": "key_press",
+          "ok": true,
+          "raw": {
+            "pressed": "Enter",
+            "test_id": null
+          },
+          "durationMs": 5
+        },
+        {
+          "id": "wait-market-detail",
+          "action": "wait_for",
+          "ok": true,
+          "raw": {
+            "found": true,
+            "target": "testId:perps-market-detail-page"
+          },
+          "durationMs": 2397
+        },
+        {
+          "id": "wait-position-in-state",
+          "action": "wait_for",
+          "ok": true,
+          "raw": true,
+          "durationMs": 5319
+        },
+        {
+          "id": "verify-position-dom",
+          "action": "wait_for",
+          "ok": true,
+          "raw": {
+            "found": true,
+            "target": "testId:perps-position-cta-buttons"
+          },
+          "durationMs": 109
+        },
+        {
+          "id": "wait-position-direction",
+          "action": "wait_for",
+          "ok": true,
+          "raw": true,
+          "durationMs": 0
+        },
+        {
+          "id": "enter-submit-proof",
+          "action": "eval_sync",
+          "ok": true,
+          "raw": "{\"leftOrderForm\":true,\"onMarketDetail\":true,\"positionLive\":true,\"directionMatches\":true,\"onRoute\":true,\"directionText\":\"Long 3x\",\"postHash\":\"#/perps/market/ETH\"}",
+          "durationMs": 1
+        },
+        {
+          "id": "screenshot-post-submit",
+          "action": "screenshot",
+          "ok": true,
+          "raw": {
+            "path": "screenshots/evidence-enter-submit-redirect-1777106042466.png",
+            "width": 500,
+            "height": 713
+          },
+          "durationMs": 76
+        },
+        {
+          "id": "done",
+          "action": "end",
+          "status": "pass",
+          "durationMs": 0
+        }
+      ],
+      "vars": {
+        "ac7_balance_gate": {
+          "ok": true,
+          "bal": 864.426031,
+          "reason": "ok"
+        },
+        "ac7_pre_position": {
+          "ok": true,
+          "hasPosition": false,
+          "positionsCount": 1,
+          "symbol": null
+        },
+        "ac7_wiring": {
+          "formTag": "FORM",
+          "buttonType": "submit",
+          "buttonForm": true,
+          "preHash": "#/perps/trade/ETH?direction=long&mode=new"
+        },
+        "ac7_focus": {
+          "focused": true,
+          "preHash": "#/perps/trade/ETH?direction=long&mode=new"
+        },
+        "ac7_redirect": {
+          "leftOrderForm": true,
+          "onMarketDetail": true,
+          "positionLive": true,
+          "directionMatches": true,
+          "onRoute": true,
+          "directionText": "Long 3x",
+          "postHash": "#/perps/market/ETH"
+        }
+      }
+    },
+    "durationMs": 9599
+  },
+  {
+    "id": "done",
+    "action": "end",
+    "status": "pass",
+    "durationMs": 0
+  }
+]

@@ -1,0 +1,40 @@
+{
+  "title": "AC5 — Below-min amount keeps submit disabled with min-order copy ({{side}} {{symbol}})",
+  "description": "Self-runnable. Opens a fresh {{side}} order form on {{symbol}}, types {{amount}} into the amount-input-field and asserts submit-order-button still reads 'Order size must be at least $10' and is disabled.",
+  "inputs": {
+    "symbol": { "type": "string", "default": "ETH", "description": "Market symbol" },
+    "side": { "type": "string", "default": "long", "description": "Trade side: long or short" },
+    "amount": { "type": "string", "default": "5", "description": "Below-min USD notional" }
+  },
+  "validate": {
+    "workflow": {
+      "pre_conditions": [
+        "wallet.unlocked",
+        "perps.feature_enabled"
+      ],
+      "setup": [
+        { "id": "open-form", "action": "call", "ref": "perps/open-order-form", "params": { "symbol": "{{symbol}}", "side": "{{side}}" } }
+      ],
+      "entry": "type-below-min",
+      "nodes": {
+        "type-below-min": {
+          "action": "set_input",
+          "test_id": "amount-input-field",
+          "value": "{{amount}}",
+          "next": "assert-still-disabled"
+        },
+        "assert-still-disabled": {
+          "action": "eval_sync",
+          "expression": "(function(){var b=document.querySelector('[data-testid=\"submit-order-button\"]');return JSON.stringify({ text: (b?.textContent||'').trim(), disabled: !!b?.disabled });})()",
+          "assert": { "all": [
+            { "field": "text", "operator": "eq", "value": "Order size must be at least $10" },
+            { "field": "disabled", "operator": "eq", "value": true }
+          ]},
+          "save_as": "ac5_below_min",
+          "next": "done"
+        },
+        "done": { "action": "end", "status": "pass" }
+      }
+    }
+  }
+}

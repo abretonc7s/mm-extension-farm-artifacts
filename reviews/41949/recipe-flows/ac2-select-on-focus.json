@@ -1,0 +1,50 @@
+{
+  "title": "AC2 — Existing value auto-selected on input refocus ({{side}} {{symbol}} ${{amount}})",
+  "description": "Self-runnable. Opens a fresh {{side}} order form on {{symbol}}, types {{amount}} so the input has a value, then blurs + refocuses the amount-input-field inner input and polls until selectionStart/selectionEnd span the full value length.",
+  "inputs": {
+    "symbol": { "type": "string", "default": "ETH", "description": "Market symbol" },
+    "side": { "type": "string", "default": "long", "description": "Trade side: long or short" },
+    "amount": { "type": "string", "default": "15", "description": "USD notional pre-typed so the input has a value for the select-on-focus proof" }
+  },
+  "validate": {
+    "workflow": {
+      "pre_conditions": [
+        "wallet.unlocked",
+        "perps.feature_enabled"
+      ],
+      "setup": [
+        { "id": "open-form", "action": "call", "ref": "perps/open-order-form", "params": { "symbol": "{{symbol}}", "side": "{{side}}" } }
+      ],
+      "entry": "prelude-type-value",
+      "nodes": {
+        "prelude-type-value": {
+          "action": "set_input",
+          "test_id": "amount-input-field",
+          "value": "{{amount}}",
+          "next": "blur-input"
+        },
+        "blur-input": {
+          "action": "eval_sync",
+          "expression": "(function(){var i=document.querySelector('[data-testid=\"amount-input-field\"] input');if(!i)return JSON.stringify({blurred:false});i.blur();return JSON.stringify({blurred:document.activeElement!==i});})()",
+          "assert": { "operator": "eq", "field": "blurred", "value": true },
+          "next": "refocus-input"
+        },
+        "refocus-input": {
+          "action": "eval_sync",
+          "expression": "(function(){var i=document.querySelector('[data-testid=\"amount-input-field\"] input');if(!i)return JSON.stringify({focused:false});i.focus();return JSON.stringify({focused:document.activeElement===i});})()",
+          "assert": { "operator": "eq", "field": "focused", "value": true },
+          "next": "select-on-focus"
+        },
+        "select-on-focus": {
+          "action": "wait_for",
+          "expression": "(function(){var i=document.querySelector('[data-testid=\"amount-input-field\"] input');var len=(i&&i.value||'').length;return JSON.stringify({selected: !!i && len>0 && i.selectionStart===0 && i.selectionEnd===len, len:len, start:i&&i.selectionStart, end:i&&i.selectionEnd});})()",
+          "assert": { "operator": "eq", "field": "selected", "value": true },
+          "timeout_ms": 2000,
+          "poll_ms": 100,
+          "next": "done"
+        },
+        "done": { "action": "end", "status": "pass" }
+      }
+    }
+  }
+}

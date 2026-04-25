@@ -1,0 +1,37 @@
+{
+  "pr_number": "41949",
+  "verdict": "pass",
+  "summary": "9/10 ACs proven via live recipe (9/9 PASS) + 221/221 jest tests. AC4 (Tab order) UNTESTABLE — recipe does not exercise Tab sequence; native DOM order assumed. No weak/missing rows.",
+  "checks": {
+    "ac_to_node_binding": {
+      "verdict": "pass",
+      "reason": "All AC subflows use ac<N>-<verb>-<obj> node IDs; setup/teardown prefixes correct."
+    },
+    "screenshot_evidence": {
+      "verdict": "pass",
+      "reason": "4 evidence PNGs (min-order-empty, valid-amount, limit-autofocus, enter-submit-redirect) directly corroborate caption claims."
+    },
+    "trace_alignment": {
+      "verdict": "pass",
+      "reason": "trace.json shows 9/9 subflows ok=true; passed counts (2,2,3,2,3,4,8,5,14) align with coverage matrix."
+    },
+    "forbidden_patterns": {
+      "verdict": "pass",
+      "reason": "No `switch default` skipping ACs; no skip-reason eval_sync; no >500ms wait; no DOM-only proofs for visual AC."
+    },
+    "auto_issues": {
+      "verdict": "warn",
+      "reason": "Issue review status `review` — 38× home 'Unknown action Object' errors + 7× SW HttpRequestError AbortError + 7× SW Sentry-not-initialized. Non-gating; pre-existing background noise unrelated to PR."
+    },
+    "ac_coverage": {
+      "verdict": "warn",
+      "reason": "AC4 (Tab key sequence) not exercised by recipe. Marked UNTESTABLE with rationale; manual reviewer must Tab-walk before merge."
+    }
+  },
+  "better_version_guidance": [
+    "Add a `tab-key-sequence` subflow that programmatically dispatches Tab keydown events and asserts focus moves through size → leverage → (auto-close-TP if shown) → submit; mirror the same for TP/SL modal (TP-price → TP-% → SL-price → SL-%). Even if the underlying mechanism is native DOM order, an explicit assertion catches accidental tabIndex regressions.",
+    "Move the canonical `perps/open-order-form` flow into temp/recipes/domains/perps/flows/ on `main` so future review slots do not need to copy it from temp/agentic/. The author's task-local recipe assumes it lives there.",
+    "Default `sideLabel` in ac5-valid-amount.json was 'Long' (title-case), but i18n key `perpsOpenLong` resolves to 'Open long $1' (lowercase 'l'). Fixed in this review (changed default to 'long'); upstream the same fix to author's bundle.",
+    "Add a metaRPCClientFactory.test.js case that pushes a stream response with `error.message = ''` and asserts the pending request rejects with the safe-message string instead of orphaning the promise. The behavioral fix in this PR has no unit-test guard."
+  ]
+}

@@ -1,0 +1,37 @@
+{
+  "pr_number": "41949",
+  "recommendation": "COMMENT",
+  "summary": "Strong PR — 9/10 ACs proven live (1 UNTESTABLE: Tab order requires manual reviewer walk), 221/221 jest tests pass, stuck-toast root-cause fix is clean. Two test gaps and one mobile-divergence follow-up worth tracking before merge.",
+  "comments": [
+    {
+      "path": "app/scripts/lib/metaRPCClientFactory.ts",
+      "line": 286,
+      "body": "Behavioral fix is correct (try/catch + safeMessage prevents the orphaned-promise hang), but `app/scripts/lib/metaRPCClientFactory.test.js` has no regression test that exercises the empty-`message` path. Consider adding a case that pushes `{type:'response', data:{id, error:{code:1, message:''}}}` and asserts the request promise rejects with the safe-message string instead of remaining pending. Without it, a future refactor could silently re-introduce the hang.",
+      "severity": "suggestion"
+    },
+    {
+      "path": "ui/components/app/perps/constants.ts",
+      "line": 61,
+      "body": "Hardcoding `PERPS_MIN_MARKET_ORDER_USD = 10` diverges from mobile, which uses `useMinimumOrderAmount` to resolve from `marketData.minimumOrderSize` (with `TRADING_DEFAULTS.amount.{mainnet|testnet}` fallback). Per-market high-min-notional assets bypass the gate, and testnet vs mainnet are not differentiated. The TODO comment acknowledges this — recommend filing a follow-up ticket so we don't lose track once the shared controller export lands.",
+      "severity": "suggestion"
+    },
+    {
+      "path": "ui/pages/perps/perps-order-entry-page.tsx",
+      "line": 1095,
+      "body": "The fix changes the navigation order so `navigate('/perps/market/<symbol>')` runs *after* `await submitRequestToBackground`, which is the right repair for the stuck-toast hang. But the existing tests only assert final `mockUseNavigate` call args — they would still pass if a future refactor moved the navigate before the await. Consider adding an explicit assertion that `mockSubmitRequestToBackground` resolves before `mockUseNavigate` is invoked (e.g. via a deferred mock + ordered-call check).",
+      "severity": "suggestion"
+    },
+    {
+      "path": "package.json",
+      "line": 274,
+      "body": "Bumped `@metamask/perps-controller` from `^3.0.0` to `^3.2.0` (yarn.lock resolves to 3.2.0). No `lavamoat/policy.json` change in this PR — confirm `yarn lavamoat:auto` was run if 3.2.0 added new globals or imports. If it did and the policy was not regenerated, CI's LavaMoat policy check will fail.",
+      "severity": "nitpick"
+    },
+    {
+      "path": "ui/components/app/perps/order-entry/components/leverage-slider/leverage-slider.tsx",
+      "line": 96,
+      "body": "Reading `event.currentTarget.value` directly to dodge stale closure on rapid ArrowUp presses is correct and the inline comment explains why. As a future cleanup, replacing `inputValue` state + DOM-read fallback with a single `useRef` for the latest committed value would remove the dual source of truth. Non-blocking.",
+      "severity": "nitpick"
+    }
+  ]
+}

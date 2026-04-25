@@ -1,0 +1,46 @@
+{
+  "title": "AC7 (negative) — Enter is blocked while submit button is disabled ({{side}} {{symbol}})",
+  "description": "Self-runnable. Opens a fresh {{side}} order form on {{symbol}} (empty amount), focuses the amount input, dispatches Enter, asserts the order form is still mounted, route still carries mode=new, and the submit button is still disabled.",
+  "inputs": {
+    "symbol": { "type": "string", "default": "ETH", "description": "Market symbol" },
+    "side": { "type": "string", "default": "long", "description": "Trade side: long or short" }
+  },
+  "validate": {
+    "workflow": {
+      "pre_conditions": [
+        "wallet.unlocked",
+        "perps.feature_enabled"
+      ],
+      "setup": [
+        { "id": "open-form", "action": "call", "ref": "perps/open-order-form", "params": { "symbol": "{{symbol}}", "side": "{{side}}" } }
+      ],
+      "entry": "focus-input",
+      "nodes": {
+        "focus-input": {
+          "action": "eval_sync",
+          "expression": "(function(){var i=document.querySelector('[data-testid=\"amount-input-field\"] input');if(!i)return JSON.stringify({focused:false});i.focus();return JSON.stringify({focused:document.activeElement===i,preHash:window.location.hash});})()",
+          "assert": { "operator": "eq", "field": "focused", "value": true },
+          "save_as": "ac7_neg_pre",
+          "next": "press-enter"
+        },
+        "press-enter": {
+          "action": "key_press",
+          "key": "Enter",
+          "next": "assert-blocked"
+        },
+        "assert-blocked": {
+          "action": "eval_sync",
+          "expression": "(function(){var b=document.querySelector('[data-testid=\"submit-order-button\"]');return JSON.stringify({formMounted:!!document.querySelector('[data-testid=\"perps-order-entry-page\"]'),hashStillNew:window.location.hash.indexOf('mode=new')!==-1,buttonStillDisabled:!!b?.disabled});})()",
+          "assert": { "all": [
+            { "field": "formMounted", "operator": "eq", "value": true },
+            { "field": "hashStillNew", "operator": "eq", "value": true },
+            { "field": "buttonStillDisabled", "operator": "eq", "value": true }
+          ]},
+          "save_as": "ac7_neg_proof",
+          "next": "done"
+        },
+        "done": { "action": "end", "status": "pass" }
+      }
+    }
+  }
+}
