@@ -1,0 +1,48 @@
+{
+  "verdict": "pass",
+  "summary": "Recipe drives the live extension end-to-end on home.html. AC1 (mount persists), AC4 (in-app leave clears), and AC3 (home consumes seeded entry and redirects) are PROVEN with strict assertions + screenshots. AC2 (popup teardown survival), AC5 (TTL > 5min), AC6 (popup vs fullscreen parity), and AC7 (pendingRedirectRoute precedence) are explicitly UNTESTABLE on this CDP target and are covered by the home.component.test.tsx and app-state-controller.test.ts unit suites.",
+  "checks": [
+    {
+      "name": "ac_to_node_binding",
+      "verdict": "pass",
+      "reason": "Every recipe node exercising an AC carries an ac<N>- prefix; setup/teardown nodes use the proper plumbing prefixes; trace.json node IDs match the drafted recipe one-for-one (21 executed nodes including done)."
+    },
+    {
+      "name": "assertion_rigor",
+      "verdict": "pass",
+      "reason": "ac1-assert-state, ac4-assert-cleared, and ac3-assert-redirect each pin an exact hash + state shape (eq/falsy/gt). Reverting the PR change would flip these asserts: removing setLastVisitedPerpsRoute on PerpsLayout mount would fail ac1, removing the cleanup-phase clear+marker would fail ac4, removing checkLastVisitedPerpsRoute in home would fail ac3."
+    },
+    {
+      "name": "visual_evidence",
+      "verdict": "pass",
+      "reason": "Three screenshots (BTC market detail, wallet home, ETH market detail) match their AC captions verbatim. Caption-to-image self-review found no mismatches."
+    },
+    {
+      "name": "untestable_documentation",
+      "verdict": "pass",
+      "reason": "AC2/5/6/7 are pre-flagged in TASK step 10b/10c with concrete rationale (CDP target attach scope, no back-dating API, deterministic-ordering limitation) and routed to specific named unit tests."
+    },
+    {
+      "name": "forbidden_patterns",
+      "verdict": "pass",
+      "reason": "No switch+default bypass, no eval_sync returning a skip reason, no wait>500ms used as wait_for substitute (the only wait is the 2000ms in-app marker decay, which is a real time-decay tied to wasPerpsUnmountedInAppRecently(1500)), no DOM-only ordering claims, all node IDs prefixed correctly."
+    },
+    {
+      "name": "trace_self_consistency",
+      "verdict": "pass",
+      "reason": "trace.json reports 20/20 executed nodes ok=true plus done. No drafted node missing or skipped."
+    }
+  ],
+  "untestable_acs": [
+    { "id": "AC2", "reason": "popup teardown survival — only home.html target is reachable on this CDP attach", "covered_by": "home.component.test.tsx in-app-marker race test + useLayoutEffect cleanup ordering" },
+    { "id": "AC5", "reason": "no API to back-date the timestamp; live 6-minute wait impractical", "covered_by": "home.component.test.tsx 'does not redirect but still clears when TTL has expired'" },
+    { "id": "AC6", "reason": "popup.html target not reachable via CDP without a user gesture", "covered_by": "implementation is single-bundle; AC1/3/4 home.html proof transfers" },
+    { "id": "AC7", "reason": "deterministic ordering of pendingRedirectRoute + lastVisitedPerpsRoute in a single componentDidUpdate cycle is not reliably reproducible from a CDP recipe", "covered_by": "home.component.test.tsx 'defers to pendingRedirectRoute when both are set but still clears the persisted perps entry'" }
+  ],
+  "better_version_guidance": [
+    "Add a bundled domains/extension-core/flows/seed-app-state-route flow that wraps `submitRequestToBackground('setLastVisitedPerpsRoute', ...)` + `setPendingRedirectRoute` so future precedence-style recipes can reuse this seed pattern instead of inlining eval_async.",
+    "Expose a debug-only `setLastVisitedPerpsRouteWithTimestamp(path, timestamp)` background method gated on a build flag so AC5 (TTL expiry) can be exercised by a recipe that seeds a stale timestamp directly. Without it, AC5 will remain UNTESTABLE in live CDP.",
+    "If popup-target attach lands in farmslot, add an AC2/AC6 split run that closes and reopens the popup target between the persist and the consume nodes — the only piece of behaviour not currently exercised end-to-end on home.html.",
+    "The 1500ms in-app-marker grace is a magic number duplicated between PerpsLayout cleanup (writes) and home.component (reads). Pull it into `ui/helpers/constants/routes.ts` or alongside `PERPS_REOPEN_TTL_MS` as `PERPS_IN_APP_LEAVE_GRACE_MS` so it stays in sync if either side changes."
+  ]
+}

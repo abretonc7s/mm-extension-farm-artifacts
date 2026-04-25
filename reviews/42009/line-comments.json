@@ -1,0 +1,19 @@
+{
+  "pr_number": "42009",
+  "recommendation": "COMMENT",
+  "summary": "AC1/AC3/AC4 PROVEN end-to-end on home.html with strict assertions + screenshots; AC2/AC5/AC6/AC7 covered by unit tests but not exercisable on this CDP attach. Recommend a manual popup-mode pass before merge. Two non-blocking suggestions inline.",
+  "comments": [
+    {
+      "path": "ui/pages/home/home.component.js",
+      "line": 289,
+      "body": "Magic number `1500` here is paired with `markPerpsUnmountInApp()` at ui/pages/perps/perps-layout.tsx:118 — both sides need to stay in sync if the layout-effect-vs-componentDidMount ordering ever changes. Suggest extracting to a named constant alongside `PERPS_REOPEN_TTL_MS` in `ui/helpers/constants/routes.ts`, e.g. `PERPS_IN_APP_LEAVE_GRACE_MS = 1500`. Non-blocking, but it makes the contract between the writer and the reader explicit.",
+      "severity": "suggestion"
+    },
+    {
+      "path": "app/scripts/controllers/app-state-controller.ts",
+      "line": 1781,
+      "body": "`Date.now()` is captured inside the controller, so there is no way to seed a stale timestamp from a recipe — which makes AC5 (TTL > 5min expiry) UNTESTABLE in live CDP and forces the test suite to be the only line of defence. Consider adding a debug-only `setLastVisitedPerpsRouteWithTimestamp(path, timestamp)` gated on a build flag so future regression recipes can exercise the expiry branch without a 6-minute wait. Optional.",
+      "severity": "suggestion"
+    }
+  ]
+}

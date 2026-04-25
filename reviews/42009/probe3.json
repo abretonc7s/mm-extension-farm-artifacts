@@ -1,0 +1,18 @@
+{
+  "title": "probe-state-after-nav",
+  "validate": {
+    "workflow": {
+      "pre_conditions": ["wallet.unlocked"],
+      "entry": "probe",
+      "nodes": {
+        "probe": {
+          "action": "eval_sync",
+          "expression": "JSON.stringify({ url: location.href, hash: location.hash, perpsTestId: !!document.querySelector('[data-testid=\"perps-market-detail-page\"]'), perpsTestIds: Array.from(document.querySelectorAll('[data-testid]')).map(e => e.getAttribute('data-testid')).slice(0, 25), lastVisitedPerpsRoute: stateHooks.store.getState().metamask.lastVisitedPerpsRoute })",
+          "save_as": "out",
+          "next": "done"
+        },
+        "done": { "action": "end", "status": "pass" }
+      }
+    }
+  }
+}

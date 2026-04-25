@@ -1,0 +1,29 @@
+{
+  "title": "probe-perps-mount",
+  "validate": {
+    "workflow": {
+      "pre_conditions": ["wallet.unlocked"],
+      "entry": "nav-perps",
+      "nodes": {
+        "nav-perps": {
+          "action": "ext_navigate_hash",
+          "hash": "#/perps/market/BTC",
+          "next": "wait"
+        },
+        "wait": {
+          "action": "wait_for",
+          "expression": "stateHooks.store.getState().metamask.lastVisitedPerpsRoute !== null",
+          "timeout_ms": 8000,
+          "next": "probe"
+        },
+        "probe": {
+          "action": "eval_sync",
+          "expression": "JSON.stringify({ url: location.href, hash: location.hash, lastVisitedPerpsRoute: stateHooks.store.getState().metamask.lastVisitedPerpsRoute })",
+          "save_as": "out",
+          "next": "done"
+        },
+        "done": { "action": "end", "status": "pass" }
+      }
+    }
+  }
+}

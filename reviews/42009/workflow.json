@@ -1,0 +1,198 @@
+{
+  "description": "",
+  "hooks": {
+    "pre_conditions": [
+      "wallet.unlocked"
+    ],
+    "setup": [],
+    "teardown": []
+  },
+  "inputs": {},
+  "playback": {
+    "mode": "off",
+    "slow_ms": 1000
+  },
+  "sourcePath": "",
+  "title": "TAT-2691 — Persist last-visited Perps route across close/reopen (review)",
+  "workflow": {
+    "entry": "setup-go-home-first",
+    "nodes": {
+      "setup-go-home-first": {
+        "action": "ext_navigate_hash",
+        "hash": "",
+        "next": "setup-unlock",
+        "id": "setup-go-home-first"
+      },
+      "setup-unlock": {
+        "action": "call",
+        "ref": "extension-core/unlock-wallet",
+        "next": "setup-clear-baseline",
+        "id": "setup-unlock"
+      },
+      "setup-clear-baseline": {
+        "action": "eval_async",
+        "expression": "Promise.all([stateHooks.submitRequestToBackground('setLastVisitedPerpsRoute', [null]), stateHooks.submitRequestToBackground('setPendingRedirectRoute', [null])]).then(() => 'cleared')",
+        "save_as": "baseline_cleared",
+        "next": "setup-go-home",
+        "id": "setup-clear-baseline"
+      },
+      "setup-go-home": {
+        "action": "ext_navigate_hash",
+        "hash": "",
+        "next": "setup-wait-home",
+        "id": "setup-go-home"
+      },
+      "setup-wait-home": {
+        "action": "wait_for",
+        "expression": "location.hash === '#/' && stateHooks.store.getState().metamask.lastVisitedPerpsRoute === null",
+        "timeout_ms": 5000,
+        "next": "ac1-navigate-perps",
+        "id": "setup-wait-home"
+      },
+      "ac1-navigate-perps": {
+        "action": "ext_navigate_hash",
+        "hash": "perps/market/BTC",
+        "next": "ac1-wait-persisted",
+        "id": "ac1-navigate-perps"
+      },
+      "ac1-wait-persisted": {
+        "action": "wait_for",
+        "expression": "(function(){var lvpr=stateHooks.store.getState().metamask.lastVisitedPerpsRoute;return !!(lvpr && lvpr.path === '/perps/market/BTC' && (Date.now() - lvpr.timestamp) < 5000);})()",
+        "timeout_ms": 8000,
+        "next": "ac1-assert-state",
+        "id": "ac1-wait-persisted"
+      },
+      "ac1-assert-state": {
+        "action": "eval_sync",
+        "expression": "JSON.stringify({ hash: location.hash, lvpr: stateHooks.store.getState().metamask.lastVisitedPerpsRoute })",
+        "save_as": "ac1_state",
+        "assert": {
+          "all": [
+            {
+              "field": "hash",
+              "operator": "eq",
+              "value": "#/perps/market/BTC"
+            },
+            {
+              "field": "lvpr.path",
+              "operator": "eq",
+              "value": "/perps/market/BTC"
+            },
+            {
+              "field": "lvpr.timestamp",
+              "operator": "gt",
+              "value": 0
+            }
+          ]
+        },
+        "next": "ac1-screenshot",
+        "id": "ac1-assert-state"
+      },
+      "ac1-screenshot": {
+        "action": "screenshot",
+        "filename": "evidence-ac1-perps-mount-persists-route",
+        "next": "ac4-navigate-home",
+        "id": "ac1-screenshot"
+      },
+      "ac4-navigate-home": {
+        "action": "ext_navigate_hash",
+        "hash": "",
+        "next": "ac4-wait-cleared",
+        "id": "ac4-navigate-home"
+      },
+      "ac4-wait-cleared": {
+        "action": "wait_for",
+        "expression": "stateHooks.store.getState().metamask.lastVisitedPerpsRoute === null && location.hash === '#/'",
+        "timeout_ms": 8000,
+        "next": "ac4-assert-cleared",
+        "id": "ac4-wait-cleared"
+      },
+      "ac4-assert-cleared": {
+        "action": "eval_sync",
+        "expression": "JSON.stringify({ hash: location.hash, lvpr: stateHooks.store.getState().metamask.lastVisitedPerpsRoute })",
+        "save_as": "ac4_state",
+        "assert": {
+          "all": [
+            {
+              "field": "hash",
+              "operator": "eq",
+              "value": "#/"
+            },
+            {
+              "field": "lvpr",
+              "operator": "falsy"
+            }
+          ]
+        },
+        "next": "ac4-screenshot",
+        "id": "ac4-assert-cleared"
+      },
+      "ac4-screenshot": {
+        "action": "screenshot",
+        "filename": "evidence-ac4-in-app-leave-clears-entry",
+        "next": "ac3-decay-marker",
+        "id": "ac4-screenshot"
+      },
+      "ac3-decay-marker": {
+        "action": "wait",
+        "ms": 2000,
+        "next": "ac3-seed-route",
+        "id": "ac3-decay-marker"
+      },
+      "ac3-seed-route": {
+        "action": "eval_async",
+        "expression": "stateHooks.submitRequestToBackground('setLastVisitedPerpsRoute', ['/perps/market/ETH']).then(() => 'seeded')",
+        "save_as": "ac3_seed",
+        "next": "ac3-wait-redirect",
+        "id": "ac3-seed-route"
+      },
+      "ac3-wait-redirect": {
+        "action": "wait_for",
+        "expression": "location.hash === '#/perps/market/ETH'",
+        "timeout_ms": 8000,
+        "next": "ac3-assert-redirect",
+        "id": "ac3-wait-redirect"
+      },
+      "ac3-assert-redirect": {
+        "action": "eval_sync",
+        "expression": "JSON.stringify({ hash: location.hash, lvpr: stateHooks.store.getState().metamask.lastVisitedPerpsRoute })",
+        "save_as": "ac3_state",
+        "assert": {
+          "all": [
+            {
+              "field": "hash",
+              "operator": "eq",
+              "value": "#/perps/market/ETH"
+            }
+          ]
+        },
+        "next": "ac3-screenshot",
+        "id": "ac3-assert-redirect"
+      },
+      "ac3-screenshot": {
+        "action": "screenshot",
+        "filename": "evidence-ac3-home-consumes-entry-redirect",
+        "next": "teardown-clear",
+        "id": "ac3-screenshot"
+      },
+      "teardown-clear": {
+        "action": "eval_async",
+        "expression": "stateHooks.submitRequestToBackground('setLastVisitedPerpsRoute', [null]).then(() => 'cleared')",
+        "save_as": "teardown_cleared",
+        "next": "teardown-go-home",
+        "id": "teardown-clear"
+      },
+      "teardown-go-home": {
+        "action": "ext_navigate_hash",
+        "hash": "",
+        "next": "done",
+        "id": "teardown-go-home"
+      },
+      "done": {
+        "action": "end",
+        "status": "pass",
+        "id": "done"
+      }
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "title": "probe-full-cycle",
+  "validate": {
+    "workflow": {
+      "pre_conditions": ["wallet.unlocked"],
+      "entry": "step1-nav-perps",
+      "nodes": {
+        "step1-nav-perps": { "action": "ext_navigate_hash", "hash": "perps/market/BTC", "next": "step1-wait" },
+        "step1-wait": { "action": "wait_for", "expression": "stateHooks.store.getState().metamask.lastVisitedPerpsRoute !== null", "timeout_ms": 8000, "next": "step1-probe" },
+        "step1-probe": { "action": "eval_sync", "expression": "JSON.stringify({ phase: 'after-perps-mount', url: location.href, lvpr: stateHooks.store.getState().metamask.lastVisitedPerpsRoute })", "save_as": "step1", "next": "step2-nav-home" },
+        "step2-nav-home": { "action": "ext_navigate_hash", "hash": "", "next": "step2-wait" },
+        "step2-wait": { "action": "wait_for", "expression": "stateHooks.store.getState().metamask.lastVisitedPerpsRoute === null && location.hash === '#/'", "timeout_ms": 8000, "next": "step2-probe" },
+        "step2-probe": { "action": "eval_sync", "expression": "JSON.stringify({ phase: 'after-in-app-home', url: location.href, lvpr: stateHooks.store.getState().metamask.lastVisitedPerpsRoute })", "save_as": "step2", "next": "step3-wait-decay" },
+        "step3-wait-decay": { "action": "wait", "ms": 2000, "next": "step3-seed" },
+        "step3-seed": { "action": "eval_async", "expression": "stateHooks.submitRequestToBackground('setLastVisitedPerpsRoute', ['/perps/market/ETH']).then(() => 'seeded')", "save_as": "step3_seed", "next": "step3-wait-redirect" },
+        "step3-wait-redirect": { "action": "wait_for", "expression": "location.hash.startsWith('#/perps')", "timeout_ms": 8000, "next": "step3-probe" },
+        "step3-probe": { "action": "eval_sync", "expression": "JSON.stringify({ phase: 'after-seeded-reopen', url: location.href, lvpr: stateHooks.store.getState().metamask.lastVisitedPerpsRoute })", "save_as": "step3", "next": "done" },
+        "done": { "action": "end", "status": "pass" }
+      }
+    }
+  }
+}

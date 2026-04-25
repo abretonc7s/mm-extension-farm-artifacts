@@ -1,0 +1,215 @@
+[
+  {
+    "id": "setup-go-home-first",
+    "action": "ext_navigate_hash",
+    "ok": true,
+    "raw": {
+      "navigated": true,
+      "hash": ""
+    },
+    "durationMs": 3
+  },
+  {
+    "id": "setup-unlock",
+    "action": "call",
+    "ok": true,
+    "raw": {
+      "passed": 2,
+      "failed": 0,
+      "trace": [
+        {
+          "id": "check-locked",
+          "action": "ext_check_dom",
+          "ok": true,
+          "raw": {
+            "visible": false
+          },
+          "durationMs": 1
+        },
+        {
+          "id": "branch-locked",
+          "action": "switch",
+          "next": "verify-unlocked",
+          "durationMs": 0
+        },
+        {
+          "id": "verify-unlocked",
+          "action": "ext_check_dom",
+          "ok": true,
+          "raw": {
+            "visible": true
+          },
+          "durationMs": 1
+        },
+        {
+          "id": "done",
+          "action": "end",
+          "status": "pass",
+          "durationMs": 0
+        }
+      ],
+      "vars": {
+        "lock_check": {
+          "visible": false
+        }
+      }
+    },
+    "durationMs": 7
+  },
+  {
+    "id": "setup-clear-baseline",
+    "action": "eval_async",
+    "ok": true,
+    "raw": "cleared",
+    "durationMs": 1
+  },
+  {
+    "id": "setup-go-home",
+    "action": "ext_navigate_hash",
+    "ok": true,
+    "raw": {
+      "navigated": true,
+      "hash": ""
+    },
+    "durationMs": 3
+  },
+  {
+    "id": "setup-wait-home",
+    "action": "wait_for",
+    "ok": true,
+    "raw": true,
+    "durationMs": 1
+  },
+  {
+    "id": "ac1-navigate-perps",
+    "action": "ext_navigate_hash",
+    "ok": true,
+    "raw": {
+      "navigated": true,
+      "hash": "perps/market/BTC"
+    },
+    "durationMs": 3
+  },
+  {
+    "id": "ac1-wait-persisted",
+    "action": "wait_for",
+    "ok": true,
+    "raw": true,
+    "durationMs": 502
+  },
+  {
+    "id": "ac1-assert-state",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"hash\":\"#/perps/market/BTC\",\"lvpr\":{\"path\":\"/perps/market/BTC\",\"timestamp\":1777125168112}}",
+    "durationMs": 1
+  },
+  {
+    "id": "ac1-screenshot",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "screenshots/evidence-ac1-perps-mount-persists-route-1777125168627.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 135
+  },
+  {
+    "id": "ac4-navigate-home",
+    "action": "ext_navigate_hash",
+    "ok": true,
+    "raw": {
+      "navigated": true,
+      "hash": ""
+    },
+    "durationMs": 6
+  },
+  {
+    "id": "ac4-wait-cleared",
+    "action": "wait_for",
+    "ok": true,
+    "raw": true,
+    "durationMs": 503
+  },
+  {
+    "id": "ac4-assert-cleared",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"hash\":\"#/\",\"lvpr\":null}",
+    "durationMs": 1
+  },
+  {
+    "id": "ac4-screenshot",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "screenshots/evidence-ac4-in-app-leave-clears-entry-1777125169316.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 100
+  },
+  {
+    "id": "ac3-decay-marker",
+    "action": "wait",
+    "ok": true,
+    "raw": null,
+    "durationMs": 2001
+  },
+  {
+    "id": "ac3-seed-route",
+    "action": "eval_async",
+    "ok": true,
+    "raw": "seeded",
+    "durationMs": 2
+  },
+  {
+    "id": "ac3-wait-redirect",
+    "action": "wait_for",
+    "ok": true,
+    "raw": true,
+    "durationMs": 503
+  },
+  {
+    "id": "ac3-assert-redirect",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"hash\":\"#/perps/market/ETH\",\"lvpr\":{\"path\":\"/perps/market/ETH\",\"timestamp\":1777125171654}}",
+    "durationMs": 1
+  },
+  {
+    "id": "ac3-screenshot",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "screenshots/evidence-ac3-home-consumes-entry-redirect-1777125171937.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 98
+  },
+  {
+    "id": "teardown-clear",
+    "action": "eval_async",
+    "ok": true,
+    "raw": "cleared",
+    "durationMs": 1
+  },
+  {
+    "id": "teardown-go-home",
+    "action": "ext_navigate_hash",
+    "ok": true,
+    "raw": {
+      "navigated": true,
+      "hash": ""
+    },
+    "durationMs": 4
+  },
+  {
+    "id": "done",
+    "action": "end",
+    "status": "pass",
+    "durationMs": 0
+  }
+]

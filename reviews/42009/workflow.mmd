@@ -1,0 +1,44 @@
+flowchart TD
+  %% TAT-2691 — Persist last-visited Perps route across close/reopen (review)
+  __entry__(["ENTRY"]) --> node_setup_go_home_first
+  node_setup_go_home_first["setup-go-home-first<br/>ext_navigate_hash"]
+  node_setup_unlock[["setup-unlock<br/>extension-core/unlock-wallet"]]
+  node_setup_clear_baseline["setup-clear-baseline<br/>eval_async"]
+  node_setup_go_home["setup-go-home<br/>ext_navigate_hash"]
+  node_setup_wait_home["setup-wait-home<br/>wait_for"]
+  node_ac1_navigate_perps["ac1-navigate-perps<br/>ext_navigate_hash"]
+  node_ac1_wait_persisted["ac1-wait-persisted<br/>wait_for"]
+  node_ac1_assert_state["ac1-assert-state<br/>eval_sync"]
+  node_ac1_screenshot["ac1-screenshot<br/>screenshot"]
+  node_ac4_navigate_home["ac4-navigate-home<br/>ext_navigate_hash"]
+  node_ac4_wait_cleared["ac4-wait-cleared<br/>wait_for"]
+  node_ac4_assert_cleared["ac4-assert-cleared<br/>eval_sync"]
+  node_ac4_screenshot["ac4-screenshot<br/>screenshot"]
+  node_ac3_decay_marker["ac3-decay-marker<br/>wait"]
+  node_ac3_seed_route["ac3-seed-route<br/>eval_async"]
+  node_ac3_wait_redirect["ac3-wait-redirect<br/>wait_for"]
+  node_ac3_assert_redirect["ac3-assert-redirect<br/>eval_sync"]
+  node_ac3_screenshot["ac3-screenshot<br/>screenshot"]
+  node_teardown_clear["teardown-clear<br/>eval_async"]
+  node_teardown_go_home["teardown-go-home<br/>ext_navigate_hash"]
+  node_done(["done<br/>PASS"])
+  node_setup_go_home_first --> node_setup_unlock
+  node_setup_unlock --> node_setup_clear_baseline
+  node_setup_clear_baseline --> node_setup_go_home
+  node_setup_go_home --> node_setup_wait_home
+  node_setup_wait_home --> node_ac1_navigate_perps
+  node_ac1_navigate_perps --> node_ac1_wait_persisted
+  node_ac1_wait_persisted --> node_ac1_assert_state
+  node_ac1_assert_state --> node_ac1_screenshot
+  node_ac1_screenshot --> node_ac4_navigate_home
+  node_ac4_navigate_home --> node_ac4_wait_cleared
+  node_ac4_wait_cleared --> node_ac4_assert_cleared
+  node_ac4_assert_cleared --> node_ac4_screenshot
+  node_ac4_screenshot --> node_ac3_decay_marker
+  node_ac3_decay_marker --> node_ac3_seed_route
+  node_ac3_seed_route --> node_ac3_wait_redirect
+  node_ac3_wait_redirect --> node_ac3_assert_redirect
+  node_ac3_assert_redirect --> node_ac3_screenshot
+  node_ac3_screenshot --> node_teardown_clear
+  node_teardown_clear --> node_teardown_go_home
+  node_teardown_go_home --> node_done
