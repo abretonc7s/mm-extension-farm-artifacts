@@ -1,0 +1,126 @@
+flowchart TD
+  %% PR 41949 keyboard-first perps order entry review
+  __entry__(["ENTRY"]) --> node_setup_open_order_form
+  node_setup_open_order_form["setup-open-order-form<br/>navigate"]
+  node_setup_wait_order_form["setup-wait-order-form<br/>wait_for"]
+  node_ac1_assert_size_focused["ac1-assert-size-focused<br/>eval_sync"]
+  node_ac1_screenshot_size_focused["ac1-screenshot-size-focused<br/>screenshot"]
+  node_ac3_assert_placeholder_state["ac3-assert-placeholder-state<br/>eval_sync"]
+  node_ac3_screenshot_placeholder_state["ac3-screenshot-placeholder-state<br/>screenshot"]
+  node_ac5_assert_empty_min_copy["ac5-assert-empty-min-copy<br/>eval_sync"]
+  node_ac5_screenshot_empty_min_copy["ac5-screenshot-empty-min-copy<br/>screenshot"]
+  node_ac5_type_below_min["ac5-type-below-min<br/>set_input"]
+  node_ac5_assert_below_min_disabled["ac5-assert-below-min-disabled<br/>eval_sync"]
+  node_ac5_screenshot_below_min["ac5-screenshot-below-min<br/>screenshot"]
+  node_ac5_type_valid_amount["ac5-type-valid-amount<br/>set_input"]
+  node_ac5_assert_valid_submit["ac5-assert-valid-submit<br/>eval_sync"]
+  node_ac5_screenshot_valid_submit["ac5-screenshot-valid-submit<br/>screenshot"]
+  node_ac2_refocus_size["ac2-refocus-size<br/>eval_sync"]
+  node_ac2_screenshot_size_selected["ac2-screenshot-size-selected<br/>screenshot"]
+  node_ac7_switch_limit["ac7-switch-limit<br/>press"]
+  node_ac7_wait_limit_input["ac7-wait-limit-input<br/>wait_for"]
+  node_ac7_assert_limit_focused["ac7-assert-limit-focused<br/>eval_sync"]
+  node_ac7_screenshot_limit_focused["ac7-screenshot-limit-focused<br/>screenshot"]
+  node_ac16_switch_market["ac16-switch-market<br/>press"]
+  node_ac16_focus_leverage["ac16-focus-leverage<br/>eval_sync"]
+  node_ac16_key_arrow_up["ac16-key-arrow-up<br/>key_press"]
+  node_ac16_assert_arrow_up["ac16-assert-arrow-up<br/>eval_sync"]
+  node_ac16_key_arrow_down["ac16-key-arrow-down<br/>key_press"]
+  node_ac16_assert_arrow_down["ac16-assert-arrow-down<br/>eval_sync"]
+  node_ac16_screenshot_leverage_keyboard["ac16-screenshot-leverage-keyboard<br/>screenshot"]
+  node_ac4_focus_size_for_tab["ac4-focus-size-for-tab<br/>eval_sync"]
+  node_ac4_key_tab_1["ac4-key-tab-1<br/>key_press"]
+  node_ac4_assert_tab_reaches_token["ac4-assert-tab-reaches-token<br/>eval_sync"]
+  node_ac4_key_tab_2["ac4-key-tab-2<br/>key_press"]
+  node_ac4_assert_tab_reaches_percent["ac4-assert-tab-reaches-percent<br/>eval_sync"]
+  node_ac4_screenshot_tab_order["ac4-screenshot-tab-order<br/>screenshot"]
+  node_ac14_reset_amount_before_enter["ac14-reset-amount-before-enter<br/>set_input"]
+  node_ac14_focus_size_for_enter["ac14-focus-size-for-enter<br/>eval_sync"]
+  node_ac14_key_enter_submit["ac14-key-enter-submit<br/>key_press"]
+  node_ac17_wait_market_detail["ac17-wait-market-detail<br/>wait_for"]
+  node_ac17_wait_position_live["ac17-wait-position-live<br/>wait_for"]
+  node_ac17_assert_route_position["ac17-assert-route-position<br/>eval_sync"]
+  node_ac17_screenshot_enter_submit["ac17-screenshot-enter-submit<br/>screenshot"]
+  node_ac8_open_margin_menu["ac8-open-margin-menu<br/>press"]
+  node_ac8_open_add_margin["ac8-open-add-margin<br/>press"]
+  node_ac8_wait_add_margin_input["ac8-wait-add-margin-input<br/>wait_for"]
+  node_ac8_assert_add_margin_focused["ac8-assert-add-margin-focused<br/>eval_sync"]
+  node_ac8_screenshot_add_margin_focused["ac8-screenshot-add-margin-focused<br/>screenshot"]
+  node_setup_close_add_margin_modal["setup-close-add-margin-modal<br/>key_press"]
+  node_ac9_open_margin_menu["ac9-open-margin-menu<br/>press"]
+  node_ac9_open_remove_margin["ac9-open-remove-margin<br/>press"]
+  node_ac9_wait_remove_margin_input["ac9-wait-remove-margin-input<br/>wait_for"]
+  node_ac9_assert_remove_margin_focused["ac9-assert-remove-margin-focused<br/>eval_sync"]
+  node_ac9_screenshot_remove_margin_focused["ac9-screenshot-remove-margin-focused<br/>screenshot"]
+  node_setup_close_remove_margin_modal["setup-close-remove-margin-modal<br/>key_press"]
+  node_ac10_open_tpsl["ac10-open-tpsl<br/>press"]
+  node_ac10_wait_tp_input["ac10-wait-tp-input<br/>wait_for"]
+  node_ac10_assert_tp_focused["ac10-assert-tp-focused<br/>eval_sync"]
+  node_ac10_screenshot_tp_focused["ac10-screenshot-tp-focused<br/>screenshot"]
+  node_setup_close_tpsl_modal["setup-close-tpsl-modal<br/>key_press"]
+  node_ac11_open_close_position["ac11-open-close-position<br/>press"]
+  node_ac11_wait_close_submit["ac11-wait-close-submit<br/>wait_for"]
+  node_ac11_assert_close_focused["ac11-assert-close-focused<br/>eval_sync"]
+  node_ac11_screenshot_close_focused["ac11-screenshot-close-focused<br/>screenshot"]
+  node_done(["done<br/>PASS"])
+  node_setup_open_order_form --> node_setup_wait_order_form
+  node_setup_wait_order_form --> node_ac1_assert_size_focused
+  node_ac1_assert_size_focused --> node_ac1_screenshot_size_focused
+  node_ac1_screenshot_size_focused --> node_ac3_assert_placeholder_state
+  node_ac3_assert_placeholder_state --> node_ac3_screenshot_placeholder_state
+  node_ac3_screenshot_placeholder_state --> node_ac5_assert_empty_min_copy
+  node_ac5_assert_empty_min_copy --> node_ac5_screenshot_empty_min_copy
+  node_ac5_screenshot_empty_min_copy --> node_ac5_type_below_min
+  node_ac5_type_below_min --> node_ac5_assert_below_min_disabled
+  node_ac5_assert_below_min_disabled --> node_ac5_screenshot_below_min
+  node_ac5_screenshot_below_min --> node_ac5_type_valid_amount
+  node_ac5_type_valid_amount --> node_ac5_assert_valid_submit
+  node_ac5_assert_valid_submit --> node_ac5_screenshot_valid_submit
+  node_ac5_screenshot_valid_submit --> node_ac2_refocus_size
+  node_ac2_refocus_size --> node_ac2_screenshot_size_selected
+  node_ac2_screenshot_size_selected --> node_ac7_switch_limit
+  node_ac7_switch_limit --> node_ac7_wait_limit_input
+  node_ac7_wait_limit_input --> node_ac7_assert_limit_focused
+  node_ac7_assert_limit_focused --> node_ac7_screenshot_limit_focused
+  node_ac7_screenshot_limit_focused --> node_ac16_switch_market
+  node_ac16_switch_market --> node_ac16_focus_leverage
+  node_ac16_focus_leverage --> node_ac16_key_arrow_up
+  node_ac16_key_arrow_up --> node_ac16_assert_arrow_up
+  node_ac16_assert_arrow_up --> node_ac16_key_arrow_down
+  node_ac16_key_arrow_down --> node_ac16_assert_arrow_down
+  node_ac16_assert_arrow_down --> node_ac16_screenshot_leverage_keyboard
+  node_ac16_screenshot_leverage_keyboard --> node_ac4_focus_size_for_tab
+  node_ac4_focus_size_for_tab --> node_ac4_key_tab_1
+  node_ac4_key_tab_1 --> node_ac4_assert_tab_reaches_token
+  node_ac4_assert_tab_reaches_token --> node_ac4_key_tab_2
+  node_ac4_key_tab_2 --> node_ac4_assert_tab_reaches_percent
+  node_ac4_assert_tab_reaches_percent --> node_ac4_screenshot_tab_order
+  node_ac4_screenshot_tab_order --> node_ac14_reset_amount_before_enter
+  node_ac14_reset_amount_before_enter --> node_ac14_focus_size_for_enter
+  node_ac14_focus_size_for_enter --> node_ac14_key_enter_submit
+  node_ac14_key_enter_submit --> node_ac17_wait_market_detail
+  node_ac17_wait_market_detail --> node_ac17_wait_position_live
+  node_ac17_wait_position_live --> node_ac17_assert_route_position
+  node_ac17_assert_route_position --> node_ac17_screenshot_enter_submit
+  node_ac17_screenshot_enter_submit --> node_ac8_open_margin_menu
+  node_ac8_open_margin_menu --> node_ac8_open_add_margin
+  node_ac8_open_add_margin --> node_ac8_wait_add_margin_input
+  node_ac8_wait_add_margin_input --> node_ac8_assert_add_margin_focused
+  node_ac8_assert_add_margin_focused --> node_ac8_screenshot_add_margin_focused
+  node_ac8_screenshot_add_margin_focused --> node_setup_close_add_margin_modal
+  node_setup_close_add_margin_modal --> node_ac9_open_margin_menu
+  node_ac9_open_margin_menu --> node_ac9_open_remove_margin
+  node_ac9_open_remove_margin --> node_ac9_wait_remove_margin_input
+  node_ac9_wait_remove_margin_input --> node_ac9_assert_remove_margin_focused
+  node_ac9_assert_remove_margin_focused --> node_ac9_screenshot_remove_margin_focused
+  node_ac9_screenshot_remove_margin_focused --> node_setup_close_remove_margin_modal
+  node_setup_close_remove_margin_modal --> node_ac10_open_tpsl
+  node_ac10_open_tpsl --> node_ac10_wait_tp_input
+  node_ac10_wait_tp_input --> node_ac10_assert_tp_focused
+  node_ac10_assert_tp_focused --> node_ac10_screenshot_tp_focused
+  node_ac10_screenshot_tp_focused --> node_setup_close_tpsl_modal
+  node_setup_close_tpsl_modal --> node_ac11_open_close_position
+  node_ac11_open_close_position --> node_ac11_wait_close_submit
+  node_ac11_wait_close_submit --> node_ac11_assert_close_focused
+  node_ac11_assert_close_focused --> node_ac11_screenshot_close_focused
+  node_ac11_screenshot_close_focused --> node_done

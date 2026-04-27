@@ -1,0 +1,575 @@
+[
+  {
+    "id": "setup-open-order-form",
+    "action": "navigate",
+    "ok": true,
+    "raw": {
+      "navigated": true,
+      "hash": "#/perps/trade/ETH?direction=long&mode=new"
+    },
+    "durationMs": 6
+  },
+  {
+    "id": "setup-wait-order-form",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-order-entry-page"
+    },
+    "durationMs": 64
+  },
+  {
+    "id": "ac1-assert-size-focused",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"focused\":true,\"activeTestId\":\"amount-input-field\"}",
+    "durationMs": 1
+  },
+  {
+    "id": "ac1-screenshot-size-focused",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "screenshots/evidence-ac1-size-autofocus.png-1777279948662.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 161
+  },
+  {
+    "id": "ac3-assert-placeholder-state",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"placeholder\":\"0.00\",\"buttonText\":\"Order size must be at least $10\",\"disabled\":true}",
+    "durationMs": 1
+  },
+  {
+    "id": "ac3-screenshot-placeholder-state",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "screenshots/evidence-ac3-placeholder-state.png-1777279948834.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 107
+  },
+  {
+    "id": "ac5-assert-empty-min-copy",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"placeholder\":\"0.00\",\"buttonText\":\"Order size must be at least $10\",\"disabled\":true}",
+    "durationMs": 1
+  },
+  {
+    "id": "ac5-screenshot-empty-min-copy",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "screenshots/evidence-ac5-empty-min-copy.png-1777279948949.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 102
+  },
+  {
+    "id": "ac5-type-below-min",
+    "action": "set_input",
+    "ok": true,
+    "raw": {
+      "filled": true,
+      "fallback": true
+    },
+    "durationMs": 126
+  },
+  {
+    "id": "ac5-assert-below-min-disabled",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"buttonText\":\"Order size must be at least $10\",\"disabled\":true}",
+    "durationMs": 1
+  },
+  {
+    "id": "ac5-screenshot-below-min",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "screenshots/evidence-ac5-below-min-disabled.png-1777279949188.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 107
+  },
+  {
+    "id": "ac5-type-valid-amount",
+    "action": "set_input",
+    "ok": true,
+    "raw": {
+      "filled": true,
+      "fallback": true
+    },
+    "durationMs": 98
+  },
+  {
+    "id": "ac5-assert-valid-submit",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"buttonText\":\"Open long ETH\",\"disabled\":false}",
+    "durationMs": 1
+  },
+  {
+    "id": "ac5-screenshot-valid-submit",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "screenshots/evidence-ac5-valid-submit.png-1777279949399.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 115
+  },
+  {
+    "id": "ac2-refocus-size",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"selected\":true,\"value\":\"15.00\"}",
+    "durationMs": 3
+  },
+  {
+    "id": "ac2-screenshot-size-selected",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "screenshots/evidence-ac2-size-selected.png-1777279949520.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 92
+  },
+  {
+    "id": "ac7-switch-limit",
+    "action": "press",
+    "ok": true,
+    "raw": {
+      "clicked": true,
+      "target": "testId:order-type-limit"
+    },
+    "durationMs": 98
+  },
+  {
+    "id": "ac7-wait-limit-input",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:limit-price-input"
+    },
+    "durationMs": 31
+  },
+  {
+    "id": "ac7-assert-limit-focused",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"focused\":true,\"activeTestId\":\"limit-price-input\"}",
+    "durationMs": 1
+  },
+  {
+    "id": "ac7-screenshot-limit-focused",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "screenshots/evidence-ac7-limit-autofocus.png-1777279949745.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 97
+  },
+  {
+    "id": "ac16-switch-market",
+    "action": "press",
+    "ok": true,
+    "raw": {
+      "clicked": true,
+      "target": "testId:order-type-market"
+    },
+    "durationMs": 100
+  },
+  {
+    "id": "ac16-focus-leverage",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"selected\":true,\"value\":\"3\"}",
+    "durationMs": 3
+  },
+  {
+    "id": "ac16-key-arrow-up",
+    "action": "key_press",
+    "ok": true,
+    "raw": {
+      "pressed": "ArrowUp",
+      "test_id": null
+    },
+    "durationMs": 6
+  },
+  {
+    "id": "ac16-assert-arrow-up",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"value\":4}",
+    "durationMs": 0
+  },
+  {
+    "id": "ac16-key-arrow-down",
+    "action": "key_press",
+    "ok": true,
+    "raw": {
+      "pressed": "ArrowDown",
+      "test_id": null
+    },
+    "durationMs": 4
+  },
+  {
+    "id": "ac16-assert-arrow-down",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"value\":3}",
+    "durationMs": 0
+  },
+  {
+    "id": "ac16-screenshot-leverage-keyboard",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "screenshots/evidence-ac16-leverage-keyboard.png-1777279949964.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 103
+  },
+  {
+    "id": "ac4-focus-size-for-tab",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"focused\":true}",
+    "durationMs": 4
+  },
+  {
+    "id": "ac4-key-tab-1",
+    "action": "key_press",
+    "ok": true,
+    "raw": {
+      "pressed": "Tab",
+      "test_id": null
+    },
+    "durationMs": 4
+  },
+  {
+    "id": "ac4-assert-tab-reaches-token",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"activeTestId\":\"amount-input-token-field\"}",
+    "durationMs": 0
+  },
+  {
+    "id": "ac4-key-tab-2",
+    "action": "key_press",
+    "ok": true,
+    "raw": {
+      "pressed": "Tab",
+      "test_id": null
+    },
+    "durationMs": 2
+  },
+  {
+    "id": "ac4-assert-tab-reaches-percent",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"activeTestId\":\"amount-slider\"}",
+    "durationMs": 1
+  },
+  {
+    "id": "ac4-screenshot-tab-order",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "screenshots/evidence-ac4-tab-order.png-1777279950094.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 118
+  },
+  {
+    "id": "ac14-reset-amount-before-enter",
+    "action": "set_input",
+    "ok": true,
+    "raw": {
+      "filled": true,
+      "fallback": true
+    },
+    "durationMs": 83
+  },
+  {
+    "id": "ac14-focus-size-for-enter",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"focused\":true,\"buttonDisabled\":false}",
+    "durationMs": 6
+  },
+  {
+    "id": "ac14-key-enter-submit",
+    "action": "key_press",
+    "ok": true,
+    "raw": {
+      "pressed": "Enter",
+      "test_id": null
+    },
+    "durationMs": 8
+  },
+  {
+    "id": "ac17-wait-market-detail",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-market-detail-page"
+    },
+    "durationMs": 2437
+  },
+  {
+    "id": "ac17-wait-position-live",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-position-cta-buttons"
+    },
+    "durationMs": 4544
+  },
+  {
+    "id": "ac17-assert-route-position",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"hash\":\"#/perps/market/ETH\",\"hasPosition\":true,\"hasSubmittingToast\":false}",
+    "durationMs": 1
+  },
+  {
+    "id": "ac17-screenshot-enter-submit",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "screenshots/evidence-ac17-enter-submit-position.png-1777279957307.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 101
+  },
+  {
+    "id": "ac8-open-margin-menu",
+    "action": "press",
+    "ok": true,
+    "raw": {
+      "clicked": true,
+      "target": "testId:perps-margin-card"
+    },
+    "durationMs": 157
+  },
+  {
+    "id": "ac8-open-add-margin",
+    "action": "press",
+    "ok": true,
+    "raw": {
+      "clicked": true,
+      "target": "testId:perps-margin-menu-add"
+    },
+    "durationMs": 156
+  },
+  {
+    "id": "ac8-wait-add-margin-input",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-edit-margin-amount-input"
+    },
+    "durationMs": 97
+  },
+  {
+    "id": "ac8-assert-add-margin-focused",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"focused\":true}",
+    "durationMs": 0
+  },
+  {
+    "id": "ac8-screenshot-add-margin-focused",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "screenshots/evidence-ac8-add-margin-focused.png-1777279957826.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 92
+  },
+  {
+    "id": "setup-close-add-margin-modal",
+    "action": "key_press",
+    "ok": true,
+    "raw": {
+      "pressed": "Escape",
+      "test_id": null
+    },
+    "durationMs": 7
+  },
+  {
+    "id": "ac9-open-margin-menu",
+    "action": "press",
+    "ok": true,
+    "raw": {
+      "clicked": true,
+      "target": "testId:perps-margin-card"
+    },
+    "durationMs": 141
+  },
+  {
+    "id": "ac9-open-remove-margin",
+    "action": "press",
+    "ok": true,
+    "raw": {
+      "clicked": true,
+      "target": "testId:perps-margin-menu-remove"
+    },
+    "durationMs": 148
+  },
+  {
+    "id": "ac9-wait-remove-margin-input",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-edit-margin-amount-input"
+    },
+    "durationMs": 86
+  },
+  {
+    "id": "ac9-assert-remove-margin-focused",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"focused\":true}",
+    "durationMs": 0
+  },
+  {
+    "id": "ac9-screenshot-remove-margin-focused",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "screenshots/evidence-ac9-remove-margin-focused.png-1777279958312.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 94
+  },
+  {
+    "id": "setup-close-remove-margin-modal",
+    "action": "key_press",
+    "ok": true,
+    "raw": {
+      "pressed": "Escape",
+      "test_id": null
+    },
+    "durationMs": 7
+  },
+  {
+    "id": "ac10-open-tpsl",
+    "action": "press",
+    "ok": true,
+    "raw": {
+      "clicked": true,
+      "target": "testId:perps-auto-close-row"
+    },
+    "durationMs": 146
+  },
+  {
+    "id": "ac10-wait-tp-input",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-update-tpsl-tp-price-input"
+    },
+    "durationMs": 66
+  },
+  {
+    "id": "ac10-assert-tp-focused",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"focused\":true}",
+    "durationMs": 0
+  },
+  {
+    "id": "ac10-screenshot-tp-focused",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "screenshots/evidence-ac10-tpsl-focused.png-1777279958635.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 122
+  },
+  {
+    "id": "setup-close-tpsl-modal",
+    "action": "key_press",
+    "ok": true,
+    "raw": {
+      "pressed": "Escape",
+      "test_id": null
+    },
+    "durationMs": 6
+  },
+  {
+    "id": "ac11-open-close-position",
+    "action": "press",
+    "ok": true,
+    "raw": {
+      "clicked": true,
+      "target": "testId:perps-close-cta-button"
+    },
+    "durationMs": 1119
+  },
+  {
+    "id": "ac11-wait-close-submit",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-close-position-modal-submit"
+    },
+    "durationMs": 180
+  },
+  {
+    "id": "ac11-assert-close-focused",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"focused\":true}",
+    "durationMs": 1
+  },
+  {
+    "id": "ac11-screenshot-close-focused",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "screenshots/evidence-ac11-close-position-focused.png-1777279960075.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 98
+  },
+  {
+    "id": "done",
+    "action": "end",
+    "status": "pass",
+    "durationMs": 0
+  }
+]

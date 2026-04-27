@@ -1,0 +1,21 @@
+{
+  "title": "PR 41949 baseline screenshot",
+  "validate": {
+    "workflow": {
+      "pre_conditions": ["wallet.unlocked"],
+      "entry": "setup-baseline-screenshot",
+      "nodes": {
+        "setup-baseline-screenshot": {
+          "action": "screenshot",
+          "filename": "baseline-current-extension-state.png",
+          "note": "Baseline: current extension state before PR validation interactions.",
+          "next": "done"
+        },
+        "done": {
+          "action": "end",
+          "status": "pass"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,618 @@
+{
+  "description": "AC-bound UI validation for autofocus, select-on-focus, min-order copy, keyboard leverage, Enter submit, and position modal focus.",
+  "hooks": {
+    "pre_conditions": [
+      "wallet.unlocked",
+      "perps.feature_enabled"
+    ],
+    "setup": [
+      {
+        "id": "setup-save-original-network",
+        "action": "eval_sync",
+        "expression": "(function(){var m=stateHooks.store.getState().metamask;return JSON.stringify({network:m.isTestnet?'testnet':'mainnet',provider:m.activeProvider||'hyperliquid'})})()",
+        "save_as": "original_network"
+      },
+      {
+        "id": "setup-ensure-testnet",
+        "action": "call",
+        "ref": "perps/ensure-perps-network",
+        "params": {
+          "network": "testnet",
+          "provider": "hyperliquid"
+        }
+      },
+      {
+        "id": "setup-prime-perps",
+        "action": "call",
+        "ref": "perps/prime-perps-state"
+      },
+      {
+        "id": "setup-close-existing-eth",
+        "action": "call",
+        "ref": "perps/close-position",
+        "params": {
+          "symbol": "ETH",
+          "percent": "100"
+        }
+      }
+    ],
+    "teardown": [
+      {
+        "id": "teardown-close-eth",
+        "action": "call",
+        "ref": "perps/close-position",
+        "params": {
+          "symbol": "ETH",
+          "percent": "100"
+        }
+      },
+      {
+        "id": "teardown-restore-network",
+        "action": "call",
+        "ref": "perps/ensure-perps-network",
+        "params": {
+          "network": "{{vars.original_network.network}}",
+          "provider": "{{vars.original_network.provider}}"
+        }
+      }
+    ]
+  },
+  "inputs": {},
+  "playback": {
+    "mode": "off",
+    "slow_ms": 1000
+  },
+  "sourcePath": "",
+  "title": "PR 41949 keyboard-first perps order entry review",
+  "workflow": {
+    "entry": "setup-open-order-form",
+    "nodes": {
+      "setup-open-order-form": {
+        "action": "navigate",
+        "target": "PerpsOrderEntry",
+        "params": {
+          "symbol": "ETH",
+          "direction": "long"
+        },
+        "next": "setup-wait-order-form",
+        "id": "setup-open-order-form"
+      },
+      "setup-wait-order-form": {
+        "action": "wait_for",
+        "test_id": "perps-order-entry-page",
+        "timeout_ms": 10000,
+        "next": "ac1-assert-size-focused",
+        "id": "setup-wait-order-form"
+      },
+      "ac1-assert-size-focused": {
+        "action": "eval_sync",
+        "expression": "(function(){var input=document.querySelector('[data-testid=\"amount-input-field\"] input');var active=document.activeElement;return JSON.stringify({focused:active===input,activeTestId:active&&active.closest('[data-testid]')?.getAttribute('data-testid')});})()",
+        "assert": {
+          "operator": "eq",
+          "field": "focused",
+          "value": true
+        },
+        "next": "ac1-screenshot-size-focused",
+        "id": "ac1-assert-size-focused"
+      },
+      "ac1-screenshot-size-focused": {
+        "action": "screenshot",
+        "filename": "evidence-ac1-size-autofocus.png",
+        "note": "AC1: Trade order form opens with the USD size input focused.",
+        "next": "ac3-assert-placeholder-state",
+        "id": "ac1-screenshot-size-focused"
+      },
+      "ac3-assert-placeholder-state": {
+        "action": "eval_sync",
+        "expression": "(function(){var input=document.querySelector('[data-testid=\"amount-input-field\"] input');var button=document.querySelector('[data-testid=\"submit-order-button\"]');return JSON.stringify({placeholder:input?.getAttribute('placeholder'),buttonText:button?.textContent?.trim(),disabled:button?.disabled===true});})()",
+        "assert": {
+          "operator": "eq",
+          "field": "placeholder",
+          "value": "0.00"
+        },
+        "next": "ac3-screenshot-placeholder-state",
+        "id": "ac3-assert-placeholder-state"
+      },
+      "ac3-screenshot-placeholder-state": {
+        "action": "screenshot",
+        "filename": "evidence-ac3-placeholder-state.png",
+        "note": "AC3: Empty size input placeholder state is captured for constraint-placeholder validation.",
+        "next": "ac5-assert-empty-min-copy",
+        "id": "ac3-screenshot-placeholder-state"
+      },
+      "ac5-assert-empty-min-copy": {
+        "action": "eval_sync",
+        "expression": "(function(){var input=document.querySelector('[data-testid=\"amount-input-field\"] input');var button=document.querySelector('[data-testid=\"submit-order-button\"]');return JSON.stringify({placeholder:input?.getAttribute('placeholder'),buttonText:button?.textContent?.trim(),disabled:button?.disabled===true});})()",
+        "assert": {
+          "all": [
+            {
+              "operator": "eq",
+              "field": "buttonText",
+              "value": "Order size must be at least $10"
+            },
+            {
+              "operator": "eq",
+              "field": "disabled",
+              "value": true
+            }
+          ]
+        },
+        "next": "ac5-screenshot-empty-min-copy",
+        "id": "ac5-assert-empty-min-copy"
+      },
+      "ac5-screenshot-empty-min-copy": {
+        "action": "screenshot",
+        "filename": "evidence-ac5-empty-min-copy.png",
+        "note": "AC5/AC6: Empty market order shows min-order submit copy and disables submit.",
+        "next": "ac5-type-below-min",
+        "id": "ac5-screenshot-empty-min-copy"
+      },
+      "ac5-type-below-min": {
+        "action": "set_input",
+        "test_id": "amount-input-field",
+        "value": "5",
+        "next": "ac5-assert-below-min-disabled",
+        "id": "ac5-type-below-min"
+      },
+      "ac5-assert-below-min-disabled": {
+        "action": "eval_sync",
+        "expression": "(function(){var button=document.querySelector('[data-testid=\"submit-order-button\"]');return JSON.stringify({buttonText:button?.textContent?.trim(),disabled:button?.disabled===true});})()",
+        "assert": {
+          "all": [
+            {
+              "operator": "eq",
+              "field": "buttonText",
+              "value": "Order size must be at least $10"
+            },
+            {
+              "operator": "eq",
+              "field": "disabled",
+              "value": true
+            }
+          ]
+        },
+        "next": "ac5-screenshot-below-min",
+        "id": "ac5-assert-below-min-disabled"
+      },
+      "ac5-screenshot-below-min": {
+        "action": "screenshot",
+        "filename": "evidence-ac5-below-min-disabled.png",
+        "note": "AC5/AC6: A $5 market amount keeps submit disabled with min-order copy.",
+        "next": "ac5-type-valid-amount",
+        "id": "ac5-screenshot-below-min"
+      },
+      "ac5-type-valid-amount": {
+        "action": "set_input",
+        "test_id": "amount-input-field",
+        "value": "15",
+        "next": "ac5-assert-valid-submit",
+        "id": "ac5-type-valid-amount"
+      },
+      "ac5-assert-valid-submit": {
+        "action": "eval_sync",
+        "expression": "(function(){var button=document.querySelector('[data-testid=\"submit-order-button\"]');return JSON.stringify({buttonText:button?.textContent?.trim(),disabled:button?.disabled===true});})()",
+        "assert": {
+          "all": [
+            {
+              "operator": "eq",
+              "field": "buttonText",
+              "value": "Open long ETH"
+            },
+            {
+              "operator": "eq",
+              "field": "disabled",
+              "value": false
+            }
+          ]
+        },
+        "next": "ac5-screenshot-valid-submit",
+        "id": "ac5-assert-valid-submit"
+      },
+      "ac5-screenshot-valid-submit": {
+        "action": "screenshot",
+        "filename": "evidence-ac5-valid-submit.png",
+        "note": "AC5/AC6: A $15 market amount enables submit and restores Open Long ETH copy.",
+        "next": "ac2-refocus-size",
+        "id": "ac5-screenshot-valid-submit"
+      },
+      "ac2-refocus-size": {
+        "action": "eval_sync",
+        "expression": "(function(){var input=document.querySelector('[data-testid=\"amount-input-field\"] input');input.blur();input.focus();return JSON.stringify({selected:input.selectionStart===0&&input.selectionEnd===input.value.length,value:input.value});})()",
+        "assert": {
+          "operator": "eq",
+          "field": "selected",
+          "value": true
+        },
+        "next": "ac2-screenshot-size-selected",
+        "id": "ac2-refocus-size"
+      },
+      "ac2-screenshot-size-selected": {
+        "action": "screenshot",
+        "filename": "evidence-ac2-size-selected.png",
+        "note": "AC2: Refocusing the numeric size input selects the full current value.",
+        "next": "ac7-switch-limit",
+        "id": "ac2-screenshot-size-selected"
+      },
+      "ac7-switch-limit": {
+        "action": "press",
+        "test_id": "order-type-limit",
+        "next": "ac7-wait-limit-input",
+        "id": "ac7-switch-limit"
+      },
+      "ac7-wait-limit-input": {
+        "action": "wait_for",
+        "test_id": "limit-price-input",
+        "timeout_ms": 10000,
+        "next": "ac7-assert-limit-focused",
+        "id": "ac7-wait-limit-input"
+      },
+      "ac7-assert-limit-focused": {
+        "action": "eval_sync",
+        "expression": "(function(){var input=document.querySelector('[data-testid=\"limit-price-input\"] input');return JSON.stringify({focused:document.activeElement===input,activeTestId:document.activeElement&&document.activeElement.closest('[data-testid]')?.getAttribute('data-testid')});})()",
+        "assert": {
+          "operator": "eq",
+          "field": "focused",
+          "value": true
+        },
+        "next": "ac7-screenshot-limit-focused",
+        "id": "ac7-assert-limit-focused"
+      },
+      "ac7-screenshot-limit-focused": {
+        "action": "screenshot",
+        "filename": "evidence-ac7-limit-autofocus.png",
+        "note": "AC7: Switching to Limit focuses the limit price input.",
+        "next": "ac16-switch-market",
+        "id": "ac7-screenshot-limit-focused"
+      },
+      "ac16-switch-market": {
+        "action": "press",
+        "test_id": "order-type-market",
+        "next": "ac16-focus-leverage",
+        "id": "ac16-switch-market"
+      },
+      "ac16-focus-leverage": {
+        "action": "eval_sync",
+        "expression": "(function(){var input=document.querySelector('[data-testid=\"leverage-input\"] input');input.focus();return JSON.stringify({selected:input.selectionStart===0&&input.selectionEnd===input.value.length,value:input.value});})()",
+        "assert": {
+          "operator": "eq",
+          "field": "selected",
+          "value": true
+        },
+        "next": "ac16-key-arrow-up",
+        "id": "ac16-focus-leverage"
+      },
+      "ac16-key-arrow-up": {
+        "action": "key_press",
+        "key": "ArrowUp",
+        "next": "ac16-assert-arrow-up",
+        "id": "ac16-key-arrow-up"
+      },
+      "ac16-assert-arrow-up": {
+        "action": "eval_sync",
+        "expression": "(function(){var input=document.querySelector('[data-testid=\"leverage-input\"] input');return JSON.stringify({value:Number(input.value)});})()",
+        "assert": {
+          "operator": "eq",
+          "field": "value",
+          "value": 4
+        },
+        "next": "ac16-key-arrow-down",
+        "id": "ac16-assert-arrow-up"
+      },
+      "ac16-key-arrow-down": {
+        "action": "key_press",
+        "key": "ArrowDown",
+        "next": "ac16-assert-arrow-down",
+        "id": "ac16-key-arrow-down"
+      },
+      "ac16-assert-arrow-down": {
+        "action": "eval_sync",
+        "expression": "(function(){var input=document.querySelector('[data-testid=\"leverage-input\"] input');return JSON.stringify({value:Number(input.value)});})()",
+        "assert": {
+          "operator": "eq",
+          "field": "value",
+          "value": 3
+        },
+        "next": "ac16-screenshot-leverage-keyboard",
+        "id": "ac16-assert-arrow-down"
+      },
+      "ac16-screenshot-leverage-keyboard": {
+        "action": "screenshot",
+        "filename": "evidence-ac16-leverage-keyboard.png",
+        "note": "AC16: Leverage input select-on-focus works and ArrowUp/ArrowDown step by 1.",
+        "next": "ac4-focus-size-for-tab",
+        "id": "ac16-screenshot-leverage-keyboard"
+      },
+      "ac4-focus-size-for-tab": {
+        "action": "eval_sync",
+        "expression": "(function(){var input=document.querySelector('[data-testid=\"amount-input-field\"] input');input.focus();return JSON.stringify({focused:document.activeElement===input});})()",
+        "assert": {
+          "operator": "eq",
+          "field": "focused",
+          "value": true
+        },
+        "next": "ac4-key-tab-1",
+        "id": "ac4-focus-size-for-tab"
+      },
+      "ac4-key-tab-1": {
+        "action": "key_press",
+        "key": "Tab",
+        "next": "ac4-assert-tab-reaches-token",
+        "id": "ac4-key-tab-1"
+      },
+      "ac4-assert-tab-reaches-token": {
+        "action": "eval_sync",
+        "expression": "(function(){var active=document.activeElement;return JSON.stringify({activeTestId:active&&active.closest('[data-testid]')?.getAttribute('data-testid')});})()",
+        "assert": {
+          "operator": "eq",
+          "field": "activeTestId",
+          "value": "amount-input-token-field"
+        },
+        "next": "ac4-key-tab-2",
+        "id": "ac4-assert-tab-reaches-token"
+      },
+      "ac4-key-tab-2": {
+        "action": "key_press",
+        "key": "Tab",
+        "next": "ac4-assert-tab-reaches-percent",
+        "id": "ac4-key-tab-2"
+      },
+      "ac4-assert-tab-reaches-percent": {
+        "action": "eval_sync",
+        "expression": "(function(){var active=document.activeElement;return JSON.stringify({activeTestId:active&&active.closest('[data-testid]')?.getAttribute('data-testid')});})()",
+        "assert": {
+          "operator": "eq",
+          "field": "activeTestId",
+          "value": "amount-slider"
+        },
+        "next": "ac4-screenshot-tab-order",
+        "id": "ac4-assert-tab-reaches-percent"
+      },
+      "ac4-screenshot-tab-order": {
+        "action": "screenshot",
+        "filename": "evidence-ac4-tab-order.png",
+        "note": "AC4: Tab moves from size to token amount to amount slider in DOM order.",
+        "next": "ac14-reset-amount-before-enter",
+        "id": "ac4-screenshot-tab-order"
+      },
+      "ac14-reset-amount-before-enter": {
+        "action": "set_input",
+        "test_id": "amount-input-field",
+        "value": "15",
+        "next": "ac14-focus-size-for-enter",
+        "id": "ac14-reset-amount-before-enter"
+      },
+      "ac14-focus-size-for-enter": {
+        "action": "eval_sync",
+        "expression": "(function(){var input=document.querySelector('[data-testid=\"amount-input-field\"] input');input.focus();return JSON.stringify({focused:document.activeElement===input,buttonDisabled:document.querySelector('[data-testid=\"submit-order-button\"]')?.disabled===true});})()",
+        "assert": {
+          "all": [
+            {
+              "operator": "eq",
+              "field": "focused",
+              "value": true
+            },
+            {
+              "operator": "eq",
+              "field": "buttonDisabled",
+              "value": false
+            }
+          ]
+        },
+        "next": "ac14-key-enter-submit",
+        "id": "ac14-focus-size-for-enter"
+      },
+      "ac14-key-enter-submit": {
+        "action": "key_press",
+        "key": "Enter",
+        "next": "ac17-wait-market-detail",
+        "id": "ac14-key-enter-submit"
+      },
+      "ac17-wait-market-detail": {
+        "action": "wait_for",
+        "test_id": "perps-market-detail-page",
+        "timeout_ms": 20000,
+        "next": "ac17-wait-position-live",
+        "id": "ac17-wait-market-detail"
+      },
+      "ac17-wait-position-live": {
+        "action": "wait_for",
+        "test_id": "perps-position-cta-buttons",
+        "timeout_ms": 20000,
+        "next": "ac17-assert-route-position",
+        "id": "ac17-wait-position-live"
+      },
+      "ac17-assert-route-position": {
+        "action": "eval_sync",
+        "expression": "(function(){return JSON.stringify({hash:location.hash,hasPosition:!!document.querySelector('[data-testid=\"perps-position-cta-buttons\"]'),hasSubmittingToast:document.body.textContent.includes('Submitting your trade')});})()",
+        "assert": {
+          "all": [
+            {
+              "operator": "contains",
+              "field": "hash",
+              "value": "/perps/market/ETH"
+            },
+            {
+              "operator": "eq",
+              "field": "hasPosition",
+              "value": true
+            },
+            {
+              "operator": "eq",
+              "field": "hasSubmittingToast",
+              "value": false
+            }
+          ]
+        },
+        "next": "ac17-screenshot-enter-submit",
+        "id": "ac17-assert-route-position"
+      },
+      "ac17-screenshot-enter-submit": {
+        "action": "screenshot",
+        "filename": "evidence-ac17-enter-submit-position.png",
+        "note": "AC17: Enter submits a valid $15 market order, redirects to ETH market detail, and shows a live position without a stuck submitting toast.",
+        "next": "ac8-open-margin-menu",
+        "id": "ac17-screenshot-enter-submit"
+      },
+      "ac8-open-margin-menu": {
+        "action": "press",
+        "test_id": "perps-margin-card",
+        "next": "ac8-open-add-margin",
+        "id": "ac8-open-margin-menu"
+      },
+      "ac8-open-add-margin": {
+        "action": "press",
+        "test_id": "perps-margin-menu-add",
+        "next": "ac8-wait-add-margin-input",
+        "id": "ac8-open-add-margin"
+      },
+      "ac8-wait-add-margin-input": {
+        "action": "wait_for",
+        "test_id": "perps-edit-margin-amount-input",
+        "timeout_ms": 10000,
+        "next": "ac8-assert-add-margin-focused",
+        "id": "ac8-wait-add-margin-input"
+      },
+      "ac8-assert-add-margin-focused": {
+        "action": "eval_sync",
+        "expression": "(function(){var input=document.querySelector('[data-testid=\"perps-edit-margin-amount-input\"] input');return JSON.stringify({focused:document.activeElement===input});})()",
+        "assert": {
+          "operator": "eq",
+          "field": "focused",
+          "value": true
+        },
+        "next": "ac8-screenshot-add-margin-focused",
+        "id": "ac8-assert-add-margin-focused"
+      },
+      "ac8-screenshot-add-margin-focused": {
+        "action": "screenshot",
+        "filename": "evidence-ac8-add-margin-focused.png",
+        "note": "AC8: Add margin modal opens with the margin amount input focused.",
+        "next": "setup-close-add-margin-modal",
+        "id": "ac8-screenshot-add-margin-focused"
+      },
+      "setup-close-add-margin-modal": {
+        "action": "key_press",
+        "key": "Escape",
+        "next": "ac9-open-margin-menu",
+        "id": "setup-close-add-margin-modal"
+      },
+      "ac9-open-margin-menu": {
+        "action": "press",
+        "test_id": "perps-margin-card",
+        "next": "ac9-open-remove-margin",
+        "id": "ac9-open-margin-menu"
+      },
+      "ac9-open-remove-margin": {
+        "action": "press",
+        "test_id": "perps-margin-menu-remove",
+        "next": "ac9-wait-remove-margin-input",
+        "id": "ac9-open-remove-margin"
+      },
+      "ac9-wait-remove-margin-input": {
+        "action": "wait_for",
+        "test_id": "perps-edit-margin-amount-input",
+        "timeout_ms": 10000,
+        "next": "ac9-assert-remove-margin-focused",
+        "id": "ac9-wait-remove-margin-input"
+      },
+      "ac9-assert-remove-margin-focused": {
+        "action": "eval_sync",
+        "expression": "(function(){var input=document.querySelector('[data-testid=\"perps-edit-margin-amount-input\"] input');return JSON.stringify({focused:document.activeElement===input});})()",
+        "assert": {
+          "operator": "eq",
+          "field": "focused",
+          "value": true
+        },
+        "next": "ac9-screenshot-remove-margin-focused",
+        "id": "ac9-assert-remove-margin-focused"
+      },
+      "ac9-screenshot-remove-margin-focused": {
+        "action": "screenshot",
+        "filename": "evidence-ac9-remove-margin-focused.png",
+        "note": "AC9: Remove margin modal opens with the margin amount input focused.",
+        "next": "setup-close-remove-margin-modal",
+        "id": "ac9-screenshot-remove-margin-focused"
+      },
+      "setup-close-remove-margin-modal": {
+        "action": "key_press",
+        "key": "Escape",
+        "next": "ac10-open-tpsl",
+        "id": "setup-close-remove-margin-modal"
+      },
+      "ac10-open-tpsl": {
+        "action": "press",
+        "test_id": "perps-auto-close-row",
+        "next": "ac10-wait-tp-input",
+        "id": "ac10-open-tpsl"
+      },
+      "ac10-wait-tp-input": {
+        "action": "wait_for",
+        "test_id": "perps-update-tpsl-tp-price-input",
+        "timeout_ms": 10000,
+        "next": "ac10-assert-tp-focused",
+        "id": "ac10-wait-tp-input"
+      },
+      "ac10-assert-tp-focused": {
+        "action": "eval_sync",
+        "expression": "(function(){var input=document.querySelector('[data-testid=\"perps-update-tpsl-tp-price-input\"] input');return JSON.stringify({focused:document.activeElement===input});})()",
+        "assert": {
+          "operator": "eq",
+          "field": "focused",
+          "value": true
+        },
+        "next": "ac10-screenshot-tp-focused",
+        "id": "ac10-assert-tp-focused"
+      },
+      "ac10-screenshot-tp-focused": {
+        "action": "screenshot",
+        "filename": "evidence-ac10-tpsl-focused.png",
+        "note": "AC10: TP/SL modal opens with the TP trigger price input focused.",
+        "next": "setup-close-tpsl-modal",
+        "id": "ac10-screenshot-tp-focused"
+      },
+      "setup-close-tpsl-modal": {
+        "action": "key_press",
+        "key": "Escape",
+        "next": "ac11-open-close-position",
+        "id": "setup-close-tpsl-modal"
+      },
+      "ac11-open-close-position": {
+        "action": "press",
+        "test_id": "perps-close-cta-button",
+        "next": "ac11-wait-close-submit",
+        "id": "ac11-open-close-position"
+      },
+      "ac11-wait-close-submit": {
+        "action": "wait_for",
+        "test_id": "perps-close-position-modal-submit",
+        "timeout_ms": 10000,
+        "next": "ac11-assert-close-focused",
+        "id": "ac11-wait-close-submit"
+      },
+      "ac11-assert-close-focused": {
+        "action": "eval_sync",
+        "expression": "(function(){var button=document.querySelector('[data-testid=\"perps-close-position-modal-submit\"]');return JSON.stringify({focused:document.activeElement===button});})()",
+        "assert": {
+          "operator": "eq",
+          "field": "focused",
+          "value": true
+        },
+        "next": "ac11-screenshot-close-focused",
+        "id": "ac11-assert-close-focused"
+      },
+      "ac11-screenshot-close-focused": {
+        "action": "screenshot",
+        "filename": "evidence-ac11-close-position-focused.png",
+        "note": "AC11: Close position modal opens with the Close Position button focused.",
+        "next": "done",
+        "id": "ac11-screenshot-close-focused"
+      },
+      "done": {
+        "action": "end",
+        "status": "pass",
+        "message": "PR 41949 keyboard-first order entry UI validation completed",
+        "id": "done"
+      }
+    }
+  }
+}

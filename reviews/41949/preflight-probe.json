@@ -1,0 +1,33 @@
+{
+  "title": "PR 41949 preflight state probe",
+  "validate": {
+    "workflow": {
+      "pre_conditions": ["wallet.unlocked", "perps.feature_enabled"],
+      "entry": "probe-balance",
+      "nodes": {
+        "probe-balance": {
+          "action": "eval_ref",
+          "ref": "perps-balance",
+          "save_as": "balance",
+          "next": "probe-positions"
+        },
+        "probe-positions": {
+          "action": "eval_ref",
+          "ref": "perps-positions",
+          "save_as": "positions",
+          "next": "probe-markets"
+        },
+        "probe-markets": {
+          "action": "eval_ref",
+          "ref": "perps-markets",
+          "save_as": "markets",
+          "next": "done"
+        },
+        "done": {
+          "action": "end",
+          "status": "pass"
+        }
+      }
+    }
+  }
+}

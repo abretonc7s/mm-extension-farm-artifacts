@@ -1,0 +1,10 @@
+flowchart TD
+  %% PR 41949 preflight state probe
+  __entry__(["ENTRY"]) --> node_probe_balance
+  node_probe_balance["probe-balance<br/>perps-balance"]
+  node_probe_positions["probe-positions<br/>perps-positions"]
+  node_probe_markets["probe-markets<br/>perps-markets"]
+  node_done(["done<br/>PASS"])
+  node_probe_balance --> node_probe_positions
+  node_probe_positions --> node_probe_markets
+  node_probe_markets --> node_done
