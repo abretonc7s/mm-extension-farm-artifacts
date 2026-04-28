@@ -1,0 +1,38 @@
+{
+  "title": "TAT-2691 Phase C-post — sidepanel reopen: pendingRedirectRoute wins, perps cleared (AC7)",
+  "summary": "After the shell-driven cycle, the sidepanel home mount sees both seeded entries. Asserts hash lands on /settings/general (pending precedence), the persisted perps entry is cleared (defensive even when pending wins), and the pending entry is also cleared after consumption.",
+  "validate": {
+    "workflow": {
+      "pre_conditions": ["wallet.unlocked"],
+      "entry": "ac7-wait-redirect",
+      "nodes": {
+        "ac7-wait-redirect": {
+          "action": "wait_for",
+          "expression": "location.hash === '#/settings/general' && stateHooks.store.getState().metamask.lastVisitedPerpsRoute === null",
+          "timeout_ms": 10000,
+          "next": "ac7-assert-state"
+        },
+        "ac7-assert-state": {
+          "action": "eval_sync",
+          "expression": "JSON.stringify({ url: location.href, hash: location.hash, lvpr: stateHooks.store.getState().metamask.lastVisitedPerpsRoute, pending: stateHooks.store.getState().metamask.pendingRedirectRoute })",
+          "save_as": "ac7_state",
+          "assert": {
+            "all": [
+              { "field": "hash", "operator": "eq", "value": "#/settings/general" },
+              { "field": "url", "operator": "contains", "value": "sidepanel.html" },
+              { "field": "lvpr", "operator": "falsy" },
+              { "field": "pending", "operator": "falsy" }
+            ]
+          },
+          "next": "ac7-screenshot"
+        },
+        "ac7-screenshot": {
+          "action": "screenshot",
+          "filename": "evidence-ac7-sidepanel-postcycle-pending-wins",
+          "next": "done"
+        },
+        "done": { "action": "end", "status": "pass" }
+      }
+    }
+  }
+}

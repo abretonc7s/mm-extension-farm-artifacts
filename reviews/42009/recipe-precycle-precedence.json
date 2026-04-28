@@ -1,0 +1,55 @@
+{
+  "title": "TAT-2691 Phase C-pre — seed both pendingRedirectRoute and lastVisitedPerpsRoute (precedence test)",
+  "summary": "Seeds AppStateController with BOTH pendingRedirectRoute={path:'/settings/general'} and lastVisitedPerpsRoute={'/perps/market/BTC', timestamp:now}. After the shell-driven sidepanel cycle, the new sidepanel home mount should consume the pending entry first (precedence), navigate to /settings/general, and clear the persisted perps entry without triggering a perps redirect.",
+  "validate": {
+    "workflow": {
+      "pre_conditions": ["wallet.unlocked"],
+      "entry": "step1-clear",
+      "nodes": {
+        "step1-clear": {
+          "action": "eval_async",
+          "expression": "Promise.all([stateHooks.submitRequestToBackground('setLastVisitedPerpsRoute', [null]), stateHooks.submitRequestToBackground('setPendingRedirectRoute', [null])]).then(() => 'cleared')",
+          "save_as": "cleared",
+          "next": "step1b-leave-home"
+        },
+        "step1b-leave-home": {
+          "action": "eval_sync",
+          "expression": "(function(){location.hash='#/settings/general'; return location.hash;})()",
+          "save_as": "left_home",
+          "next": "step1c-wait-off-home"
+        },
+        "step1c-wait-off-home": {
+          "action": "wait_for",
+          "expression": "location.hash === '#/settings/general'",
+          "timeout_ms": 5000,
+          "next": "step2-seed-both"
+        },
+        "step2-seed-both": {
+          "action": "eval_async",
+          "expression": "Promise.all([stateHooks.submitRequestToBackground('setLastVisitedPerpsRoute', ['/perps/market/BTC']), stateHooks.submitRequestToBackground('setPendingRedirectRoute', [{ path: '/settings/general' }])]).then(() => 'seeded')",
+          "save_as": "seeded",
+          "next": "step3-wait-both"
+        },
+        "step3-wait-both": {
+          "action": "wait_for",
+          "expression": "(function(){var m=stateHooks.store.getState().metamask;return !!(m.lastVisitedPerpsRoute && m.pendingRedirectRoute);})()",
+          "timeout_ms": 5000,
+          "next": "step4-assert-seeded"
+        },
+        "step4-assert-seeded": {
+          "action": "eval_sync",
+          "expression": "JSON.stringify({ lvpr: stateHooks.store.getState().metamask.lastVisitedPerpsRoute, pending: stateHooks.store.getState().metamask.pendingRedirectRoute })",
+          "save_as": "seeded_state",
+          "assert": {
+            "all": [
+              { "field": "lvpr.path", "operator": "eq", "value": "/perps/market/BTC" },
+              { "field": "pending.path", "operator": "eq", "value": "/settings/general" }
+            ]
+          },
+          "next": "done"
+        },
+        "done": { "action": "end", "status": "pass" }
+      }
+    }
+  }
+}

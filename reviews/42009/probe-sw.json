@@ -1,0 +1,18 @@
+{
+  "title": "probe-service-worker-controller",
+  "validate": {
+    "workflow": {
+      "pre_conditions": ["wallet.unlocked"],
+      "entry": "probe",
+      "nodes": {
+        "probe": {
+          "action": "eval_sync",
+          "expression": "JSON.stringify({ keys: Object.keys(stateHooks).slice(0,30), submitToBg: typeof stateHooks.submitRequestToBackground })",
+          "save_as": "out",
+          "next": "done"
+        },
+        "done": { "action": "end", "status": "pass" }
+      }
+    }
+  }
+}

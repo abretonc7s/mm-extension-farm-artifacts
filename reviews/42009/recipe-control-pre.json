@@ -1,0 +1,42 @@
+{
+  "title": "TAT-2691 control-pre — clear state, navigate to perps, then null",
+  "validate": {
+    "workflow": {
+      "pre_conditions": ["wallet.unlocked"],
+      "entry": "step1-clear",
+      "nodes": {
+        "step1-clear": {
+          "action": "eval_async",
+          "expression": "Promise.all([stateHooks.submitRequestToBackground('setLastVisitedPerpsRoute', [null]), stateHooks.submitRequestToBackground('setPendingRedirectRoute', [null])]).then(() => 'cleared')",
+          "save_as": "cleared",
+          "next": "step2-go-home"
+        },
+        "step2-go-home": {
+          "action": "eval_sync",
+          "expression": "(function(){location.hash='#/'; return location.hash;})()",
+          "save_as": "hash_now",
+          "next": "step3-wait-cleanup"
+        },
+        "step3-wait-cleanup": {
+          "action": "wait_for",
+          "expression": "location.hash === '#/' && stateHooks.store.getState().metamask.lastVisitedPerpsRoute === null",
+          "timeout_ms": 5000,
+          "next": "step4-final-assert"
+        },
+        "step4-final-assert": {
+          "action": "eval_sync",
+          "expression": "JSON.stringify({ hash: location.hash, lvpr: stateHooks.store.getState().metamask.lastVisitedPerpsRoute })",
+          "save_as": "final",
+          "assert": {
+            "all": [
+              { "field": "hash", "operator": "eq", "value": "#/" },
+              { "field": "lvpr", "operator": "falsy" }
+            ]
+          },
+          "next": "done"
+        },
+        "done": { "action": "end", "status": "pass" }
+      }
+    }
+  }
+}

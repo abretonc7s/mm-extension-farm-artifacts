@@ -1,0 +1,40 @@
+{
+  "title": "TAT-2691 Phase B-post — sidepanel reopen replays perps redirect (AC2/AC3/AC6)",
+  "summary": "After sidepanel-toggle.sh cycle closed and reopened the side panel, the new sidepanel JS context boots fresh on sidepanel.html. The home component's componentDidMount reads the surviving lastVisitedPerpsRoute and dispatches setRedirectAfterDefaultPage; checkRedirectAfterDefaultPage navigates to /perps/market/BTC. Asserts the post-cycle URL ends at /perps/market/BTC and PerpsLayout has re-mounted (lvpr is re-persisted with a fresh timestamp).",
+  "validate": {
+    "workflow": {
+      "pre_conditions": ["wallet.unlocked"],
+      "entry": "ac3-wait-redirect",
+      "nodes": {
+        "ac3-wait-redirect": {
+          "action": "wait_for",
+          "expression": "location.hash === '#/perps/market/BTC'",
+          "timeout_ms": 10000,
+          "next": "ac3-assert-redirect"
+        },
+        "ac3-assert-redirect": {
+          "action": "eval_sync",
+          "expression": "JSON.stringify({ url: location.href, hash: location.hash, lvpr: stateHooks.store.getState().metamask.lastVisitedPerpsRoute })",
+          "save_as": "ac3_state",
+          "assert": {
+            "all": [
+              { "field": "hash", "operator": "eq", "value": "#/perps/market/BTC" },
+              { "field": "url", "operator": "contains", "value": "sidepanel.html" },
+              { "field": "lvpr.path", "operator": "eq", "value": "/perps/market/BTC" }
+            ]
+          },
+          "next": "ac3-screenshot"
+        },
+        "ac3-screenshot": {
+          "action": "screenshot",
+          "filename": "evidence-ac3-sidepanel-postcycle-on-btc",
+          "next": "done"
+        },
+        "done": {
+          "action": "end",
+          "status": "pass"
+        }
+      }
+    }
+  }
+}

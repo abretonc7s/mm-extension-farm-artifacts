@@ -1,0 +1,51 @@
+{
+  "title": "TAT-2691 Phase B-pre — seed perps state in sidepanel before cycle",
+  "summary": "Drives the sidepanel to /perps/market/BTC and waits for lastVisitedPerpsRoute to persist. The shell-driven sidepanel-toggle.sh cycle then closes + reopens the side panel JS context (real popup teardown), and the post-cycle recipe asserts the persisted entry replayed as a redirect.",
+  "validate": {
+    "workflow": {
+      "pre_conditions": ["wallet.unlocked"],
+      "entry": "setup-clear-baseline",
+      "nodes": {
+        "setup-clear-baseline": {
+          "action": "eval_async",
+          "expression": "Promise.all([stateHooks.submitRequestToBackground('setLastVisitedPerpsRoute', [null]), stateHooks.submitRequestToBackground('setPendingRedirectRoute', [null])]).then(() => 'cleared')",
+          "save_as": "baseline_cleared",
+          "next": "setup-go-home"
+        },
+        "setup-go-home": {
+          "action": "eval_sync",
+          "expression": "(function(){location.hash='#/'; return location.hash;})()",
+          "save_as": "go_home",
+          "next": "setup-wait-home"
+        },
+        "setup-wait-home": {
+          "action": "wait_for",
+          "expression": "location.hash === '#/' && stateHooks.store.getState().metamask.lastVisitedPerpsRoute === null",
+          "timeout_ms": 5000,
+          "next": "precycle-navigate-perps"
+        },
+        "precycle-navigate-perps": {
+          "action": "eval_sync",
+          "expression": "(function(){location.hash='#/perps/market/BTC'; return location.hash;})()",
+          "save_as": "precycle_nav",
+          "next": "precycle-wait-persisted"
+        },
+        "precycle-wait-persisted": {
+          "action": "wait_for",
+          "expression": "(function(){var lvpr=stateHooks.store.getState().metamask.lastVisitedPerpsRoute;return !!(lvpr && lvpr.path === '/perps/market/BTC');})()",
+          "timeout_ms": 8000,
+          "next": "precycle-screenshot"
+        },
+        "precycle-screenshot": {
+          "action": "screenshot",
+          "filename": "evidence-precycle-sidepanel-on-btc",
+          "next": "done"
+        },
+        "done": {
+          "action": "end",
+          "status": "pass"
+        }
+      }
+    }
+  }
+}
