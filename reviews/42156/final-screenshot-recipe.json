@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "title": "Final screenshot after PR 42156 validation",
+  "validate": {
+    "workflow": {
+      "entry": "teardown-final-screenshot",
+      "nodes": {
+        "teardown-final-screenshot": {
+          "action": "screenshot",
+          "filename": "final",
+          "note": "Final: extension state after TP/SL clear-button validation",
+          "next": "teardown-done"
+        },
+        "teardown-done": {
+          "action": "end",
+          "status": "pass"
+        }
+      }
+    }
+  }
+}

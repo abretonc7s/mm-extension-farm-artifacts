@@ -1,0 +1,291 @@
+[
+  {
+    "id": "setup-navigate-btc-market",
+    "action": "call",
+    "ok": true,
+    "raw": {
+      "passed": 2,
+      "failed": 0,
+      "trace": [
+        {
+          "id": "nav-detail",
+          "action": "navigate",
+          "ok": true,
+          "raw": {
+            "navigated": true,
+            "hash": "#/perps/market/BTC"
+          },
+          "durationMs": 4
+        },
+        {
+          "id": "wait-detail",
+          "action": "wait_for",
+          "ok": true,
+          "raw": {
+            "found": true,
+            "target": "testId:perps-market-detail-page"
+          },
+          "durationMs": 52
+        },
+        {
+          "id": "done",
+          "action": "end",
+          "status": "pass",
+          "durationMs": 0
+        }
+      ],
+      "vars": {}
+    },
+    "durationMs": 81
+  },
+  {
+    "id": "setup-open-long-order",
+    "action": "press",
+    "ok": true,
+    "raw": {
+      "clicked": true,
+      "target": "testId:perps-long-cta-button"
+    },
+    "durationMs": 86
+  },
+  {
+    "id": "setup-wait-order-entry",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-order-entry-page"
+    },
+    "durationMs": 60
+  },
+  {
+    "id": "setup-set-order-size",
+    "action": "set_input",
+    "ok": true,
+    "raw": {
+      "filled": true,
+      "fallback": true
+    },
+    "durationMs": 44
+  },
+  {
+    "id": "setup-scroll-auto-close",
+    "action": "scroll",
+    "ok": true,
+    "raw": null,
+    "durationMs": 32
+  },
+  {
+    "id": "setup-enable-auto-close",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"clicked\":true}",
+    "durationMs": 3
+  },
+  {
+    "id": "setup-wait-tpsl-inputs",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:tp-price-input"
+    },
+    "durationMs": 45
+  },
+  {
+    "id": "ac5-assert-clear-hidden-initially",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"tpClearHidden\":true,\"slClearHidden\":true,\"tpPriceEmpty\":true,\"tpPercentEmpty\":true,\"slPriceEmpty\":true,\"slPercentEmpty\":true}",
+    "durationMs": 1
+  },
+  {
+    "id": "ac5-screenshot-empty-auto-close",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "screenshots/evidence-ac5-empty-auto-close-1777375129083.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 119
+  },
+  {
+    "id": "ac1-enter-tp-price",
+    "action": "set_input",
+    "ok": true,
+    "raw": {
+      "filled": true,
+      "fallback": true
+    },
+    "durationMs": 57
+  },
+  {
+    "id": "ac1-wait-tp-clear",
+    "action": "wait_for",
+    "ok": true,
+    "raw": true,
+    "durationMs": 0
+  },
+  {
+    "id": "ac1-assert-tp-clear-layout",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"clearVisible\":true,\"pnlLabelVisible\":true,\"pnlValueVisible\":true,\"clearLeftOfPnl\":true,\"sameRow\":true,\"rowVisible\":true}",
+    "durationMs": 0
+  },
+  {
+    "id": "ac1-scroll-tp-clear-layout",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"scrolled\":true}",
+    "durationMs": 1
+  },
+  {
+    "id": "ac1-screenshot-tp-clear-layout",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "screenshots/evidence-ac1-tp-clear-layout-1777375129267.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 78
+  },
+  {
+    "id": "ac2-click-tp-clear",
+    "action": "press",
+    "ok": true,
+    "raw": {
+      "clicked": true,
+      "target": "testId:tp-clear-button"
+    },
+    "durationMs": 90
+  },
+  {
+    "id": "ac2-wait-tp-cleared",
+    "action": "wait_for",
+    "ok": true,
+    "raw": true,
+    "durationMs": 1
+  },
+  {
+    "id": "ac2-assert-tp-cleared",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"tpClearHidden\":true,\"tpPriceEmpty\":true,\"tpPercentEmpty\":true}",
+    "durationMs": 0
+  },
+  {
+    "id": "ac2-screenshot-tp-cleared",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "screenshots/evidence-ac2-tp-cleared-1777375129442.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 95
+  },
+  {
+    "id": "ac3-enter-sl-price",
+    "action": "set_input",
+    "ok": true,
+    "raw": {
+      "filled": true,
+      "fallback": true
+    },
+    "durationMs": 99
+  },
+  {
+    "id": "ac3-wait-sl-clear",
+    "action": "wait_for",
+    "ok": true,
+    "raw": true,
+    "durationMs": 1
+  },
+  {
+    "id": "ac3-assert-sl-clear-layout",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"clearVisible\":true,\"pnlLabelVisible\":true,\"pnlValueVisible\":true,\"clearLeftOfPnl\":true,\"sameRow\":true,\"rowVisible\":true}",
+    "durationMs": 1
+  },
+  {
+    "id": "ac3-scroll-sl-clear-layout",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"scrolled\":true}",
+    "durationMs": 1
+  },
+  {
+    "id": "ac3-screenshot-sl-clear-layout",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "screenshots/evidence-ac3-sl-clear-layout-1777375129650.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 96
+  },
+  {
+    "id": "ac4-click-sl-clear",
+    "action": "press",
+    "ok": true,
+    "raw": {
+      "clicked": true,
+      "target": "testId:sl-clear-button"
+    },
+    "durationMs": 145
+  },
+  {
+    "id": "ac4-wait-sl-cleared",
+    "action": "wait_for",
+    "ok": true,
+    "raw": true,
+    "durationMs": 0
+  },
+  {
+    "id": "ac4-assert-sl-cleared",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"slClearHidden\":true,\"slPriceEmpty\":true,\"slPercentEmpty\":true}",
+    "durationMs": 0
+  },
+  {
+    "id": "ac4-screenshot-sl-cleared",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "screenshots/evidence-ac4-sl-cleared-1777375129903.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 124
+  },
+  {
+    "id": "ac5-assert-clear-hidden-after-clears",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"tpClearHidden\":true,\"slClearHidden\":true}",
+    "durationMs": 1
+  },
+  {
+    "id": "ac5-screenshot-clear-hidden-final",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "screenshots/evidence-ac5-clear-hidden-final-1777375130034.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 117
+  },
+  {
+    "id": "teardown-done",
+    "action": "end",
+    "status": "pass",
+    "durationMs": 0
+  }
+]

@@ -1,0 +1,62 @@
+flowchart TD
+  %% PR 42156 TP/SL clear buttons in perps order entry
+  __entry__(["ENTRY"]) --> node_setup_navigate_btc_market
+  node_setup_navigate_btc_market[["setup-navigate-btc-market<br/>perps/navigate-to-market-detail"]]
+  node_setup_open_long_order["setup-open-long-order<br/>press"]
+  node_setup_wait_order_entry["setup-wait-order-entry<br/>wait_for"]
+  node_setup_set_order_size["setup-set-order-size<br/>set_input"]
+  node_setup_scroll_auto_close["setup-scroll-auto-close<br/>scroll"]
+  node_setup_enable_auto_close["setup-enable-auto-close<br/>eval_sync"]
+  node_setup_wait_tpsl_inputs["setup-wait-tpsl-inputs<br/>wait_for"]
+  node_ac5_assert_clear_hidden_initially["ac5-assert-clear-hidden-initially<br/>eval_sync"]
+  node_ac5_screenshot_empty_auto_close["ac5-screenshot-empty-auto-close<br/>screenshot"]
+  node_ac1_enter_tp_price["ac1-enter-tp-price<br/>set_input"]
+  node_ac1_wait_tp_clear["ac1-wait-tp-clear<br/>wait_for"]
+  node_ac1_assert_tp_clear_layout["ac1-assert-tp-clear-layout<br/>eval_sync"]
+  node_ac1_scroll_tp_clear_layout["ac1-scroll-tp-clear-layout<br/>eval_sync"]
+  node_ac1_screenshot_tp_clear_layout["ac1-screenshot-tp-clear-layout<br/>screenshot"]
+  node_ac2_click_tp_clear["ac2-click-tp-clear<br/>press"]
+  node_ac2_wait_tp_cleared["ac2-wait-tp-cleared<br/>wait_for"]
+  node_ac2_assert_tp_cleared["ac2-assert-tp-cleared<br/>eval_sync"]
+  node_ac2_screenshot_tp_cleared["ac2-screenshot-tp-cleared<br/>screenshot"]
+  node_ac3_enter_sl_price["ac3-enter-sl-price<br/>set_input"]
+  node_ac3_wait_sl_clear["ac3-wait-sl-clear<br/>wait_for"]
+  node_ac3_assert_sl_clear_layout["ac3-assert-sl-clear-layout<br/>eval_sync"]
+  node_ac3_scroll_sl_clear_layout["ac3-scroll-sl-clear-layout<br/>eval_sync"]
+  node_ac3_screenshot_sl_clear_layout["ac3-screenshot-sl-clear-layout<br/>screenshot"]
+  node_ac4_click_sl_clear["ac4-click-sl-clear<br/>press"]
+  node_ac4_wait_sl_cleared["ac4-wait-sl-cleared<br/>wait_for"]
+  node_ac4_assert_sl_cleared["ac4-assert-sl-cleared<br/>eval_sync"]
+  node_ac4_screenshot_sl_cleared["ac4-screenshot-sl-cleared<br/>screenshot"]
+  node_ac5_assert_clear_hidden_after_clears["ac5-assert-clear-hidden-after-clears<br/>eval_sync"]
+  node_ac5_screenshot_clear_hidden_final["ac5-screenshot-clear-hidden-final<br/>screenshot"]
+  node_teardown_done(["teardown-done<br/>PASS"])
+  node_setup_navigate_btc_market --> node_setup_open_long_order
+  node_setup_open_long_order --> node_setup_wait_order_entry
+  node_setup_wait_order_entry --> node_setup_set_order_size
+  node_setup_set_order_size --> node_setup_scroll_auto_close
+  node_setup_scroll_auto_close --> node_setup_enable_auto_close
+  node_setup_enable_auto_close --> node_setup_wait_tpsl_inputs
+  node_setup_wait_tpsl_inputs --> node_ac5_assert_clear_hidden_initially
+  node_ac5_assert_clear_hidden_initially --> node_ac5_screenshot_empty_auto_close
+  node_ac5_screenshot_empty_auto_close --> node_ac1_enter_tp_price
+  node_ac1_enter_tp_price --> node_ac1_wait_tp_clear
+  node_ac1_wait_tp_clear --> node_ac1_assert_tp_clear_layout
+  node_ac1_assert_tp_clear_layout --> node_ac1_scroll_tp_clear_layout
+  node_ac1_scroll_tp_clear_layout --> node_ac1_screenshot_tp_clear_layout
+  node_ac1_screenshot_tp_clear_layout --> node_ac2_click_tp_clear
+  node_ac2_click_tp_clear --> node_ac2_wait_tp_cleared
+  node_ac2_wait_tp_cleared --> node_ac2_assert_tp_cleared
+  node_ac2_assert_tp_cleared --> node_ac2_screenshot_tp_cleared
+  node_ac2_screenshot_tp_cleared --> node_ac3_enter_sl_price
+  node_ac3_enter_sl_price --> node_ac3_wait_sl_clear
+  node_ac3_wait_sl_clear --> node_ac3_assert_sl_clear_layout
+  node_ac3_assert_sl_clear_layout --> node_ac3_scroll_sl_clear_layout
+  node_ac3_scroll_sl_clear_layout --> node_ac3_screenshot_sl_clear_layout
+  node_ac3_screenshot_sl_clear_layout --> node_ac4_click_sl_clear
+  node_ac4_click_sl_clear --> node_ac4_wait_sl_cleared
+  node_ac4_wait_sl_cleared --> node_ac4_assert_sl_cleared
+  node_ac4_assert_sl_cleared --> node_ac4_screenshot_sl_cleared
+  node_ac4_screenshot_sl_cleared --> node_ac5_assert_clear_hidden_after_clears
+  node_ac5_assert_clear_hidden_after_clears --> node_ac5_screenshot_clear_hidden_final
+  node_ac5_screenshot_clear_hidden_final --> node_teardown_done

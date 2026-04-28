@@ -1,0 +1,41 @@
+{
+  "title": "Preflight probe for PR 42156 review",
+  "description": "Collect account and perps state required for TP/SL clear-button validation.",
+  "validate": {
+    "workflow": {
+      "pre_conditions": ["wallet.unlocked", "perps.feature_enabled"],
+      "entry": "gate-accounts",
+      "nodes": {
+        "gate-accounts": {
+          "action": "eval_ref",
+          "ref": "accounts",
+          "save_as": "accounts",
+          "next": "gate-perps-balance"
+        },
+        "gate-perps-balance": {
+          "action": "eval_ref",
+          "ref": "perps-balance",
+          "save_as": "perps_balance",
+          "next": "gate-perps-positions"
+        },
+        "gate-perps-positions": {
+          "action": "eval_ref",
+          "ref": "perps-positions",
+          "save_as": "perps_positions",
+          "next": "gate-perps-markets"
+        },
+        "gate-perps-markets": {
+          "action": "eval_ref",
+          "ref": "perps-markets",
+          "save_as": "perps_markets",
+          "next": "teardown-done"
+        },
+        "teardown-done": {
+          "action": "end",
+          "status": "pass",
+          "message": "Preflight probes completed"
+        }
+      }
+    }
+  }
+}

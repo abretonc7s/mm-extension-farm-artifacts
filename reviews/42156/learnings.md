@@ -1,0 +1,8 @@
+- Recipe `eval_ref` names are loaded flat from `evals.json`; refs such as `accounts` and `perps-balance` worked, while namespaced refs such as `extension-core/accounts` did not.
+- The styled `ToggleButton` input can be intercepted by its wrapper for pointer clicks; clicking the closest label through a setup `eval_sync` reliably toggled Auto Close.
+- For perps order-entry visual evidence, `scrollIntoView({ block: 'center' })` before screenshots avoids the sticky Add funds footer and makes TP/SL rows reviewable.
+- TP/SL P&L rows require an order size; the recipe sets `amount-input-field` before entering TP/SL prices so estimated P&L appears.
+- Mobile clears TP/SL through `handleTakeProfitOff` and `handleStopLossOff`, which reset price and percentage state; extension derives percentage from price, so clearing the canonical price value resets the derived percentage.
+- The active slot had CDP, wallet unlock, perps feature, and BTC market data available; no funded available balance was required for this UI validation.
+- The generated recipe's issue capture was clean: 0 warnings, 0 errors, and 0 runtime exceptions.
+- The video recorder started but did not produce `review.mp4`; screenshot evidence and trace artifacts were still complete.

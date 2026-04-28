@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "title": "Baseline screenshot before PR 42156 validation",
+  "validate": {
+    "workflow": {
+      "entry": "setup-baseline-screenshot",
+      "nodes": {
+        "setup-baseline-screenshot": {
+          "action": "screenshot",
+          "filename": "baseline",
+          "note": "Baseline: extension state before TP/SL clear-button validation",
+          "next": "teardown-done"
+        },
+        "teardown-done": {
+          "action": "end",
+          "status": "pass"
+        }
+      }
+    }
+  }
+}

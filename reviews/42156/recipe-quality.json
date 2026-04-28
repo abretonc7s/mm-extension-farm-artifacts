@@ -1,0 +1,63 @@
+{
+  "version": 1,
+  "verdict": "pass",
+  "compact": {
+    "verdict": "PASS",
+    "reasons": [
+      "AC1-5 are covered by ac<N>-prefixed nodes with assertions and screenshots.",
+      "Trace recorded 29/29 executable nodes passed plus teardown.",
+      "Visual TP/SL layout claims include screenshots and bounding-box assertions."
+    ],
+    "better_version_guidance": []
+  },
+  "dimensions": {
+    "graph_integrity": {
+      "status": "pass",
+      "reason": "Workflow graph dry-ran successfully and all main recipe nodes are reachable.",
+      "evidence": ["artifacts/recipe.json", "artifacts/recipe-run.log"]
+    },
+    "action_contract": {
+      "status": "pass",
+      "reason": "Recipe uses existing perps navigation flow, no manual actions, and no long wait actions.",
+      "evidence": ["artifacts/recipe.json"]
+    },
+    "ac_coverage": {
+      "status": "pass",
+      "reason": "Every AC has mapped ac<N>-prefixed interaction, assertion, and screenshot nodes.",
+      "evidence": ["artifacts/recipe-coverage.md", "artifacts/trace.json"]
+    },
+    "evidence_contract_basics": {
+      "status": "pass",
+      "reason": "Visual claims have screenshots; TP/SL row placement also has bounding-box eval proof.",
+      "evidence": [
+        "artifacts/evidence/evidence-ac1-tp-clear-layout.png",
+        "artifacts/evidence/evidence-ac3-sl-clear-layout.png",
+        "artifacts/trace.json"
+      ]
+    }
+  },
+  "structural_findings": [],
+  "contextual_findings": [],
+  "suggested_recipe_delta": [],
+  "training_fields": {
+    "farm": "metamask-extension",
+    "project": "metamask-extension-farm",
+    "flow_type": "review-pr",
+    "task_type": "review-pr",
+    "claim_is_visual": true,
+    "proof_mode": "mixed",
+    "anti_patterns": [],
+    "good_patterns": [
+      "Used perps/navigate-to-market-detail flow for setup.",
+      "Used AC-prefixed nodes and screenshot filenames.",
+      "Used bounding-box assertions for left/right visual layout claims."
+    ]
+  },
+  "meta": {
+    "producer": "worker",
+    "fallback_used": false,
+    "legacy_task": false,
+    "artifact_required": true,
+    "source_signals": ["recipe.json", "recipe-coverage.md", "trace.json", "recipe-run.log"]
+  }
+}

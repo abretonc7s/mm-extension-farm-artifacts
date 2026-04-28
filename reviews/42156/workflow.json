@@ -1,0 +1,390 @@
+{
+  "description": "Validate clear buttons for Take Profit and Stop Loss fields in the perps order-entry Auto Close panel.",
+  "hooks": {
+    "pre_conditions": [
+      "wallet.unlocked",
+      "perps.feature_enabled"
+    ],
+    "setup": [],
+    "teardown": []
+  },
+  "inputs": {},
+  "playback": {
+    "mode": "off",
+    "slow_ms": 1000
+  },
+  "sourcePath": "",
+  "title": "PR 42156 TP/SL clear buttons in perps order entry",
+  "workflow": {
+    "entry": "setup-navigate-btc-market",
+    "nodes": {
+      "setup-navigate-btc-market": {
+        "action": "call",
+        "ref": "perps/navigate-to-market-detail",
+        "params": {
+          "symbol": "BTC"
+        },
+        "next": "setup-open-long-order",
+        "id": "setup-navigate-btc-market"
+      },
+      "setup-open-long-order": {
+        "action": "press",
+        "test_id": "perps-long-cta-button",
+        "next": "setup-wait-order-entry",
+        "id": "setup-open-long-order"
+      },
+      "setup-wait-order-entry": {
+        "action": "wait_for",
+        "test_id": "perps-order-entry-page",
+        "timeout_ms": 10000,
+        "next": "setup-set-order-size",
+        "id": "setup-wait-order-entry"
+      },
+      "setup-set-order-size": {
+        "action": "set_input",
+        "test_id": "amount-input-field",
+        "value": "100",
+        "next": "setup-scroll-auto-close",
+        "id": "setup-set-order-size"
+      },
+      "setup-scroll-auto-close": {
+        "action": "scroll",
+        "test_id": "auto-close-toggle",
+        "next": "setup-enable-auto-close",
+        "id": "setup-scroll-auto-close"
+      },
+      "setup-enable-auto-close": {
+        "action": "eval_sync",
+        "expression": "(function(){const toggle=document.querySelector('[data-testid=\"auto-close-toggle\"]');const label=toggle?.closest('label');label?.click();return JSON.stringify({clicked:!!label});})()",
+        "assert": {
+          "field": "clicked",
+          "operator": "eq",
+          "value": true
+        },
+        "next": "setup-wait-tpsl-inputs",
+        "id": "setup-enable-auto-close"
+      },
+      "setup-wait-tpsl-inputs": {
+        "action": "wait_for",
+        "test_id": "tp-price-input",
+        "timeout_ms": 5000,
+        "next": "ac5-assert-clear-hidden-initially",
+        "id": "setup-wait-tpsl-inputs"
+      },
+      "ac5-assert-clear-hidden-initially": {
+        "action": "eval_sync",
+        "expression": "(function(){const byId=(id)=>document.querySelector(`[data-testid=\"${id}\"]`);const value=(id)=>byId(id)?.querySelector('input')?.value ?? null;return JSON.stringify({tpClearHidden:!byId('tp-clear-button'),slClearHidden:!byId('sl-clear-button'),tpPriceEmpty:value('tp-price-input')==='',tpPercentEmpty:value('tp-percent-input')==='',slPriceEmpty:value('sl-price-input')==='',slPercentEmpty:value('sl-percent-input')===''});})()",
+        "assert": {
+          "all": [
+            {
+              "field": "tpClearHidden",
+              "operator": "eq",
+              "value": true
+            },
+            {
+              "field": "slClearHidden",
+              "operator": "eq",
+              "value": true
+            },
+            {
+              "field": "tpPriceEmpty",
+              "operator": "eq",
+              "value": true
+            },
+            {
+              "field": "tpPercentEmpty",
+              "operator": "eq",
+              "value": true
+            },
+            {
+              "field": "slPriceEmpty",
+              "operator": "eq",
+              "value": true
+            },
+            {
+              "field": "slPercentEmpty",
+              "operator": "eq",
+              "value": true
+            }
+          ]
+        },
+        "next": "ac5-screenshot-empty-auto-close",
+        "id": "ac5-assert-clear-hidden-initially"
+      },
+      "ac5-screenshot-empty-auto-close": {
+        "action": "screenshot",
+        "filename": "evidence-ac5-empty-auto-close",
+        "note": "AC5: TP and SL fields are empty and no Clear buttons are shown",
+        "next": "ac1-enter-tp-price",
+        "id": "ac5-screenshot-empty-auto-close"
+      },
+      "ac1-enter-tp-price": {
+        "action": "set_input",
+        "test_id": "tp-price-input",
+        "value": "999999",
+        "next": "ac1-wait-tp-clear",
+        "id": "ac1-enter-tp-price"
+      },
+      "ac1-wait-tp-clear": {
+        "action": "wait_for",
+        "expression": "Boolean(document.querySelector('[data-testid=\"tp-clear-button\"]')) && (document.querySelector('[data-testid=\"auto-close-estimated-tp-pnl-row\"]')?.textContent || '').includes('Est. P&L at take profit')",
+        "timeout_ms": 5000,
+        "next": "ac1-assert-tp-clear-layout",
+        "id": "ac1-wait-tp-clear"
+      },
+      "ac1-assert-tp-clear-layout": {
+        "action": "eval_sync",
+        "expression": "(function(){const clear=document.querySelector('[data-testid=\"tp-clear-button\"]');const row=document.querySelector('[data-testid=\"auto-close-estimated-tp-pnl-row\"]');const label=Array.from(row?.querySelectorAll('*')||[]).find((el)=>el.textContent?.includes('Est. P&L at take profit'));const clearRect=clear?.getBoundingClientRect();const labelRect=label?.getBoundingClientRect();const rowRect=row?.getBoundingClientRect();return JSON.stringify({clearVisible:!!clear,pnlLabelVisible:!!label,pnlValueVisible:/\\$/.test(row?.textContent||''),clearLeftOfPnl:!!(clearRect&&labelRect&&clearRect.left<labelRect.left),sameRow:!!(clearRect&&labelRect&&Math.abs((clearRect.top+clearRect.height/2)-(labelRect.top+labelRect.height/2))<24),rowVisible:!!(rowRect&&rowRect.width>0&&rowRect.height>0)});})()",
+        "assert": {
+          "all": [
+            {
+              "field": "clearVisible",
+              "operator": "eq",
+              "value": true
+            },
+            {
+              "field": "pnlLabelVisible",
+              "operator": "eq",
+              "value": true
+            },
+            {
+              "field": "pnlValueVisible",
+              "operator": "eq",
+              "value": true
+            },
+            {
+              "field": "clearLeftOfPnl",
+              "operator": "eq",
+              "value": true
+            },
+            {
+              "field": "sameRow",
+              "operator": "eq",
+              "value": true
+            },
+            {
+              "field": "rowVisible",
+              "operator": "eq",
+              "value": true
+            }
+          ]
+        },
+        "next": "ac1-scroll-tp-clear-layout",
+        "id": "ac1-assert-tp-clear-layout"
+      },
+      "ac1-scroll-tp-clear-layout": {
+        "action": "eval_sync",
+        "expression": "(function(){const row=document.querySelector('[data-testid=\"auto-close-estimated-tp-pnl-row\"]');row?.scrollIntoView({block:'center',inline:'nearest'});return JSON.stringify({scrolled:!!row});})()",
+        "assert": {
+          "field": "scrolled",
+          "operator": "eq",
+          "value": true
+        },
+        "next": "ac1-screenshot-tp-clear-layout",
+        "id": "ac1-scroll-tp-clear-layout"
+      },
+      "ac1-screenshot-tp-clear-layout": {
+        "action": "screenshot",
+        "filename": "evidence-ac1-tp-clear-layout",
+        "note": "AC1: TP Clear button is left of the estimated take-profit P&L label/value",
+        "next": "ac2-click-tp-clear",
+        "id": "ac1-screenshot-tp-clear-layout"
+      },
+      "ac2-click-tp-clear": {
+        "action": "press",
+        "test_id": "tp-clear-button",
+        "next": "ac2-wait-tp-cleared",
+        "id": "ac2-click-tp-clear"
+      },
+      "ac2-wait-tp-cleared": {
+        "action": "wait_for",
+        "expression": "!document.querySelector('[data-testid=\"tp-clear-button\"]') && (document.querySelector('[data-testid=\"tp-price-input\"] input')?.value === '') && (document.querySelector('[data-testid=\"tp-percent-input\"] input')?.value === '')",
+        "timeout_ms": 5000,
+        "next": "ac2-assert-tp-cleared",
+        "id": "ac2-wait-tp-cleared"
+      },
+      "ac2-assert-tp-cleared": {
+        "action": "eval_sync",
+        "expression": "(function(){const value=(id)=>document.querySelector(`[data-testid=\"${id}\"] input`)?.value ?? null;return JSON.stringify({tpClearHidden:!document.querySelector('[data-testid=\"tp-clear-button\"]'),tpPriceEmpty:value('tp-price-input')==='',tpPercentEmpty:value('tp-percent-input')===''});})()",
+        "assert": {
+          "all": [
+            {
+              "field": "tpClearHidden",
+              "operator": "eq",
+              "value": true
+            },
+            {
+              "field": "tpPriceEmpty",
+              "operator": "eq",
+              "value": true
+            },
+            {
+              "field": "tpPercentEmpty",
+              "operator": "eq",
+              "value": true
+            }
+          ]
+        },
+        "next": "ac2-screenshot-tp-cleared",
+        "id": "ac2-assert-tp-cleared"
+      },
+      "ac2-screenshot-tp-cleared": {
+        "action": "screenshot",
+        "filename": "evidence-ac2-tp-cleared",
+        "note": "AC2: TP Clear reset price and percent fields and the button disappeared",
+        "next": "ac3-enter-sl-price",
+        "id": "ac2-screenshot-tp-cleared"
+      },
+      "ac3-enter-sl-price": {
+        "action": "set_input",
+        "test_id": "sl-price-input",
+        "value": "1",
+        "next": "ac3-wait-sl-clear",
+        "id": "ac3-enter-sl-price"
+      },
+      "ac3-wait-sl-clear": {
+        "action": "wait_for",
+        "expression": "Boolean(document.querySelector('[data-testid=\"sl-clear-button\"]')) && (document.querySelector('[data-testid=\"auto-close-estimated-sl-pnl-row\"]')?.textContent || '').includes('Est. P&L at stop loss')",
+        "timeout_ms": 5000,
+        "next": "ac3-assert-sl-clear-layout",
+        "id": "ac3-wait-sl-clear"
+      },
+      "ac3-assert-sl-clear-layout": {
+        "action": "eval_sync",
+        "expression": "(function(){const clear=document.querySelector('[data-testid=\"sl-clear-button\"]');const row=document.querySelector('[data-testid=\"auto-close-estimated-sl-pnl-row\"]');const label=Array.from(row?.querySelectorAll('*')||[]).find((el)=>el.textContent?.includes('Est. P&L at stop loss'));const clearRect=clear?.getBoundingClientRect();const labelRect=label?.getBoundingClientRect();const rowRect=row?.getBoundingClientRect();return JSON.stringify({clearVisible:!!clear,pnlLabelVisible:!!label,pnlValueVisible:/\\$/.test(row?.textContent||''),clearLeftOfPnl:!!(clearRect&&labelRect&&clearRect.left<labelRect.left),sameRow:!!(clearRect&&labelRect&&Math.abs((clearRect.top+clearRect.height/2)-(labelRect.top+labelRect.height/2))<24),rowVisible:!!(rowRect&&rowRect.width>0&&rowRect.height>0)});})()",
+        "assert": {
+          "all": [
+            {
+              "field": "clearVisible",
+              "operator": "eq",
+              "value": true
+            },
+            {
+              "field": "pnlLabelVisible",
+              "operator": "eq",
+              "value": true
+            },
+            {
+              "field": "pnlValueVisible",
+              "operator": "eq",
+              "value": true
+            },
+            {
+              "field": "clearLeftOfPnl",
+              "operator": "eq",
+              "value": true
+            },
+            {
+              "field": "sameRow",
+              "operator": "eq",
+              "value": true
+            },
+            {
+              "field": "rowVisible",
+              "operator": "eq",
+              "value": true
+            }
+          ]
+        },
+        "next": "ac3-scroll-sl-clear-layout",
+        "id": "ac3-assert-sl-clear-layout"
+      },
+      "ac3-scroll-sl-clear-layout": {
+        "action": "eval_sync",
+        "expression": "(function(){const row=document.querySelector('[data-testid=\"auto-close-estimated-sl-pnl-row\"]');row?.scrollIntoView({block:'center',inline:'nearest'});return JSON.stringify({scrolled:!!row});})()",
+        "assert": {
+          "field": "scrolled",
+          "operator": "eq",
+          "value": true
+        },
+        "next": "ac3-screenshot-sl-clear-layout",
+        "id": "ac3-scroll-sl-clear-layout"
+      },
+      "ac3-screenshot-sl-clear-layout": {
+        "action": "screenshot",
+        "filename": "evidence-ac3-sl-clear-layout",
+        "note": "AC3: SL Clear button is left of the estimated stop-loss P&L label/value",
+        "next": "ac4-click-sl-clear",
+        "id": "ac3-screenshot-sl-clear-layout"
+      },
+      "ac4-click-sl-clear": {
+        "action": "press",
+        "test_id": "sl-clear-button",
+        "next": "ac4-wait-sl-cleared",
+        "id": "ac4-click-sl-clear"
+      },
+      "ac4-wait-sl-cleared": {
+        "action": "wait_for",
+        "expression": "!document.querySelector('[data-testid=\"sl-clear-button\"]') && (document.querySelector('[data-testid=\"sl-price-input\"] input')?.value === '') && (document.querySelector('[data-testid=\"sl-percent-input\"] input')?.value === '')",
+        "timeout_ms": 5000,
+        "next": "ac4-assert-sl-cleared",
+        "id": "ac4-wait-sl-cleared"
+      },
+      "ac4-assert-sl-cleared": {
+        "action": "eval_sync",
+        "expression": "(function(){const value=(id)=>document.querySelector(`[data-testid=\"${id}\"] input`)?.value ?? null;return JSON.stringify({slClearHidden:!document.querySelector('[data-testid=\"sl-clear-button\"]'),slPriceEmpty:value('sl-price-input')==='',slPercentEmpty:value('sl-percent-input')===''});})()",
+        "assert": {
+          "all": [
+            {
+              "field": "slClearHidden",
+              "operator": "eq",
+              "value": true
+            },
+            {
+              "field": "slPriceEmpty",
+              "operator": "eq",
+              "value": true
+            },
+            {
+              "field": "slPercentEmpty",
+              "operator": "eq",
+              "value": true
+            }
+          ]
+        },
+        "next": "ac4-screenshot-sl-cleared",
+        "id": "ac4-assert-sl-cleared"
+      },
+      "ac4-screenshot-sl-cleared": {
+        "action": "screenshot",
+        "filename": "evidence-ac4-sl-cleared",
+        "note": "AC4: SL Clear reset price and percent fields and the button disappeared",
+        "next": "ac5-assert-clear-hidden-after-clears",
+        "id": "ac4-screenshot-sl-cleared"
+      },
+      "ac5-assert-clear-hidden-after-clears": {
+        "action": "eval_sync",
+        "expression": "(function(){return JSON.stringify({tpClearHidden:!document.querySelector('[data-testid=\"tp-clear-button\"]'),slClearHidden:!document.querySelector('[data-testid=\"sl-clear-button\"]')});})()",
+        "assert": {
+          "all": [
+            {
+              "field": "tpClearHidden",
+              "operator": "eq",
+              "value": true
+            },
+            {
+              "field": "slClearHidden",
+              "operator": "eq",
+              "value": true
+            }
+          ]
+        },
+        "next": "ac5-screenshot-clear-hidden-final",
+        "id": "ac5-assert-clear-hidden-after-clears"
+      },
+      "ac5-screenshot-clear-hidden-final": {
+        "action": "screenshot",
+        "filename": "evidence-ac5-clear-hidden-final",
+        "note": "AC5: after clearing TP and SL, both sections have no Clear buttons",
+        "next": "teardown-done",
+        "id": "ac5-screenshot-clear-hidden-final"
+      },
+      "teardown-done": {
+        "action": "end",
+        "status": "pass",
+        "message": "TP/SL clear-button validation completed",
+        "id": "teardown-done"
+      }
+    }
+  }
+}
