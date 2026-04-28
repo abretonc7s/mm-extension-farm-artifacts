@@ -1,0 +1,32 @@
+{
+  "title": "PR 41913 preflight state probe",
+  "description": "Checks current wallet, Perps, and account state before review recipe generation.",
+  "validate": {
+    "workflow": {
+      "pre_conditions": ["wallet.unlocked", "perps.feature_enabled"],
+      "entry": "gate-accounts",
+      "nodes": {
+        "gate-accounts": {
+          "action": "eval_ref",
+          "ref": "accounts",
+          "next": "gate-perps-state"
+        },
+        "gate-perps-state": {
+          "action": "eval_ref",
+          "ref": "perps-state",
+          "next": "gate-perps-balance"
+        },
+        "gate-perps-balance": {
+          "action": "eval_ref",
+          "ref": "perps-balance",
+          "next": "teardown-end"
+        },
+        "teardown-end": {
+          "action": "end",
+          "status": "pass",
+          "message": "Preflight probe complete"
+        }
+      }
+    }
+  }
+}

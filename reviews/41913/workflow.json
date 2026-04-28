@@ -1,0 +1,345 @@
+{
+  "description": "Internal-proof recipe for native vs token-funded Perps deposit toast behavior derived from transaction state.",
+  "hooks": {
+    "pre_conditions": [
+      "wallet.unlocked",
+      "perps.feature_enabled"
+    ],
+    "setup": [
+      {
+        "id": "setup-save-original-deposit-state",
+        "action": "eval_sync",
+        "expression": "(function(){const m=stateHooks.store.getState().metamask||{};return btoa(JSON.stringify({transactions:m.transactions||[],transactionData:m.transactionData||{},lastDepositTransactionId:m.lastDepositTransactionId||null,lastDepositResult:m.lastDepositResult||null}));})()",
+        "assert": {
+          "operator": "matches",
+          "pattern": "/.+/"
+        },
+        "save_as": "original_deposit_state_b64"
+      }
+    ],
+    "teardown": [
+      {
+        "id": "teardown-restore-original-deposit-state",
+        "action": "eval_sync",
+        "expression": "(function(){const saved=JSON.parse(atob('{{vars.original_deposit_state_b64}}'));stateHooks.store.dispatch({type:'UPDATE_METAMASK_STATE',value:saved});return JSON.stringify({restored:true,transactionCount:(saved.transactions||[]).length,lastDepositTransactionId:saved.lastDepositTransactionId});})()",
+        "assert": {
+          "field": "restored",
+          "operator": "eq",
+          "value": true
+        }
+      }
+    ]
+  },
+  "inputs": {},
+  "playback": {
+    "mode": "off",
+    "slow_ms": 1000
+  },
+  "sourcePath": "",
+  "title": "PR 41913 — Perps deposit toast ownership",
+  "workflow": {
+    "entry": "setup-navigate-home",
+    "nodes": {
+      "setup-navigate-home": {
+        "action": "ext_navigate_hash",
+        "hash": "/",
+        "next": "ac1-set-native-approved-deposit",
+        "id": "setup-navigate-home"
+      },
+      "ac1-set-native-approved-deposit": {
+        "action": "eval_sync",
+        "expression": "(function(){const id='review-native-approved';const tx={id,time:Date.now(),chainId:'0xa4b1',type:'perpsDeposit',status:'approved',txParams:{from:'0x8dc623e964475d4d669da601fd15ea9125469003'}};stateHooks.store.dispatch({type:'UPDATE_METAMASK_STATE',value:{transactions:[tx],lastDepositTransactionId:id,lastDepositResult:null,transactionData:{[id]:{paymentToken:{address:'0x0000000000000000000000000000000000000000',chainId:'0xa4b1'}}}}});return JSON.stringify({id,type:tx.type,status:tx.status});})()",
+        "assert": {
+          "all": [
+            {
+              "field": "type",
+              "operator": "eq",
+              "value": "perpsDeposit"
+            },
+            {
+              "field": "status",
+              "operator": "eq",
+              "value": "approved"
+            }
+          ]
+        },
+        "next": "ac1-assert-native-approved-pending-toast",
+        "id": "ac1-set-native-approved-deposit"
+      },
+      "ac1-assert-native-approved-pending-toast": {
+        "action": "wait_for",
+        "expression": "(function(){const el=document.querySelector('[data-testid=\"perps-deposit-toast\"]');return JSON.stringify({visible:!!el,text:el?el.textContent:''});})()",
+        "assert": {
+          "all": [
+            {
+              "field": "visible",
+              "operator": "eq",
+              "value": true
+            },
+            {
+              "field": "text",
+              "operator": "contains",
+              "value": "Adding funds to Perps"
+            }
+          ]
+        },
+        "timeout_ms": 5000,
+        "next": "ac1-screenshot-native-approved-pending-toast",
+        "id": "ac1-assert-native-approved-pending-toast"
+      },
+      "ac1-screenshot-native-approved-pending-toast": {
+        "action": "screenshot",
+        "filename": "evidence-ac1-native-approved-pending-toast",
+        "note": "AC1: native approved Perps deposit transaction shows pending Perps deposit toast.",
+        "next": "ac2-set-unapproved-deposit",
+        "id": "ac1-screenshot-native-approved-pending-toast"
+      },
+      "ac2-set-unapproved-deposit": {
+        "action": "eval_sync",
+        "expression": "(function(){const id='review-native-unapproved';const tx={id,time:Date.now(),chainId:'0xa4b1',type:'perpsDeposit',status:'unapproved',txParams:{from:'0x8dc623e964475d4d669da601fd15ea9125469003'}};stateHooks.store.dispatch({type:'UPDATE_METAMASK_STATE',value:{transactions:[tx],lastDepositTransactionId:id,lastDepositResult:null,transactionData:{[id]:{paymentToken:{address:'0x0000000000000000000000000000000000000000',chainId:'0xa4b1'}}}}});return JSON.stringify({id,status:tx.status});})()",
+        "assert": {
+          "field": "status",
+          "operator": "eq",
+          "value": "unapproved"
+        },
+        "next": "ac2-assert-unapproved-hides-toast",
+        "id": "ac2-set-unapproved-deposit"
+      },
+      "ac2-assert-unapproved-hides-toast": {
+        "action": "wait_for",
+        "expression": "(function(){const el=document.querySelector('[data-testid=\"perps-deposit-toast\"]');return JSON.stringify({hidden:!el,text:el?el.textContent:''});})()",
+        "assert": {
+          "field": "hidden",
+          "operator": "eq",
+          "value": true
+        },
+        "timeout_ms": 5000,
+        "next": "ac2-set-signed-deposit",
+        "id": "ac2-assert-unapproved-hides-toast"
+      },
+      "ac2-set-signed-deposit": {
+        "action": "eval_sync",
+        "expression": "(function(){const id='review-native-signed';const tx={id,time:Date.now(),chainId:'0xa4b1',type:'perpsDepositAndOrder',status:'signed',txParams:{from:'0x8dc623e964475d4d669da601fd15ea9125469003'}};stateHooks.store.dispatch({type:'UPDATE_METAMASK_STATE',value:{transactions:[tx],lastDepositTransactionId:id,lastDepositResult:null,transactionData:{[id]:{paymentToken:{address:'0x0000000000000000000000000000000000000000',chainId:'0xa4b1'}}}}});return JSON.stringify({id,type:tx.type,status:tx.status});})()",
+        "assert": {
+          "all": [
+            {
+              "field": "type",
+              "operator": "eq",
+              "value": "perpsDepositAndOrder"
+            },
+            {
+              "field": "status",
+              "operator": "eq",
+              "value": "signed"
+            }
+          ]
+        },
+        "next": "ac2-assert-signed-shows-toast",
+        "id": "ac2-set-signed-deposit"
+      },
+      "ac2-assert-signed-shows-toast": {
+        "action": "wait_for",
+        "expression": "(function(){const el=document.querySelector('[data-testid=\"perps-deposit-toast\"]');return JSON.stringify({visible:!!el,text:el?el.textContent:''});})()",
+        "assert": {
+          "all": [
+            {
+              "field": "visible",
+              "operator": "eq",
+              "value": true
+            },
+            {
+              "field": "text",
+              "operator": "contains",
+              "value": "Adding funds to Perps"
+            }
+          ]
+        },
+        "timeout_ms": 5000,
+        "next": "ac2-set-stale-submitted-current-confirmed",
+        "id": "ac2-assert-signed-shows-toast"
+      },
+      "ac2-set-stale-submitted-current-confirmed": {
+        "action": "eval_sync",
+        "expression": "(function(){const stale={id:'review-stale-submitted',time:Date.now(),chainId:'0xa4b1',type:'perpsDeposit',status:'submitted',txParams:{from:'0x8dc623e964475d4d669da601fd15ea9125469003'}};const current={id:'review-current-confirmed',time:Date.now()+1,chainId:'0xa4b1',type:'perpsDeposit',status:'confirmed',txParams:{from:'0x8dc623e964475d4d669da601fd15ea9125469003'}};stateHooks.store.dispatch({type:'UPDATE_METAMASK_STATE',value:{transactions:[stale,current],lastDepositTransactionId:current.id,lastDepositResult:null,transactionData:{[stale.id]:{paymentToken:{address:'0x0000000000000000000000000000000000000000',chainId:'0xa4b1'}},[current.id]:{paymentToken:{address:'0x0000000000000000000000000000000000000000',chainId:'0xa4b1'}}}}});return JSON.stringify({active:current.id,activeStatus:current.status,staleStatus:stale.status});})()",
+        "assert": {
+          "all": [
+            {
+              "field": "activeStatus",
+              "operator": "eq",
+              "value": "confirmed"
+            },
+            {
+              "field": "staleStatus",
+              "operator": "eq",
+              "value": "submitted"
+            }
+          ]
+        },
+        "next": "ac2-assert-current-confirmed-stale-submitted-hides-toast",
+        "id": "ac2-set-stale-submitted-current-confirmed"
+      },
+      "ac2-assert-current-confirmed-stale-submitted-hides-toast": {
+        "action": "wait_for",
+        "expression": "(function(){const el=document.querySelector('[data-testid=\"perps-deposit-toast\"]');return JSON.stringify({hidden:!el,text:el?el.textContent:''});})()",
+        "assert": {
+          "field": "hidden",
+          "operator": "eq",
+          "value": true
+        },
+        "timeout_ms": 5000,
+        "next": "ac3-set-native-success-result",
+        "id": "ac2-assert-current-confirmed-stale-submitted-hides-toast"
+      },
+      "ac3-set-native-success-result": {
+        "action": "eval_sync",
+        "expression": "(function(){const id='review-native-success';const tx={id,time:Date.now(),chainId:'0xa4b1',type:'perpsDeposit',status:'confirmed',txParams:{from:'0x8dc623e964475d4d669da601fd15ea9125469003'}};stateHooks.store.dispatch({type:'UPDATE_METAMASK_STATE',value:{transactions:[tx],lastDepositTransactionId:id,lastDepositResult:{success:true,error:'',timestamp:Date.now()},transactionData:{[id]:{paymentToken:{address:'0x0000000000000000000000000000000000000000',chainId:'0xa4b1'}}}}});return JSON.stringify({id,status:tx.status,success:true});})()",
+        "assert": {
+          "all": [
+            {
+              "field": "status",
+              "operator": "eq",
+              "value": "confirmed"
+            },
+            {
+              "field": "success",
+              "operator": "eq",
+              "value": true
+            }
+          ]
+        },
+        "next": "ac3-assert-native-success-toast",
+        "id": "ac3-set-native-success-result"
+      },
+      "ac3-assert-native-success-toast": {
+        "action": "wait_for",
+        "expression": "(function(){const el=document.querySelector('[data-testid=\"perps-deposit-toast\"]');return JSON.stringify({visible:!!el,text:el?el.textContent:''});})()",
+        "assert": {
+          "all": [
+            {
+              "field": "visible",
+              "operator": "eq",
+              "value": true
+            },
+            {
+              "field": "text",
+              "operator": "contains",
+              "value": "Funds added to Perps"
+            }
+          ]
+        },
+        "timeout_ms": 5000,
+        "next": "ac3-screenshot-native-success-toast",
+        "id": "ac3-assert-native-success-toast"
+      },
+      "ac3-screenshot-native-success-toast": {
+        "action": "screenshot",
+        "filename": "evidence-ac3-native-success-toast",
+        "note": "AC3: native confirmed Perps deposit result shows Perps success toast.",
+        "next": "ac4-set-token-funded-approved-deposit",
+        "id": "ac3-screenshot-native-success-toast"
+      },
+      "ac4-set-token-funded-approved-deposit": {
+        "action": "eval_sync",
+        "expression": "(function(){const id='review-token-approved';const tx={id,time:Date.now(),chainId:'0xa4b1',type:'perpsDeposit',status:'approved',txParams:{from:'0x8dc623e964475d4d669da601fd15ea9125469003'}};stateHooks.store.dispatch({type:'UPDATE_METAMASK_STATE',value:{transactions:[tx],lastDepositTransactionId:id,lastDepositResult:null,transactionData:{[id]:{paymentToken:{address:'0x00000000000000000000000000000000000000dA',chainId:'0xa4b1'}}}}});return JSON.stringify({id,status:tx.status,paymentToken:'non-native'});})()",
+        "assert": {
+          "all": [
+            {
+              "field": "status",
+              "operator": "eq",
+              "value": "approved"
+            },
+            {
+              "field": "paymentToken",
+              "operator": "eq",
+              "value": "non-native"
+            }
+          ]
+        },
+        "next": "ac4-assert-token-funded-pending-hides-perps-toast",
+        "id": "ac4-set-token-funded-approved-deposit"
+      },
+      "ac4-assert-token-funded-pending-hides-perps-toast": {
+        "action": "wait_for",
+        "expression": "(function(){const el=document.querySelector('[data-testid=\"perps-deposit-toast\"]');return JSON.stringify({hidden:!el,text:el?el.textContent:''});})()",
+        "assert": {
+          "field": "hidden",
+          "operator": "eq",
+          "value": true
+        },
+        "timeout_ms": 5000,
+        "next": "ac4-set-token-funded-success-result",
+        "id": "ac4-assert-token-funded-pending-hides-perps-toast"
+      },
+      "ac4-set-token-funded-success-result": {
+        "action": "eval_sync",
+        "expression": "(function(){const id='review-token-success';const tx={id,time:Date.now(),chainId:'0xa4b1',type:'perpsDeposit',status:'confirmed',txParams:{from:'0x8dc623e964475d4d669da601fd15ea9125469003'}};stateHooks.store.dispatch({type:'UPDATE_METAMASK_STATE',value:{transactions:[tx],lastDepositTransactionId:id,lastDepositResult:{success:true,error:'',timestamp:Date.now()},transactionData:{[id]:{paymentToken:{address:'0x00000000000000000000000000000000000000dA',chainId:'0xa4b1'}}}}});return JSON.stringify({id,status:tx.status,paymentToken:'non-native',success:true});})()",
+        "assert": {
+          "all": [
+            {
+              "field": "status",
+              "operator": "eq",
+              "value": "confirmed"
+            },
+            {
+              "field": "paymentToken",
+              "operator": "eq",
+              "value": "non-native"
+            }
+          ]
+        },
+        "next": "ac4-assert-token-funded-success-hides-perps-toast",
+        "id": "ac4-set-token-funded-success-result"
+      },
+      "ac4-assert-token-funded-success-hides-perps-toast": {
+        "action": "wait_for",
+        "expression": "(function(){const el=document.querySelector('[data-testid=\"perps-deposit-toast\"]');return JSON.stringify({hidden:!el,text:el?el.textContent:''});})()",
+        "assert": {
+          "field": "hidden",
+          "operator": "eq",
+          "value": true
+        },
+        "timeout_ms": 5000,
+        "next": "ac6-set-perps-relay-deposit-row",
+        "id": "ac4-assert-token-funded-success-hides-perps-toast"
+      },
+      "ac6-set-perps-relay-deposit-row": {
+        "action": "eval_sync",
+        "expression": "(function(){const tx={id:'review-perps-relay-deposit',time:Date.now(),chainId:'0xa4b1',type:'perpsRelayDeposit',status:'confirmed',txParams:{from:'0x8dc623e964475d4d669da601fd15ea9125469003'}};stateHooks.store.dispatch({type:'UPDATE_METAMASK_STATE',value:{transactions:[tx],lastDepositTransactionId:null,lastDepositResult:null,transactionData:{}}});return JSON.stringify({id:tx.id,type:tx.type,status:tx.status});})()",
+        "assert": {
+          "all": [
+            {
+              "field": "type",
+              "operator": "eq",
+              "value": "perpsRelayDeposit"
+            },
+            {
+              "field": "status",
+              "operator": "eq",
+              "value": "confirmed"
+            }
+          ]
+        },
+        "next": "ac6-assert-perps-relay-does-not-render-perps-deposit-toast",
+        "id": "ac6-set-perps-relay-deposit-row"
+      },
+      "ac6-assert-perps-relay-does-not-render-perps-deposit-toast": {
+        "action": "wait_for",
+        "expression": "(function(){const el=document.querySelector('[data-testid=\"perps-deposit-toast\"]');return JSON.stringify({hidden:!el,text:el?el.textContent:''});})()",
+        "assert": {
+          "field": "hidden",
+          "operator": "eq",
+          "value": true
+        },
+        "timeout_ms": 5000,
+        "next": "teardown-end",
+        "id": "ac6-assert-perps-relay-does-not-render-perps-deposit-toast"
+      },
+      "teardown-end": {
+        "action": "end",
+        "status": "pass",
+        "message": "Perps deposit toast ownership recipe completed",
+        "id": "teardown-end"
+      }
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "title": "probe stateHooks",
+  "validate": {
+    "workflow": {
+      "entry": "probe",
+      "nodes": {
+        "probe": {
+          "action": "eval_sync",
+          "expression": "(function(){return JSON.stringify({stateHooks:Object.keys(globalThis.stateHooks||{}), hasStore:!!globalThis.stateHooks?.store, storeKeys:Object.keys(globalThis.stateHooks?.store||{}).slice(0,30), hasDispatch:typeof globalThis.stateHooks?.store?.dispatch, hasGetState:typeof globalThis.stateHooks?.store?.getState})})()",
+          "next": "done"
+        },
+        "done": {
+          "action": "end",
+          "status": "pass"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,152 @@
+[
+  {
+    "id": "setup-navigate-home",
+    "action": "ext_navigate_hash",
+    "ok": true,
+    "raw": {
+      "navigated": true,
+      "hash": "/"
+    },
+    "durationMs": 3
+  },
+  {
+    "id": "ac1-set-native-approved-deposit",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"id\":\"review-native-approved\",\"type\":\"perpsDeposit\",\"status\":\"approved\"}",
+    "durationMs": 5
+  },
+  {
+    "id": "ac1-assert-native-approved-pending-toast",
+    "action": "wait_for",
+    "ok": true,
+    "raw": "{\"visible\":true,\"text\":\"Adding funds to PerpsYour funds will be available to trade shortly.\"}",
+    "durationMs": 1
+  },
+  {
+    "id": "ac1-screenshot-native-approved-pending-toast",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "screenshots/evidence-ac1-native-approved-pending-toast-1777389667610.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 11197
+  },
+  {
+    "id": "ac2-set-unapproved-deposit",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"id\":\"review-native-unapproved\",\"status\":\"unapproved\"}",
+    "durationMs": 19
+  },
+  {
+    "id": "ac2-assert-unapproved-hides-toast",
+    "action": "wait_for",
+    "ok": true,
+    "raw": "{\"hidden\":true,\"text\":\"\"}",
+    "durationMs": 2
+  },
+  {
+    "id": "ac2-set-signed-deposit",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"id\":\"review-native-signed\",\"type\":\"perpsDepositAndOrder\",\"status\":\"signed\"}",
+    "durationMs": 10
+  },
+  {
+    "id": "ac2-assert-signed-shows-toast",
+    "action": "wait_for",
+    "ok": true,
+    "raw": "{\"visible\":true,\"text\":\"Adding funds to PerpsYour funds will be available to trade shortly.\"}",
+    "durationMs": 1
+  },
+  {
+    "id": "ac2-set-stale-submitted-current-confirmed",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"active\":\"review-current-confirmed\",\"activeStatus\":\"confirmed\",\"staleStatus\":\"submitted\"}",
+    "durationMs": 7
+  },
+  {
+    "id": "ac2-assert-current-confirmed-stale-submitted-hides-toast",
+    "action": "wait_for",
+    "ok": true,
+    "raw": "{\"hidden\":true,\"text\":\"\"}",
+    "durationMs": 1
+  },
+  {
+    "id": "ac3-set-native-success-result",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"id\":\"review-native-success\",\"status\":\"confirmed\",\"success\":true}",
+    "durationMs": 6
+  },
+  {
+    "id": "ac3-assert-native-success-toast",
+    "action": "wait_for",
+    "ok": true,
+    "raw": "{\"visible\":true,\"text\":\"Funds added to PerpsYour funds are ready to trade.\"}",
+    "durationMs": 1
+  },
+  {
+    "id": "ac3-screenshot-native-success-toast",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "screenshots/evidence-ac3-native-success-toast-1777389678888.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 11114
+  },
+  {
+    "id": "ac4-set-token-funded-approved-deposit",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"id\":\"review-token-approved\",\"status\":\"approved\",\"paymentToken\":\"non-native\"}",
+    "durationMs": 17
+  },
+  {
+    "id": "ac4-assert-token-funded-pending-hides-perps-toast",
+    "action": "wait_for",
+    "ok": true,
+    "raw": "{\"hidden\":true,\"text\":\"\"}",
+    "durationMs": 2
+  },
+  {
+    "id": "ac4-set-token-funded-success-result",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"id\":\"review-token-success\",\"status\":\"confirmed\",\"paymentToken\":\"non-native\",\"success\":true}",
+    "durationMs": 8
+  },
+  {
+    "id": "ac4-assert-token-funded-success-hides-perps-toast",
+    "action": "wait_for",
+    "ok": true,
+    "raw": "{\"hidden\":true,\"text\":\"\"}",
+    "durationMs": 1
+  },
+  {
+    "id": "ac6-set-perps-relay-deposit-row",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"id\":\"review-perps-relay-deposit\",\"type\":\"perpsRelayDeposit\",\"status\":\"confirmed\"}",
+    "durationMs": 4
+  },
+  {
+    "id": "ac6-assert-perps-relay-does-not-render-perps-deposit-toast",
+    "action": "wait_for",
+    "ok": true,
+    "raw": "{\"hidden\":true,\"text\":\"\"}",
+    "durationMs": 1
+  },
+  {
+    "id": "teardown-end",
+    "action": "end",
+    "status": "pass",
+    "durationMs": 0
+  }
+]

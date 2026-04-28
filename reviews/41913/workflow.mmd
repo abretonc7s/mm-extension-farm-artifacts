@@ -1,0 +1,42 @@
+flowchart TD
+  %% PR 41913 — Perps deposit toast ownership
+  __entry__(["ENTRY"]) --> node_setup_navigate_home
+  node_setup_navigate_home["setup-navigate-home<br/>ext_navigate_hash"]
+  node_ac1_set_native_approved_deposit["ac1-set-native-approved-deposit<br/>eval_sync"]
+  node_ac1_assert_native_approved_pending_toast["ac1-assert-native-approved-pending-toast<br/>wait_for"]
+  node_ac1_screenshot_native_approved_pending_toast["ac1-screenshot-native-approved-pending-toast<br/>screenshot"]
+  node_ac2_set_unapproved_deposit["ac2-set-unapproved-deposit<br/>eval_sync"]
+  node_ac2_assert_unapproved_hides_toast["ac2-assert-unapproved-hides-toast<br/>wait_for"]
+  node_ac2_set_signed_deposit["ac2-set-signed-deposit<br/>eval_sync"]
+  node_ac2_assert_signed_shows_toast["ac2-assert-signed-shows-toast<br/>wait_for"]
+  node_ac2_set_stale_submitted_current_confirmed["ac2-set-stale-submitted-current-confirmed<br/>eval_sync"]
+  node_ac2_assert_current_confirmed_stale_submitted_hides_toast["ac2-assert-current-confirmed-stale-submitted-hides-toast<br/>wait_for"]
+  node_ac3_set_native_success_result["ac3-set-native-success-result<br/>eval_sync"]
+  node_ac3_assert_native_success_toast["ac3-assert-native-success-toast<br/>wait_for"]
+  node_ac3_screenshot_native_success_toast["ac3-screenshot-native-success-toast<br/>screenshot"]
+  node_ac4_set_token_funded_approved_deposit["ac4-set-token-funded-approved-deposit<br/>eval_sync"]
+  node_ac4_assert_token_funded_pending_hides_perps_toast["ac4-assert-token-funded-pending-hides-perps-toast<br/>wait_for"]
+  node_ac4_set_token_funded_success_result["ac4-set-token-funded-success-result<br/>eval_sync"]
+  node_ac4_assert_token_funded_success_hides_perps_toast["ac4-assert-token-funded-success-hides-perps-toast<br/>wait_for"]
+  node_ac6_set_perps_relay_deposit_row["ac6-set-perps-relay-deposit-row<br/>eval_sync"]
+  node_ac6_assert_perps_relay_does_not_render_perps_deposit_toast["ac6-assert-perps-relay-does-not-render-perps-deposit-toast<br/>wait_for"]
+  node_teardown_end(["teardown-end<br/>PASS"])
+  node_setup_navigate_home --> node_ac1_set_native_approved_deposit
+  node_ac1_set_native_approved_deposit --> node_ac1_assert_native_approved_pending_toast
+  node_ac1_assert_native_approved_pending_toast --> node_ac1_screenshot_native_approved_pending_toast
+  node_ac1_screenshot_native_approved_pending_toast --> node_ac2_set_unapproved_deposit
+  node_ac2_set_unapproved_deposit --> node_ac2_assert_unapproved_hides_toast
+  node_ac2_assert_unapproved_hides_toast --> node_ac2_set_signed_deposit
+  node_ac2_set_signed_deposit --> node_ac2_assert_signed_shows_toast
+  node_ac2_assert_signed_shows_toast --> node_ac2_set_stale_submitted_current_confirmed
+  node_ac2_set_stale_submitted_current_confirmed --> node_ac2_assert_current_confirmed_stale_submitted_hides_toast
+  node_ac2_assert_current_confirmed_stale_submitted_hides_toast --> node_ac3_set_native_success_result
+  node_ac3_set_native_success_result --> node_ac3_assert_native_success_toast
+  node_ac3_assert_native_success_toast --> node_ac3_screenshot_native_success_toast
+  node_ac3_screenshot_native_success_toast --> node_ac4_set_token_funded_approved_deposit
+  node_ac4_set_token_funded_approved_deposit --> node_ac4_assert_token_funded_pending_hides_perps_toast
+  node_ac4_assert_token_funded_pending_hides_perps_toast --> node_ac4_set_token_funded_success_result
+  node_ac4_set_token_funded_success_result --> node_ac4_assert_token_funded_success_hides_perps_toast
+  node_ac4_assert_token_funded_success_hides_perps_toast --> node_ac6_set_perps_relay_deposit_row
+  node_ac6_set_perps_relay_deposit_row --> node_ac6_assert_perps_relay_does_not_render_perps_deposit_toast
+  node_ac6_assert_perps_relay_does_not_render_perps_deposit_toast --> node_teardown_end

@@ -1,0 +1,68 @@
+{
+  "version": 1,
+  "verdict": "pass",
+  "compact": {
+    "verdict": "PASS",
+    "reasons": [
+      "AC1-4 covered by live Redux state mutations plus DOM assertions against the mounted PerpsDepositToast component.",
+      "AC6 covered by live absence assertion plus affected Jest selector coverage; trace shows all ac<N>- nodes passed.",
+      "AC5 and AC7 are explicitly UNTESTABLE in-browser with concrete rationale, not silently skipped."
+    ],
+    "better_version_guidance": [
+      "A stronger farm slot would provide a safe mocked Perps order/deposit backend so AC5 can be exercised without placing a live order.",
+      "Expose the toast selector through a stable eval_ref to prove AC6 entirely through runtime selector output instead of combining recipe and Jest evidence."
+    ]
+  },
+  "dimensions": {
+    "graph_integrity": {
+      "status": "pass",
+      "reason": "Workflow graph dry-ran successfully; forbidden-pattern scan found no bad prefixes, manual nodes, long waits, or switch defaults.",
+      "evidence": ["recipe.json", "live-recipe.log"]
+    },
+    "ac_coverage": {
+      "status": "pass",
+      "reason": "Every AC is either PROVEN or explicitly UNTESTABLE with rationale; zero WEAK or MISSING rows remain.",
+      "evidence": ["recipe-coverage.md", "trace.json"]
+    },
+    "evidence_contract_basics": {
+      "status": "pass",
+      "reason": "Visual toast claims have screenshots; internal ownership claims have trace-backed state and DOM assertions.",
+      "evidence": [
+        "evidence/evidence-ac1-native-approved-pending-toast.png",
+        "evidence/evidence-ac3-native-success-toast.png",
+        "summary.json"
+      ]
+    },
+    "runtime_observability": {
+      "status": "pass",
+      "reason": "Live recipe log has no HUD warnings; summary reports 19/19 passed and no console/runtime recipe issues.",
+      "evidence": ["live-recipe.log", "summary.json", "recipe-issues-review.md"]
+    }
+  },
+  "structural_findings": [],
+  "contextual_findings": [],
+  "suggested_recipe_delta": [
+    "Add a reusable eval_ref for selectEvmTransactionsForToast once the recipe runtime can import UI selectors safely.",
+    "Add a safe mock order submission fixture for Perps so order-toast suppression can be tested end-to-end."
+  ],
+  "training_fields": {
+    "farm": "metamask-extension",
+    "project": "metamask-extension-farm",
+    "flow_type": "review-pr",
+    "task_type": "review-pr",
+    "claim_is_visual": true,
+    "proof_mode": "mixed",
+    "anti_patterns": [],
+    "good_patterns": [
+      "Save and restore original Redux state around synthetic transaction-state assertions.",
+      "Use ac<N>-prefixed node IDs and screenshot filenames for direct coverage mapping."
+    ]
+  },
+  "meta": {
+    "producer": "worker",
+    "fallback_used": false,
+    "legacy_task": false,
+    "artifact_required": true,
+    "source_signals": ["recipe.json", "recipe-coverage.md", "trace.json", "summary.json"]
+  }
+}
