@@ -1,0 +1,80 @@
+flowchart TD
+  %% PR 42232 stop-loss percent and liquidation validation
+  __entry__(["ENTRY"]) --> node_setup_nav_eth_market
+  node_setup_nav_eth_market[["setup-nav-eth-market<br/>perps/navigate-to-market-detail"]]
+  node_setup_open_long_form["setup-open-long-form<br/>press"]
+  node_setup_wait_long_form["setup-wait-long-form<br/>wait_for"]
+  node_setup_set_long_amount["setup-set-long-amount<br/>set_input"]
+  node_setup_enable_auto_close["setup-enable-auto-close<br/>eval_sync"]
+  node_ac1_set_sl_percent_10["ac1-set-sl-percent-10<br/>set_input"]
+  node_ac1_assert_sl_default_negative["ac1-assert-sl-default-negative<br/>eval_sync"]
+  node_ac1_screenshot_sl_negative["ac1-screenshot-sl-negative<br/>screenshot"]
+  node_ac2_clear_sl_percent["ac2-clear-sl-percent<br/>set_input"]
+  node_ac2_set_sl_percent_leading_zero["ac2-set-sl-percent-leading-zero<br/>set_input"]
+  node_ac2_assert_leading_zero["ac2-assert-leading-zero<br/>eval_sync"]
+  node_ac2_screenshot_leading_zero["ac2-screenshot-leading-zero<br/>screenshot"]
+  node_ac3_clear_sl_percent["ac3-clear-sl-percent<br/>set_input"]
+  node_ac3_set_sl_percent_zero["ac3-set-sl-percent-zero<br/>set_input"]
+  node_ac3_assert_zero_neutral["ac3-assert-zero-neutral<br/>eval_sync"]
+  node_ac3_screenshot_zero_neutral["ac3-screenshot-zero-neutral<br/>screenshot"]
+  node_ac4_clear_sl_percent["ac4-clear-sl-percent<br/>set_input"]
+  node_ac4_set_sl_percent_plus["ac4-set-sl-percent-plus<br/>set_input"]
+  node_ac4_assert_explicit_plus["ac4-assert-explicit-plus<br/>eval_sync"]
+  node_ac4_screenshot_explicit_plus["ac4-screenshot-explicit-plus<br/>screenshot"]
+  node_ac6_set_long_liquidation_sl["ac6-set-long-liquidation-sl<br/>set_input"]
+  node_ac6_assert_long_liquidation_error["ac6-assert-long-liquidation-error<br/>eval_sync"]
+  node_ac6_screenshot_long_liquidation["ac6-screenshot-long-liquidation<br/>screenshot"]
+  node_ac9_set_valid_long_tpsl["ac9-set-valid-long-tpsl<br/>eval_sync"]
+  node_ac9_assert_valid_long_tpsl["ac9-assert-valid-long-tpsl<br/>eval_sync"]
+  node_ac9_screenshot_valid_long_tpsl["ac9-screenshot-valid-long-tpsl<br/>screenshot"]
+  node_ac7_nav_eth_market[["ac7-nav-eth-market<br/>perps/navigate-to-market-detail"]]
+  node_ac7_open_short_form["ac7-open-short-form<br/>press"]
+  node_ac7_wait_short_order["ac7-wait-short-order<br/>wait_for"]
+  node_ac7_set_short_amount["ac7-set-short-amount<br/>set_input"]
+  node_ac7_enable_auto_close["ac7-enable-auto-close<br/>eval_sync"]
+  node_ac7_set_short_liquidation_sl["ac7-set-short-liquidation-sl<br/>set_input"]
+  node_ac7_assert_short_liquidation_error["ac7-assert-short-liquidation-error<br/>eval_sync"]
+  node_ac7_screenshot_short_liquidation["ac7-screenshot-short-liquidation<br/>screenshot"]
+  node_ac8_assert_order_disabled["ac8-assert-order-disabled<br/>eval_sync"]
+  node_ac8_screenshot_order_disabled["ac8-screenshot-order-disabled<br/>screenshot"]
+  node_ac10_probe_tradeable_balance["ac10-probe-tradeable-balance<br/>eval_async"]
+  node_ac10_screenshot_balance_context["ac10-screenshot-balance-context<br/>screenshot"]
+  node_done(["done<br/>PASS"])
+  node_setup_nav_eth_market --> node_setup_open_long_form
+  node_setup_open_long_form --> node_setup_wait_long_form
+  node_setup_wait_long_form --> node_setup_set_long_amount
+  node_setup_set_long_amount --> node_setup_enable_auto_close
+  node_setup_enable_auto_close --> node_ac1_set_sl_percent_10
+  node_ac1_set_sl_percent_10 --> node_ac1_assert_sl_default_negative
+  node_ac1_assert_sl_default_negative --> node_ac1_screenshot_sl_negative
+  node_ac1_screenshot_sl_negative --> node_ac2_clear_sl_percent
+  node_ac2_clear_sl_percent --> node_ac2_set_sl_percent_leading_zero
+  node_ac2_set_sl_percent_leading_zero --> node_ac2_assert_leading_zero
+  node_ac2_assert_leading_zero --> node_ac2_screenshot_leading_zero
+  node_ac2_screenshot_leading_zero --> node_ac3_clear_sl_percent
+  node_ac3_clear_sl_percent --> node_ac3_set_sl_percent_zero
+  node_ac3_set_sl_percent_zero --> node_ac3_assert_zero_neutral
+  node_ac3_assert_zero_neutral --> node_ac3_screenshot_zero_neutral
+  node_ac3_screenshot_zero_neutral --> node_ac4_clear_sl_percent
+  node_ac4_clear_sl_percent --> node_ac4_set_sl_percent_plus
+  node_ac4_set_sl_percent_plus --> node_ac4_assert_explicit_plus
+  node_ac4_assert_explicit_plus --> node_ac4_screenshot_explicit_plus
+  node_ac4_screenshot_explicit_plus --> node_ac6_set_long_liquidation_sl
+  node_ac6_set_long_liquidation_sl --> node_ac6_assert_long_liquidation_error
+  node_ac6_assert_long_liquidation_error --> node_ac6_screenshot_long_liquidation
+  node_ac6_screenshot_long_liquidation --> node_ac9_set_valid_long_tpsl
+  node_ac9_set_valid_long_tpsl --> node_ac9_assert_valid_long_tpsl
+  node_ac9_assert_valid_long_tpsl --> node_ac9_screenshot_valid_long_tpsl
+  node_ac9_screenshot_valid_long_tpsl --> node_ac7_nav_eth_market
+  node_ac7_nav_eth_market --> node_ac7_open_short_form
+  node_ac7_open_short_form --> node_ac7_wait_short_order
+  node_ac7_wait_short_order --> node_ac7_set_short_amount
+  node_ac7_set_short_amount --> node_ac7_enable_auto_close
+  node_ac7_enable_auto_close --> node_ac7_set_short_liquidation_sl
+  node_ac7_set_short_liquidation_sl --> node_ac7_assert_short_liquidation_error
+  node_ac7_assert_short_liquidation_error --> node_ac7_screenshot_short_liquidation
+  node_ac7_screenshot_short_liquidation --> node_ac8_assert_order_disabled
+  node_ac8_assert_order_disabled --> node_ac8_screenshot_order_disabled
+  node_ac8_screenshot_order_disabled --> node_ac10_probe_tradeable_balance
+  node_ac10_probe_tradeable_balance --> node_ac10_screenshot_balance_context
+  node_ac10_screenshot_balance_context --> node_done

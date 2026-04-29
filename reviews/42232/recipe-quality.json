@@ -1,0 +1,98 @@
+{
+  "version": 1,
+  "verdict": "warn",
+  "compact": {
+    "verdict": "WARN",
+    "reasons": [
+      "AC1-4 and AC6-10 have AC-bound nodes with trace pass evidence.",
+      "AC5 modal browser coverage is explicitly UNTESTABLE in this CDP slot; affected Jest tests cover the changed modal code path.",
+      "Recipe stdout reported 38/38 passed; trace recorded 39 entries, 33 AC entries, and 0 failures."
+    ],
+    "better_version_guidance": [
+      "Add stable test ids or a reusable perps flow for opening the edit TP/SL modal, then add ac5-* browser nodes.",
+      "For AC6 and AC7, scroll the validation error into the screenshot frame so the visual artifact shows the exact error text, not only the invalid price and disabled submit state."
+    ]
+  },
+  "dimensions": {
+    "graph_integrity": {
+      "status": "pass",
+      "reason": "Workflow graph dry-ran and live-ran successfully with all recorded AC nodes passing.",
+      "evidence": [
+        "recipe.json",
+        "evidence/trace.json",
+        "evidence/recipe-run.log"
+      ]
+    },
+    "action_contract": {
+      "status": "pass",
+      "reason": "Recipe uses existing perps flows for setup/teardown, contains no manual actions, and avoids forbidden skip patterns.",
+      "evidence": [
+        "recipe.json"
+      ]
+    },
+    "ac_coverage": {
+      "status": "warn",
+      "reason": "AC5 is explicitly untestable in browser because the edit TP/SL modal was not reachable in the current CDP slot; no AC is weak or missing.",
+      "evidence": [
+        "recipe-coverage.md",
+        "evidence/trace.json"
+      ]
+    },
+    "evidence_contract_basics": {
+      "status": "warn",
+      "reason": "Screenshots have AC captions and show the relevant order form state; AC6/AC7 exact error text is proven by trace assertion rather than visible in the screenshot frame.",
+      "evidence": [
+        "evidence/evidence-ac1-sl-negative.png",
+        "evidence/evidence-ac2-leading-zero.png",
+        "evidence/evidence-ac3-zero-neutral.png",
+        "evidence/evidence-ac4-explicit-plus.png",
+        "evidence/evidence-ac6-long-liquidation.png",
+        "evidence/evidence-ac7-short-liquidation.png",
+        "evidence/evidence-ac8-submit-disabled.png",
+        "evidence/evidence-ac9-valid-tpsl.png",
+        "evidence/evidence-ac10-balance-context.png"
+      ]
+    }
+  },
+  "structural_findings": [],
+  "contextual_findings": [
+    {
+      "code": "modal_browser_path_untestable",
+      "message": "The edit TP/SL modal AC was covered by Jest but not by browser recipe because the modal was not reachable/visible through the current CDP route.",
+      "dimension": "ac_coverage",
+      "evidence": [
+        "recipe-coverage.md"
+      ]
+    }
+  ],
+  "suggested_recipe_delta": [
+    "Add a stable edit TP/SL modal opener flow and AC5 assertions once the modal can be reached reliably.",
+    "Scroll validation errors into view before AC6/AC7 screenshots."
+  ],
+  "training_fields": {
+    "farm": "metamask-extension",
+    "project": "metamask-extension-farm",
+    "flow_type": "review-pr",
+    "task_type": "review-pr",
+    "claim_is_visual": true,
+    "proof_mode": "mixed",
+    "anti_patterns": [],
+    "good_patterns": [
+      "AC-prefixed nodes",
+      "state probe for non-visual balance context",
+      "existing perps flows for setup and teardown"
+    ]
+  },
+  "meta": {
+    "producer": "worker",
+    "fallback_used": false,
+    "legacy_task": false,
+    "artifact_required": true,
+    "source_signals": [
+      "recipe.json",
+      "recipe-coverage.md",
+      "evidence/trace.json",
+      "evidence/recipe-run.log"
+    ]
+  }
+}

@@ -1,0 +1,419 @@
+[
+  {
+    "id": "setup-nav-eth-market",
+    "action": "call",
+    "ok": true,
+    "raw": {
+      "passed": 2,
+      "failed": 0,
+      "trace": [
+        {
+          "id": "nav-detail",
+          "action": "navigate",
+          "ok": true,
+          "raw": {
+            "navigated": true,
+            "hash": "#/perps/market/ETH"
+          },
+          "durationMs": 5
+        },
+        {
+          "id": "wait-detail",
+          "action": "wait_for",
+          "ok": true,
+          "raw": {
+            "found": true,
+            "target": "testId:perps-market-detail-page"
+          },
+          "durationMs": 69
+        },
+        {
+          "id": "done",
+          "action": "end",
+          "status": "pass",
+          "durationMs": 0
+        }
+      ],
+      "vars": {}
+    },
+    "durationMs": 105
+  },
+  {
+    "id": "setup-open-long-form",
+    "action": "press",
+    "ok": true,
+    "raw": {
+      "clicked": true,
+      "target": "testId:perps-long-cta-button"
+    },
+    "durationMs": 115
+  },
+  {
+    "id": "setup-wait-long-form",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-order-entry-page"
+    },
+    "durationMs": 45
+  },
+  {
+    "id": "setup-set-long-amount",
+    "action": "set_input",
+    "ok": true,
+    "raw": {
+      "filled": true,
+      "fallback": true
+    },
+    "durationMs": 55
+  },
+  {
+    "id": "setup-enable-auto-close",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"checked\":true,\"visible\":true,\"ok\":true}",
+    "durationMs": 3
+  },
+  {
+    "id": "ac1-set-sl-percent-10",
+    "action": "set_input",
+    "ok": true,
+    "raw": {
+      "filled": true,
+      "fallback": true
+    },
+    "durationMs": 59
+  },
+  {
+    "id": "ac1-assert-sl-default-negative",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"slPercent\":\"-10\",\"slPrice\":2240.15333333,\"current\":2317.4,\"ok\":true}",
+    "durationMs": 1
+  },
+  {
+    "id": "ac1-screenshot-sl-negative",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "screenshots/evidence-ac1-sl-negative-1777436868703.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 147
+  },
+  {
+    "id": "ac2-clear-sl-percent",
+    "action": "set_input",
+    "ok": true,
+    "raw": {
+      "filled": true,
+      "fallback": true
+    },
+    "durationMs": 61
+  },
+  {
+    "id": "ac2-set-sl-percent-leading-zero",
+    "action": "set_input",
+    "ok": true,
+    "raw": {
+      "filled": true,
+      "fallback": true
+    },
+    "durationMs": 61
+  },
+  {
+    "id": "ac2-assert-leading-zero",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"slPercent\":\"-11\",\"slPrice\":2232.42866667,\"current\":2317.4,\"ok\":true}",
+    "durationMs": 1
+  },
+  {
+    "id": "ac2-screenshot-leading-zero",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "screenshots/evidence-ac2-leading-zero-1777436868977.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 86
+  },
+  {
+    "id": "ac3-clear-sl-percent",
+    "action": "set_input",
+    "ok": true,
+    "raw": {
+      "filled": true,
+      "fallback": true
+    },
+    "durationMs": 82
+  },
+  {
+    "id": "ac3-set-sl-percent-zero",
+    "action": "set_input",
+    "ok": true,
+    "raw": {
+      "filled": true,
+      "fallback": true
+    },
+    "durationMs": 76
+  },
+  {
+    "id": "ac3-assert-zero-neutral",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"slPercent\":\"0\",\"ok\":true}",
+    "durationMs": 1
+  },
+  {
+    "id": "ac3-screenshot-zero-neutral",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "screenshots/evidence-ac3-zero-neutral-1777436869227.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 93
+  },
+  {
+    "id": "ac4-clear-sl-percent",
+    "action": "set_input",
+    "ok": true,
+    "raw": {
+      "filled": true,
+      "fallback": true
+    },
+    "durationMs": 102
+  },
+  {
+    "id": "ac4-set-sl-percent-plus",
+    "action": "set_input",
+    "ok": true,
+    "raw": {
+      "filled": true,
+      "fallback": true
+    },
+    "durationMs": 92
+  },
+  {
+    "id": "ac4-assert-explicit-plus",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"slPercent\":\"+10\",\"ok\":true}",
+    "durationMs": 1
+  },
+  {
+    "id": "ac4-screenshot-explicit-plus",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "screenshots/evidence-ac4-explicit-plus-1777436869526.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 98
+  },
+  {
+    "id": "ac6-set-long-liquidation-sl",
+    "action": "set_input",
+    "ok": true,
+    "raw": {
+      "filled": true,
+      "fallback": true
+    },
+    "durationMs": 103
+  },
+  {
+    "id": "ac6-assert-long-liquidation-error",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"error\":\"Stop loss must be above liquidation price\",\"disabled\":true,\"ok\":true}",
+    "durationMs": 1
+  },
+  {
+    "id": "ac6-screenshot-long-liquidation",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "screenshots/evidence-ac6-long-liquidation-1777436869735.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 106
+  },
+  {
+    "id": "ac9-set-valid-long-tpsl",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"current\":2317.4,\"tp\":\"2433.27\",\"sl\":\"2201.53\",\"ok\":true}",
+    "durationMs": 8
+  },
+  {
+    "id": "ac9-assert-valid-long-tpsl",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"tpErr\":false,\"slErr\":false,\"disabled\":false,\"ok\":true}",
+    "durationMs": 1
+  },
+  {
+    "id": "ac9-screenshot-valid-long-tpsl",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "screenshots/evidence-ac9-valid-tpsl-1777436869860.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 96
+  },
+  {
+    "id": "ac7-nav-eth-market",
+    "action": "call",
+    "ok": true,
+    "raw": {
+      "passed": 2,
+      "failed": 0,
+      "trace": [
+        {
+          "id": "nav-detail",
+          "action": "navigate",
+          "ok": true,
+          "raw": {
+            "navigated": true,
+            "hash": "#/perps/market/ETH"
+          },
+          "durationMs": 7
+        },
+        {
+          "id": "wait-detail",
+          "action": "wait_for",
+          "ok": true,
+          "raw": {
+            "found": true,
+            "target": "testId:perps-market-detail-page"
+          },
+          "durationMs": 83
+        },
+        {
+          "id": "done",
+          "action": "end",
+          "status": "pass",
+          "durationMs": 0
+        }
+      ],
+      "vars": {}
+    },
+    "durationMs": 119
+  },
+  {
+    "id": "ac7-open-short-form",
+    "action": "press",
+    "ok": true,
+    "raw": {
+      "clicked": true,
+      "target": "testId:perps-short-cta-button"
+    },
+    "durationMs": 121
+  },
+  {
+    "id": "ac7-wait-short-order",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-order-entry-page"
+    },
+    "durationMs": 135
+  },
+  {
+    "id": "ac7-set-short-amount",
+    "action": "set_input",
+    "ok": true,
+    "raw": {
+      "filled": true,
+      "fallback": true
+    },
+    "durationMs": 51
+  },
+  {
+    "id": "ac7-enable-auto-close",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"checked\":true,\"visible\":true,\"ok\":true}",
+    "durationMs": 3
+  },
+  {
+    "id": "ac7-set-short-liquidation-sl",
+    "action": "set_input",
+    "ok": true,
+    "raw": {
+      "filled": true,
+      "fallback": true
+    },
+    "durationMs": 48
+  },
+  {
+    "id": "ac7-assert-short-liquidation-error",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"error\":\"Stop loss must be below liquidation price\",\"disabled\":true,\"ok\":true}",
+    "durationMs": 1
+  },
+  {
+    "id": "ac7-screenshot-short-liquidation",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "screenshots/evidence-ac7-short-liquidation-1777436870446.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 86
+  },
+  {
+    "id": "ac8-assert-order-disabled",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"disabled\":true,\"ok\":true}",
+    "durationMs": 1
+  },
+  {
+    "id": "ac8-screenshot-order-disabled",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "screenshots/evidence-ac8-submit-disabled-1777436870538.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 101
+  },
+  {
+    "id": "ac10-probe-tradeable-balance",
+    "action": "eval_async",
+    "ok": true,
+    "raw": "{\"availableBalance\":\"860.693169\",\"availableToTradeBalance\":null,\"totalBalance\":\"863.862893\",\"ok\":true}",
+    "durationMs": 128
+  },
+  {
+    "id": "ac10-screenshot-balance-context",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "screenshots/evidence-ac10-balance-context-1777436870774.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 108
+  },
+  {
+    "id": "done",
+    "action": "end",
+    "status": "pass",
+    "durationMs": 0
+  }
+]

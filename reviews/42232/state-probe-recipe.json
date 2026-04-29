@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "title": "PR 42232 state probe",
+  "description": "Probe current wallet and perps state for recipe prerequisites.",
+  "validate": {
+    "workflow": {
+      "pre_conditions": ["wallet.unlocked", "perps.feature_enabled"],
+      "entry": "gate-wallet",
+      "nodes": {
+        "gate-wallet": {
+          "action": "eval_ref",
+          "ref": "accounts",
+          "save_as": "accounts",
+          "next": "gate-perps-state"
+        },
+        "gate-perps-state": {
+          "action": "eval_ref",
+          "ref": "perps-state",
+          "save_as": "perps_state",
+          "next": "gate-perps-balance"
+        },
+        "gate-perps-balance": {
+          "action": "eval_ref",
+          "ref": "perps-balance",
+          "save_as": "perps_balance",
+          "next": "gate-perps-positions"
+        },
+        "gate-perps-positions": {
+          "action": "eval_ref",
+          "ref": "perps-positions",
+          "save_as": "perps_positions",
+          "next": "gate-perps-orders"
+        },
+        "gate-perps-orders": {
+          "action": "eval_ref",
+          "ref": "perps-orders",
+          "save_as": "perps_orders",
+          "next": "done"
+        },
+        "done": {
+          "action": "end",
+          "status": "pass"
+        }
+      }
+    }
+  }
+}

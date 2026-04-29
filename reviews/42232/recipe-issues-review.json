@@ -1,0 +1,67 @@
+{
+  "status": "review",
+  "note": "Observed 14 unexpected warning/error/exception event(s) during validation. Relation to the recipe or current change is not determined; review the artifacts.",
+  "observed": {
+    "total": 14,
+    "warning": 11,
+    "error": 3,
+    "exception": 0,
+    "other": 0
+  },
+  "gating": {
+    "total": 0,
+    "warning": 0,
+    "error": 0,
+    "exception": 0,
+    "other": 0
+  },
+  "informational": {
+    "total": 0
+  },
+  "topIssues": [
+    {
+      "level": "warning",
+      "channel": "console",
+      "source": "home",
+      "targetRole": "home",
+      "text": "An input selector returned a different result when passed same arguments.\nThis means your output selector will likely run more frequently than intended.\nAvoid returning a new reference inside your input selector, e.g.\n`createSelector([state => state.todos.map(todo => todo.id)], todoIds => todoIds.length)` Object",
+      "count": 10,
+      "allowlistMatch": null
+    },
+    {
+      "level": "error",
+      "channel": "console",
+      "source": "home",
+      "targetRole": "home",
+      "text": "Unknown action Object",
+      "count": 6,
+      "allowlistMatch": null
+    },
+    {
+      "level": "warning",
+      "channel": "console",
+      "source": "home",
+      "targetRole": "home",
+      "text": "The result function returned its own inputs without modification. e.g\n`createSelector([state => state.todos], todos => todos)`\nThis could lead to inefficient memoization and unnecessary re-renders.\nEnsure transformation logic is in the result function, and extraction logic is in the input selectors. Object",
+      "count": 4,
+      "allowlistMatch": null
+    },
+    {
+      "level": "warning",
+      "channel": "console",
+      "source": "sw",
+      "targetRole": "service-worker",
+      "text": "Sentry not initialized",
+      "count": 3,
+      "allowlistMatch": null
+    }
+  ],
+  "artifactFiles": {
+    "allIssues": "/Users/deeeed/dev/metamask/metamask-extension-1/temp/tasks/review/42232-0429-120213/artifacts/recipe-issues.json",
+    "consoleWarnings": "/Users/deeeed/dev/metamask/metamask-extension-1/temp/tasks/review/42232-0429-120213/artifacts/console-warnings.json",
+    "consoleErrors": "/Users/deeeed/dev/metamask/metamask-extension-1/temp/tasks/review/42232-0429-120213/artifacts/console-errors.json",
+    "runtimeExceptions": "/Users/deeeed/dev/metamask/metamask-extension-1/temp/tasks/review/42232-0429-120213/artifacts/runtime-exceptions.json",
+    "reviewJson": "/Users/deeeed/dev/metamask/metamask-extension-1/temp/tasks/review/42232-0429-120213/artifacts/recipe-issues-review.json",
+    "reviewMd": "/Users/deeeed/dev/metamask/metamask-extension-1/temp/tasks/review/42232-0429-120213/artifacts/recipe-issues-review.md"
+  }
+}

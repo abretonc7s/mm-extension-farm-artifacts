@@ -1,0 +1,8 @@
+- The perps recipe flows are useful for order-entry setup: `perps/ensure-perps-network`, `perps/navigate-to-market-detail`, and `perps/close-position` covered most of the setup/cleanup without custom navigation.
+- Network toggles during recipe setup/teardown can destroy the page evaluation context and produce transient HUD warnings; checking the trace after reload distinguishes this from AC-node failure.
+- The order-entry stop-loss percent fields have stable `data-testid` selectors, which made AC-bound assertions and screenshots straightforward.
+- The edit TP/SL modal content has unit-test coverage but the live modal path was not reachable reliably through the current CDP route; a reusable flow or stable modal opener selector would improve future browser coverage.
+- For perps validation screenshots, scroll position matters: invalid price and disabled submit were visible, while exact error text was trace-proven but not always in the screenshot frame.
+- Mobile parity for stop-loss percentage entry lives in `PerpsTPSLView`; mobile liquidation warning expectations are well represented in `PerpsOrderView.test.tsx`.
+- `yarn lint:tsc` can fail on AccountState typing around `availableToTradeBalance` even when the PR diff does not include those hunks; diff-gating line comments avoids attaching review comments to unrelated lines.
+- The recipe issue artifacts may include non-gating selector memoization and Sentry initialization noise; review `recipe-issues-review.md` before treating console output as PR-specific.

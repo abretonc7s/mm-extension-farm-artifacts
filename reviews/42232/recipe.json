@@ -1,0 +1,277 @@
+{
+  "schema_version": 1,
+  "title": "PR 42232 stop-loss percent and liquidation validation",
+  "description": "Validate perps stop-loss percent defaulting, leading-zero normalization, explicit positive entry, liquidation validation, and valid TP/SL paths.",
+  "validate": {
+    "workflow": {
+      "pre_conditions": ["wallet.unlocked", "perps.feature_enabled"],
+      "setup": [
+        {
+          "id": "setup-save-original-network",
+          "action": "eval_sync",
+          "expression": "(function(){var m=stateHooks.store.getState().metamask;return JSON.stringify({network:m.isTestnet?'testnet':'mainnet',provider:m.activeProvider||'hyperliquid'})})()",
+          "save_as": "original_network"
+        },
+        {
+          "id": "setup-ensure-testnet",
+          "action": "call",
+          "ref": "perps/ensure-perps-network",
+          "params": { "network": "testnet", "provider": "hyperliquid" }
+        }
+      ],
+      "teardown": [
+        {
+          "id": "teardown-close-eth",
+          "action": "call",
+          "ref": "perps/close-position",
+          "params": { "symbol": "ETH", "percent": "100" }
+        },
+        {
+          "id": "teardown-restore-network",
+          "action": "call",
+          "ref": "perps/ensure-perps-network",
+          "params": { "network": "{{vars.original_network.network}}", "provider": "{{vars.original_network.provider}}" }
+        },
+        {
+          "id": "teardown-nav-perps",
+          "action": "call",
+          "ref": "perps/navigate-perps-tab"
+        }
+      ],
+      "entry": "setup-nav-eth-market",
+      "nodes": {
+        "setup-nav-eth-market": {
+          "action": "call",
+          "ref": "perps/navigate-to-market-detail",
+          "params": { "symbol": "ETH" },
+          "next": "setup-open-long-form"
+        },
+        "setup-open-long-form": {
+          "action": "press",
+          "test_id": "perps-long-cta-button",
+          "next": "setup-wait-long-form"
+        },
+        "setup-wait-long-form": {
+          "action": "wait_for",
+          "test_id": "perps-order-entry-page",
+          "timeout_ms": 10000,
+          "next": "setup-set-long-amount"
+        },
+        "setup-set-long-amount": {
+          "action": "set_input",
+          "test_id": "amount-input-field",
+          "value": "100",
+          "next": "setup-enable-auto-close"
+        },
+        "setup-enable-auto-close": {
+          "action": "eval_sync",
+          "expression": "(function(){const input=document.querySelector('[data-testid=\"auto-close-toggle\"]');if(input&&!input.checked){input.click();}const visible=!!document.querySelector('[data-testid=\"sl-price-input\"] input');return JSON.stringify({checked:input?.checked===true,visible,ok:input?.checked===true&&visible});})()",
+          "assert": { "operator": "eq", "field": "ok", "value": true },
+          "next": "ac1-set-sl-percent-10"
+        },
+        "ac1-set-sl-percent-10": {
+          "action": "set_input",
+          "test_id": "sl-percent-input",
+          "value": "10",
+          "next": "ac1-assert-sl-default-negative"
+        },
+        "ac1-assert-sl-default-negative": {
+          "action": "eval_sync",
+          "expression": "(function(){const q=(id)=>document.querySelector('[data-testid=\"'+id+'\"] input');const num=(v)=>Number(String(v||'').replace(/[$,]/g,''));const slPercent=q('sl-percent-input')?.value||'';const slPrice=num(q('sl-price-input')?.value);const current=num(document.querySelector('[data-testid=\"perps-order-entry-price\"]')?.textContent);return JSON.stringify({slPercent,slPrice,current,ok:slPercent==='-10'&&slPrice>0&&current>0&&slPrice<current});})()",
+          "assert": { "operator": "eq", "field": "ok", "value": true },
+          "next": "ac1-screenshot-sl-negative"
+        },
+        "ac1-screenshot-sl-negative": {
+          "action": "screenshot",
+          "filename": "evidence-ac1-sl-negative",
+          "note": "AC1: unsigned 10 becomes -10",
+          "next": "ac2-clear-sl-percent"
+        },
+        "ac2-clear-sl-percent": {
+          "action": "set_input",
+          "test_id": "sl-percent-input",
+          "value": "",
+          "next": "ac2-set-sl-percent-leading-zero"
+        },
+        "ac2-set-sl-percent-leading-zero": {
+          "action": "set_input",
+          "test_id": "sl-percent-input",
+          "value": "011",
+          "next": "ac2-assert-leading-zero"
+        },
+        "ac2-assert-leading-zero": {
+          "action": "eval_sync",
+          "expression": "(function(){const q=(id)=>document.querySelector('[data-testid=\"'+id+'\"] input');const num=(v)=>Number(String(v||'').replace(/[$,]/g,''));const slPercent=q('sl-percent-input')?.value||'';const slPrice=num(q('sl-price-input')?.value);const current=num(document.querySelector('[data-testid=\"perps-order-entry-price\"]')?.textContent);return JSON.stringify({slPercent,slPrice,current,ok:slPercent==='-11'&&slPrice>0&&current>0&&slPrice<current});})()",
+          "assert": { "operator": "eq", "field": "ok", "value": true },
+          "next": "ac2-screenshot-leading-zero"
+        },
+        "ac2-screenshot-leading-zero": {
+          "action": "screenshot",
+          "filename": "evidence-ac2-leading-zero",
+          "note": "AC2: 011 normalizes to -11",
+          "next": "ac3-clear-sl-percent"
+        },
+        "ac3-clear-sl-percent": {
+          "action": "set_input",
+          "test_id": "sl-percent-input",
+          "value": "",
+          "next": "ac3-set-sl-percent-zero"
+        },
+        "ac3-set-sl-percent-zero": {
+          "action": "set_input",
+          "test_id": "sl-percent-input",
+          "value": "0",
+          "next": "ac3-assert-zero-neutral"
+        },
+        "ac3-assert-zero-neutral": {
+          "action": "eval_sync",
+          "expression": "(function(){const q=(id)=>document.querySelector('[data-testid=\"'+id+'\"] input');const slPercent=q('sl-percent-input')?.value||'';return JSON.stringify({slPercent,ok:slPercent==='0'});})()",
+          "assert": { "operator": "eq", "field": "ok", "value": true },
+          "next": "ac3-screenshot-zero-neutral"
+        },
+        "ac3-screenshot-zero-neutral": {
+          "action": "screenshot",
+          "filename": "evidence-ac3-zero-neutral",
+          "note": "AC3: zero remains unsigned",
+          "next": "ac4-clear-sl-percent"
+        },
+        "ac4-clear-sl-percent": {
+          "action": "set_input",
+          "test_id": "sl-percent-input",
+          "value": "",
+          "next": "ac4-set-sl-percent-plus"
+        },
+        "ac4-set-sl-percent-plus": {
+          "action": "set_input",
+          "test_id": "sl-percent-input",
+          "value": "+10",
+          "next": "ac4-assert-explicit-plus"
+        },
+        "ac4-assert-explicit-plus": {
+          "action": "eval_sync",
+          "expression": "(function(){const q=(id)=>document.querySelector('[data-testid=\"'+id+'\"] input');const slPercent=q('sl-percent-input')?.value||'';return JSON.stringify({slPercent,ok:slPercent==='+10'});})()",
+          "assert": { "operator": "eq", "field": "ok", "value": true },
+          "next": "ac4-screenshot-explicit-plus"
+        },
+        "ac4-screenshot-explicit-plus": {
+          "action": "screenshot",
+          "filename": "evidence-ac4-explicit-plus",
+          "note": "AC4: explicit +10 is preserved",
+          "next": "ac6-set-long-liquidation-sl"
+        },
+        "ac6-set-long-liquidation-sl": {
+          "action": "set_input",
+          "test_id": "sl-price-input",
+          "value": "1",
+          "next": "ac6-assert-long-liquidation-error"
+        },
+        "ac6-assert-long-liquidation-error": {
+          "action": "eval_sync",
+          "expression": "(function(){const error=document.querySelector('[data-testid=\"sl-validation-error\"]')?.textContent||'';const disabled=document.querySelector('[data-testid=\"submit-order-button\"]')?.disabled===true;return JSON.stringify({error,disabled,ok:/above.*liquidation/i.test(error)&&disabled});})()",
+          "assert": { "operator": "eq", "field": "ok", "value": true },
+          "next": "ac6-screenshot-long-liquidation"
+        },
+        "ac6-screenshot-long-liquidation": {
+          "action": "screenshot",
+          "filename": "evidence-ac6-long-liquidation",
+          "note": "AC6: long SL below liquidation is blocked",
+          "next": "ac9-set-valid-long-tpsl"
+        },
+        "ac9-set-valid-long-tpsl": {
+          "action": "eval_sync",
+          "expression": "(function(){const q=(id)=>document.querySelector('[data-testid=\"'+id+'\"] input');const num=(v)=>Number(String(v||'').replace(/[$,]/g,''));const set=(input,value)=>{const setter=Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set;setter.call(input,String(value));input.dispatchEvent(new Event('input',{bubbles:true}));input.dispatchEvent(new Event('change',{bubbles:true}));};const current=num(document.querySelector('[data-testid=\"perps-order-entry-price\"]')?.textContent);set(q('tp-price-input'),(current*1.05).toFixed(2));set(q('sl-price-input'),(current*0.95).toFixed(2));return JSON.stringify({current,tp:q('tp-price-input')?.value,sl:q('sl-price-input')?.value,ok:current>0});})()",
+          "assert": { "operator": "eq", "field": "ok", "value": true },
+          "next": "ac9-assert-valid-long-tpsl"
+        },
+        "ac9-assert-valid-long-tpsl": {
+          "action": "eval_sync",
+          "expression": "(function(){const tpErr=!!document.querySelector('[data-testid=\"tp-validation-error\"]');const slErr=!!document.querySelector('[data-testid=\"sl-validation-error\"]');const disabled=document.querySelector('[data-testid=\"submit-order-button\"]')?.disabled===true;return JSON.stringify({tpErr,slErr,disabled,ok:!tpErr&&!slErr&&!disabled});})()",
+          "assert": { "operator": "eq", "field": "ok", "value": true },
+          "next": "ac9-screenshot-valid-long-tpsl"
+        },
+        "ac9-screenshot-valid-long-tpsl": {
+          "action": "screenshot",
+          "filename": "evidence-ac9-valid-tpsl",
+          "note": "AC9: valid TP and SL keep submit enabled",
+          "next": "ac7-nav-eth-market"
+        },
+        "ac7-nav-eth-market": {
+          "action": "call",
+          "ref": "perps/navigate-to-market-detail",
+          "params": { "symbol": "ETH" },
+          "next": "ac7-open-short-form"
+        },
+        "ac7-open-short-form": {
+          "action": "press",
+          "test_id": "perps-short-cta-button",
+          "next": "ac7-wait-short-order"
+        },
+        "ac7-wait-short-order": {
+          "action": "wait_for",
+          "test_id": "perps-order-entry-page",
+          "timeout_ms": 10000,
+          "next": "ac7-set-short-amount"
+        },
+        "ac7-set-short-amount": {
+          "action": "set_input",
+          "test_id": "amount-input-field",
+          "value": "100",
+          "next": "ac7-enable-auto-close"
+        },
+        "ac7-enable-auto-close": {
+          "action": "eval_sync",
+          "expression": "(function(){const input=document.querySelector('[data-testid=\"auto-close-toggle\"]');if(input&&!input.checked){input.click();}const visible=!!document.querySelector('[data-testid=\"sl-price-input\"] input');return JSON.stringify({checked:input?.checked===true,visible,ok:input?.checked===true&&visible});})()",
+          "assert": { "operator": "eq", "field": "ok", "value": true },
+          "next": "ac7-set-short-liquidation-sl"
+        },
+        "ac7-set-short-liquidation-sl": {
+          "action": "set_input",
+          "test_id": "sl-price-input",
+          "value": "999999",
+          "next": "ac7-assert-short-liquidation-error"
+        },
+        "ac7-assert-short-liquidation-error": {
+          "action": "eval_sync",
+          "expression": "(function(){const error=document.querySelector('[data-testid=\"sl-validation-error\"]')?.textContent||'';const disabled=document.querySelector('[data-testid=\"submit-order-button\"]')?.disabled===true;return JSON.stringify({error,disabled,ok:/below.*liquidation/i.test(error)&&disabled});})()",
+          "assert": { "operator": "eq", "field": "ok", "value": true },
+          "next": "ac7-screenshot-short-liquidation"
+        },
+        "ac7-screenshot-short-liquidation": {
+          "action": "screenshot",
+          "filename": "evidence-ac7-short-liquidation",
+          "note": "AC7: short SL above liquidation is blocked",
+          "next": "ac8-assert-order-disabled"
+        },
+        "ac8-assert-order-disabled": {
+          "action": "eval_sync",
+          "expression": "(function(){const disabled=document.querySelector('[data-testid=\"submit-order-button\"]')?.disabled===true;return JSON.stringify({disabled,ok:disabled});})()",
+          "assert": { "operator": "eq", "field": "ok", "value": true },
+          "next": "ac8-screenshot-order-disabled"
+        },
+        "ac8-screenshot-order-disabled": {
+          "action": "screenshot",
+          "filename": "evidence-ac8-submit-disabled",
+          "note": "AC8: invalid liquidation disables submit",
+          "next": "ac10-probe-tradeable-balance"
+        },
+        "ac10-probe-tradeable-balance": {
+          "action": "eval_async",
+          "expression": "(async()=>{const r=await stateHooks.submitRequestToBackground('perpsGetAccountState',[]);return JSON.stringify({availableBalance:r?.availableBalance??null,availableToTradeBalance:r?.availableToTradeBalance??null,totalBalance:r?.totalBalance??null,ok:r!=null});})()",
+          "assert": { "operator": "eq", "field": "ok", "value": true },
+          "next": "ac10-screenshot-balance-context"
+        },
+        "ac10-screenshot-balance-context": {
+          "action": "screenshot",
+          "filename": "evidence-ac10-balance-context",
+          "note": "AC10: balance context captured",
+          "next": "done"
+        },
+        "done": {
+          "action": "end",
+          "status": "pass",
+          "message": "PR 42232 validation recipe completed"
+        }
+      }
+    }
+  }
+}

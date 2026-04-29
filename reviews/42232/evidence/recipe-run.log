@@ -1,0 +1,109 @@
+
+Recipe: PR 42232 stop-loss percent and liquidation validation
+
+Connecting to existing browser via CDP on port 6665...
+[cdp] Found extension ID from existing service worker: hebhblbkkdabgoldnojllkipeoacjioc
+
+Pre-conditions:
+  [[32mOK[0m] wallet.unlocked (11405ms)
+  [[32mOK[0m] perps.feature_enabled (8ms)
+
+Nodes:
+
+Setup:
+  [[32mPASS[0m] setup-save-original-network (3ms)
+
+Setup:
+  [[32mPASS[0m] nav-perps-tab (9ms)
+  [[32mPASS[0m] check-tutorial (4ms)
+  [[32mPASS[0m] wait-tab-mount (11387ms)
+  [[32mPASS[0m] fetch-account-state (382ms)
+  [[32mPASS[0m] setup-prime-perps (11818ms)
+  [[32mPASS[0m] check-state (1ms)
+  [[32mPASS[0m] toggle-network (631ms)
+  [[32mPASS[0m] verify-network (2ms)
+  [hud] update failed: page.evaluate: Execution context was destroyed, most likely because of a navigation
+  [[32mPASS[0m] reload-ui (3ms)
+  [[32mPASS[0m] wait-reload (11669ms)
+  [[32mPASS[0m] verify-markets (125ms)
+  [[32mPASS[0m] setup-ensure-testnet (24524ms)
+  [[32mPASS[0m] nav-detail (5ms)
+  [[32mPASS[0m] wait-detail (69ms)
+  [[32mPASS[0m] setup-nav-eth-market (105ms)
+  [[32mPASS[0m] setup-open-long-form (115ms)
+  [[32mPASS[0m] setup-wait-long-form (45ms)
+  [[32mPASS[0m] setup-set-long-amount (55ms)
+  [[32mPASS[0m] setup-enable-auto-close (3ms)
+  [[32mPASS[0m] ac1-set-sl-percent-10 (59ms)
+  [[32mPASS[0m] ac1-assert-sl-default-negative (1ms)
+  [[32mPASS[0m] ac1-screenshot-sl-negative (147ms)
+  [[32mPASS[0m] ac2-clear-sl-percent (61ms)
+  [[32mPASS[0m] ac2-set-sl-percent-leading-zero (61ms)
+  [[32mPASS[0m] ac2-assert-leading-zero (1ms)
+  [[32mPASS[0m] ac2-screenshot-leading-zero (86ms)
+  [[32mPASS[0m] ac3-clear-sl-percent (82ms)
+  [[32mPASS[0m] ac3-set-sl-percent-zero (76ms)
+  [[32mPASS[0m] ac3-assert-zero-neutral (1ms)
+  [[32mPASS[0m] ac3-screenshot-zero-neutral (93ms)
+  [[32mPASS[0m] ac4-clear-sl-percent (102ms)
+  [[32mPASS[0m] ac4-set-sl-percent-plus (92ms)
+  [[32mPASS[0m] ac4-assert-explicit-plus (1ms)
+  [[32mPASS[0m] ac4-screenshot-explicit-plus (98ms)
+  [[32mPASS[0m] ac6-set-long-liquidation-sl (103ms)
+  [[32mPASS[0m] ac6-assert-long-liquidation-error (1ms)
+  [[32mPASS[0m] ac6-screenshot-long-liquidation (106ms)
+  [[32mPASS[0m] ac9-set-valid-long-tpsl (8ms)
+  [[32mPASS[0m] ac9-assert-valid-long-tpsl (1ms)
+  [[32mPASS[0m] ac9-screenshot-valid-long-tpsl (96ms)
+  [[32mPASS[0m] nav-detail (7ms)
+  [[32mPASS[0m] wait-detail (83ms)
+  [[32mPASS[0m] ac7-nav-eth-market (119ms)
+  [[32mPASS[0m] ac7-open-short-form (121ms)
+  [[32mPASS[0m] ac7-wait-short-order (135ms)
+  [[32mPASS[0m] ac7-set-short-amount (51ms)
+  [[32mPASS[0m] ac7-enable-auto-close (3ms)
+  [[32mPASS[0m] ac7-set-short-liquidation-sl (48ms)
+  [[32mPASS[0m] ac7-assert-short-liquidation-error (1ms)
+  [[32mPASS[0m] ac7-screenshot-short-liquidation (86ms)
+  [[32mPASS[0m] ac8-assert-order-disabled (1ms)
+  [[32mPASS[0m] ac8-screenshot-order-disabled (101ms)
+  [[32mPASS[0m] ac10-probe-tradeable-balance (128ms)
+  [[32mPASS[0m] ac10-screenshot-balance-context (108ms)
+
+Teardown:
+
+Setup:
+  [[32mPASS[0m] nav-perps-tab (8ms)
+  [[32mPASS[0m] check-tutorial (3ms)
+  [[32mPASS[0m] wait-tab-mount (11294ms)
+  [[32mPASS[0m] fetch-account-state (130ms)
+  [[32mPASS[0m] setup-prime-perps (11495ms)
+  [[32mPASS[0m] nav-detail (11ms)
+  [[32mPASS[0m] wait-detail (82ms)
+  [[32mPASS[0m] call-nav-detail (128ms)
+  [[32mPASS[0m] check-close-btn (1ms)
+  [[32mPASS[0m] teardown-close-eth (11632ms)
+
+Setup:
+  [[32mPASS[0m] nav-perps-tab (4ms)
+  [[32mPASS[0m] check-tutorial (1ms)
+  [[32mPASS[0m] wait-tab-mount (11356ms)
+  [[32mPASS[0m] fetch-account-state (128ms)
+  [[32mPASS[0m] setup-prime-perps (11532ms)
+  [[32mPASS[0m] check-state (1ms)
+  [[32mPASS[0m] toggle-network (711ms)
+  [[32mPASS[0m] verify-network (1ms)
+  [hud] update failed: page.evaluate: Execution context was destroyed, most likely because of a navigation
+  [[32mPASS[0m] reload-ui (2ms)
+  [[32mPASS[0m] wait-reload (11844ms)
+  [[32mPASS[0m] verify-markets (130ms)
+  [[32mPASS[0m] teardown-restore-network (24492ms)
+  [[32mPASS[0m] nav-perps (8ms)
+  [[32mPASS[0m] check-tutorial (1ms)
+  [[32mPASS[0m] wait-perps (11359ms)
+  [[32mPASS[0m] screenshot-perps (11123ms)
+  [[32mPASS[0m] teardown-nav-perps (22522ms)
+
+[auto-issues] review — 14 unexpected event(s). See /Users/deeeed/dev/metamask/metamask-extension-1/temp/tasks/review/42232-0429-120213/artifacts/recipe-issues-review.md
+
+[32m38/38 passed[0m in 85755ms
