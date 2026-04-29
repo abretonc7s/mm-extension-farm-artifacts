@@ -1,0 +1,115 @@
+[
+  {
+    "id": "ac5-nav-eth-market",
+    "action": "call",
+    "ok": true,
+    "raw": {
+      "passed": 2,
+      "failed": 0,
+      "trace": [
+        {
+          "id": "nav-detail",
+          "action": "navigate",
+          "ok": true,
+          "raw": {
+            "navigated": true,
+            "hash": "#/perps/market/ETH"
+          },
+          "durationMs": 4
+        },
+        {
+          "id": "wait-detail",
+          "action": "wait_for",
+          "ok": true,
+          "raw": {
+            "found": true,
+            "target": "testId:perps-market-detail-page"
+          },
+          "durationMs": 56
+        },
+        {
+          "id": "done",
+          "action": "end",
+          "status": "pass",
+          "durationMs": 0
+        }
+      ],
+      "vars": {}
+    },
+    "durationMs": 63
+  },
+  {
+    "id": "ac5-open-tpsl-modal",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"found\":true,\"clicked\":true}",
+    "durationMs": 9
+  },
+  {
+    "id": "ac5-wait-tpsl-modal",
+    "action": "wait_for",
+    "ok": true,
+    "raw": true,
+    "durationMs": 0
+  },
+  {
+    "id": "ac5-assert-modal-percent-cases",
+    "action": "eval_async",
+    "ok": true,
+    "raw": "{\"inputCount\":4,\"results\":{\"ten\":\"-10\",\"leading\":\"-11\",\"zero\":\"0\",\"plus\":\"+10\"},\"ok\":true}",
+    "durationMs": 241
+  },
+  {
+    "id": "ac5-screenshot-modal-percent-cases",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "screenshots/evidence-ac5-modal-percent-cases-1777440049161.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 99
+  },
+  {
+    "id": "ac8-modal-set-liquidation-sl",
+    "action": "eval_async",
+    "ok": true,
+    "raw": "{\"error\":\"Stop loss must be above liquidation price\",\"disabled\":true,\"ok\":true}",
+    "durationMs": 37
+  },
+  {
+    "id": "ac8-screenshot-modal-save-disabled",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "screenshots/evidence-ac8-modal-save-disabled-1777440049304.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 110
+  },
+  {
+    "id": "ac9-modal-set-valid-tpsl",
+    "action": "eval_async",
+    "ok": true,
+    "raw": "{\"current\":2330.1,\"liquidation\":1588.2,\"tp\":\"2446.61\",\"sl\":\"1959.15\",\"tpError\":\"\",\"slError\":\"\",\"disabled\":false,\"ok\":true}",
+    "durationMs": 72
+  },
+  {
+    "id": "ac9-screenshot-modal-valid-tpsl",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "screenshots/evidence-ac9-modal-valid-tpsl-1777440049492.png",
+      "width": 500,
+      "height": 713
+    },
+    "durationMs": 92
+  },
+  {
+    "id": "done",
+    "action": "end",
+    "status": "pass",
+    "durationMs": 0
+  }
+]

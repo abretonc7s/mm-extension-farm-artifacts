@@ -1,0 +1,110 @@
+{
+  "schema_version": 1,
+  "title": "PR 42232 AC5 edit TP/SL modal validation",
+  "description": "Seed a perps position, open the edit TP/SL modal, and verify stop-loss percent defaulting behavior.",
+  "validate": {
+    "workflow": {
+      "pre_conditions": ["wallet.unlocked", "perps.feature_enabled"],
+      "setup": [
+        {
+          "id": "setup-save-original-network",
+          "action": "eval_sync",
+          "expression": "(function(){var m=stateHooks.store.getState().metamask;return JSON.stringify({network:m.isTestnet?'testnet':'mainnet',provider:m.activeProvider||'hyperliquid'})})()",
+          "save_as": "original_network"
+        },
+        {
+          "id": "setup-ensure-testnet",
+          "action": "call",
+          "ref": "perps/ensure-perps-network",
+          "params": { "network": "testnet", "provider": "hyperliquid" }
+        },
+        {
+          "id": "setup-open-long-position",
+          "action": "call",
+          "ref": "perps/open-long-position",
+          "params": { "symbol": "ETH", "amount": "10", "side": "long" }
+        }
+      ],
+      "teardown": [
+        {
+          "id": "teardown-close-eth",
+          "action": "call",
+          "ref": "perps/close-position",
+          "params": { "symbol": "ETH", "percent": "100" }
+        },
+        {
+          "id": "teardown-restore-network",
+          "action": "call",
+          "ref": "perps/ensure-perps-network",
+          "params": { "network": "{{vars.original_network.network}}", "provider": "{{vars.original_network.provider}}" }
+        },
+        {
+          "id": "teardown-nav-perps",
+          "action": "call",
+          "ref": "perps/navigate-perps-tab"
+        }
+      ],
+      "entry": "ac5-nav-eth-market",
+      "nodes": {
+        "ac5-nav-eth-market": {
+          "action": "call",
+          "ref": "perps/navigate-to-market-detail",
+          "params": { "symbol": "ETH" },
+          "next": "ac5-open-tpsl-modal"
+        },
+        "ac5-open-tpsl-modal": {
+          "action": "eval_sync",
+          "expression": "(function(){const row=document.querySelector('[data-testid=\"perps-auto-close-row\"]');if(row){row.scrollIntoView({block:'center'});row.dispatchEvent(new MouseEvent('click',{bubbles:true,cancelable:true,view:window}));}return JSON.stringify({found:!!row,clicked:!!row});})()",
+          "assert": { "operator": "eq", "field": "clicked", "value": true },
+          "next": "ac5-wait-tpsl-modal"
+        },
+        "ac5-wait-tpsl-modal": {
+          "action": "wait_for",
+          "expression": "document.querySelector('[data-testid=\"perps-update-tpsl-modal\"] input') !== null",
+          "timeout_ms": 10000,
+          "next": "ac5-assert-modal-percent-cases"
+        },
+        "ac5-assert-modal-percent-cases": {
+          "action": "eval_async",
+          "expression": "(async()=>{const modal=document.querySelector('[data-testid=\"perps-update-tpsl-modal\"]');const inputs=[...(modal?.querySelectorAll('input')||[])];const slPercent=inputs[3];const setter=Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set;const pause=()=>new Promise((resolve)=>setTimeout(resolve,30));const set=async(value)=>{slPercent.focus();setter.call(slPercent,value);slPercent.dispatchEvent(new Event('input',{bubbles:true}));slPercent.dispatchEvent(new Event('change',{bubbles:true}));await pause();return slPercent.value;};const results={};results.ten=await set('10');await set('');results.leading=await set('011');await set('');results.zero=await set('0');await set('');results.plus=await set('+10');const ok=!!modal&&inputs.length>=4&&results.ten==='-10'&&results.leading==='-11'&&results.zero==='0'&&results.plus==='+10';return JSON.stringify({inputCount:inputs.length,results,ok});})()",
+          "assert": { "operator": "eq", "field": "ok", "value": true },
+          "next": "ac5-screenshot-modal-percent-cases"
+        },
+        "ac5-screenshot-modal-percent-cases": {
+          "action": "screenshot",
+          "filename": "evidence-ac5-modal-percent-cases",
+          "note": "AC5: edit modal preserves +10",
+          "next": "ac8-modal-set-liquidation-sl"
+        },
+        "ac8-modal-set-liquidation-sl": {
+          "action": "eval_async",
+          "expression": "(async()=>{const modal=document.querySelector('[data-testid=\"perps-update-tpsl-modal\"]');const inputs=[...(modal?.querySelectorAll('input')||[])];const slPrice=inputs[2];const setter=Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set;setter.call(slPrice,'1');slPrice.dispatchEvent(new Event('input',{bubbles:true}));slPrice.dispatchEvent(new Event('change',{bubbles:true}));await new Promise((resolve)=>setTimeout(resolve,30));const error=modal?.querySelector('[data-testid=\"sl-validation-error\"]')?.textContent||'';const disabled=document.querySelector('[data-testid=\"perps-update-tpsl-modal-submit\"]')?.disabled===true;return JSON.stringify({error,disabled,ok:/above.*liquidation/i.test(error)&&disabled});})()",
+          "assert": { "operator": "eq", "field": "ok", "value": true },
+          "next": "ac8-screenshot-modal-save-disabled"
+        },
+        "ac8-screenshot-modal-save-disabled": {
+          "action": "screenshot",
+          "filename": "evidence-ac8-modal-save-disabled",
+          "note": "AC8: modal liquidation disables save",
+          "next": "ac9-modal-set-valid-tpsl"
+        },
+        "ac9-modal-set-valid-tpsl": {
+          "action": "eval_async",
+          "expression": "(async()=>{const modal=document.querySelector('[data-testid=\"perps-update-tpsl-modal\"]');const inputs=[...(modal?.querySelectorAll('input')||[])];const tpPrice=inputs[0];const slPrice=inputs[2];const setter=Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set;const num=(text)=>Number(String(text||'').replace(/[$,]/g,''));const current=num(document.querySelector('[data-testid=\"perps-market-detail-price\"]')?.textContent);const liquidation=num(document.querySelector('[data-testid=\"perps-position-liquidation-value\"]')?.textContent);const tp=(current*1.05).toFixed(2);const sl=((current+liquidation)/2).toFixed(2);for(const [input,value] of [[tpPrice,tp],[slPrice,sl]]){setter.call(input,value);input.dispatchEvent(new Event('input',{bubbles:true}));input.dispatchEvent(new Event('change',{bubbles:true}));await new Promise((resolve)=>setTimeout(resolve,30));}const tpError=modal?.querySelector('[data-testid=\"tp-validation-error\"]')?.textContent||'';const slError=modal?.querySelector('[data-testid=\"sl-validation-error\"]')?.textContent||'';const disabled=document.querySelector('[data-testid=\"perps-update-tpsl-modal-submit\"]')?.disabled===true;const ok=current>0&&liquidation>0&&sl>liquidation&&sl<current&&!tpError&&!slError&&!disabled;return JSON.stringify({current,liquidation,tp,sl,tpError,slError,disabled,ok});})()",
+          "assert": { "operator": "eq", "field": "ok", "value": true },
+          "next": "ac9-screenshot-modal-valid-tpsl"
+        },
+        "ac9-screenshot-modal-valid-tpsl": {
+          "action": "screenshot",
+          "filename": "evidence-ac9-modal-valid-tpsl",
+          "note": "AC9: modal valid TP SL enables save",
+          "next": "done"
+        },
+        "done": {
+          "action": "end",
+          "status": "pass"
+        }
+      }
+    }
+  }
+}

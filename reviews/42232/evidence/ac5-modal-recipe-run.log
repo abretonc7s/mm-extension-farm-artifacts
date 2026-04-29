@@ -1,0 +1,104 @@
+
+Recipe: PR 42232 AC5 edit TP/SL modal validation
+
+Connecting to existing browser via CDP on port 6665...
+[cdp] Found extension ID from existing service worker: hebhblbkkdabgoldnojllkipeoacjioc
+
+Pre-conditions:
+  [[32mOK[0m] wallet.unlocked (11361ms)
+  [[32mOK[0m] perps.feature_enabled (4ms)
+
+Nodes:
+
+Setup:
+  [[32mPASS[0m] setup-save-original-network (2ms)
+
+Setup:
+  [[32mPASS[0m] nav-perps-tab (11ms)
+  [[32mPASS[0m] check-tutorial (1ms)
+  [[32mPASS[0m] wait-tab-mount (11333ms)
+  [[32mPASS[0m] fetch-account-state (170ms)
+  [[32mPASS[0m] setup-prime-perps (11539ms)
+  [[32mPASS[0m] check-state (1ms)
+  [[32mPASS[0m] toggle-network (655ms)
+  [[32mPASS[0m] verify-network (2ms)
+  [hud] update failed: page.evaluate: Execution context was destroyed, most likely because of a navigation
+  [[32mPASS[0m] reload-ui (3ms)
+  [[32mPASS[0m] wait-reload (11840ms)
+  [[32mPASS[0m] verify-markets (127ms)
+  [[32mPASS[0m] setup-ensure-testnet (24448ms)
+
+Setup:
+  [[32mPASS[0m] nav-perps-tab (8ms)
+  [[32mPASS[0m] check-tutorial (1ms)
+  [[32mPASS[0m] wait-tab-mount (11355ms)
+  [[32mPASS[0m] fetch-account-state (124ms)
+  [[32mPASS[0m] setup-prime-perps (11518ms)
+  [[32mPASS[0m] gate-check-balance (195ms)
+  [[32mPASS[0m] nav-detail (12ms)
+  [[32mPASS[0m] wait-detail (81ms)
+  [[32mPASS[0m] call-nav-detail (131ms)
+  [[32mPASS[0m] check-position (0ms)
+  [[32mPASS[0m] wait-detail (52ms)
+  [[32mPASS[0m] press-side (121ms)
+  [[32mPASS[0m] wait-order-form (56ms)
+  [[32mPASS[0m] set-amount (62ms)
+  [[32mPASS[0m] submit-order (150ms)
+  [[32mPASS[0m] wait-submitted (42ms)
+  [[32mPASS[0m] verify-position (6046ms)
+  [[32mPASS[0m] screenshot-result (182ms)
+  [[32mPASS[0m] setup-open-long-position (18583ms)
+  [[32mPASS[0m] nav-detail (4ms)
+  [[32mPASS[0m] wait-detail (56ms)
+  [[32mPASS[0m] ac5-nav-eth-market (63ms)
+  [[32mPASS[0m] ac5-open-tpsl-modal (9ms)
+  [[32mPASS[0m] ac5-wait-tpsl-modal (0ms)
+  [[32mPASS[0m] ac5-assert-modal-percent-cases (241ms)
+  [[32mPASS[0m] ac5-screenshot-modal-percent-cases (99ms)
+  [[32mPASS[0m] ac8-modal-set-liquidation-sl (37ms)
+  [[32mPASS[0m] ac8-screenshot-modal-save-disabled (110ms)
+  [[32mPASS[0m] ac9-modal-set-valid-tpsl (72ms)
+  [[32mPASS[0m] ac9-screenshot-modal-valid-tpsl (92ms)
+
+Teardown:
+
+Setup:
+  [[32mPASS[0m] nav-perps-tab (5ms)
+  [[32mPASS[0m] check-tutorial (1ms)
+  [[32mPASS[0m] wait-tab-mount (11355ms)
+  [[32mPASS[0m] fetch-account-state (243ms)
+  [[32mPASS[0m] setup-prime-perps (11685ms)
+  [[32mPASS[0m] nav-detail (12ms)
+  [[32mPASS[0m] wait-detail (117ms)
+  [[32mPASS[0m] call-nav-detail (170ms)
+  [[32mPASS[0m] check-close-btn (1ms)
+  [[32mPASS[0m] click-close (186ms)
+  [[32mPASS[0m] wait-modal (127ms)
+  [[32mPASS[0m] confirm-close (408ms)
+  [[32mPASS[0m] wait-closed (2ms)
+  [[32mPASS[0m] screenshot-result (105ms)
+  [[32mPASS[0m] teardown-close-eth (12706ms)
+
+Setup:
+  [[32mPASS[0m] nav-perps-tab (5ms)
+  [[32mPASS[0m] check-tutorial (27ms)
+  [[32mPASS[0m] wait-tab-mount (11339ms)
+  [[32mPASS[0m] fetch-account-state (256ms)
+  [[32mPASS[0m] setup-prime-perps (11680ms)
+  [[32mPASS[0m] check-state (2ms)
+  [[32mPASS[0m] toggle-network (636ms)
+  [[32mPASS[0m] verify-network (1ms)
+  [hud] update failed: page.evaluate: Execution context was destroyed, most likely because of a navigation
+  [[32mPASS[0m] reload-ui (1ms)
+  [[32mPASS[0m] wait-reload (11965ms)
+  [[32mPASS[0m] verify-markets (150ms)
+  [[32mPASS[0m] teardown-restore-network (24743ms)
+  [[32mPASS[0m] nav-perps (9ms)
+  [[32mPASS[0m] check-tutorial (0ms)
+  [[32mPASS[0m] wait-perps (11361ms)
+  [[32mPASS[0m] screenshot-perps (11118ms)
+  [[32mPASS[0m] teardown-nav-perps (22514ms)
+
+[auto-issues] review — 15 unexpected event(s). See /Users/deeeed/dev/metamask/metamask-extension-1/temp/tasks/review/42232-0429-120213/artifacts/recipe-issues-review.md
+
+[32m9/9 passed[0m in 103748ms
