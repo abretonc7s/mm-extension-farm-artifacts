@@ -1,0 +1,38 @@
+
+Recipe: PR 41913 — Perps deposit toast ownership
+
+Connecting to existing browser via CDP on port 6665...
+[cdp] Found extension ID from existing service worker: hebhblbkkdabgoldnojllkipeoacjioc
+
+Pre-conditions:
+  [[32mOK[0m] wallet.unlocked (63ms)
+  [[32mOK[0m] perps.feature_enabled (2ms)
+
+Nodes:
+
+Setup:
+  [[32mPASS[0m] setup-save-original-deposit-state (0ms)
+  [[32mPASS[0m] setup-navigate-home (3ms)
+  [[32mPASS[0m] ac1-set-native-approved-deposit (9ms)
+  [[32mPASS[0m] ac1-assert-native-approved-pending-toast (1ms)
+  [[32mPASS[0m] ac1-screenshot-native-approved-pending-toast (87ms)
+  [[32mPASS[0m] ac2-set-unapproved-deposit (9ms)
+  [[32mPASS[0m] ac2-assert-unapproved-hides-toast (0ms)
+  [[32mPASS[0m] ac2-set-signed-deposit (9ms)
+  [[32mPASS[0m] ac2-assert-signed-shows-toast (0ms)
+  [[32mPASS[0m] ac2-set-stale-submitted-current-confirmed (8ms)
+  [[32mPASS[0m] ac2-assert-current-confirmed-stale-submitted-hides-toast (1ms)
+  [[32mPASS[0m] ac3-set-native-success-result (6ms)
+  [[32mPASS[0m] ac3-assert-native-success-toast (1ms)
+  [[32mPASS[0m] ac3-screenshot-native-success-toast (70ms)
+  [[32mPASS[0m] ac4-set-token-funded-approved-deposit (7ms)
+  [[32mPASS[0m] ac4-assert-token-funded-pending-hides-perps-toast (0ms)
+  [[32mPASS[0m] ac4-set-token-funded-success-result (6ms)
+  [[32mPASS[0m] ac4-assert-token-funded-success-hides-perps-toast (0ms)
+  [[32mPASS[0m] ac6-set-perps-relay-deposit-row (6ms)
+  [[32mPASS[0m] ac6-assert-perps-relay-does-not-render-perps-deposit-toast (0ms)
+
+Teardown:
+  [[32mPASS[0m] teardown-restore-original-deposit-state (6ms)
+
+[32m19/19 passed[0m in 262ms
