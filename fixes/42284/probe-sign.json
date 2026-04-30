@@ -1,0 +1,9 @@
+{
+  "title": "Probe TP/SL sign entry",
+  "validate": {"workflow": {"entry": "type-plus", "nodes": {
+    "type-plus": {"action":"eval_sync", "expression":"(function(){const inputs=[...document.querySelectorAll('input')]; const sl=inputs[3]; sl.focus(); const setter=Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set; setter.call(sl,'+15'); sl.dispatchEvent(new Event('input',{bubbles:true})); sl.dispatchEvent(new Event('change',{bubbles:true})); return JSON.stringify({slValue:sl.value, all:inputs.map((i)=>i.value)});})()", "save_as":"plus", "next":"type-minus"},
+    "type-minus": {"action":"eval_sync", "expression":"(function(){const inputs=[...document.querySelectorAll('input')]; const sl=inputs[3]; const setter=Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set; setter.call(sl,'-5'); sl.dispatchEvent(new Event('input',{bubbles:true})); sl.dispatchEvent(new Event('change',{bubbles:true})); return JSON.stringify({slValue:sl.value, all:inputs.map((i)=>i.value)});})()", "save_as":"minus", "next":"shot"},
+    "shot": {"action":"screenshot", "filename":"baseline-sign-probe", "next":"done"},
+    "done": {"action":"end", "status":"pass"}
+  }}}
+}

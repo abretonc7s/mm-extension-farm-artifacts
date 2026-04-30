@@ -1,0 +1,26 @@
+flowchart TD
+  %% TAT-2947 — TP/SL RoE sign entry
+  __entry__(["ENTRY"]) --> node_setup_close_stale_modal
+  node_setup_close_stale_modal["setup-close-stale-modal<br/>key_press"]
+  node_setup_open_long_position[["setup-open-long-position<br/>perps/open-long-position"]]
+  node_setup_scroll_auto_close["setup-scroll-auto-close<br/>scroll"]
+  node_setup_open_auto_close["setup-open-auto-close<br/>press"]
+  node_setup_wait_auto_close_modal["setup-wait-auto-close-modal<br/>wait_for"]
+  node_ac1_enter_positive_sl["ac1-enter-positive-sl<br/>eval_sync"]
+  node_ac1_screenshot_positive_sl["ac1-screenshot-positive-sl<br/>screenshot"]
+  node_ac2_enter_negative_tp["ac2-enter-negative-tp<br/>eval_sync"]
+  node_ac2_screenshot_negative_tp["ac2-screenshot-negative-tp<br/>screenshot"]
+  node_ac3_enter_unsigned_sl["ac3-enter-unsigned-sl<br/>eval_sync"]
+  node_ac3_screenshot_unsigned_sl["ac3-screenshot-unsigned-sl<br/>screenshot"]
+  node_done(["done<br/>PASS"])
+  node_setup_close_stale_modal --> node_setup_open_long_position
+  node_setup_open_long_position --> node_setup_scroll_auto_close
+  node_setup_scroll_auto_close --> node_setup_open_auto_close
+  node_setup_open_auto_close --> node_setup_wait_auto_close_modal
+  node_setup_wait_auto_close_modal --> node_ac1_enter_positive_sl
+  node_ac1_enter_positive_sl --> node_ac1_screenshot_positive_sl
+  node_ac1_screenshot_positive_sl --> node_ac2_enter_negative_tp
+  node_ac2_enter_negative_tp --> node_ac2_screenshot_negative_tp
+  node_ac2_screenshot_negative_tp --> node_ac3_enter_unsigned_sl
+  node_ac3_enter_unsigned_sl --> node_ac3_screenshot_unsigned_sl
+  node_ac3_screenshot_unsigned_sl --> node_done

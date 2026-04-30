@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "preferred_mode": "screenshots",
+  "summary": "TP/SL RoE inputs preserve explicit signs, and unsigned long stop loss defaults negative.",
+  "before_after_pairs": [],
+  "standalone": [
+    {
+      "label": "Auto close modal — positive SL RoE sign preserved",
+      "covers": ["ac1"],
+      "file": "after-evidence-ac1-positive-sl-sign.png"
+    },
+    {
+      "label": "Auto close modal — negative TP RoE sign preserved",
+      "covers": ["ac2"],
+      "file": "after-evidence-ac2-negative-tp-sign.png"
+    },
+    {
+      "label": "Auto close modal — unsigned long SL defaults negative",
+      "covers": ["ac3"],
+      "file": "after-evidence-ac3-unsigned-sl-negative.png"
+    }
+  ],
+  "omit": [],
+  "videos": {
+    "before": "before.mp4",
+    "after": "after.mp4",
+    "preferred": false,
+    "note": "Videos captured the recipe before and after the fix; screenshots are preferred for PR embedding."
+  }
+}

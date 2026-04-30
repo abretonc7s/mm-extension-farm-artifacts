@@ -1,0 +1,4 @@
+- Investigation took longer than the code fix because the first merged attempt already covered unsigned SL defaulting; the remaining bug was the after-blur display path.
+- The useful source path was `update-tpsl-modal-content.tsx` plus `utils/tpslInput.ts`; mobile's `usePerpsTPSLForm` confirmed signed display after focus loss.
+- Recipe screenshots are written under `artifacts/screenshots/`, so normalized root-level copies were needed for the gateway manifest.
+- The CDP slot needed an explicit page reload after webpack rebuilt before new test IDs were visible to the recipe.

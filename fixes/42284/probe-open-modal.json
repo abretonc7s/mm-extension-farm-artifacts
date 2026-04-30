@@ -1,0 +1,8 @@
+{
+  "title": "Probe open TP/SL modal",
+  "validate": {"workflow": {"entry": "probe", "nodes": {
+    "probe": {"action":"eval_sync", "expression":"JSON.stringify({modal:{exists:!!document.querySelector('[data-testid=perps-update-tpsl-modal]'),visible:(()=>{const e=document.querySelector('[data-testid=perps-update-tpsl-modal]'); if(!e)return false; const r=e.getBoundingClientRect(); return !!(r.width&&r.height);})()},inputs:[...document.querySelectorAll('input')].map((el,i)=>({i,placeholder:el.getAttribute('placeholder'),value:el.value,type:el.type,testid:el.getAttribute('data-testid'),html:el.outerHTML.slice(0,500)})), text:document.body.innerText.slice(0,1500)})", "save_as":"probe", "next":"shot"},
+    "shot": {"action":"screenshot", "filename":"baseline-tpsl-modal-open", "next":"done"},
+    "done": {"action":"end", "status":"pass"}
+  }}}
+}

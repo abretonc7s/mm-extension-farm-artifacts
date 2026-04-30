@@ -1,0 +1,7 @@
+{
+  "title": "Probe TP/SL blur sign",
+  "validate": {"workflow": {"entry": "type-plus", "nodes": {
+    "type-plus": {"action":"eval_sync", "expression":"(function(){const inputs=[...document.querySelectorAll('input')]; const sl=inputs[3]; sl.focus(); const setter=Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set; setter.call(sl,'+15'); sl.dispatchEvent(new Event('input',{bubbles:true})); sl.dispatchEvent(new Event('change',{bubbles:true})); sl.blur(); return JSON.stringify({slPercent:sl.value, slPrice:inputs[2].value});})()", "save_as":"plus", "next":"done"},
+    "done": {"action":"end", "status":"pass"}
+  }}}
+}

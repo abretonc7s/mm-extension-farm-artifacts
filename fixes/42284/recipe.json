@@ -1,0 +1,84 @@
+{
+  "schema_version": 1,
+  "title": "TAT-2947 — TP/SL RoE sign entry",
+  "description": "Validates signed RoE input in the Perps Auto close modal for TP/SL thresholds.",
+  "validate": {
+    "workflow": {
+      "pre_conditions": ["wallet.unlocked", "perps.feature_enabled"],
+      "entry": "setup-close-stale-modal",
+      "nodes": {
+        "setup-close-stale-modal": {
+          "action": "key_press",
+          "key": "Escape",
+          "next": "setup-open-long-position"
+        },
+        "setup-open-long-position": {
+          "action": "call",
+          "ref": "perps/open-long-position",
+          "params": { "symbol": "ETH", "side": "long", "amount": "10" },
+          "next": "setup-scroll-auto-close"
+        },
+        "setup-scroll-auto-close": {
+          "action": "scroll",
+          "test_id": "perps-auto-close-row",
+          "next": "setup-open-auto-close"
+        },
+        "setup-open-auto-close": {
+          "action": "press",
+          "test_id": "perps-auto-close-row",
+          "next": "setup-wait-auto-close-modal"
+        },
+        "setup-wait-auto-close-modal": {
+          "action": "wait_for",
+          "expression": "!!(document.querySelector('[data-testid=\"perps-update-tpsl-tp-percent-input\"]') && document.querySelector('[data-testid=\"perps-update-tpsl-sl-percent-input\"]') && document.querySelector('[data-testid=\"perps-update-tpsl-tp-price-input\"]') && document.querySelector('[data-testid=\"perps-update-tpsl-sl-price-input\"]'))",
+          "timeout_ms": 10000,
+          "next": "ac1-enter-positive-sl"
+        },
+        "ac1-enter-positive-sl": {
+          "action": "eval_sync",
+          "expression": "(function(){const slPrice=document.querySelector('[data-testid=\"perps-update-tpsl-sl-price-input\"]'); const slPercent=document.querySelector('[data-testid=\"perps-update-tpsl-sl-percent-input\"]'); const setter=Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set; setter.call(slPrice,''); slPrice.dispatchEvent(new Event('input',{bubbles:true})); slPrice.dispatchEvent(new Event('change',{bubbles:true})); slPercent.focus(); setter.call(slPercent,'+15'); slPercent.dispatchEvent(new Event('input',{bubbles:true})); slPercent.dispatchEvent(new Event('change',{bubbles:true})); slPercent.blur(); return JSON.stringify({slPercent:slPercent.value, slPrice:slPrice.value, hasPositiveSign:slPercent.value.startsWith('+')});})()",
+          "assert": { "operator": "eq", "field": "hasPositiveSign", "value": true },
+          "save_as": "ac1_positive_sl",
+          "next": "ac1-screenshot-positive-sl"
+        },
+        "ac1-screenshot-positive-sl": {
+          "action": "screenshot",
+          "filename": "evidence-ac1-positive-sl-sign",
+          "note": "AC1: SL RoE entered as +15 remains visibly positive after blur.",
+          "next": "ac2-enter-negative-tp"
+        },
+        "ac2-enter-negative-tp": {
+          "action": "eval_sync",
+          "expression": "(function(){const tpPrice=document.querySelector('[data-testid=\"perps-update-tpsl-tp-price-input\"]'); const tpPercent=document.querySelector('[data-testid=\"perps-update-tpsl-tp-percent-input\"]'); const setter=Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set; setter.call(tpPrice,''); tpPrice.dispatchEvent(new Event('input',{bubbles:true})); tpPrice.dispatchEvent(new Event('change',{bubbles:true})); tpPercent.focus(); setter.call(tpPercent,'-15'); tpPercent.dispatchEvent(new Event('input',{bubbles:true})); tpPercent.dispatchEvent(new Event('change',{bubbles:true})); tpPercent.blur(); return JSON.stringify({tpPercent:tpPercent.value, tpPrice:tpPrice.value, hasNegativeSign:tpPercent.value.startsWith('-')});})()",
+          "assert": { "operator": "eq", "field": "hasNegativeSign", "value": true },
+          "save_as": "ac2_negative_tp",
+          "next": "ac2-screenshot-negative-tp"
+        },
+        "ac2-screenshot-negative-tp": {
+          "action": "screenshot",
+          "filename": "evidence-ac2-negative-tp-sign",
+          "note": "AC2: TP RoE entered as -15 remains visibly negative after blur.",
+          "next": "ac3-enter-unsigned-sl"
+        },
+        "ac3-enter-unsigned-sl": {
+          "action": "eval_sync",
+          "expression": "(function(){const slPrice=document.querySelector('[data-testid=\"perps-update-tpsl-sl-price-input\"]'); const slPercent=document.querySelector('[data-testid=\"perps-update-tpsl-sl-percent-input\"]'); const setter=Object.getOwnPropertyDescriptor(HTMLInputElement.prototype,'value').set; setter.call(slPrice,''); slPrice.dispatchEvent(new Event('input',{bubbles:true})); slPrice.dispatchEvent(new Event('change',{bubbles:true})); slPercent.focus(); setter.call(slPercent,'5'); slPercent.dispatchEvent(new Event('input',{bubbles:true})); slPercent.dispatchEvent(new Event('change',{bubbles:true})); return JSON.stringify({slPercent:slPercent.value, slPrice:slPrice.value, defaultedNegative:slPercent.value.startsWith('-')});})()",
+          "assert": { "operator": "eq", "field": "defaultedNegative", "value": true },
+          "save_as": "ac3_unsigned_sl",
+          "next": "ac3-screenshot-unsigned-sl"
+        },
+        "ac3-screenshot-unsigned-sl": {
+          "action": "screenshot",
+          "filename": "evidence-ac3-unsigned-sl-negative",
+          "note": "AC3: unsigned SL RoE input 5 defaults to a negative -5 value for a long position.",
+          "next": "done"
+        },
+        "done": {
+          "action": "end",
+          "status": "pass",
+          "message": "TP/SL signed RoE inputs preserve explicit signs and default unsigned long SL values negative."
+        }
+      }
+    }
+  }
+}

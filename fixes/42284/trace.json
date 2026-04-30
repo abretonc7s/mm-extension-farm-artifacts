@@ -1,0 +1,206 @@
+[
+  {
+    "id": "setup-close-stale-modal",
+    "action": "key_press",
+    "ok": true,
+    "raw": {
+      "pressed": "Escape",
+      "test_id": null
+    },
+    "durationMs": 12
+  },
+  {
+    "id": "setup-open-long-position",
+    "action": "call",
+    "ok": true,
+    "raw": {
+      "passed": 5,
+      "failed": 0,
+      "trace": [
+        {
+          "id": "gate-check-balance",
+          "action": "eval_async",
+          "ok": true,
+          "raw": "{\"ok\":true,\"bal\":26.4059705,\"reason\":\"ok\"}",
+          "durationMs": 165
+        },
+        {
+          "id": "call-nav-detail",
+          "action": "call",
+          "ok": true,
+          "raw": {
+            "passed": 2,
+            "failed": 0,
+            "trace": [
+              {
+                "id": "nav-detail",
+                "action": "navigate",
+                "ok": true,
+                "raw": {
+                  "navigated": true,
+                  "hash": "#/perps/market/ETH"
+                },
+                "durationMs": 31
+              },
+              {
+                "id": "wait-detail",
+                "action": "wait_for",
+                "ok": true,
+                "raw": {
+                  "found": true,
+                  "target": "testId:perps-market-detail-page"
+                },
+                "durationMs": 135
+              },
+              {
+                "id": "done",
+                "action": "end",
+                "status": "pass",
+                "durationMs": 0
+              }
+            ],
+            "vars": {}
+          },
+          "durationMs": 194
+        },
+        {
+          "id": "check-position",
+          "action": "ext_check_dom",
+          "ok": true,
+          "raw": {
+            "visible": true
+          },
+          "durationMs": 3
+        },
+        {
+          "id": "branch-position",
+          "action": "switch",
+          "next": "verify-position",
+          "durationMs": 0
+        },
+        {
+          "id": "verify-position",
+          "action": "wait_for",
+          "ok": true,
+          "raw": {
+            "found": true,
+            "target": "testId:perps-position-cta-buttons"
+          },
+          "durationMs": 193
+        },
+        {
+          "id": "screenshot-result",
+          "action": "screenshot",
+          "ok": true,
+          "raw": {
+            "path": "screenshots/long-position-ETH-1777547239778.png",
+            "width": 500,
+            "height": 657
+          },
+          "durationMs": 163
+        },
+        {
+          "id": "done",
+          "action": "end",
+          "status": "pass",
+          "durationMs": 0
+        }
+      ],
+      "vars": {
+        "balance_gate": {
+          "ok": true,
+          "bal": 26.4059705,
+          "reason": "ok"
+        },
+        "pos_check": {
+          "visible": true
+        }
+      }
+    },
+    "durationMs": 1340
+  },
+  {
+    "id": "setup-scroll-auto-close",
+    "action": "scroll",
+    "ok": true,
+    "raw": null,
+    "durationMs": 49
+  },
+  {
+    "id": "setup-open-auto-close",
+    "action": "press",
+    "ok": true,
+    "raw": {
+      "clicked": true,
+      "target": "testId:perps-auto-close-row"
+    },
+    "durationMs": 321
+  },
+  {
+    "id": "setup-wait-auto-close-modal",
+    "action": "wait_for",
+    "ok": true,
+    "raw": true,
+    "durationMs": 1
+  },
+  {
+    "id": "ac1-enter-positive-sl",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"slPercent\":\"+14.99\",\"slPrice\":\"2373.8\",\"hasPositiveSign\":true}",
+    "durationMs": 6
+  },
+  {
+    "id": "ac1-screenshot-positive-sl",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "screenshots/evidence-ac1-positive-sl-sign-1777547240333.png",
+      "width": 500,
+      "height": 657
+    },
+    "durationMs": 107
+  },
+  {
+    "id": "ac2-enter-negative-tp",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"tpPercent\":\"-14.99\",\"tpPrice\":\"2147.8\",\"hasNegativeSign\":true}",
+    "durationMs": 6
+  },
+  {
+    "id": "ac2-screenshot-negative-tp",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "screenshots/evidence-ac2-negative-tp-sign-1777547240449.png",
+      "width": 500,
+      "height": 657
+    },
+    "durationMs": 107
+  },
+  {
+    "id": "ac3-enter-unsigned-sl",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"slPercent\":\"-5\",\"slPrice\":\"2223.1\",\"defaultedNegative\":true}",
+    "durationMs": 5
+  },
+  {
+    "id": "ac3-screenshot-unsigned-sl",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "screenshots/evidence-ac3-unsigned-sl-negative-1777547240567.png",
+      "width": 500,
+      "height": 657
+    },
+    "durationMs": 86
+  },
+  {
+    "id": "done",
+    "action": "end",
+    "status": "pass",
+    "durationMs": 0
+  }
+]

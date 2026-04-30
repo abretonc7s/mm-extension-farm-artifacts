@@ -1,0 +1,67 @@
+{
+  "version": 1,
+  "verdict": "pass",
+  "compact": {
+    "verdict": "PASS",
+    "reasons": [
+      "AC1-AC3 are covered by ac<N>-* assertion and screenshot nodes; trace shows 11/11 nodes passed.",
+      "Screenshots visibly prove signed RoE display for positive SL, negative TP, and unsigned long SL defaulting to negative."
+    ],
+    "better_version_guidance": []
+  },
+  "dimensions": {
+    "graph_integrity": {
+      "status": "pass",
+      "reason": "Workflow is structurally valid and all AC nodes are reachable from setup.",
+      "evidence": ["recipe.json", "trace.json"]
+    },
+    "action_contract": {
+      "status": "pass",
+      "reason": "Recipe uses existing perps/open-long-position flow for setup and testID-backed eval assertions for fix-specific behavior.",
+      "evidence": ["recipe.json"]
+    },
+    "ac_coverage": {
+      "status": "pass",
+      "reason": "Every enumerated AC has at least one passing assertion node and a matching screenshot row in recipe-coverage.md.",
+      "evidence": ["recipe-coverage.md", "trace.json"]
+    },
+    "evidence_contract_basics": {
+      "status": "pass",
+      "reason": "Visual claims have screenshots with visible target inputs and captions; trace records the asserted field values.",
+      "evidence": [
+        "after-evidence-ac1-positive-sl-sign.png",
+        "after-evidence-ac2-negative-tp-sign.png",
+        "after-evidence-ac3-unsigned-sl-negative.png"
+      ]
+    },
+    "perps_state_setup": {
+      "status": "pass",
+      "reason": "Open position state is built through perps/open-long-position rather than skipped or assumed.",
+      "evidence": ["trace.json"]
+    }
+  },
+  "structural_findings": [],
+  "contextual_findings": [],
+  "suggested_recipe_delta": [],
+  "training_fields": {
+    "farm": "metamask-extension",
+    "project": "metamask-extension-farm",
+    "flow_type": "fix-bug",
+    "task_type": "fix-bug",
+    "claim_is_visual": true,
+    "proof_mode": "mixed",
+    "anti_patterns": [],
+    "good_patterns": [
+      "AC-prefixed assertion nodes",
+      "Existing perps setup flow reused",
+      "Screenshots paired with UI value assertions"
+    ]
+  },
+  "meta": {
+    "producer": "worker",
+    "fallback_used": false,
+    "legacy_task": false,
+    "artifact_required": true,
+    "source_signals": ["recipe.json", "recipe-coverage.md", "trace.json"]
+  }
+}
