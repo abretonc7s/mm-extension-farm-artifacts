@@ -1,0 +1,73 @@
+{
+  "version": 1,
+  "verdict": "pass",
+  "compact": {
+    "verdict": "PASS",
+    "reasons": [
+      "AC1-3 covered by ac<N>-* nodes; trace shows 15/15 passed (recipe also fails — exit non-zero — when reverted to old code, demonstrated in before.mp4 / before-ac1 screenshot).",
+      "Visual claim that positionTPSL renders in auto-close and not in orders list is proven by after-ac1-auto-close-shows-positiontpsl.png (Auto close → Details with no Orders header in between).",
+      "Visual claim that order-level TP/SL renders synthetic TP/SL rows in the orders list with no auto-close section is proven by after-ac2-orderlevel-tpsl-in-orders-list.png.",
+      "DOM disjoint asserts: ac1 disjoint check (tpInOrders=false, slInOrders=false) and ac2 disjoint check (autoCloseRendered=false) both pass in trace.json."
+    ],
+    "better_version_guidance": []
+  },
+  "dimensions": {
+    "graph_integrity": {
+      "status": "pass",
+      "reason": "Workflow graph passes validate-flow-schema.js and validate-recipe.js dry-run; all nodes reachable from entry to done.",
+      "evidence": ["recipe.json", "workflow.mmd"]
+    },
+    "action_contract": {
+      "status": "pass",
+      "reason": "All eval_sync/eval_async nodes have asserts; wait_for uses test_id sugar; no manual actions; no wait > 500ms.",
+      "evidence": ["recipe.json"]
+    },
+    "ac_coverage": {
+      "status": "pass",
+      "reason": "Every AC binds to ac<N>-* nodes with assertions and screenshots; coverage matrix in recipe-coverage.md is 3/3 PROVEN.",
+      "evidence": ["recipe-coverage.md", "trace.json"]
+    },
+    "evidence_contract_basics": {
+      "status": "pass",
+      "reason": "Visual claims (auto-close prices, orders rendering) backed by screenshots that show the actual target on the right screen; internal claims backed by eval_sync DOM probes.",
+      "evidence": [
+        "screenshots/after-ac1-auto-close-shows-positiontpsl.png-1777555232727.png",
+        "screenshots/after-ac2-orderlevel-tpsl-in-orders-list.png-1777555233081.png",
+        "trace.json"
+      ]
+    },
+    "perps_state_setup": {
+      "status": "pass",
+      "reason": "Mock position+orders injected via stateHooks.getPerpsStreamManager().positions.pushData / orders.pushData — no funded testnet account required, scenario is reproducible without spending real funds.",
+      "evidence": ["recipe.json"]
+    },
+    "mobile_alignment": {
+      "status": "pass",
+      "reason": "Fix replicates mobile's shouldDisplayOrderInMarketDetailsOrders behavior (metamask-mobile/app/components/UI/Perps/utils/orderUtils.ts:290-299) — reduce-only orders associated with the full position are excluded from the orders list.",
+      "evidence": ["report.md"]
+    }
+  },
+  "structural_findings": [],
+  "contextual_findings": [],
+  "suggested_recipe_delta": [],
+  "training_fields": {
+    "farm": "metamask-extension",
+    "project": "metamask-extension-farm",
+    "flow_type": "fix-bug",
+    "task_type": "fix-bug",
+    "claim_is_visual": true,
+    "proof_mode": "mixed",
+    "anti_patterns": [],
+    "good_patterns": [
+      "stateHooks injection via PerpsStreamManager avoids real-fund dependency",
+      "screenshot proves disjoint sections by capturing adjacent section transitions"
+    ]
+  },
+  "meta": {
+    "producer": "worker",
+    "fallback_used": false,
+    "legacy_task": false,
+    "artifact_required": true,
+    "source_signals": ["recipe.json", "recipe-coverage.md", "trace.json"]
+  }
+}

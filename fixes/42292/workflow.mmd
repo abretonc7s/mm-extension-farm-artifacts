@@ -1,0 +1,34 @@
+flowchart TD
+  %% TAT-3075 — positionTPSL appears in auto-close section, not order section
+  __entry__(["ENTRY"]) --> node_setup_nav_detail_btc
+  node_setup_nav_detail_btc[["setup-nav-detail-btc<br/>perps/navigate-to-market-detail"]]
+  node_setup_wait_detail["setup-wait-detail<br/>wait_for"]
+  node_ac1_inject_position_with_positiontpsl["ac1-inject-position-with-positiontpsl<br/>eval_sync"]
+  node_ac1_wait_auto_close_row["ac1-wait-auto-close-row<br/>wait_for"]
+  node_ac1_scroll_to_auto_close["ac1-scroll-to-auto-close<br/>eval_sync"]
+  node_ac1_assert_auto_close_shows_tpsl["ac1-assert-auto-close-shows-tpsl<br/>eval_sync"]
+  node_ac1_screenshot_auto_close["ac1-screenshot-auto-close<br/>screenshot"]
+  node_ac1_assert_positiontpsl_not_in_orders_list["ac1-assert-positiontpsl-not-in-orders-list<br/>eval_sync"]
+  node_ac1_scroll_to_orders_section["ac1-scroll-to-orders-section<br/>eval_sync"]
+  node_ac1_screenshot_orders_list["ac1-screenshot-orders-list<br/>screenshot"]
+  node_ac2_clear_and_inject_orderlevel_tpsl["ac2-clear-and-inject-orderlevel-tpsl<br/>eval_sync"]
+  node_ac2_wait_rerender["ac2-wait-rerender<br/>wait_for"]
+  node_ac2_scroll_to_orders["ac2-scroll-to-orders<br/>scroll"]
+  node_ac2_assert_orderlevel_tpsl_in_orders["ac2-assert-orderlevel-tpsl-in-orders<br/>eval_sync"]
+  node_ac2_screenshot_orders_list["ac2-screenshot-orders-list<br/>screenshot"]
+  node_done(["done<br/>PASS"])
+  node_setup_nav_detail_btc --> node_setup_wait_detail
+  node_setup_wait_detail --> node_ac1_inject_position_with_positiontpsl
+  node_ac1_inject_position_with_positiontpsl --> node_ac1_wait_auto_close_row
+  node_ac1_wait_auto_close_row --> node_ac1_scroll_to_auto_close
+  node_ac1_scroll_to_auto_close --> node_ac1_assert_auto_close_shows_tpsl
+  node_ac1_assert_auto_close_shows_tpsl --> node_ac1_screenshot_auto_close
+  node_ac1_screenshot_auto_close --> node_ac1_assert_positiontpsl_not_in_orders_list
+  node_ac1_assert_positiontpsl_not_in_orders_list --> node_ac1_scroll_to_orders_section
+  node_ac1_scroll_to_orders_section --> node_ac1_screenshot_orders_list
+  node_ac1_screenshot_orders_list --> node_ac2_clear_and_inject_orderlevel_tpsl
+  node_ac2_clear_and_inject_orderlevel_tpsl --> node_ac2_wait_rerender
+  node_ac2_wait_rerender --> node_ac2_scroll_to_orders
+  node_ac2_scroll_to_orders --> node_ac2_assert_orderlevel_tpsl_in_orders
+  node_ac2_assert_orderlevel_tpsl_in_orders --> node_ac2_screenshot_orders_list
+  node_ac2_screenshot_orders_list --> node_done

@@ -1,0 +1,27 @@
+{
+  "version": 1,
+  "preferred_mode": "screenshots",
+  "summary": "After fix: positionTPSL renders only in the auto-close section; order-level TP/SL renders only in the orders list.",
+  "before_after_pairs": [
+    {
+      "label": "AC1+AC3 — Auto-close shows positionTPSL prices; Orders list does not duplicate them",
+      "covers": ["ac1", "ac3"],
+      "before": "screenshots/before-ac1-auto-close-shows-positiontpsl.png-1777554222656.png",
+      "after": "screenshots/after-ac1-auto-close-shows-positiontpsl.png-1777555232727.png",
+      "note": "Before: positionTPSL appeared in the orders list (recipe ac1 disjoint check failed). After: Auto close row shows TP $99,000 / SL $90,000 and the Details section follows directly with no Orders header in between."
+    }
+  ],
+  "standalone": [
+    {
+      "label": "AC2+AC3 — Order-level TP/SL renders synthetic TP/SL rows in the orders list with no auto-close section (no position)",
+      "covers": ["ac2", "ac3"],
+      "file": "screenshots/after-ac2-orderlevel-tpsl-in-orders-list.png-1777555233081.png"
+    }
+  ],
+  "videos": {
+    "before": "before.mp4",
+    "after": "after.mp4",
+    "preferred": false,
+    "note": "Optional. Screenshots already prove the visual disjoint sections."
+  }
+}

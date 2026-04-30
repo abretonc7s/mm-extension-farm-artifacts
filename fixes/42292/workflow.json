@@ -1,0 +1,226 @@
+{
+  "description": "Validates that a position-level TP/SL renders in the auto-close section of the market detail page only, and that an order-level TP/SL renders in the orders list only. Mock data is injected into the live PerpsStreamManager via stateHooks so the test runs without spending funds on a real position.",
+  "hooks": {
+    "pre_conditions": [
+      "wallet.unlocked",
+      "perps.feature_enabled"
+    ],
+    "setup": [
+      {
+        "id": "setup-nav-perps",
+        "action": "call",
+        "ref": "perps/navigate-perps-tab"
+      }
+    ],
+    "teardown": [
+      {
+        "id": "teardown-clear-injections",
+        "action": "eval_sync",
+        "expression": "(function(){try{var sm=stateHooks.getPerpsStreamManager();if(sm){sm.positions.pushData([]);sm.orders.pushData([]);}return JSON.stringify({cleared:true})}catch(e){return JSON.stringify({cleared:false,error:String(e&&e.message||e)})}})()",
+        "assert": {
+          "operator": "eq",
+          "field": "cleared",
+          "value": true
+        }
+      }
+    ]
+  },
+  "inputs": {},
+  "playback": {
+    "mode": "off",
+    "slow_ms": 1000
+  },
+  "sourcePath": "",
+  "title": "TAT-3075 — positionTPSL appears in auto-close section, not order section",
+  "workflow": {
+    "entry": "setup-nav-detail-btc",
+    "nodes": {
+      "setup-nav-detail-btc": {
+        "action": "call",
+        "ref": "perps/navigate-to-market-detail",
+        "params": {
+          "symbol": "BTC"
+        },
+        "next": "setup-wait-detail",
+        "id": "setup-nav-detail-btc"
+      },
+      "setup-wait-detail": {
+        "action": "wait_for",
+        "test_id": "perps-market-detail-page",
+        "timeout_ms": 10000,
+        "next": "ac1-inject-position-with-positiontpsl",
+        "id": "setup-wait-detail"
+      },
+      "ac1-inject-position-with-positiontpsl": {
+        "action": "eval_sync",
+        "expression": "(function(){try{var sm=stateHooks.getPerpsStreamManager();var position={symbol:'BTC',size:'0.05',entryPrice:'95000',positionValue:'4750',unrealizedPnl:'25',marginUsed:'475',leverage:{type:'isolated',value:10,rawUsd:'475'},liquidationPrice:'87000',maxLeverage:40,returnOnEquity:'5.26',cumulativeFunding:{allTime:'0',sinceOpen:'0',sinceChange:'0'},takeProfitPrice:'99000',stopLossPrice:'90000',takeProfitCount:1,stopLossCount:1};var positionTpslOrder={orderId:'tat3075-position-tp-1',symbol:'BTC',side:'sell',orderType:'market',size:'0.05',originalSize:'0.05',price:'99000',filledSize:'0',remainingSize:'0.05',status:'open',timestamp:Date.now(),detailedOrderType:'Take Profit Market',isTrigger:true,reduceOnly:true,triggerPrice:'99000',isPositionTpsl:true};var positionSlOrder={orderId:'tat3075-position-sl-1',symbol:'BTC',side:'sell',orderType:'market',size:'0.05',originalSize:'0.05',price:'90000',filledSize:'0',remainingSize:'0.05',status:'open',timestamp:Date.now(),detailedOrderType:'Stop Market',isTrigger:true,reduceOnly:true,triggerPrice:'90000',isPositionTpsl:true};sm.positions.pushData([position]);sm.orders.pushData([positionTpslOrder,positionSlOrder]);return JSON.stringify({injected:true,positions:1,orders:2})}catch(e){return JSON.stringify({injected:false,error:String(e&&e.message||e)})}})()",
+        "assert": {
+          "operator": "eq",
+          "field": "injected",
+          "value": true
+        },
+        "save_as": "ac1_inject",
+        "next": "ac1-wait-auto-close-row",
+        "id": "ac1-inject-position-with-positiontpsl"
+      },
+      "ac1-wait-auto-close-row": {
+        "action": "wait_for",
+        "test_id": "perps-auto-close-row",
+        "timeout_ms": 5000,
+        "next": "ac1-scroll-to-auto-close",
+        "id": "ac1-wait-auto-close-row"
+      },
+      "ac1-scroll-to-auto-close": {
+        "action": "eval_sync",
+        "expression": "(function(){var row=document.querySelector('[data-testid=\"perps-auto-close-row\"]');if(!row)return JSON.stringify({scrolled:false,reason:'row missing'});row.scrollIntoView({block:'center'});var p=row.parentElement;while(p){var s=getComputedStyle(p);if(s.overflowY==='auto'||s.overflowY==='scroll'){p.scrollTop=row.offsetTop-p.clientHeight/2;break;}p=p.parentElement;}var rect=row.getBoundingClientRect();return JSON.stringify({scrolled:true,top:rect.top,bottom:rect.bottom,viewportH:window.innerHeight})})()",
+        "assert": {
+          "operator": "eq",
+          "field": "scrolled",
+          "value": true
+        },
+        "next": "ac1-assert-auto-close-shows-tpsl",
+        "id": "ac1-scroll-to-auto-close"
+      },
+      "ac1-assert-auto-close-shows-tpsl": {
+        "action": "eval_sync",
+        "expression": "(function(){var row=document.querySelector('[data-testid=\"perps-auto-close-row\"]');var text=row?row.textContent||'':'';return JSON.stringify({rendered:!!row,hasTp:text.indexOf('99,000')!==-1||text.indexOf('99000')!==-1,hasSl:text.indexOf('90,000')!==-1||text.indexOf('90000')!==-1,raw:text})})()",
+        "assert": {
+          "all": [
+            {
+              "operator": "eq",
+              "field": "rendered",
+              "value": true
+            },
+            {
+              "operator": "eq",
+              "field": "hasTp",
+              "value": true
+            },
+            {
+              "operator": "eq",
+              "field": "hasSl",
+              "value": true
+            }
+          ]
+        },
+        "save_as": "ac1_auto_close",
+        "next": "ac1-screenshot-auto-close",
+        "id": "ac1-assert-auto-close-shows-tpsl"
+      },
+      "ac1-screenshot-auto-close": {
+        "action": "screenshot",
+        "filename": "evidence-ac1-auto-close-shows-positiontpsl.png",
+        "note": "AC1: auto-close section shows the positionTPSL prices (TP $99,000 / SL $90,000) on /perps/market/BTC.",
+        "next": "ac1-assert-positiontpsl-not-in-orders-list",
+        "id": "ac1-screenshot-auto-close"
+      },
+      "ac1-assert-positiontpsl-not-in-orders-list": {
+        "action": "eval_sync",
+        "expression": "(function(){var tpCard=document.querySelector('[data-testid=\"order-card-tat3075-position-tp-1\"]');var slCard=document.querySelector('[data-testid=\"order-card-tat3075-position-sl-1\"]');return JSON.stringify({tpInOrders:!!tpCard,slInOrders:!!slCard})})()",
+        "assert": {
+          "all": [
+            {
+              "operator": "eq",
+              "field": "tpInOrders",
+              "value": false
+            },
+            {
+              "operator": "eq",
+              "field": "slInOrders",
+              "value": false
+            }
+          ]
+        },
+        "save_as": "ac1_disjoint",
+        "next": "ac1-scroll-to-orders-section",
+        "id": "ac1-assert-positiontpsl-not-in-orders-list"
+      },
+      "ac1-scroll-to-orders-section": {
+        "action": "eval_sync",
+        "expression": "(function(){var page=document.querySelector('[data-testid=\"perps-market-detail-page\"]');var p=page;while(p){var s=getComputedStyle(p);if(s.overflowY==='auto'||s.overflowY==='scroll'){p.scrollTop=p.scrollHeight;return JSON.stringify({scrolled:true,scrollTop:p.scrollTop,scrollHeight:p.scrollHeight});}p=p.parentElement;}window.scrollTo(0,document.body.scrollHeight);return JSON.stringify({scrolled:true,scrollY:window.scrollY,fallback:true})})()",
+        "assert": {
+          "operator": "eq",
+          "field": "scrolled",
+          "value": true
+        },
+        "next": "ac1-screenshot-orders-list",
+        "id": "ac1-scroll-to-orders-section"
+      },
+      "ac1-screenshot-orders-list": {
+        "action": "screenshot",
+        "filename": "evidence-ac1-orders-list-no-positiontpsl.png",
+        "note": "AC1+AC3: orders list does NOT contain the positionTPSL TP/SL rows when a position with takeProfitPrice/stopLossPrice exists.",
+        "next": "ac2-clear-and-inject-orderlevel-tpsl",
+        "id": "ac1-screenshot-orders-list"
+      },
+      "ac2-clear-and-inject-orderlevel-tpsl": {
+        "action": "eval_sync",
+        "expression": "(function(){try{var sm=stateHooks.getPerpsStreamManager();sm.positions.pushData([]);var parentLimit={orderId:'tat3075-orderlevel-parent-1',symbol:'BTC',side:'buy',orderType:'limit',size:'0.05',originalSize:'0.05',price:'92000',filledSize:'0',remainingSize:'0.05',status:'open',timestamp:Date.now(),detailedOrderType:'Limit',isTrigger:false,reduceOnly:false,takeProfitPrice:'99000',stopLossPrice:'90000'};sm.orders.pushData([parentLimit]);return JSON.stringify({injected:true})}catch(e){return JSON.stringify({injected:false,error:String(e&&e.message||e)})}})()",
+        "assert": {
+          "operator": "eq",
+          "field": "injected",
+          "value": true
+        },
+        "save_as": "ac2_inject",
+        "next": "ac2-wait-rerender",
+        "id": "ac2-clear-and-inject-orderlevel-tpsl"
+      },
+      "ac2-wait-rerender": {
+        "action": "wait_for",
+        "test_id": "order-card-tat3075-orderlevel-parent-1",
+        "timeout_ms": 5000,
+        "next": "ac2-scroll-to-orders",
+        "id": "ac2-wait-rerender"
+      },
+      "ac2-scroll-to-orders": {
+        "action": "scroll",
+        "test_id": "order-card-tat3075-orderlevel-parent-1",
+        "next": "ac2-assert-orderlevel-tpsl-in-orders",
+        "id": "ac2-scroll-to-orders"
+      },
+      "ac2-assert-orderlevel-tpsl-in-orders": {
+        "action": "eval_sync",
+        "expression": "(function(){var parent=document.querySelector('[data-testid=\"order-card-tat3075-orderlevel-parent-1\"]');var syntheticTp=document.querySelector('[data-testid=\"order-card-tat3075-orderlevel-parent-1-synthetic-tp\"]');var syntheticSl=document.querySelector('[data-testid=\"order-card-tat3075-orderlevel-parent-1-synthetic-sl\"]');var autoCloseRow=document.querySelector('[data-testid=\"perps-auto-close-row\"]');return JSON.stringify({parentInOrders:!!parent,syntheticTpInOrders:!!syntheticTp,syntheticSlInOrders:!!syntheticSl,autoCloseRendered:!!autoCloseRow})})()",
+        "assert": {
+          "all": [
+            {
+              "operator": "eq",
+              "field": "parentInOrders",
+              "value": true
+            },
+            {
+              "operator": "eq",
+              "field": "syntheticTpInOrders",
+              "value": true
+            },
+            {
+              "operator": "eq",
+              "field": "syntheticSlInOrders",
+              "value": true
+            },
+            {
+              "operator": "eq",
+              "field": "autoCloseRendered",
+              "value": false
+            }
+          ]
+        },
+        "save_as": "ac2_disjoint",
+        "next": "ac2-screenshot-orders-list",
+        "id": "ac2-assert-orderlevel-tpsl-in-orders"
+      },
+      "ac2-screenshot-orders-list": {
+        "action": "screenshot",
+        "filename": "evidence-ac2-orderlevel-tpsl-in-orders-list.png",
+        "note": "AC2+AC3: order-level TP/SL renders synthetic TP/SL rows in the orders list, and the auto-close section is not rendered (no position).",
+        "next": "done",
+        "id": "ac2-screenshot-orders-list"
+      },
+      "done": {
+        "action": "end",
+        "status": "pass",
+        "id": "done"
+      }
+    }
+  }
+}

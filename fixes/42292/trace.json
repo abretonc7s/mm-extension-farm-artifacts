@@ -1,0 +1,166 @@
+[
+  {
+    "id": "setup-nav-detail-btc",
+    "action": "call",
+    "ok": true,
+    "raw": {
+      "passed": 2,
+      "failed": 0,
+      "trace": [
+        {
+          "id": "nav-detail",
+          "action": "navigate",
+          "ok": true,
+          "raw": {
+            "navigated": true,
+            "hash": "#/perps/market/BTC"
+          },
+          "durationMs": 3
+        },
+        {
+          "id": "wait-detail",
+          "action": "wait_for",
+          "ok": true,
+          "raw": {
+            "found": true,
+            "target": "testId:perps-market-detail-page"
+          },
+          "durationMs": 84
+        },
+        {
+          "id": "done",
+          "action": "end",
+          "status": "pass",
+          "durationMs": 0
+        }
+      ],
+      "vars": {}
+    },
+    "durationMs": 121
+  },
+  {
+    "id": "setup-wait-detail",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-market-detail-page"
+    },
+    "durationMs": 120
+  },
+  {
+    "id": "ac1-inject-position-with-positiontpsl",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"injected\":true,\"positions\":1,\"orders\":2}",
+    "durationMs": 5
+  },
+  {
+    "id": "ac1-wait-auto-close-row",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-auto-close-row"
+    },
+    "durationMs": 163
+  },
+  {
+    "id": "ac1-scroll-to-auto-close",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"scrolled\":true,\"top\":328,\"bottom\":402,\"viewportH\":657}",
+    "durationMs": 0
+  },
+  {
+    "id": "ac1-assert-auto-close-shows-tpsl",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"rendered\":true,\"hasTp\":true,\"hasSl\":true,\"raw\":\"Auto closeTP $99,000, SL $90,000\"}",
+    "durationMs": 0
+  },
+  {
+    "id": "ac1-screenshot-auto-close",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "screenshots/evidence-ac1-auto-close-shows-positiontpsl.png-1777556634586.png",
+      "width": 500,
+      "height": 657
+    },
+    "durationMs": 117
+  },
+  {
+    "id": "ac1-assert-positiontpsl-not-in-orders-list",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"tpInOrders\":false,\"slInOrders\":false}",
+    "durationMs": 1
+  },
+  {
+    "id": "ac1-scroll-to-orders-section",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"scrolled\":true,\"scrollTop\":990,\"scrollHeight\":1647}",
+    "durationMs": 0
+  },
+  {
+    "id": "ac1-screenshot-orders-list",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "screenshots/evidence-ac1-orders-list-no-positiontpsl.png-1777556634709.png",
+      "width": 500,
+      "height": 657
+    },
+    "durationMs": 80
+  },
+  {
+    "id": "ac2-clear-and-inject-orderlevel-tpsl",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"injected\":true}",
+    "durationMs": 4
+  },
+  {
+    "id": "ac2-wait-rerender",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:order-card-tat3075-orderlevel-parent-1"
+    },
+    "durationMs": 79
+  },
+  {
+    "id": "ac2-scroll-to-orders",
+    "action": "scroll",
+    "ok": true,
+    "raw": null,
+    "durationMs": 45
+  },
+  {
+    "id": "ac2-assert-orderlevel-tpsl-in-orders",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"parentInOrders\":true,\"syntheticTpInOrders\":true,\"syntheticSlInOrders\":true,\"autoCloseRendered\":false}",
+    "durationMs": 0
+  },
+  {
+    "id": "ac2-screenshot-orders-list",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "screenshots/evidence-ac2-orderlevel-tpsl-in-orders-list.png-1777556634925.png",
+      "width": 500,
+      "height": 657
+    },
+    "durationMs": 80
+  },
+  {
+    "id": "done",
+    "action": "end",
+    "status": "pass",
+    "durationMs": 0
+  }
+]
