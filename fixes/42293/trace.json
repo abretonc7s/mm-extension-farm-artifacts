@@ -1,0 +1,133 @@
+[
+  {
+    "id": "setup-navigate-market-detail",
+    "action": "call",
+    "ok": true,
+    "raw": {
+      "passed": 2,
+      "failed": 0,
+      "trace": [
+        {
+          "id": "nav-detail",
+          "action": "navigate",
+          "ok": true,
+          "raw": {
+            "navigated": true,
+            "hash": "#/perps/market/ETH"
+          },
+          "durationMs": 22
+        },
+        {
+          "id": "wait-detail",
+          "action": "wait_for",
+          "ok": true,
+          "raw": {
+            "found": true,
+            "target": "testId:perps-market-detail-page"
+          },
+          "durationMs": 61
+        },
+        {
+          "id": "done",
+          "action": "end",
+          "status": "pass",
+          "durationMs": 0
+        }
+      ],
+      "vars": {}
+    },
+    "durationMs": 104
+  },
+  {
+    "id": "setup-wait-position-loaded",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-position-liquidation-value"
+    },
+    "durationMs": 51
+  },
+  {
+    "id": "ac3-assert-liq-price-displayed",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"text\":\"$1,541.2\",\"found\":true}",
+    "durationMs": 0
+  },
+  {
+    "id": "ac3-screenshot-liq-price",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "screenshots/evidence-ac3-market-detail-liq-price.png-1777555128984.png",
+      "width": 500,
+      "height": 657
+    },
+    "durationMs": 119
+  },
+  {
+    "id": "setup-click-margin-card",
+    "action": "press",
+    "ok": true,
+    "raw": {
+      "clicked": true,
+      "target": "testId:perps-margin-card"
+    },
+    "durationMs": 122
+  },
+  {
+    "id": "setup-wait-margin-menu",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-margin-menu-add"
+    },
+    "durationMs": 52
+  },
+  {
+    "id": "setup-click-add-margin",
+    "action": "press",
+    "ok": true,
+    "raw": {
+      "clicked": true,
+      "target": "testId:perps-margin-menu-add"
+    },
+    "durationMs": 101
+  },
+  {
+    "id": "setup-wait-modal",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-edit-margin-liquidation-distance-value"
+    },
+    "durationMs": 53
+  },
+  {
+    "id": "ac1-assert-distance-valid",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"text\":\"32%\",\"valid\":true}",
+    "durationMs": 0
+  },
+  {
+    "id": "ac1-screenshot-add-margin",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "screenshots/evidence-ac1-add-margin-distance.png-1777555129448.png",
+      "width": 500,
+      "height": 657
+    },
+    "durationMs": 97
+  },
+  {
+    "id": "end-success",
+    "action": "end",
+    "status": "pass",
+    "durationMs": 0
+  }
+]

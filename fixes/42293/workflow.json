@@ -1,0 +1,122 @@
+{
+  "description": "Verifies edit-margin modal displays liquidation distance correctly. Normal case (liq > 0) via live UI; edge case (liq <= 0 showing '--') covered by unit tests.",
+  "hooks": {
+    "pre_conditions": [
+      "wallet.unlocked",
+      "perps.feature_enabled"
+    ],
+    "setup": [],
+    "teardown": []
+  },
+  "inputs": {},
+  "playback": {
+    "mode": "off",
+    "slow_ms": 1000
+  },
+  "sourcePath": "",
+  "title": "TAT-3012: Liquidation distance fallback for liq price <= 0",
+  "workflow": {
+    "entry": "setup-navigate-market-detail",
+    "nodes": {
+      "setup-navigate-market-detail": {
+        "action": "call",
+        "ref": "perps/navigate-to-market-detail",
+        "params": {
+          "symbol": "ETH"
+        },
+        "next": "setup-wait-position-loaded",
+        "id": "setup-navigate-market-detail"
+      },
+      "setup-wait-position-loaded": {
+        "action": "wait_for",
+        "test_id": "perps-position-liquidation-value",
+        "timeout": 15000,
+        "next": "ac3-assert-liq-price-displayed",
+        "id": "setup-wait-position-loaded"
+      },
+      "ac3-assert-liq-price-displayed": {
+        "action": "eval_sync",
+        "expression": "(function(){ var el = document.querySelector('[data-testid=\"perps-position-liquidation-value\"]'); return JSON.stringify({text: el ? el.textContent.trim() : 'NOT_FOUND', found: !!el}); })()",
+        "save_as": "liqPriceText",
+        "assert": {
+          "all": [
+            {
+              "field": "found",
+              "operator": "eq",
+              "value": true
+            },
+            {
+              "field": "text",
+              "operator": "neq",
+              "value": ""
+            },
+            {
+              "field": "text",
+              "operator": "neq",
+              "value": "-"
+            }
+          ]
+        },
+        "next": "ac3-screenshot-liq-price",
+        "id": "ac3-assert-liq-price-displayed"
+      },
+      "ac3-screenshot-liq-price": {
+        "action": "screenshot",
+        "filename": "evidence-ac3-market-detail-liq-price.png",
+        "note": "AC3: Market detail page showing liquidation price for current position (normal case, liq > 0)",
+        "next": "setup-click-margin-card",
+        "id": "ac3-screenshot-liq-price"
+      },
+      "setup-click-margin-card": {
+        "action": "press",
+        "test_id": "perps-margin-card",
+        "next": "setup-wait-margin-menu",
+        "id": "setup-click-margin-card"
+      },
+      "setup-wait-margin-menu": {
+        "action": "wait_for",
+        "test_id": "perps-margin-menu-add",
+        "timeout": 5000,
+        "next": "setup-click-add-margin",
+        "id": "setup-wait-margin-menu"
+      },
+      "setup-click-add-margin": {
+        "action": "press",
+        "test_id": "perps-margin-menu-add",
+        "next": "setup-wait-modal",
+        "id": "setup-click-add-margin"
+      },
+      "setup-wait-modal": {
+        "action": "wait_for",
+        "test_id": "perps-edit-margin-liquidation-distance-value",
+        "timeout": 5000,
+        "next": "ac1-assert-distance-valid",
+        "id": "setup-wait-modal"
+      },
+      "ac1-assert-distance-valid": {
+        "action": "eval_sync",
+        "expression": "(function(){ var el = document.querySelector('[data-testid=\"perps-edit-margin-liquidation-distance-value\"]'); if (!el) return JSON.stringify({text:'NOT_FOUND',valid:false}); var text = el.textContent.trim(); var valid = text !== '0%' && text.length > 0; return JSON.stringify({text:text, valid:valid}); })()",
+        "save_as": "distanceText",
+        "assert": {
+          "field": "valid",
+          "operator": "eq",
+          "value": true
+        },
+        "next": "ac1-screenshot-add-margin",
+        "id": "ac1-assert-distance-valid"
+      },
+      "ac1-screenshot-add-margin": {
+        "action": "screenshot",
+        "filename": "evidence-ac1-add-margin-distance.png",
+        "note": "AC1: Edit margin modal showing liquidation distance (normal case, liq > 0 shows valid %)",
+        "next": "end-success",
+        "id": "ac1-screenshot-add-margin"
+      },
+      "end-success": {
+        "action": "end",
+        "message": "Liquidation distance display verified. Edge case (liq<=0 showing '--') covered by unit tests.",
+        "id": "end-success"
+      }
+    }
+  }
+}

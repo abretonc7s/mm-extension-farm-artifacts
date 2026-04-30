@@ -1,0 +1,24 @@
+flowchart TD
+  %% TAT-3012: Liquidation distance fallback for liq price <= 0
+  __entry__(["ENTRY"]) --> node_setup_navigate_market_detail
+  node_setup_navigate_market_detail[["setup-navigate-market-detail<br/>perps/navigate-to-market-detail"]]
+  node_setup_wait_position_loaded["setup-wait-position-loaded<br/>wait_for"]
+  node_ac3_assert_liq_price_displayed["ac3-assert-liq-price-displayed<br/>eval_sync"]
+  node_ac3_screenshot_liq_price["ac3-screenshot-liq-price<br/>screenshot"]
+  node_setup_click_margin_card["setup-click-margin-card<br/>press"]
+  node_setup_wait_margin_menu["setup-wait-margin-menu<br/>wait_for"]
+  node_setup_click_add_margin["setup-click-add-margin<br/>press"]
+  node_setup_wait_modal["setup-wait-modal<br/>wait_for"]
+  node_ac1_assert_distance_valid["ac1-assert-distance-valid<br/>eval_sync"]
+  node_ac1_screenshot_add_margin["ac1-screenshot-add-margin<br/>screenshot"]
+  node_end_success(["end-success<br/>PASS"])
+  node_setup_navigate_market_detail --> node_setup_wait_position_loaded
+  node_setup_wait_position_loaded --> node_ac3_assert_liq_price_displayed
+  node_ac3_assert_liq_price_displayed --> node_ac3_screenshot_liq_price
+  node_ac3_screenshot_liq_price --> node_setup_click_margin_card
+  node_setup_click_margin_card --> node_setup_wait_margin_menu
+  node_setup_wait_margin_menu --> node_setup_click_add_margin
+  node_setup_click_add_margin --> node_setup_wait_modal
+  node_setup_wait_modal --> node_ac1_assert_distance_valid
+  node_ac1_assert_distance_valid --> node_ac1_screenshot_add_margin
+  node_ac1_screenshot_add_margin --> node_end_success

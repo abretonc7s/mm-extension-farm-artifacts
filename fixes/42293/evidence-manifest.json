@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "preferred_mode": "screenshots",
+  "summary": "Edit-margin modal and market detail page now show '--' for liquidation price/distance when liq price <= 0, matching mobile.",
+  "before_after_pairs": [
+    {
+      "label": "Add margin modal — liquidation price and distance display",
+      "covers": ["ac1", "ac2", "ac3"],
+      "before": "before-evidence-ac1-add-margin-distance.png.png",
+      "after": "after-evidence-ac1-add-margin-distance.png.png",
+      "note": "Normal case (liq > 0) shows valid price and distance. Edge case (liq <= 0 showing '--') verified by unit tests."
+    }
+  ],
+  "standalone": [],
+  "omit": [
+    "after-evidence-ac3-market-detail-liq-price.png.png",
+    "before-evidence-ac3-market-detail-liq-price.png.png"
+  ],
+  "videos": {
+    "before": "before.mp4",
+    "after": "after.mp4",
+    "preferred": false,
+    "note": "Video shows full flow: navigate to market detail, open add-margin modal, verify liq distance display."
+  }
+}
