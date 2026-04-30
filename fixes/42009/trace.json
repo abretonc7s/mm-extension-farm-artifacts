@@ -1,0 +1,93 @@
+[
+  {
+    "id": "setup-clear-baseline",
+    "action": "eval_async",
+    "ok": true,
+    "raw": "cleared",
+    "durationMs": 1
+  },
+  {
+    "id": "setup-go-home",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "#/",
+    "durationMs": 10
+  },
+  {
+    "id": "setup-wait-home",
+    "action": "wait_for",
+    "ok": true,
+    "raw": true,
+    "durationMs": 0
+  },
+  {
+    "id": "ac1-navigate-perps",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "#/perps/market/BTC",
+    "durationMs": 32
+  },
+  {
+    "id": "ac1-wait-persisted",
+    "action": "wait_for",
+    "ok": true,
+    "raw": true,
+    "durationMs": 503
+  },
+  {
+    "id": "ac1-assert-state",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"url\":\"chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/sidepanel.html#/perps/market/BTC\",\"hash\":\"#/perps/market/BTC\",\"lvpr\":{\"name\":\"perps\",\"path\":\"/perps/market/BTC\",\"timestamp\":1777557428296}}",
+    "durationMs": 1
+  },
+  {
+    "id": "ac1-screenshot",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "screenshots/evidence-ac1-sidepanel-perps-mount-persists-1777557428810.png",
+      "width": 720,
+      "height": 1628
+    },
+    "durationMs": 243
+  },
+  {
+    "id": "ac4-navigate-home",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "#/",
+    "durationMs": 32
+  },
+  {
+    "id": "ac4-wait-cleared",
+    "action": "wait_for",
+    "ok": true,
+    "raw": true,
+    "durationMs": 511
+  },
+  {
+    "id": "ac4-assert-cleared",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"url\":\"chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/sidepanel.html#/\",\"hash\":\"#/\",\"lvpr\":null}",
+    "durationMs": 5
+  },
+  {
+    "id": "ac4-screenshot",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "screenshots/evidence-ac4-sidepanel-in-app-leave-clears-1777557429633.png",
+      "width": 720,
+      "height": 1628
+    },
+    "durationMs": 59
+  },
+  {
+    "id": "done",
+    "action": "end",
+    "status": "pass",
+    "durationMs": 0
+  }
+]

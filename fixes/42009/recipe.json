@@ -1,0 +1,124 @@
+{
+  "title": "TAT-2691 Phase A — perps mount persists, in-app leave clears (sidepanel)",
+  "summary": "Drives the live sidepanel target on sidepanel.html. AC1: navigate to /perps/market/BTC via in-app hash change, assert lastVisitedRoute = { name: 'perps', path, timestamp }. AC4: navigate Home in-app, assert PerpsLayout cleanup writes setLastVisitedRoute('perps', null) and the in-app marker prevents an immediate resume.",
+  "validate": {
+    "workflow": {
+      "pre_conditions": [
+        "wallet.unlocked"
+      ],
+      "entry": "setup-clear-baseline",
+      "nodes": {
+        "setup-clear-baseline": {
+          "action": "eval_async",
+          "expression": "Promise.all([stateHooks.submitRequestToBackground('setLastVisitedRoute', ['perps', null]), stateHooks.submitRequestToBackground('setPendingRedirectRoute', [null])]).then(() => 'cleared')",
+          "save_as": "baseline_cleared",
+          "next": "setup-go-home"
+        },
+        "setup-go-home": {
+          "action": "eval_sync",
+          "expression": "(function(){location.hash='#/'; return location.hash;})()",
+          "save_as": "go_home",
+          "next": "setup-wait-home"
+        },
+        "setup-wait-home": {
+          "action": "wait_for",
+          "expression": "location.hash === '#/' && stateHooks.store.getState().metamask.lastVisitedRoute === null",
+          "timeout_ms": 5000,
+          "next": "ac1-navigate-perps"
+        },
+        "ac1-navigate-perps": {
+          "action": "eval_sync",
+          "expression": "(function(){location.hash='#/perps/market/BTC'; return location.hash;})()",
+          "save_as": "ac1_nav",
+          "next": "ac1-wait-persisted"
+        },
+        "ac1-wait-persisted": {
+          "action": "wait_for",
+          "expression": "(function(){var lvpr=stateHooks.store.getState().metamask.lastVisitedRoute;return !!(lvpr && lvpr.name === 'perps' && lvpr.path === '/perps/market/BTC' && (Date.now() - lvpr.timestamp) < 5000);})()",
+          "timeout_ms": 8000,
+          "next": "ac1-assert-state"
+        },
+        "ac1-assert-state": {
+          "action": "eval_sync",
+          "expression": "JSON.stringify({ url: location.href, hash: location.hash, lvpr: stateHooks.store.getState().metamask.lastVisitedRoute })",
+          "save_as": "ac1_state",
+          "assert": {
+            "all": [
+              {
+                "field": "hash",
+                "operator": "eq",
+                "value": "#/perps/market/BTC"
+              },
+              {
+                "field": "lvpr.path",
+                "operator": "eq",
+                "value": "/perps/market/BTC"
+              },
+              {
+                "field": "lvpr.timestamp",
+                "operator": "gt",
+                "value": 0
+              },
+              {
+                "field": "url",
+                "operator": "contains",
+                "value": "sidepanel.html"
+              }
+            ]
+          },
+          "next": "ac1-screenshot"
+        },
+        "ac1-screenshot": {
+          "action": "screenshot",
+          "filename": "evidence-ac1-sidepanel-perps-mount-persists",
+          "next": "ac4-navigate-home"
+        },
+        "ac4-navigate-home": {
+          "action": "eval_sync",
+          "expression": "(function(){location.hash='#/'; return location.hash;})()",
+          "save_as": "ac4_nav",
+          "next": "ac4-wait-cleared"
+        },
+        "ac4-wait-cleared": {
+          "action": "wait_for",
+          "expression": "stateHooks.store.getState().metamask.lastVisitedRoute === null && location.hash === '#/'",
+          "timeout_ms": 8000,
+          "next": "ac4-assert-cleared"
+        },
+        "ac4-assert-cleared": {
+          "action": "eval_sync",
+          "expression": "JSON.stringify({ url: location.href, hash: location.hash, lvpr: stateHooks.store.getState().metamask.lastVisitedRoute })",
+          "save_as": "ac4_state",
+          "assert": {
+            "all": [
+              {
+                "field": "hash",
+                "operator": "eq",
+                "value": "#/"
+              },
+              {
+                "field": "lvpr",
+                "operator": "falsy"
+              },
+              {
+                "field": "url",
+                "operator": "contains",
+                "value": "sidepanel.html"
+              }
+            ]
+          },
+          "next": "ac4-screenshot"
+        },
+        "ac4-screenshot": {
+          "action": "screenshot",
+          "filename": "evidence-ac4-sidepanel-in-app-leave-clears",
+          "next": "done"
+        },
+        "done": {
+          "action": "end",
+          "status": "pass"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,26 @@
+flowchart TD
+  %% TAT-2691 Phase A — perps mount persists, in-app leave clears (sidepanel)
+  __entry__(["ENTRY"]) --> node_setup_clear_baseline
+  node_setup_clear_baseline["setup-clear-baseline<br/>eval_async"]
+  node_setup_go_home["setup-go-home<br/>eval_sync"]
+  node_setup_wait_home["setup-wait-home<br/>wait_for"]
+  node_ac1_navigate_perps["ac1-navigate-perps<br/>eval_sync"]
+  node_ac1_wait_persisted["ac1-wait-persisted<br/>wait_for"]
+  node_ac1_assert_state["ac1-assert-state<br/>eval_sync"]
+  node_ac1_screenshot["ac1-screenshot<br/>screenshot"]
+  node_ac4_navigate_home["ac4-navigate-home<br/>eval_sync"]
+  node_ac4_wait_cleared["ac4-wait-cleared<br/>wait_for"]
+  node_ac4_assert_cleared["ac4-assert-cleared<br/>eval_sync"]
+  node_ac4_screenshot["ac4-screenshot<br/>screenshot"]
+  node_done(["done<br/>PASS"])
+  node_setup_clear_baseline --> node_setup_go_home
+  node_setup_go_home --> node_setup_wait_home
+  node_setup_wait_home --> node_ac1_navigate_perps
+  node_ac1_navigate_perps --> node_ac1_wait_persisted
+  node_ac1_wait_persisted --> node_ac1_assert_state
+  node_ac1_assert_state --> node_ac1_screenshot
+  node_ac1_screenshot --> node_ac4_navigate_home
+  node_ac4_navigate_home --> node_ac4_wait_cleared
+  node_ac4_wait_cleared --> node_ac4_assert_cleared
+  node_ac4_assert_cleared --> node_ac4_screenshot
+  node_ac4_screenshot --> node_done
