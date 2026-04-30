@@ -1,0 +1,9 @@
+- Perps modal wrapper test IDs can remain mounted but hidden; wait on visible child controls such as `perps-close-position-modal-submit` and `perps-candle-period-modal-1M`.
+- The close-position flow should use existing `perps/ensure-perps-network`, `perps/open-long-position`, `perps/close-position`, and `perps/navigate-to-market-detail` flows instead of raw setup steps.
+- Network toggles during perps setup/teardown can emit transient HUD execution-context warnings; treat them as non-gating only after the final trace confirms every AC node passed.
+- The warning icon proof needs both visual evidence and DOM assertions; in this run the icon resolved to `inline-block w-5 h-5 text-warning-default shrink-0` with 20x20 dimensions.
+- The close amount input uses `formatNumberForInput`, which is designed for editable input compatibility and disables grouping. Do not assume it satisfies display-formatting claims.
+- The live slot balance was too small to create a comma-level close notional, so comma formatting had to be validated by code/CDP formatter probe rather than browser screenshot.
+- Mobile close-position formatting uses `formatCloseAmountUSD`, which also returns ungrouped fixed-decimal strings; comma grouping is not a mobile precedent.
+- The existing close amount tests use optional-comma regexes, so they are not strong enough to prove grouped formatting.
+- Recipe screenshots should be cleaned before final reruns; failed iterations otherwise leave duplicate `evidence-ac*.png` files that confuse audit.

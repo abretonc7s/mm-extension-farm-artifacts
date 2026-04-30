@@ -1,0 +1,48 @@
+flowchart TD
+  %% PR 42261 perps close amount and candle labels
+  __entry__(["ENTRY"]) --> node_setup_navigate_detail
+  node_setup_navigate_detail[["setup-navigate-detail<br/>perps/navigate-to-market-detail"]]
+  node_setup_wait_close_cta["setup-wait-close-cta<br/>wait_for"]
+  node_setup_click_close["setup-click-close<br/>press"]
+  node_setup_wait_close_modal["setup-wait-close-modal<br/>wait_for"]
+  node_ac1_assert_usd_input["ac1-assert-usd-input<br/>eval_sync"]
+  node_ac1_screenshot_usd_input["ac1-screenshot-usd-input<br/>screenshot"]
+  node_ac2_select_close_usd["ac2-select-close-usd<br/>key_press"]
+  node_ac2_set_close_usd["ac2-set-close-usd<br/>set_input"]
+  node_ac2_assert_slider_sync["ac2-assert-slider-sync<br/>wait_for"]
+  node_ac2_screenshot_slider_sync["ac2-screenshot-slider-sync<br/>screenshot"]
+  node_ac5_select_close_usd["ac5-select-close-usd<br/>key_press"]
+  node_ac5_set_below_min["ac5-set-below-min<br/>set_input"]
+  node_ac5_probe_warning_icon["ac5-probe-warning-icon<br/>eval_sync"]
+  node_ac5_assert_warning_icon["ac5-assert-warning-icon<br/>wait_for"]
+  node_ac5_screenshot_warning_icon["ac5-screenshot-warning-icon<br/>screenshot"]
+  node_setup_close_close_modal["setup-close-close-modal<br/>eval_sync"]
+  node_setup_wait_close_modal_hidden["setup-wait-close-modal-hidden<br/>wait_for"]
+  node_setup_return_detail[["setup-return-detail<br/>perps/navigate-to-market-detail"]]
+  node_ac4_open_candle_selector["ac4-open-candle-selector<br/>press"]
+  node_ac4_wait_candle_modal["ac4-wait-candle-modal<br/>wait_for"]
+  node_ac4_assert_lowercase_labels["ac4-assert-lowercase-labels<br/>eval_sync"]
+  node_ac4_screenshot_lowercase_labels["ac4-screenshot-lowercase-labels<br/>screenshot"]
+  node_teardown_done(["teardown-done<br/>PASS"])
+  node_setup_navigate_detail --> node_setup_wait_close_cta
+  node_setup_wait_close_cta --> node_setup_click_close
+  node_setup_click_close --> node_setup_wait_close_modal
+  node_setup_wait_close_modal --> node_ac1_assert_usd_input
+  node_ac1_assert_usd_input --> node_ac1_screenshot_usd_input
+  node_ac1_screenshot_usd_input --> node_ac2_select_close_usd
+  node_ac2_select_close_usd --> node_ac2_set_close_usd
+  node_ac2_set_close_usd --> node_ac2_assert_slider_sync
+  node_ac2_assert_slider_sync --> node_ac2_screenshot_slider_sync
+  node_ac2_screenshot_slider_sync --> node_ac5_select_close_usd
+  node_ac5_select_close_usd --> node_ac5_set_below_min
+  node_ac5_set_below_min --> node_ac5_probe_warning_icon
+  node_ac5_probe_warning_icon --> node_ac5_assert_warning_icon
+  node_ac5_assert_warning_icon --> node_ac5_screenshot_warning_icon
+  node_ac5_screenshot_warning_icon --> node_setup_close_close_modal
+  node_setup_close_close_modal --> node_setup_wait_close_modal_hidden
+  node_setup_wait_close_modal_hidden --> node_setup_return_detail
+  node_setup_return_detail --> node_ac4_open_candle_selector
+  node_ac4_open_candle_selector --> node_ac4_wait_candle_modal
+  node_ac4_wait_candle_modal --> node_ac4_assert_lowercase_labels
+  node_ac4_assert_lowercase_labels --> node_ac4_screenshot_lowercase_labels
+  node_ac4_screenshot_lowercase_labels --> node_teardown_done

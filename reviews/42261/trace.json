@@ -1,0 +1,272 @@
+[
+  {
+    "id": "setup-navigate-detail",
+    "action": "call",
+    "ok": true,
+    "raw": {
+      "passed": 2,
+      "failed": 0,
+      "trace": [
+        {
+          "id": "nav-detail",
+          "action": "navigate",
+          "ok": true,
+          "raw": {
+            "navigated": true,
+            "hash": "#/perps/market/ETH"
+          },
+          "durationMs": 35
+        },
+        {
+          "id": "wait-detail",
+          "action": "wait_for",
+          "ok": true,
+          "raw": {
+            "found": true,
+            "target": "testId:perps-market-detail-page"
+          },
+          "durationMs": 61
+        },
+        {
+          "id": "done",
+          "action": "end",
+          "status": "pass",
+          "durationMs": 0
+        }
+      ],
+      "vars": {}
+    },
+    "durationMs": 105
+  },
+  {
+    "id": "setup-wait-close-cta",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-close-cta-button"
+    },
+    "durationMs": 62
+  },
+  {
+    "id": "setup-click-close",
+    "action": "press",
+    "ok": true,
+    "raw": {
+      "clicked": true,
+      "target": "testId:perps-close-cta-button"
+    },
+    "durationMs": 2281
+  },
+  {
+    "id": "setup-wait-close-modal",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-close-position-modal-submit"
+    },
+    "durationMs": 196
+  },
+  {
+    "id": "ac1-assert-usd-input",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"hasInput\":true,\"prefixText\":true,\"inputMode\":\"decimal\",\"inputValue\":\"10.22\"}",
+    "durationMs": 1
+  },
+  {
+    "id": "ac1-screenshot-usd-input",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "evidence/evidence-ac1-usd-input-1777540705169.png",
+      "width": 500,
+      "height": 657
+    },
+    "durationMs": 123
+  },
+  {
+    "id": "ac2-select-close-usd",
+    "action": "key_press",
+    "ok": true,
+    "raw": {
+      "pressed": "Control+a",
+      "test_id": "close-amount-value"
+    },
+    "durationMs": 9
+  },
+  {
+    "id": "ac2-set-close-usd",
+    "action": "set_input",
+    "ok": true,
+    "raw": {
+      "filled": true,
+      "fallback": true
+    },
+    "durationMs": 136
+  },
+  {
+    "id": "ac2-assert-slider-sync",
+    "action": "wait_for",
+    "ok": true,
+    "raw": "{\"inputValue\":\"5\",\"sliderValue\":48.92607270414403,\"expectedPercent\":48.92367906066536,\"matches\":true}",
+    "durationMs": 1
+  },
+  {
+    "id": "ac2-screenshot-slider-sync",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "evidence/evidence-ac2-slider-sync-1777540705448.png",
+      "width": 500,
+      "height": 657
+    },
+    "durationMs": 98
+  },
+  {
+    "id": "ac5-select-close-usd",
+    "action": "key_press",
+    "ok": true,
+    "raw": {
+      "pressed": "Control+a",
+      "test_id": "close-amount-value"
+    },
+    "durationMs": 9
+  },
+  {
+    "id": "ac5-set-below-min",
+    "action": "set_input",
+    "ok": true,
+    "raw": {
+      "filled": true,
+      "fallback": true
+    },
+    "durationMs": 118
+  },
+  {
+    "id": "ac5-probe-warning-icon",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"inputValue\":\"0.01\",\"sliderValue\":\"0.09785214540828809\",\"bodyHasWarning\":true,\"hasWarning\":true,\"noShrink\":true,\"iconWidth\":20,\"iconHeight\":20,\"classText\":\"inline-block w-5 h-5 text-warning-default shrink-0\",\"bodyPreview\":\"ETH-USD\\n\\n$2,271\\n\\n-2.59%\\n\\n\\t\\n\\t\\n\\n\\n\\t\\n\\t\\n\\n\\t\\n\\t\\n\\n1min\\n\\n3min\\n\\n5min\\n\\n15min\\n\\nMore\\n\\nPosition\\n\\nP&L\\n\\n-$0.01\\n\\nReturn\\n\\n-0.25%\\n\\nSize\\n\\n0.0045 ETH\\n\\nMargin\\n\\n$3.39\\n\\nAuto close\\n\\nTP\\n\\n-\\n\\n, SL\\n\\n-\\n\\nDetails\\n\\nDirection\\n\\nLong 3x\\n\\nEntry price\\n\\n$2,271\\n\\nLiquidation price\\n\\n$1,546.2\\n\\nFunding payments\\n\\n$0.00\\n\\nStats\\n\\n24h Volume\\n\\n$1.59M\\n\\nOpen interest\\n\\n$2.78M\\n\\nFunding rate\\n\\n0.0221%\\n\\n(00:41:35)\\n\\nOracle price\\n\\n$2,259\\n\\nRecent activity\\n\\nOpened long\\n\\n0.0045 ETH\\n\\n-$0.01\\n\\nClosed long\\n\\n0.0045 ETH\\n\\n-$0.03\\n\\nOpened long\\n\\n0.0045 ETH\\n\\n-$0.01\\n\\nL\"}",
+    "durationMs": 1
+  },
+  {
+    "id": "ac5-assert-warning-icon",
+    "action": "wait_for",
+    "ok": true,
+    "raw": "{\"hasWarning\":true,\"noShrink\":true,\"iconWidth\":20,\"iconHeight\":20}",
+    "durationMs": 1
+  },
+  {
+    "id": "ac5-screenshot-warning-icon",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "evidence/evidence-ac5-warning-icon-1777540705690.png",
+      "width": 500,
+      "height": 657
+    },
+    "durationMs": 106
+  },
+  {
+    "id": "setup-close-close-modal",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"clicked\":true}",
+    "durationMs": 6
+  },
+  {
+    "id": "setup-wait-close-modal-hidden",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "hidden": true
+    },
+    "durationMs": 2
+  },
+  {
+    "id": "setup-return-detail",
+    "action": "call",
+    "ok": true,
+    "raw": {
+      "passed": 2,
+      "failed": 0,
+      "trace": [
+        {
+          "id": "nav-detail",
+          "action": "navigate",
+          "ok": true,
+          "raw": {
+            "navigated": true,
+            "hash": "#/perps/market/ETH"
+          },
+          "durationMs": 22
+        },
+        {
+          "id": "wait-detail",
+          "action": "wait_for",
+          "ok": true,
+          "raw": {
+            "found": true,
+            "target": "testId:perps-market-detail-page"
+          },
+          "durationMs": 92
+        },
+        {
+          "id": "done",
+          "action": "end",
+          "status": "pass",
+          "durationMs": 0
+        }
+      ],
+      "vars": {}
+    },
+    "durationMs": 122
+  },
+  {
+    "id": "ac4-open-candle-selector",
+    "action": "press",
+    "ok": true,
+    "raw": {
+      "clicked": true,
+      "target": "testId:perps-candle-period-more"
+    },
+    "durationMs": 257
+  },
+  {
+    "id": "ac4-wait-candle-modal",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-candle-period-modal-1M"
+    },
+    "durationMs": 150
+  },
+  {
+    "id": "ac4-assert-lowercase-labels",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"oneDay\":\"1d\",\"threeDays\":\"3d\",\"oneWeek\":\"1w\",\"oneMonth\":\"1m\"}",
+    "durationMs": 0
+  },
+  {
+    "id": "ac4-screenshot-lowercase-labels",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "evidence/evidence-ac4-candle-labels-1777540706349.png",
+      "width": 500,
+      "height": 657
+    },
+    "durationMs": 95
+  },
+  {
+    "id": "teardown-done",
+    "action": "end",
+    "status": "pass",
+    "durationMs": 0
+  }
+]

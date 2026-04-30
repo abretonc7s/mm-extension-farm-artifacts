@@ -1,0 +1,293 @@
+{
+  "schema_version": 1,
+  "title": "PR 42261 perps close amount and candle labels",
+  "description": "Validates the close-position USD input, slider sync, warning icon sizing, and lowercase candle labels.",
+  "validate": {
+    "workflow": {
+      "pre_conditions": [
+        "wallet.unlocked",
+        "perps.feature_enabled"
+      ],
+      "setup": [
+        {
+          "id": "setup-save-original-network",
+          "action": "eval_sync",
+          "expression": "(function(){var m=stateHooks.store.getState().metamask;return JSON.stringify({network:m.isTestnet?'testnet':'mainnet',provider:m.activeProvider||'hyperliquid'})})()",
+          "save_as": "original_network"
+        },
+        {
+          "id": "setup-ensure-testnet",
+          "action": "call",
+          "ref": "perps/ensure-perps-network",
+          "params": {
+            "network": "testnet",
+            "provider": "hyperliquid"
+          }
+        },
+        {
+          "id": "setup-open-eth-position",
+          "action": "call",
+          "ref": "perps/open-long-position",
+          "params": {
+            "symbol": "ETH",
+            "side": "long",
+            "amount": "10"
+          }
+        }
+      ],
+      "teardown": [
+        {
+          "id": "teardown-close-eth-position",
+          "action": "call",
+          "ref": "perps/close-position",
+          "params": {
+            "symbol": "ETH",
+            "percent": "100"
+          }
+        },
+        {
+          "id": "teardown-restore-network",
+          "action": "call",
+          "ref": "perps/ensure-perps-network",
+          "params": {
+            "network": "{{vars.original_network.network}}",
+            "provider": "{{vars.original_network.provider}}"
+          }
+        }
+      ],
+      "entry": "setup-navigate-detail",
+      "nodes": {
+        "setup-navigate-detail": {
+          "action": "call",
+          "ref": "perps/navigate-to-market-detail",
+          "params": {
+            "symbol": "ETH"
+          },
+          "next": "setup-wait-close-cta"
+        },
+        "setup-wait-close-cta": {
+          "action": "wait_for",
+          "test_id": "perps-close-cta-button",
+          "timeout_ms": 10000,
+          "next": "setup-click-close"
+        },
+        "setup-click-close": {
+          "action": "press",
+          "test_id": "perps-close-cta-button",
+          "next": "setup-wait-close-modal"
+        },
+        "setup-wait-close-modal": {
+          "action": "wait_for",
+          "test_id": "perps-close-position-modal-submit",
+          "timeout_ms": 10000,
+          "next": "ac1-assert-usd-input"
+        },
+        "ac1-assert-usd-input": {
+          "action": "eval_sync",
+          "target": "active",
+          "expression": "(function(){var root=document.querySelector('[data-testid=\"close-amount-value\"]');var input=root&&root.querySelector('input');return JSON.stringify({hasInput:input instanceof HTMLInputElement,prefixText:(root&&root.textContent||'').includes('$'),inputMode:input?(input.getAttribute('inputmode')||input.inputMode||''):'',inputValue:input?input.value:''})})()",
+          "save_as": "usd_input",
+          "assert": {
+            "all": [
+              {
+                "field": "hasInput",
+                "operator": "eq",
+                "value": true
+              },
+              {
+                "field": "prefixText",
+                "operator": "eq",
+                "value": true
+              },
+              {
+                "field": "inputMode",
+                "operator": "eq",
+                "value": "decimal"
+              }
+            ]
+          },
+          "next": "ac1-screenshot-usd-input"
+        },
+        "ac1-screenshot-usd-input": {
+          "action": "screenshot",
+          "filename": "../evidence/evidence-ac1-usd-input",
+          "note": "AC1: editable USD input with prefix",
+          "next": "ac2-select-close-usd"
+        },
+        "ac2-select-close-usd": {
+          "action": "key_press",
+          "test_id": "close-amount-value",
+          "key": "Control+a",
+          "next": "ac2-set-close-usd"
+        },
+        "ac2-set-close-usd": {
+          "action": "set_input",
+          "test_id": "close-amount-value",
+          "value": "5",
+          "next": "ac2-assert-slider-sync"
+        },
+        "ac2-assert-slider-sync": {
+          "action": "wait_for",
+          "target": "active",
+          "expression": "(function(){var root=document.querySelector('[data-testid=\"close-amount-value\"]');var input=root&&root.querySelector('input');var slider=document.querySelector('[data-testid=\"close-amount-slider\"] [role=\"slider\"], [data-testid=\"close-amount-slider\"] input');var raw=slider?(slider.getAttribute('aria-valuenow')||slider.value||''):'';var val=Number(raw);var total=Number('{{vars.usd_input.inputValue}}');var typed=Number(input?input.value:'');var expected=total>0?(typed/total)*100:NaN;return JSON.stringify({inputValue:input?input.value:'',sliderValue:val,expectedPercent:expected,matches:Number.isFinite(expected)&&Math.abs(val-expected)<=1})})()",
+          "assert": {
+            "all": [
+              {
+                "field": "inputValue",
+                "operator": "eq",
+                "value": "5"
+              },
+              {
+                "field": "matches",
+                "operator": "eq",
+                "value": true
+              }
+            ]
+          },
+          "timeout_ms": 5000,
+          "poll_ms": 250,
+          "next": "ac2-screenshot-slider-sync"
+        },
+        "ac2-screenshot-slider-sync": {
+          "action": "screenshot",
+          "filename": "../evidence/evidence-ac2-slider-sync",
+          "note": "AC2: typed USD updates slider",
+          "next": "ac5-select-close-usd"
+        },
+        "ac5-select-close-usd": {
+          "action": "key_press",
+          "test_id": "close-amount-value",
+          "key": "Control+a",
+          "next": "ac5-set-below-min"
+        },
+        "ac5-set-below-min": {
+          "action": "set_input",
+          "test_id": "close-amount-value",
+          "value": "0.01",
+          "next": "ac5-probe-warning-icon"
+        },
+        "ac5-probe-warning-icon": {
+          "action": "eval_sync",
+          "target": "active",
+          "expression": "(function(){var bodyText=document.body.innerText||'';var root=document.body;var nodes=Array.from(root.querySelectorAll('*'));var input=document.querySelector('[data-testid=\"close-amount-value\"] input');var slider=document.querySelector('[data-testid=\"close-amount-slider\"] [role=\"slider\"], [data-testid=\"close-amount-slider\"] input');var matches=nodes.filter(function(el){return (el.textContent||'').includes('Partial closes must be at least')});var text=matches[matches.length-1];var warningBox=text;while(warningBox&&!warningBox.querySelector('svg')){warningBox=warningBox.parentElement}var iconCarrier=warningBox&&(warningBox.querySelector('.shrink-0')||warningBox.querySelector('svg'));var svg=warningBox&&warningBox.querySelector('svg');var rect=(svg||iconCarrier)&&((svg||iconCarrier).getBoundingClientRect());var flex=iconCarrier?getComputedStyle(iconCarrier).flexShrink:'';var classText=iconCarrier?String(iconCarrier.getAttribute('class')||''):'';return JSON.stringify({inputValue:input?input.value:'',sliderValue:slider?(slider.getAttribute('aria-valuenow')||slider.value||''):'',bodyHasWarning:bodyText.includes('Partial closes must'),hasWarning:!!text,noShrink:classText.includes('shrink-0')||flex==='0',iconWidth:rect?rect.width:0,iconHeight:rect?rect.height:0,classText:classText,bodyPreview:bodyText.slice(0,500)})})()",
+          "next": "ac5-assert-warning-icon"
+        },
+        "ac5-assert-warning-icon": {
+          "action": "wait_for",
+          "target": "active",
+          "expression": "(function(){var root=document.body;var nodes=Array.from(root.querySelectorAll('*'));var matches=nodes.filter(function(el){return (el.textContent||'').includes('Partial closes must be at least')});var text=matches[matches.length-1];var warningBox=text;while(warningBox&&!warningBox.querySelector('svg')){warningBox=warningBox.parentElement}var iconCarrier=warningBox&&(warningBox.querySelector('.shrink-0')||warningBox.querySelector('svg'));var svg=warningBox&&warningBox.querySelector('svg');var rect=(svg||iconCarrier)&&((svg||iconCarrier).getBoundingClientRect());var flex=iconCarrier?getComputedStyle(iconCarrier).flexShrink:'';var classText=iconCarrier?String(iconCarrier.getAttribute('class')||''):'';return JSON.stringify({hasWarning:!!text,noShrink:classText.includes('shrink-0')||flex==='0',iconWidth:rect?rect.width:0,iconHeight:rect?rect.height:0})})()",
+          "assert": {
+            "all": [
+              {
+                "field": "hasWarning",
+                "operator": "eq",
+                "value": true
+              },
+              {
+                "field": "noShrink",
+                "operator": "eq",
+                "value": true
+              },
+              {
+                "field": "iconWidth",
+                "operator": "gte",
+                "value": 18
+              },
+              {
+                "field": "iconHeight",
+                "operator": "gte",
+                "value": 18
+              }
+            ]
+          },
+          "timeout_ms": 5000,
+          "poll_ms": 250,
+          "next": "ac5-screenshot-warning-icon"
+        },
+        "ac5-screenshot-warning-icon": {
+          "action": "screenshot",
+          "filename": "../evidence/evidence-ac5-warning-icon",
+          "note": "AC5: warning icon is medium",
+          "next": "setup-close-close-modal"
+        },
+        "setup-close-close-modal": {
+          "action": "eval_sync",
+          "target": "active",
+          "expression": "(function(){var buttons=Array.from(document.querySelectorAll('button[aria-label=\"Close\"]'));var button=buttons.find(function(btn){return btn.closest('[data-testid=\"perps-close-position-modal\"]')})||buttons[0];if(button){button.click()}return JSON.stringify({clicked:!!button})})()",
+          "assert": {
+            "field": "clicked",
+            "operator": "eq",
+            "value": true
+          },
+          "next": "setup-wait-close-modal-hidden"
+        },
+        "setup-wait-close-modal-hidden": {
+          "action": "wait_for",
+          "test_id": "perps-close-position-modal-submit",
+          "visible": false,
+          "timeout_ms": 10000,
+          "next": "setup-return-detail"
+        },
+        "setup-return-detail": {
+          "action": "call",
+          "ref": "perps/navigate-to-market-detail",
+          "params": {
+            "symbol": "ETH"
+          },
+          "next": "ac4-open-candle-selector"
+        },
+        "ac4-open-candle-selector": {
+          "action": "press",
+          "test_id": "perps-candle-period-more",
+          "next": "ac4-wait-candle-modal"
+        },
+        "ac4-wait-candle-modal": {
+          "action": "wait_for",
+          "test_id": "perps-candle-period-modal-1M",
+          "timeout_ms": 10000,
+          "next": "ac4-assert-lowercase-labels"
+        },
+        "ac4-assert-lowercase-labels": {
+          "action": "eval_sync",
+          "target": "active",
+          "expression": "(function(){var ids=['1d','3d','1w','1M'];var labels={};ids.forEach(function(id){var el=document.querySelector('[data-testid=\"perps-candle-period-modal-'+id+'\"]');labels[id]=el?(el.textContent||'').trim():''});return JSON.stringify({oneDay:labels['1d'],threeDays:labels['3d'],oneWeek:labels['1w'],oneMonth:labels['1M']})})()",
+          "assert": {
+            "all": [
+              {
+                "field": "oneDay",
+                "operator": "eq",
+                "value": "1d"
+              },
+              {
+                "field": "threeDays",
+                "operator": "eq",
+                "value": "3d"
+              },
+              {
+                "field": "oneWeek",
+                "operator": "eq",
+                "value": "1w"
+              },
+              {
+                "field": "oneMonth",
+                "operator": "eq",
+                "value": "1m"
+              }
+            ]
+          },
+          "next": "ac4-screenshot-lowercase-labels"
+        },
+        "ac4-screenshot-lowercase-labels": {
+          "action": "screenshot",
+          "filename": "../evidence/evidence-ac4-candle-labels",
+          "note": "AC4: candle labels are lowercase",
+          "next": "teardown-done"
+        },
+        "teardown-done": {
+          "action": "end",
+          "status": "pass"
+        }
+      }
+    }
+  }
+}

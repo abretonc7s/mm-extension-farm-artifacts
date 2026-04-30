@@ -1,0 +1,63 @@
+{
+  "version": 1,
+  "verdict": "pass",
+  "compact": {
+    "verdict": "PASS",
+    "reasons": [
+      "AC1, AC2, AC4, and AC5 are covered by ac<N>-* nodes; final trace shows 22/22 passed.",
+      "AC3 is explicitly UNTESTABLE in browser because the funded slot cannot create a comma-level close notional.",
+      "Screenshots include HUD captions that match recipe notes for each visual AC."
+    ],
+    "better_version_guidance": []
+  },
+  "dimensions": {
+    "graph_integrity": {
+      "status": "pass",
+      "reason": "Workflow graph is structurally valid and uses existing perps flows for setup, navigation, and teardown.",
+      "evidence": ["recipe.json", "trace.json"]
+    },
+    "ac_coverage": {
+      "status": "pass",
+      "reason": "Every AC is either PROVEN by AC-bound nodes or explicitly marked UNTESTABLE with rationale.",
+      "evidence": ["recipe-coverage.md", "trace.json"]
+    },
+    "evidence_contract_basics": {
+      "status": "pass",
+      "reason": "Visual claims have screenshots and trace assertions; AC5 includes DOM size/no-shrink proof.",
+      "evidence": [
+        "evidence/evidence-ac1-usd-input-1777540705169.png",
+        "evidence/evidence-ac2-slider-sync-1777540705448.png",
+        "evidence/evidence-ac4-candle-labels-1777540706349.png",
+        "evidence/evidence-ac5-warning-icon-1777540705690.png"
+      ]
+    },
+    "perps_state_setup": {
+      "status": "pass",
+      "reason": "Recipe switches to testnet, opens an ETH long with the existing flow, closes it in teardown, and restores the original network.",
+      "evidence": ["trace.json"]
+    }
+  },
+  "structural_findings": [],
+  "contextual_findings": [],
+  "suggested_recipe_delta": [],
+  "training_fields": {
+    "farm": "metamask-extension",
+    "project": "metamask-extension-farm",
+    "flow_type": "review-pr",
+    "task_type": "review-pr",
+    "claim_is_visual": true,
+    "proof_mode": "mixed",
+    "anti_patterns": [],
+    "good_patterns": [
+      "Used perps/ensure-perps-network, perps/open-long-position, perps/close-position, and perps/navigate-to-market-detail flows.",
+      "Waited on visible modal controls instead of mounted-hidden modal wrappers."
+    ]
+  },
+  "meta": {
+    "producer": "worker",
+    "fallback_used": false,
+    "legacy_task": false,
+    "artifact_required": true,
+    "source_signals": ["recipe.json", "recipe-coverage.md", "trace.json"]
+  }
+}

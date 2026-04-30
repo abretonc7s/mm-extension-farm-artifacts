@@ -1,0 +1,33 @@
+{
+  "title": "Preflight probe for PR 42261",
+  "validate": {
+    "workflow": {
+      "pre_conditions": ["wallet.unlocked", "perps.feature_enabled"],
+      "entry": "probe-state",
+      "nodes": {
+        "probe-state": {
+          "action": "eval_ref",
+          "ref": "perps-state",
+          "save_as": "perps_state",
+          "next": "probe-positions"
+        },
+        "probe-positions": {
+          "action": "eval_ref",
+          "ref": "perps-positions",
+          "save_as": "perps_positions",
+          "next": "probe-balance"
+        },
+        "probe-balance": {
+          "action": "eval_ref",
+          "ref": "perps-balance",
+          "save_as": "perps_balance",
+          "next": "done"
+        },
+        "done": {
+          "action": "end",
+          "status": "pass"
+        }
+      }
+    }
+  }
+}

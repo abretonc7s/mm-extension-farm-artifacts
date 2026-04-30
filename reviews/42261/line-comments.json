@@ -1,0 +1,19 @@
+{
+  "pr_number": "42261",
+  "recommendation": "REQUEST_CHANGES",
+  "summary": "The editable close amount input, slider sync, candle labels, and warning icon are validated, but the blurred USD value does not meet the stated comma-formatting requirement.",
+  "comments": [
+    {
+      "path": "ui/components/app/perps/order-entry/components/close-amount-section/close-amount-section.tsx",
+      "line": 62,
+      "body": "This uses `formatNumberForInput`, which explicitly formats with `useGrouping: false`, so a blurred value like 56250 renders as `56250` instead of `56,250`. The PR's manual test says the value should format with commas on blur; keep the focused editing value ungrouped, but use a grouped display formatter for the blurred state.",
+      "severity": "must_fix"
+    },
+    {
+      "path": "ui/components/app/perps/order-entry/components/close-amount-section/close-amount-section.test.tsx",
+      "line": 49,
+      "body": "This optional-comma assertion passes for both `56250` and `56,250`, so it would not catch the missing blur comma formatting. Once the display formatter is fixed, make the expectation require the grouped value for the non-focused state.",
+      "severity": "suggestion"
+    }
+  ]
+}

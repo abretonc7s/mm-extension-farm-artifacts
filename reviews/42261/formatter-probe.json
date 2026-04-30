@@ -1,0 +1,26 @@
+{
+  "title": "Formatter grouping probe for PR 42261",
+  "validate": {
+    "workflow": {
+      "pre_conditions": ["wallet.unlocked"],
+      "entry": "probe-format-number-for-input-options",
+      "nodes": {
+        "probe-format-number-for-input-options": {
+          "action": "eval_sync",
+          "target": "active",
+          "expression": "(function(){var formatted=new Intl.NumberFormat('en-US',{useGrouping:false,minimumFractionDigits:0,maximumFractionDigits:2}).format(56250);return JSON.stringify({formatted:formatted,hasComma:formatted.includes(',')})})()",
+          "assert": {
+            "field": "formatted",
+            "operator": "eq",
+            "value": "56250"
+          },
+          "next": "probe-done"
+        },
+        "probe-done": {
+          "action": "end",
+          "status": "pass"
+        }
+      }
+    }
+  }
+}
