@@ -1,0 +1,6 @@
+| # | AC (verbatim) | Target env | Recipe nodes (IDs) | Screenshot filename | Visual verdict | Justification |
+|---|---------------|------------|---------------------|---------------------|----------------|---------------|
+| 1 | When the user has 1 open position, the % RoE in the unrealized P&L summary row matches the % RoE in the individual position card at all times. | fullscreen | `gate-assert-single-position`, `ac1-inject-desynced-roe`, `ac1-screenshot-roe-sync` | `after-ac1-roe-sync-1777564915393.png` | PROVEN | The screenshot shows exactly one ETH position. The summary row displays `+$1 (42.00%)` and the position card displays `+$4.20 (42.00%)`, proving the RoE percentage matches while P&L values differ. |
+| 2 | Both values update with the same frequency from the same data source with no observable lag. | fullscreen | `ac1-inject-desynced-roe`, `ac2-assert-summary-uses-position-source`, `ac2-screenshot-position-source` | `after-ac2-position-source-1777564915490.png` | PROVEN | The recipe injects a fresh position RoE of `42.00%` while forcing the account RoE cache to stale `1.00%`; trace shows `ac2-assert-summary-uses-position-source` passed, and the screenshot shows both visible RoE values at `42.00%`. |
+
+Overall recipe coverage: 2/2 ACs PROVEN (untestable: none, weak: 0, missing: 0)

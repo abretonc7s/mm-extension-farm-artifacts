@@ -1,0 +1,29 @@
+{
+  "version": 1,
+  "preferred_mode": "screenshots",
+  "summary": "Perps home shows the single-position summary RoE matching the ETH position card after a forced stale account RoE cache.",
+  "before_after_pairs": [],
+  "standalone": [
+    {
+      "label": "Perps single-position RoE sync",
+      "covers": ["ac1", "ac2"],
+      "file": "after-ac1-roe-sync-1777564915393.png",
+      "note": "Summary row and position card both display 42.00% RoE while the recipe forced the account RoE cache to 1.00%."
+    }
+  ],
+  "omit": [
+    "after-ac2-position-source-1777564915490.png",
+    "after-ac1-roe-sync-1777564761992.png",
+    "after-ac2-position-source-1777564762075.png",
+    "after-ac1-roe-sync-1777564897096.png",
+    "after-ac2-position-source-1777564897174.png",
+    "before-ac1-roe-sync-1777564565642.png",
+    "before-ac2-position-source-1777564565724.png"
+  ],
+  "videos": {
+    "before": "before.mp4",
+    "after": "after.mp4",
+    "preferred": false,
+    "note": "Before video shows the stricter recipe failing on stale summary RoE; after video shows the final recipe passing."
+  }
+}

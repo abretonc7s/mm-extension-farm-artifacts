@@ -1,0 +1,57 @@
+{
+  "version": 1,
+  "verdict": "pass",
+  "compact": {
+    "verdict": "PASS",
+    "reasons": [
+      "AC1 and AC2 are covered by ac<N>-prefixed assertion nodes; final summary reports 8/8 passed.",
+      "Screenshots show the summary row and ETH position card both visible with matching 42.00% RoE after a forced stale account cache."
+    ],
+    "better_version_guidance": []
+  },
+  "dimensions": {
+    "graph_integrity": {
+      "status": "pass",
+      "reason": "Workflow graph dry-runs and final validate-recipe execution completed with all nodes passing.",
+      "evidence": ["recipe.json", "workflow.mmd", "summary.json"]
+    },
+    "action_contract": {
+      "status": "pass",
+      "reason": "The recipe uses existing perps flows for setup and executable eval/screenshot actions for bug-specific assertions; no manual actions or forbidden local patterns are present.",
+      "evidence": ["recipe.json"]
+    },
+    "ac_coverage": {
+      "status": "pass",
+      "reason": "Both ACs bind to assertion nodes and visual evidence in recipe-coverage.md; no AC is weak, missing, or untestable.",
+      "evidence": ["recipe-coverage.md", "trace.json"]
+    },
+    "evidence_contract_basics": {
+      "status": "pass",
+      "reason": "The latest after screenshots visibly show the Perps home summary row and the single ETH position card with matching RoE values.",
+      "evidence": ["after-ac1-roe-sync-1777564915393.png", "after-ac2-position-source-1777564915490.png", "after.mp4"]
+    }
+  },
+  "structural_findings": [],
+  "contextual_findings": [],
+  "suggested_recipe_delta": [],
+  "training_fields": {
+    "farm": "metamask-extension",
+    "project": "metamask-extension-farm",
+    "flow_type": "fix-bug",
+    "task_type": "fix-bug",
+    "claim_is_visual": true,
+    "proof_mode": "mixed",
+    "anti_patterns": [],
+    "good_patterns": [
+      "Uses perps/open-long-position and perps/navigate-perps-tab flows for setup.",
+      "Forces a stale account RoE cache while pushing a fresh single-position RoE to prove source alignment."
+    ]
+  },
+  "meta": {
+    "producer": "worker",
+    "fallback_used": false,
+    "legacy_task": false,
+    "artifact_required": true,
+    "source_signals": ["recipe.json", "recipe-coverage.md", "trace.json", "summary.json"]
+  }
+}

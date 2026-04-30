@@ -1,0 +1,235 @@
+[
+  {
+    "id": "setup-open-position",
+    "action": "call",
+    "ok": true,
+    "raw": {
+      "passed": 5,
+      "failed": 0,
+      "trace": [
+        {
+          "id": "gate-check-balance",
+          "action": "eval_async",
+          "ok": true,
+          "raw": "{\"ok\":true,\"bal\":26.3659305,\"reason\":\"ok\"}",
+          "durationMs": 118
+        },
+        {
+          "id": "call-nav-detail",
+          "action": "call",
+          "ok": true,
+          "raw": {
+            "passed": 2,
+            "failed": 0,
+            "trace": [
+              {
+                "id": "nav-detail",
+                "action": "navigate",
+                "ok": true,
+                "raw": {
+                  "navigated": true,
+                  "hash": "#/perps/market/ETH"
+                },
+                "durationMs": 28
+              },
+              {
+                "id": "wait-detail",
+                "action": "wait_for",
+                "ok": true,
+                "raw": {
+                  "found": true,
+                  "target": "testId:perps-market-detail-page"
+                },
+                "durationMs": 81
+              },
+              {
+                "id": "done",
+                "action": "end",
+                "status": "pass",
+                "durationMs": 0
+              }
+            ],
+            "vars": {}
+          },
+          "durationMs": 134
+        },
+        {
+          "id": "check-position",
+          "action": "ext_check_dom",
+          "ok": true,
+          "raw": {
+            "visible": true
+          },
+          "durationMs": 1
+        },
+        {
+          "id": "branch-position",
+          "action": "switch",
+          "next": "verify-position",
+          "durationMs": 0
+        },
+        {
+          "id": "verify-position",
+          "action": "wait_for",
+          "ok": true,
+          "raw": {
+            "found": true,
+            "target": "testId:perps-position-cta-buttons"
+          },
+          "durationMs": 62
+        },
+        {
+          "id": "screenshot-result",
+          "action": "screenshot",
+          "ok": true,
+          "raw": {
+            "path": "screenshots/long-position-ETH-1777565420819.png",
+            "width": 500,
+            "height": 657
+          },
+          "durationMs": 110
+        },
+        {
+          "id": "done",
+          "action": "end",
+          "status": "pass",
+          "durationMs": 0
+        }
+      ],
+      "vars": {
+        "balance_gate": {
+          "ok": true,
+          "bal": 26.3659305,
+          "reason": "ok"
+        },
+        "pos_check": {
+          "visible": true
+        }
+      }
+    },
+    "durationMs": 743
+  },
+  {
+    "id": "setup-nav-perps-home",
+    "action": "call",
+    "ok": true,
+    "raw": {
+      "passed": 4,
+      "failed": 0,
+      "trace": [
+        {
+          "id": "nav-perps",
+          "action": "navigate",
+          "ok": true,
+          "raw": {
+            "navigated": true,
+            "hash": "#/?tab=perps"
+          },
+          "durationMs": 25
+        },
+        {
+          "id": "check-tutorial",
+          "action": "eval_sync",
+          "ok": true,
+          "raw": "{\"visible\":false}",
+          "durationMs": 6
+        },
+        {
+          "id": "tutorial-switch",
+          "action": "switch",
+          "next": "wait-perps",
+          "durationMs": 0
+        },
+        {
+          "id": "wait-perps",
+          "action": "wait_for",
+          "ok": true,
+          "raw": {
+            "found": true,
+            "target": "testId:perps-balance-dropdown"
+          },
+          "durationMs": 98
+        },
+        {
+          "id": "screenshot-perps",
+          "action": "screenshot",
+          "ok": true,
+          "raw": {
+            "path": "screenshots/perps-tab-1777565421093.png",
+            "width": 500,
+            "height": 657
+          },
+          "durationMs": 79
+        },
+        {
+          "id": "done",
+          "action": "end",
+          "status": "pass",
+          "durationMs": 0
+        }
+      ],
+      "vars": {
+        "tutorial_state": {
+          "visible": false
+        }
+      }
+    },
+    "durationMs": 243
+  },
+  {
+    "id": "gate-assert-single-position",
+    "action": "eval_async",
+    "ok": true,
+    "raw": "{\"count\":1,\"symbols\":[\"ETH\"]}",
+    "durationMs": 1
+  },
+  {
+    "id": "ac1-inject-desynced-roe",
+    "action": "eval_async",
+    "ok": true,
+    "raw": "{\"ok\":true,\"summaryRoe\":\"42.00%\",\"cardRoe\":\"42.00%\",\"matches\":true,\"summary\":\"Unrealized P&L+$1 (42.00%)\",\"card\":\"(42.00%)\",\"positionReturnOnEquity\":\"0.42\",\"accountReturnOnEquity\":\"1\"}",
+    "durationMs": 29
+  },
+  {
+    "id": "ac2-assert-summary-uses-position-source",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"summaryRoe\":\"42.00%\",\"cardRoe\":\"42.00%\",\"staleAccountRoe\":\"1.00%\",\"usesPositionSource\":true,\"summary\":\"Unrealized P&L+$1 (42.00%)\",\"card\":\"(42.00%)\"}",
+    "durationMs": 1
+  },
+  {
+    "id": "ac1-screenshot-roe-sync",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "screenshots/evidence-ac1-roe-sync-1777565421210.png",
+      "width": 500,
+      "height": 657
+    },
+    "durationMs": 79
+  },
+  {
+    "id": "ac2-screenshot-position-source",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "screenshots/evidence-ac2-position-source-1777565421290.png",
+      "width": 500,
+      "height": 657
+    },
+    "durationMs": 84
+  },
+  {
+    "id": "teardown-refresh-live-state",
+    "action": "eval_async",
+    "ok": true,
+    "raw": "{\"ok\":true,\"positions\":1}",
+    "durationMs": 455
+  },
+  {
+    "id": "teardown-done",
+    "action": "end",
+    "status": "pass",
+    "durationMs": 0
+  }
+]

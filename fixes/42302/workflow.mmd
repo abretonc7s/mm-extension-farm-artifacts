@@ -1,0 +1,20 @@
+flowchart TD
+  %% TAT-3015 — Perps single-position summary RoE matches position card
+  __entry__(["ENTRY"]) --> node_setup_open_position
+  node_setup_open_position[["setup-open-position<br/>perps/open-long-position"]]
+  node_setup_nav_perps_home[["setup-nav-perps-home<br/>perps/navigate-perps-tab"]]
+  node_gate_assert_single_position["gate-assert-single-position<br/>eval_async"]
+  node_ac1_inject_desynced_roe["ac1-inject-desynced-roe<br/>eval_async"]
+  node_ac2_assert_summary_uses_position_source["ac2-assert-summary-uses-position-source<br/>eval_sync"]
+  node_ac1_screenshot_roe_sync["ac1-screenshot-roe-sync<br/>screenshot"]
+  node_ac2_screenshot_position_source["ac2-screenshot-position-source<br/>screenshot"]
+  node_teardown_refresh_live_state["teardown-refresh-live-state<br/>eval_async"]
+  node_teardown_done(["teardown-done<br/>PASS"])
+  node_setup_open_position --> node_setup_nav_perps_home
+  node_setup_nav_perps_home --> node_gate_assert_single_position
+  node_gate_assert_single_position --> node_ac1_inject_desynced_roe
+  node_ac1_inject_desynced_roe --> node_ac2_assert_summary_uses_position_source
+  node_ac2_assert_summary_uses_position_source --> node_ac1_screenshot_roe_sync
+  node_ac1_screenshot_roe_sync --> node_ac2_screenshot_position_source
+  node_ac2_screenshot_position_source --> node_teardown_refresh_live_state
+  node_teardown_refresh_live_state --> node_teardown_done

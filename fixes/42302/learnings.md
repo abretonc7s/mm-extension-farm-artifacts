@@ -1,0 +1,4 @@
+- Investigation took longer than the code change because the live bug is timing-sensitive; a polling recipe initially passed after the account stream caught up.
+- The useful proof pattern was forcing a fresh positions cache update and a stale account cache update through `stateHooks.getPerpsStreamManager()`.
+- `PerpsBalanceDropdown` and `PositionCard` format RoE from different units: account RoE is percent-like and divided by 100, while position RoE is already a ratio.
+- Evidence screenshots are emitted under `artifacts/screenshots/`; the task rename snippets only cover root screenshots unless the nested path is handled.

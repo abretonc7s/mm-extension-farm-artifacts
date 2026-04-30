@@ -1,0 +1,106 @@
+{
+  "description": "Validates that the Perps home unrealized P&L summary RoE follows the single open position stream and stays aligned with the position card RoE.",
+  "hooks": {
+    "pre_conditions": [
+      "wallet.unlocked",
+      "perps.feature_enabled",
+      "perps.ready_to_trade",
+      "perps.sufficient_balance"
+    ],
+    "setup": [],
+    "teardown": []
+  },
+  "inputs": {},
+  "playback": {
+    "mode": "off",
+    "slow_ms": 1000
+  },
+  "sourcePath": "",
+  "title": "TAT-3015 — Perps single-position summary RoE matches position card",
+  "workflow": {
+    "entry": "setup-open-position",
+    "nodes": {
+      "setup-open-position": {
+        "action": "call",
+        "ref": "perps/open-long-position",
+        "params": {
+          "symbol": "ETH",
+          "side": "long",
+          "amount": "10"
+        },
+        "next": "setup-nav-perps-home",
+        "id": "setup-open-position"
+      },
+      "setup-nav-perps-home": {
+        "action": "call",
+        "ref": "perps/navigate-perps-tab",
+        "next": "gate-assert-single-position",
+        "id": "setup-nav-perps-home"
+      },
+      "gate-assert-single-position": {
+        "action": "eval_async",
+        "expression": "(async()=>{var positions=await stateHooks.submitRequestToBackground('perpsGetPositions',[]);positions=positions||[];return JSON.stringify({count:positions.length,symbols:positions.map(function(p){return p.symbol})})})()",
+        "assert": {
+          "operator": "eq",
+          "field": "count",
+          "value": 1
+        },
+        "next": "ac1-inject-desynced-roe",
+        "id": "gate-assert-single-position"
+      },
+      "ac1-inject-desynced-roe": {
+        "action": "eval_async",
+        "expression": "(async()=>{var sm=stateHooks.getPerpsStreamManager();var positions=sm.positions.getCachedData()||[];var base=positions[0];if(!base){return JSON.stringify({ok:false,reason:'missing position cache',matches:false})}var freshPosition=Object.assign({},base,{unrealizedPnl:'4.20',marginUsed:'10',positionValue:'14.20',returnOnEquity:'0.42'});var account=sm.account.getCachedData()||{};sm.account.pushData(Object.assign({},account,{unrealizedPnl:'1.00',returnOnEquity:'1'}));sm.positions.pushData([freshPosition]);window.__tat3015RoeProbe={staleAccountRoe:'1.00%',positionRoe:'42.00%'};await new Promise(requestAnimationFrame);await new Promise(requestAnimationFrame);var summary=document.querySelector('[data-testid=\"perps-balance-dropdown-pnl\"]')?.textContent?.replace(/\\s+/g,' ').trim()||'';var card=document.querySelector('[data-testid^=\"position-card-roe-\"]')?.textContent?.replace(/\\s+/g,' ').trim()||'';var summaryMatch=summary.match(/\\(([^)]+%)\\)/);var summaryRoe=summaryMatch?summaryMatch[1]:'';var cardRoe=card.replace(/[()]/g,'');return JSON.stringify({ok:true,summaryRoe:summaryRoe,cardRoe:cardRoe,matches:summaryRoe===cardRoe,summary:summary,card:card,positionReturnOnEquity:freshPosition.returnOnEquity,accountReturnOnEquity:'1'})})()",
+        "assert": {
+          "operator": "eq",
+          "field": "matches",
+          "value": true
+        },
+        "next": "ac2-assert-summary-uses-position-source",
+        "id": "ac1-inject-desynced-roe"
+      },
+      "ac2-assert-summary-uses-position-source": {
+        "action": "eval_sync",
+        "expression": "(function(){var summary=document.querySelector('[data-testid=\"perps-balance-dropdown-pnl\"]')?.textContent?.replace(/\\s+/g,' ').trim()||'';var card=document.querySelector('[data-testid^=\"position-card-roe-\"]')?.textContent?.replace(/\\s+/g,' ').trim()||'';var summaryMatch=summary.match(/\\(([^)]+%)\\)/);var summaryRoe=summaryMatch?summaryMatch[1]:'';var cardRoe=card.replace(/[()]/g,'');var probe=window.__tat3015RoeProbe||{};return JSON.stringify({summaryRoe:summaryRoe,cardRoe:cardRoe,staleAccountRoe:probe.staleAccountRoe||'',usesPositionSource:summaryRoe===cardRoe&&summaryRoe!==probe.staleAccountRoe,summary:summary,card:card})})()",
+        "assert": {
+          "operator": "eq",
+          "field": "usesPositionSource",
+          "value": true
+        },
+        "next": "ac1-screenshot-roe-sync",
+        "id": "ac2-assert-summary-uses-position-source"
+      },
+      "ac1-screenshot-roe-sync": {
+        "action": "screenshot",
+        "filename": "evidence-ac1-roe-sync",
+        "note": "AC1: the unrealized P&L summary row RoE matches the individual ETH position card RoE with one open position.",
+        "next": "ac2-screenshot-position-source",
+        "id": "ac1-screenshot-roe-sync"
+      },
+      "ac2-screenshot-position-source": {
+        "action": "screenshot",
+        "filename": "evidence-ac2-position-source",
+        "note": "AC2: after a fresh position stream update and stale account RoE cache, the summary row still displays the same RoE as the position card.",
+        "next": "teardown-refresh-live-state",
+        "id": "ac2-screenshot-position-source"
+      },
+      "teardown-refresh-live-state": {
+        "action": "eval_async",
+        "expression": "(async()=>{var sm=stateHooks.getPerpsStreamManager();var positions=await stateHooks.submitRequestToBackground('perpsGetPositions',[]);var account=await stateHooks.submitRequestToBackground('perpsGetAccountState',[]);sm.positions.pushData(positions||[]);sm.account.pushData(account||null);delete window.__tat3015RoeProbe;return JSON.stringify({ok:true,positions:(positions||[]).length})})()",
+        "assert": {
+          "operator": "eq",
+          "field": "ok",
+          "value": true
+        },
+        "next": "teardown-done",
+        "id": "teardown-refresh-live-state"
+      },
+      "teardown-done": {
+        "action": "end",
+        "status": "pass",
+        "message": "TAT-3015 RoE sync validation passed",
+        "id": "teardown-done"
+      }
+    }
+  }
+}
