@@ -1,0 +1,6 @@
+{
+  "originalFamilyScopeSummary": "Make entire recent activity rows tappable on market detail and wallet perps views",
+  "currentTriggerSummary": "pr-complete: Make entire recent activity rows tappable on market detail and wallet perps views",
+  "scopeVerdict": "full-scope-addressed",
+  "notes": "Original family fix already merged into branch (commits b480b4fd05, 47730ab706). PR diff vs origin/main covers both surfaces: ui/components/app/perps/perps-recent-activity/perps-recent-activity.tsx (perps tab default row click → /perps/activity) and ui/components/app/perps/perps-market-recent-activity/perps-market-recent-activity.tsx (market-detail row click wiring). Unit tests for both (25/25 passing). Recipe AC1 (perps tab) PASSES post-merge, confirming the fix still works. AC2 (market detail) setup hangs on perpsGetOrderFills, a regression from main's perps controller — unrelated to this PR's scope."
+}
