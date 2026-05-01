@@ -1,0 +1,90 @@
+[
+  {
+    "comment_id": 4353971173,
+    "author": "github-actions[bot]",
+    "source": "bot",
+    "path": null,
+    "line": null,
+    "body": "**CLA Signature Action:** All authors have signed the CLA. You may need to manually re-run the blocking PR check if it doesn't pass in a few minutes.",
+    "triage": "OUT_OF_SCOPE",
+    "action": "CLA status notification only; no PR code change required.",
+    "fixed_in_commit": null
+  },
+  {
+    "comment_id": 4353979498,
+    "author": "metamaskbotv2[bot]",
+    "source": "bot",
+    "path": null,
+    "line": null,
+    "body": "<details><summary>Builds ready [34351ed] [reused from 9043841]</summary>...build artifacts and benchmark report...</details>",
+    "triage": "OUT_OF_SCOPE",
+    "action": "Prior build artifacts notification only; no PR code change required.",
+    "fixed_in_commit": null
+  },
+  {
+    "comment_id": 4354081219,
+    "author": "metamaskbotv2[bot]",
+    "source": "bot",
+    "path": null,
+    "line": null,
+    "body": "<!-- METAMASK-CODEOWNERS-BOT --> Files requiring CODEOWNER review for @MetaMask/perps.",
+    "triage": "OUT_OF_SCOPE",
+    "action": "CODEOWNER routing notification only; no PR code change required.",
+    "fixed_in_commit": null
+  },
+  {
+    "comment_id": 4354123587,
+    "author": "abretonc7s",
+    "source": "human",
+    "path": null,
+    "line": null,
+    "body": "Validation recipe passed and worker report for TAT-3015: single-position summary RoE now matches the position card RoE while zero/multi-position summary behavior remains aggregate-based.",
+    "triage": "OUT_OF_SCOPE",
+    "action": "Prior validation report and evidence bundle; no requested change.",
+    "fixed_in_commit": null
+  },
+  {
+    "comment_id": 4354183631,
+    "author": "sonarqubecloud[bot]",
+    "source": "bot",
+    "path": "ui/components/app/perps/perps-balance-dropdown/perps-balance-dropdown.tsx",
+    "line": 98,
+    "body": "Quality Gate passed with 2 new issues. Sonar issues AZ3fL9hA6P2CFuSP2YMV and AZ3fL9hA6P2CFuSP2YMW: Prefer `Number.parseFloat` over `parseFloat`.",
+    "triage": "REAL",
+    "action": "Replaced new parseFloat calls with Number.parseFloat.",
+    "fixed_in_commit": "884fd9efdd"
+  },
+  {
+    "comment_id": 4354225602,
+    "author": "metamaskbotv2[bot]",
+    "source": "bot",
+    "path": null,
+    "line": null,
+    "body": "<details><summary>Builds ready [79fc078]</summary>...build artifacts and benchmark report...</details>",
+    "triage": "OUT_OF_SCOPE",
+    "action": "Latest build artifacts notification only; no PR code change required.",
+    "fixed_in_commit": null
+  },
+  {
+    "comment_id": 4354783052,
+    "author": "gambinish",
+    "source": "human",
+    "path": null,
+    "line": null,
+    "body": "Hmm, I'm not noticing any difference between the before and after videos. Could you explain what the difference should be?",
+    "triage": "REAL",
+    "action": "Explained that the recipe forces stale account RoE to 1.00% while the fixed single-position summary/card both show fresh 42.00% position RoE.",
+    "fixed_in_commit": "884fd9efdd"
+  },
+  {
+    "comment_id": 4354812221,
+    "author": "gambinish",
+    "source": "human",
+    "path": null,
+    "line": null,
+    "body": "Also, logically, it also doesn't make sense to me why this would only break for a single position. Why can't we use the same aggregate logic that we use for multiple positions, for a single position?",
+    "triage": "REAL",
+    "action": "Clarified the single-position exception, preserved aggregate behavior for zero/multiple positions, and added a regression test for multi-position aggregate RoE.",
+    "fixed_in_commit": "884fd9efdd"
+  }
+]
