@@ -1,0 +1,48 @@
+flowchart TD
+  %% TAT-3077 — Recent activity row fully tappable on perps tab and market detail
+  __entry__(["ENTRY"]) --> node_setup_call_navigate_perps
+  node_setup_call_navigate_perps[["setup-call-navigate-perps<br/>perps/navigate-perps-tab"]]
+  node_setup_wait_recent_activity_home["setup-wait-recent-activity-home<br/>wait_for"]
+  node_ac1_find_first_row["ac1-find-first-row<br/>eval_sync"]
+  node_ac1_scroll_row["ac1-scroll-row<br/>scroll"]
+  node_ac1_screenshot_before_tap["ac1-screenshot-before-tap<br/>screenshot"]
+  node_ac1_tap_row["ac1-tap-row<br/>press"]
+  node_ac1_wait_activity_page["ac1-wait-activity-page<br/>wait_for"]
+  node_ac1_assert_route["ac1-assert-route<br/>eval_sync"]
+  node_ac1_screenshot_activity_page["ac1-screenshot-activity-page<br/>screenshot"]
+  node_ac2_back_to_perps["ac2-back-to-perps<br/>ext_navigate_hash"]
+  node_ac2_wait_perps_tab["ac2-wait-perps-tab<br/>wait_for"]
+  node_ac2_pick_symbol["ac2-pick-symbol<br/>eval_async"]
+  node_ac2_call_navigate_market_detail[["ac2-call-navigate-market-detail<br/>perps/navigate-to-market-detail"]]
+  node_ac2_warm_market_fills["ac2-warm-market-fills<br/>eval_async"]
+  node_ac2_wait_market_recent_activity["ac2-wait-market-recent-activity<br/>wait_for"]
+  node_ac2_find_first_row["ac2-find-first-row<br/>eval_sync"]
+  node_ac2_scroll_row["ac2-scroll-row<br/>scroll"]
+  node_ac2_screenshot_before_tap["ac2-screenshot-before-tap<br/>screenshot"]
+  node_ac2_tap_row["ac2-tap-row<br/>press"]
+  node_ac2_wait_activity_page["ac2-wait-activity-page<br/>wait_for"]
+  node_ac2_assert_route["ac2-assert-route<br/>eval_sync"]
+  node_ac2_screenshot_activity_page["ac2-screenshot-activity-page<br/>screenshot"]
+  node_done(["done<br/>PASS"])
+  node_setup_call_navigate_perps --> node_setup_wait_recent_activity_home
+  node_setup_wait_recent_activity_home --> node_ac1_find_first_row
+  node_ac1_find_first_row --> node_ac1_scroll_row
+  node_ac1_scroll_row --> node_ac1_screenshot_before_tap
+  node_ac1_screenshot_before_tap --> node_ac1_tap_row
+  node_ac1_tap_row --> node_ac1_wait_activity_page
+  node_ac1_wait_activity_page --> node_ac1_assert_route
+  node_ac1_assert_route --> node_ac1_screenshot_activity_page
+  node_ac1_screenshot_activity_page --> node_ac2_back_to_perps
+  node_ac2_back_to_perps --> node_ac2_wait_perps_tab
+  node_ac2_wait_perps_tab --> node_ac2_pick_symbol
+  node_ac2_pick_symbol --> node_ac2_call_navigate_market_detail
+  node_ac2_call_navigate_market_detail --> node_ac2_warm_market_fills
+  node_ac2_warm_market_fills --> node_ac2_wait_market_recent_activity
+  node_ac2_wait_market_recent_activity --> node_ac2_find_first_row
+  node_ac2_find_first_row --> node_ac2_scroll_row
+  node_ac2_scroll_row --> node_ac2_screenshot_before_tap
+  node_ac2_screenshot_before_tap --> node_ac2_tap_row
+  node_ac2_tap_row --> node_ac2_wait_activity_page
+  node_ac2_wait_activity_page --> node_ac2_assert_route
+  node_ac2_assert_route --> node_ac2_screenshot_activity_page
+  node_ac2_screenshot_activity_page --> node_done

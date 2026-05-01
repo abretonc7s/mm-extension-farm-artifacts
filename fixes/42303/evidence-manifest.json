@@ -1,0 +1,37 @@
+{
+  "version": 1,
+  "preferred_mode": "screenshots",
+  "summary": "Tapping any Recent Activity row on perps tab and market detail now navigates to /perps/activity (previously only the See All chevron was tappable).",
+  "before_after_pairs": [
+    {
+      "label": "Perps tab — Recent Activity row tap navigates to /perps/activity",
+      "covers": ["ac1"],
+      "before": "screenshots/before-ac1-row-before-tap-1777564909575.png",
+      "after": "screenshots/after-ac1-activity-page-1777565798901.png",
+      "note": "Before: row visible on perps tab but tap is a no-op (bug). After: tap routes to the Activity page."
+    }
+  ],
+  "standalone": [
+    {
+      "label": "Market detail — Recent Activity row tap navigates to /perps/activity",
+      "covers": ["ac2"],
+      "file": "screenshots/after-ac2-row-before-tap-1777565799426.png",
+      "note": "BTC market detail with the recent-activity row that triggers navigation when tapped."
+    },
+    {
+      "label": "Market detail — destination after row tap",
+      "covers": ["ac2"],
+      "file": "screenshots/after-ac2-activity-page-1777565799636.png",
+      "note": "Activity page reached from the market detail row tap."
+    }
+  ],
+  "omit": [
+    "screenshots/after-ac1-row-before-tap-1777565798742.png"
+  ],
+  "videos": {
+    "before": "before.mp4",
+    "after": "after.mp4",
+    "preferred": false,
+    "note": "Available for full end-to-end playback if reviewer wants the recipe trace."
+  }
+}

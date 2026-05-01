@@ -1,0 +1,291 @@
+[
+  {
+    "id": "setup-call-navigate-perps",
+    "action": "call",
+    "ok": true,
+    "raw": {
+      "passed": 4,
+      "failed": 0,
+      "trace": [
+        {
+          "id": "nav-perps",
+          "action": "navigate",
+          "ok": true,
+          "raw": {
+            "navigated": true,
+            "hash": "#/?tab=perps"
+          },
+          "durationMs": 6
+        },
+        {
+          "id": "check-tutorial",
+          "action": "eval_sync",
+          "ok": true,
+          "raw": "{\"visible\":false}",
+          "durationMs": 3
+        },
+        {
+          "id": "tutorial-switch",
+          "action": "switch",
+          "next": "wait-perps",
+          "durationMs": 0
+        },
+        {
+          "id": "wait-perps",
+          "action": "wait_for",
+          "ok": true,
+          "raw": {
+            "found": true,
+            "target": "testId:perps-balance-dropdown"
+          },
+          "durationMs": 171
+        },
+        {
+          "id": "screenshot-perps",
+          "action": "screenshot",
+          "ok": true,
+          "raw": {
+            "path": "screenshots/perps-tab-1777597852861.png",
+            "width": 500,
+            "height": 657
+          },
+          "durationMs": 195
+        },
+        {
+          "id": "done",
+          "action": "end",
+          "status": "pass",
+          "durationMs": 0
+        }
+      ],
+      "vars": {
+        "tutorial_state": {
+          "visible": false
+        }
+      }
+    },
+    "durationMs": 483
+  },
+  {
+    "id": "setup-wait-recent-activity-home",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-recent-activity"
+    },
+    "durationMs": 168
+  },
+  {
+    "id": "ac1-find-first-row",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"count\":5,\"id\":\"transaction-card-405103502003-1777564315078-0\",\"tag\":\"button\",\"symbol\":\"BTC\"}",
+    "durationMs": 1
+  },
+  {
+    "id": "ac1-scroll-row",
+    "action": "scroll",
+    "ok": true,
+    "raw": null,
+    "durationMs": 50
+  },
+  {
+    "id": "ac1-screenshot-before-tap",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "screenshots/evidence-ac1-row-before-tap-1777597853281.png",
+      "width": 500,
+      "height": 657
+    },
+    "durationMs": 83
+  },
+  {
+    "id": "ac1-tap-row",
+    "action": "press",
+    "ok": true,
+    "raw": {
+      "clicked": true,
+      "target": "testId:transaction-card-405103502003-1777564315078-0"
+    },
+    "durationMs": 84
+  },
+  {
+    "id": "ac1-wait-activity-page",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-activity-page"
+    },
+    "durationMs": 22
+  },
+  {
+    "id": "ac1-assert-route",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"hash\":\"#/perps/activity\",\"onActivityPage\":true}",
+    "durationMs": 0
+  },
+  {
+    "id": "ac1-screenshot-activity-page",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "screenshots/evidence-ac1-activity-page-1777597853476.png",
+      "width": 500,
+      "height": 657
+    },
+    "durationMs": 99
+  },
+  {
+    "id": "ac2-back-to-perps",
+    "action": "ext_navigate_hash",
+    "ok": true,
+    "raw": {
+      "navigated": true,
+      "hash": "/?tab=perps"
+    },
+    "durationMs": 3
+  },
+  {
+    "id": "ac2-wait-perps-tab",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-balance-dropdown"
+    },
+    "durationMs": 184
+  },
+  {
+    "id": "ac2-pick-symbol",
+    "action": "eval_async",
+    "ok": true,
+    "raw": "{\"fillCount\":998,\"symbol\":\"BTC\",\"counts\":{\"ETH\":172,\"BTC\":375,\"xyz:CL\":4,\"PUMP\":78,\"xyz:SILVER\":45,\"xyz:BRENTOIL\":2,\"xyz:XYZ100\":132,\"xyz:GOLD\":2,\"SOL\":38,\"HYPE\":27,\"MON\":2,\"xyz:NVDA\":10,\"vntl:SPACEX\":8,\"xyz:TSLA\":2,\"ASTER\":56,\"kPEPE\":29,\"ZEC\":2,\"FARTCOIN\":2,\"OM\":2,\"PENGU\":2,\"LINEA\":8}}",
+    "durationMs": 3
+  },
+  {
+    "id": "ac2-call-navigate-market-detail",
+    "action": "call",
+    "ok": true,
+    "raw": {
+      "passed": 2,
+      "failed": 0,
+      "trace": [
+        {
+          "id": "nav-detail",
+          "action": "navigate",
+          "ok": true,
+          "raw": {
+            "navigated": true,
+            "hash": "#/perps/market/BTC"
+          },
+          "durationMs": 3
+        },
+        {
+          "id": "wait-detail",
+          "action": "wait_for",
+          "ok": true,
+          "raw": {
+            "found": true,
+            "target": "testId:perps-market-detail-page"
+          },
+          "durationMs": 134
+        },
+        {
+          "id": "done",
+          "action": "end",
+          "status": "pass",
+          "durationMs": 0
+        }
+      ],
+      "vars": {}
+    },
+    "durationMs": 174
+  },
+  {
+    "id": "ac2-warm-market-fills",
+    "action": "eval_async",
+    "ok": true,
+    "raw": "{\"symbol\":\"BTC\",\"matchingForSymbol\":375}",
+    "durationMs": 3
+  },
+  {
+    "id": "ac2-wait-market-recent-activity",
+    "action": "wait_for",
+    "ok": true,
+    "raw": "{\"ok\":true}",
+    "durationMs": 1
+  },
+  {
+    "id": "ac2-find-first-row",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"count\":3,\"id\":\"transaction-card-400383471312-1777293790560-0\",\"tag\":\"button\",\"hash\":\"#/perps/market/BTC\"}",
+    "durationMs": 1
+  },
+  {
+    "id": "ac2-scroll-row",
+    "action": "scroll",
+    "ok": true,
+    "raw": null,
+    "durationMs": 28
+  },
+  {
+    "id": "ac2-screenshot-before-tap",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "screenshots/evidence-ac2-row-before-tap-1777597854048.png",
+      "width": 500,
+      "height": 657
+    },
+    "durationMs": 97
+  },
+  {
+    "id": "ac2-tap-row",
+    "action": "press",
+    "ok": true,
+    "raw": {
+      "clicked": true,
+      "target": "testId:transaction-card-400383471312-1777293790560-0"
+    },
+    "durationMs": 63
+  },
+  {
+    "id": "ac2-wait-activity-page",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "target": "testId:perps-activity-page"
+    },
+    "durationMs": 16
+  },
+  {
+    "id": "ac2-assert-route",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"hash\":\"#/perps/activity\",\"onActivityPage\":true}",
+    "durationMs": 1
+  },
+  {
+    "id": "ac2-screenshot-activity-page",
+    "action": "screenshot",
+    "ok": true,
+    "raw": {
+      "path": "screenshots/evidence-ac2-activity-page-1777597854232.png",
+      "width": 500,
+      "height": 657
+    },
+    "durationMs": 100
+  },
+  {
+    "id": "done",
+    "action": "end",
+    "status": "pass",
+    "durationMs": 0
+  }
+]
