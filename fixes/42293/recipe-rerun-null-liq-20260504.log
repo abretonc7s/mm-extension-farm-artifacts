@@ -1,0 +1,24 @@
+
+Recipe: TAT-3012: Liquidation distance evidence for liq price <= 0
+
+Connecting to existing browser via CDP on port 6666...
+[cdp] Found extension ID from existing service worker: hebhblbkkdabgoldnojllkipeoacjioc
+
+Pre-conditions:
+  [[32mOK[0m] wallet.unlocked (97ms)
+  [[32mOK[0m] perps.feature_enabled (2ms)
+
+Nodes:
+  [[32mPASS[0m] seed-negative-liquidation-position (53ms)
+  [[32mPASS[0m] wait-market-detail (302ms)
+  [[32mPASS[0m] assert-market-liq-fallback (0ms)
+  [[32mPASS[0m] scroll-market-liq-row (1ms)
+  [[32mPASS[0m] screenshot-market-liq-fallback (104ms)
+  [[32mPASS[0m] open-margin-menu (128ms)
+  [[32mPASS[0m] wait-margin-menu (146ms)
+  [[32mPASS[0m] open-add-margin (177ms)
+  [[32mPASS[0m] wait-add-margin-modal (64ms)
+  [[32mPASS[0m] assert-add-margin-distance (1ms)
+  [[32mPASS[0m] screenshot-add-margin-distance (95ms)
+
+[32m11/11 passed[0m in 1102ms

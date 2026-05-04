@@ -1,0 +1,26 @@
+
+Recipe: TAT-3012: Liquidation distance evidence for liq price <= 0
+
+Connecting to existing browser via CDP on port 6666...
+[cdp] Found extension ID from existing service worker: hebhblbkkdabgoldnojllkipeoacjioc
+
+Pre-conditions:
+  [[32mOK[0m] wallet.unlocked (64ms)
+  [[32mOK[0m] perps.feature_enabled (1ms)
+
+Nodes:
+  [[32mPASS[0m] seed-negative-liquidation-position (45ms)
+  [[32mPASS[0m] wait-market-detail (270ms)
+  [[32mPASS[0m] assert-market-liq-fallback (0ms)
+  [[32mPASS[0m] scroll-market-liq-row (1ms)
+  [[32mPASS[0m] screenshot-market-liq-fallback (162ms)
+  [[32mPASS[0m] open-margin-menu (161ms)
+  [[32mPASS[0m] wait-margin-menu (89ms)
+  [[32mPASS[0m] open-add-margin (108ms)
+  [[32mPASS[0m] wait-add-margin-modal (57ms)
+  [[32mPASS[0m] assert-add-margin-distance (1ms)
+  [[32mPASS[0m] screenshot-add-margin-distance (261ms)
+
+[auto-issues] review — 1 unexpected event(s). See /Users/deeeed/dev/metamask/metamask-extension-1/temp/tasks/fix/42293-0504-182408/artifacts/recipe-issues-review.md
+
+[32m11/11 passed[0m in 1183ms
