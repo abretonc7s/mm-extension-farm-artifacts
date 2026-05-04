@@ -1,0 +1,85 @@
+{
+  "version": 1,
+  "verdict": "warn",
+  "compact": {
+    "verdict": "WARN",
+    "reasons": [
+      "AC1–AC3 are PROVEN with mixed proof: Redux `perpsSelectedCandlePeriod` held at 15m across leave/return, ETH switch, and post–UI reload; four fullscreen PNGs show 15min selected on BTC/ETH.",
+      "Canonical validate-recipe.js did not run (setSessionManager missing); trace is Playwright-equivalent in artifacts/evidence/trace.json, not a native runner artifact.",
+      "recipe.json still asserts/captions 4h while the exercised period was 15m — drift only in the draft recipe, not in live behavior."
+    ],
+    "better_version_guidance": [
+      "Repair validate-recipe.js / @metamask/client-mcp-core session wiring so this recipe executes and emits a native trace.json.",
+      "Parameterize candle period (TARGET=15m or 4h) and align eval_sync assert values, screenshot notes, and filenames in recipe.json."
+    ]
+  },
+  "dimensions": {
+    "graph_integrity": {
+      "status": "pass",
+      "reason": "recipe.json workflow is connected; entry/setup/ac/teardown nodes are reachable.",
+      "evidence": ["recipe.json"]
+    },
+    "ac_coverage": {
+      "status": "warn",
+      "reason": "All AC rows are PROVEN, but proof used Playwright fallback + synthetic trace because validate-recipe failed to start.",
+      "evidence": ["recipe-coverage.md", "evidence/trace.json"]
+    },
+    "evidence_contract_basics": {
+      "status": "pass",
+      "reason": "Visual ACs have on-screen interval selection proof; persistence also asserted via store-shaped eval (documented in run log / trace notes).",
+      "evidence": [
+        "evidence/evidence-ac1-15m-after-select.png",
+        "evidence/evidence-ac1-15m-after-navigate-back.png",
+        "evidence/evidence-ac2-eth-still-15m.png",
+        "evidence/evidence-ac3-15m-after-goto-home.png"
+      ]
+    }
+  },
+  "structural_findings": [],
+  "contextual_findings": [
+    {
+      "code": "runner-mismatch",
+      "message": "validate-recipe.js incompatible with current client-mcp session API in this workspace snapshot.",
+      "dimension": "ac_coverage",
+      "evidence": ["TASK step 16 notes", "trace.json canonical_runner_note"]
+    },
+    {
+      "code": "recipe-assert-drift",
+      "message": "recipe.json encodes 4h while validation exercised 15m; coverage matrix and PNG names reflect the executed period.",
+      "dimension": "graph_integrity",
+      "evidence": ["recipe.json", "recipe-coverage.md"]
+    }
+  ],
+  "suggested_recipe_delta": [
+    "Replace ac1-press-4h + 4h asserts with the period actually used in QA, or add params.TARGET_PERIOD.",
+    "After runner fix, delete synthetic trace.json and capture native trace from validate-recipe.js."
+  ],
+  "training_fields": {
+    "farm": "metamask-extension",
+    "project": "metamask-extension-farm",
+    "flow_type": "review-pr",
+    "task_type": "review-pr",
+    "claim_is_visual": true,
+    "proof_mode": "mixed",
+    "anti_patterns": [],
+    "good_patterns": [
+      "Redux preference read after UI interaction to avoid racing the screenshot",
+      "Unlock helper after extension UI reload for MV3 cold start"
+    ]
+  },
+  "meta": {
+    "producer": "worker",
+    "fallback_used": false,
+    "legacy_task": false,
+    "artifact_required": true,
+    "source_signals": [
+      "recipe.json",
+      "recipe-coverage.md",
+      "evidence/trace.json",
+      "evidence/evidence-ac1-15m-after-select.png",
+      "evidence/evidence-ac1-15m-after-navigate-back.png",
+      "evidence/evidence-ac2-eth-still-15m.png",
+      "evidence/evidence-ac3-15m-after-goto-home.png"
+    ]
+  }
+}

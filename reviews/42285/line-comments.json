@@ -1,0 +1,13 @@
+{
+  "pr_number": "42285",
+  "recommendation": "COMMENT",
+  "summary": "Preference-backed candle period with local override matches goals; tests and live checks pass. Minor typing nit on useSelector cast; restore canonical recipe runner when possible.",
+  "comments": [
+    {
+      "path": "ui/pages/perps/perps-market-detail-page.tsx",
+      "line": 494,
+      "body": "Consider extending the `getPreferences` return type (or a dedicated selector) to include `perpsSelectedCandlePeriod` so this `as { perpsSelectedCandlePeriod?: string }` assertion on the `useSelector` result can be removed while keeping strict typing end-to-end.",
+      "severity": "suggestion"
+    }
+  ]
+}

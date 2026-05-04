@@ -1,0 +1,211 @@
+{
+  "title": "PR 42285 — perps candle period persistence (navigation, markets, reload)",
+  "schema_version": 1,
+  "description": "Selects 4h on BTC market detail, verifies PreferencesController, leaves and returns, switches to ETH, reloads extension UI, reopens ETH and asserts 4h still selected.",
+  "validate": {
+    "workflow": {
+      "pre_conditions": ["wallet.unlocked", "perps.feature_enabled"],
+      "entry": "setup-nav-perps",
+      "nodes": {
+        "setup-nav-perps": {
+          "id": "setup-nav-perps",
+          "action": "call",
+          "ref": "perps/navigate-perps-tab",
+          "next": "setup-open-btc-detail"
+        },
+        "setup-open-btc-detail": {
+          "id": "setup-open-btc-detail",
+          "action": "call",
+          "ref": "perps/navigate-to-market-detail",
+          "params": { "symbol": "BTC" },
+          "next": "ac1-wait-selector"
+        },
+        "ac1-wait-selector": {
+          "id": "ac1-wait-selector",
+          "action": "wait_for",
+          "test_id": "perps-candle-period-selector",
+          "timeout_ms": 20000,
+          "next": "ac1-open-more-modal"
+        },
+        "ac1-open-more-modal": {
+          "id": "ac1-open-more-modal",
+          "action": "press",
+          "test_id": "perps-candle-period-more",
+          "next": "ac1-wait-modal"
+        },
+        "ac1-wait-modal": {
+          "id": "ac1-wait-modal",
+          "action": "wait_for",
+          "test_id": "perps-candle-period-modal",
+          "timeout_ms": 8000,
+          "next": "ac1-press-4h"
+        },
+        "ac1-press-4h": {
+          "id": "ac1-press-4h",
+          "action": "press",
+          "test_id": "perps-candle-period-modal-4h",
+          "next": "ac1-wait-modal-closed"
+        },
+        "ac1-wait-modal-closed": {
+          "id": "ac1-wait-modal-closed",
+          "action": "wait_for",
+          "expression": "!document.querySelector('[data-testid=\"perps-candle-period-modal\"]')",
+          "timeout_ms": 5000,
+          "next": "ac1-assert-pref-set"
+        },
+        "ac1-assert-pref-set": {
+          "id": "ac1-assert-pref-set",
+          "action": "eval_sync",
+          "expression": "(function(){var m=(stateHooks.store.getState()||{}).metamask||{};return JSON.stringify({period:(m.preferences||{}).perpsSelectedCandlePeriod})})()",
+          "assert": {
+            "all": [{ "operator": "eq", "field": "period", "value": "4h" }]
+          },
+          "next": "ac1-screenshot-selected"
+        },
+        "ac1-screenshot-selected": {
+          "id": "ac1-screenshot-selected",
+          "action": "screenshot",
+          "filename": "evidence-ac1-4h-after-select.png",
+          "note": "AC1: 4h selected on BTC market detail",
+          "next": "ac1-nav-back"
+        },
+        "ac1-nav-back": {
+          "id": "ac1-nav-back",
+          "action": "press",
+          "test_id": "perps-market-detail-back-button",
+          "next": "ac1-wait-perps-home"
+        },
+        "ac1-wait-perps-home": {
+          "id": "ac1-wait-perps-home",
+          "action": "wait_for",
+          "test_id": "perps-balance-dropdown",
+          "timeout_ms": 15000,
+          "next": "ac1-reopen-btc"
+        },
+        "ac1-reopen-btc": {
+          "id": "ac1-reopen-btc",
+          "action": "call",
+          "ref": "perps/navigate-to-market-detail",
+          "params": { "symbol": "BTC" },
+          "next": "ac1-wait-selector-return"
+        },
+        "ac1-wait-selector-return": {
+          "id": "ac1-wait-selector-return",
+          "action": "wait_for",
+          "test_id": "perps-candle-period-selector",
+          "timeout_ms": 20000,
+          "next": "ac1-assert-pref-still"
+        },
+        "ac1-assert-pref-still": {
+          "id": "ac1-assert-pref-still",
+          "action": "eval_sync",
+          "expression": "(function(){var m=(stateHooks.store.getState()||{}).metamask||{};return JSON.stringify({period:(m.preferences||{}).perpsSelectedCandlePeriod})})()",
+          "assert": {
+            "all": [{ "operator": "eq", "field": "period", "value": "4h" }]
+          },
+          "next": "ac1-screenshot-after-return"
+        },
+        "ac1-screenshot-after-return": {
+          "id": "ac1-screenshot-after-return",
+          "action": "screenshot",
+          "filename": "evidence-ac1-4h-after-navigate-back.png",
+          "note": "AC1: 4h persists after back and reopen BTC",
+          "next": "ac2-open-eth-detail"
+        },
+        "ac2-open-eth-detail": {
+          "id": "ac2-open-eth-detail",
+          "action": "call",
+          "ref": "perps/navigate-to-market-detail",
+          "params": { "symbol": "ETH" },
+          "next": "ac2-wait-eth-detail"
+        },
+        "ac2-wait-eth-detail": {
+          "id": "ac2-wait-eth-detail",
+          "action": "wait_for",
+          "test_id": "perps-market-detail-page",
+          "timeout_ms": 20000,
+          "next": "ac2-assert-shared-period"
+        },
+        "ac2-assert-shared-period": {
+          "id": "ac2-assert-shared-period",
+          "action": "eval_sync",
+          "expression": "(function(){var m=(stateHooks.store.getState()||{}).metamask||{};return JSON.stringify({period:(m.preferences||{}).perpsSelectedCandlePeriod})})()",
+          "assert": {
+            "all": [{ "operator": "eq", "field": "period", "value": "4h" }]
+          },
+          "next": "ac2-screenshot-eth"
+        },
+        "ac2-screenshot-eth": {
+          "id": "ac2-screenshot-eth",
+          "action": "screenshot",
+          "filename": "evidence-ac2-eth-inherits-4h.png",
+          "note": "AC2: ETH market detail still on 4h after switch",
+          "next": "ac3-reload-ui"
+        },
+        "ac3-reload-ui": {
+          "id": "ac3-reload-ui",
+          "action": "page",
+          "page_action": "reload",
+          "target": "extension",
+          "assert": {
+            "all": [
+              { "operator": "eq", "field": "control", "value": "page" },
+              { "operator": "eq", "field": "pageAction", "value": "reload" },
+              { "operator": "length_gt", "field": "applied", "value": 0 }
+            ]
+          },
+          "next": "ac3-wait-main-ready"
+        },
+        "ac3-wait-main-ready": {
+          "id": "ac3-wait-main-ready",
+          "action": "wait_for",
+          "test_id": "account-menu-icon",
+          "timeout_ms": 45000,
+          "next": "ac3-nav-perps-again"
+        },
+        "ac3-nav-perps-again": {
+          "id": "ac3-nav-perps-again",
+          "action": "call",
+          "ref": "perps/navigate-perps-tab",
+          "next": "ac3-open-eth-after-reload"
+        },
+        "ac3-open-eth-after-reload": {
+          "id": "ac3-open-eth-after-reload",
+          "action": "call",
+          "ref": "perps/navigate-to-market-detail",
+          "params": { "symbol": "ETH" },
+          "next": "ac3-wait-detail-after-reload"
+        },
+        "ac3-wait-detail-after-reload": {
+          "id": "ac3-wait-detail-after-reload",
+          "action": "wait_for",
+          "test_id": "perps-candle-period-selector",
+          "timeout_ms": 25000,
+          "next": "ac3-assert-pref-after-reload"
+        },
+        "ac3-assert-pref-after-reload": {
+          "id": "ac3-assert-pref-after-reload",
+          "action": "eval_sync",
+          "expression": "(function(){var m=(stateHooks.store.getState()||{}).metamask||{};return JSON.stringify({period:(m.preferences||{}).perpsSelectedCandlePeriod})})()",
+          "assert": {
+            "all": [{ "operator": "eq", "field": "period", "value": "4h" }]
+          },
+          "next": "ac3-screenshot-post-reload"
+        },
+        "ac3-screenshot-post-reload": {
+          "id": "ac3-screenshot-post-reload",
+          "action": "screenshot",
+          "filename": "evidence-ac3-4h-after-extension-reload.png",
+          "note": "AC3: 4h restored after full extension page reload",
+          "next": "teardown-done"
+        },
+        "teardown-done": {
+          "id": "teardown-done",
+          "action": "end",
+          "status": "pass",
+          "message": "All AC nodes completed for candle period persistence"
+        }
+      }
+    }
+  }
+}
