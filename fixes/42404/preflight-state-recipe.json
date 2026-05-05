@@ -1,0 +1,37 @@
+{
+  "title": "TAT-3104 preflight state",
+  "schema_version": 1,
+  "validate": {
+    "workflow": {
+      "pre_conditions": ["wallet.unlocked"],
+      "entry": "setup-nav-market",
+      "nodes": {
+        "setup-nav-market": {
+          "action": "call",
+          "ref": "perps/navigate-to-market-detail",
+          "params": { "symbol": "BTC" },
+          "next": "gate-read-markets"
+        },
+        "gate-read-markets": {
+          "action": "eval_ref",
+          "ref": "perps-markets",
+          "save_as": "markets",
+          "next": "ac1-assert-btc-market-data"
+        },
+        "ac1-assert-btc-market-data": {
+          "action": "eval_sync",
+          "expression": "(function(){var sm=stateHooks.getPerpsStreamManager&&stateHooks.getPerpsStreamManager();var rows=sm?.markets?.getCachedData?.()||[];var btc=rows.find(function(m){return m.symbol==='BTC';}); return JSON.stringify({hasBtc:!!btc,maxLeverage:btc && btc.maxLeverage || null});})()",
+          "assert": {
+            "all": [
+              { "operator": "eq", "field": "hasBtc", "value": true },
+              { "operator": "eq", "field": "maxLeverage", "value": "40x" }
+            ]
+          },
+          "save_as": "btc_market",
+          "next": "done"
+        },
+        "done": { "action": "end", "status": "pass" }
+      }
+    }
+  }
+}

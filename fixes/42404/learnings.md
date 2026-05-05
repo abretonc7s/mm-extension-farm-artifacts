@@ -1,0 +1,4 @@
+- The investigation took longer than the fix because the task required recipe setup, before/after capture, and mobile alignment checks before editing.
+- The live extension had to be refreshed with `temp/runtime/refresh-build.sh` and browser reopen; a page reload alone kept the old bundle.
+- The recipe runner stores screenshots under `artifacts/screenshots/` with timestamped names, so root-level evidence files were copied explicitly for the manifest.
+- Mobile's `PerpsMarketDetailsView` and `PerpsLeverage` components were the key references for the expected header pill behavior.

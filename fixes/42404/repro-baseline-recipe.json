@@ -1,0 +1,37 @@
+{
+  "title": "TAT-3104 baseline market detail",
+  "schema_version": 1,
+  "validate": {
+    "workflow": {
+      "pre_conditions": ["wallet.unlocked"],
+      "entry": "setup-nav-market",
+      "nodes": {
+        "setup-nav-market": {
+          "action": "call",
+          "ref": "perps/navigate-to-market-detail",
+          "params": { "symbol": "BTC" },
+          "next": "ac1-assert-baseline"
+        },
+        "ac1-assert-baseline": {
+          "action": "eval_sync",
+          "expression": "(function(){var page=!!document.querySelector('[data-testid=\"perps-market-detail-page\"]');var pill=document.querySelector('[data-testid=\"perps-market-max-leverage\"]');var header=document.querySelector('[data-testid=\"perps-market-detail-page\"]')?.innerText||'';return JSON.stringify({page:page,pillText:pill?.textContent?.trim()||null,hash:location.hash,header:header.slice(0,500)});})()",
+          "assert": {
+            "all": [
+              { "operator": "eq", "field": "page", "value": true },
+              { "operator": "eq", "field": "pillText", "value": null }
+            ]
+          },
+          "save_as": "baseline",
+          "next": "ac1-screenshot-baseline"
+        },
+        "ac1-screenshot-baseline": {
+          "action": "screenshot",
+          "filename": "baseline-market-detail.png",
+          "note": "AC1: baseline market detail header before fix; max leverage pill is missing",
+          "next": "done"
+        },
+        "done": { "action": "end", "status": "pass" }
+      }
+    }
+  }
+}

@@ -1,0 +1,58 @@
+{
+  "version": 1,
+  "verdict": "pass",
+  "compact": {
+    "verdict": "PASS",
+    "reasons": [
+      "AC1 is covered by `ac1-assert-header-max-leverage` and `ac1-screenshot-max-leverage-pill`; trace shows both passed.",
+      "The recipe would fail if the header pill were removed because it asserts exact `pillText: 40x` from the DOM."
+    ],
+    "better_version_guidance": []
+  },
+  "dimensions": {
+    "graph_integrity": {
+      "status": "pass",
+      "reason": "Workflow graph is linear, reachable, and dry-run validated.",
+      "evidence": ["recipe.json", "workflow.mmd"]
+    },
+    "action_contract": {
+      "status": "pass",
+      "reason": "Navigation uses the existing `perps/navigate-to-market-detail` flow, and AC nodes use valid prefixes.",
+      "evidence": ["recipe.json"]
+    },
+    "ac_coverage": {
+      "status": "pass",
+      "reason": "The single derived AC maps to a market-data gate, DOM assertion, and visual screenshot.",
+      "evidence": ["recipe-coverage.md", "trace.json"]
+    },
+    "evidence_contract_basics": {
+      "status": "pass",
+      "reason": "Mixed proof uses state/DOM assertion plus a screenshot where the pill is visible.",
+      "evidence": ["after-evidence-ac1-max-leverage-pill.png", "trace.json"]
+    }
+  },
+  "structural_findings": [],
+  "contextual_findings": [],
+  "suggested_recipe_delta": [],
+  "training_fields": {
+    "farm": "metamask-extension",
+    "project": "metamask-extension-farm",
+    "flow_type": "fix-bug",
+    "task_type": "fix-bug",
+    "claim_is_visual": true,
+    "proof_mode": "mixed",
+    "anti_patterns": [],
+    "good_patterns": [
+      "existing perps navigation flow reused",
+      "AC-bound exact DOM assertion",
+      "visible screenshot evidence"
+    ]
+  },
+  "meta": {
+    "producer": "worker",
+    "fallback_used": false,
+    "legacy_task": false,
+    "artifact_required": true,
+    "source_signals": ["recipe.json", "recipe-coverage.md", "trace.json"]
+  }
+}

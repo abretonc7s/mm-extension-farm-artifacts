@@ -1,0 +1,12 @@
+flowchart TD
+  %% TAT-3104 market detail max leverage pill
+  __entry__(["ENTRY"]) --> node_setup_nav_market
+  node_setup_nav_market[["setup-nav-market<br/>perps/navigate-to-market-detail"]]
+  node_gate_read_btc_market_data["gate-read-btc-market-data<br/>eval_sync"]
+  node_ac1_assert_header_max_leverage["ac1-assert-header-max-leverage<br/>eval_sync"]
+  node_ac1_screenshot_max_leverage_pill["ac1-screenshot-max-leverage-pill<br/>screenshot"]
+  node_done(["done<br/>PASS"])
+  node_setup_nav_market --> node_gate_read_btc_market_data
+  node_gate_read_btc_market_data --> node_ac1_assert_header_max_leverage
+  node_ac1_assert_header_max_leverage --> node_ac1_screenshot_max_leverage_pill
+  node_ac1_screenshot_max_leverage_pill --> node_done

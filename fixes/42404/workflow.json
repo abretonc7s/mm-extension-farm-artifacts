@@ -1,0 +1,91 @@
+{
+  "description": "Validates that the perps BTC market detail header renders the market max leverage pill from live market metadata.",
+  "hooks": {
+    "pre_conditions": [
+      "wallet.unlocked"
+    ],
+    "setup": [],
+    "teardown": []
+  },
+  "inputs": {},
+  "playback": {
+    "mode": "off",
+    "slow_ms": 1000
+  },
+  "sourcePath": "",
+  "title": "TAT-3104 market detail max leverage pill",
+  "workflow": {
+    "entry": "setup-nav-market",
+    "nodes": {
+      "setup-nav-market": {
+        "action": "call",
+        "ref": "perps/navigate-to-market-detail",
+        "params": {
+          "symbol": "BTC"
+        },
+        "next": "gate-read-btc-market-data",
+        "id": "setup-nav-market"
+      },
+      "gate-read-btc-market-data": {
+        "action": "eval_sync",
+        "expression": "(function(){var sm=stateHooks.getPerpsStreamManager&&stateHooks.getPerpsStreamManager();var rows=sm?.markets?.getCachedData?.()||[];var btc=rows.find(function(m){return m.symbol==='BTC';});return JSON.stringify({hasBtc:!!btc,maxLeverage:btc&&btc.maxLeverage||null});})()",
+        "assert": {
+          "all": [
+            {
+              "operator": "eq",
+              "field": "hasBtc",
+              "value": true
+            },
+            {
+              "operator": "eq",
+              "field": "maxLeverage",
+              "value": "40x"
+            }
+          ]
+        },
+        "save_as": "btc_market",
+        "next": "ac1-assert-header-max-leverage",
+        "id": "gate-read-btc-market-data"
+      },
+      "ac1-assert-header-max-leverage": {
+        "action": "eval_sync",
+        "expression": "(function(){var page=!!document.querySelector('[data-testid=\"perps-market-detail-page\"]');var pill=document.querySelector('[data-testid=\"perps-market-max-leverage\"]');var pillText=pill?.textContent?.trim()||null;var header=document.querySelector('[data-testid=\"perps-market-detail-page\"]')?.innerText||'';return JSON.stringify({page:page,pillText:pillText,headerIncludesPill:header.includes('40x'),hash:location.hash});})()",
+        "assert": {
+          "all": [
+            {
+              "operator": "eq",
+              "field": "page",
+              "value": true
+            },
+            {
+              "operator": "eq",
+              "field": "pillText",
+              "value": "40x"
+            },
+            {
+              "operator": "eq",
+              "field": "headerIncludesPill",
+              "value": true
+            }
+          ]
+        },
+        "save_as": "header_pill",
+        "next": "ac1-screenshot-max-leverage-pill",
+        "id": "ac1-assert-header-max-leverage"
+      },
+      "ac1-screenshot-max-leverage-pill": {
+        "action": "screenshot",
+        "filename": "evidence-ac1-max-leverage-pill.png",
+        "fullPage": false,
+        "note": "AC1: BTC market detail header visibly shows the 40x max leverage pill",
+        "next": "done",
+        "id": "ac1-screenshot-max-leverage-pill"
+      },
+      "done": {
+        "action": "end",
+        "status": "pass",
+        "id": "done"
+      }
+    }
+  }
+}
