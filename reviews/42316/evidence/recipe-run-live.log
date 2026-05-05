@@ -1,0 +1,24 @@
+
+Recipe: PR 42316 Perps unified account funding review
+
+Connecting to existing browser via CDP on port 6661...
+[cdp] Found extension ID from existing service worker: hebhblbkkdabgoldnojllkipeoacjioc
+
+Pre-conditions:
+  [[32mOK[0m] wallet.unlocked (19ms)
+  [[32mOK[0m] perps.feature_enabled (2ms)
+
+Nodes:
+  [[32mPASS[0m] nav-perps (28ms)
+  [[32mPASS[0m] check-tutorial (2ms)
+  [[32mPASS[0m] wait-perps (794ms)
+  [[32mPASS[0m] screenshot-perps (141ms)
+  [[32mPASS[0m] setup-open-perps (1011ms)
+  [[32mPASS[0m] ac1-assert-markets-present (270ms)
+  [[32mPASS[0m] ac4-assert-postquote-flag-disabled (0ms)
+  [[32mPASS[0m] ac4-open-balance-menu (26ms)
+  [[32mPASS[0m] ac4-click-withdraw (76ms)
+  [[31mFAIL[0m] ac4-assert-standalone-route (5011ms)
+         Timed out waiting for route "/perps/withdraw"
+
+[31m5/6 passed[0m in 6411ms

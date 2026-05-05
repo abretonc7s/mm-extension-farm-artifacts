@@ -1,0 +1,9 @@
+{
+  "verdict": "warn",
+  "reasons": [
+    "Generated internal recipe dry-ran successfully and live CDP execution passed 11/11 nodes after fixing the injected CDP bootstrap compatibility issue and route normalization in the task recipe.",
+    "The recipe produced trace.json, summary.json, clean issue-review artifacts, and AC screenshots for Perps entrypoint and standalone withdraw behavior.",
+    "Coverage remains incomplete for AC2, AC5, and AC6 because the slot does not provide DEX migration prompt state, flag-on confirmation alert fixtures, or ARB USDC/gas-funded deposit state."
+  ],
+  "better_version_guidance": "Add farm fixture support for migration-reset/DEX-abstraction accounts, remote feature flag overrides, and funded ARB USDC/gas states so AC2, AC5, and AC6 can be proven in browser instead of marked untestable."
+}

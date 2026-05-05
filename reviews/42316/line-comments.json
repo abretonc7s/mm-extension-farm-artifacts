@@ -1,0 +1,13 @@
+{
+  "pr_number": "42316",
+  "recommendation": "COMMENT",
+  "summary": "The route and balance fallback work is mostly covered by unit tests, but browser recipe validation failed before proving any ACs. Static review found a selector-shape concern in the confirmations-backed Perps balance alert that should be checked against production-shaped Redux state.",
+  "comments": [
+    {
+      "path": "ui/pages/confirmations/hooks/alerts/transactions/useInsufficientPerpsBalanceAlert.ts",
+      "line": 52,
+      "body": "Please double-check this selector against production-shaped Perps Redux state. Existing Perps selectors read cached account data from `cachedUserDataByProvider[provider].accountState`, while this hook looks for a top-level `metamask.accountState`; if that top-level field is not populated in confirmations, the `InsufficientPerpsBalance` alert would not fire. The test fixture currently uses the top-level shape, so it may not catch this mismatch.",
+      "severity": "suggestion"
+    }
+  ]
+}

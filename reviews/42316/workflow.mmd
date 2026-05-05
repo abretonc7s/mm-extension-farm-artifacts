@@ -1,0 +1,26 @@
+flowchart TD
+  %% PR 42316 Perps unified account funding review
+  __entry__(["ENTRY"]) --> node_setup_open_perps
+  node_setup_open_perps[["setup-open-perps<br/>perps/navigate-perps-tab"]]
+  node_ac1_assert_markets_present["ac1-assert-markets-present<br/>perps-markets"]
+  node_ac4_assert_postquote_flag_disabled["ac4-assert-postquote-flag-disabled<br/>eval_sync"]
+  node_ac4_open_balance_menu["ac4-open-balance-menu<br/>press"]
+  node_ac4_click_withdraw["ac4-click-withdraw<br/>press"]
+  node_ac4_assert_standalone_route["ac4-assert-standalone-route<br/>wait_for"]
+  node_ac3_assert_withdraw_page_visible["ac3-assert-withdraw-page-visible<br/>ext_check_dom"]
+  node_ac3_screenshot_withdraw_page["ac3-screenshot-withdraw-page<br/>screenshot"]
+  node_ac5_assert_alert_hook_state_readable["ac5-assert-alert-hook-state-readable<br/>eval_sync"]
+  node_ac4_screenshot_standalone_route["ac4-screenshot-standalone-route<br/>screenshot"]
+  node_teardown_return_perps[["teardown-return-perps<br/>perps/navigate-perps-tab"]]
+  node_teardown_done(["teardown-done<br/>PASS"])
+  node_setup_open_perps --> node_ac1_assert_markets_present
+  node_ac1_assert_markets_present --> node_ac4_assert_postquote_flag_disabled
+  node_ac4_assert_postquote_flag_disabled --> node_ac4_open_balance_menu
+  node_ac4_open_balance_menu --> node_ac4_click_withdraw
+  node_ac4_click_withdraw --> node_ac4_assert_standalone_route
+  node_ac4_assert_standalone_route --> node_ac3_assert_withdraw_page_visible
+  node_ac3_assert_withdraw_page_visible --> node_ac3_screenshot_withdraw_page
+  node_ac3_screenshot_withdraw_page --> node_ac5_assert_alert_hook_state_readable
+  node_ac5_assert_alert_hook_state_readable --> node_ac4_screenshot_standalone_route
+  node_ac4_screenshot_standalone_route --> node_teardown_return_perps
+  node_teardown_return_perps --> node_teardown_done

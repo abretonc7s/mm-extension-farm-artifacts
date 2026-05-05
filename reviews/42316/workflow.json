@@ -1,0 +1,116 @@
+{
+  "description": "Internal-first validation for Perps withdraw route gating and available balance behavior. ACs requiring special funded or migration state are documented as untestable in the coverage audit.",
+  "hooks": {
+    "pre_conditions": [
+      "wallet.unlocked",
+      "perps.feature_enabled"
+    ],
+    "setup": [],
+    "teardown": []
+  },
+  "inputs": {},
+  "playback": {
+    "mode": "off",
+    "slow_ms": 1000
+  },
+  "sourcePath": "",
+  "title": "PR 42316 Perps unified account funding review",
+  "workflow": {
+    "entry": "setup-open-perps",
+    "nodes": {
+      "setup-open-perps": {
+        "action": "call",
+        "ref": "perps/navigate-perps-tab",
+        "next": "ac1-assert-markets-present",
+        "id": "setup-open-perps"
+      },
+      "ac1-assert-markets-present": {
+        "action": "eval_ref",
+        "ref": "perps-markets",
+        "assert": {
+          "operator": "length_gt",
+          "value": 0
+        },
+        "save_as": "perps_markets",
+        "next": "ac4-assert-postquote-flag-disabled",
+        "id": "ac1-assert-markets-present"
+      },
+      "ac4-assert-postquote-flag-disabled": {
+        "action": "eval_sync",
+        "expression": "(function(){var flags=stateHooks.store.getState().metamask.remoteFeatureFlags||{};var cfg=flags.confirmations_pay_post_quote;return JSON.stringify({enabled: cfg?.overrides?.perpsWithdraw?.enabled ?? cfg?.default?.enabled ?? false});})()",
+        "assert": {
+          "operator": "eq",
+          "field": "enabled",
+          "value": false
+        },
+        "save_as": "postquote_flag",
+        "next": "ac4-open-balance-menu",
+        "id": "ac4-assert-postquote-flag-disabled"
+      },
+      "ac4-open-balance-menu": {
+        "action": "press",
+        "test_id": "perps-balance-dropdown-balance",
+        "next": "ac4-click-withdraw",
+        "id": "ac4-open-balance-menu"
+      },
+      "ac4-click-withdraw": {
+        "action": "press",
+        "test_id": "perps-balance-dropdown-withdraw",
+        "next": "ac4-assert-standalone-route",
+        "id": "ac4-click-withdraw"
+      },
+      "ac4-assert-standalone-route": {
+        "action": "wait_for",
+        "route": "perps/withdraw",
+        "timeout_ms": 5000,
+        "next": "ac3-assert-withdraw-page-visible",
+        "id": "ac4-assert-standalone-route"
+      },
+      "ac3-assert-withdraw-page-visible": {
+        "action": "ext_check_dom",
+        "test_id": "perps-withdraw-page",
+        "visible": true,
+        "next": "ac3-screenshot-withdraw-page",
+        "id": "ac3-assert-withdraw-page-visible"
+      },
+      "ac3-screenshot-withdraw-page": {
+        "action": "screenshot",
+        "filename": "evidence-ac3-withdraw-page.png",
+        "note": "AC3: standalone withdraw page shows available balance",
+        "next": "ac5-assert-alert-hook-state-readable",
+        "id": "ac3-screenshot-withdraw-page"
+      },
+      "ac5-assert-alert-hook-state-readable": {
+        "action": "eval_sync",
+        "expression": "(function(){var m=stateHooks.store.getState().metamask;return JSON.stringify({hasTopLevelAccountState:Object.prototype.hasOwnProperty.call(m,'accountState'), hasCachedUserData:!!m.cachedUserDataByProvider});})()",
+        "assert": {
+          "operator": "eq",
+          "field": "hasCachedUserData",
+          "value": true
+        },
+        "save_as": "perps_account_storage",
+        "next": "ac4-screenshot-standalone-route",
+        "id": "ac5-assert-alert-hook-state-readable"
+      },
+      "ac4-screenshot-standalone-route": {
+        "action": "screenshot",
+        "filename": "evidence-ac4-standalone-withdraw.png",
+        "note": "AC4: flag-off Withdraw opens standalone page",
+        "next": "teardown-return-perps",
+        "id": "ac4-screenshot-standalone-route"
+      },
+      "teardown-return-perps": {
+        "action": "call",
+        "ref": "perps/navigate-perps-tab",
+        "next": "teardown-done",
+        "id": "teardown-return-perps"
+      },
+      "teardown-done": {
+        "action": "end",
+        "status": "pass",
+        "message": "Perps route-gating recipe complete; funded/migration ACs audited separately",
+        "id": "teardown-done"
+      }
+    }
+  }
+}
