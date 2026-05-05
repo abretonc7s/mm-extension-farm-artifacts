@@ -1,0 +1,68 @@
+{
+  "title": "PR 42316 Perps withdraw submit guard regression check",
+  "description": "Confirm the refreshed extension bundle contains the Mobile-aligned withdraw submit guard and that live pre-submit validation still allows a $5 unified-account withdrawal.",
+  "schema_version": 1,
+  "validate": {
+    "workflow": {
+      "pre_conditions": ["wallet.unlocked", "perps.feature_enabled"],
+      "entry": "open-perps",
+      "nodes": {
+        "open-perps": {
+          "action": "call",
+          "ref": "perps/navigate-perps-tab",
+          "next": "check-bundle-submit-guard"
+        },
+        "check-bundle-submit-guard": {
+          "action": "eval_async",
+          "expression": "(async()=>{const script=await fetch(chrome.runtime.getURL('common-7.js')).then((response)=>response.text());return JSON.stringify({fixedSubmitGuard:script.includes('parseFloat(accountState.availableToTradeBalance ?? accountState.availableBalance)'),staleSubmitGuard:script.includes('const availableBalance = parseFloat(accountState.availableBalance);'),hasSubmitBalanceLog:script.includes('clearinghouseAvailableBalance')});})()",
+          "assert": {
+            "all": [
+              {
+                "operator": "eq",
+                "field": "fixedSubmitGuard",
+                "value": true
+              },
+              {
+                "operator": "eq",
+                "field": "staleSubmitGuard",
+                "value": false
+              },
+              {
+                "operator": "eq",
+                "field": "hasSubmitBalanceLog",
+                "value": true
+              }
+            ]
+          },
+          "save_as": "bundle_submit_guard",
+          "next": "check-withdraw-validation"
+        },
+        "check-withdraw-validation": {
+          "action": "eval_sync",
+          "expression": "(async()=>{var m=stateHooks.store.getState().metamask;var account=m.accountState||{};var assetId=m.isTestnet?'eip155:421614/erc20:0x75faf114eafb1BDbe2F0316DF893fd58CE46AA4d':'eip155:42161/erc20:0xaf88d065e77c8cC2239327C5EDb3A432268e5831';var validation=await stateHooks.submitRequestToBackground('perpsValidateWithdrawal',[{amount:'5',assetId:assetId}]);return JSON.stringify({availableBalance:account.availableBalance??null,availableBalanceNum:parseFloat(account.availableBalance??'0'),availableToTradeBalance:account.availableToTradeBalance??null,availableToTradeBalanceNum:parseFloat(account.availableToTradeBalance??'0'),validation:validation});})()",
+          "assert": {
+            "all": [
+              {
+                "operator": "gt",
+                "field": "availableToTradeBalanceNum",
+                "value": 5
+              },
+              {
+                "operator": "eq",
+                "field": "validation.isValid",
+                "value": true
+              }
+            ]
+          },
+          "save_as": "withdraw_validation",
+          "next": "done"
+        },
+        "done": {
+          "action": "end",
+          "status": "pass",
+          "message": "Refreshed bundle uses availableToTradeBalance fallback in the withdraw submit guard."
+        }
+      }
+    }
+  }
+}

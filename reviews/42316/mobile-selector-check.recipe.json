@@ -1,0 +1,56 @@
+{
+  "title": "PR 42316 Perps account state selector validation",
+  "description": "Validate the live extension state shape for Perps account balance selectors after comparing against MetaMask Mobile.",
+  "schema_version": 1,
+  "validate": {
+    "workflow": {
+      "pre_conditions": [
+        "wallet.unlocked",
+        "perps.feature_enabled"
+      ],
+      "entry": "open-perps",
+      "nodes": {
+        "open-perps": {
+          "action": "call",
+          "ref": "perps/navigate-perps-tab",
+          "next": "assert-state-shape"
+        },
+        "assert-state-shape": {
+          "action": "eval_sync",
+          "expression": "(async()=>{var m=stateHooks.store.getState().metamask;var provider=m.activeProvider||'hyperliquid';var top=m.accountState||null;var cached=m.cachedUserDataByProvider?.[provider]?.accountState||null;var bg=await stateHooks.submitRequestToBackground('perpsGetAccountState',[]);function pick(a){return a?{availableBalance:a.availableBalance??null,availableToTradeBalance:a.availableToTradeBalance??null,totalBalance:a.totalBalance??null}:null}return JSON.stringify({provider:provider,hasTop:!!top,hasCached:!!cached,hasBackground:!!bg,topHasAvailableBalance:top?.availableBalance!==undefined,topHasAvailableToTradeBalance:top?.availableToTradeBalance!==undefined,backgroundHasAvailableBalance:bg?.availableBalance!==undefined,backgroundHasAvailableToTradeBalance:bg?.availableToTradeBalance!==undefined,top:pick(top),cached:pick(cached),background:pick(bg)});})()",
+          "assert": {
+            "all": [
+              {
+                "operator": "eq",
+                "field": "hasTop",
+                "value": true
+              },
+              {
+                "operator": "eq",
+                "field": "hasBackground",
+                "value": true
+              },
+              {
+                "operator": "eq",
+                "field": "topHasAvailableBalance",
+                "value": true
+              },
+              {
+                "operator": "eq",
+                "field": "topHasAvailableToTradeBalance",
+                "value": true
+              }
+            ]
+          },
+          "save_as": "perps_account_state_shape",
+          "next": "done"
+        },
+        "done": {
+          "action": "end",
+          "status": "pass",
+          "message": "Top-level Perps accountState is present and matches the background account state."
+        }
+      }
+    }
+  }
+}

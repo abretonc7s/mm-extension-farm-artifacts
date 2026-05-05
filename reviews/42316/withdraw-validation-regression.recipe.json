@@ -1,0 +1,51 @@
+{
+  "title": "PR 42316 Perps withdraw validation regression check",
+  "description": "Validate that a user-visible availableToTradeBalance can exceed withdrawable availableBalance while pre-submit validation still allows the amount. The real submit path is not invoked.",
+  "schema_version": 1,
+  "validate": {
+    "workflow": {
+      "pre_conditions": [
+        "wallet.unlocked",
+        "perps.feature_enabled"
+      ],
+      "entry": "open-perps",
+      "nodes": {
+        "open-perps": {
+          "action": "call",
+          "ref": "perps/navigate-perps-tab",
+          "next": "check-withdraw-validation"
+        },
+        "check-withdraw-validation": {
+          "action": "eval_sync",
+          "expression": "(async()=>{var m=stateHooks.store.getState().metamask;var account=m.accountState||{};var assetId=m.isTestnet?'eip155:421614/erc20:0x75faf114eafb1BDbe2F0316DF893fd58CE46AA4d':'eip155:42161/erc20:0xaf88d065e77c8cC2239327C5EDb3A432268e5831';var validation=await stateHooks.submitRequestToBackground('perpsValidateWithdrawal',[{amount:'5',assetId:assetId}]);return JSON.stringify({availableBalance:account.availableBalance??null,availableBalanceNum:parseFloat(account.availableBalance??'0'),availableToTradeBalance:account.availableToTradeBalance??null,availableToTradeBalanceNum:parseFloat(account.availableToTradeBalance??'0'),validation:validation});})()",
+          "assert": {
+            "all": [
+              {
+                "operator": "eq",
+                "field": "availableBalanceNum",
+                "value": 0
+              },
+              {
+                "operator": "gt",
+                "field": "availableToTradeBalanceNum",
+                "value": 5
+              },
+              {
+                "operator": "eq",
+                "field": "validation.isValid",
+                "value": true
+              }
+            ]
+          },
+          "save_as": "withdraw_validation",
+          "next": "done"
+        },
+        "done": {
+          "action": "end",
+          "status": "pass",
+          "message": "Pre-submit withdrawal validation allows $5 even though withdrawable availableBalance is 0 and only availableToTradeBalance is above $5."
+        }
+      }
+    }
+  }
+}
