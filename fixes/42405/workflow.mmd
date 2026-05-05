@@ -1,0 +1,8 @@
+flowchart TD
+  %% TAT-3094 Open order decimal formatting
+  __entry__(["ENTRY"]) --> node_setup_navigate_perps
+  node_setup_navigate_perps[["setup-navigate-perps<br/>perps/navigate-perps-tab"]]
+  node_ac1_assert_universal_format_btc["ac1-assert-universal-format-btc<br/>eval_sync"]
+  node_ac2_assert_format_values["ac2-assert-format-values<br/>eval_sync"]
+  node_setup_navigate_perps --> node_ac1_assert_universal_format_btc
+  node_ac1_assert_universal_format_btc --> node_ac2_assert_format_values
