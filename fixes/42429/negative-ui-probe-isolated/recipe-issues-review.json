@@ -1,0 +1,40 @@
+{
+  "status": "review",
+  "note": "Observed 1 unexpected warning/error/exception event(s) during validation. Relation to the recipe or current change is not determined; review the artifacts.",
+  "observed": {
+    "total": 1,
+    "warning": 0,
+    "error": 1,
+    "exception": 0,
+    "other": 0
+  },
+  "gating": {
+    "total": 0,
+    "warning": 0,
+    "error": 0,
+    "exception": 0,
+    "other": 0
+  },
+  "informational": {
+    "total": 0
+  },
+  "topIssues": [
+    {
+      "level": "error",
+      "channel": "console",
+      "source": "home",
+      "targetRole": "home",
+      "text": "Warning: Can't perform a React state update on an unmounted component. This is a no-op, but it indicates a memory leak in your application. To fix, cancel all subscriptions and asynchronous tasks in %s.%s a useEffect cleanup function \n  at PerpsView (chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/ui-7.js:15078:48)\n  at PerpsViewStreamBoundary (chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/ui-7.js:15003:41)\n  at ErrorBoundary (chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/ui-5.js:18105:5)\n  at PerpsToastProvider (chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/ui-7.js:13086:41)\n  at PerpsTab (chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/ui-7.js:12890:41)\n  at div\n  at chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/common-4.js:11280:42\n  at div\n  at chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/common-4.js:11280:42\n  at Tabs (chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/ui-12.js:6432:41)\n  at AccountOverviewTabs (chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/ui-10.js:2379:41)\n  at AccountOverviewLayout (chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/ui-10.js:2190:41)\n  at AccountOverviewEth (chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/ui-10.js:2137:41)\n  at AccountOverview (chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/ui-10.js:2717:41)\n  at div\n  at div\n  at div\n  at ScrollContainer (chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/ui-12.js:9991:41)\n  at Home (chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/ui-19.js:3607:5)\n  at div\n  at HomeWithRouter (chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/ui-19.js:4439:10)\n  at ConnectFunction (chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/common-16.js:49401:41)\n  at ComponentWithRouterHooks (chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/ui-12.js:16793:58)",
+      "count": 1,
+      "allowlistMatch": null
+    }
+  ],
+  "artifactFiles": {
+    "allIssues": "/Users/deeeed/dev/metamask/metamask-extension-5/temp/tasks/fix/tat-3012-0506-074754/artifacts/negative-ui-probe-isolated/recipe-issues.json",
+    "consoleWarnings": "/Users/deeeed/dev/metamask/metamask-extension-5/temp/tasks/fix/tat-3012-0506-074754/artifacts/negative-ui-probe-isolated/console-warnings.json",
+    "consoleErrors": "/Users/deeeed/dev/metamask/metamask-extension-5/temp/tasks/fix/tat-3012-0506-074754/artifacts/negative-ui-probe-isolated/console-errors.json",
+    "runtimeExceptions": "/Users/deeeed/dev/metamask/metamask-extension-5/temp/tasks/fix/tat-3012-0506-074754/artifacts/negative-ui-probe-isolated/runtime-exceptions.json",
+    "reviewJson": "/Users/deeeed/dev/metamask/metamask-extension-5/temp/tasks/fix/tat-3012-0506-074754/artifacts/negative-ui-probe-isolated/recipe-issues-review.json",
+    "reviewMd": "/Users/deeeed/dev/metamask/metamask-extension-5/temp/tasks/fix/tat-3012-0506-074754/artifacts/negative-ui-probe-isolated/recipe-issues-review.md"
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "description": "",
+  "hooks": {
+    "pre_conditions": [
+      "wallet.unlocked"
+    ],
+    "setup": [],
+    "teardown": []
+  },
+  "inputs": {},
+  "playback": {
+    "mode": "off",
+    "slow_ms": 1000
+  },
+  "sourcePath": "",
+  "title": "Modal DOM probe",
+  "workflow": {
+    "entry": "read",
+    "nodes": {
+      "read": {
+        "action": "eval_sync",
+        "expression": "JSON.stringify(Array.from(document.querySelectorAll('[data-testid*=\"margin\"], .mm-modal')).map((el)=>({testId:el.getAttribute('data-testid'), tag:el.tagName, text:(el.innerText||'').slice(0,200), hidden:el.hidden, display:getComputedStyle(el).display, visibility:getComputedStyle(el).visibility, opacity:getComputedStyle(el).opacity, rect:(()=>{const r=el.getBoundingClientRect(); return {x:r.x,y:r.y,w:r.width,h:r.height}})()})))",
+        "next": "done",
+        "id": "read"
+      },
+      "done": {
+        "action": "end",
+        "status": "pass",
+        "id": "done"
+      }
+    }
+  }
+}

@@ -1,0 +1,93 @@
+{
+  "description": "",
+  "hooks": {
+    "pre_conditions": [
+      "wallet.unlocked"
+    ],
+    "setup": [],
+    "teardown": []
+  },
+  "inputs": {},
+  "playback": {
+    "mode": "off",
+    "slow_ms": 1000
+  },
+  "sourcePath": "",
+  "title": "Negative liquidation UI probe",
+  "workflow": {
+    "entry": "setup-nav-perps",
+    "nodes": {
+      "setup-nav-perps": {
+        "action": "call",
+        "ref": "perps/navigate-perps-tab",
+        "next": "setup-inject-negative",
+        "id": "setup-nav-perps"
+      },
+      "setup-inject-negative": {
+        "action": "eval_async",
+        "expression": "(async()=>{const sm=stateHooks.getPerpsStreamManager(); const p=await stateHooks.submitRequestToBackground('perpsGetPositions',[]); const next=(p&&p.length?p:[]).map((pos,i)=>i===0?{...pos,liquidationPrice:'-1',leverage:{...(pos.leverage||{}),type:'cross'}}:pos); sm.positions.pushData(next); return JSON.stringify({symbol:next[0]?.symbol, liquidationPrice:next[0]?.liquidationPrice, leverage:next[0]?.leverage});})()",
+        "save_as": "injected",
+        "next": "setup-open-detail",
+        "id": "setup-inject-negative"
+      },
+      "setup-open-detail": {
+        "action": "press",
+        "test_id": "position-card-BTC",
+        "next": "setup-wait-detail",
+        "id": "setup-open-detail"
+      },
+      "setup-wait-detail": {
+        "action": "wait_for",
+        "test_id": "perps-market-detail-page",
+        "timeout_ms": 10000,
+        "next": "ac1-read-detail-liq",
+        "id": "setup-wait-detail"
+      },
+      "ac1-read-detail-liq": {
+        "action": "eval_sync",
+        "expression": "JSON.stringify({detailLiq:document.querySelector('[data-testid=\"perps-position-liquidation-value\"]')?.innerText||null})",
+        "save_as": "detail",
+        "next": "setup-open-margin-menu",
+        "id": "ac1-read-detail-liq"
+      },
+      "setup-open-margin-menu": {
+        "action": "press",
+        "test_id": "perps-margin-card",
+        "next": "setup-open-add-margin",
+        "id": "setup-open-margin-menu"
+      },
+      "setup-open-add-margin": {
+        "action": "press",
+        "test_id": "perps-margin-menu-add",
+        "next": "setup-wait-modal",
+        "id": "setup-open-add-margin"
+      },
+      "setup-wait-modal": {
+        "action": "wait_for",
+        "test_id": "perps-add-margin-modal",
+        "timeout_ms": 10000,
+        "next": "ac2-read-modal-liq",
+        "id": "setup-wait-modal"
+      },
+      "ac2-read-modal-liq": {
+        "action": "eval_sync",
+        "expression": "JSON.stringify({price:document.querySelector('[data-testid=\"perps-edit-margin-liquidation-price-value\"]')?.innerText||null,distance:document.querySelector('[data-testid=\"perps-edit-margin-liquidation-distance-value\"]')?.innerText||null, modal:document.querySelector('[data-testid=\"perps-add-margin-modal\"]')?.innerText||null})",
+        "save_as": "modal",
+        "next": "ac2-screenshot-modal",
+        "id": "ac2-read-modal-liq"
+      },
+      "ac2-screenshot-modal": {
+        "action": "screenshot",
+        "filename": "evidence-ac2-modal-probe",
+        "note": "AC2: add margin modal probe after injecting a non-positive liquidation price",
+        "next": "done",
+        "id": "ac2-screenshot-modal"
+      },
+      "done": {
+        "action": "end",
+        "status": "pass",
+        "id": "done"
+      }
+    }
+  }
+}

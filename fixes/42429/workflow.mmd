@@ -1,0 +1,36 @@
+flowchart TD
+  %% TAT-3012 non-positive liquidation fallback
+  __entry__(["ENTRY"]) --> node_setup_nav_perps
+  node_setup_nav_perps[["setup-nav-perps<br/>perps/navigate-perps-tab"]]
+  node_setup_inject_cross_position["setup-inject-cross-position<br/>eval_async"]
+  node_setup_open_btc_detail["setup-open-btc-detail<br/>press"]
+  node_setup_wait_btc_detail["setup-wait-btc-detail<br/>wait_for"]
+  node_ac1_assert_position_liq_fallback["ac1-assert-position-liq-fallback<br/>eval_sync"]
+  node_ac1_scroll_position_liq_fallback["ac1-scroll-position-liq-fallback<br/>scroll"]
+  node_ac1_screenshot_position_liq_fallback["ac1-screenshot-position-liq-fallback<br/>screenshot"]
+  node_ac3_assert_cross_liq_fallback["ac3-assert-cross-liq-fallback<br/>eval_sync"]
+  node_setup_inject_isolated_position["setup-inject-isolated-position<br/>eval_async"]
+  node_setup_open_margin_menu["setup-open-margin-menu<br/>press"]
+  node_setup_open_add_margin["setup-open-add-margin<br/>press"]
+  node_setup_wait_add_margin_values["setup-wait-add-margin-values<br/>wait_for"]
+  node_ac2_assert_add_margin_liq_fallback["ac2-assert-add-margin-liq-fallback<br/>eval_sync"]
+  node_ac2_screenshot_add_margin_liq_fallback["ac2-screenshot-add-margin-liq-fallback<br/>screenshot"]
+  node_ac3_assert_isolated_liq_fallback["ac3-assert-isolated-liq-fallback<br/>eval_sync"]
+  node_ac4_assert_mobile_reference_fallback["ac4-assert-mobile-reference-fallback<br/>eval_sync"]
+  node_teardown_done(["teardown-done<br/>PASS"])
+  node_setup_nav_perps --> node_setup_inject_cross_position
+  node_setup_inject_cross_position --> node_setup_open_btc_detail
+  node_setup_open_btc_detail --> node_setup_wait_btc_detail
+  node_setup_wait_btc_detail --> node_ac1_assert_position_liq_fallback
+  node_ac1_assert_position_liq_fallback --> node_ac1_scroll_position_liq_fallback
+  node_ac1_scroll_position_liq_fallback --> node_ac1_screenshot_position_liq_fallback
+  node_ac1_screenshot_position_liq_fallback --> node_ac3_assert_cross_liq_fallback
+  node_ac3_assert_cross_liq_fallback --> node_setup_inject_isolated_position
+  node_setup_inject_isolated_position --> node_setup_open_margin_menu
+  node_setup_open_margin_menu --> node_setup_open_add_margin
+  node_setup_open_add_margin --> node_setup_wait_add_margin_values
+  node_setup_wait_add_margin_values --> node_ac2_assert_add_margin_liq_fallback
+  node_ac2_assert_add_margin_liq_fallback --> node_ac2_screenshot_add_margin_liq_fallback
+  node_ac2_screenshot_add_margin_liq_fallback --> node_ac3_assert_isolated_liq_fallback
+  node_ac3_assert_isolated_liq_fallback --> node_ac4_assert_mobile_reference_fallback
+  node_ac4_assert_mobile_reference_fallback --> node_teardown_done

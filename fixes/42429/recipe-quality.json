@@ -1,0 +1,74 @@
+{
+  "version": 1,
+  "verdict": "pass",
+  "compact": {
+    "verdict": "PASS",
+    "reasons": [
+      "AC1-4 are covered by ac<N>-prefixed nodes; final trace shows 16/16 executable nodes passed.",
+      "AC1 and AC2 use direct DOM assertions plus screenshots that show the visible fallback fields.",
+      "AC3 exercises both cross and isolated injected perps positions; AC4 is backed by mobile source alignment and targeted Jest tests."
+    ],
+    "better_version_guidance": []
+  },
+  "dimensions": {
+    "graph_integrity": {
+      "status": "pass",
+      "reason": "Workflow graph is structurally valid, schema validation passed, and all nodes are reachable from setup-nav-perps.",
+      "evidence": ["recipe.json", "workflow.mmd", "trace.json"]
+    },
+    "action_contract": {
+      "status": "pass",
+      "reason": "Recipe uses executable call, eval, press, wait_for, scroll, screenshot, and end actions with no manual steps or AC bypasses.",
+      "evidence": ["recipe.json", "validate-flow-schema output"]
+    },
+    "ac_coverage": {
+      "status": "pass",
+      "reason": "Every AC has at least one ac<N>-prefixed assertion node and every visual or mixed AC has screenshot evidence.",
+      "evidence": ["recipe-coverage.md", "trace.json"]
+    },
+    "evidence_contract_basics": {
+      "status": "pass",
+      "reason": "Screenshots show visible UI fallback fields for visual claims; state claims are proven by trace and targeted tests.",
+      "evidence": [
+        "after-evidence-ac1-position-liq-fallback.png",
+        "after-evidence-ac2-add-margin-liq-fallback.png",
+        "trace.json"
+      ]
+    },
+    "perps_state_setup": {
+      "status": "pass",
+      "reason": "Recipe builds the required non-positive liquidation state through the perps stream manager after navigating with the canonical perps flow.",
+      "evidence": ["recipe.json", "trace.json"]
+    }
+  },
+  "structural_findings": [],
+  "contextual_findings": [],
+  "suggested_recipe_delta": [],
+  "training_fields": {
+    "farm": "metamask-extension",
+    "project": "metamask-extension-farm",
+    "flow_type": "fix-bug",
+    "task_type": "fix-bug",
+    "claim_is_visual": true,
+    "proof_mode": "mixed",
+    "anti_patterns": [],
+    "good_patterns": [
+      "Injected deterministic perps stream state for non-positive liquidation prices.",
+      "Paired UI assertions with screenshots for visible fallback fields.",
+      "Scrolled the market-detail target into view before screenshot evidence."
+    ]
+  },
+  "meta": {
+    "producer": "worker",
+    "fallback_used": false,
+    "legacy_task": false,
+    "artifact_required": true,
+    "source_signals": [
+      "recipe.json",
+      "recipe-coverage.md",
+      "trace.json",
+      "targeted Jest output",
+      "mobile source alignment"
+    ]
+  }
+}

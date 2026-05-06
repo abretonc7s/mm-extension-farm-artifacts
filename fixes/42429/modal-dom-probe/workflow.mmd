@@ -1,0 +1,6 @@
+flowchart TD
+  %% Modal DOM probe
+  __entry__(["ENTRY"]) --> node_read
+  node_read["read<br/>eval_sync"]
+  node_done(["done<br/>PASS"])
+  node_read --> node_done

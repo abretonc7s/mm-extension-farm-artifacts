@@ -1,0 +1,14 @@
+flowchart TD
+  %% Inject negative liquidation position probe
+  __entry__(["ENTRY"]) --> node_setup_nav_perps
+  node_setup_nav_perps[["setup-nav-perps<br/>perps/navigate-perps-tab"]]
+  node_setup_inject_negative["setup-inject-negative<br/>eval_async"]
+  node_setup_wait_card["setup-wait-card<br/>wait_for"]
+  node_ac1_read_card["ac1-read-card<br/>eval_sync"]
+  node_ac1_screenshot_card["ac1-screenshot-card<br/>screenshot"]
+  node_done(["done<br/>PASS"])
+  node_setup_nav_perps --> node_setup_inject_negative
+  node_setup_inject_negative --> node_setup_wait_card
+  node_setup_wait_card --> node_ac1_read_card
+  node_ac1_read_card --> node_ac1_screenshot_card
+  node_ac1_screenshot_card --> node_done

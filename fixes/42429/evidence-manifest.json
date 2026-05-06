@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "preferred_mode": "screenshots",
+  "summary": "Non-positive Perps liquidation prices render as the -- fallback on market details and add margin.",
+  "before_after_pairs": [],
+  "standalone": [
+    {
+      "label": "Market detail liquidation fallback",
+      "covers": ["ac1", "ac3"],
+      "file": "after-evidence-ac1-position-liq-fallback.png"
+    },
+    {
+      "label": "Add margin liquidation fallback",
+      "covers": ["ac2", "ac3"],
+      "file": "after-evidence-ac2-add-margin-liq-fallback.png"
+    }
+  ],
+  "omit": [],
+  "videos": {
+    "before": "before.mp4",
+    "after": "after.mp4",
+    "preferred": false,
+    "note": "Videos captured the failing recipe before the fix and the passing recipe after the fix; screenshots are preferred for PR embedding."
+  }
+}

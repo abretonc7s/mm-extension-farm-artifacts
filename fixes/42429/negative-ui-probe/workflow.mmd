@@ -1,0 +1,24 @@
+flowchart TD
+  %% Negative liquidation UI probe
+  __entry__(["ENTRY"]) --> node_setup_nav_perps
+  node_setup_nav_perps[["setup-nav-perps<br/>perps/navigate-perps-tab"]]
+  node_setup_inject_negative["setup-inject-negative<br/>eval_async"]
+  node_setup_open_detail["setup-open-detail<br/>press"]
+  node_setup_wait_detail["setup-wait-detail<br/>wait_for"]
+  node_ac1_read_detail_liq["ac1-read-detail-liq<br/>eval_sync"]
+  node_setup_open_margin_menu["setup-open-margin-menu<br/>press"]
+  node_setup_open_add_margin["setup-open-add-margin<br/>press"]
+  node_setup_wait_modal["setup-wait-modal<br/>wait_for"]
+  node_ac2_read_modal_liq["ac2-read-modal-liq<br/>eval_sync"]
+  node_ac2_screenshot_modal["ac2-screenshot-modal<br/>screenshot"]
+  node_done(["done<br/>PASS"])
+  node_setup_nav_perps --> node_setup_inject_negative
+  node_setup_inject_negative --> node_setup_open_detail
+  node_setup_open_detail --> node_setup_wait_detail
+  node_setup_wait_detail --> node_ac1_read_detail_liq
+  node_ac1_read_detail_liq --> node_setup_open_margin_menu
+  node_setup_open_margin_menu --> node_setup_open_add_margin
+  node_setup_open_add_margin --> node_setup_wait_modal
+  node_setup_wait_modal --> node_ac2_read_modal_liq
+  node_ac2_read_modal_liq --> node_ac2_screenshot_modal
+  node_ac2_screenshot_modal --> node_done

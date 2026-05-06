@@ -1,0 +1,61 @@
+{
+  "description": "",
+  "hooks": {
+    "pre_conditions": [
+      "wallet.unlocked"
+    ],
+    "setup": [],
+    "teardown": []
+  },
+  "inputs": {},
+  "playback": {
+    "mode": "off",
+    "slow_ms": 1000
+  },
+  "sourcePath": "",
+  "title": "Inject negative liquidation position probe",
+  "workflow": {
+    "entry": "setup-nav-perps",
+    "nodes": {
+      "setup-nav-perps": {
+        "action": "call",
+        "ref": "perps/navigate-perps-tab",
+        "next": "setup-inject-negative",
+        "id": "setup-nav-perps"
+      },
+      "setup-inject-negative": {
+        "action": "eval_async",
+        "expression": "(async()=>{const sm=stateHooks.getPerpsStreamManager(); const p=await stateHooks.submitRequestToBackground('perpsGetPositions',[]); const next=(p&&p.length?p:[{symbol:'BTC',size:'0.001',entryPrice:'80000',positionValue:'80',unrealizedPnl:'0',marginUsed:'10',leverage:{type:'cross',value:40},liquidationPrice:'-1',maxLeverage:40,returnOnEquity:'0',cumulativeFunding:{allTime:'0',sinceOpen:'0',sinceChange:'0'},takeProfitCount:0,stopLossCount:0}]).map((pos,i)=>i===0?{...pos,liquidationPrice:'-1',leverage:{...(pos.leverage||{}),type:'cross'}}:pos); sm.positions.pushData(next); return JSON.stringify({count:next.length, first:next[0]});})()",
+        "save_as": "injected",
+        "next": "setup-wait-card",
+        "id": "setup-inject-negative"
+      },
+      "setup-wait-card": {
+        "action": "wait_for",
+        "test_id": "position-card-BTC",
+        "timeout_ms": 5000,
+        "next": "ac1-read-card",
+        "id": "setup-wait-card"
+      },
+      "ac1-read-card": {
+        "action": "eval_sync",
+        "expression": "JSON.stringify({card:document.querySelector('[data-testid=\"position-card-BTC\"]')?.innerText||null, liq:document.querySelector('[data-testid=\"position-card-liquidation-distance-BTC\"]')?.innerText||null})",
+        "save_as": "card",
+        "next": "ac1-screenshot-card",
+        "id": "ac1-read-card"
+      },
+      "ac1-screenshot-card": {
+        "action": "screenshot",
+        "filename": "evidence-ac1-card-probe",
+        "note": "AC1: position card probe after injecting a non-positive liquidation price",
+        "next": "done",
+        "id": "ac1-screenshot-card"
+      },
+      "done": {
+        "action": "end",
+        "status": "pass",
+        "id": "done"
+      }
+    }
+  }
+}

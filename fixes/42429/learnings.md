@@ -1,0 +1,4 @@
+- Investigation took longer than the code fix because the live account did not naturally have a non-positive liquidation price; injecting deterministic Perps stream snapshots made the recipe reliable.
+- The first valid before/after recordings required bypassing the shared screen-control socket with `SCREEN_CONTROL_SOCKET=/tmp/nonexistent-farmslot.sock`; otherwise recordings could be corrupt or missing.
+- The market-detail screenshot initially captured the target below the fold, so recipes for lower page rows should scroll the exact `data-testid` into view before screenshot evidence.
+- Mobile parity was in `PerpsPositionCard`: it suppresses liquidation distance when `liqPrice <= 0`, which clarified that Extension should validate liquidation prices before display and distance calculations.

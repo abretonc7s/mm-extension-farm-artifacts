@@ -1,0 +1,19 @@
+flowchart TD
+  %% Navigate to Perps tab
+  __entry__(["ENTRY"]) --> node_nav_perps
+  node_nav_perps["nav-perps<br/>navigate"]
+  node_check_tutorial["check-tutorial<br/>eval_sync"]
+  node_tutorial_switch{"tutorial-switch<br/>switch"}
+  node_dismiss_tutorial["dismiss-tutorial<br/>press"]
+  node_wait_tutorial_gone["wait-tutorial-gone<br/>wait_for"]
+  node_wait_perps["wait-perps<br/>wait_for"]
+  node_screenshot_perps["screenshot-perps<br/>screenshot"]
+  node_done(["done<br/>PASS"])
+  node_nav_perps --> node_check_tutorial
+  node_check_tutorial --> node_tutorial_switch
+  node_tutorial_switch -->|tutorial_state.visible eq true| node_dismiss_tutorial
+  node_tutorial_switch -->|default| node_wait_perps
+  node_dismiss_tutorial --> node_wait_tutorial_gone
+  node_wait_tutorial_gone --> node_wait_perps
+  node_wait_perps --> node_screenshot_perps
+  node_screenshot_perps --> node_done

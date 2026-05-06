@@ -1,0 +1,158 @@
++ set -euo pipefail
++++ dirname /Users/deeeed/dev/farmslot/scripts/record-window.sh
+++ cd /Users/deeeed/dev/farmslot/scripts
+++ pwd
++ SCRIPT_DIR=/Users/deeeed/dev/farmslot/scripts
++ CAPTURE_HELPER=/Users/deeeed/dev/farmslot/scripts/../tools/capture-helper/capture-helper
++ FFMPEG=/opt/homebrew/bin/ffmpeg
+++ id -u
++ SCREEN_CONTROL_SOCKET=/tmp/farmslot-screen-control-501.sock
++ MAX_FPS=15
++ MAX_SIZE=720
++ MIN_DURATION=2
++ OUTPUT=
++ PID_ARG=
++ WINDOW_NAME=
++ APP_NAME=
++ RECORDING_ID=
++ CONTROL_RESPONSE=
++ USE_CONTROL_SOCKET=false
++ [[ 6 -gt 0 ]]
++ case "$1" in
++ PID_ARG=94178
++ shift 2
++ [[ 4 -gt 0 ]]
++ case "$1" in
++ OUTPUT=temp/tasks/fix/tat-3012-0506-074754/artifacts/test-record.mp4
++ shift 2
++ [[ 2 -gt 0 ]]
++ case "$1" in
++ MIN_DURATION=2
++ shift 2
++ [[ 0 -gt 0 ]]
++ [[ -z temp/tasks/fix/tat-3012-0506-074754/artifacts/test-record.mp4 ]]
++ [[ -z 94178 ]]
++ [[ ! -x /Users/deeeed/dev/farmslot/scripts/../tools/capture-helper/capture-helper ]]
++ command -v /opt/homebrew/bin/ffmpeg
++ [[ -n 94178 ]]
+++ resolve_window_pid 94178
+++ local pid=94178 depth=0
+++ [[ 0 -gt 5 ]]
+++ ps -p 94178 -o ucomm=
+++ grep -qi 'chromium\|simulator'
++++ pgrep -P 94178
+++ for child in $(pgrep -P "$pid" 2> /dev/null)
+++ local found
++++ resolve_window_pid 94195 1
++++ local pid=94195 depth=1
++++ [[ 1 -gt 5 ]]
++++ ps -p 94195 -o ucomm=
++++ grep -qi 'chromium\|simulator'
+++++ pgrep -P 94195
+++ found=
+++ [[ -n '' ]]
+++ for child in $(pgrep -P "$pid" 2> /dev/null)
+++ local found
++++ resolve_window_pid 94196 1
++++ local pid=94196 depth=1
++++ [[ 1 -gt 5 ]]
++++ ps -p 94196 -o ucomm=
++++ grep -qi 'chromium\|simulator'
+++++ pgrep -P 94196
+++ found=
+++ [[ -n '' ]]
+++ for child in $(pgrep -P "$pid" 2> /dev/null)
+++ local found
++++ resolve_window_pid 94197 1
++++ local pid=94197 depth=1
++++ [[ 1 -gt 5 ]]
++++ ps -p 94197 -o ucomm=
++++ grep -qi 'chromium\|simulator'
+++++ pgrep -P 94197
+++ found=
+++ [[ -n '' ]]
+++ for child in $(pgrep -P "$pid" 2> /dev/null)
+++ local found
++++ resolve_window_pid 94210 1
++++ local pid=94210 depth=1
++++ [[ 1 -gt 5 ]]
++++ ps -p 94210 -o ucomm=
++++ grep -qi 'chromium\|simulator'
+++++ pgrep -P 94210
+++ found=
+++ [[ -n '' ]]
+++ for child in $(pgrep -P "$pid" 2> /dev/null)
+++ local found
++++ resolve_window_pid 94634 1
++++ local pid=94634 depth=1
++++ [[ 1 -gt 5 ]]
++++ ps -p 94634 -o ucomm=
++++ grep -qi 'chromium\|simulator'
+++++ pgrep -P 94634
+++ found=
+++ [[ -n '' ]]
+++ for child in $(pgrep -P "$pid" 2> /dev/null)
+++ local found
++++ resolve_window_pid 94637 1
++++ local pid=94637 depth=1
++++ [[ 1 -gt 5 ]]
++++ ps -p 94637 -o ucomm=
++++ grep -qi 'chromium\|simulator'
+++++ pgrep -P 94637
+++ found=
+++ [[ -n '' ]]
+++ for child in $(pgrep -P "$pid" 2> /dev/null)
+++ local found
++++ resolve_window_pid 94895 1
++++ local pid=94895 depth=1
++++ [[ 1 -gt 5 ]]
++++ ps -p 94895 -o ucomm=
++++ grep -qi 'chromium\|simulator'
+++++ pgrep -P 94895
+++ found=
+++ [[ -n '' ]]
++ RESOLVED=
++ [[ -n '' ]]
+++ dirname temp/tasks/fix/tat-3012-0506-074754/artifacts/test-record.mp4
++ mkdir -p temp/tasks/fix/tat-3012-0506-074754/artifacts
+++ mktemp -u /tmp/farmslot-record-XXXXXXXX
++ FIFO=/tmp/farmslot-record-Moypgo97
++ mkfifo /tmp/farmslot-record-Moypgo97
++ CAPTURE_PID=
++ FFMPEG_PID=
++ LOG_FILE=/tmp/farmslot-record-10996.log
+++ date +%s
++ START_TS=1778025475
++ STOP=false
++ trap handle_signal INT TERM
++ CAPTURE_ARGS=(--max-fps "$MAX_FPS" --max-size "$MAX_SIZE")
++ [[ -n 94178 ]]
++ CAPTURE_ARGS+=(--pid "$PID_ARG")
++ FFMPEG_PID=11213
++ screen_control_start
++ /opt/homebrew/bin/ffmpeg -nostdin -framerate 15 -fflags +genpts -f h264 -i /tmp/farmslot-record-Moypgo97 -c:v libx264 -preset ultrafast -pix_fmt yuv420p -movflags +faststart -y temp/tasks/fix/tat-3012-0506-074754/artifacts/test-record.mp4
++ USE_CONTROL_SOCKET=true
++ echo '[record-window] attached to shared screen owner socket=/tmp/farmslot-screen-control-501.sock response={"ok": true, "sessionId": "mac-capture-1", "helperPid": 8693, "targetKey": "+pid 94178"}'
+[record-window] attached to shared screen owner socket=/tmp/farmslot-screen-control-501.sock response={"ok": true, "sessionId": "mac-capture-1", "helperPid": 8693, "targetKey": "+pid 94178"}
++ echo '[record-window] started capture_pid=shared-owner ffmpeg_pid=11213 output=temp/tasks/fix/tat-3012-0506-074754/artifacts/test-record.mp4'
+[record-window] started capture_pid=shared-owner ffmpeg_pid=11213 output=temp/tasks/fix/tat-3012-0506-074754/artifacts/test-record.mp4
++ false
++ true
++ kill -0 11213
++ sleep 0.5
++ false
++ true
++ kill -0 11213
++ sleep 0.5
++ false
++ true
++ kill -0 11213
++ sleep 0.5
++ false
++ true
++ kill -0 11213
++ sleep 0.5
++ false
++ true
++ kill -0 11213
++ sleep 0.5

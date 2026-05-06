@@ -1,0 +1,84 @@
+{
+  "description": "",
+  "hooks": {
+    "pre_conditions": [
+      "wallet.unlocked"
+    ],
+    "setup": [],
+    "teardown": []
+  },
+  "inputs": {},
+  "playback": {
+    "mode": "off",
+    "slow_ms": 1000
+  },
+  "sourcePath": "",
+  "title": "Navigate to Perps tab",
+  "workflow": {
+    "entry": "nav-perps",
+    "nodes": {
+      "nav-perps": {
+        "action": "navigate",
+        "target": "PerpsHome",
+        "next": "check-tutorial",
+        "id": "nav-perps"
+      },
+      "check-tutorial": {
+        "action": "eval_sync",
+        "expression": "JSON.stringify({ visible: !!document.querySelector('[data-testid=\"perps-tutorial-modal\"]') })",
+        "save_as": "tutorial_state",
+        "next": "tutorial-switch",
+        "id": "check-tutorial"
+      },
+      "tutorial-switch": {
+        "action": "switch",
+        "cases": [
+          {
+            "when": {
+              "operator": "eq",
+              "field": "tutorial_state.visible",
+              "value": true
+            },
+            "next": "dismiss-tutorial",
+            "index": 0,
+            "label": ""
+          }
+        ],
+        "default": "wait-perps",
+        "id": "tutorial-switch"
+      },
+      "dismiss-tutorial": {
+        "action": "press",
+        "test_id": "perps-tutorial-skip-button",
+        "next": "wait-tutorial-gone",
+        "id": "dismiss-tutorial"
+      },
+      "wait-tutorial-gone": {
+        "action": "wait_for",
+        "expression": "!document.querySelector('[data-testid=\"perps-tutorial-modal\"]')",
+        "timeout_ms": 5000,
+        "next": "wait-perps",
+        "id": "wait-tutorial-gone"
+      },
+      "wait-perps": {
+        "action": "wait_for",
+        "test_id": "perps-balance-dropdown",
+        "timeout_ms": 10000,
+        "next": "screenshot-perps",
+        "id": "wait-perps"
+      },
+      "screenshot-perps": {
+        "action": "screenshot",
+        "filename": "perps-tab",
+        "note": "Perps tab loaded with balance dropdown visible and tutorial dismissed",
+        "next": "done",
+        "id": "screenshot-perps"
+      },
+      "done": {
+        "action": "end",
+        "status": "pass",
+        "id": "done"
+      }
+    }
+  }
+}
