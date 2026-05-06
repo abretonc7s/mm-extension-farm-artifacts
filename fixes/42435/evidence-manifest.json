@@ -4,15 +4,26 @@
   "summary": "Before/after screenshots show the partial-close warning changing from slider copy to close-full-position copy.",
   "before_after_pairs": [
     {
-      "label": "Partial close warning copy",
-      "covers": ["ac1", "ac2"],
-      "before": "before-ac1-partial-close-warning.png",
-      "after": "after-ac2-partial-close-warning.png",
-      "note": "The before warning references the slider; the after warning directs the user to close the full position."
+      "label": "AC1 — removes slider-specific copy",
+      "covers": ["ac1"],
+      "before": "before-evidence-ac1-partial-close-warning.png",
+      "after": "after-evidence-ac1-partial-close-warning.png",
+      "note": "Before references setting the slider to 100%; after removes slider/slide wording."
+    },
+    {
+      "label": "AC2 — directs users to close the full position",
+      "covers": ["ac2"],
+      "before": "before-evidence-ac2-partial-close-warning.png",
+      "after": "after-evidence-ac2-partial-close-warning.png",
+      "note": "Before lacks full-position guidance; after directs users to close the full position."
     }
   ],
   "standalone": [],
-  "omit": ["after-ac1-partial-close-warning.png"],
+  "omit": [
+    "before-ac1-partial-close-warning.png",
+    "after-ac1-partial-close-warning.png",
+    "after-ac2-partial-close-warning.png"
+  ],
   "videos": {
     "before": "before.mp4",
     "after": "after.mp4",

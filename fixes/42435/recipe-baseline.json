@@ -1,6 +1,6 @@
 {
   "title": "TAT-2849 partial close minimum-notional copy",
-  "description": "Opens the Perps close-position modal, enters a partial close amount below the minimum notional, and verifies the warning copy references closing the full position instead of the slider.",
+  "description": "Baseline evidence recipe for TAT-2849: verifies the pre-fix buggy partial-close warning copy references the slider and does not direct users to close the full position.",
   "schema_version": 1,
   "validate": {
     "workflow": {
@@ -53,7 +53,7 @@
         },
         "ac1-screenshot-partial-close-warning": {
           "action": "screenshot",
-          "filename": "after-evidence-ac1-partial-close-warning.png",
+          "filename": "before-evidence-ac1-partial-close-warning.png",
           "note": "AC1: partial close warning is visible in the close position modal",
           "next": "ac1-assert-no-slider-copy"
         },
@@ -70,7 +70,7 @@
               {
                 "operator": "eq",
                 "field": "referencesSlider",
-                "value": false
+                "value": true
               }
             ]
           },
@@ -83,21 +83,21 @@
           "assert": {
             "operator": "eq",
             "field": "referencesFullPosition",
-            "value": true
+            "value": false
           },
           "save_as": "ac2_copy_state",
           "next": "ac2-screenshot-full-position-copy"
         },
         "ac2-screenshot-full-position-copy": {
           "action": "screenshot",
-          "filename": "after-evidence-ac2-partial-close-warning.png",
+          "filename": "before-evidence-ac2-partial-close-warning.png",
           "note": "AC2: partial close warning directs the user to close the full position",
           "next": "teardown-done"
         },
         "teardown-done": {
           "action": "end",
           "status": "pass",
-          "message": "Partial close warning copy verified"
+          "message": "Baseline buggy partial close warning copy verified"
         }
       }
     }
