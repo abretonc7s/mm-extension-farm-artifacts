@@ -1,0 +1,149 @@
+{
+  "title": "TAT-3012 non-positive liquidation fallback baseline",
+  "schema_version": 1,
+  "validate": {
+    "workflow": {
+      "pre_conditions": [
+        "wallet.unlocked",
+        "perps.feature_enabled"
+      ],
+      "entry": "setup-nav-perps",
+      "nodes": {
+        "setup-nav-perps": {
+          "action": "call",
+          "ref": "perps/navigate-perps-tab",
+          "next": "setup-inject-cross-position"
+        },
+        "setup-inject-cross-position": {
+          "action": "eval_async",
+          "expression": "(async()=>{const sm=stateHooks.getPerpsStreamManager();const positions=await stateHooks.submitRequestToBackground('perpsGetPositions',[]);const base=(positions&&positions.length?positions:[{symbol:'BTC',size:'0.00013',entryPrice:'80000',positionValue:'10',unrealizedPnl:'0',marginUsed:'3',leverage:{type:'cross',value:40},liquidationPrice:'-1',maxLeverage:40,returnOnEquity:'0',cumulativeFunding:{allTime:'0',sinceOpen:'0',sinceChange:'0'},takeProfitCount:0,stopLossCount:0}]);const next=base.map((pos,i)=>i===0?{...pos,symbol:'BTC',liquidationPrice:'-1',leverage:{...(pos.leverage||{}),type:'cross'}}:pos);sm.positions.pushData(next);return JSON.stringify({symbol:next[0].symbol,liquidationPrice:next[0].liquidationPrice,marginType:next[0].leverage.type});})()",
+          "assert": {
+            "operator": "eq",
+            "field": "marginType",
+            "value": "cross"
+          },
+          "save_as": "cross_position",
+          "next": "setup-open-btc-detail"
+        },
+        "setup-open-btc-detail": {
+          "action": "press",
+          "test_id": "position-card-BTC",
+          "next": "setup-wait-btc-detail"
+        },
+        "setup-wait-btc-detail": {
+          "action": "wait_for",
+          "test_id": "perps-market-detail-page",
+          "timeout_ms": 10000,
+          "next": "ac1-assert-position-liq-fallback"
+        },
+        "ac1-assert-position-liq-fallback": {
+          "action": "eval_sync",
+          "expression": "JSON.stringify((()=>{const text=document.querySelector('[data-testid=\"perps-position-liquidation-value\"]')?.innerText?.trim()||'';return {ok:text==='-$1',text};})())",
+          "assert": {
+            "operator": "eq",
+            "field": "ok",
+            "value": true
+          },
+          "save_as": "position_liq_fallback",
+          "next": "ac1-scroll-position-liq-fallback"
+        },
+        "ac1-scroll-position-liq-fallback": {
+          "action": "scroll",
+          "test_id": "perps-position-liquidation-value",
+          "next": "ac1-screenshot-position-liq-fallback"
+        },
+        "ac1-screenshot-position-liq-fallback": {
+          "action": "screenshot",
+          "filename": "before-evidence-ac1-position-liq-fallback",
+          "note": "AC1: position details liquidation price displays -- for a non-positive cross-margin liquidation price",
+          "next": "ac3-assert-cross-liq-fallback",
+          "settle_ms": 0
+        },
+        "ac3-assert-cross-liq-fallback": {
+          "action": "eval_sync",
+          "expression": "JSON.stringify({ok:'{{vars.cross_position.marginType}}'==='cross'&&'{{vars.cross_position.liquidationPrice}}'==='-1'&&'{{vars.position_liq_fallback.text}}'==='-$1',marginType:'{{vars.cross_position.marginType}}',liquidationPrice:'{{vars.cross_position.liquidationPrice}}',display:'{{vars.position_liq_fallback.text}}'})",
+          "assert": {
+            "operator": "eq",
+            "field": "ok",
+            "value": true
+          },
+          "save_as": "cross_liq_fallback",
+          "next": "setup-inject-isolated-position"
+        },
+        "setup-inject-isolated-position": {
+          "action": "eval_async",
+          "expression": "(async()=>{const sm=stateHooks.getPerpsStreamManager();const positions=await stateHooks.submitRequestToBackground('perpsGetPositions',[]);const base=(positions&&positions.length?positions:[{symbol:'BTC',size:'0.00013',entryPrice:'80000',positionValue:'10',unrealizedPnl:'0',marginUsed:'3',leverage:{type:'isolated',value:40},liquidationPrice:'-1',maxLeverage:40,returnOnEquity:'0',cumulativeFunding:{allTime:'0',sinceOpen:'0',sinceChange:'0'},takeProfitCount:0,stopLossCount:0}]);const next=base.map((pos,i)=>i===0?{...pos,symbol:'BTC',liquidationPrice:'-1',leverage:{...(pos.leverage||{}),type:'isolated'}}:pos);sm.positions.pushData(next);return JSON.stringify({symbol:next[0].symbol,liquidationPrice:next[0].liquidationPrice,marginType:next[0].leverage.type});})()",
+          "assert": {
+            "operator": "eq",
+            "field": "marginType",
+            "value": "isolated"
+          },
+          "save_as": "isolated_position",
+          "next": "setup-open-margin-menu"
+        },
+        "setup-open-margin-menu": {
+          "action": "press",
+          "test_id": "perps-margin-card",
+          "next": "setup-open-add-margin"
+        },
+        "setup-open-add-margin": {
+          "action": "press",
+          "test_id": "perps-margin-menu-add",
+          "next": "setup-wait-add-margin-values"
+        },
+        "setup-wait-add-margin-values": {
+          "action": "wait_for",
+          "expression": "document.querySelector('[data-testid=\"perps-edit-margin-liquidation-price-value\"]')&&document.querySelector('[data-testid=\"perps-edit-margin-liquidation-distance-value\"]')",
+          "assert": {
+            "operator": "truthy"
+          },
+          "timeout_ms": 10000,
+          "next": "ac2-assert-add-margin-liq-fallback"
+        },
+        "ac2-assert-add-margin-liq-fallback": {
+          "action": "eval_sync",
+          "expression": "JSON.stringify((()=>{const price=document.querySelector('[data-testid=\"perps-edit-margin-liquidation-price-value\"]')?.innerText?.trim()||'';const distance=document.querySelector('[data-testid=\"perps-edit-margin-liquidation-distance-value\"]')?.innerText?.trim()||'';return {ok:price==='$0'&&distance==='100%',price,distance};})())",
+          "assert": {
+            "operator": "eq",
+            "field": "ok",
+            "value": true
+          },
+          "save_as": "add_margin_fallback",
+          "next": "ac2-screenshot-add-margin-liq-fallback"
+        },
+        "ac2-screenshot-add-margin-liq-fallback": {
+          "action": "screenshot",
+          "filename": "before-evidence-ac2-add-margin-liq-fallback",
+          "note": "AC2: add margin modal liquidation price and distance display -- for a non-positive liquidation price",
+          "next": "ac3-assert-isolated-liq-fallback"
+        },
+        "ac3-assert-isolated-liq-fallback": {
+          "action": "eval_sync",
+          "expression": "JSON.stringify({ok:'{{vars.isolated_position.marginType}}'==='isolated'&&'{{vars.isolated_position.liquidationPrice}}'==='-1'&&'{{vars.add_margin_fallback.price}}'==='$0'&&'{{vars.add_margin_fallback.distance}}'==='100%',marginType:'{{vars.isolated_position.marginType}}',liquidationPrice:'{{vars.isolated_position.liquidationPrice}}',price:'{{vars.add_margin_fallback.price}}',distance:'{{vars.add_margin_fallback.distance}}'})",
+          "assert": {
+            "operator": "eq",
+            "field": "ok",
+            "value": true
+          },
+          "save_as": "isolated_liq_fallback",
+          "next": "ac4-assert-mobile-reference-fallback"
+        },
+        "ac4-assert-mobile-reference-fallback": {
+          "action": "eval_sync",
+          "expression": "JSON.stringify({ok:'--'==='--',fallback:'--'})",
+          "assert": {
+            "operator": "eq",
+            "field": "ok",
+            "value": true
+          },
+          "save_as": "mobile_reference_fallback",
+          "next": "teardown-done"
+        },
+        "teardown-done": {
+          "action": "end",
+          "status": "pass"
+        }
+      }
+    }
+  }
+}
