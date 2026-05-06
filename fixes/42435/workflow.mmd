@@ -1,0 +1,20 @@
+flowchart TD
+  %% TAT-2849 partial close minimum-notional copy
+  __entry__(["ENTRY"]) --> node_setup_open_close_modal
+  node_setup_open_close_modal["setup-open-close-modal<br/>press"]
+  node_setup_wait_close_input["setup-wait-close-input<br/>wait_for"]
+  node_ac1_enter_partial_close_amount["ac1-enter-partial-close-amount<br/>set_input"]
+  node_gate_wait_warning_copy["gate-wait-warning-copy<br/>wait_for"]
+  node_ac1_screenshot_partial_close_warning["ac1-screenshot-partial-close-warning<br/>screenshot"]
+  node_ac1_assert_no_slider_copy["ac1-assert-no-slider-copy<br/>eval_sync"]
+  node_ac2_assert_full_position_copy["ac2-assert-full-position-copy<br/>eval_sync"]
+  node_ac2_screenshot_full_position_copy["ac2-screenshot-full-position-copy<br/>screenshot"]
+  node_teardown_done(["teardown-done<br/>PASS"])
+  node_setup_open_close_modal --> node_setup_wait_close_input
+  node_setup_wait_close_input --> node_ac1_enter_partial_close_amount
+  node_ac1_enter_partial_close_amount --> node_gate_wait_warning_copy
+  node_gate_wait_warning_copy --> node_ac1_screenshot_partial_close_warning
+  node_ac1_screenshot_partial_close_warning --> node_ac1_assert_no_slider_copy
+  node_ac1_assert_no_slider_copy --> node_ac2_assert_full_position_copy
+  node_ac2_assert_full_position_copy --> node_ac2_screenshot_full_position_copy
+  node_ac2_screenshot_full_position_copy --> node_teardown_done

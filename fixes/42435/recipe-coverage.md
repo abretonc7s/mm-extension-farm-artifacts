@@ -1,0 +1,6 @@
+| # | AC (verbatim) | Proof mode | Primary evidence | Recipe nodes (IDs) | Visual file if any | Evidence verdict | Justification |
+|---|---------------|------------|------------------|---------------------|--------------------|------------------|---------------|
+| 1 | "The error message on the partial close screen must not reference "the slide" or any mobile-specific UI element" | mixed | trace assertion | `ac1-enter-partial-close-amount`, `ac1-screenshot-partial-close-warning`, `ac1-assert-no-slider-copy` | `after-ac1-partial-close-warning.png` | PROVEN | `trace.json` shows `ac1-assert-no-slider-copy` passed with `referencesSlider=false`; screenshot shows the warning in the close-position modal. |
+| 2 | "The corrected error message should direct the user to "close the full position" as an alternative action" | mixed | trace assertion | `ac2-assert-full-position-copy`, `ac2-screenshot-full-position-copy` | `after-ac2-partial-close-warning.png` | PROVEN | `trace.json` shows `ac2-assert-full-position-copy` passed with `referencesFullPosition=true`; screenshot visibly includes "close the full position." |
+
+Overall recipe coverage: 2/2 ACs PROVEN (untestable: none, weak: 0, missing: 0)

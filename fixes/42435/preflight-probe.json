@@ -1,0 +1,34 @@
+{
+  "title": "TAT-2849 preflight state probes",
+  "schema_version": 1,
+  "validate": {
+    "workflow": {
+      "pre_conditions": ["wallet.unlocked", "perps.feature_enabled"],
+      "entry": "gate-accounts",
+      "nodes": {
+        "gate-accounts": {
+          "action": "eval_ref",
+          "ref": "extension-core/accounts",
+          "save_as": "accounts",
+          "next": "gate-perps-positions"
+        },
+        "gate-perps-positions": {
+          "action": "eval_ref",
+          "ref": "perps/perps-positions",
+          "save_as": "positions",
+          "next": "gate-perps-balance"
+        },
+        "gate-perps-balance": {
+          "action": "eval_ref",
+          "ref": "perps/perps-balance",
+          "save_as": "balance",
+          "next": "done"
+        },
+        "done": {
+          "action": "end",
+          "status": "pass"
+        }
+      }
+    }
+  }
+}

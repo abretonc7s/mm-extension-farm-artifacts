@@ -1,0 +1,120 @@
+{
+  "description": "Opens the Perps close-position modal, enters a partial close amount below the minimum notional, and verifies the warning copy references closing the full position instead of the slider.",
+  "hooks": {
+    "pre_conditions": [
+      "wallet.unlocked",
+      "perps.feature_enabled",
+      "perps.ready_to_trade",
+      "perps.sufficient_balance"
+    ],
+    "setup": [
+      {
+        "id": "setup-ensure-eth-position",
+        "action": "call",
+        "ref": "perps/open-long-position",
+        "params": {
+          "symbol": "ETH",
+          "amount": "10"
+        }
+      }
+    ],
+    "teardown": []
+  },
+  "inputs": {},
+  "playback": {
+    "mode": "off",
+    "slow_ms": 1000
+  },
+  "sourcePath": "",
+  "title": "TAT-2849 partial close minimum-notional copy",
+  "workflow": {
+    "entry": "setup-open-close-modal",
+    "nodes": {
+      "setup-open-close-modal": {
+        "action": "press",
+        "test_id": "perps-close-cta-button",
+        "next": "setup-wait-close-input",
+        "id": "setup-open-close-modal"
+      },
+      "setup-wait-close-input": {
+        "action": "wait_for",
+        "test_id": "close-amount-value",
+        "timeout_ms": 10000,
+        "next": "ac1-enter-partial-close-amount",
+        "id": "setup-wait-close-input"
+      },
+      "ac1-enter-partial-close-amount": {
+        "action": "set_input",
+        "test_id": "close-amount-value",
+        "value": "1",
+        "next": "gate-wait-warning-copy",
+        "id": "ac1-enter-partial-close-amount"
+      },
+      "gate-wait-warning-copy": {
+        "action": "wait_for",
+        "expression": "Boolean((document.body.innerText || '').match(/Partial closes must be at least \\$\\d+(?:\\.\\d+)? in USD value\\./u))",
+        "assert": {
+          "operator": "eq",
+          "field": "",
+          "value": true
+        },
+        "timeout_ms": 10000,
+        "next": "ac1-screenshot-partial-close-warning",
+        "id": "gate-wait-warning-copy"
+      },
+      "ac1-screenshot-partial-close-warning": {
+        "action": "screenshot",
+        "filename": "evidence-ac1-partial-close-warning.png",
+        "note": "AC1: partial close warning is visible in the close position modal",
+        "next": "ac1-assert-no-slider-copy",
+        "id": "ac1-screenshot-partial-close-warning"
+      },
+      "ac1-assert-no-slider-copy": {
+        "action": "eval_sync",
+        "expression": "JSON.stringify((function(){var text=document.body.innerText||'';return {modalVisible:!!document.querySelector('[data-testid=\"perps-close-position-modal\"]'), warning:(text.match(/Partial closes[^\\n]+/)||[])[0]||'', referencesSlider:/\\bslider\\b|\\bslide\\b/iu.test(text), referencesFullPosition:/close the full position/iu.test(text)}})())",
+        "assert": {
+          "all": [
+            {
+              "operator": "eq",
+              "field": "modalVisible",
+              "value": true
+            },
+            {
+              "operator": "eq",
+              "field": "referencesSlider",
+              "value": false
+            }
+          ]
+        },
+        "save_as": "ac1_copy_state",
+        "next": "ac2-assert-full-position-copy",
+        "id": "ac1-assert-no-slider-copy"
+      },
+      "ac2-assert-full-position-copy": {
+        "action": "eval_sync",
+        "expression": "JSON.stringify((function(){var text=document.body.innerText||'';return {warning:(text.match(/Partial closes[^\\n]+/)||[])[0]||'', referencesFullPosition:/close the full position/iu.test(text)}})())",
+        "assert": {
+          "operator": "eq",
+          "field": "referencesFullPosition",
+          "value": true
+        },
+        "save_as": "ac2_copy_state",
+        "next": "ac2-screenshot-full-position-copy",
+        "id": "ac2-assert-full-position-copy"
+      },
+      "ac2-screenshot-full-position-copy": {
+        "action": "screenshot",
+        "filename": "evidence-ac2-partial-close-warning.png",
+        "note": "AC2: partial close warning directs the user to close the full position",
+        "next": "teardown-done",
+        "id": "ac2-screenshot-full-position-copy"
+      },
+      "teardown-done": {
+        "action": "end",
+        "status": "pass",
+        "message": "Partial close warning copy verified",
+        "id": "teardown-done"
+      }
+    }
+  }
+}

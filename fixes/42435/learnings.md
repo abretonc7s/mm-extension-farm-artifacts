@@ -1,0 +1,4 @@
+- Investigation took longer than the copy fix because the recipe had to seed a live Perps position and the webpack watcher crashed during locale reload.
+- The task instructions were clear, but `eval_ref` refs appear domain-scoped in the runner despite examples showing cross-domain refs.
+- `refresh-build.sh` was the reliable recovery path after locale file changes caused the watcher to crash on a missing `zh_TW` dist file.
+- The useful code path is `close-position-modal.tsx` -> `perpsClosePartialMinNotional` in locale files -> `close-position-modal.test.tsx`.

@@ -1,0 +1,61 @@
+{
+  "version": 1,
+  "verdict": "pass",
+  "compact": {
+    "verdict": "PASS",
+    "reasons": [
+      "AC1 and AC2 are covered by ac<N>-prefixed assertion nodes; trace shows 5/5 AC nodes passed.",
+      "Mixed proof uses trace assertions for exact copy state plus screenshots showing the modal warning."
+    ],
+    "better_version_guidance": []
+  },
+  "dimensions": {
+    "graph_integrity": {
+      "status": "pass",
+      "reason": "Workflow graph is structurally valid; dry-run and live validation completed.",
+      "evidence": ["recipe.json", "workflow.mmd"]
+    },
+    "action_contract": {
+      "status": "pass",
+      "reason": "Recipe uses existing Perps flow calls for setup and no manual, long wait, or switch-default skip patterns.",
+      "evidence": ["recipe.json"]
+    },
+    "ac_coverage": {
+      "status": "pass",
+      "reason": "Both ACs bind to passing ac<N>-* nodes in trace.json.",
+      "evidence": ["recipe-coverage.md", "trace.json"]
+    },
+    "evidence_contract_basics": {
+      "status": "pass",
+      "reason": "Visual evidence files show the target close-position modal warning; hidden copy claims are proven by eval assertions.",
+      "evidence": [
+        "after-ac1-partial-close-warning.png",
+        "after-ac2-partial-close-warning.png",
+        "trace.json"
+      ]
+    }
+  },
+  "structural_findings": [],
+  "contextual_findings": [],
+  "suggested_recipe_delta": [],
+  "training_fields": {
+    "farm": "metamask-extension",
+    "project": "metamask-extension-farm",
+    "flow_type": "fix-bug",
+    "task_type": "fix-bug",
+    "claim_is_visual": true,
+    "proof_mode": "mixed",
+    "anti_patterns": [],
+    "good_patterns": [
+      "Existing perps/open-long-position flow seeds required position state.",
+      "Assertions check both absence of slider copy and presence of full-position copy."
+    ]
+  },
+  "meta": {
+    "producer": "worker",
+    "fallback_used": false,
+    "legacy_task": false,
+    "artifact_required": true,
+    "source_signals": ["recipe.json", "recipe-coverage.md", "trace.json", "summary.json"]
+  }
+}
