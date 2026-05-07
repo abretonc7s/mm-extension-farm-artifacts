@@ -1,0 +1,93 @@
+{
+  "version": 1,
+  "verdict": "pass",
+  "compact": {
+    "verdict": "PASS",
+    "reasons": [
+      "AC2 is proven by trace: setup-navigate-eth-market through ac2-screenshot-order-entry passed 7/7.",
+      "AC1 and blocked-runtime portion of AC3 are explicitly UNTESTABLE because the slot lacks a blocked compliance fixture or controllable API mock.",
+      "Evidence includes one AC-bound screenshot with the expected HUD caption and clean recipe issue artifacts."
+    ],
+    "better_version_guidance": [
+      "Add a blocked-wallet compliance fixture or API mock so AC1 can assert access-restricted-modal after a trading action.",
+      "Reuse the same blocked fixture to compare Mobile parity for blocked runtime behavior under AC3."
+    ]
+  },
+  "dimensions": {
+    "graph_integrity": {
+      "status": "pass",
+      "reason": "Dry-run succeeded and all authored nodes use allowed prefixes.",
+      "evidence": [
+        "artifacts/recipe.json",
+        "artifacts/evidence/workflow.json"
+      ]
+    },
+    "ac_coverage": {
+      "status": "pass",
+      "reason": "Coverage matrix has one PROVEN AC and two explicitly UNTESTABLE ACs with concrete fixture limitations; no WEAK or MISSING rows remain.",
+      "evidence": [
+        "artifacts/recipe-coverage.md",
+        "artifacts/evidence/trace.json"
+      ]
+    },
+    "evidence_contract_basics": {
+      "status": "pass",
+      "reason": "The AC2 visual claim has a screenshot, matching HUD caption, DOM assertion, and trace proof.",
+      "evidence": [
+        "artifacts/evidence/screenshots/evidence-ac2-compliant-order-entry-1778143101055.png",
+        "artifacts/evidence/screenshots-captions.json",
+        "artifacts/evidence/trace.json"
+      ]
+    },
+    "action_contract": {
+      "status": "pass",
+      "reason": "The recipe uses an existing perps navigation flow and stable data-testid actions for the compliant add-exposure route.",
+      "evidence": [
+        "artifacts/recipe.json",
+        "artifacts/evidence/trace.json"
+      ]
+    }
+  },
+  "structural_findings": [],
+  "contextual_findings": [
+    {
+      "code": "blocked_fixture_missing",
+      "message": "Blocked compliance behavior could not be exercised in the current slot.",
+      "dimension": "ac_coverage",
+      "evidence": [
+        "artifacts/preflight/trace.json",
+        "artifacts/recipe-coverage.md"
+      ]
+    }
+  ],
+  "suggested_recipe_delta": [
+    "Add a setup hook that makes the selected wallet return blocked=true from complianceCheckWalletsCompliance, then click a gated trading action and assert access-restricted-modal.",
+    "After blocked fixture setup exists, add AC1 screenshot and AC3 state/assertion nodes for blocked parity."
+  ],
+  "training_fields": {
+    "farm": "metamask-extension",
+    "project": "metamask-extension-farm",
+    "flow_type": "review-pr",
+    "task_type": "review-pr",
+    "claim_is_visual": true,
+    "proof_mode": "mixed",
+    "anti_patterns": [],
+    "good_patterns": [
+      "used existing perps navigate-to-market-detail flow",
+      "switched from a disabled long CTA to a valid add-exposure path",
+      "reported trace-derived pass counts"
+    ]
+  },
+  "meta": {
+    "producer": "worker",
+    "fallback_used": false,
+    "legacy_task": false,
+    "artifact_required": true,
+    "source_signals": [
+      "recipe.json",
+      "recipe-coverage.md",
+      "trace.json",
+      "summary.json"
+    ]
+  }
+}

@@ -1,0 +1,12 @@
+flowchart TD
+  %% PR 42433 compliance preflight probe
+  __entry__(["ENTRY"]) --> node_ac1_probe_state
+  node_ac1_probe_state["ac1-probe-state<br/>perps-state"]
+  node_ac1_probe_positions["ac1-probe-positions<br/>perps-positions"]
+  node_ac2_probe_balance["ac2-probe-balance<br/>perps-balance"]
+  node_ac2_probe_markets["ac2-probe-markets<br/>perps-markets"]
+  node_done(["done<br/>PASS"])
+  node_ac1_probe_state --> node_ac1_probe_positions
+  node_ac1_probe_positions --> node_ac2_probe_balance
+  node_ac2_probe_balance --> node_ac2_probe_markets
+  node_ac2_probe_markets --> node_done

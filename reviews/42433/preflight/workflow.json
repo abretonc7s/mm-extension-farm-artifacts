@@ -1,0 +1,56 @@
+{
+  "description": "Probe perps state needed to decide recipe prerequisites.",
+  "hooks": {
+    "pre_conditions": [
+      "wallet.unlocked",
+      "perps.feature_enabled"
+    ],
+    "setup": [],
+    "teardown": []
+  },
+  "inputs": {},
+  "playback": {
+    "mode": "off",
+    "slow_ms": 1000
+  },
+  "sourcePath": "",
+  "title": "PR 42433 compliance preflight probe",
+  "workflow": {
+    "entry": "ac1-probe-state",
+    "nodes": {
+      "ac1-probe-state": {
+        "action": "eval_ref",
+        "ref": "perps-state",
+        "save_as": "perps_state",
+        "next": "ac1-probe-positions",
+        "id": "ac1-probe-state"
+      },
+      "ac1-probe-positions": {
+        "action": "eval_ref",
+        "ref": "perps-positions",
+        "save_as": "perps_positions",
+        "next": "ac2-probe-balance",
+        "id": "ac1-probe-positions"
+      },
+      "ac2-probe-balance": {
+        "action": "eval_ref",
+        "ref": "perps-balance",
+        "save_as": "perps_balance",
+        "next": "ac2-probe-markets",
+        "id": "ac2-probe-balance"
+      },
+      "ac2-probe-markets": {
+        "action": "eval_ref",
+        "ref": "perps-markets",
+        "save_as": "perps_markets",
+        "next": "done",
+        "id": "ac2-probe-markets"
+      },
+      "done": {
+        "action": "end",
+        "status": "pass",
+        "id": "done"
+      }
+    }
+  }
+}

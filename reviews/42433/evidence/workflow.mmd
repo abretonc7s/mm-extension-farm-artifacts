@@ -1,0 +1,18 @@
+flowchart TD
+  %% PR 42433 compliance gate review
+  __entry__(["ENTRY"]) --> node_setup_navigate_eth_market
+  node_setup_navigate_eth_market[["setup-navigate-eth-market<br/>perps/navigate-to-market-detail"]]
+  node_ac2_assert_market_detail["ac2-assert-market-detail<br/>ext_check_dom"]
+  node_ac2_open_modify_menu["ac2-open-modify-menu<br/>press"]
+  node_ac2_open_add_exposure["ac2-open-add-exposure<br/>press"]
+  node_ac2_wait_order_entry["ac2-wait-order-entry<br/>wait_for"]
+  node_ac2_assert_no_restricted_modal["ac2-assert-no-restricted-modal<br/>eval_sync"]
+  node_ac2_screenshot_order_entry["ac2-screenshot-order-entry<br/>screenshot"]
+  node_teardown_done(["teardown-done<br/>PASS"])
+  node_setup_navigate_eth_market --> node_ac2_assert_market_detail
+  node_ac2_assert_market_detail --> node_ac2_open_modify_menu
+  node_ac2_open_modify_menu --> node_ac2_open_add_exposure
+  node_ac2_open_add_exposure --> node_ac2_wait_order_entry
+  node_ac2_wait_order_entry --> node_ac2_assert_no_restricted_modal
+  node_ac2_assert_no_restricted_modal --> node_ac2_screenshot_order_entry
+  node_ac2_screenshot_order_entry --> node_teardown_done

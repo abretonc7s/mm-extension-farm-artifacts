@@ -1,0 +1,13 @@
+{
+  "pr_number": "42433",
+  "recommendation": "COMMENT",
+  "summary": "No blocking issues found. The compliant-wallet path was validated live; blocked-wallet browser validation needs a dedicated fixture or API mock.",
+  "comments": [
+    {
+      "path": "ui/components/app/compliance/useComplianceGate.test.tsx",
+      "line": 199,
+      "body": "This test asserts fail-open behavior by forcing `submitRequestToBackground` to reject even though Redux has a cached blocked status. In the actual background API, `complianceCheckWalletsCompliance` is bound to `ComplianceController.checkWalletsCompliance`, and `@metamask/compliance-controller@2.0.0` can fall back to cached per-address statuses on service failure. If the desired contract is fail-open even when a blocked cached status exists, this needs a test closer to the real controller behavior; otherwise this assertion gives false confidence about outage behavior.",
+      "severity": "suggestion"
+    }
+  ]
+}

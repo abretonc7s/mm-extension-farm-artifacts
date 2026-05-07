@@ -1,0 +1,75 @@
+{
+  "title": "PR 42433 compliance gate review",
+  "description": "Validate compliant-wallet perps trade entry and capture coverage limits for blocked-wallet ACs.",
+  "schema_version": 1,
+  "validate": {
+    "workflow": {
+      "pre_conditions": [
+        "wallet.unlocked",
+        "perps.feature_enabled"
+      ],
+      "entry": "setup-navigate-eth-market",
+      "nodes": {
+        "setup-navigate-eth-market": {
+          "action": "call",
+          "ref": "perps/navigate-to-market-detail",
+          "params": {
+            "symbol": "ETH"
+          },
+          "next": "ac2-assert-market-detail"
+        },
+        "ac2-assert-market-detail": {
+          "action": "ext_check_dom",
+          "test_id": "perps-market-detail-page",
+          "visible": true,
+          "next": "ac2-open-modify-menu"
+        },
+        "ac2-open-modify-menu": {
+          "action": "press",
+          "test_id": "perps-modify-cta-button",
+          "next": "ac2-open-add-exposure"
+        },
+        "ac2-open-add-exposure": {
+          "action": "press",
+          "test_id": "perps-modify-menu-add-exposure",
+          "next": "ac2-wait-order-entry"
+        },
+        "ac2-wait-order-entry": {
+          "action": "wait_for",
+          "test_id": "perps-order-entry-page",
+          "timeout_ms": 10000,
+          "next": "ac2-assert-no-restricted-modal"
+        },
+        "ac2-assert-no-restricted-modal": {
+          "action": "eval_sync",
+          "expression": "JSON.stringify({restrictedModalVisible: !!document.querySelector('[data-testid=\"access-restricted-modal\"]'), orderEntryVisible: !!document.querySelector('[data-testid=\"perps-order-entry-page\"]')})",
+          "assert": {
+            "all": [
+              {
+                "operator": "eq",
+                "field": "restrictedModalVisible",
+                "value": false
+              },
+              {
+                "operator": "eq",
+                "field": "orderEntryVisible",
+                "value": true
+              }
+            ]
+          },
+          "next": "ac2-screenshot-order-entry"
+        },
+        "ac2-screenshot-order-entry": {
+          "action": "screenshot",
+          "filename": "evidence-ac2-compliant-order-entry",
+          "note": "AC2: compliant wallet reaches order entry",
+          "next": "teardown-done"
+        },
+        "teardown-done": {
+          "action": "end",
+          "status": "pass"
+        }
+      }
+    }
+  }
+}

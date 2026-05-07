@@ -1,0 +1,8 @@
+- For Perps compliance reviews, a live blocked-wallet fixture or controllable compliance API mock is required to prove the access-restricted modal in browser; code/unit tests are not enough for full AC1 evidence.
+- `perps-long-cta-button` can be disabled on market detail when an existing position or state makes direct new-order entry unavailable; the compliant trade-entry recipe should use `perps-modify-cta-button` then `perps-modify-menu-add-exposure` when a position exists.
+- The existing `perps/navigate-to-market-detail` flow is reliable for reaching `#/perps/market/ETH` and should be preferred over raw hash navigation.
+- AC-bound screenshots should use HUD notes under 80 characters; `AC2: compliant wallet reaches order entry` rendered correctly and matched `screenshots-captions.json`.
+- `stateHooks.store.getState().metamask.walletComplianceStatusMap` is useful for confirming compliance runtime cache after a gated action; this slot recorded the selected wallet as `blocked:false`.
+- `@metamask/compliance-controller@2.0.0` can fall back to cached per-address statuses on service failure, so hook tests that mock only `submitRequestToBackground` rejection may not model real background outage behavior with cached statuses.
+- Mobile has a global `AccessRestrictedProvider` and account-group compliance hook; Extension intentionally uses action-level Perps gates in this PR, so parity review should distinguish UX/copy/flag alignment from implementation routing.
+- Baseline recipe issue artifacts were clean for this run: no console warnings, console errors, or runtime exceptions were captured.
