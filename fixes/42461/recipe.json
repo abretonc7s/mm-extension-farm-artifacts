@@ -1,0 +1,289 @@
+{
+  "title": "TAT-3074 TP/SL generated price precision by market",
+  "schema_version": 1,
+  "description": "Navigate to Perps order entry, enable auto-close, enter a TP percentage, and assert the generated TP price field uses the market price precision for BTC, PUMP, XYZ100, and ETH.",
+  "validate": {
+    "workflow": {
+      "pre_conditions": [
+        "wallet.unlocked",
+        "perps.feature_enabled"
+      ],
+      "entry": "setup-prime-perps",
+      "nodes": {
+        "setup-prime-perps": {
+          "action": "call",
+          "ref": "perps/prime-perps-state",
+          "next": "ac1-navigate-btc"
+        },
+        "ac1-navigate-btc": {
+          "action": "navigate",
+          "target": "PerpsOrderEntry",
+          "params": {
+            "symbol": "BTC",
+            "direction": "long"
+          },
+          "next": "ac1-wait-btc"
+        },
+        "ac1-wait-btc": {
+          "action": "wait_for",
+          "expression": "document.querySelector('[data-testid=\"perps-order-entry-asset-symbol\"]')?.textContent?.includes('BTC')",
+          "timeout_ms": 15000,
+          "next": "ac1-open-auto-close"
+        },
+        "ac1-open-auto-close": {
+          "action": "eval_sync",
+          "next": "ac1-enter-tp-percent",
+          "expression": "(function(){const toggle=document.querySelector('[data-testid=\"auto-close-toggle\"]'); if(!toggle){return JSON.stringify({clicked:false,reason:'missing'});} if(!document.querySelector('[data-testid=\"tp-percent-input\"]')){toggle.click();} return JSON.stringify({clicked:true,enabled:!!document.querySelector('[data-testid=\"tp-percent-input\"]')});})()",
+          "assert": {
+            "operator": "eq",
+            "field": "clicked",
+            "value": true
+          }
+        },
+        "ac1-enter-tp-percent": {
+          "action": "set_input",
+          "test_id": "tp-percent-input",
+          "value": "7",
+          "next": "ac1-blur-percent"
+        },
+        "ac1-blur-percent": {
+          "action": "eval_sync",
+          "expression": "(function(){document.querySelector('[data-testid=\"tp-percent-input\"] input')?.blur();return JSON.stringify({blurred:true});})()",
+          "assert": {
+            "operator": "eq",
+            "field": "blurred",
+            "value": true
+          },
+          "next": "ac1-assert-btc-price-precision"
+        },
+        "ac1-assert-btc-price-precision": {
+          "action": "eval_sync",
+          "expression": "(function(){const value=document.querySelector('[data-testid=\"tp-price-input\"] input')?.value||'';const decimals=value.includes('.')?value.split('.')[1].length:0;return JSON.stringify({value,decimals,hasValue:value.length>0});})()",
+          "assert": {
+            "all": [
+              {
+                "operator": "eq",
+                "field": "hasValue",
+                "value": true
+              },
+              {
+                "operator": "eq",
+                "field": "decimals",
+                "value": 0
+              }
+            ]
+          },
+          "next": "ac1-screenshot-btc"
+        },
+        "ac1-screenshot-btc": {
+          "action": "screenshot",
+          "filename": "evidence-ac1-btc-tpsl-price.png",
+          "note": "AC1: BTC TP price generated from 7% displays with 0 decimal places.",
+          "next": "ac2-navigate-pump"
+        },
+        "ac2-navigate-pump": {
+          "action": "navigate",
+          "target": "PerpsOrderEntry",
+          "params": {
+            "symbol": "PUMP",
+            "direction": "long"
+          },
+          "next": "ac2-wait-pump"
+        },
+        "ac2-wait-pump": {
+          "action": "wait_for",
+          "expression": "document.querySelector('[data-testid=\"perps-order-entry-asset-symbol\"]')?.textContent?.includes('PUMP')",
+          "timeout_ms": 15000,
+          "next": "ac2-open-auto-close"
+        },
+        "ac2-open-auto-close": {
+          "action": "eval_sync",
+          "next": "ac2-enter-tp-percent",
+          "expression": "(function(){const toggle=document.querySelector('[data-testid=\"auto-close-toggle\"]'); if(!toggle){return JSON.stringify({clicked:false,reason:'missing'});} if(!document.querySelector('[data-testid=\"tp-percent-input\"]')){toggle.click();} return JSON.stringify({clicked:true,enabled:!!document.querySelector('[data-testid=\"tp-percent-input\"]')});})()",
+          "assert": {
+            "operator": "eq",
+            "field": "clicked",
+            "value": true
+          }
+        },
+        "ac2-enter-tp-percent": {
+          "action": "set_input",
+          "test_id": "tp-percent-input",
+          "value": "7",
+          "next": "ac2-blur-percent"
+        },
+        "ac2-blur-percent": {
+          "action": "eval_sync",
+          "expression": "(function(){document.querySelector('[data-testid=\"tp-percent-input\"] input')?.blur();return JSON.stringify({blurred:true});})()",
+          "assert": {
+            "operator": "eq",
+            "field": "blurred",
+            "value": true
+          },
+          "next": "ac2-assert-pump-price-precision"
+        },
+        "ac2-assert-pump-price-precision": {
+          "action": "eval_sync",
+          "expression": "(function(){const value=document.querySelector('[data-testid=\"tp-price-input\"] input')?.value||'';const decimals=value.includes('.')?value.split('.')[1].length:0;return JSON.stringify({value,decimals,hasValue:value.length>0});})()",
+          "assert": {
+            "all": [
+              {
+                "operator": "eq",
+                "field": "hasValue",
+                "value": true
+              },
+              {
+                "operator": "eq",
+                "field": "decimals",
+                "value": 6
+              }
+            ]
+          },
+          "next": "ac2-screenshot-pump"
+        },
+        "ac2-screenshot-pump": {
+          "action": "screenshot",
+          "filename": "evidence-ac2-pump-tpsl-price.png",
+          "note": "AC2: PUMP TP price generated from 7% displays with 6 decimal places.",
+          "next": "ac3-navigate-xyz100"
+        },
+        "ac3-navigate-xyz100": {
+          "action": "navigate",
+          "target": "PerpsOrderEntry",
+          "params": {
+            "symbol": "xyz:XYZ100",
+            "direction": "long"
+          },
+          "next": "ac3-wait-xyz100"
+        },
+        "ac3-wait-xyz100": {
+          "action": "wait_for",
+          "expression": "document.querySelector('[data-testid=\"perps-order-entry-asset-symbol\"]')?.textContent?.includes('XYZ100')",
+          "timeout_ms": 15000,
+          "next": "ac3-open-auto-close"
+        },
+        "ac3-open-auto-close": {
+          "action": "eval_sync",
+          "next": "ac3-enter-tp-percent",
+          "expression": "(function(){const toggle=document.querySelector('[data-testid=\"auto-close-toggle\"]'); if(!toggle){return JSON.stringify({clicked:false,reason:'missing'});} if(!document.querySelector('[data-testid=\"tp-percent-input\"]')){toggle.click();} return JSON.stringify({clicked:true,enabled:!!document.querySelector('[data-testid=\"tp-percent-input\"]')});})()",
+          "assert": {
+            "operator": "eq",
+            "field": "clicked",
+            "value": true
+          }
+        },
+        "ac3-enter-tp-percent": {
+          "action": "set_input",
+          "test_id": "tp-percent-input",
+          "value": "7",
+          "next": "ac3-blur-percent"
+        },
+        "ac3-blur-percent": {
+          "action": "eval_sync",
+          "expression": "(function(){document.querySelector('[data-testid=\"tp-percent-input\"] input')?.blur();return JSON.stringify({blurred:true});})()",
+          "assert": {
+            "operator": "eq",
+            "field": "blurred",
+            "value": true
+          },
+          "next": "ac3-assert-xyz100-price-precision"
+        },
+        "ac3-assert-xyz100-price-precision": {
+          "action": "eval_sync",
+          "expression": "(function(){const value=document.querySelector('[data-testid=\"tp-price-input\"] input')?.value||'';const decimals=value.includes('.')?value.split('.')[1].length:0;return JSON.stringify({value,decimals,hasValue:value.length>0});})()",
+          "assert": {
+            "all": [
+              {
+                "operator": "eq",
+                "field": "hasValue",
+                "value": true
+              },
+              {
+                "operator": "eq",
+                "field": "decimals",
+                "value": 0
+              }
+            ]
+          },
+          "next": "ac3-screenshot-xyz100"
+        },
+        "ac3-screenshot-xyz100": {
+          "action": "screenshot",
+          "filename": "evidence-ac3-xyz100-tpsl-price.png",
+          "note": "AC3: XYZ100 TP price generated from 7% displays with 0 decimal places.",
+          "next": "ac4-navigate-eth"
+        },
+        "ac4-navigate-eth": {
+          "action": "navigate",
+          "target": "PerpsOrderEntry",
+          "params": {
+            "symbol": "ETH",
+            "direction": "long"
+          },
+          "next": "ac4-wait-eth"
+        },
+        "ac4-wait-eth": {
+          "action": "wait_for",
+          "expression": "document.querySelector('[data-testid=\"perps-order-entry-asset-symbol\"]')?.textContent?.includes('ETH')",
+          "timeout_ms": 15000,
+          "next": "ac4-open-auto-close"
+        },
+        "ac4-open-auto-close": {
+          "action": "eval_sync",
+          "next": "ac4-enter-tp-percent",
+          "expression": "(function(){const toggle=document.querySelector('[data-testid=\"auto-close-toggle\"]'); if(!toggle){return JSON.stringify({clicked:false,reason:'missing'});} if(!document.querySelector('[data-testid=\"tp-percent-input\"]')){toggle.click();} return JSON.stringify({clicked:true,enabled:!!document.querySelector('[data-testid=\"tp-percent-input\"]')});})()",
+          "assert": {
+            "operator": "eq",
+            "field": "clicked",
+            "value": true
+          }
+        },
+        "ac4-enter-tp-percent": {
+          "action": "set_input",
+          "test_id": "tp-percent-input",
+          "value": "7",
+          "next": "ac4-blur-percent"
+        },
+        "ac4-blur-percent": {
+          "action": "eval_sync",
+          "expression": "(function(){document.querySelector('[data-testid=\"tp-percent-input\"] input')?.blur();return JSON.stringify({blurred:true});})()",
+          "assert": {
+            "operator": "eq",
+            "field": "blurred",
+            "value": true
+          },
+          "next": "ac4-assert-eth-price-precision"
+        },
+        "ac4-assert-eth-price-precision": {
+          "action": "eval_sync",
+          "expression": "(function(){const value=document.querySelector('[data-testid=\"tp-price-input\"] input')?.value||'';const decimals=value.includes('.')?value.split('.')[1].length:0;return JSON.stringify({value,decimals,hasValue:value.length>0});})()",
+          "assert": {
+            "all": [
+              {
+                "operator": "eq",
+                "field": "hasValue",
+                "value": true
+              },
+              {
+                "operator": "lte",
+                "field": "decimals",
+                "value": 1
+              }
+            ]
+          },
+          "next": "ac4-screenshot-eth"
+        },
+        "ac4-screenshot-eth": {
+          "action": "screenshot",
+          "filename": "evidence-ac4-eth-tpsl-price.png",
+          "note": "AC4: ETH TP price generated from 7% displays with at most 1 decimal place.",
+          "next": "teardown-done"
+        },
+        "teardown-done": {
+          "action": "end",
+          "status": "pass"
+        }
+      }
+    }
+  }
+}

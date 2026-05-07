@@ -1,0 +1,60 @@
+{
+  "version": 1,
+  "preferred_mode": "screenshots",
+  "summary": "Before/after order-entry screenshots show TP/SL prices generated from a 7% TP input using market-appropriate precision for BTC, PUMP, XYZ100, and ETH.",
+  "before_after_pairs": [
+    {
+      "label": "BTC auto-close TP price precision",
+      "covers": [
+        "ac1"
+      ],
+      "before": "screenshots/before-evidence-ac1-btc-tpsl-price.png-1778079766498.png",
+      "after": "screenshots/after-evidence-ac1-btc-tpsl-price.png-1778080179674.png",
+      "note": "BTC changes from an over-precise decimal TP price to a whole-number TP price."
+    },
+    {
+      "label": "PUMP auto-close TP price precision",
+      "covers": [
+        "ac2"
+      ],
+      "before": "screenshots/before-evidence-ac2-pump-tpsl-price.png-1778079766983.png",
+      "after": "screenshots/after-evidence-ac2-pump-tpsl-price.png-1778080180165.png",
+      "note": "PUMP changes from more than six generated price decimals to six decimals."
+    },
+    {
+      "label": "XYZ100 auto-close TP price precision",
+      "covers": [
+        "ac3"
+      ],
+      "before": "screenshots/before-evidence-ac3-xyz100-tpsl-price.png-1778079767408.png",
+      "after": "screenshots/after-evidence-ac3-xyz100-tpsl-price.png-1778080180581.png",
+      "note": "XYZ100 changes from an over-precise decimal TP price to a whole-number TP price."
+    },
+    {
+      "label": "ETH mid-range auto-close TP price precision",
+      "covers": [
+        "ac4"
+      ],
+      "before": "screenshots/before-evidence-ac4-eth-tpsl-price.png-1778079767899.png",
+      "after": "screenshots/after-evidence-ac4-eth-tpsl-price.png-1778080181004.png",
+      "note": "ETH validates the mid-range regression check with one generated price decimal."
+    }
+  ],
+  "standalone": [],
+  "omit": [
+    "screenshots/evidence-ac1-btc-tpsl-price.png-1778080179674.png",
+    "screenshots/evidence-ac2-pump-tpsl-price.png-1778080180165.png",
+    "screenshots/evidence-ac3-xyz100-tpsl-price.png-1778080180581.png",
+    "screenshots/evidence-ac4-eth-tpsl-price.png-1778080181004.png",
+    "screenshots/after-ac1-btc-tpsl-price.png-1778080179674.png",
+    "screenshots/after-ac2-pump-tpsl-price.png-1778080180165.png",
+    "screenshots/after-ac3-xyz100-tpsl-price.png-1778080180581.png",
+    "screenshots/after-ac4-eth-tpsl-price.png-1778080181004.png"
+  ],
+  "videos": {
+    "before": "before.mp4",
+    "after": "after.mp4",
+    "preferred": false,
+    "note": "Videos recorded successfully; screenshots are preferred for concise PR evidence."
+  }
+}

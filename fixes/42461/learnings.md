@@ -1,0 +1,4 @@
+- Investigation took longer than the code fix because the recipe had to prove before/after precision across four markets and capture valid video/screenshot evidence.
+- The important extension file was `auto-close-section.tsx`; the bug was isolated to `percentToPrice` using hardcoded 8-decimal normalization after converting RoE percent to a trigger price.
+- The mobile comparison helped confirm the expected direction: TP/SL generated prices should flow through market-aware perps price precision instead of a fixed decimal count.
+- Recipe validation was reliable once screenshots were captured immediately after each assertion; checking the saved screenshots directly caught whether the target input was visible enough for PR evidence.

@@ -1,0 +1,62 @@
+flowchart TD
+  %% TAT-3074 TP/SL generated price precision by market
+  __entry__(["ENTRY"]) --> node_setup_prime_perps
+  node_setup_prime_perps[["setup-prime-perps<br/>perps/prime-perps-state"]]
+  node_ac1_navigate_btc["ac1-navigate-btc<br/>navigate"]
+  node_ac1_wait_btc["ac1-wait-btc<br/>wait_for"]
+  node_ac1_open_auto_close["ac1-open-auto-close<br/>eval_sync"]
+  node_ac1_enter_tp_percent["ac1-enter-tp-percent<br/>set_input"]
+  node_ac1_blur_percent["ac1-blur-percent<br/>eval_sync"]
+  node_ac1_assert_btc_price_precision["ac1-assert-btc-price-precision<br/>eval_sync"]
+  node_ac1_screenshot_btc["ac1-screenshot-btc<br/>screenshot"]
+  node_ac2_navigate_pump["ac2-navigate-pump<br/>navigate"]
+  node_ac2_wait_pump["ac2-wait-pump<br/>wait_for"]
+  node_ac2_open_auto_close["ac2-open-auto-close<br/>eval_sync"]
+  node_ac2_enter_tp_percent["ac2-enter-tp-percent<br/>set_input"]
+  node_ac2_blur_percent["ac2-blur-percent<br/>eval_sync"]
+  node_ac2_assert_pump_price_precision["ac2-assert-pump-price-precision<br/>eval_sync"]
+  node_ac2_screenshot_pump["ac2-screenshot-pump<br/>screenshot"]
+  node_ac3_navigate_xyz100["ac3-navigate-xyz100<br/>navigate"]
+  node_ac3_wait_xyz100["ac3-wait-xyz100<br/>wait_for"]
+  node_ac3_open_auto_close["ac3-open-auto-close<br/>eval_sync"]
+  node_ac3_enter_tp_percent["ac3-enter-tp-percent<br/>set_input"]
+  node_ac3_blur_percent["ac3-blur-percent<br/>eval_sync"]
+  node_ac3_assert_xyz100_price_precision["ac3-assert-xyz100-price-precision<br/>eval_sync"]
+  node_ac3_screenshot_xyz100["ac3-screenshot-xyz100<br/>screenshot"]
+  node_ac4_navigate_eth["ac4-navigate-eth<br/>navigate"]
+  node_ac4_wait_eth["ac4-wait-eth<br/>wait_for"]
+  node_ac4_open_auto_close["ac4-open-auto-close<br/>eval_sync"]
+  node_ac4_enter_tp_percent["ac4-enter-tp-percent<br/>set_input"]
+  node_ac4_blur_percent["ac4-blur-percent<br/>eval_sync"]
+  node_ac4_assert_eth_price_precision["ac4-assert-eth-price-precision<br/>eval_sync"]
+  node_ac4_screenshot_eth["ac4-screenshot-eth<br/>screenshot"]
+  node_teardown_done(["teardown-done<br/>PASS"])
+  node_setup_prime_perps --> node_ac1_navigate_btc
+  node_ac1_navigate_btc --> node_ac1_wait_btc
+  node_ac1_wait_btc --> node_ac1_open_auto_close
+  node_ac1_open_auto_close --> node_ac1_enter_tp_percent
+  node_ac1_enter_tp_percent --> node_ac1_blur_percent
+  node_ac1_blur_percent --> node_ac1_assert_btc_price_precision
+  node_ac1_assert_btc_price_precision --> node_ac1_screenshot_btc
+  node_ac1_screenshot_btc --> node_ac2_navigate_pump
+  node_ac2_navigate_pump --> node_ac2_wait_pump
+  node_ac2_wait_pump --> node_ac2_open_auto_close
+  node_ac2_open_auto_close --> node_ac2_enter_tp_percent
+  node_ac2_enter_tp_percent --> node_ac2_blur_percent
+  node_ac2_blur_percent --> node_ac2_assert_pump_price_precision
+  node_ac2_assert_pump_price_precision --> node_ac2_screenshot_pump
+  node_ac2_screenshot_pump --> node_ac3_navigate_xyz100
+  node_ac3_navigate_xyz100 --> node_ac3_wait_xyz100
+  node_ac3_wait_xyz100 --> node_ac3_open_auto_close
+  node_ac3_open_auto_close --> node_ac3_enter_tp_percent
+  node_ac3_enter_tp_percent --> node_ac3_blur_percent
+  node_ac3_blur_percent --> node_ac3_assert_xyz100_price_precision
+  node_ac3_assert_xyz100_price_precision --> node_ac3_screenshot_xyz100
+  node_ac3_screenshot_xyz100 --> node_ac4_navigate_eth
+  node_ac4_navigate_eth --> node_ac4_wait_eth
+  node_ac4_wait_eth --> node_ac4_open_auto_close
+  node_ac4_open_auto_close --> node_ac4_enter_tp_percent
+  node_ac4_enter_tp_percent --> node_ac4_blur_percent
+  node_ac4_blur_percent --> node_ac4_assert_eth_price_precision
+  node_ac4_assert_eth_price_precision --> node_ac4_screenshot_eth
+  node_ac4_screenshot_eth --> node_teardown_done

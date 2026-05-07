@@ -1,0 +1,86 @@
+{
+  "version": 1,
+  "verdict": "pass",
+  "compact": {
+    "verdict": "PASS",
+    "reasons": [
+      "AC1-4 are covered by ac<N>-* assertion nodes; trace.json records every AC-prefixed node with ok=true.",
+      "Mixed visual/state claims have before/after screenshots plus trace assertions for exact decimal counts.",
+      "Reverting the formatter change makes the baseline assertions pass and the fixed recipe assertions fail for over-precise generated TP prices."
+    ],
+    "better_version_guidance": []
+  },
+  "dimensions": {
+    "graph_integrity": {
+      "status": "pass",
+      "reason": "Recipe dry-run succeeded and the live trace shows the graph reached teardown-done.",
+      "evidence": [
+        "recipe.json",
+        "workflow.mmd",
+        "trace.json"
+      ]
+    },
+    "action_contract": {
+      "status": "pass",
+      "reason": "All nodes use executable actions and allowed ID prefixes; no manual actions or forbidden skip paths are present.",
+      "evidence": [
+        "recipe.json"
+      ]
+    },
+    "ac_coverage": {
+      "status": "pass",
+      "reason": "Every AC from TASK.md maps to ac<N>-prefixed assertion and screenshot nodes with PROVEN rows.",
+      "evidence": [
+        "recipe-coverage.md",
+        "trace.json"
+      ]
+    },
+    "evidence_contract_basics": {
+      "status": "pass",
+      "reason": "Each mixed AC has direct trace proof for decimal count and visible before/after screenshots on the affected order-entry screen.",
+      "evidence": [
+        "screenshots/before-evidence-ac*.png-*",
+        "screenshots/after-evidence-ac*.png-*",
+        "before.mp4",
+        "after.mp4"
+      ]
+    },
+    "perps_state_setup": {
+      "status": "pass",
+      "reason": "Recipe starts with perps/prime-perps-state and uses live order-entry routes for BTC, PUMP, xyz:XYZ100, and ETH.",
+      "evidence": [
+        "recipe.json",
+        "trace.json"
+      ]
+    }
+  },
+  "structural_findings": [],
+  "contextual_findings": [],
+  "suggested_recipe_delta": [],
+  "training_fields": {
+    "farm": "metamask-extension",
+    "project": "metamask-extension-farm",
+    "flow_type": "fix-bug",
+    "task_type": "fix-bug",
+    "claim_is_visual": true,
+    "proof_mode": "mixed",
+    "anti_patterns": [],
+    "good_patterns": [
+      "AC-prefixed assertion nodes",
+      "before/after screenshots for visible precision deltas",
+      "shared Perps setup flow"
+    ]
+  },
+  "meta": {
+    "producer": "worker",
+    "fallback_used": false,
+    "legacy_task": false,
+    "artifact_required": true,
+    "source_signals": [
+      "recipe.json",
+      "recipe-coverage.md",
+      "trace.json",
+      "screenshots"
+    ]
+  }
+}
