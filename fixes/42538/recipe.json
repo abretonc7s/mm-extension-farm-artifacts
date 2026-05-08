@@ -1,0 +1,105 @@
+{
+  "title": "TAT-3060 — perps order-entry error states",
+  "schema_version": 1,
+  "validate": {
+    "workflow": {
+      "pre_conditions": ["wallet.unlocked"],
+      "setup": [
+        {
+          "id": "setup-prime-perps",
+          "action": "call",
+          "ref": "perps/prime-perps-state"
+        },
+        {
+          "id": "setup-navigate-order-entry",
+          "action": "navigate",
+          "target": "PerpsOrderEntry",
+          "params": { "symbol": "BTC", "direction": "long" }
+        },
+        {
+          "id": "setup-wait-form",
+          "action": "wait_for",
+          "test_id": "perps-order-entry-page",
+          "timeout_ms": 10000
+        }
+      ],
+      "entry": "ac1-read-placeholder",
+      "nodes": {
+        "ac1-read-placeholder": {
+          "action": "eval_sync",
+          "expression": "(()=>{const w=document.querySelector('[data-testid=\"amount-input-field\"]');const i=w?.tagName==='INPUT'?w:w?.querySelector('input');return {placeholder:(i)?.placeholder ?? null};})()",
+          "assert": { "field": "placeholder", "operator": "eq", "value": "0.00" },
+          "save_as": "ac1_ph",
+          "next": "ac1-screenshot-placeholder"
+        },
+        "ac1-screenshot-placeholder": {
+          "action": "screenshot",
+          "filename": "evidence-ac1-placeholder",
+          "note": "AC1: order-size input shows default '0.00' placeholder, not 'min $10'.",
+          "next": "ac2-read-submit-state"
+        },
+        "ac2-read-submit-state": {
+          "action": "eval_sync",
+          "expression": "(()=>{const b=document.querySelector('[data-testid=\"submit-order-button\"]');const w=document.querySelector('[data-testid=\"amount-input-field\"]');const i=w?.tagName==='INPUT'?w:w?.querySelector('input');return {disabled: !!b?.disabled, amount:(i)?.value ?? '', text:(b)?.innerText ?? ''};})()",
+          "assert": { "all": [
+            { "field": "disabled", "operator": "eq", "value": true },
+            { "field": "amount", "operator": "eq", "value": "" },
+            { "field": "text", "operator": "matches", "value": "Order size must be at least \\$10" }
+          ] },
+          "save_as": "ac2_btn",
+          "next": "ac2-screenshot-submit-active"
+        },
+        "ac2-screenshot-submit-active": {
+          "action": "screenshot",
+          "filename": "evidence-ac2-submit-disabled",
+          "note": "AC2: submit button is disabled at startup with empty order size and shows the minimum-order copy.",
+          "next": "ac3-prep-scroll-spy"
+        },
+        "ac3-prep-scroll-spy": {
+          "action": "eval_sync",
+          "expression": "(()=>{document.querySelectorAll('*').forEach((el)=>{if(el.scrollTop) el.scrollTop=0;});window.__autoCloseScrollCalls=[];const orig=Element.prototype.scrollIntoView;Element.prototype.scrollIntoView=function(...args){window.__autoCloseScrollCalls.push({tag:this.tagName,testid:this.getAttribute('data-testid')||null});return orig.apply(this,args);};return {ok:true};})()",
+          "assert": { "field": "ok", "operator": "eq", "value": true },
+          "next": "ac3-toggle-auto-close"
+        },
+        "ac3-toggle-auto-close": {
+          "action": "eval_sync",
+          "expression": "(()=>{const inp=document.querySelector('[data-testid=\"auto-close-toggle\"]');const label=inp?.closest('label');label?.click();return {clicked:!!label};})()",
+          "assert": { "field": "clicked", "operator": "eq", "value": true },
+          "next": "ac3-wait-tp-input"
+        },
+        "ac3-wait-tp-input": {
+          "action": "wait_for",
+          "test_id": "tp-price-input",
+          "timeout_ms": 5000,
+          "next": "ac3-settle-scroll"
+        },
+        "ac3-settle-scroll": {
+          "action": "wait",
+          "ms": 600,
+          "next": "ac3-assert-scroll-into-view"
+        },
+        "ac3-assert-scroll-into-view": {
+          "action": "eval_sync",
+          "expression": "(()=>{const calls=window.__autoCloseScrollCalls||[];const tp=document.querySelector('[data-testid=\"tp-price-input\"]');const sl=document.querySelector('[data-testid=\"sl-price-input\"]');const tpRect=tp?.getBoundingClientRect();const slRect=sl?.getBoundingClientRect();const vh=window.innerHeight;return {scrollIntoViewCount:calls.length, scrollCalls:calls, tpVisible: !!tpRect && tpRect.top >= 0 && tpRect.bottom <= vh, slVisible: !!slRect && slRect.top >= 0 && slRect.bottom <= vh, slBottom:slRect?.bottom ?? -1, vh};})()",
+          "assert": { "all": [
+            { "field": "scrollIntoViewCount", "operator": "gt", "value": 0 },
+            { "field": "tpVisible", "operator": "eq", "value": true },
+            { "field": "slVisible", "operator": "eq", "value": true }
+          ] },
+          "save_as": "ac3_vis",
+          "next": "ac3-screenshot-auto-close-visible"
+        },
+        "ac3-screenshot-auto-close-visible": {
+          "action": "screenshot",
+          "filename": "evidence-ac3-auto-close-visible",
+          "note": "AC3: enabling auto-close calls scrollIntoView and TP+SL inputs are visible without further user scroll.",
+          "next": "done"
+        },
+        "done": {
+          "action": "end",
+          "status": "pass"
+        }
+      }
+    }
+  }
+}

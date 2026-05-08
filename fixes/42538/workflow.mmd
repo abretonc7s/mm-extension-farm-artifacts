@@ -1,0 +1,24 @@
+flowchart TD
+  %% TAT-3060 — perps order-entry error states
+  __entry__(["ENTRY"]) --> node_ac1_read_placeholder
+  node_ac1_read_placeholder["ac1-read-placeholder<br/>eval_sync"]
+  node_ac1_screenshot_placeholder["ac1-screenshot-placeholder<br/>screenshot"]
+  node_ac2_read_submit_state["ac2-read-submit-state<br/>eval_sync"]
+  node_ac2_screenshot_submit_active["ac2-screenshot-submit-active<br/>screenshot"]
+  node_ac3_prep_scroll_spy["ac3-prep-scroll-spy<br/>eval_sync"]
+  node_ac3_toggle_auto_close["ac3-toggle-auto-close<br/>eval_sync"]
+  node_ac3_wait_tp_input["ac3-wait-tp-input<br/>wait_for"]
+  node_ac3_settle_scroll["ac3-settle-scroll<br/>wait"]
+  node_ac3_assert_scroll_into_view["ac3-assert-scroll-into-view<br/>eval_sync"]
+  node_ac3_screenshot_auto_close_visible["ac3-screenshot-auto-close-visible<br/>screenshot"]
+  node_done(["done<br/>PASS"])
+  node_ac1_read_placeholder --> node_ac1_screenshot_placeholder
+  node_ac1_screenshot_placeholder --> node_ac2_read_submit_state
+  node_ac2_read_submit_state --> node_ac2_screenshot_submit_active
+  node_ac2_screenshot_submit_active --> node_ac3_prep_scroll_spy
+  node_ac3_prep_scroll_spy --> node_ac3_toggle_auto_close
+  node_ac3_toggle_auto_close --> node_ac3_wait_tp_input
+  node_ac3_wait_tp_input --> node_ac3_settle_scroll
+  node_ac3_settle_scroll --> node_ac3_assert_scroll_into_view
+  node_ac3_assert_scroll_into_view --> node_ac3_screenshot_auto_close_visible
+  node_ac3_screenshot_auto_close_visible --> node_done

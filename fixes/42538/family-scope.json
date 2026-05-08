@@ -1,0 +1,6 @@
+{
+  "originalFamilyScopeSummary": "Adjust order screen validation states and auto-close scrolling behavior",
+  "currentTriggerSummary": "pr-complete: Adjust order screen validation states and auto-close scrolling behavior",
+  "scopeVerdict": "full-scope-addressed",
+  "notes": "PR #42538 implements the three TAT-3060 ACs: (1) drop redundant 'min $10' placeholder, (2) keep submit disabled at startup with 'Order size must be at least $10' as the single source of truth for the minimum-order requirement, (3) auto-scroll TP/SL into view on auto-close toggle. Local follow-up commit 80e1935ef5 reconciled an earlier-implementation drift (submit had been left active at empty state) with the final PR description and recipe AC2. Recipe re-validation 10/10 PASS post-merge. No reviewer comments outstanding."
+}
