@@ -1,0 +1,144 @@
+{
+  "description": "Validates that navigateBack() correctly pops history when clicking back from order-entry page",
+  "hooks": {
+    "pre_conditions": [
+      "wallet.unlocked"
+    ],
+    "setup": [],
+    "teardown": []
+  },
+  "inputs": {},
+  "playback": {
+    "mode": "off",
+    "slow_ms": 1000
+  },
+  "sourcePath": "",
+  "title": "PR #42531 — back-button single click after order entry navigation",
+  "workflow": {
+    "entry": "setup-nav-market-detail",
+    "nodes": {
+      "setup-nav-market-detail": {
+        "action": "eval_sync",
+        "expression": "window.location.hash = '#/perps/market/BTC'; window.location.hash",
+        "next": "setup-wait-market-detail",
+        "id": "setup-nav-market-detail"
+      },
+      "setup-wait-market-detail": {
+        "action": "wait_for",
+        "test_id": "perps-market-detail-page",
+        "timeout_ms": 30000,
+        "next": "setup-nav-order-entry",
+        "id": "setup-wait-market-detail"
+      },
+      "setup-nav-order-entry": {
+        "action": "eval_sync",
+        "expression": "window.location.hash = '#/perps/trade/BTC'; window.location.hash",
+        "next": "setup-wait-order-entry",
+        "id": "setup-nav-order-entry"
+      },
+      "setup-wait-order-entry": {
+        "action": "wait_for",
+        "test_id": "perps-order-entry-back-button",
+        "timeout_ms": 30000,
+        "next": "ac1-screenshot-order-entry",
+        "id": "setup-wait-order-entry"
+      },
+      "ac1-screenshot-order-entry": {
+        "action": "screenshot",
+        "filename": "evidence-ac1-order-entry-before-back.png",
+        "note": "AC1: order-entry page loaded, back button visible",
+        "next": "ac1-click-back-button",
+        "id": "ac1-screenshot-order-entry"
+      },
+      "ac1-click-back-button": {
+        "action": "press",
+        "test_id": "perps-order-entry-back-button",
+        "next": "ac1-wait-market-detail",
+        "id": "ac1-click-back-button"
+      },
+      "ac1-wait-market-detail": {
+        "action": "wait_for",
+        "test_id": "perps-market-detail-page",
+        "timeout_ms": 15000,
+        "next": "ac1-assert-on-market-detail",
+        "id": "ac1-wait-market-detail"
+      },
+      "ac1-assert-on-market-detail": {
+        "action": "eval_sync",
+        "expression": "window.location.hash",
+        "assert": {
+          "operator": "contains",
+          "value": "/perps/market/BTC"
+        },
+        "next": "ac1-screenshot-after-back",
+        "id": "ac1-assert-on-market-detail"
+      },
+      "ac1-screenshot-after-back": {
+        "action": "screenshot",
+        "filename": "evidence-ac1-market-detail-after-back.png",
+        "note": "AC1: single back click returned to market detail",
+        "next": "ac2-nav-order-entry-direct",
+        "id": "ac1-screenshot-after-back"
+      },
+      "ac2-nav-order-entry-direct": {
+        "action": "eval_sync",
+        "expression": "window.location.hash = '#/perps/trade/BTC'; window.location.hash",
+        "next": "ac2-wait-order-entry-direct",
+        "id": "ac2-nav-order-entry-direct"
+      },
+      "ac2-wait-order-entry-direct": {
+        "action": "wait_for",
+        "test_id": "perps-order-entry-back-button",
+        "timeout_ms": 30000,
+        "next": "ac2-check-history-length-before",
+        "id": "ac2-wait-order-entry-direct"
+      },
+      "ac2-check-history-length-before": {
+        "action": "eval_sync",
+        "expression": "window.history.length",
+        "save_as": "historyBefore",
+        "assert": {
+          "operator": "gt",
+          "value": 1
+        },
+        "next": "ac2-click-back",
+        "id": "ac2-check-history-length-before"
+      },
+      "ac2-click-back": {
+        "action": "press",
+        "test_id": "perps-order-entry-back-button",
+        "next": "ac2-wait-navigated",
+        "id": "ac2-click-back"
+      },
+      "ac2-wait-navigated": {
+        "action": "wait_for",
+        "expression": "!window.location.hash.includes('/perps/trade/')",
+        "timeout_ms": 15000,
+        "next": "ac2-assert-not-on-order-entry",
+        "id": "ac2-wait-navigated"
+      },
+      "ac2-assert-not-on-order-entry": {
+        "action": "eval_sync",
+        "expression": "window.location.hash",
+        "assert": {
+          "operator": "not_contains",
+          "value": "/perps/trade/"
+        },
+        "next": "ac2-screenshot-navigated-away",
+        "id": "ac2-assert-not-on-order-entry"
+      },
+      "ac2-screenshot-navigated-away": {
+        "action": "screenshot",
+        "filename": "evidence-ac2-navigated-away-single-click.png",
+        "note": "AC2: back button navigated away in single click",
+        "next": "done",
+        "id": "ac2-screenshot-navigated-away"
+      },
+      "done": {
+        "action": "end",
+        "status": "pass",
+        "id": "done"
+      }
+    }
+  }
+}

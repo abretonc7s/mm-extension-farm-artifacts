@@ -1,0 +1,36 @@
+flowchart TD
+  %% PR #42531 — back-button single click after order entry navigation
+  __entry__(["ENTRY"]) --> node_setup_nav_market_detail
+  node_setup_nav_market_detail["setup-nav-market-detail<br/>eval_sync"]
+  node_setup_wait_market_detail["setup-wait-market-detail<br/>wait_for"]
+  node_setup_nav_order_entry["setup-nav-order-entry<br/>eval_sync"]
+  node_setup_wait_order_entry["setup-wait-order-entry<br/>wait_for"]
+  node_ac1_screenshot_order_entry["ac1-screenshot-order-entry<br/>screenshot"]
+  node_ac1_click_back_button["ac1-click-back-button<br/>press"]
+  node_ac1_wait_market_detail["ac1-wait-market-detail<br/>wait_for"]
+  node_ac1_assert_on_market_detail["ac1-assert-on-market-detail<br/>eval_sync"]
+  node_ac1_screenshot_after_back["ac1-screenshot-after-back<br/>screenshot"]
+  node_ac2_nav_order_entry_direct["ac2-nav-order-entry-direct<br/>eval_sync"]
+  node_ac2_wait_order_entry_direct["ac2-wait-order-entry-direct<br/>wait_for"]
+  node_ac2_check_history_length_before["ac2-check-history-length-before<br/>eval_sync"]
+  node_ac2_click_back["ac2-click-back<br/>press"]
+  node_ac2_wait_navigated["ac2-wait-navigated<br/>wait_for"]
+  node_ac2_assert_not_on_order_entry["ac2-assert-not-on-order-entry<br/>eval_sync"]
+  node_ac2_screenshot_navigated_away["ac2-screenshot-navigated-away<br/>screenshot"]
+  node_done(["done<br/>PASS"])
+  node_setup_nav_market_detail --> node_setup_wait_market_detail
+  node_setup_wait_market_detail --> node_setup_nav_order_entry
+  node_setup_nav_order_entry --> node_setup_wait_order_entry
+  node_setup_wait_order_entry --> node_ac1_screenshot_order_entry
+  node_ac1_screenshot_order_entry --> node_ac1_click_back_button
+  node_ac1_click_back_button --> node_ac1_wait_market_detail
+  node_ac1_wait_market_detail --> node_ac1_assert_on_market_detail
+  node_ac1_assert_on_market_detail --> node_ac1_screenshot_after_back
+  node_ac1_screenshot_after_back --> node_ac2_nav_order_entry_direct
+  node_ac2_nav_order_entry_direct --> node_ac2_wait_order_entry_direct
+  node_ac2_wait_order_entry_direct --> node_ac2_check_history_length_before
+  node_ac2_check_history_length_before --> node_ac2_click_back
+  node_ac2_click_back --> node_ac2_wait_navigated
+  node_ac2_wait_navigated --> node_ac2_assert_not_on_order_entry
+  node_ac2_assert_not_on_order_entry --> node_ac2_screenshot_navigated_away
+  node_ac2_screenshot_navigated_away --> node_done

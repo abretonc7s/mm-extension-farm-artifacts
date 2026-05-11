@@ -1,0 +1,13 @@
+{
+  "pr_number": "42531",
+  "recommendation": "APPROVE",
+  "summary": "Clean navigation refactor that correctly fixes the double-click back-button bug by unifying both navigation paths through a shared navigateBack helper. All 69 tests pass, live validation confirms single-click behavior.",
+  "comments": [
+    {
+      "path": "ui/pages/perps/perps-order-entry-page.tsx",
+      "line": 1267,
+      "body": "nitpick: `onClick={() => handleBackClick()}` creates a new arrow function on each render. Since `handleBackClick` is already wrapped in `useCallback` and accepts an optional param, `onClick={handleBackClick}` would work here — the React `MouseEvent` would be passed as `extraState`, but `extraState?.pendingOrderSymbol` would be `undefined` so the `if` block is safely skipped. That said, the wrapper is arguably clearer about intent (no args passed), so this is purely stylistic.",
+      "severity": "nitpick"
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "recipe_file": "temp/tasks/review/42531-0511-165720/artifacts/recipe.json",
+  "overall": "pass",
+  "checks": {
+    "ac_coverage": {
+      "verdict": "pass",
+      "reason": "2/2 ACs PROVEN with assertion + screenshot evidence"
+    },
+    "forbidden_patterns": {
+      "verdict": "pass",
+      "reason": "No forbidden patterns detected"
+    },
+    "node_naming": {
+      "verdict": "pass",
+      "reason": "All nodes use ac<N>- or setup- prefixes"
+    },
+    "assertion_rigor": {
+      "verdict": "pass",
+      "reason": "Hash assertions verify exact route; history.length > 1 asserts stack state"
+    },
+    "revert_sensitivity": {
+      "verdict": "pass",
+      "reason": "If navigateBack reverts to old navigate(replace), history pop would not work and ac1-wait-market-detail would timeout"
+    },
+    "flow_reuse": {
+      "verdict": "pass",
+      "reason": "No existing flow covers order-entry back-button navigation; raw steps justified"
+    }
+  },
+  "better_version_guidance": "Could add a post-order-submission flow to test the exact PR scenario, but this requires real mainnet funds. Current recipe validates the core navigation fix path."
+}

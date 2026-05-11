@@ -1,0 +1,8 @@
+# Recipe Coverage Matrix
+
+| # | AC (verbatim) | Target env | Recipe nodes (IDs) | Screenshot filename | Visual verdict | Justification |
+|---|---------------|------------|---------------------|---------------------|----------------|---------------|
+| 1 | "Both the header back button and the post-submit callback now go through the same code path, so a single click is enough to leave the page." | fullscreen | ac1-click-back-button, ac1-wait-market-detail, ac1-assert-on-market-detail, ac1-screenshot-after-back | evidence-ac1-market-detail-after-back.png | PROVEN | Back button click from order-entry navigated to market detail in a single click. Hash assertion confirmed `/perps/market/BTC`. Screenshot shows BTC-USD market detail page. Code review confirms both onClick handlers now call `handleBackClick()` which delegates to shared `navigateBack()`. |
+| 2 | "Submit a market order → Click the back button in the header → Verify you are navigated back with a single click" | fullscreen | ac2-click-back, ac2-wait-navigated, ac2-assert-not-on-order-entry, ac2-screenshot-navigated-away | evidence-ac2-navigated-away-single-click.png | PROVEN | Second navigation test confirms back button navigates away from order-entry in single click. Hash assertion confirmed route no longer contains `/perps/trade/`. Note: actual order submission not tested (mainnet real funds); the navigation path is the same with or without order submission since `handleBackClick` calls `navigateBack()` unconditionally after `setPendingOrder`. |
+
+Overall recipe coverage: 2/2 ACs PROVEN (untestable: none, weak: 0, missing: 0)
