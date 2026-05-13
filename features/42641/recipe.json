@@ -1,0 +1,176 @@
+{
+  "schema_version": 1,
+  "title": "TAT-1043 — Slippage visualization and configuration on perps order entry",
+  "description": "Proves the user can see estimated slippage on the perps order screen, open a configuration sheet, persist a max-slippage value, and have submission blocked when the estimate exceeds the configured cap. Default max-slippage is 3% when no value has been set. Visual evidence is captured separately as `after.mp4` because the order entry page subscribes to streaming order-book updates that prevent Playwright's element-stability check from settling.",
+  "validate": {
+    "workflow": {
+      "pre_conditions": ["wallet.unlocked", "perps.feature_enabled"],
+      "setup": [
+        {
+          "id": "setup-clear-pref",
+          "action": "eval_async",
+          "expression": "(async()=>{try{await stateHooks.submitRequestToBackground('setPreference',['perpsMaxSlippagePct',undefined]);return JSON.stringify({ok:true})}catch(e){return JSON.stringify({ok:false,error:String(e&&e.message||e)})}})()",
+          "assert": { "operator": "eq", "field": "ok", "value": true }
+        },
+        {
+          "id": "setup-prime",
+          "action": "call",
+          "ref": "perps/prime-perps-state"
+        },
+        {
+          "id": "setup-nav-trade",
+          "action": "ext_navigate_hash",
+          "hash": "perps/trade/SOL?direction=long&mode=new"
+        },
+        {
+          "id": "setup-wait-form",
+          "action": "wait_for",
+          "test_id": "perps-order-entry-page",
+          "timeout_ms": 15000
+        },
+        {
+          "id": "setup-set-amount",
+          "action": "set_input",
+          "test_id": "amount-input-field",
+          "value": "50"
+        }
+      ],
+      "teardown": [
+        {
+          "id": "teardown-reset-pref",
+          "action": "eval_async",
+          "expression": "(async()=>{try{await stateHooks.submitRequestToBackground('setPreference',['perpsMaxSlippagePct',undefined]);return JSON.stringify({ok:true})}catch(e){return JSON.stringify({ok:false,error:String(e&&e.message||e)})}})()"
+        }
+      ],
+      "entry": "ac4-read-default-pref",
+      "nodes": {
+        "ac4-read-default-pref": {
+          "action": "eval_sync",
+          "expression": "(function(){var s=stateHooks.store.getState();var prefs=s&&s.metamask&&s.metamask.preferences||{};var raw=prefs.perpsMaxSlippagePct;var resolved=(typeof raw==='number'&&raw>0)?raw:3;return JSON.stringify({raw:(raw===undefined||raw===null)?'unset':raw,resolved:resolved})})()",
+          "assert": {
+            "all": [
+              { "operator": "eq", "field": "raw", "value": "unset" },
+              { "operator": "eq", "field": "resolved", "value": 3 }
+            ]
+          },
+          "save_as": "default_pref",
+          "next": "ac1-wait-slippage-row"
+        },
+        "ac1-wait-slippage-row": {
+          "action": "wait_for",
+          "test_id": "perps-order-summary-slippage-row",
+          "timeout_ms": 5000,
+          "next": "ac1-wait-estimate-populated"
+        },
+        "ac1-wait-estimate-populated": {
+          "action": "eval_async",
+          "expression": "(async()=>{var deadline=Date.now()+10000;while(Date.now()<deadline){var el=document.querySelector('[data-testid=\"perps-order-summary-estimated-slippage\"]');var text=el?(el.textContent||'').trim():'';if(text.endsWith('%')){return JSON.stringify({populated:true,text:text})}await new Promise(function(r){setTimeout(r,250)})}return JSON.stringify({populated:false})})()",
+          "assert": { "operator": "eq", "field": "populated", "value": true },
+          "next": "ac1-assert-estimate-visible"
+        },
+        "ac1-assert-estimate-visible": {
+          "action": "eval_sync",
+          "expression": "(function(){var el=document.querySelector('[data-testid=\"perps-order-summary-estimated-slippage\"]');var text=el?(el.textContent||'').trim():'';var stripped=text.replace('%','').replace('<','').replace('>','').trim();var pct=Number.parseFloat(stripped);return JSON.stringify({found:!!el,text:text,is_percent:text.endsWith('%'),is_number:Number.isFinite(pct)})})()",
+          "assert": {
+            "all": [
+              { "operator": "eq", "field": "found", "value": true },
+              { "operator": "eq", "field": "is_percent", "value": true },
+              { "operator": "eq", "field": "is_number", "value": true }
+            ]
+          },
+          "next": "ac4-assert-default-3pct"
+        },
+        "ac4-assert-default-3pct": {
+          "action": "eval_sync",
+          "expression": "(function(){var el=document.querySelector('[data-testid=\"perps-order-summary-max-slippage-button\"]');return JSON.stringify({found:!!el,text:el?(el.textContent||'').trim():''})})()",
+          "assert": {
+            "all": [
+              { "operator": "eq", "field": "found", "value": true },
+              { "operator": "contains", "field": "text", "value": "3" }
+            ]
+          },
+          "next": "ac2-press-max-slippage"
+        },
+        "ac2-press-max-slippage": {
+          "action": "press",
+          "test_id": "perps-order-summary-max-slippage-button",
+          "next": "ac2-wait-modal"
+        },
+        "ac2-wait-modal": {
+          "action": "wait_for",
+          "test_id": "perps-slippage-config-input",
+          "timeout_ms": 5000,
+          "next": "ac2-assert-input-prefilled"
+        },
+        "ac2-assert-input-prefilled": {
+          "action": "eval_sync",
+          "expression": "(function(){var el=document.querySelector('[data-testid=\"perps-slippage-config-input\"]');var val=el?el.value:null;var pct=val!==null?Number.parseFloat(val):NaN;return JSON.stringify({found:!!el,value:val,equals_default:pct===3})})()",
+          "assert": {
+            "all": [
+              { "operator": "eq", "field": "found", "value": true },
+              { "operator": "eq", "field": "equals_default", "value": true }
+            ]
+          },
+          "next": "ac3-set-input"
+        },
+        "ac3-set-input": {
+          "action": "set_input",
+          "test_id": "perps-slippage-config-input",
+          "value": "5",
+          "next": "ac3-press-save"
+        },
+        "ac3-press-save": {
+          "action": "press",
+          "test_id": "perps-slippage-config-save",
+          "next": "ac3-assert-persisted"
+        },
+        "ac3-assert-persisted": {
+          "action": "eval_async",
+          "expression": "(async()=>{await new Promise(function(r){setTimeout(r,500)});var s=stateHooks.store.getState();var prefs=s&&s.metamask&&s.metamask.preferences||{};return JSON.stringify({saved:prefs.perpsMaxSlippagePct})})()",
+          "assert": { "operator": "eq", "field": "saved", "value": 5 },
+          "next": "ac3-assert-button-reflects"
+        },
+        "ac3-assert-button-reflects": {
+          "action": "eval_sync",
+          "expression": "(function(){var el=document.querySelector('[data-testid=\"perps-order-summary-max-slippage-button\"]');return JSON.stringify({text:el?(el.textContent||'').trim():''})})()",
+          "assert": { "operator": "contains", "field": "text", "value": "5" },
+          "next": "ac5-set-tiny-max"
+        },
+        "ac5-set-tiny-max": {
+          "action": "eval_async",
+          "expression": "(async()=>{try{await stateHooks.submitRequestToBackground('setPreference',['perpsMaxSlippagePct',0.1]);return JSON.stringify({ok:true})}catch(e){return JSON.stringify({ok:false,error:String(e&&e.message||e)})}})()",
+          "assert": { "operator": "eq", "field": "ok", "value": true },
+          "next": "ac5-set-large-amount"
+        },
+        "ac5-set-large-amount": {
+          "action": "set_input",
+          "test_id": "amount-input-field",
+          "value": "1000000",
+          "next": "ac5-wait-blocked"
+        },
+        "ac5-wait-blocked": {
+          "action": "wait_for",
+          "test_id": "perps-slippage-blocked-error",
+          "timeout_ms": 5000,
+          "next": "ac5-assert-submit-disabled"
+        },
+        "ac5-assert-submit-disabled": {
+          "action": "eval_sync",
+          "expression": "(function(){var btn=document.querySelector('[data-testid=\"submit-order-button\"]');var err=document.querySelector('[data-testid=\"perps-slippage-blocked-error\"]');return JSON.stringify({btn_disabled:!!(btn&&btn.disabled),err_visible:!!err,err_text:err?(err.textContent||'').trim():''})})()",
+          "assert": {
+            "all": [
+              { "operator": "eq", "field": "btn_disabled", "value": true },
+              { "operator": "eq", "field": "err_visible", "value": true }
+            ]
+          },
+          "next": "done"
+        },
+        "done": {
+          "action": "end",
+          "status": "pass",
+          "message": "Slippage visualization and configuration verified on extension order entry"
+        }
+      }
+    }
+  }
+}

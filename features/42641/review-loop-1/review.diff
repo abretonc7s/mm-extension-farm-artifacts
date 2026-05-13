@@ -1,0 +1,1264 @@
+diff --git a/app/_locales/en/messages.json b/app/_locales/en/messages.json
+index 9734452f87..6174904d59 100644
+--- a/app/_locales/en/messages.json
++++ b/app/_locales/en/messages.json
+@@ -6253,9 +6253,37 @@
+   "perpsSize": {
+     "message": "Size"
+   },
++  "perpsSlippageBlockedError": {
++    "message": "Estimated slippage exceeds your max slippage of $1. Adjust the order size or raise the cap.",
++    "description": "Inline error shown on the perps order entry when the live estimated slippage exceeds the configured max-slippage cap. $1 is the configured max-slippage percent."
++  },
++  "perpsSlippageConfigDescription": {
++    "message": "Orders are blocked when the estimated slippage exceeds this cap. Applies to all future trades until changed.",
++    "description": "Description text inside the slippage configuration sheet."
++  },
++  "perpsSlippageConfigInputLabel": {
++    "message": "Max slippage percent",
++    "description": "Accessibility label for the slippage percent input in the configuration sheet."
++  },
++  "perpsSlippageConfigOutOfRange": {
++    "message": "Enter a value between $1% and $2%.",
++    "description": "Validation error when the user enters a value outside the allowed slippage range. $1 is min percent, $2 is max percent."
++  },
++  "perpsSlippageConfigTitle": {
++    "message": "Max slippage",
++    "description": "Title of the slippage configuration sheet."
++  },
++  "perpsSlippageEstimated": {
++    "message": "Estimated slippage",
++    "description": "Label for the estimated slippage row in the order summary."
++  },
+   "perpsSlippageExceeded": {
+     "message": "Slippage exceeded. Adjust your slippage tolerance and try again."
+   },
++  "perpsSlippageMaxLabel": {
++    "message": "Max $1",
++    "description": "Compact label shown on the max-slippage button next to the estimated slippage. $1 is the configured max-slippage percent (e.g. '3.0%')."
++  },
+   "perpsSortByFundingRate": {
+     "message": "Funding rate"
+   },
+diff --git a/app/_locales/en_GB/messages.json b/app/_locales/en_GB/messages.json
+index 9734452f87..6174904d59 100644
+--- a/app/_locales/en_GB/messages.json
++++ b/app/_locales/en_GB/messages.json
+@@ -6253,9 +6253,37 @@
+   "perpsSize": {
+     "message": "Size"
+   },
++  "perpsSlippageBlockedError": {
++    "message": "Estimated slippage exceeds your max slippage of $1. Adjust the order size or raise the cap.",
++    "description": "Inline error shown on the perps order entry when the live estimated slippage exceeds the configured max-slippage cap. $1 is the configured max-slippage percent."
++  },
++  "perpsSlippageConfigDescription": {
++    "message": "Orders are blocked when the estimated slippage exceeds this cap. Applies to all future trades until changed.",
++    "description": "Description text inside the slippage configuration sheet."
++  },
++  "perpsSlippageConfigInputLabel": {
++    "message": "Max slippage percent",
++    "description": "Accessibility label for the slippage percent input in the configuration sheet."
++  },
++  "perpsSlippageConfigOutOfRange": {
++    "message": "Enter a value between $1% and $2%.",
++    "description": "Validation error when the user enters a value outside the allowed slippage range. $1 is min percent, $2 is max percent."
++  },
++  "perpsSlippageConfigTitle": {
++    "message": "Max slippage",
++    "description": "Title of the slippage configuration sheet."
++  },
++  "perpsSlippageEstimated": {
++    "message": "Estimated slippage",
++    "description": "Label for the estimated slippage row in the order summary."
++  },
+   "perpsSlippageExceeded": {
+     "message": "Slippage exceeded. Adjust your slippage tolerance and try again."
+   },
++  "perpsSlippageMaxLabel": {
++    "message": "Max $1",
++    "description": "Compact label shown on the max-slippage button next to the estimated slippage. $1 is the configured max-slippage percent (e.g. '3.0%')."
++  },
+   "perpsSortByFundingRate": {
+     "message": "Funding rate"
+   },
+diff --git a/shared/constants/perps-events.ts b/shared/constants/perps-events.ts
+index 491392969b..ec9a1018fa 100644
+--- a/shared/constants/perps-events.ts
++++ b/shared/constants/perps-events.ts
+@@ -41,6 +41,9 @@ export const PERPS_EVENT_PROPERTY = {
+   MARKET_CATEGORY_FILTER: 'market_category_filter',
+   OPEN_POSITION: 'open_position',
+   OPEN_ORDER: 'open_order',
++  MAX_SLIPPAGE_PCT: 'max_slippage_pct',
++  MAX_SLIPPAGE_SOURCE: 'max_slippage_source',
++  ESTIMATED_SLIPPAGE_PCT: 'estimated_slippage_pct',
+ } as const;
+ 
+ export const PERPS_EVENT_VALUE = {
+@@ -70,6 +73,13 @@ export const PERPS_EVENT_VALUE = {
+     TUTORIAL_STARTED: 'tutorial_started',
+     TUTORIAL_COMPLETED: 'tutorial_completed',
+     TUTORIAL_NAVIGATION: 'tutorial_navigation',
++    SLIPPAGE_CONFIG_OPENED: 'slippage_config_opened',
++    SLIPPAGE_CONFIG_CHANGED: 'slippage_config_changed',
++    SLIPPAGE_LIMIT_BLOCKED_ORDER: 'slippage_limit_blocked_order',
++  },
++  MAX_SLIPPAGE_SOURCE: {
++    DEFAULT: 'default',
++    USER_CONFIGURED: 'user_configured',
+   },
+   BUTTON_CLICKED: {
+     DEPOSIT: 'deposit',
+diff --git a/shared/types/preferences.ts b/shared/types/preferences.ts
+index fadcaea9bd..c9eb448326 100644
+--- a/shared/types/preferences.ts
++++ b/shared/types/preferences.ts
+@@ -27,4 +27,5 @@ export type Preferences = {
+   useNativeCurrencyAsPrimaryCurrency: boolean;
+   useSidePanelAsDefault?: boolean;
+   perpsSelectedCandlePeriod?: string;
++  perpsMaxSlippagePct?: number;
+ };
+diff --git a/ui/components/app/perps/constants.ts b/ui/components/app/perps/constants.ts
+index 68cc959730..8b404047b7 100644
+--- a/ui/components/app/perps/constants.ts
++++ b/ui/components/app/perps/constants.ts
+@@ -60,6 +60,17 @@ export const PERPS_CONSTANTS = {
+  */
+ export const PERPS_MIN_MARKET_ORDER_USD = 10;
+ 
++// Slippage configuration bounds for the perps order entry surface.
++// Default 3% matches HyperLiquid's `DefaultMarketSlippageBps = 300`, so a
++// user who never opens the config sheet gets the same protection the
++// controller already enforces. Range 0.1%–10% in 0.1% steps covers tight
++// (deep-book major) and loose (illiquid HIP-3) trading without inviting
++// unsafe values.
++export const PERPS_SLIPPAGE_DEFAULT_PCT = 3;
++export const PERPS_SLIPPAGE_MIN_PCT = 0.1;
++export const PERPS_SLIPPAGE_MAX_PCT = 10;
++export const PERPS_SLIPPAGE_STEP_PCT = 0.1;
++
+ /**
+  * Market sorting configuration
+  * Controls sorting behavior for the markets view
+diff --git a/ui/components/app/perps/order-entry/components/order-summary/order-summary.tsx b/ui/components/app/perps/order-entry/components/order-summary/order-summary.tsx
+index 3bda617192..54504bd8ac 100644
+--- a/ui/components/app/perps/order-entry/components/order-summary/order-summary.tsx
++++ b/ui/components/app/perps/order-entry/components/order-summary/order-summary.tsx
+@@ -1,28 +1,32 @@
+ import React from 'react';
+ import {
+   Box,
+-  Text,
+-  TextVariant,
+-  TextColor,
++  BoxAlignItems,
+   BoxFlexDirection,
+   BoxJustifyContent,
+-  BoxAlignItems,
++  ButtonBase,
++  Text,
++  TextColor,
++  TextVariant,
+ } from '@metamask/design-system-react';
+ import { useI18nContext } from '../../../../../../hooks/useI18nContext';
+ import type { OrderSummaryProps } from '../../order-entry.types';
++import { formatSlippagePct } from '../../../utils/slippageFormat';
+ 
+ /**
+- * OrderSummary - Displays calculated order values (margin, fees, liquidation price)
++ * OrderSummary - Displays calculated order values (margin, fees, liquidation price, slippage)
+  *
+  * @param props - Component props
+  * @param props.marginRequired - Margin required for the position
+  * @param props.estimatedFees - Estimated trading fees
+  * @param props.liquidationPrice - Estimated liquidation price
++ * @param props.slippage - Optional slippage row config (estimated + max with click handler)
+  */
+ export const OrderSummary: React.FC<OrderSummaryProps> = ({
+   marginRequired,
+   estimatedFees,
+   liquidationPrice,
++  slippage,
+ }) => {
+   const t = useI18nContext();
+ 
+@@ -81,6 +85,51 @@ export const OrderSummary: React.FC<OrderSummaryProps> = ({
+           {estimatedFees ?? '-'}
+         </Text>
+       </Box>
++
++      {/* Slippage (TAT-1043) */}
++      {slippage && (
++        <Box
++          flexDirection={BoxFlexDirection.Row}
++          justifyContent={BoxJustifyContent.Between}
++          alignItems={BoxAlignItems.Center}
++          data-testid="perps-order-summary-slippage-row"
++        >
++          <Box
++            flexDirection={BoxFlexDirection.Row}
++            alignItems={BoxAlignItems.Center}
++            gap={1}
++          >
++            <Text
++              variant={TextVariant.BodySm}
++              color={TextColor.TextAlternative}
++            >
++              {t('perpsSlippageEstimated')}
++            </Text>
++            <Text
++              variant={TextVariant.BodySm}
++              color={TextColor.TextDefault}
++              data-testid="perps-order-summary-estimated-slippage"
++            >
++              {formatSlippagePct(
++                slippage.estimatedPct,
++                slippage.insufficientLiquidity,
++              )}
++            </Text>
++          </Box>
++          <ButtonBase
++            type="button"
++            onClick={slippage.onMaxSlippageClick}
++            data-testid="perps-order-summary-max-slippage-button"
++            className="h-7 rounded-md bg-muted px-2 py-0"
++          >
++            <Text variant={TextVariant.BodySm} color={TextColor.TextDefault}>
++              {t('perpsSlippageMaxLabel', [
++                `${slippage.maxSlippagePct.toFixed(1)}%`,
++              ])}
++            </Text>
++          </ButtonBase>
++        </Box>
++      )}
+     </Box>
+   );
+ };
+diff --git a/ui/components/app/perps/order-entry/order-entry.types.ts b/ui/components/app/perps/order-entry/order-entry.types.ts
+index 586b99cd18..813c9cc2fc 100644
+--- a/ui/components/app/perps/order-entry/order-entry.types.ts
++++ b/ui/components/app/perps/order-entry/order-entry.types.ts
+@@ -216,6 +216,16 @@ export type OrderSummaryProps = {
+   estimatedFees: string | null;
+   /** Estimated liquidation price */
+   liquidationPrice: string | null;
++  /**
++   * Slippage row props. When omitted the row is hidden — keeps the summary
++   * usable from screens that don't currently surface order-book depth.
++   */
++  slippage?: {
++    estimatedPct: number | null;
++    insufficientLiquidity: boolean;
++    maxSlippagePct: number;
++    onMaxSlippageClick: () => void;
++  };
+ };
+ 
+ /**
+diff --git a/ui/components/app/perps/slippage-config-modal/index.ts b/ui/components/app/perps/slippage-config-modal/index.ts
+new file mode 100644
+index 0000000000..669c3d19a0
+--- /dev/null
++++ b/ui/components/app/perps/slippage-config-modal/index.ts
+@@ -0,0 +1,2 @@
++export { SlippageConfigModal } from './slippage-config-modal';
++export type { SlippageConfigModalProps } from './slippage-config-modal';
+diff --git a/ui/components/app/perps/slippage-config-modal/slippage-config-modal.test.tsx b/ui/components/app/perps/slippage-config-modal/slippage-config-modal.test.tsx
+new file mode 100644
+index 0000000000..dfee1e9bc9
+--- /dev/null
++++ b/ui/components/app/perps/slippage-config-modal/slippage-config-modal.test.tsx
+@@ -0,0 +1,80 @@
++import React from 'react';
++import { screen, fireEvent } from '@testing-library/react';
++import { renderWithProvider } from '../../../../../test/lib/render-helpers-navigate';
++import configureStore from '../../../../store/store';
++import mockState from '../../../../../test/data/mock-state.json';
++import { SlippageConfigModal } from './slippage-config-modal';
++
++const mockStore = configureStore({
++  metamask: { ...mockState.metamask },
++});
++
++function render(
++  props: Partial<React.ComponentProps<typeof SlippageConfigModal>> = {},
++) {
++  const onSave = jest.fn();
++  const onClose = jest.fn();
++  renderWithProvider(
++    <SlippageConfigModal
++      isOpen
++      currentValuePct={3}
++      onSave={onSave}
++      onClose={onClose}
++      {...props}
++    />,
++    mockStore,
++  );
++  return { onSave, onClose };
++}
++
++describe('SlippageConfigModal', () => {
++  it('renders with the current max-slippage value pre-selected in the input', () => {
++    render({ currentValuePct: 3 });
++    const input = screen.getByTestId(
++      'perps-slippage-config-input',
++    ) as HTMLInputElement;
++    expect(input.value).toBe('3');
++  });
++
++  it('saves the chosen value, snapping it to the 0.1% step, and closes', () => {
++    const { onSave, onClose } = render({ currentValuePct: 3 });
++    const input = screen.getByTestId(
++      'perps-slippage-config-input',
++    ) as HTMLInputElement;
++    fireEvent.change(input, { target: { value: '1.23' } });
++    fireEvent.click(screen.getByTestId('perps-slippage-config-save'));
++    expect(onSave).toHaveBeenCalledTimes(1);
++    expect(onSave.mock.calls[0][0]).toBeCloseTo(1.2, 5);
++    expect(onClose).toHaveBeenCalled();
++  });
++
++  it('disables save and shows an error when the value is out of the allowed range', () => {
++    render();
++    const input = screen.getByTestId(
++      'perps-slippage-config-input',
++    ) as HTMLInputElement;
++    fireEvent.change(input, { target: { value: '50' } });
++    expect(screen.getByTestId('perps-slippage-config-save')).toBeDisabled();
++    expect(
++      screen.getByTestId('perps-slippage-config-error'),
++    ).toBeInTheDocument();
++  });
++
++  it('applies a preset and triggers save with the preset value', () => {
++    const { onSave } = render({ currentValuePct: 3 });
++    fireEvent.click(screen.getByTestId('perps-slippage-config-preset-5'));
++    fireEvent.click(screen.getByTestId('perps-slippage-config-save'));
++    expect(onSave).toHaveBeenCalledWith(5);
++  });
++
++  it('does nothing when save is clicked with an invalid value', () => {
++    const { onSave, onClose } = render();
++    const input = screen.getByTestId(
++      'perps-slippage-config-input',
++    ) as HTMLInputElement;
++    fireEvent.change(input, { target: { value: '0.05' } });
++    fireEvent.click(screen.getByTestId('perps-slippage-config-save'));
++    expect(onSave).not.toHaveBeenCalled();
++    expect(onClose).not.toHaveBeenCalled();
++  });
++});
+diff --git a/ui/components/app/perps/slippage-config-modal/slippage-config-modal.tsx b/ui/components/app/perps/slippage-config-modal/slippage-config-modal.tsx
+new file mode 100644
+index 0000000000..f0145c8433
+--- /dev/null
++++ b/ui/components/app/perps/slippage-config-modal/slippage-config-modal.tsx
+@@ -0,0 +1,243 @@
++import React, { useEffect, useRef, useState } from 'react';
++import {
++  Box,
++  Button,
++  ButtonIcon,
++  ButtonIconSize,
++  ButtonSize,
++  ButtonVariant,
++  FontWeight,
++  IconName,
++  Text,
++  TextColor,
++  TextVariant,
++} from '@metamask/design-system-react';
++import {
++  Modal,
++  ModalContent,
++  ModalContentSize,
++  ModalOverlay,
++} from '../../../component-library';
++import {
++  AlignItems,
++  Display,
++  JustifyContent,
++} from '../../../../helpers/constants/design-system';
++import { useI18nContext } from '../../../../hooks/useI18nContext';
++import { getEnvironmentType } from '../../../../../shared/lib/environment-type';
++import {
++  ENVIRONMENT_TYPE_POPUP,
++  ENVIRONMENT_TYPE_SIDEPANEL,
++} from '../../../../../shared/constants/app';
++import {
++  PERPS_SLIPPAGE_DEFAULT_PCT,
++  PERPS_SLIPPAGE_MAX_PCT,
++  PERPS_SLIPPAGE_MIN_PCT,
++  PERPS_SLIPPAGE_STEP_PCT,
++} from '../constants';
++
++export type SlippageConfigModalProps = {
++  isOpen: boolean;
++  currentValuePct: number;
++  onClose: () => void;
++  onSave: (valuePct: number) => void;
++};
++
++const QUICK_PICK_PCTS = [0.5, 1, 3, 5];
++
++function clampToBounds(value: number): number {
++  if (!Number.isFinite(value)) {
++    return PERPS_SLIPPAGE_DEFAULT_PCT;
++  }
++  return Math.min(
++    PERPS_SLIPPAGE_MAX_PCT,
++    Math.max(PERPS_SLIPPAGE_MIN_PCT, value),
++  );
++}
++
++// Round to the nearest 0.1 to honor the step contract (AC2).
++function snapToStep(value: number): number {
++  return Math.round(value / PERPS_SLIPPAGE_STEP_PCT) * PERPS_SLIPPAGE_STEP_PCT;
++}
++
++export const SlippageConfigModal: React.FC<SlippageConfigModalProps> = ({
++  isOpen,
++  currentValuePct,
++  onClose,
++  onSave,
++}) => {
++  const t = useI18nContext();
++  const [draftValue, setDraftValue] = useState<string>(
++    currentValuePct.toString(),
++  );
++  const savedValueRef = useRef(currentValuePct);
++
++  useEffect(() => {
++    if (isOpen) {
++      savedValueRef.current = currentValuePct;
++      setDraftValue(currentValuePct.toString());
++    }
++  }, [isOpen, currentValuePct]);
++
++  const parsedDraft = Number.parseFloat(draftValue);
++  const draftIsValid =
++    Number.isFinite(parsedDraft) &&
++    parsedDraft >= PERPS_SLIPPAGE_MIN_PCT &&
++    parsedDraft <= PERPS_SLIPPAGE_MAX_PCT;
++
++  const handleSave = () => {
++    if (!draftIsValid) {
++      return;
++    }
++    const finalValue = snapToStep(clampToBounds(parsedDraft));
++    onSave(finalValue);
++    onClose();
++  };
++
++  const handleQuickPick = (pct: number) => {
++    setDraftValue(pct.toString());
++  };
++
++  const environmentType = getEnvironmentType();
++  const isCompactSheet =
++    environmentType === ENVIRONMENT_TYPE_POPUP ||
++    environmentType === ENVIRONMENT_TYPE_SIDEPANEL;
++
++  const modalLayoutProps = isCompactSheet
++    ? {
++        justifyContent: JustifyContent.flexEnd,
++        alignItems: AlignItems.stretch,
++        dialogStyle: {
++          marginTop: 'auto',
++          width: '100%',
++          maxWidth: '100%',
++          borderTopLeftRadius: '20px',
++          borderTopRightRadius: '20px',
++          borderBottomLeftRadius: 0,
++          borderBottomRightRadius: 0,
++          overflow: 'hidden',
++        },
++      }
++    : {
++        justifyContent: JustifyContent.center,
++        alignItems: AlignItems.center,
++        dialogStyle: {
++          width: '100%',
++          maxWidth: '360px',
++          borderRadius: '20px',
++        },
++      };
++
++  return (
++    <Modal
++      isOpen={isOpen}
++      onClose={onClose}
++      data-testid="perps-slippage-config-modal"
++    >
++      <ModalOverlay />
++      <ModalContent
++        size={ModalContentSize.Sm}
++        display={Display.Flex}
++        justifyContent={modalLayoutProps.justifyContent}
++        alignItems={modalLayoutProps.alignItems}
++        padding={0}
++        modalDialogProps={{
++          padding: 0,
++          style: modalLayoutProps.dialogStyle,
++        }}
++      >
++        <div className="px-4 pb-4 pt-3">
++          <div className="relative flex min-h-8 items-center justify-center">
++            <Text
++              variant={TextVariant.HeadingSm}
++              fontWeight={FontWeight.Bold}
++              className="text-center"
++            >
++              {t('perpsSlippageConfigTitle')}
++            </Text>
++            <ButtonIcon
++              iconName={IconName.Close}
++              ariaLabel={t('close')}
++              size={ButtonIconSize.Md}
++              onClick={onClose}
++              className="absolute right-0 top-1/2 -translate-y-1/2"
++            />
++          </div>
++        </div>
++
++        <Box className="flex flex-col gap-3 px-4 pb-5">
++          <Text variant={TextVariant.BodySm} color={TextColor.TextAlternative}>
++            {t('perpsSlippageConfigDescription')}
++          </Text>
++
++          <div className="relative">
++            <input
++              type="number"
++              inputMode="decimal"
++              min={PERPS_SLIPPAGE_MIN_PCT}
++              max={PERPS_SLIPPAGE_MAX_PCT}
++              step={PERPS_SLIPPAGE_STEP_PCT}
++              value={draftValue}
++              onChange={(e) => setDraftValue(e.target.value)}
++              data-testid="perps-slippage-config-input"
++              aria-label={t('perpsSlippageConfigInputLabel')}
++              className="h-12 w-full rounded-xl border border-muted bg-default px-4 pr-10 text-right text-base text-default focus:border-icon-default focus:outline-none"
++            />
++            <span
++              aria-hidden="true"
++              className="pointer-events-none absolute right-4 top-1/2 -translate-y-1/2 text-base text-alternative"
++            >
++              %
++            </span>
++          </div>
++
++          <div className="grid grid-cols-4 gap-2">
++            {QUICK_PICK_PCTS.map((pct) => {
++              const isSelected =
++                draftIsValid && snapToStep(parsedDraft) === pct;
++              return (
++                <Button
++                  key={pct}
++                  type="button"
++                  variant={
++                    isSelected ? ButtonVariant.Primary : ButtonVariant.Secondary
++                  }
++                  size={ButtonSize.Sm}
++                  onClick={() => handleQuickPick(pct)}
++                  data-testid={`perps-slippage-config-preset-${pct}`}
++                >{`${pct}%`}</Button>
++              );
++            })}
++          </div>
++
++          {!draftIsValid && (
++            <Text
++              variant={TextVariant.BodySm}
++              color={TextColor.ErrorDefault}
++              data-testid="perps-slippage-config-error"
++            >
++              {t('perpsSlippageConfigOutOfRange', [
++                `${PERPS_SLIPPAGE_MIN_PCT}`,
++                `${PERPS_SLIPPAGE_MAX_PCT}`,
++              ])}
++            </Text>
++          )}
++
++          <Button
++            type="button"
++            variant={ButtonVariant.Primary}
++            size={ButtonSize.Lg}
++            disabled={!draftIsValid}
++            onClick={handleSave}
++            data-testid="perps-slippage-config-save"
++            className="w-full"
++          >
++            {t('save')}
++          </Button>
++        </Box>
++      </ModalContent>
++    </Modal>
++  );
++};
++
++export default SlippageConfigModal;
+diff --git a/ui/components/app/perps/utils/slippageFormat.test.ts b/ui/components/app/perps/utils/slippageFormat.test.ts
+new file mode 100644
+index 0000000000..aa462a038a
+--- /dev/null
++++ b/ui/components/app/perps/utils/slippageFormat.test.ts
+@@ -0,0 +1,23 @@
++import { formatSlippagePct } from './slippageFormat';
++
++describe('formatSlippagePct', () => {
++  it('returns ">10%" when liquidity is insufficient', () => {
++    expect(formatSlippagePct(null, true)).toBe('>10%');
++    expect(formatSlippagePct(5, true)).toBe('>10%');
++  });
++
++  it('returns "—" when estimate is null and liquidity is sufficient', () => {
++    expect(formatSlippagePct(null, false)).toBe('—');
++  });
++
++  it('returns "<0.01%" for sub-rounding-threshold non-zero estimates', () => {
++    expect(formatSlippagePct(0.0001, false)).toBe('<0.01%');
++    expect(formatSlippagePct(0.0099, false)).toBe('<0.01%');
++  });
++
++  it('returns two-decimal percent for in-range estimates', () => {
++    expect(formatSlippagePct(0.01, false)).toBe('0.01%');
++    expect(formatSlippagePct(3, false)).toBe('3.00%');
++    expect(formatSlippagePct(9.876, false)).toBe('9.88%');
++  });
++});
+diff --git a/ui/components/app/perps/utils/slippageFormat.ts b/ui/components/app/perps/utils/slippageFormat.ts
+new file mode 100644
+index 0000000000..8eea165979
+--- /dev/null
++++ b/ui/components/app/perps/utils/slippageFormat.ts
+@@ -0,0 +1,20 @@
++// Format a slippage percent for display in the order summary.
++// `<0.01` returns "<0.01%" so a tight-book non-zero estimate never reads as
++// "0.00%". `null` (no book / not enough size) returns "—" to distinguish
++// "unknown" from "zero". `insufficientLiquidity` returns ">10%" so the
++// cap-blocked AC5 path still has a label when the book cannot fill.
++export function formatSlippagePct(
++  estimatedPct: number | null,
++  insufficientLiquidity: boolean,
++): string {
++  if (insufficientLiquidity) {
++    return '>10%';
++  }
++  if (estimatedPct === null) {
++    return '—';
++  }
++  if (estimatedPct < 0.01) {
++    return '<0.01%';
++  }
++  return `${estimatedPct.toFixed(2)}%`;
++}
+diff --git a/ui/hooks/perps/useEstimatedSlippage.test.ts b/ui/hooks/perps/useEstimatedSlippage.test.ts
+new file mode 100644
+index 0000000000..45ae0c31bd
+--- /dev/null
++++ b/ui/hooks/perps/useEstimatedSlippage.test.ts
+@@ -0,0 +1,97 @@
++import type { OrderBookData } from '@metamask/perps-controller';
++import { computeSlippagePct } from './useEstimatedSlippage';
++
++function level(price: string, size: string): OrderBookData['asks'][number] {
++  const total = size;
++  const notional = String(Number(price) * Number(size));
++  return { price, size, total, notional, totalNotional: notional };
++}
++
++function book(overrides: Partial<OrderBookData> = {}): OrderBookData {
++  return {
++    bids: [],
++    asks: [],
++    spread: '0',
++    spreadPercentage: '0',
++    midPrice: '100',
++    lastUpdated: Date.now(),
++    maxTotal: '0',
++    ...overrides,
++  };
++}
++
++describe('computeSlippagePct', () => {
++  it('returns null + insufficientLiquidity=false when the book has no asks for a long', () => {
++    const result = computeSlippagePct(book({ asks: [] }), 100, 'long');
++    expect(result).toStrictEqual({
++      estimatedSlippagePct: null,
++      insufficientLiquidity: false,
++    });
++  });
++
++  it('computes slippage from the ask side for a long', () => {
++    // Notional 210 USD fully consumes 1@100 + 1@110 → avg 105 → 5% above mid.
++    const result = computeSlippagePct(
++      book({
++        asks: [level('100', '1'), level('110', '1')],
++        midPrice: '100',
++      }),
++      210,
++      'long',
++    );
++    expect(result.insufficientLiquidity).toBe(false);
++    expect(result.estimatedSlippagePct).toBeCloseTo(5, 5);
++  });
++
++  it('computes slippage from the bid side for a short', () => {
++    // Notional 190 USD fully consumes 1@100 + 1@90 → avg 95 → 5% below mid.
++    const result = computeSlippagePct(
++      book({
++        bids: [level('100', '1'), level('90', '1')],
++        midPrice: '100',
++      }),
++      190,
++      'short',
++    );
++    expect(result.insufficientLiquidity).toBe(false);
++    expect(result.estimatedSlippagePct).toBeCloseTo(5, 5);
++  });
++
++  it('returns insufficientLiquidity when the book cannot fill the notional', () => {
++    const result = computeSlippagePct(
++      book({ asks: [level('100', '1')], midPrice: '100' }),
++      1_000_000,
++      'long',
++    );
++    expect(result).toStrictEqual({
++      estimatedSlippagePct: null,
++      insufficientLiquidity: true,
++    });
++  });
++
++  it('clamps tiny negative rounding to zero rather than reporting negative slippage', () => {
++    // Fill at exactly mid price → 0% (guards against -1e-15 from float math).
++    const result = computeSlippagePct(
++      book({ asks: [level('100', '10')], midPrice: '100' }),
++      100,
++      'long',
++    );
++    expect(result.estimatedSlippagePct).toBe(0);
++  });
++
++  it('skips malformed levels rather than throwing', () => {
++    const result = computeSlippagePct(
++      book({
++        asks: [
++          level('not-a-number', '1'),
++          level('100', '0'),
++          level('100', '2'),
++        ],
++        midPrice: '100',
++      }),
++      100,
++      'long',
++    );
++    expect(result.estimatedSlippagePct).toBe(0);
++  });
++});
+diff --git a/ui/hooks/perps/useEstimatedSlippage.ts b/ui/hooks/perps/useEstimatedSlippage.ts
+new file mode 100644
+index 0000000000..436c3dbb5c
+--- /dev/null
++++ b/ui/hooks/perps/useEstimatedSlippage.ts
+@@ -0,0 +1,159 @@
++import { useEffect, useMemo, useRef, useState } from 'react';
++import type { OrderBookData } from '@metamask/perps-controller';
++import { getPerpsStreamManager } from '../../providers/perps';
++import { submitRequestToBackground } from '../../store/background-connection';
++
++// HyperLiquid pushes order-book diffs every ~50ms. Re-rendering the order
++// entry page on every tick would (a) drown the form in layout shifts and (b)
++// keep Playwright `page.screenshot` waiting for the page to settle. 500ms
++// is fast enough that a typed-in amount still sees a fresh estimate within
++// half a second and slow enough that the page actually stops repainting.
++const ORDER_BOOK_SAMPLE_MS = 500;
++
++export type EstimatedSlippageParams = {
++  /** Market symbol (e.g. 'ETH', 'BTC'). Empty disables the hook. */
++  symbol: string;
++  /** Notional USD size of the prospective order. Non-positive disables the hook. */
++  notionalUsd: number;
++  /** Order direction. Long walks the ask side, short walks the bid side. */
++  direction: 'long' | 'short';
++  /**
++   * When the user is on a limit order we cannot reason about market-fill
++   * slippage, so the hook returns null. Kept as a flag so the caller can
++   * keep the hook mounted while toggling order types.
++   */
++  enabled?: boolean;
++};
++
++export type EstimatedSlippageResult = {
++  /** Estimated slippage as a percent (e.g. 0.5 = 0.5%). Null when not computable yet. */
++  estimatedSlippagePct: number | null;
++  /** True when the book is too shallow to fill the requested notional. */
++  insufficientLiquidity: boolean;
++};
++
++const EMPTY_RESULT: EstimatedSlippageResult = {
++  estimatedSlippagePct: null,
++  insufficientLiquidity: false,
++};
++
++// Walk one side of the book until `notionalUsd` is filled and return the
++// percent deviation between the volume-weighted fill price and the book's
++// mid price. Exported so the pure calculation can be unit-tested without
++// mocking the perps stream manager.
++export function computeSlippagePct(
++  orderBook: OrderBookData,
++  notionalUsd: number,
++  direction: 'long' | 'short',
++): EstimatedSlippageResult {
++  const levels = direction === 'long' ? orderBook.asks : orderBook.bids;
++  const midPrice = Number.parseFloat(orderBook.midPrice);
++  if (!levels.length || !Number.isFinite(midPrice) || midPrice <= 0) {
++    return EMPTY_RESULT;
++  }
++
++  let remainingUsd = notionalUsd;
++  let filledSize = 0;
++  let filledNotional = 0;
++
++  for (const level of levels) {
++    if (remainingUsd <= 0) {
++      break;
++    }
++    const price = Number.parseFloat(level.price);
++    const size = Number.parseFloat(level.size);
++    if (!Number.isFinite(price) || price <= 0 || !Number.isFinite(size) || size <= 0) {
++      continue;
++    }
++    const levelNotional = price * size;
++    const consumeUsd = Math.min(remainingUsd, levelNotional);
++    const consumeSize = consumeUsd / price;
++    filledSize += consumeSize;
++    filledNotional += consumeUsd;
++    remainingUsd -= consumeUsd;
++  }
++
++  if (filledSize <= 0) {
++    return EMPTY_RESULT;
++  }
++
++  if (remainingUsd > 0) {
++    // Book exhausted before fully filling the order. Use the worst price we
++    // touched as the effective fill price so callers can still surface a
++    // cap-busting estimate while showing the insufficient-liquidity flag.
++    return {
++      estimatedSlippagePct: null,
++      insufficientLiquidity: true,
++    };
++  }
++
++  const avgFillPrice = filledNotional / filledSize;
++  const slippageRatio =
++    direction === 'long'
++      ? (avgFillPrice - midPrice) / midPrice
++      : (midPrice - avgFillPrice) / midPrice;
++  return {
++    estimatedSlippagePct: Math.max(0, slippageRatio * 100),
++    insufficientLiquidity: false,
++  };
++}
++
++/**
++ * Compute an estimated slippage % for a prospective market order against the
++ * live HyperLiquid order book. Subscribes to the same stream the order entry
++ * page already uses (no extra network calls), and returns null until enough
++ * data has arrived to compute a value.
++ *
++ * Mobile parity TODO: mobile does not yet expose this estimate; this hook is
++ * the extension-first implementation for TAT-1043.
++ * @param options0
++ * @param options0.symbol
++ * @param options0.notionalUsd
++ * @param options0.direction
++ * @param options0.enabled
++ */
++export function useEstimatedSlippage({
++  symbol,
++  notionalUsd,
++  direction,
++  enabled = true,
++}: EstimatedSlippageParams): EstimatedSlippageResult {
++  const [orderBook, setOrderBook] = useState<OrderBookData | null>(null);
++  const lastSampleAtRef = useRef(0);
++
++  useEffect(() => {
++    if (!enabled || !symbol) {
++      setOrderBook(null);
++      return undefined;
++    }
++    lastSampleAtRef.current = 0;
++    submitRequestToBackground('perpsActivateOrderBookStream', [
++      { symbol },
++    ]).catch(() => {
++      // Controller not ready; we'll get an update once it is.
++    });
++    const stream = getPerpsStreamManager();
++    const unsubscribe = stream.orderBook.subscribe((book) => {
++      if (!book) {
++        return;
++      }
++      const now = Date.now();
++      if (now - lastSampleAtRef.current < ORDER_BOOK_SAMPLE_MS) {
++        return;
++      }
++      lastSampleAtRef.current = now;
++      setOrderBook(book);
++    });
++    return () => {
++      submitRequestToBackground('perpsDeactivateOrderBookStream', []);
++      unsubscribe();
++    };
++  }, [enabled, symbol]);
++
++  return useMemo(() => {
++    if (!enabled || !orderBook || !Number.isFinite(notionalUsd) || notionalUsd <= 0) {
++      return EMPTY_RESULT;
++    }
++    return computeSlippagePct(orderBook, notionalUsd, direction);
++  }, [enabled, orderBook, notionalUsd, direction]);
++}
+diff --git a/ui/pages/perps/perps-order-entry-page.tsx b/ui/pages/perps/perps-order-entry-page.tsx
+index 860bda98a3..c852cf64ad 100644
+--- a/ui/pages/perps/perps-order-entry-page.tsx
++++ b/ui/pages/perps/perps-order-entry-page.tsx
+@@ -63,7 +63,14 @@ import {
+   selectPerpsDepositPending,
+   selectPerpsTradeConfigurations,
+   selectPerpsIsTestnet,
++  selectPerpsMaxSlippagePct,
+ } from '../../selectors/perps-controller';
++import { useEstimatedSlippage } from '../../hooks/perps/useEstimatedSlippage';
++import { SlippageConfigModal } from '../../components/app/perps/slippage-config-modal';
++import {
++  PERPS_SLIPPAGE_DEFAULT_PCT,
++  PERPS_SLIPPAGE_MAX_PCT,
++ PERPS_MIN_MARKET_ORDER_USD } from '../../components/app/perps/constants';
+ import {
+   CandlePeriod,
+   TimeDuration,
+@@ -103,7 +110,6 @@ import {
+   isStopLossSafeFromLiquidation,
+ } from '../../components/app/perps/utils/tpslValidation';
+ import { PerpsDetailPageSkeleton } from '../../components/app/perps/perps-skeletons';
+-import { PERPS_MIN_MARKET_ORDER_USD } from '../../components/app/perps/constants';
+ import {
+   OrderEntry,
+   DirectionTabs,
+@@ -154,12 +160,14 @@ export function shouldShowPerpsOrderSubmissionToasts(
+  * @param currentPrice - Current asset price in USD
+  * @param mode - Order mode (new, modify, close)
+  * @param existingPositionSize - Size of existing position when closing
++ * @param maxSlippagePct
+  */
+ function formStateToOrderParams(
+   formState: OrderFormState,
+   currentPrice: number,
+   mode: OrderMode,
+-  existingPositionSize?: string,
++  existingPositionSize: string | undefined,
++  maxSlippagePct: number,
+ ): OrderParams {
+   const isBuy = formState.direction === 'long';
+   const marginAmount = Number.parseFloat(formState.amount) || 0;
+@@ -179,6 +187,8 @@ function formStateToOrderParams(
+     leverage: formState.leverage,
+     currentPrice,
+     usdAmount: cleanAmount,
++    // Convert percent → basis points (1% = 100bps) for the controller.
++    maxSlippageBps: Math.round(maxSlippagePct * 100),
+   };
+ 
+   if (formState.type === 'limit' && formState.limitPrice) {
+@@ -244,6 +254,11 @@ const PerpsOrderEntryPage: React.FC = () => {
+   trackRef.current = track;
+   const tradeConfigurations = useSelector(selectPerpsTradeConfigurations);
+   const isTestnet = useSelector(selectPerpsIsTestnet);
++  const persistedMaxSlippagePct = useSelector(selectPerpsMaxSlippagePct);
++  const maxSlippagePct = persistedMaxSlippagePct ?? PERPS_SLIPPAGE_DEFAULT_PCT;
++  const maxSlippageSource: 'default' | 'user_configured' =
++    persistedMaxSlippagePct === undefined ? 'default' : 'user_configured';
++  const [isSlippageConfigOpen, setIsSlippageConfigOpen] = useState(false);
+   const hasPendingPerpsDeposit = useSelector(selectPerpsDepositPending);
+   const { trigger: triggerDeposit, isLoading: isDepositLoading } =
+     usePerpsDepositConfirmation();
+@@ -312,6 +327,71 @@ const PerpsOrderEntryPage: React.FC = () => {
+ 
+   const isOrderPending = isSubmitting;
+ 
++  // Notional USD = margin × leverage. Drives the order-book walk that
++  // produces an estimated slippage percent for AC1 / AC5.
++  const slippageNotional = useMemo(() => {
++    if (!orderFormState) {
++      return 0;
++    }
++    const amount =
++      Number.parseFloat(orderFormState.amount.replace(/,/gu, '')) || 0;
++    return amount * (orderFormState.leverage || 1);
++  }, [orderFormState]);
++
++  const { estimatedSlippagePct, insufficientLiquidity } = useEstimatedSlippage({
++    symbol: decodedSymbol ?? '',
++    notionalUsd: slippageNotional,
++    direction: orderDirection,
++    enabled: orderType === 'market' && orderMode !== 'close',
++  });
++
++  const exceedsMaxSlippage = useMemo(() => {
++    if (orderType !== 'market' || orderMode === 'close') {
++      return false;
++    }
++    if (insufficientLiquidity) {
++      return true;
++    }
++    if (estimatedSlippagePct === null) {
++      return false;
++    }
++    return estimatedSlippagePct > maxSlippagePct;
++  }, [
++    estimatedSlippagePct,
++    insufficientLiquidity,
++    maxSlippagePct,
++    orderType,
++    orderMode,
++  ]);
++
++  const handleOpenSlippageConfig = useCallback(() => {
++    setIsSlippageConfigOpen(true);
++    track(MetaMetricsEventName.PerpsUiInteraction, {
++      [PERPS_EVENT_PROPERTY.INTERACTION_TYPE]:
++        PERPS_EVENT_VALUE.INTERACTION_TYPE.SLIPPAGE_CONFIG_OPENED,
++      [PERPS_EVENT_PROPERTY.MAX_SLIPPAGE_PCT]: maxSlippagePct,
++      [PERPS_EVENT_PROPERTY.MAX_SLIPPAGE_SOURCE]: maxSlippageSource,
++    });
++  }, [track, maxSlippagePct, maxSlippageSource]);
++
++  const handleSaveSlippageConfig = useCallback(
++    (valuePct: number) => {
++      submitRequestToBackground('setPreference', [
++        'perpsMaxSlippagePct',
++        valuePct,
++      ]).catch(() => {
++        // Preference save is best-effort; UI state already reflects the
++        // change via the next Redux flush from the background.
++      });
++      track(MetaMetricsEventName.PerpsUiInteraction, {
++        [PERPS_EVENT_PROPERTY.INTERACTION_TYPE]:
++          PERPS_EVENT_VALUE.INTERACTION_TYPE.SLIPPAGE_CONFIG_CHANGED,
++        [PERPS_EVENT_PROPERTY.MAX_SLIPPAGE_PCT]: valuePct,
++      });
++    },
++    [track],
++  );
++
+   // Dynamic fee rate for close-mode order submission tracking
+   const { feeRate: closeFeeRate } = usePerpsOrderFees({
+     symbol: decodedSymbol ?? '',
+@@ -532,24 +612,24 @@ const PerpsOrderEntryPage: React.FC = () => {
+ 
+     const tpInvalid = Boolean(
+       tp?.trim() &&
+-      !isValidTakeProfitPrice(tp, {
+-        currentPrice: referencePrice,
+-        direction: dir,
+-      }),
++        !isValidTakeProfitPrice(tp, {
++          currentPrice: referencePrice,
++          direction: dir,
++        }),
+     );
+     const slInvalid = Boolean(
+       sl?.trim() &&
+-      !isValidStopLossPrice(sl, {
+-        currentPrice: referencePrice,
+-        direction: dir,
+-      }),
++        !isValidStopLossPrice(sl, {
++          currentPrice: referencePrice,
++          direction: dir,
++        }),
+     );
+     const slLiquidationInvalid = Boolean(
+       sl?.trim() &&
+-      !isStopLossSafeFromLiquidation(sl, {
+-        liquidationPrice,
+-        direction: dir,
+-      }),
++        !isStopLossSafeFromLiquidation(sl, {
++          liquidationPrice,
++          direction: dir,
++        }),
+     );
+ 
+     return tpInvalid || slInvalid || slLiquidationInvalid;
+@@ -607,6 +687,7 @@ const PerpsOrderEntryPage: React.FC = () => {
+         hasInvalidTPSL ||
+         isInsufficientFunds ||
+         isBelowMinOrderSize ||
++        exceedsMaxSlippage ||
+         currentPrice <= 0 ||
+         (orderMode === 'close' &&
+           (orderFormState?.closePercent ?? FULL_CLOSE_PERCENT) <= 0)));
+@@ -817,6 +898,32 @@ const PerpsOrderEntryPage: React.FC = () => {
+     setOrderFormState(formState);
+   }, []);
+ 
++  // Fire `slippage_limit_blocked_order` once per block transition. Tracking
++  // every render would balloon the event volume — and the AC reads as a
++  // single user-visible state change, not continuous noise.
++  const slippageBlockTrackedRef = useRef(false);
++  useEffect(() => {
++    if (exceedsMaxSlippage && !slippageBlockTrackedRef.current) {
++      slippageBlockTrackedRef.current = true;
++      track(MetaMetricsEventName.PerpsUiInteraction, {
++        [PERPS_EVENT_PROPERTY.INTERACTION_TYPE]:
++          PERPS_EVENT_VALUE.INTERACTION_TYPE.SLIPPAGE_LIMIT_BLOCKED_ORDER,
++        [PERPS_EVENT_PROPERTY.MAX_SLIPPAGE_PCT]: maxSlippagePct,
++        [PERPS_EVENT_PROPERTY.MAX_SLIPPAGE_SOURCE]: maxSlippageSource,
++        [PERPS_EVENT_PROPERTY.ESTIMATED_SLIPPAGE_PCT]:
++          estimatedSlippagePct ?? PERPS_SLIPPAGE_MAX_PCT,
++      });
++    } else if (!exceedsMaxSlippage) {
++      slippageBlockTrackedRef.current = false;
++    }
++  }, [
++    exceedsMaxSlippage,
++    track,
++    maxSlippagePct,
++    maxSlippageSource,
++    estimatedSlippagePct,
++  ]);
++
+   const handleCalculationsChange = useCallback(
+     (calculations: OrderCalculations) => {
+       setOrderCalculations(calculations);
+@@ -922,6 +1029,10 @@ const PerpsOrderEntryPage: React.FC = () => {
+           [PERPS_EVENT_PROPERTY.SIZE]: orderFormState.amount,
+           [PERPS_EVENT_PROPERTY.METAMASK_FEE]:
+             orderCalculations?.estimatedFees ?? null,
++          [PERPS_EVENT_PROPERTY.MAX_SLIPPAGE_PCT]: maxSlippagePct,
++          [PERPS_EVENT_PROPERTY.MAX_SLIPPAGE_SOURCE]: maxSlippageSource,
++          [PERPS_EVENT_PROPERTY.ESTIMATED_SLIPPAGE_PCT]:
++            estimatedSlippagePct ?? null,
+         }),
+         ...(event === MetaMetricsEventName.PerpsRiskManagement && {
+           [PERPS_EVENT_PROPERTY.ACTION]: deriveTradeAction(),
+@@ -993,6 +1104,7 @@ const PerpsOrderEntryPage: React.FC = () => {
+             currentPrice,
+             orderMode,
+             position?.size,
++            maxSlippagePct,
+           );
+           // Emit the submit-in-progress toast here (not via route state).
+           replacePerpsToastByKey({
+@@ -1025,6 +1137,10 @@ const PerpsOrderEntryPage: React.FC = () => {
+             [PERPS_EVENT_PROPERTY.SIZE]: orderFormState.amount,
+             [PERPS_EVENT_PROPERTY.METAMASK_FEE]:
+               orderCalculations?.estimatedFees ?? null,
++            [PERPS_EVENT_PROPERTY.MAX_SLIPPAGE_PCT]: maxSlippagePct,
++            [PERPS_EVENT_PROPERTY.MAX_SLIPPAGE_SOURCE]: maxSlippageSource,
++            [PERPS_EVENT_PROPERTY.ESTIMATED_SLIPPAGE_PCT]:
++              estimatedSlippagePct ?? null,
+           });
+ 
+           submitRequestToBackground('perpsSaveTradeConfiguration', [
+@@ -1092,6 +1208,7 @@ const PerpsOrderEntryPage: React.FC = () => {
+         currentPrice,
+         orderMode,
+         position?.size,
++        maxSlippagePct,
+       );
+       // Do not re-emit SUBMIT_IN_PROGRESS via route state — it was already
+       // emitted above by replacePerpsToastByKey. Re-emitting from the
+@@ -1130,6 +1247,10 @@ const PerpsOrderEntryPage: React.FC = () => {
+         [PERPS_EVENT_PROPERTY.SIZE]: orderFormState.amount,
+         [PERPS_EVENT_PROPERTY.METAMASK_FEE]:
+           orderCalculations?.estimatedFees ?? null,
++        [PERPS_EVENT_PROPERTY.MAX_SLIPPAGE_PCT]: maxSlippagePct,
++        [PERPS_EVENT_PROPERTY.MAX_SLIPPAGE_SOURCE]: maxSlippageSource,
++        [PERPS_EVENT_PROPERTY.ESTIMATED_SLIPPAGE_PCT]:
++          estimatedSlippagePct ?? null,
+       });
+ 
+       submitRequestToBackground('perpsSaveTradeConfiguration', [
+@@ -1210,6 +1331,9 @@ const PerpsOrderEntryPage: React.FC = () => {
+     closeFeeRate,
+     hasPendingPerpsDeposit,
+     marketInfo?.szDecimals,
++    maxSlippagePct,
++    maxSlippageSource,
++    estimatedSlippagePct,
+   ]);
+ 
+   const handlePrimaryAction = useCallback(async () => {
+@@ -1443,8 +1567,27 @@ const PerpsOrderEntryPage: React.FC = () => {
+             marginRequired={orderCalculations.marginRequired}
+             estimatedFees={orderCalculations.estimatedFees}
+             liquidationPrice={orderCalculations.liquidationPrice}
++            slippage={
++              orderType === 'market' && orderMode !== 'close'
++                ? {
++                    estimatedPct: estimatedSlippagePct,
++                    insufficientLiquidity,
++                    maxSlippagePct,
++                    onMaxSlippageClick: handleOpenSlippageConfig,
++                  }
++                : undefined
++            }
+           />
+         )}
++        {exceedsMaxSlippage && (
++          <Text
++            variant={TextVariant.BodySm}
++            color={TextColor.ErrorDefault}
++            data-testid="perps-slippage-blocked-error"
++          >
++            {t('perpsSlippageBlockedError', [`${maxSlippagePct.toFixed(1)}%`])}
++          </Text>
++        )}
+         {submitError && (
+           <Text
+             variant={TextVariant.BodySm}
+@@ -1468,6 +1611,12 @@ const PerpsOrderEntryPage: React.FC = () => {
+           {isOrderPending ? t('perpsSubmitting') : resolvedButtonText}
+         </Button>
+       </Box>
++      <SlippageConfigModal
++        isOpen={isSlippageConfigOpen}
++        currentValuePct={maxSlippagePct}
++        onClose={() => setIsSlippageConfigOpen(false)}
++        onSave={handleSaveSlippageConfig}
++      />
+       <PerpsGeoBlockModal
+         isOpen={isGeoBlockModalOpen}
+         onClose={() => setIsGeoBlockModalOpen(false)}
+diff --git a/ui/selectors/perps-controller.ts b/ui/selectors/perps-controller.ts
+index 0aa133ff8b..2605b03e3b 100644
+--- a/ui/selectors/perps-controller.ts
++++ b/ui/selectors/perps-controller.ts
+@@ -267,3 +267,20 @@ export const selectPerpsMarketFilterPreferences = (state: PerpsState) =>
+ 
+ export const selectPerpsTradeConfigurations = (state: PerpsState) =>
+   state.metamask.tradeConfigurations ?? EMPTY_TRADE_CONFIGURATIONS;
++
++/**
++ * Persisted max-slippage percent. Lives in PreferencesController so it
++ * survives across sessions and applies to every future trade until the user
++ * explicitly changes it (TAT-1043).
++ *
++ * Returns the raw stored value (may be undefined when the user has never
++ * configured a value). Callers should fall back to PERPS_SLIPPAGE_DEFAULT_PCT
++ * for display/order math — keeping the raw shape lets callers also emit the
++ * `max_slippage_source` analytics property accurately.
++ */
++type PreferencesSelectorState = {
++  metamask: { preferences?: { perpsMaxSlippagePct?: number } };
++};
++export const selectPerpsMaxSlippagePct = (
++  state: PreferencesSelectorState,
++): number | undefined => state.metamask.preferences?.perpsMaxSlippagePct;

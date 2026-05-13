@@ -1,0 +1,36 @@
+flowchart TD
+  %% TAT-1043 — Slippage visualization and configuration on perps order entry
+  __entry__(["ENTRY"]) --> node_ac4_read_default_pref
+  node_ac4_read_default_pref["ac4-read-default-pref<br/>eval_sync"]
+  node_ac1_wait_slippage_row["ac1-wait-slippage-row<br/>wait_for"]
+  node_ac1_wait_estimate_populated["ac1-wait-estimate-populated<br/>eval_async"]
+  node_ac1_assert_estimate_visible["ac1-assert-estimate-visible<br/>eval_sync"]
+  node_ac4_assert_default_3pct["ac4-assert-default-3pct<br/>eval_sync"]
+  node_ac2_press_max_slippage["ac2-press-max-slippage<br/>press"]
+  node_ac2_wait_modal["ac2-wait-modal<br/>wait_for"]
+  node_ac2_assert_input_prefilled["ac2-assert-input-prefilled<br/>eval_sync"]
+  node_ac3_set_input["ac3-set-input<br/>set_input"]
+  node_ac3_press_save["ac3-press-save<br/>press"]
+  node_ac3_assert_persisted["ac3-assert-persisted<br/>eval_async"]
+  node_ac3_assert_button_reflects["ac3-assert-button-reflects<br/>eval_sync"]
+  node_ac5_set_tiny_max["ac5-set-tiny-max<br/>eval_async"]
+  node_ac5_set_large_amount["ac5-set-large-amount<br/>set_input"]
+  node_ac5_wait_blocked["ac5-wait-blocked<br/>wait_for"]
+  node_ac5_assert_submit_disabled["ac5-assert-submit-disabled<br/>eval_sync"]
+  node_done(["done<br/>PASS"])
+  node_ac4_read_default_pref --> node_ac1_wait_slippage_row
+  node_ac1_wait_slippage_row --> node_ac1_wait_estimate_populated
+  node_ac1_wait_estimate_populated --> node_ac1_assert_estimate_visible
+  node_ac1_assert_estimate_visible --> node_ac4_assert_default_3pct
+  node_ac4_assert_default_3pct --> node_ac2_press_max_slippage
+  node_ac2_press_max_slippage --> node_ac2_wait_modal
+  node_ac2_wait_modal --> node_ac2_assert_input_prefilled
+  node_ac2_assert_input_prefilled --> node_ac3_set_input
+  node_ac3_set_input --> node_ac3_press_save
+  node_ac3_press_save --> node_ac3_assert_persisted
+  node_ac3_assert_persisted --> node_ac3_assert_button_reflects
+  node_ac3_assert_button_reflects --> node_ac5_set_tiny_max
+  node_ac5_set_tiny_max --> node_ac5_set_large_amount
+  node_ac5_set_large_amount --> node_ac5_wait_blocked
+  node_ac5_wait_blocked --> node_ac5_assert_submit_disabled
+  node_ac5_assert_submit_disabled --> node_done

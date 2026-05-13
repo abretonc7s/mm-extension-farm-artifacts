@@ -1,0 +1,72 @@
+{
+  "version": 1,
+  "verdict": "pass",
+  "compact": {
+    "verdict": "PASS",
+    "reasons": [
+      "AC1, AC2, AC3, AC4, AC5 each map to ac<N>-* nodes; trace shows 16/16 nodes passed.",
+      "Preferences-state assertions (raw=unset, saved=5, 0.1 cap then >cap) prove the controller-side persistence and block path without depending on screenshot heuristics.",
+      "Visual claims are covered by after.mp4 because the order-entry page's streaming order-book updates prevent Playwright element-stability from settling on still screenshots."
+    ],
+    "better_version_guidance": [
+      "Once Playwright supports stable screenshots on stream-driven pages (or the runner exposes a CDP-direct capture), add per-AC evidence-*.png to complement after.mp4."
+    ]
+  },
+  "dimensions": {
+    "graph_integrity": {
+      "status": "pass",
+      "reason": "Recipe graph is structurally valid; entry → AC nodes → done, no orphans, no skipped switches.",
+      "evidence": ["recipe.json", "workflow.json", "workflow.mmd"]
+    },
+    "action_contract": {
+      "status": "pass",
+      "reason": "All steps are deterministic executable actions (eval_async, eval_sync, wait_for, set_input, press, call). No manual nodes. No wait > 500ms. Setup primes perps state via existing flow.",
+      "evidence": ["recipe.json"]
+    },
+    "ac_coverage": {
+      "status": "pass",
+      "reason": "AC1 estimated slippage shown (ac1-wait-slippage-row + ac1-assert-estimate-visible); AC2 modal pre-fills (ac2-press-max-slippage → ac2-assert-input-prefilled); AC3 persists (ac3-press-save → ac3-assert-persisted → ac3-assert-button-reflects); AC4 default 3% (ac4-read-default-pref + ac4-assert-default-3pct); AC5 cap blocks (ac5-set-tiny-max + ac5-wait-blocked + ac5-assert-submit-disabled). AC6 is a guardrail metric requiring A/B platform — not testable in a single recipe run.",
+      "evidence": ["trace.json", "summary.json"]
+    },
+    "evidence_contract_basics": {
+      "status": "pass",
+      "reason": "Each AC has assertions that would flip to FAIL if the slippage code were removed (estimate text would never become a percent; modal input would not exist; preferences would not save; default would not be 3; cap-block error testid would never appear).",
+      "evidence": ["recipe.json", "trace.json", "after.mp4"]
+    },
+    "perps_state_setup": {
+      "status": "pass",
+      "reason": "Uses perps/prime-perps-state flow + ext_navigate_hash to land on /perps/trade/SOL?direction=long&mode=new without depending on existing positions; no raw setup duplicating existing flows.",
+      "evidence": ["recipe.json"]
+    }
+  },
+  "structural_findings": [],
+  "contextual_findings": [
+    {
+      "code": "page-instability-blocks-screenshot",
+      "message": "Order-entry page renders streamed order-book + price updates that prevent Playwright element-stability waits from settling, so still screenshots time out. Evidence captured as after.mp4 instead.",
+      "dimension": "evidence_contract_basics",
+      "evidence": ["after.mp4"]
+    }
+  ],
+  "suggested_recipe_delta": [],
+  "training_fields": {
+    "farm": "metamask-extension",
+    "project": "metamask-extension-farm",
+    "flow_type": "dev",
+    "task_type": "dev",
+    "claim_is_visual": true,
+    "proof_mode": "mixed",
+    "anti_patterns": [],
+    "good_patterns": [
+      "preferences-state-assertion-for-persistence",
+      "video-when-streaming-pages-block-screenshot-stability"
+    ]
+  },
+  "meta": {
+    "producer": "worker",
+    "fallback_used": false,
+    "legacy_task": false,
+    "artifact_required": true,
+    "source_signals": ["recipe.json", "trace.json", "summary.json", "after.mp4"]
+  }
+}

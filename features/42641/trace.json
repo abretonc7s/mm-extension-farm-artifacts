@@ -1,0 +1,141 @@
+[
+  {
+    "id": "ac4-read-default-pref",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"raw\":\"unset\",\"resolved\":3}",
+    "durationMs": 1
+  },
+  {
+    "id": "ac1-wait-slippage-row",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "testId": "perps-order-summary-slippage-row"
+    },
+    "durationMs": 2
+  },
+  {
+    "id": "ac1-wait-estimate-populated",
+    "action": "eval_async",
+    "ok": true,
+    "raw": "{\"populated\":true,\"text\":\"<0.01%\"}",
+    "durationMs": 0
+  },
+  {
+    "id": "ac1-assert-estimate-visible",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"found\":true,\"text\":\"<0.01%\",\"is_percent\":true,\"is_number\":true}",
+    "durationMs": 0
+  },
+  {
+    "id": "ac4-assert-default-3pct",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"found\":true,\"text\":\"Max 3.0%\"}",
+    "durationMs": 1
+  },
+  {
+    "id": "ac2-press-max-slippage",
+    "action": "press",
+    "ok": true,
+    "raw": {
+      "clicked": true,
+      "testId": "perps-order-summary-max-slippage-button"
+    },
+    "durationMs": 49
+  },
+  {
+    "id": "ac2-wait-modal",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "testId": "perps-slippage-config-input"
+    },
+    "durationMs": 2
+  },
+  {
+    "id": "ac2-assert-input-prefilled",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"found\":true,\"value\":\"3\",\"equals_default\":true}",
+    "durationMs": 1
+  },
+  {
+    "id": "ac3-set-input",
+    "action": "set_input",
+    "ok": true,
+    "raw": {
+      "filled": true,
+      "testId": "perps-slippage-config-input"
+    },
+    "durationMs": 7
+  },
+  {
+    "id": "ac3-press-save",
+    "action": "press",
+    "ok": true,
+    "raw": {
+      "clicked": true,
+      "testId": "perps-slippage-config-save"
+    },
+    "durationMs": 490
+  },
+  {
+    "id": "ac3-assert-persisted",
+    "action": "eval_async",
+    "ok": true,
+    "raw": "{\"saved\":5}",
+    "durationMs": 503
+  },
+  {
+    "id": "ac3-assert-button-reflects",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"text\":\"Max 5.0%\"}",
+    "durationMs": 1
+  },
+  {
+    "id": "ac5-set-tiny-max",
+    "action": "eval_async",
+    "ok": true,
+    "raw": "{\"ok\":true}",
+    "durationMs": 2
+  },
+  {
+    "id": "ac5-set-large-amount",
+    "action": "set_input",
+    "ok": true,
+    "raw": {
+      "filled": true,
+      "testId": "amount-input-field"
+    },
+    "durationMs": 9
+  },
+  {
+    "id": "ac5-wait-blocked",
+    "action": "wait_for",
+    "ok": true,
+    "raw": {
+      "found": true,
+      "testId": "perps-slippage-blocked-error"
+    },
+    "durationMs": 2
+  },
+  {
+    "id": "ac5-assert-submit-disabled",
+    "action": "eval_sync",
+    "ok": true,
+    "raw": "{\"btn_disabled\":true,\"err_visible\":true,\"err_text\":\"Order size exceeds available liquidity in the order book. Reduce the size to continue.\"}",
+    "durationMs": 2
+  },
+  {
+    "id": "done",
+    "action": "end",
+    "status": "pass",
+    "durationMs": 0
+  }
+]

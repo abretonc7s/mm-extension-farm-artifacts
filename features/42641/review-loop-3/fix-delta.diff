@@ -1,0 +1,82 @@
+diff --git a/ui/components/app/perps/utils/slippageFormat.ts b/ui/components/app/perps/utils/slippageFormat.ts
+index b64192a3e1..baac217ece 100644
+--- a/ui/components/app/perps/utils/slippageFormat.ts
++++ b/ui/components/app/perps/utils/slippageFormat.ts
+@@ -1,5 +1,12 @@
+ import { PERPS_SLIPPAGE_MAX_PCT } from '../constants';
+ 
++// Display threshold that matches the two-decimal rendering below — anything
++// below this rounds to "0.00%", which would misread as zero slippage on a
++// non-zero estimate, so render "<0.01%" instead. Not tied to
++// PERPS_SLIPPAGE_MIN_PCT (the configurable cap floor is 0.1%); this is a
++// pure rounding artifact of `toFixed(2)`.
++const SLIPPAGE_DISPLAY_FLOOR_PCT = 0.01;
++
+ // Format a slippage percent for display in the order summary.
+ // `<0.01` returns "<0.01%" so a tight-book non-zero estimate never reads as
+ // "0.00%". `null` (no book / not enough size) returns "—" to distinguish
+@@ -17,8 +24,8 @@ export function formatSlippagePct(
+   if (estimatedPct === null) {
+     return '—';
+   }
+-  if (estimatedPct < 0.01) {
+-    return '<0.01%';
++  if (estimatedPct < SLIPPAGE_DISPLAY_FLOOR_PCT) {
++    return `<${SLIPPAGE_DISPLAY_FLOOR_PCT}%`;
+   }
+   return `${estimatedPct.toFixed(2)}%`;
+ }
+diff --git a/ui/hooks/perps/useEstimatedSlippage.ts b/ui/hooks/perps/useEstimatedSlippage.ts
+index 4e20619d04..d6a26dc5a7 100644
+--- a/ui/hooks/perps/useEstimatedSlippage.ts
++++ b/ui/hooks/perps/useEstimatedSlippage.ts
+@@ -110,11 +110,12 @@ export function computeSlippagePct(
+  *
+  * TODO(TAT-1043): mobile does not yet expose this estimate; this hook is
+  * the extension-first implementation. Port to mobile in the follow-up story.
+- * @param options0
+- * @param options0.symbol
+- * @param options0.notionalUsd
+- * @param options0.direction
+- * @param options0.enabled
++ *
++ * @param params - See `EstimatedSlippageParams`.
++ * @param params.symbol - Market symbol (e.g. 'ETH', 'BTC'). Empty disables the hook.
++ * @param params.notionalUsd - Prospective order notional in USD. Non-positive disables the hook.
++ * @param params.direction - Order direction; 'long' walks asks, 'short' walks bids.
++ * @param params.enabled - Optional kill switch — pass false on limit orders to keep the hook mounted without computing.
+  */
+ export function useEstimatedSlippage({
+   symbol,
+diff --git a/ui/pages/perps/perps-order-entry-page.tsx b/ui/pages/perps/perps-order-entry-page.tsx
+index 873165a306..3385b9b999 100644
+--- a/ui/pages/perps/perps-order-entry-page.tsx
++++ b/ui/pages/perps/perps-order-entry-page.tsx
+@@ -162,7 +162,7 @@ export function shouldShowPerpsOrderSubmissionToasts(
+  * @param currentPrice - Current asset price in USD
+  * @param mode - Order mode (new, modify, close)
+  * @param existingPositionSize - Size of existing position when closing
+- * @param maxSlippagePct
++ * @param maxSlippagePct - User-configured max slippage in percent; converted to bps for market orders, ignored for limit orders (they use the controller's fixed limit-order slippage).
+  */
+ function formStateToOrderParams(
+   formState: OrderFormState,
+@@ -383,13 +383,15 @@ const PerpsOrderEntryPage: React.FC = () => {
+ 
+   const handleSaveSlippageConfig = useCallback(
+     (valuePct: number) => {
++      // The user already saw the modal close — log the persistence failure
++      // so a stale cap on the next session doesn't look silent to the user
++      // or to support. Acceptable swallow per antipatterns "Error handling"
++      // exemption: the modal flow has no inline error surface and a
++      // controller-down toast would be more noise than signal.
+       submitRequestToBackground('setPreference', [
+         'perpsMaxSlippagePct',
+         valuePct,
+       ]).catch((error) => {
+-        // The user already saw the modal close — surface the persistence
+-        // failure in the log so a stale cap on the next session doesn't
+-        // look silent to the user or to support.
+         log.error('[Perps] Save max-slippage preference failed:', error);
+       });
+       track(MetaMetricsEventName.PerpsUiInteraction, {
