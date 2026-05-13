@@ -1,0 +1,205 @@
+{
+  "title": "TAT-3065 real $10 AVAX market+TPSL via UI",
+  "description": "End-to-end repro of TAT-3065. Closes any pre-existing AVAX position, then places a real Hyperliquid $10 market long on AVAX via the order-entry UI with auto-close TP/SL filled in. Asserts the resulting positionTPSL trigger orders (a) come back from HL with isPositionTpsl=true, (b) populate the Auto-close row on the market detail page, and (c) do not appear in the Orders section. Teardown closes the AVAX position.",
+  "schema_version": 1,
+  "validate": {
+    "workflow": {
+      "pre_conditions": ["wallet.unlocked", "perps.feature_enabled"],
+      "setup": [],
+      "teardown": [
+        {
+          "id": "teardown-close-avax",
+          "action": "eval_async",
+          "expression": "(async()=>{try{var p=await stateHooks.submitRequestToBackground('perpsGetPositions',[]);var avax=(p||[]).find(x=>x.symbol==='AVAX');if(!avax){return JSON.stringify({ok:true,skipped:true})}var r=await stateHooks.submitRequestToBackground('perpsClosePosition',[{symbol:'AVAX',orderType:'market'}]);return JSON.stringify({ok:r?.success!==false,result:r})}catch(e){return JSON.stringify({ok:false,error:String(e&&e.message||e)})}})()",
+          "assert": {
+            "all": [
+              { "operator": "eq", "field": "ok", "value": true }
+            ]
+          }
+        }
+      ],
+      "entry": "gate-nav-perps",
+      "nodes": {
+        "gate-nav-perps": {
+          "action": "call",
+          "ref": "perps/navigate-perps-tab",
+          "next": "gate-cleanup-pre-existing-avax"
+        },
+        "gate-cleanup-pre-existing-avax": {
+          "action": "eval_async",
+          "expression": "(async()=>{try{var p=await stateHooks.submitRequestToBackground('perpsGetPositions',[]);var avax=(p||[]).find(x=>x.symbol==='AVAX');if(avax){await stateHooks.submitRequestToBackground('perpsClosePosition',[{symbol:'AVAX',orderType:'market'}]);for(var i=0;i<20;i++){var p2=await stateHooks.submitRequestToBackground('perpsGetPositions',[]);if(!(p2||[]).find(x=>x.symbol==='AVAX')){return JSON.stringify({ok:true,closed:true,attempts:i})}await new Promise(r=>setTimeout(r,500))}return JSON.stringify({ok:false,reason:'failed to close pre-existing AVAX position'})}return JSON.stringify({ok:true,closed:false})}catch(e){return JSON.stringify({ok:false,error:String(e&&e.message||e)})}})()",
+          "assert": {
+            "all": [
+              { "operator": "eq", "field": "ok", "value": true }
+            ]
+          },
+          "save_as": "cleanup",
+          "next": "setup-nav-market"
+        },
+        "setup-nav-market": {
+          "action": "call",
+          "ref": "perps/navigate-to-market-detail",
+          "params": { "symbol": "AVAX" },
+          "next": "setup-wait-long-cta"
+        },
+        "setup-wait-long-cta": {
+          "action": "wait_for",
+          "test_id": "perps-long-cta-button",
+          "timeout_ms": 10000,
+          "next": "setup-press-long"
+        },
+        "setup-press-long": {
+          "action": "press",
+          "test_id": "perps-long-cta-button",
+          "next": "setup-wait-order-form"
+        },
+        "setup-wait-order-form": {
+          "action": "wait_for",
+          "test_id": "perps-order-entry-page",
+          "timeout_ms": 10000,
+          "next": "setup-set-amount"
+        },
+        "setup-set-amount": {
+          "action": "set_input",
+          "test_id": "amount-input-field",
+          "value": "10",
+          "next": "setup-toggle-autoclose"
+        },
+        "setup-toggle-autoclose": {
+          "action": "eval_sync",
+          "expression": "(function(){var el=document.querySelector('[data-testid=\"auto-close-toggle\"]');if(!el){return JSON.stringify({ok:false,reason:'auto-close-toggle not found'})}var label=el.closest('label.toggle-button');if(!label){return JSON.stringify({ok:false,reason:'toggle-button label not found'})}var track=label.querySelector('div[style]')||label.firstElementChild;(track||label).dispatchEvent(new MouseEvent('click',{bubbles:true,cancelable:true,view:window}));return JSON.stringify({ok:true})})()",
+          "assert": {
+            "all": [
+              { "operator": "eq", "field": "ok", "value": true }
+            ]
+          },
+          "next": "setup-wait-tp-input"
+        },
+        "setup-wait-tp-input": {
+          "action": "wait_for",
+          "test_id": "tp-price-input",
+          "timeout_ms": 5000,
+          "next": "setup-set-tp"
+        },
+        "setup-set-tp": {
+          "action": "set_input",
+          "test_id": "tp-price-input",
+          "value": "11",
+          "next": "setup-set-sl"
+        },
+        "setup-set-sl": {
+          "action": "set_input",
+          "test_id": "sl-price-input",
+          "value": "9",
+          "next": "setup-wait-submit-enabled"
+        },
+        "setup-wait-submit-enabled": {
+          "action": "eval_async",
+          "expression": "(async()=>{for(var i=0;i<20;i++){var b=document.querySelector('[data-testid=\"submit-order-button\"]');if(b&&!b.disabled){return JSON.stringify({ok:true,attempts:i})}await new Promise(r=>setTimeout(r,250))}return JSON.stringify({ok:false,reason:'submit button stayed disabled',tpErr:document.querySelector('[data-testid=\"tp-validation-error\"]')?.innerText,slErr:document.querySelector('[data-testid=\"sl-validation-error\"]')?.innerText})})()",
+          "assert": {
+            "all": [
+              { "operator": "eq", "field": "ok", "value": true }
+            ]
+          },
+          "next": "setup-submit"
+        },
+        "setup-submit": {
+          "action": "press",
+          "test_id": "submit-order-button",
+          "next": "setup-wait-fill"
+        },
+        "setup-wait-fill": {
+          "action": "eval_async",
+          "expression": "(async()=>{for(var i=0;i<40;i++){var p=await stateHooks.submitRequestToBackground('perpsGetPositions',[]);var avax=(p||[]).find(x=>x.symbol==='AVAX');if(avax){return JSON.stringify({ok:true,attempts:i,size:avax.size,entry:avax.entryPrice,liq:avax.liquidationPrice,tp:avax.takeProfitPrice,sl:avax.stopLossPrice})}await new Promise(r=>setTimeout(r,500))}return JSON.stringify({ok:false,reason:'AVAX position did not appear within 20s of submit'})})()",
+          "assert": {
+            "all": [
+              { "operator": "eq", "field": "ok", "value": true }
+            ]
+          },
+          "save_as": "avax_position",
+          "next": "setup-wait-tpsl-orders"
+        },
+        "setup-wait-tpsl-orders": {
+          "action": "eval_async",
+          "expression": "(async()=>{for(var i=0;i<30;i++){var o=await stateHooks.submitRequestToBackground('perpsGetOpenOrders',[]);var triggers=(o||[]).filter(x=>x.symbol==='AVAX'&&x.isTrigger===true&&x.reduceOnly===true);if(triggers.length>=2){return JSON.stringify({ok:true,attempts:i,allPositionTpsl:triggers.every(t=>t.isPositionTpsl===true),triggers:triggers.map(t=>({orderId:t.orderId,detailedOrderType:t.detailedOrderType,triggerPrice:t.triggerPrice,isPositionTpsl:t.isPositionTpsl,size:t.size}))})}await new Promise(r=>setTimeout(r,500))}return JSON.stringify({ok:false,reason:'AVAX trigger orders did not appear within 15s'})})()",
+          "assert": {
+            "all": [
+              { "operator": "eq", "field": "ok", "value": true },
+              { "operator": "eq", "field": "allPositionTpsl", "value": true }
+            ]
+          },
+          "save_as": "avax_triggers",
+          "next": "setup-nav-avax-detail"
+        },
+        "setup-nav-avax-detail": {
+          "action": "call",
+          "ref": "perps/navigate-to-market-detail",
+          "params": { "symbol": "AVAX" },
+          "next": "setup-wait-autoclose"
+        },
+        "setup-wait-autoclose": {
+          "action": "wait_for",
+          "test_id": "perps-auto-close-row",
+          "timeout_ms": 10000,
+          "next": "setup-wait-render"
+        },
+        "setup-wait-render": {
+          "action": "eval_async",
+          "expression": "(async()=>{for(var i=0;i<20;i++){var row=document.querySelector('[data-testid=\"perps-auto-close-row\"]');var text=row?.innerText||'';if(text.includes('$11')&&text.includes('$9')&&!text.includes('TP\\n\\n-')&&!text.includes('SL\\n\\n-')){return JSON.stringify({ok:true,text:text,attempts:i})}await new Promise(r=>setTimeout(r,500))}return JSON.stringify({ok:false,text:document.querySelector('[data-testid=\"perps-auto-close-row\"]')?.innerText,reason:'Auto-close row did not show $11 / $9 within 10s'})})()",
+          "assert": {
+            "all": [
+              { "operator": "eq", "field": "ok", "value": true }
+            ]
+          },
+          "save_as": "autoclose_render",
+          "next": "ac1-assert-autoclose-shows-positiontpsl"
+        },
+        "ac1-assert-autoclose-shows-positiontpsl": {
+          "action": "eval_sync",
+          "expression": "(function(){var row=document.querySelector('[data-testid=\"perps-auto-close-row\"]');var text=row?row.innerText||row.textContent||'':'';return JSON.stringify({autoCloseText:text,hasTpPrice:text.includes('$11'),hasSlPrice:text.includes('$9'),hasPlaceholderTp:text.includes('TP\\n\\n-'),hasPlaceholderSl:text.includes('SL\\n\\n-')})})()",
+          "assert": {
+            "all": [
+              { "operator": "eq", "field": "hasTpPrice", "value": true },
+              { "operator": "eq", "field": "hasSlPrice", "value": true },
+              { "operator": "eq", "field": "hasPlaceholderTp", "value": false },
+              { "operator": "eq", "field": "hasPlaceholderSl", "value": false }
+            ]
+          },
+          "save_as": "autoclose_state",
+          "next": "ac2-assert-positiontpsl-not-in-orders"
+        },
+        "ac2-assert-positiontpsl-not-in-orders": {
+          "action": "eval_async",
+          "expression": "(async()=>{var o=await stateHooks.submitRequestToBackground('perpsGetOpenOrders',[]);var triggers=(o||[]).filter(x=>x.symbol==='AVAX'&&x.isTrigger===true&&x.reduceOnly===true);var ids=triggers.map(x=>x.orderId);var leaked=ids.filter(id=>!!document.querySelector('[data-testid=\"order-card-'+id+'\"]'));var allCards=[...document.querySelectorAll('[data-testid^=\"order-card-\"]')].map(e=>e.getAttribute('data-testid'));return JSON.stringify({triggerOrderIds:ids,triggerFlags:triggers.map(t=>t.isPositionTpsl),leakedOrderIds:leaked,leakCount:leaked.length,allOrderCards:allCards})})()",
+          "assert": {
+            "all": [
+              { "operator": "eq", "field": "leakCount", "value": 0 }
+            ]
+          },
+          "save_as": "orders_exclusion_state",
+          "next": "ac-scroll-to-autoclose"
+        },
+        "ac-scroll-to-autoclose": {
+          "action": "eval_sync",
+          "expression": "(function(){var el=document.querySelector('[data-testid=\"perps-auto-close-row\"]');if(el){el.scrollIntoView({block:'center',behavior:'instant'});}return JSON.stringify({scrolled:!!el})})()",
+          "assert": {
+            "all": [
+              { "operator": "eq", "field": "scrolled", "value": true }
+            ]
+          },
+          "next": "ac-screenshot-final"
+        },
+        "ac-screenshot-final": {
+          "action": "screenshot",
+          "filename": "evidence-ac1-real-avax-market-tpsl.png",
+          "note": "AC1+AC2: real $10 AVAX market long submitted via UI with TP $20 / SL $5 produces positionTPSL orders (isPositionTpsl=true) that route to Auto-close row, not the Orders section.",
+          "next": "done"
+        },
+        "done": {
+          "action": "end",
+          "status": "pass"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,17 @@
+[
+  {
+    "comment_id": 3235613642,
+    "review_id": null,
+    "author_login": "cursor[bot]",
+    "author_type": "Bot",
+    "reviewer_login": "cursor[bot]",
+    "review_state": null,
+    "source_kind": "bugbot",
+    "path": "ui/components/app/perps/utils/orderUtils.ts",
+    "line": 212,
+    "body": "Zero-size position misclassified as short in flip check. `willFlipPosition` treats a zero-size position (`size: '0'`) as `'short'` because `0 > 0` is false. A sell market order against this phantom 'short' position matches direction and returns `false` (no flip), so `shouldHandleTpslSeparately` becomes false. The TP/SL then goes through the single `perpsPlaceOrder` call with `normalTpsl` grouping — the exact scenario this PR aims to prevent. Adding a zero-size guard at the top of `willFlipPosition` to return `false` would let the `!position` fallback in the caller handle it, or treating zero as a no-position scenario directly.",
+    "triage": "REAL",
+    "action": "Treat zero-size position as no-position in the order-entry caller before `willFlipPosition`; routes the market+TPSL through the two-step `perpsUpdatePositionTPSL` flow that yields `grouping: 'positionTpsl'`.",
+    "fixed_in_commit": "fbb0a45af66cf8d48abf70db7b708246bd1515c2"
+  }
+]

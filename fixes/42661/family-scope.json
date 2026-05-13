@@ -1,0 +1,6 @@
+{
+  "originalFamilyScopeSummary": "Fix Perps market detail filtering so position-linked TP/SL orders only appear in Auto-close",
+  "currentTriggerSummary": "pr-complete: Fix Perps market detail filtering so position-linked TP/SL orders only appear in Auto-close",
+  "scopeVerdict": "full-scope-addressed",
+  "notes": "Original PR f0d1badfc8 already implemented the positionTpsl two-step routing, the orderUtils flag-less recognition, and the Auto-close fallback derivation. Recipe (22/22 PASS) validates Auto-close partition + non-leak to Orders section on live Hyperliquid mainnet. This iteration addressed the only outstanding review comment (cursor[bot] zero-size phantom-position misclassification) by treating zero-size positions as no-position in the order-entry caller (commit fbb0a45af6) so market+TPSL submissions still route through `perpsUpdatePositionTPSL`. No regressions; review thread resolved."
+}

@@ -1,0 +1,48 @@
+flowchart TD
+  %% TAT-3065 real $10 AVAX market+TPSL via UI
+  __entry__(["ENTRY"]) --> node_gate_nav_perps
+  node_gate_nav_perps[["gate-nav-perps<br/>perps/navigate-perps-tab"]]
+  node_gate_cleanup_pre_existing_avax["gate-cleanup-pre-existing-avax<br/>eval_async"]
+  node_setup_nav_market[["setup-nav-market<br/>perps/navigate-to-market-detail"]]
+  node_setup_wait_long_cta["setup-wait-long-cta<br/>wait_for"]
+  node_setup_press_long["setup-press-long<br/>press"]
+  node_setup_wait_order_form["setup-wait-order-form<br/>wait_for"]
+  node_setup_set_amount["setup-set-amount<br/>set_input"]
+  node_setup_toggle_autoclose["setup-toggle-autoclose<br/>eval_sync"]
+  node_setup_wait_tp_input["setup-wait-tp-input<br/>wait_for"]
+  node_setup_set_tp["setup-set-tp<br/>set_input"]
+  node_setup_set_sl["setup-set-sl<br/>set_input"]
+  node_setup_wait_submit_enabled["setup-wait-submit-enabled<br/>eval_async"]
+  node_setup_submit["setup-submit<br/>press"]
+  node_setup_wait_fill["setup-wait-fill<br/>eval_async"]
+  node_setup_wait_tpsl_orders["setup-wait-tpsl-orders<br/>eval_async"]
+  node_setup_nav_avax_detail[["setup-nav-avax-detail<br/>perps/navigate-to-market-detail"]]
+  node_setup_wait_autoclose["setup-wait-autoclose<br/>wait_for"]
+  node_setup_wait_render["setup-wait-render<br/>eval_async"]
+  node_ac1_assert_autoclose_shows_positiontpsl["ac1-assert-autoclose-shows-positiontpsl<br/>eval_sync"]
+  node_ac2_assert_positiontpsl_not_in_orders["ac2-assert-positiontpsl-not-in-orders<br/>eval_async"]
+  node_ac_scroll_to_autoclose["ac-scroll-to-autoclose<br/>eval_sync"]
+  node_ac_screenshot_final["ac-screenshot-final<br/>screenshot"]
+  node_done(["done<br/>PASS"])
+  node_gate_nav_perps --> node_gate_cleanup_pre_existing_avax
+  node_gate_cleanup_pre_existing_avax --> node_setup_nav_market
+  node_setup_nav_market --> node_setup_wait_long_cta
+  node_setup_wait_long_cta --> node_setup_press_long
+  node_setup_press_long --> node_setup_wait_order_form
+  node_setup_wait_order_form --> node_setup_set_amount
+  node_setup_set_amount --> node_setup_toggle_autoclose
+  node_setup_toggle_autoclose --> node_setup_wait_tp_input
+  node_setup_wait_tp_input --> node_setup_set_tp
+  node_setup_set_tp --> node_setup_set_sl
+  node_setup_set_sl --> node_setup_wait_submit_enabled
+  node_setup_wait_submit_enabled --> node_setup_submit
+  node_setup_submit --> node_setup_wait_fill
+  node_setup_wait_fill --> node_setup_wait_tpsl_orders
+  node_setup_wait_tpsl_orders --> node_setup_nav_avax_detail
+  node_setup_nav_avax_detail --> node_setup_wait_autoclose
+  node_setup_wait_autoclose --> node_setup_wait_render
+  node_setup_wait_render --> node_ac1_assert_autoclose_shows_positiontpsl
+  node_ac1_assert_autoclose_shows_positiontpsl --> node_ac2_assert_positiontpsl_not_in_orders
+  node_ac2_assert_positiontpsl_not_in_orders --> node_ac_scroll_to_autoclose
+  node_ac_scroll_to_autoclose --> node_ac_screenshot_final
+  node_ac_screenshot_final --> node_done
