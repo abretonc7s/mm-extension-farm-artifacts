@@ -1,0 +1,267 @@
+{
+  "description": "",
+  "hooks": {
+    "pre_conditions": [
+      "wallet.unlocked"
+    ],
+    "setup": [],
+    "teardown": []
+  },
+  "inputs": {},
+  "playback": {
+    "mode": "off",
+    "slow_ms": 1000
+  },
+  "sourcePath": "",
+  "title": "PR #42578 — Market filter modal design validation",
+  "workflow": {
+    "entry": "setup-navigate-perps",
+    "nodes": {
+      "setup-navigate-perps": {
+        "action": "eval_sync",
+        "expression": "location.hash = '#/perps/market-list'; 'navigated'",
+        "next": "setup-wait-render",
+        "id": "setup-navigate-perps"
+      },
+      "setup-wait-render": {
+        "action": "wait",
+        "ms": 5000,
+        "next": "setup-assert-market-list",
+        "id": "setup-wait-render"
+      },
+      "setup-assert-market-list": {
+        "action": "eval_sync",
+        "expression": "JSON.stringify({ ready: !!document.querySelector('[data-testid=\"market-list-filter-sort-row\"]') })",
+        "assert": {
+          "field": "ready",
+          "operator": "eq",
+          "value": true
+        },
+        "next": "ac1-open-sort-modal",
+        "id": "setup-assert-market-list"
+      },
+      "ac1-open-sort-modal": {
+        "action": "eval_sync",
+        "expression": "document.querySelector('[data-testid=\"sort-dropdown-button\"]').click(); 'clicked'",
+        "next": "ac1-wait-sort-modal",
+        "id": "ac1-open-sort-modal"
+      },
+      "ac1-wait-sort-modal": {
+        "action": "wait",
+        "ms": 500,
+        "next": "ac1-assert-modal-open",
+        "id": "ac1-wait-sort-modal"
+      },
+      "ac1-assert-modal-open": {
+        "action": "eval_sync",
+        "expression": "JSON.stringify({ visible: !!document.querySelector('[data-testid=\"sort-field-option-volume\"]') })",
+        "assert": {
+          "field": "visible",
+          "operator": "eq",
+          "value": true
+        },
+        "next": "ac1-assert-title-filter",
+        "id": "ac1-assert-modal-open"
+      },
+      "ac1-assert-title-filter": {
+        "action": "eval_sync",
+        "expression": "(function(){ var headers = document.querySelectorAll('.mm-modal-content h5, .mm-modal-content h6, .mm-modal-content [class*=\"modal-header\"] p, .mm-modal-content header p'); var title = ''; headers.forEach(function(h){ if (h.textContent.trim()) title = h.textContent.trim(); }); if (!title) { var allText = document.querySelector('.mm-modal-content')?.querySelector('header, [class*=\"header\"]'); title = allText ? allText.textContent.trim().split('\\n')[0].trim() : ''; } return JSON.stringify({ title: title }); })()",
+        "assert": {
+          "field": "title",
+          "operator": "contains",
+          "value": "Filter"
+        },
+        "next": "ac2-assert-sort-by-header",
+        "id": "ac1-assert-title-filter"
+      },
+      "ac2-assert-sort-by-header": {
+        "action": "eval_sync",
+        "expression": "(function(){ var modal = document.querySelector('.mm-modal-content'); if (!modal) return JSON.stringify({ hasSortBy: false }); var texts = Array.from(modal.querySelectorAll('p, span')).map(function(el){ return el.textContent.trim().toUpperCase(); }); return JSON.stringify({ hasSortBy: texts.includes('SORT BY') }); })()",
+        "assert": {
+          "field": "hasSortBy",
+          "operator": "eq",
+          "value": true
+        },
+        "next": "ac3-assert-rank-header",
+        "id": "ac2-assert-sort-by-header"
+      },
+      "ac3-assert-rank-header": {
+        "action": "eval_sync",
+        "expression": "(function(){ var modal = document.querySelector('.mm-modal-content'); if (!modal) return JSON.stringify({ hasRank: false }); var texts = Array.from(modal.querySelectorAll('p, span')).map(function(el){ return el.textContent.trim().toUpperCase(); }); return JSON.stringify({ hasRank: texts.includes('RANK') }); })()",
+        "assert": {
+          "field": "hasRank",
+          "operator": "eq",
+          "value": true
+        },
+        "next": "ac4-assert-border-separator",
+        "id": "ac3-assert-rank-header"
+      },
+      "ac4-assert-border-separator": {
+        "action": "eval_sync",
+        "expression": "(function(){ var lastField = document.querySelector('[data-testid=\"sort-field-option-fundingRate\"]'); if (!lastField) return JSON.stringify({ hasBorder: false }); var style = window.getComputedStyle(lastField); var hasBorder = style.borderBottomWidth !== '0px' && style.borderBottomStyle !== 'none'; return JSON.stringify({ hasBorder: hasBorder }); })()",
+        "assert": {
+          "field": "hasBorder",
+          "operator": "eq",
+          "value": true
+        },
+        "next": "ac5-assert-selected-bg",
+        "id": "ac4-assert-border-separator"
+      },
+      "ac5-assert-selected-bg": {
+        "action": "eval_sync",
+        "expression": "(function(){ var selected = document.querySelector('[data-testid=\"sort-field-option-volume\"]'); if (!selected) return JSON.stringify({ hasBgHover: false, hasCheck: false }); var hasBgHover = selected.className.split(' ').some(function(c){ return c === 'bg-hover'; }); var hasCheck = !!selected.querySelector('svg'); return JSON.stringify({ hasBgHover: hasBgHover, hasCheck: hasCheck }); })()",
+        "assert": {
+          "all": [
+            {
+              "field": "hasBgHover",
+              "operator": "eq",
+              "value": true
+            },
+            {
+              "field": "hasCheck",
+              "operator": "eq",
+              "value": true
+            }
+          ]
+        },
+        "next": "ac5-screenshot-sort-modal",
+        "id": "ac5-assert-selected-bg"
+      },
+      "ac5-screenshot-sort-modal": {
+        "action": "screenshot",
+        "filename": "evidence-ac1-5-sort-modal-design",
+        "note": "AC1-5: Filter modal with headers, border, grey selected bg",
+        "next": "ac5-select-different-field",
+        "id": "ac5-screenshot-sort-modal"
+      },
+      "ac5-select-different-field": {
+        "action": "eval_sync",
+        "expression": "document.querySelector('[data-testid=\"sort-field-option-priceChange\"]').click(); 'clicked'",
+        "next": "ac5-wait-selection",
+        "id": "ac5-select-different-field"
+      },
+      "ac5-wait-selection": {
+        "action": "wait",
+        "ms": 300,
+        "next": "ac5-assert-new-selection-bg",
+        "id": "ac5-wait-selection"
+      },
+      "ac5-assert-new-selection-bg": {
+        "action": "eval_sync",
+        "expression": "(function(){ var prev = document.querySelector('[data-testid=\"sort-field-option-volume\"]'); var curr = document.querySelector('[data-testid=\"sort-field-option-priceChange\"]'); function hasDirectBgHover(el){ return el.className.split(' ').some(function(c){ return c === 'bg-hover'; }); } return JSON.stringify({ prevHasBg: prev ? hasDirectBgHover(prev) : null, currHasBg: curr ? hasDirectBgHover(curr) : null, currHasCheck: curr ? !!curr.querySelector('svg') : false }); })()",
+        "assert": {
+          "all": [
+            {
+              "field": "prevHasBg",
+              "operator": "eq",
+              "value": false
+            },
+            {
+              "field": "currHasBg",
+              "operator": "eq",
+              "value": true
+            },
+            {
+              "field": "currHasCheck",
+              "operator": "eq",
+              "value": true
+            }
+          ]
+        },
+        "next": "ac5-screenshot-selection-change",
+        "id": "ac5-assert-new-selection-bg"
+      },
+      "ac5-screenshot-selection-change": {
+        "action": "screenshot",
+        "filename": "evidence-ac5-selection-change",
+        "note": "AC5: Selection changes grey bg and checkmark to new item",
+        "next": "ac5-cancel-modal",
+        "id": "ac5-screenshot-selection-change"
+      },
+      "ac5-cancel-modal": {
+        "action": "eval_sync",
+        "expression": "document.querySelector('[data-testid=\"sort-modal-cancel\"]').click(); 'closed'",
+        "next": "ac6-wait-modal-close",
+        "id": "ac5-cancel-modal"
+      },
+      "ac6-wait-modal-close": {
+        "action": "wait",
+        "ms": 500,
+        "next": "ac6-open-filter-dropdown",
+        "id": "ac6-wait-modal-close"
+      },
+      "ac6-open-filter-dropdown": {
+        "action": "eval_sync",
+        "expression": "document.querySelector('[data-testid=\"filter-select-button\"]').click(); 'clicked'",
+        "next": "ac6-wait-filter-menu",
+        "id": "ac6-open-filter-dropdown"
+      },
+      "ac6-wait-filter-menu": {
+        "action": "wait",
+        "ms": 300,
+        "next": "ac6-assert-menu-visible",
+        "id": "ac6-wait-filter-menu"
+      },
+      "ac6-assert-menu-visible": {
+        "action": "eval_sync",
+        "expression": "JSON.stringify({ visible: !!document.querySelector('[data-testid=\"filter-select-menu\"]') })",
+        "assert": {
+          "field": "visible",
+          "operator": "eq",
+          "value": true
+        },
+        "next": "ac6-assert-filter-selected-bg",
+        "id": "ac6-assert-menu-visible"
+      },
+      "ac6-assert-filter-selected-bg": {
+        "action": "eval_sync",
+        "expression": "(function(){ var selected = document.querySelector('[data-testid=\"filter-select-option-all\"]'); if (!selected) return JSON.stringify({ hasBgHover: false }); var hasBgHover = selected.className.split(' ').some(function(c){ return c === 'bg-hover'; }); return JSON.stringify({ hasBgHover: hasBgHover, ariaSelected: selected.getAttribute('aria-selected') }); })()",
+        "assert": {
+          "all": [
+            {
+              "field": "hasBgHover",
+              "operator": "eq",
+              "value": true
+            },
+            {
+              "field": "ariaSelected",
+              "operator": "eq",
+              "value": "true"
+            }
+          ]
+        },
+        "next": "ac6-assert-unselected-text-default",
+        "id": "ac6-assert-filter-selected-bg"
+      },
+      "ac6-assert-unselected-text-default": {
+        "action": "eval_sync",
+        "expression": "(function(){ var opt = document.querySelector('[data-testid=\"filter-select-option-crypto\"]'); if (!opt) return JSON.stringify({ colorsMatch: false }); var textEl = opt.querySelector('p, span'); var textColor = textEl ? window.getComputedStyle(textEl).color : ''; var selectedOpt = document.querySelector('[data-testid=\"filter-select-option-all\"] p, [data-testid=\"filter-select-option-all\"] span'); var selectedColor = selectedOpt ? window.getComputedStyle(selectedOpt).color : ''; return JSON.stringify({ textColor: textColor, selectedTextColor: selectedColor, colorsMatch: textColor === selectedColor }); })()",
+        "assert": {
+          "field": "colorsMatch",
+          "operator": "eq",
+          "value": true
+        },
+        "next": "ac6-screenshot-filter-dropdown",
+        "id": "ac6-assert-unselected-text-default"
+      },
+      "ac6-screenshot-filter-dropdown": {
+        "action": "screenshot",
+        "filename": "evidence-ac6-filter-dropdown-selected",
+        "note": "AC6: Filter dropdown grey bg on selected, default text color",
+        "next": "teardown-close-dropdown",
+        "id": "ac6-screenshot-filter-dropdown"
+      },
+      "teardown-close-dropdown": {
+        "action": "eval_sync",
+        "expression": "document.querySelector('[data-testid=\"filter-select-button\"]').click(); 'closed'",
+        "next": "done",
+        "id": "teardown-close-dropdown"
+      },
+      "done": {
+        "action": "end",
+        "status": "pass",
+        "id": "done"
+      }
+    }
+  }
+}

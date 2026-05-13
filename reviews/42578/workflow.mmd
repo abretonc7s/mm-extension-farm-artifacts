@@ -1,0 +1,54 @@
+flowchart TD
+  %% PR #42578 — Market filter modal design validation
+  __entry__(["ENTRY"]) --> node_setup_navigate_perps
+  node_setup_navigate_perps["setup-navigate-perps<br/>eval_sync"]
+  node_setup_wait_render["setup-wait-render<br/>wait"]
+  node_setup_assert_market_list["setup-assert-market-list<br/>eval_sync"]
+  node_ac1_open_sort_modal["ac1-open-sort-modal<br/>eval_sync"]
+  node_ac1_wait_sort_modal["ac1-wait-sort-modal<br/>wait"]
+  node_ac1_assert_modal_open["ac1-assert-modal-open<br/>eval_sync"]
+  node_ac1_assert_title_filter["ac1-assert-title-filter<br/>eval_sync"]
+  node_ac2_assert_sort_by_header["ac2-assert-sort-by-header<br/>eval_sync"]
+  node_ac3_assert_rank_header["ac3-assert-rank-header<br/>eval_sync"]
+  node_ac4_assert_border_separator["ac4-assert-border-separator<br/>eval_sync"]
+  node_ac5_assert_selected_bg["ac5-assert-selected-bg<br/>eval_sync"]
+  node_ac5_screenshot_sort_modal["ac5-screenshot-sort-modal<br/>screenshot"]
+  node_ac5_select_different_field["ac5-select-different-field<br/>eval_sync"]
+  node_ac5_wait_selection["ac5-wait-selection<br/>wait"]
+  node_ac5_assert_new_selection_bg["ac5-assert-new-selection-bg<br/>eval_sync"]
+  node_ac5_screenshot_selection_change["ac5-screenshot-selection-change<br/>screenshot"]
+  node_ac5_cancel_modal["ac5-cancel-modal<br/>eval_sync"]
+  node_ac6_wait_modal_close["ac6-wait-modal-close<br/>wait"]
+  node_ac6_open_filter_dropdown["ac6-open-filter-dropdown<br/>eval_sync"]
+  node_ac6_wait_filter_menu["ac6-wait-filter-menu<br/>wait"]
+  node_ac6_assert_menu_visible["ac6-assert-menu-visible<br/>eval_sync"]
+  node_ac6_assert_filter_selected_bg["ac6-assert-filter-selected-bg<br/>eval_sync"]
+  node_ac6_assert_unselected_text_default["ac6-assert-unselected-text-default<br/>eval_sync"]
+  node_ac6_screenshot_filter_dropdown["ac6-screenshot-filter-dropdown<br/>screenshot"]
+  node_teardown_close_dropdown["teardown-close-dropdown<br/>eval_sync"]
+  node_done(["done<br/>PASS"])
+  node_setup_navigate_perps --> node_setup_wait_render
+  node_setup_wait_render --> node_setup_assert_market_list
+  node_setup_assert_market_list --> node_ac1_open_sort_modal
+  node_ac1_open_sort_modal --> node_ac1_wait_sort_modal
+  node_ac1_wait_sort_modal --> node_ac1_assert_modal_open
+  node_ac1_assert_modal_open --> node_ac1_assert_title_filter
+  node_ac1_assert_title_filter --> node_ac2_assert_sort_by_header
+  node_ac2_assert_sort_by_header --> node_ac3_assert_rank_header
+  node_ac3_assert_rank_header --> node_ac4_assert_border_separator
+  node_ac4_assert_border_separator --> node_ac5_assert_selected_bg
+  node_ac5_assert_selected_bg --> node_ac5_screenshot_sort_modal
+  node_ac5_screenshot_sort_modal --> node_ac5_select_different_field
+  node_ac5_select_different_field --> node_ac5_wait_selection
+  node_ac5_wait_selection --> node_ac5_assert_new_selection_bg
+  node_ac5_assert_new_selection_bg --> node_ac5_screenshot_selection_change
+  node_ac5_screenshot_selection_change --> node_ac5_cancel_modal
+  node_ac5_cancel_modal --> node_ac6_wait_modal_close
+  node_ac6_wait_modal_close --> node_ac6_open_filter_dropdown
+  node_ac6_open_filter_dropdown --> node_ac6_wait_filter_menu
+  node_ac6_wait_filter_menu --> node_ac6_assert_menu_visible
+  node_ac6_assert_menu_visible --> node_ac6_assert_filter_selected_bg
+  node_ac6_assert_filter_selected_bg --> node_ac6_assert_unselected_text_default
+  node_ac6_assert_unselected_text_default --> node_ac6_screenshot_filter_dropdown
+  node_ac6_screenshot_filter_dropdown --> node_teardown_close_dropdown
+  node_teardown_close_dropdown --> node_done

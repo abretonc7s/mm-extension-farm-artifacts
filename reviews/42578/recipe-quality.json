@@ -1,0 +1,27 @@
+{
+  "recipe_title": "PR #42578 — Market filter modal design validation",
+  "overall_verdict": "pass",
+  "dimensions": {
+    "ac_coverage": {
+      "verdict": "pass",
+      "reason": "6/6 ACs PROVEN with assertion + screenshot evidence"
+    },
+    "assertion_rigor": {
+      "verdict": "pass",
+      "reason": "Each AC uses eval_sync assertions checking specific DOM state (class names, text content, computed styles) — would fail if PR reverted"
+    },
+    "forbidden_patterns": {
+      "verdict": "pass",
+      "reason": "No switch defaults routing around ACs, no skip evals, all waits ≤500ms, node IDs properly prefixed"
+    },
+    "flow_reuse": {
+      "verdict": "warn",
+      "reason": "navigate-perps-tab flow not used due to needing /perps/market-list route; used eval_sync navigation instead"
+    },
+    "screenshot_evidence": {
+      "verdict": "pass",
+      "reason": "3 screenshots covering all 6 ACs: sort modal design (AC1-5), selection change (AC5), filter dropdown (AC6)"
+    }
+  },
+  "better_version_guidance": "Use wait_for with expression instead of fixed wait+assert for navigation. The Playwright locator approach (press/wait_for with test_id) had reliability issues with this extension's modal rendering; eval_sync clicks were more reliable."
+}
