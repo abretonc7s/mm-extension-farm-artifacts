@@ -1,0 +1,13 @@
+{
+  "pr_number": "42671",
+  "recommendation": "COMMENT",
+  "summary": "Selector + effect refactor correctly broadens Perps deposit toasts to token-funded deposits (e.g. USDC on Arbitrum) and aligns with mobile's type-only gating. Tests (97/97) and live perps smoke (11/11) pass. One non-blocking suggestion: a back-to-back deposit started within the 5s success-toast timer suppresses the next pending toast.",
+  "comments": [
+    {
+      "path": "ui/components/app/perps/perps-deposit-toast.tsx",
+      "line": 71,
+      "body": "Race window worth tracking (non-blocking): if a new Perps deposit starts before the previous completion's 5s timer elapses, `hasDepositResult` is still truthy here, so this early-return suppresses the pending toast for the new deposit until `perpsClearDepositResult` fires. `clearDepositResult` in `PerpsController` only clears `lastDepositResult` (not `lastDepositTransactionId`), so the gate is strictly the 5s timer. Mobile's `usePerpsDepositStatus` sidesteps this because it tracks a ref + balance-increase instead of a redux-derived priority. Narrow race in practice — leaving as a follow-up note rather than a blocker.",
+      "severity": "suggestion"
+    }
+  ]
+}

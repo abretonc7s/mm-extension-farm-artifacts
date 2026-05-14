@@ -1,0 +1,14 @@
+flowchart TD
+  %% PR #42671 standard-tier skip validation
+  __entry__(["ENTRY"]) --> node_setup_nav_perps
+  node_setup_nav_perps["setup-nav-perps<br/>ext_navigate_hash"]
+  node_setup_wait_perps["setup-wait-perps<br/>wait_for"]
+  node_ac1_screenshot_perps_tab["ac1-screenshot-perps-tab<br/>screenshot"]
+  node_ac4_assert_toast_dom_absent["ac4-assert-toast-dom-absent<br/>ext_check_dom"]
+  node_gate_confirm_render_ok["gate-confirm-render-ok<br/>eval_sync"]
+  node_end(["end<br/>PASS"])
+  node_setup_nav_perps --> node_setup_wait_perps
+  node_setup_wait_perps --> node_ac1_screenshot_perps_tab
+  node_ac1_screenshot_perps_tab --> node_ac4_assert_toast_dom_absent
+  node_ac4_assert_toast_dom_absent --> node_gate_confirm_render_ok
+  node_gate_confirm_render_ok --> node_end

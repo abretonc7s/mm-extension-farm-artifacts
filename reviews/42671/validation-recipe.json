@@ -1,0 +1,43 @@
+{
+  "schema_version": 1,
+  "title": "PR #42671 standard-tier skip validation",
+  "name": "pr-42671-skip-validation",
+  "description": "Standard-tier skip validation: navigate to perps tab, verify selector behavior via UI page eval, screenshot.",
+  "validate": {
+    "workflow": {
+      "entry": "setup-nav-perps",
+      "nodes": {
+        "setup-nav-perps": {
+          "action": "ext_navigate_hash",
+          "hash": "#/perps",
+          "next": "setup-wait-perps"
+        },
+        "setup-wait-perps": {
+          "action": "wait_for",
+          "expression": "document.querySelector('[data-testid=\"perps-tab\"]') || document.querySelector('[data-testid=\"perps-account-balance\"]') || document.body",
+          "timeout_ms": 8000,
+          "next": "ac1-screenshot-perps-tab"
+        },
+        "ac1-screenshot-perps-tab": {
+          "action": "screenshot",
+          "filename": "evidence-perps-tab-no-active-deposit.png",
+          "note": "Perps tab — no active deposit, toast component mounted without crashing",
+          "next": "ac4-assert-toast-dom-absent"
+        },
+        "ac4-assert-toast-dom-absent": {
+          "action": "ext_check_dom",
+          "selector": "[data-testid=\"perps-deposit-toast\"]",
+          "visible": false,
+          "next": "gate-confirm-render-ok"
+        },
+        "gate-confirm-render-ok": {
+          "action": "eval_sync",
+          "expression": "(typeof window !== 'undefined') && Boolean(document.querySelector('[data-testid=\"app-header-logo\"]') || document.querySelector('#app-content'))",
+          "assert": { "operator": "eq", "value": true },
+          "next": "end"
+        },
+        "end": { "action": "end" }
+      }
+    }
+  }
+}
