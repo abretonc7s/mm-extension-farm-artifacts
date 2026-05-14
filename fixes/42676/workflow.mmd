@@ -1,0 +1,26 @@
+flowchart TD
+  %% TAT-3077 — Recent activity header rows are fully tappable
+  __entry__(["ENTRY"]) --> node_setup_open_position
+  node_setup_open_position[["setup-open-position<br/>perps/open-long-position"]]
+  node_setup_nav_perps_tab[["setup-nav-perps-tab<br/>perps/navigate-perps-tab"]]
+  node_ac1_wait_recent_activity["ac1-wait-recent-activity<br/>wait_for"]
+  node_ac1_scroll_recent_activity["ac1-scroll-recent-activity<br/>scroll"]
+  node_ac1_assert_row_hit_target["ac1-assert-row-hit-target<br/>eval_sync"]
+  node_ac1_screenshot_recent_activity_row["ac1-screenshot-recent-activity-row<br/>screenshot"]
+  node_setup_nav_market_detail[["setup-nav-market-detail<br/>perps/navigate-to-market-detail"]]
+  node_ac2_wait_recent_activity["ac2-wait-recent-activity<br/>wait_for"]
+  node_ac2_scroll_recent_activity["ac2-scroll-recent-activity<br/>scroll"]
+  node_ac2_assert_row_hit_target["ac2-assert-row-hit-target<br/>eval_sync"]
+  node_ac2_screenshot_recent_activity_row["ac2-screenshot-recent-activity-row<br/>screenshot"]
+  node_teardown_done(["teardown-done<br/>PASS"])
+  node_setup_open_position --> node_setup_nav_perps_tab
+  node_setup_nav_perps_tab --> node_ac1_wait_recent_activity
+  node_ac1_wait_recent_activity --> node_ac1_scroll_recent_activity
+  node_ac1_scroll_recent_activity --> node_ac1_assert_row_hit_target
+  node_ac1_assert_row_hit_target --> node_ac1_screenshot_recent_activity_row
+  node_ac1_screenshot_recent_activity_row --> node_setup_nav_market_detail
+  node_setup_nav_market_detail --> node_ac2_wait_recent_activity
+  node_ac2_wait_recent_activity --> node_ac2_scroll_recent_activity
+  node_ac2_scroll_recent_activity --> node_ac2_assert_row_hit_target
+  node_ac2_assert_row_hit_target --> node_ac2_screenshot_recent_activity_row
+  node_ac2_screenshot_recent_activity_row --> node_teardown_done

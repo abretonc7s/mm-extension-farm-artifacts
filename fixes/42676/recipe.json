@@ -1,0 +1,82 @@
+{
+  "title": "TAT-3077 — Recent activity header rows are fully tappable",
+  "description": "Validates that the left side of the Recent activity header row is inside the tappable ButtonBase on the Perps tab and Perp market detail page.",
+  "schema_version": 1,
+  "validate": {
+    "workflow": {
+      "pre_conditions": ["wallet.unlocked", "perps.feature_enabled"],
+      "entry": "setup-open-position",
+      "nodes": {
+        "setup-open-position": {
+          "action": "call",
+          "ref": "perps/open-long-position",
+          "params": { "symbol": "ETH", "side": "long", "amount": "10" },
+          "next": "setup-nav-perps-tab"
+        },
+        "setup-nav-perps-tab": {
+          "action": "call",
+          "ref": "perps/navigate-perps-tab",
+          "next": "ac1-wait-recent-activity"
+        },
+        "ac1-wait-recent-activity": {
+          "action": "wait_for",
+          "test_id": "perps-recent-activity-see-all",
+          "timeout_ms": 10000,
+          "next": "ac1-scroll-recent-activity"
+        },
+        "ac1-scroll-recent-activity": {
+          "action": "scroll",
+          "test_id": "perps-recent-activity-see-all",
+          "next": "ac1-assert-row-hit-target"
+        },
+        "ac1-assert-row-hit-target": {
+          "action": "eval_sync",
+          "expression": "(function(){var testId='perps-recent-activity-see-all';var btn=document.querySelector('[data-testid=\"'+testId+'\"]');if(!btn){return JSON.stringify({ok:false,reason:'missing button'});}var parent=btn.parentElement||btn;var parentRect=parent.getBoundingClientRect();var btnRect=btn.getBoundingClientRect();var probeX=parentRect.left+Math.min(40,parentRect.width/4);var probeY=btnRect.top+(btnRect.height/2);var hit=document.elementFromPoint(probeX,probeY);var target=hit&&hit.closest('[data-testid=\"'+testId+'\"]');return JSON.stringify({ok:target===btn,buttonWidth:Math.round(btnRect.width),rowWidth:Math.round(parentRect.width),probeX:Math.round(probeX),probeY:Math.round(probeY),hitTestId:(target&&target.getAttribute('data-testid'))||(hit&&hit.getAttribute&&hit.getAttribute('data-testid'))||null});})()",
+          "assert": { "operator": "eq", "field": "ok", "value": true },
+          "save_as": "ac1_hit_target",
+          "next": "ac1-screenshot-recent-activity-row"
+        },
+        "ac1-screenshot-recent-activity-row": {
+          "action": "screenshot",
+          "filename": "evidence-ac1-perps-recent-activity-row",
+          "note": "AC1: Perps tab Recent activity header row is visible after hit-target assertion",
+          "next": "setup-nav-market-detail"
+        },
+        "setup-nav-market-detail": {
+          "action": "call",
+          "ref": "perps/navigate-to-market-detail",
+          "params": { "symbol": "ETH" },
+          "next": "ac2-wait-recent-activity"
+        },
+        "ac2-wait-recent-activity": {
+          "action": "wait_for",
+          "test_id": "perps-market-detail-view-all-activity",
+          "timeout_ms": 10000,
+          "next": "ac2-scroll-recent-activity"
+        },
+        "ac2-scroll-recent-activity": {
+          "action": "scroll",
+          "test_id": "perps-market-detail-view-all-activity",
+          "next": "ac2-assert-row-hit-target"
+        },
+        "ac2-assert-row-hit-target": {
+          "action": "eval_sync",
+          "expression": "(function(){var testId='perps-market-detail-view-all-activity';var btn=document.querySelector('[data-testid=\"'+testId+'\"]');if(!btn){return JSON.stringify({ok:false,reason:'missing button'});}var parent=btn.parentElement||btn;var parentRect=parent.getBoundingClientRect();var btnRect=btn.getBoundingClientRect();var probeX=parentRect.left+Math.min(40,parentRect.width/4);var probeY=btnRect.top+(btnRect.height/2);var hit=document.elementFromPoint(probeX,probeY);var target=hit&&hit.closest('[data-testid=\"'+testId+'\"]');return JSON.stringify({ok:target===btn,buttonWidth:Math.round(btnRect.width),rowWidth:Math.round(parentRect.width),probeX:Math.round(probeX),probeY:Math.round(probeY),hitTestId:(target&&target.getAttribute('data-testid'))||(hit&&hit.getAttribute&&hit.getAttribute('data-testid'))||null});})()",
+          "assert": { "operator": "eq", "field": "ok", "value": true },
+          "save_as": "ac2_hit_target",
+          "next": "ac2-screenshot-recent-activity-row"
+        },
+        "ac2-screenshot-recent-activity-row": {
+          "action": "screenshot",
+          "filename": "evidence-ac2-market-recent-activity-row",
+          "note": "AC2: Market detail Recent activity header row is visible after hit-target assertion",
+          "next": "teardown-done"
+        },
+        "teardown-done": {
+          "action": "end",
+          "status": "pass"
+        }
+      }
+    }
+  }
+}
