@@ -1,0 +1,231 @@
+{
+  "description": "Validates that Perps market logos use per-asset theme-aware backgrounds: configured dark-on-transparent assets get white backgrounds in dark mode, while other visible assets are not forced to white.",
+  "hooks": {
+    "pre_conditions": [
+      "wallet.unlocked",
+      "perps.feature_enabled"
+    ],
+    "setup": [],
+    "teardown": []
+  },
+  "inputs": {},
+  "playback": {
+    "mode": "off",
+    "slow_ms": 1000
+  },
+  "sourcePath": "",
+  "title": "TAT-2964 Perps market logo contrast",
+  "workflow": {
+    "entry": "setup-dark-mode",
+    "nodes": {
+      "setup-dark-mode": {
+        "action": "emulation",
+        "emulation": "media",
+        "color_scheme": "dark",
+        "next": "setup-nav-perps-list-dark",
+        "id": "setup-dark-mode"
+      },
+      "setup-nav-perps-list-dark": {
+        "action": "call",
+        "ref": "bundle/perps-list",
+        "next": "setup-wait-list-dark",
+        "id": "setup-nav-perps-list-dark"
+      },
+      "setup-wait-list-dark": {
+        "action": "wait_for",
+        "test_id": "perps-token-logo-ETH",
+        "timeout_ms": 10000,
+        "next": "ac1-assert-list-dark-logos",
+        "id": "setup-wait-list-dark"
+      },
+      "ac1-assert-list-dark-logos": {
+        "action": "eval_sync",
+        "expression": "(function(){var light=['ETH','XRP','FARTCOIN','ADA','WLD','NEAR','ONDO','XLM','CFX','DYM','BIGTIME','GALA','AR','UNI','ETHFI'];var lightSet=new Set(light);var logos=[].slice.call(document.querySelectorAll('[data-testid^=\"perps-token-logo-\"]'));var rows=[];for(var i=0;i<logos.length;i++){var n=logos[i];var id=n.getAttribute('data-testid')||'';var symbol=id.replace('perps-token-logo-','').replace(/^xyz-/,'').toUpperCase();var bg=window.getComputedStyle(n).backgroundColor;var img=n.querySelector('img');if(img){var hasWhite=bg==='rgb(255, 255, 255)'||bg==='rgba(255, 255, 255, 1)';var requiresLight=lightSet.has(symbol);rows.push({id:id,symbol:symbol,backgroundColor:bg,hasWhiteBackground:hasWhite,requiresLightBackground:requiresLight})}}var requiredVisible=rows.filter(function(r){return r.requiresLightBackground});var failingRequired=requiredVisible.filter(function(r){return !r.hasWhiteBackground});var unexpectedWhite=rows.filter(function(r){return !r.requiresLightBackground&&r.hasWhiteBackground});return JSON.stringify({screen:'market-list-dark',logoCount:rows.length,requiredVisibleCount:requiredVisible.length,failingRequiredCount:failingRequired.length,unexpectedWhiteCount:unexpectedWhite.length,failingRequired:failingRequired.slice(0,5),unexpectedWhite:unexpectedWhite.slice(0,5),eth:rows.filter(function(r){return r.symbol==='ETH'})})})()",
+        "assert": {
+          "all": [
+            {
+              "field": "logoCount",
+              "operator": "gt",
+              "value": 0
+            },
+            {
+              "field": "requiredVisibleCount",
+              "operator": "gt",
+              "value": 0
+            },
+            {
+              "field": "failingRequiredCount",
+              "operator": "eq",
+              "value": 0
+            },
+            {
+              "field": "unexpectedWhiteCount",
+              "operator": "eq",
+              "value": 0
+            }
+          ]
+        },
+        "next": "ac2-assert-eth-list-dark-white",
+        "id": "ac1-assert-list-dark-logos"
+      },
+      "ac2-assert-eth-list-dark-white": {
+        "action": "eval_sync",
+        "expression": "(function(){var n=document.querySelector('[data-testid=\"perps-token-logo-ETH\"]');var img=n&&n.querySelector('img');var bg=n?window.getComputedStyle(n).backgroundColor:null;return JSON.stringify({present:!!n,hasImage:!!img,backgroundColor:bg,hasWhiteBackground:bg==='rgb(255, 255, 255)'||bg==='rgba(255, 255, 255, 1)'})})()",
+        "assert": {
+          "all": [
+            {
+              "field": "present",
+              "operator": "eq",
+              "value": true
+            },
+            {
+              "field": "hasImage",
+              "operator": "eq",
+              "value": true
+            },
+            {
+              "field": "hasWhiteBackground",
+              "operator": "eq",
+              "value": true
+            }
+          ]
+        },
+        "next": "ac2-screenshot-list-dark",
+        "id": "ac2-assert-eth-list-dark-white"
+      },
+      "ac2-screenshot-list-dark": {
+        "action": "screenshot",
+        "filename": "evidence-ac2-list-dark",
+        "note": "AC2: Configured Perps market logos render on white backgrounds in dark mode without forcing unrelated logos white",
+        "next": "setup-nav-eth-detail-dark",
+        "id": "ac2-screenshot-list-dark"
+      },
+      "setup-nav-eth-detail-dark": {
+        "action": "call",
+        "ref": "perps/navigate-to-market-detail",
+        "params": {
+          "symbol": "ETH"
+        },
+        "next": "setup-wait-detail-dark",
+        "id": "setup-nav-eth-detail-dark"
+      },
+      "setup-wait-detail-dark": {
+        "action": "wait_for",
+        "test_id": "perps-market-detail-page",
+        "timeout_ms": 10000,
+        "next": "setup-wait-detail-eth-image-dark",
+        "id": "setup-wait-detail-dark"
+      },
+      "setup-wait-detail-eth-image-dark": {
+        "action": "wait_for",
+        "expression": "!!document.querySelector('[data-testid=\"perps-market-detail-page\"] [data-testid=\"perps-token-logo-ETH\"] img')",
+        "timeout_ms": 10000,
+        "assert": {
+          "operator": "eq",
+          "value": true
+        },
+        "next": "ac3-assert-eth-detail-dark-white",
+        "id": "setup-wait-detail-eth-image-dark"
+      },
+      "ac3-assert-eth-detail-dark-white": {
+        "action": "eval_sync",
+        "expression": "(function(){var n=document.querySelector('[data-testid=\"perps-market-detail-page\"] [data-testid=\"perps-token-logo-ETH\"]');var img=n&&n.querySelector('img');var bg=n?window.getComputedStyle(n).backgroundColor:null;return JSON.stringify({present:!!n,hasImage:!!img,backgroundColor:bg,hasWhiteBackground:bg==='rgb(255, 255, 255)'||bg==='rgba(255, 255, 255, 1)'})})()",
+        "assert": {
+          "all": [
+            {
+              "field": "present",
+              "operator": "eq",
+              "value": true
+            },
+            {
+              "field": "hasImage",
+              "operator": "eq",
+              "value": true
+            },
+            {
+              "field": "hasWhiteBackground",
+              "operator": "eq",
+              "value": true
+            }
+          ]
+        },
+        "next": "ac3-screenshot-detail-dark",
+        "id": "ac3-assert-eth-detail-dark-white"
+      },
+      "ac3-screenshot-detail-dark": {
+        "action": "screenshot",
+        "filename": "evidence-ac3-detail-dark",
+        "note": "AC3: ETH Perps detail logo renders clearly on a white circular background in dark mode",
+        "next": "setup-light-mode",
+        "id": "ac3-screenshot-detail-dark"
+      },
+      "setup-light-mode": {
+        "action": "emulation",
+        "emulation": "media",
+        "color_scheme": "light",
+        "next": "setup-nav-perps-list-light",
+        "id": "setup-light-mode"
+      },
+      "setup-nav-perps-list-light": {
+        "action": "call",
+        "ref": "bundle/perps-list",
+        "next": "setup-wait-list-light",
+        "id": "setup-nav-perps-list-light"
+      },
+      "setup-wait-list-light": {
+        "action": "wait_for",
+        "test_id": "perps-token-logo-ETH",
+        "timeout_ms": 10000,
+        "next": "ac4-assert-list-light-logos",
+        "id": "setup-wait-list-light"
+      },
+      "ac4-assert-list-light-logos": {
+        "action": "eval_sync",
+        "expression": "(function(){var light=['ETH','XRP','FARTCOIN','ADA','WLD','NEAR','ONDO','XLM','CFX','DYM','BIGTIME','GALA','AR','UNI','ETHFI'];var dark=['S','RESOLV','IO','USUAL','SOPH','SAGA','XPL'];var lightSet=new Set(light);var darkSet=new Set(dark);var logos=[].slice.call(document.querySelectorAll('[data-testid^=\"perps-token-logo-\"]'));var rows=[];for(var i=0;i<logos.length;i++){var n=logos[i];var id=n.getAttribute('data-testid')||'';var symbol=id.replace('perps-token-logo-','').replace(/^xyz-/,'').toUpperCase();var bg=window.getComputedStyle(n).backgroundColor;var img=n.querySelector('img');if(img){var hasWhite=bg==='rgb(255, 255, 255)'||bg==='rgba(255, 255, 255, 1)';var hasDarkOverride=n.classList.contains('bg-icon-default');rows.push({id:id,symbol:symbol,backgroundColor:bg,hasWhiteBackground:hasWhite,hasDarkOverride:hasDarkOverride,requiresLightBackground:lightSet.has(symbol),requiresDarkBackground:darkSet.has(symbol)})}}var eth=rows.filter(function(r){return r.symbol==='ETH'});var ethWithWhite=eth.filter(function(r){return r.hasWhiteBackground});var darkVisible=rows.filter(function(r){return r.requiresDarkBackground});var failingDark=darkVisible.filter(function(r){return !r.hasDarkOverride});var unexpectedWhite=rows.filter(function(r){return !r.requiresDarkBackground&&r.hasWhiteBackground});return JSON.stringify({screen:'market-list-light',logoCount:rows.length,ethCount:eth.length,ethWhiteCount:ethWithWhite.length,darkVisibleCount:darkVisible.length,failingDarkCount:failingDark.length,unexpectedWhiteCount:unexpectedWhite.length,failingDark:failingDark.slice(0,5),unexpectedWhite:unexpectedWhite.slice(0,5),eth:eth})})()",
+        "assert": {
+          "all": [
+            {
+              "field": "logoCount",
+              "operator": "gt",
+              "value": 0
+            },
+            {
+              "field": "ethCount",
+              "operator": "gt",
+              "value": 0
+            },
+            {
+              "field": "ethWhiteCount",
+              "operator": "eq",
+              "value": 0
+            },
+            {
+              "field": "failingDarkCount",
+              "operator": "eq",
+              "value": 0
+            },
+            {
+              "field": "unexpectedWhiteCount",
+              "operator": "eq",
+              "value": 0
+            }
+          ]
+        },
+        "next": "ac4-screenshot-list-light",
+        "id": "ac4-assert-list-light-logos"
+      },
+      "ac4-screenshot-list-light": {
+        "action": "screenshot",
+        "filename": "evidence-ac4-list-light",
+        "note": "AC4: Light mode does not force ETH/light-background assets onto white; configured dark-background assets use dark override when visible",
+        "next": "done",
+        "id": "ac4-screenshot-list-light"
+      },
+      "done": {
+        "action": "end",
+        "status": "pass",
+        "id": "done"
+      }
+    }
+  }
+}

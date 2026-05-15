@@ -1,0 +1,36 @@
+flowchart TD
+  %% TAT-2964 Perps market logo contrast
+  __entry__(["ENTRY"]) --> node_setup_dark_mode
+  node_setup_dark_mode["setup-dark-mode<br/>emulation"]
+  node_setup_nav_perps_list_dark[["setup-nav-perps-list-dark<br/>bundle/perps-list"]]
+  node_setup_wait_list_dark["setup-wait-list-dark<br/>wait_for"]
+  node_ac1_assert_list_dark_logos["ac1-assert-list-dark-logos<br/>eval_sync"]
+  node_ac2_assert_eth_list_dark_white["ac2-assert-eth-list-dark-white<br/>eval_sync"]
+  node_ac2_screenshot_list_dark["ac2-screenshot-list-dark<br/>screenshot"]
+  node_setup_nav_eth_detail_dark[["setup-nav-eth-detail-dark<br/>perps/navigate-to-market-detail"]]
+  node_setup_wait_detail_dark["setup-wait-detail-dark<br/>wait_for"]
+  node_setup_wait_detail_eth_image_dark["setup-wait-detail-eth-image-dark<br/>wait_for"]
+  node_ac3_assert_eth_detail_dark_white["ac3-assert-eth-detail-dark-white<br/>eval_sync"]
+  node_ac3_screenshot_detail_dark["ac3-screenshot-detail-dark<br/>screenshot"]
+  node_setup_light_mode["setup-light-mode<br/>emulation"]
+  node_setup_nav_perps_list_light[["setup-nav-perps-list-light<br/>bundle/perps-list"]]
+  node_setup_wait_list_light["setup-wait-list-light<br/>wait_for"]
+  node_ac4_assert_list_light_logos["ac4-assert-list-light-logos<br/>eval_sync"]
+  node_ac4_screenshot_list_light["ac4-screenshot-list-light<br/>screenshot"]
+  node_done(["done<br/>PASS"])
+  node_setup_dark_mode --> node_setup_nav_perps_list_dark
+  node_setup_nav_perps_list_dark --> node_setup_wait_list_dark
+  node_setup_wait_list_dark --> node_ac1_assert_list_dark_logos
+  node_ac1_assert_list_dark_logos --> node_ac2_assert_eth_list_dark_white
+  node_ac2_assert_eth_list_dark_white --> node_ac2_screenshot_list_dark
+  node_ac2_screenshot_list_dark --> node_setup_nav_eth_detail_dark
+  node_setup_nav_eth_detail_dark --> node_setup_wait_detail_dark
+  node_setup_wait_detail_dark --> node_setup_wait_detail_eth_image_dark
+  node_setup_wait_detail_eth_image_dark --> node_ac3_assert_eth_detail_dark_white
+  node_ac3_assert_eth_detail_dark_white --> node_ac3_screenshot_detail_dark
+  node_ac3_screenshot_detail_dark --> node_setup_light_mode
+  node_setup_light_mode --> node_setup_nav_perps_list_light
+  node_setup_nav_perps_list_light --> node_setup_wait_list_light
+  node_setup_wait_list_light --> node_ac4_assert_list_light_logos
+  node_ac4_assert_list_light_logos --> node_ac4_screenshot_list_light
+  node_ac4_screenshot_list_light --> node_done

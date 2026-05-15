@@ -1,0 +1,26 @@
+{
+  "title": "Navigate to Perps market list without evidence capture",
+  "validate": {
+    "workflow": {
+      "pre_conditions": ["wallet.unlocked", "perps.feature_enabled"],
+      "entry": "setup-nav-perps-list",
+      "nodes": {
+        "setup-nav-perps-list": {
+          "action": "navigate",
+          "target": "PerpsHome",
+          "next": "setup-wait-perps-list"
+        },
+        "setup-wait-perps-list": {
+          "action": "wait_for",
+          "test_id": "perps-token-logo-ETH",
+          "timeout_ms": 10000,
+          "next": "done"
+        },
+        "done": {
+          "action": "end",
+          "status": "pass"
+        }
+      }
+    }
+  }
+}
