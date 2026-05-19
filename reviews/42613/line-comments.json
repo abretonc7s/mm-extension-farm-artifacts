@@ -1,0 +1,37 @@
+{
+  "pr_number": "42613",
+  "recommendation": "REQUEST_CHANGES",
+  "summary": "Flow + telemetry + locale wiring correct, latest discount/partial-failure fixes look good. Blocking: latest CHANGES_REQUESTED (geositta) still unaddressed — `usePerpsMetamaskFeeDiscountBips` runs on every Perps tab render because the modal is mounted unconditionally, driving the new console-baseline act-warning regression. Gate the modal mount.",
+  "comments": [
+    {
+      "path": "ui/components/app/perps/perps-view.tsx",
+      "line": 402,
+      "body": "Mount the modal conditionally — `{isCloseAllModalOpen && <CloseAllPositionsModal ... />}`. As written, the modal is mounted on every PerpsView render, which causes `usePerpsMetamaskFeeDiscountBips` inside the modal to fire `rewardsGetPerpsDiscountForAccount` on every Perps tab entry even when the user never opens the close-all flow. This is the open CHANGES_REQUESTED from the latest review and is also what's driving the +9/+2 React act-warning regression against the console baseline in `close-all-positions-modal.test.tsx` and `perps-view.test.tsx`.",
+      "severity": "must_fix"
+    },
+    {
+      "path": "ui/components/app/perps/close-position/close-all-positions-modal.tsx",
+      "line": 109,
+      "body": "Alternative to gating the parent mount: accept `isOpen` here and short-circuit. Either fix resolves the unconditional `rewardsGetPerpsDiscountForAccount` RPC and the closed-modal act-warning baseline regression, but parent-side mount gating is the simpler change.",
+      "severity": "suggestion"
+    },
+    {
+      "path": "ui/components/app/perps/close-position/close-all-positions-modal.test.tsx",
+      "line": 61,
+      "body": "Mock returns `{ feeRate: 0.00145 }` but the modal reads `result?.protocolFeeRate` / `result?.metamaskFeeRate`, so every test runs the fallback branch and never the per-symbol path. Return a full `FeeCalculationResult` (with distinct `protocolFeeRate`/`metamaskFeeRate` per symbol) and assert against the rendered `perps-close-all-fees-value` so the test would actually fail if the rate-application math regressed.",
+      "severity": "suggestion"
+    },
+    {
+      "path": "ui/components/app/perps/close-position/close-all-positions-modal.tsx",
+      "line": 188,
+      "body": "`youWillReceive = roundedMargin - roundedFees` double-rounds. Drift is <$0.005 so this is not a correctness bug, but `Math.round((totalMargin - estimatedFees) * 100) / 100` removes the redundant intermediate rounding.",
+      "severity": "nitpick"
+    },
+    {
+      "path": "ui/components/app/perps/close-position/close-all-positions-modal.tsx",
+      "line": 104,
+      "body": "`useState(isOpen && positions.length > 0)` duplicates work the open-effect already does. Initialise to `false` — when the modal opens, the effect sets it correctly.",
+      "severity": "nitpick"
+    }
+  ]
+}
