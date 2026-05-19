@@ -1,0 +1,19 @@
+{
+  "pr_number": "42645",
+  "recommendation": "REQUEST_CHANGES",
+  "summary": "Looks good. Smoke recipe PASS, tsc PASS, 50/50 unit tests PASS. Two nitpicks in perps-fill-tag.tsx — please address before merge.",
+  "comments": [
+    {
+      "path": "ui/components/app/perps/perps-fill-tag/perps-fill-tag.tsx",
+      "line": 57,
+      "body": "Suggestion: `e.stopPropagation()` is no longer required. After the nested-button refactor in `transaction-card.tsx`, this `<button>` is rendered as a sibling of the row `ButtonBase`, not nested inside it — so the click never bubbles to a parent interactive ancestor. Safe to drop the handler-arg and the `stopPropagation` line to keep the call site honest about why ADL is decoupled from the row.",
+      "severity": "nitpick"
+    },
+    {
+      "path": "ui/components/app/perps/perps-fill-tag/perps-fill-tag.tsx",
+      "line": 97,
+      "body": "Suggestion: the four `!== null && !== undefined` guards are redundant — `isEqualCaseInsensitive` already returns `false` for non-string inputs (see `shared/lib/string-utils.ts`). Simplify to:\n\n```ts\ncondition: isEqualCaseInsensitive(\n  fill.liquidation?.liquidatedUser ?? '',\n  selectedAccount?.address ?? '',\n),\n```\n\nSame behavior, less noise.",
+      "severity": "nitpick"
+    }
+  ]
+}

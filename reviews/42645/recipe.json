@@ -1,0 +1,67 @@
+{
+  "title": "PR 42645 smoke — perps activity surfaces render without regression and no fill-tag badge on standard fills (AC6)",
+  "schema_version": 1,
+  "validate": {
+    "workflow": {
+      "pre_conditions": ["wallet.unlocked"],
+      "entry": "setup-status-check",
+      "nodes": {
+        "setup-status-check": {
+          "action": "eval_sync",
+          "expression": "JSON.stringify({hash: location.hash, hasStateHooks: typeof globalThis.stateHooks === 'object'})",
+          "save_as": "initial",
+          "next": "ac6-nav-perps-tab"
+        },
+        "ac6-nav-perps-tab": {
+          "action": "call",
+          "ref": "perps/navigate-perps-tab",
+          "next": "ac6-wait-perps-tab-loaded"
+        },
+        "ac6-wait-perps-tab-loaded": {
+          "action": "wait_for",
+          "test_id": "perps-balance-dropdown",
+          "timeout_ms": 10000,
+          "next": "ac6-probe-fill-tags-perps-tab"
+        },
+        "ac6-probe-fill-tags-perps-tab": {
+          "action": "eval_sync",
+          "expression": "document.querySelectorAll('[data-testid^=\"perps-fill-tag-\"]').length",
+          "save_as": "perpsTabFillTagCount",
+          "assert": { "operator": "eq", "value": 0 },
+          "next": "ac6-screenshot-perps-tab"
+        },
+        "ac6-screenshot-perps-tab": {
+          "action": "screenshot",
+          "filename": "evidence-ac6-perps-tab-standard-fills-no-badge",
+          "note": "AC6: wallet-home perps tab — standard fills render without fill-tag badge",
+          "next": "ac6-nav-activity-page"
+        },
+        "ac6-nav-activity-page": {
+          "action": "ext_navigate_hash",
+          "hash": "#/perps/activity",
+          "next": "ac6-wait-activity-loaded"
+        },
+        "ac6-wait-activity-loaded": {
+          "action": "wait_for",
+          "expression": "location.hash.includes('/perps/activity') && document.querySelector('[data-testid^=\"transaction-card-\"], [data-testid=\"perps-activity-empty\"], [data-testid=\"perps-activity-page\"]') !== null",
+          "timeout_ms": 10000,
+          "next": "ac6-probe-fill-tags-activity-page"
+        },
+        "ac6-probe-fill-tags-activity-page": {
+          "action": "eval_sync",
+          "expression": "document.querySelectorAll('[data-testid^=\"perps-fill-tag-\"]').length",
+          "save_as": "activityPageFillTagCount",
+          "assert": { "operator": "eq", "value": 0 },
+          "next": "ac6-screenshot-activity-page"
+        },
+        "ac6-screenshot-activity-page": {
+          "action": "screenshot",
+          "filename": "evidence-ac6-activity-page-standard-fills-no-badge",
+          "note": "AC6: perps activity page — standard fills render without fill-tag badge",
+          "next": "done"
+        },
+        "done": { "action": "end", "status": "pass" }
+      }
+    }
+  }
+}

@@ -1,0 +1,22 @@
+flowchart TD
+  %% PR 42645 smoke — perps activity surfaces render without regression and no fill-tag badge on standard fills (AC6)
+  __entry__(["ENTRY"]) --> node_setup_status_check
+  node_setup_status_check["setup-status-check<br/>eval_sync"]
+  node_ac6_nav_perps_tab[["ac6-nav-perps-tab<br/>perps/navigate-perps-tab"]]
+  node_ac6_wait_perps_tab_loaded["ac6-wait-perps-tab-loaded<br/>wait_for"]
+  node_ac6_probe_fill_tags_perps_tab["ac6-probe-fill-tags-perps-tab<br/>eval_sync"]
+  node_ac6_screenshot_perps_tab["ac6-screenshot-perps-tab<br/>screenshot"]
+  node_ac6_nav_activity_page["ac6-nav-activity-page<br/>ext_navigate_hash"]
+  node_ac6_wait_activity_loaded["ac6-wait-activity-loaded<br/>wait_for"]
+  node_ac6_probe_fill_tags_activity_page["ac6-probe-fill-tags-activity-page<br/>eval_sync"]
+  node_ac6_screenshot_activity_page["ac6-screenshot-activity-page<br/>screenshot"]
+  node_done(["done<br/>PASS"])
+  node_setup_status_check --> node_ac6_nav_perps_tab
+  node_ac6_nav_perps_tab --> node_ac6_wait_perps_tab_loaded
+  node_ac6_wait_perps_tab_loaded --> node_ac6_probe_fill_tags_perps_tab
+  node_ac6_probe_fill_tags_perps_tab --> node_ac6_screenshot_perps_tab
+  node_ac6_screenshot_perps_tab --> node_ac6_nav_activity_page
+  node_ac6_nav_activity_page --> node_ac6_wait_activity_loaded
+  node_ac6_wait_activity_loaded --> node_ac6_probe_fill_tags_activity_page
+  node_ac6_probe_fill_tags_activity_page --> node_ac6_screenshot_activity_page
+  node_ac6_screenshot_activity_page --> node_done
