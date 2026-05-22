@@ -1,0 +1,191 @@
+diff --git a/ui/components/app/perps/perps-market-recent-activity/perps-market-recent-activity.test.tsx b/ui/components/app/perps/perps-market-recent-activity/perps-market-recent-activity.test.tsx
+index 1395f03e8c..d0cccda447 100644
+--- a/ui/components/app/perps/perps-market-recent-activity/perps-market-recent-activity.test.tsx
++++ b/ui/components/app/perps/perps-market-recent-activity/perps-market-recent-activity.test.tsx
+@@ -199,9 +199,6 @@ describe('PerpsMarketRecentActivity', () => {
+       expect(
+         screen.getByTestId('perps-market-detail-view-all-activity'),
+       ).toBeInTheDocument();
+-      expect(
+-        screen.getByTestId('perps-market-detail-view-all-activity'),
+-      ).toHaveStyle({ paddingLeft: '0px', paddingRight: '0px' });
+     });
+ 
+     it('"See All" navigates to PERPS_ACTIVITY_ROUTE', () => {
+diff --git a/ui/components/app/perps/perps-market-recent-activity/perps-market-recent-activity.tsx b/ui/components/app/perps/perps-market-recent-activity/perps-market-recent-activity.tsx
+index 96723e0f13..a5cc606a16 100644
+--- a/ui/components/app/perps/perps-market-recent-activity/perps-market-recent-activity.tsx
++++ b/ui/components/app/perps/perps-market-recent-activity/perps-market-recent-activity.tsx
+@@ -96,12 +96,11 @@ export const PerpsMarketRecentActivity: React.FC<
+   const handleSeeAll = () => navigate(PERPS_ACTIVITY_ROUTE);
+ 
+   return (
+-    <>
++    <Box flexDirection={BoxFlexDirection.Column} gap={3}>
+       {hasTransactions ? (
+         <ButtonBase
+           onClick={handleSeeAll}
+-          className="w-full flex flex-row justify-between items-center pt-4 pb-2 bg-transparent rounded-none hover:bg-hover active:bg-pressed"
+-          style={{ paddingLeft: 0, paddingRight: 0 }}
++          className="w-full flex flex-row justify-between items-center px-4 py-2 bg-transparent rounded-none hover:bg-hover active:bg-pressed"
+           data-testid="perps-market-detail-view-all-activity"
+           aria-label={`${t('perpsRecentActivity')}, ${t('perpsSeeAll')}`}
+         >
+@@ -115,20 +114,22 @@ export const PerpsMarketRecentActivity: React.FC<
+           />
+         </ButtonBase>
+       ) : (
+-        <Box paddingTop={4} paddingBottom={2}>
++        <Box paddingLeft={4} paddingRight={4} paddingTop={2} paddingBottom={2}>
+           <Text variant={TextVariant.HeadingSm} fontWeight={FontWeight.Medium}>
+             {t('perpsRecentActivity')}
+           </Text>
+         </Box>
+       )}
+-      {showSkeleton && <RecentActivitySkeleton />}
+-      {!showSkeleton && !hasTransactions && <RecentActivityEmpty />}
+-      {!showSkeleton && hasTransactions && (
+-        <RecentActivityList
+-          transactions={transactions}
+-          onTransactionClick={handleSeeAll}
+-        />
+-      )}
+-    </>
++      <Box paddingLeft={4} paddingRight={4}>
++        {showSkeleton && <RecentActivitySkeleton />}
++        {!showSkeleton && !hasTransactions && <RecentActivityEmpty />}
++        {!showSkeleton && hasTransactions && (
++          <RecentActivityList
++            transactions={transactions}
++            onTransactionClick={handleSeeAll}
++          />
++        )}
++      </Box>
++    </Box>
+   );
+ };
+diff --git a/ui/components/app/perps/perps-recent-activity/perps-recent-activity.tsx b/ui/components/app/perps/perps-recent-activity/perps-recent-activity.tsx
+index 30ea29c993..92a859a815 100644
+--- a/ui/components/app/perps/perps-recent-activity/perps-recent-activity.tsx
++++ b/ui/components/app/perps/perps-recent-activity/perps-recent-activity.tsx
+@@ -81,8 +81,8 @@ export const PerpsRecentActivity: React.FC<PerpsRecentActivityProps> = ({
+           alignItems={BoxAlignItems.Center}
+           paddingLeft={4}
+           paddingRight={4}
+-          paddingTop={4}
+-          marginBottom={2}
++          paddingTop={3}
++          paddingBottom={3}
+         >
+           <Skeleton className="h-5 w-36" borderRadius={BorderRadius.SM} />
+           <Skeleton className="h-4 w-14" borderRadius={BorderRadius.SM} />
+@@ -109,8 +109,8 @@ export const PerpsRecentActivity: React.FC<PerpsRecentActivityProps> = ({
+           alignItems={BoxAlignItems.Center}
+           paddingLeft={4}
+           paddingRight={4}
+-          paddingTop={4}
+-          marginBottom={2}
++          paddingTop={3}
++          paddingBottom={3}
+         >
+           <Text fontWeight={FontWeight.Medium}>{t('perpsRecentActivity')}</Text>
+         </Box>
+@@ -134,7 +134,7 @@ export const PerpsRecentActivity: React.FC<PerpsRecentActivityProps> = ({
+     >
+       {/* Section Header */}
+       <ButtonBase
+-        className="w-full flex flex-row justify-between items-center px-4 pt-4 mb-2 bg-transparent rounded-none hover:bg-hover active:bg-pressed"
++        className="w-full flex flex-row justify-between items-center px-4 py-3 bg-transparent rounded-none hover:bg-hover active:bg-pressed"
+         onClick={handleSeeAll}
+         data-testid="perps-recent-activity-see-all"
+         aria-label={`${t('perpsRecentActivity')}, ${t('perpsSeeAll')}`}
+diff --git a/ui/pages/perps/perps-market-detail-page.tsx b/ui/pages/perps/perps-market-detail-page.tsx
+index 4b86329e76..3f7e47f591 100644
+--- a/ui/pages/perps/perps-market-detail-page.tsx
++++ b/ui/pages/perps/perps-market-detail-page.tsx
+@@ -1752,46 +1752,48 @@ const PerpsMarketDetailPage: React.FC = () => {
+         </Box>
+ 
+         {/* Recent Activity Section - always visible */}
+-        <Box paddingLeft={4} paddingRight={4}>
++        <Box paddingTop={4} paddingBottom={4}>
+           <PerpsMarketRecentActivity symbol={decodedSymbol} />
+ 
+-          {/* Learn Section */}
+-          <Box
+-            className="mt-4 w-full cursor-pointer rounded-xl bg-muted px-4 py-3 hover:bg-muted-hover active:bg-muted-pressed"
+-            flexDirection={BoxFlexDirection.Row}
+-            justifyContent={BoxJustifyContent.Between}
+-            alignItems={BoxAlignItems.Center}
+-            data-testid="perps-learn-basics"
+-            onClick={() => {
+-              track(MetaMetricsEventName.PerpsUiInteraction, {
+-                [PERPS_EVENT_PROPERTY.INTERACTION_TYPE]:
+-                  PERPS_EVENT_VALUE.INTERACTION_TYPE.BUTTON_CLICKED,
+-                [PERPS_EVENT_PROPERTY.BUTTON_TYPE]:
+-                  PERPS_EVENT_VALUE.BUTTON_CLICKED.TUTORIAL,
+-                [PERPS_EVENT_PROPERTY.BUTTON_LOCATION]:
+-                  PERPS_EVENT_VALUE.BUTTON_LOCATION.ASSET_DETAILS,
+-              });
+-              dispatch(setTutorialModalOpen(true));
+-            }}
+-          >
+-            <Text variant={TextVariant.BodyMd} fontWeight={FontWeight.Medium}>
+-              {t('perpsLearnBasics')}
+-            </Text>
+-            <Icon
+-              name={IconName.ArrowRight}
+-              size={IconSize.Sm}
+-              color={IconColor.IconAlternative}
+-            />
+-          </Box>
+-
+-          {/* Disclaimer */}
+-          <Box paddingTop={4} paddingBottom={4}>
+-            <Text
+-              variant={TextVariant.BodyXs}
+-              color={TextColor.TextAlternative}
++          <Box paddingLeft={4} paddingRight={4}>
++            {/* Learn Section */}
++            <Box
++              className="mt-4 w-full cursor-pointer rounded-xl bg-muted px-4 py-3 hover:bg-muted-hover active:bg-muted-pressed"
++              flexDirection={BoxFlexDirection.Row}
++              justifyContent={BoxJustifyContent.Between}
++              alignItems={BoxAlignItems.Center}
++              data-testid="perps-learn-basics"
++              onClick={() => {
++                track(MetaMetricsEventName.PerpsUiInteraction, {
++                  [PERPS_EVENT_PROPERTY.INTERACTION_TYPE]:
++                    PERPS_EVENT_VALUE.INTERACTION_TYPE.BUTTON_CLICKED,
++                  [PERPS_EVENT_PROPERTY.BUTTON_TYPE]:
++                    PERPS_EVENT_VALUE.BUTTON_CLICKED.TUTORIAL,
++                  [PERPS_EVENT_PROPERTY.BUTTON_LOCATION]:
++                    PERPS_EVENT_VALUE.BUTTON_LOCATION.ASSET_DETAILS,
++                });
++                dispatch(setTutorialModalOpen(true));
++              }}
+             >
+-              {t('perpsDisclaimer')}
+-            </Text>
++              <Text variant={TextVariant.BodyMd} fontWeight={FontWeight.Medium}>
++                {t('perpsLearnBasics')}
++              </Text>
++              <Icon
++                name={IconName.ArrowRight}
++                size={IconSize.Sm}
++                color={IconColor.IconAlternative}
++              />
++            </Box>
++
++            {/* Disclaimer */}
++            <Box paddingTop={4} paddingBottom={4}>
++              <Text
++                variant={TextVariant.BodyXs}
++                color={TextColor.TextAlternative}
++              >
++                {t('perpsDisclaimer')}
++              </Text>
++            </Box>
+           </Box>
+         </Box>
+       </>

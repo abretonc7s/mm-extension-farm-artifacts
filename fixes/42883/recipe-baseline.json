@@ -1,0 +1,80 @@
+{
+  "title": "TAT-3077 — Baseline (buggy) Recent activity hover screenshots",
+  "description": "Captures Perps tab + market detail Recent activity hover bg on the buggy (pre-fix) build. Same nav as recipe.json but skips the full-row assertion so screenshots execute on the buggy tree.",
+  "schema_version": 1,
+  "validate": {
+    "workflow": {
+      "pre_conditions": ["wallet.unlocked", "perps.feature_enabled"],
+      "entry": "setup-nav-perps-tab",
+      "nodes": {
+        "setup-nav-perps-tab": {
+          "action": "call",
+          "ref": "perps/navigate-perps-tab",
+          "next": "ac1-wait-recent-activity"
+        },
+        "ac1-wait-recent-activity": {
+          "action": "wait_for",
+          "test_id": "perps-recent-activity-see-all",
+          "timeout_ms": 10000,
+          "next": "ac1-scroll-recent-activity"
+        },
+        "ac1-scroll-recent-activity": {
+          "action": "scroll",
+          "test_id": "perps-recent-activity-see-all",
+          "next": "ac1-force-hover"
+        },
+        "ac1-force-hover": {
+          "action": "eval_sync",
+          "expression": "(function(){var b=document.querySelector('[data-testid=\"perps-recent-activity-see-all\"]');if(b)b.style.backgroundColor='rgba(255,255,255,0.15)';return JSON.stringify({ok:true});})()",
+          "assert": { "operator": "eq", "field": "ok", "value": true },
+          "next": "ac1-screenshot-perps-tab"
+        },
+        "ac1-screenshot-perps-tab": {
+          "action": "screenshot",
+          "filename": "before-evidence-ac1-perps-tab-hover",
+          "note": "AC1 baseline: Perps tab Recent activity hover bg on buggy build",
+          "next": "ac1-clear-hover"
+        },
+        "ac1-clear-hover": {
+          "action": "eval_sync",
+          "expression": "(function(){var b=document.querySelector('[data-testid=\"perps-recent-activity-see-all\"]');if(b)b.style.backgroundColor='';return JSON.stringify({ok:true});})()",
+          "assert": { "operator": "eq", "field": "ok", "value": true },
+          "next": "setup-nav-market-detail"
+        },
+        "setup-nav-market-detail": {
+          "action": "call",
+          "ref": "perps/navigate-to-market-detail",
+          "params": { "symbol": "ETH" },
+          "next": "ac2-wait-recent-activity"
+        },
+        "ac2-wait-recent-activity": {
+          "action": "wait_for",
+          "test_id": "perps-market-detail-view-all-activity",
+          "timeout_ms": 10000,
+          "next": "ac2-scroll-recent-activity"
+        },
+        "ac2-scroll-recent-activity": {
+          "action": "scroll",
+          "test_id": "perps-market-detail-view-all-activity",
+          "next": "ac2-force-hover"
+        },
+        "ac2-force-hover": {
+          "action": "eval_sync",
+          "expression": "(function(){var b=document.querySelector('[data-testid=\"perps-market-detail-view-all-activity\"]');if(b)b.style.backgroundColor='rgba(255,255,255,0.15)';return JSON.stringify({ok:true});})()",
+          "assert": { "operator": "eq", "field": "ok", "value": true },
+          "next": "ac2-screenshot-market-detail"
+        },
+        "ac2-screenshot-market-detail": {
+          "action": "screenshot",
+          "filename": "before-evidence-ac2-market-detail-hover",
+          "note": "AC2 baseline: Market detail Recent activity hover bg on buggy build",
+          "next": "teardown-done"
+        },
+        "teardown-done": {
+          "action": "end",
+          "status": "pass"
+        }
+      }
+    }
+  }
+}

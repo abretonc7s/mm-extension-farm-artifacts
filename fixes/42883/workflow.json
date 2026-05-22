@@ -1,0 +1,139 @@
+{
+  "description": "Captures Recent activity styling on (1) Perps tab and (2) Perp market detail page. Forces the hover background on the header and screenshots, so the edge-to-edge hover stripe is visible.",
+  "hooks": {
+    "pre_conditions": [
+      "wallet.unlocked",
+      "perps.feature_enabled"
+    ],
+    "setup": [],
+    "teardown": []
+  },
+  "inputs": {},
+  "playback": {
+    "mode": "off",
+    "slow_ms": 1000
+  },
+  "sourcePath": "",
+  "title": "TAT-3077 — Perps Recent activity hover bg + alignment",
+  "workflow": {
+    "entry": "setup-open-position",
+    "nodes": {
+      "setup-open-position": {
+        "action": "call",
+        "ref": "perps/open-long-position",
+        "params": {
+          "symbol": "ETH",
+          "side": "long",
+          "amount": "10"
+        },
+        "next": "setup-close-position",
+        "id": "setup-open-position"
+      },
+      "setup-close-position": {
+        "action": "call",
+        "ref": "perps/close-position",
+        "params": {
+          "symbol": "ETH",
+          "percent": "100"
+        },
+        "next": "setup-nav-perps-tab",
+        "id": "setup-close-position"
+      },
+      "setup-nav-perps-tab": {
+        "action": "call",
+        "ref": "perps/navigate-perps-tab",
+        "next": "ac1-wait-recent-activity",
+        "id": "setup-nav-perps-tab"
+      },
+      "ac1-wait-recent-activity": {
+        "action": "wait_for",
+        "test_id": "perps-recent-activity-see-all",
+        "timeout_ms": 10000,
+        "next": "ac1-scroll-recent-activity",
+        "id": "ac1-wait-recent-activity"
+      },
+      "ac1-scroll-recent-activity": {
+        "action": "scroll",
+        "test_id": "perps-recent-activity-see-all",
+        "next": "ac1-force-hover",
+        "id": "ac1-scroll-recent-activity"
+      },
+      "ac1-force-hover": {
+        "action": "eval_sync",
+        "expression": "(function(){var b=document.querySelector('[data-testid=\"perps-recent-activity-see-all\"]');if(!b)return JSON.stringify({ok:false});b.style.backgroundColor='rgba(255,255,255,0.15)';var br=b.getBoundingClientRect();var pr=b.parentElement.getBoundingClientRect();return JSON.stringify({ok:Math.round(br.left)===Math.round(pr.left)&&Math.round(br.right)===Math.round(pr.right),btnLeft:Math.round(br.left),btnRight:Math.round(br.right),parentLeft:Math.round(pr.left),parentRight:Math.round(pr.right)});})()",
+        "assert": {
+          "operator": "eq",
+          "field": "ok",
+          "value": true
+        },
+        "save_as": "ac1_hover_bounds",
+        "next": "ac1-screenshot-perps-tab",
+        "id": "ac1-force-hover"
+      },
+      "ac1-screenshot-perps-tab": {
+        "action": "screenshot",
+        "filename": "evidence-ac1-perps-tab-hover",
+        "note": "AC1: Perps tab Recent activity header hover bg spans full row (edge-to-edge), text/icon inset via px-4",
+        "next": "ac1-clear-hover",
+        "id": "ac1-screenshot-perps-tab"
+      },
+      "ac1-clear-hover": {
+        "action": "eval_sync",
+        "expression": "(function(){var b=document.querySelector('[data-testid=\"perps-recent-activity-see-all\"]');if(b)b.style.backgroundColor='';return JSON.stringify({ok:true});})()",
+        "assert": {
+          "operator": "eq",
+          "field": "ok",
+          "value": true
+        },
+        "next": "setup-nav-market-detail",
+        "id": "ac1-clear-hover"
+      },
+      "setup-nav-market-detail": {
+        "action": "call",
+        "ref": "perps/navigate-to-market-detail",
+        "params": {
+          "symbol": "ETH"
+        },
+        "next": "ac2-wait-recent-activity",
+        "id": "setup-nav-market-detail"
+      },
+      "ac2-wait-recent-activity": {
+        "action": "wait_for",
+        "test_id": "perps-market-detail-view-all-activity",
+        "timeout_ms": 10000,
+        "next": "ac2-scroll-recent-activity",
+        "id": "ac2-wait-recent-activity"
+      },
+      "ac2-scroll-recent-activity": {
+        "action": "scroll",
+        "test_id": "perps-market-detail-view-all-activity",
+        "next": "ac2-force-hover",
+        "id": "ac2-scroll-recent-activity"
+      },
+      "ac2-force-hover": {
+        "action": "eval_sync",
+        "expression": "(function(){var b=document.querySelector('[data-testid=\"perps-market-detail-view-all-activity\"]');if(!b)return JSON.stringify({ok:false});b.style.backgroundColor='rgba(255,255,255,0.15)';var br=b.getBoundingClientRect();var pr=b.parentElement.getBoundingClientRect();var inlinePadL=b.style.paddingLeft;var inlinePadR=b.style.paddingRight;return JSON.stringify({ok:Math.round(br.left)===Math.round(pr.left)&&Math.round(br.right)===Math.round(pr.right)&&!inlinePadL&&!inlinePadR,btnLeft:Math.round(br.left),btnRight:Math.round(br.right),parentLeft:Math.round(pr.left),parentRight:Math.round(pr.right),inlinePadL:inlinePadL||null,inlinePadR:inlinePadR||null});})()",
+        "assert": {
+          "operator": "eq",
+          "field": "ok",
+          "value": true
+        },
+        "save_as": "ac2_hover_bounds",
+        "next": "ac2-screenshot-market-detail",
+        "id": "ac2-force-hover"
+      },
+      "ac2-screenshot-market-detail": {
+        "action": "screenshot",
+        "filename": "evidence-ac2-market-detail-hover",
+        "note": "AC2: Market detail Recent activity header hover bg spans full row edge-to-edge (no parent L/R inset, no inline padding override)",
+        "next": "teardown-done",
+        "id": "ac2-screenshot-market-detail"
+      },
+      "teardown-done": {
+        "action": "end",
+        "status": "pass",
+        "id": "teardown-done"
+      }
+    }
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "preferred_mode": "screenshots",
+  "summary": "Forced-hover bg comparison shows the market-detail Recent activity header is now edge-to-edge instead of inset.",
+  "before_after_pairs": [
+    {
+      "label": "Market detail — Recent activity header hover bg (inset → edge-to-edge)",
+      "covers": ["ac2"],
+      "before": "screenshots/before-ac2-market-detail-hover.png",
+      "after": "screenshots/after-ac2-market-detail-hover.png",
+      "note": "Hover bg simulated via inline rgba(255,255,255,0.15). Before: stripe inset by parent paddingLeft/Right={4} with inline paddingLeft:0 override. After: stripe spans the section edge-to-edge; text/icon are inset 16px via px-4 on the ButtonBase itself, matching the perps tab pattern."
+    }
+  ],
+  "standalone": [
+    {
+      "label": "Perps tab — Recent activity header hover bg (unchanged horizontal, normalized vertical padding)",
+      "covers": ["ac1"],
+      "file": "screenshots/after-ac1-perps-tab-hover.png",
+      "note": "Perps tab header was already edge-to-edge; the fix normalizes vertical padding (pt-4 mb-2 → py-3) to match the Explore markets sibling."
+    }
+  ],
+  "omit": [
+    "screenshots/before-ac1-perps-tab-hover.png",
+    "screenshots/before-ac1-perps-tab-recent-activity.png",
+    "screenshots/after-ac1-perps-tab-recent-activity.png",
+    "screenshots/before-ac2-market-detail-recent-activity.png",
+    "screenshots/after-ac2-market-detail-recent-activity.png"
+  ],
+  "videos": {
+    "preferred": false,
+    "note": "Video recording not captured; static before/after screenshots are sufficient for this visual fix."
+  }
+}

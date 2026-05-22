@@ -1,0 +1,161 @@
+{
+  "id": "pkg-c08a7d38-mph5y9fc",
+  "artifactPath": "artifacts/pr-package.json",
+  "branch": "fix/tat-3077-fix-application-bug",
+  "remoteBranchRef": "origin/fix/tat-3077-fix-application-bug",
+  "headSha": "cf975c9d79b542ac549c41cc6bb8d0a239f163b5",
+  "diffStat": {
+    "files": 4,
+    "additions": 58,
+    "deletions": 58
+  },
+  "draftTitle": "fix: tAT-3077",
+  "draftBody": "## **Description**\n\nAligns the Perps \"Recent activity\" section header on both the Perps tab and the Perp market detail page so the hover background spans the full section row edge-to-edge, with text/icon inset by 16px via the button's own `px-4` (matching the existing Perps tab pattern). Also normalizes vertical padding on the Perps tab header (`pt-4 mb-2` → `py-3`) to match sibling sections.\n\nBefore: on the market detail page, the section parent had `paddingLeft={4}`/`paddingRight={4}` and the inner header button forced `paddingLeft: 0` inline — producing a hover stripe that was inset on both sides instead of edge-to-edge.\n\nAfter: the parent layout moves to a flex column with no horizontal padding at the section level; the header button uses `px-4` directly so the hover stripe goes edge-to-edge while the text/icon stay properly inset.\n\n## **Changelog**\n\nCHANGELOG entry: null\n\n## **Related issues**\n\nFixes: [TAT-3077](https://consensyssoftware.atlassian.net/browse/TAT-3077)\n\n## **Manual testing steps**\n\n1. Open the extension with `PERPS_ENABLED=true` and unlock the wallet.\n2. Navigate to the Perps tab and scroll to the \"Recent activity\" section header.\n3. Hover the header row. **Expected:** hover background fills the section edge-to-edge; text/chevron stay inset 16px from edges; vertical padding is symmetric.\n4. Open any Perp market detail (e.g. ETH) and scroll to the \"Recent activity\" header.\n5. Hover the header row. **Expected:** hover background spans the section edge-to-edge (no inset stripe); inner button no longer carries inline `paddingLeft: 0` / `paddingRight: 0`; text/icon inset via `px-4`.\n\n## **Screenshots/Recordings**\n\nForced-hover bg comparison shows the market-detail Recent activity header is now edge-to-edge instead of inset.\n\n## **Pre-merge author checklist**\n\n- [ ] I've followed [MetaMask Contributor Docs](https://github.com/MetaMask/contributor-docs) and [MetaMask Extension Coding Standards](https://github.com/MetaMask/metamask-extension/blob/main/.github/guidelines/CODING_GUIDELINES.md).\n- [ ] I've completed the PR template to the best of my ability\n- [ ] I've included tests if applicable\n- [ ] I've documented my code using [JSDoc](https://jsdoc.app/) format if applicable\n- [ ] I've applied the right labels on the PR (see [labeling guidelines](https://github.com/MetaMask/metamask-extension/blob/main/.github/guidelines/LABELING_GUIDELINES.md)). Not required for external contributors.\n\n## **Pre-merge reviewer checklist**\n\n- [ ] I've manually tested the PR (e.g. pull and build branch, run the app, test code being changed).\n- [ ] I confirm that this PR addresses all acceptance criteria described in the ticket it closes and includes the necessary testing evidence such as recordings and or screenshots.\n\n## **Validation Recipe**\n\n<details>\n<summary>Recipe used to validate the fix</summary>\n\n```json\n{\n  \"title\": \"TAT-3077 — Perps Recent activity hover bg + alignment\",\n  \"description\": \"Captures Recent activity styling on (1) Perps tab and (2) Perp market detail page. Forces the hover background on the header and screenshots, so the edge-to-edge hover stripe is visible.\",\n  \"schema_version\": 1,\n  \"validate\": {\n    \"workflow\": {\n      \"pre_conditions\": [\"wallet.unlocked\", \"perps.feature_enabled\"],\n      \"entry\": \"setup-open-position\",\n      \"nodes\": {\n        \"setup-open-position\": {\n          \"action\": \"call\",\n          \"ref\": \"perps/open-long-position\",\n          \"params\": { \"symbol\": \"ETH\", \"side\": \"long\", \"amount\": \"10\" },\n          \"next\": \"setup-close-position\"\n        },\n        \"setup-close-position\": {\n          \"action\": \"call\",\n          \"ref\": \"perps/close-position\",\n          \"params\": { \"symbol\": \"ETH\", \"percent\": \"100\" },\n          \"next\": \"setup-nav-perps-tab\"\n        },\n        \"setup-nav-perps-tab\": {\n          \"action\": \"call\",\n          \"ref\": \"perps/navigate-perps-tab\",\n          \"next\": \"ac1-wait-recent-activity\"\n        },\n        \"ac1-wait-recent-activity\": {\n          \"action\": \"wait_for\",\n          \"test_id\": \"perps-recent-activity-see-all\",\n          \"timeout_ms\": 10000,\n          \"next\": \"ac1-scroll-recent-activity\"\n        },\n        \"ac1-scroll-recent-activity\": {\n          \"action\": \"scroll\",\n          \"test_id\": \"perps-recent-activity-see-all\",\n          \"next\": \"ac1-force-hover\"\n        },\n        \"ac1-force-hover\": {\n          \"action\": \"eval_sync\",\n          \"expression\": \"(function(){var b=document.querySelector('[data-testid=\\\"perps-recent-activity-see-all\\\"]');if(!b)return JSON.stringify({ok:false});b.style.backgroundColor='rgba(255,255,255,0.15)';var br=b.getBoundingClientRect();var pr=b.parentElement.getBoundingClientRect();return JSON.stringify({ok:Math.round(br.left)===Math.round(pr.left)&&Math.round(br.right)===Math.round(pr.right),btnLeft:Math.round(br.left),btnRight:Math.round(br.right),parentLeft:Math.round(pr.left),parentRight:Math.round(pr.right)});})()\",\n          \"assert\": { \"operator\": \"eq\", \"field\": \"ok\", \"value\": true },\n          \"save_as\": \"ac1_hover_bounds\",\n          \"next\": \"ac1-screenshot-perps-tab\"\n        },\n        \"ac1-screenshot-perps-tab\": {\n          \"action\": \"screenshot\",\n          \"filename\": \"evidence-ac1-perps-tab-hover\",\n          \"note\": \"AC1: Perps tab Recent activity header hover bg spans full row (edge-to-edge), text/icon inset via px-4\",\n          \"next\": \"ac1-clear-hover\"\n        },\n        \"ac1-clear-hover\": {\n          \"action\": \"eval_sync\",\n          \"expression\": \"(function(){var b=document.querySelector('[data-testid=\\\"perps-recent-activity-see-all\\\"]');if(b)b.style.backgroundColor='';return JSON.stringify({ok:true});})()\",\n          \"assert\": { \"operator\": \"eq\", \"field\": \"ok\", \"value\": true },\n          \"next\": \"setup-nav-market-detail\"\n        },\n        \"setup-nav-market-detail\": {\n          \"action\": \"call\",\n          \"ref\": \"perps/navigate-to-market-detail\",\n          \"params\": { \"symbol\": \"ETH\" },\n          \"next\": \"ac2-wait-recent-activity\"\n        },\n        \"ac2-wait-recent-activity\": {\n          \"action\": \"wait_for\",\n          \"test_id\": \"perps-market-detail-view-all-activity\",\n          \"timeout_ms\": 10000,\n          \"next\": \"ac2-scroll-recent-activity\"\n        },\n        \"ac2-scroll-recent-activity\": {\n          \"action\": \"scroll\",\n          \"test_id\": \"perps-market-detail-view-all-activity\",\n          \"next\": \"ac2-force-hover\"\n        },\n        \"ac2-force-hover\": {\n          \"action\": \"eval_sync\",\n          \"expression\": \"(function(){var b=document.querySelector('[data-testid=\\\"perps-market-detail-view-all-activity\\\"]');if(!b)return JSON.stringify({ok:false});b.style.backgroundColor='rgba(255,255,255,0.15)';var br=b.getBoundingClientRect();var pr=b.parentElement.getBoundingClientRect();var inlinePadL=b.style.paddingLeft;var inlinePadR=b.style.paddingRight;return JSON.stringify({ok:Math.round(br.left)===Math.round(pr.left)&&Math.round(br.right)===Math.round(pr.right)&&!inlinePadL&&!inlinePadR,btnLeft:Math.round(br.left),btnRight:Math.round(br.right),parentLeft:Math.round(pr.left),parentRight:Math.round(pr.right),inlinePadL:inlinePadL||null,inlinePadR:inlinePadR||null});})()\",\n          \"assert\": { \"operator\": \"eq\", \"field\": \"ok\", \"value\": true },\n          \"save_as\": \"ac2_hover_bounds\",\n          \"next\": \"ac2-screenshot-market-detail\"\n        },\n        \"ac2-screenshot-market-detail\": {\n          \"action\": \"screenshot\",\n          \"filename\": \"evidence-ac2-market-detail-hover\",\n          \"note\": \"AC2: Market detail Recent activity header hover bg spans full row edge-to-edge (no parent L/R inset, no inline padding override)\",\n          \"next\": \"teardown-done\"\n        },\n        \"teardown-done\": {\n          \"action\": \"end\",\n          \"status\": \"pass\"\n        }\n      }\n    }\n  }\n}\n```\n\n</details>\n\n## **Recipe Workflow**\n\n<details>\n<summary>Workflow graph (JSON)</summary>\n\n```json\n{\n  \"description\": \"Captures Recent activity styling on (1) Perps tab and (2) Perp market detail page. Forces the hover background on the header and screenshots, so the edge-to-edge hover stripe is visible.\",\n  \"hooks\": {\n    \"pre_conditions\": [\n      \"wallet.unlocked\",\n      \"perps.feature_enabled\"\n    ],\n    \"setup\": [],\n    \"teardown\": []\n  },\n  \"inputs\": {},\n  \"playback\": {\n    \"mode\": \"off\",\n    \"slow_ms\": 1000\n  },\n  \"sourcePath\": \"\",\n  \"title\": \"TAT-3077 — Perps Recent activity hover bg + alignment\",\n  \"workflow\": {\n    \"entry\": \"setup-open-position\",\n    \"nodes\": {\n      \"setup-open-position\": {\n        \"action\": \"call\",\n        \"ref\": \"perps/open-long-position\",\n        \"params\": {\n          \"symbol\": \"ETH\",\n          \"side\": \"long\",\n          \"amount\": \"10\"\n        },\n        \"next\": \"setup-close-position\",\n        \"id\": \"setup-open-position\"\n      },\n      \"setup-close-position\": {\n        \"action\": \"call\",\n        \"ref\": \"perps/close-position\",\n        \"params\": {\n          \"symbol\": \"ETH\",\n          \"percent\": \"100\"\n        },\n        \"next\": \"setup-nav-perps-tab\",\n        \"id\": \"setup-close-position\"\n      },\n      \"setup-nav-perps-tab\": {\n        \"action\": \"call\",\n        \"ref\": \"perps/navigate-perps-tab\",\n        \"next\": \"ac1-wait-recent-activity\",\n        \"id\": \"setup-nav-perps-tab\"\n      },\n      \"ac1-wait-recent-activity\": {\n        \"action\": \"wait_for\",\n        \"test_id\": \"perps-recent-activity-see-all\",\n        \"timeout_ms\": 10000,\n        \"next\": \"ac1-scroll-recent-activity\",\n        \"id\": \"ac1-wait-recent-activity\"\n      },\n      \"ac1-scroll-recent-activity\": {\n        \"action\": \"scroll\",\n        \"test_id\": \"perps-recent-activity-see-all\",\n        \"next\": \"ac1-force-hover\",\n        \"id\": \"ac1-scroll-recent-activity\"\n      },\n      \"ac1-force-hover\": {\n        \"action\": \"eval_sync\",\n        \"expression\": \"(function(){var b=document.querySelector('[data-testid=\\\"perps-recent-activity-see-all\\\"]');if(!b)return JSON.stringify({ok:false});b.style.backgroundColor='rgba(255,255,255,0.15)';var br=b.getBoundingClientRect();var pr=b.parentElement.getBoundingClientRect();return JSON.stringify({ok:Math.round(br.left)===Math.round(pr.left)&&Math.round(br.right)===Math.round(pr.right),btnLeft:Math.round(br.left),btnRight:Math.round(br.right),parentLeft:Math.round(pr.left),parentRight:Math.round(pr.right)});})()\",\n        \"assert\": {\n          \"operator\": \"eq\",\n          \"field\": \"ok\",\n          \"value\": true\n        },\n        \"save_as\": \"ac1_hover_bounds\",\n        \"next\": \"ac1-screenshot-perps-tab\",\n        \"id\": \"ac1-force-hover\"\n      },\n      \"ac1-screenshot-perps-tab\": {\n        \"action\": \"screenshot\",\n        \"filename\": \"evidence-ac1-perps-tab-hover\",\n        \"note\": \"AC1: Perps tab Recent activity header hover bg spans full row (edge-to-edge), text/icon inset via px-4\",\n        \"next\": \"ac1-clear-hover\",\n        \"id\": \"ac1-screenshot-perps-tab\"\n      },\n      \"ac1-clear-hover\": {\n        \"action\": \"eval_sync\",\n        \"expression\": \"(function(){var b=document.querySelector('[data-testid=\\\"perps-recent-activity-see-all\\\"]');if(b)b.style.backgroundColor='';return JSON.stringify({ok:true});})()\",\n        \"assert\": {\n          \"operator\": \"eq\",\n          \"field\": \"ok\",\n          \"value\": true\n        },\n        \"next\": \"setup-nav-market-detail\",\n        \"id\": \"ac1-clear-hover\"\n      },\n      \"setup-nav-market-detail\": {\n        \"action\": \"call\",\n        \"ref\": \"perps/navigate-to-market-detail\",\n        \"params\": {\n          \"symbol\": \"ETH\"\n        },\n        \"next\": \"ac2-wait-recent-activity\",\n        \"id\": \"setup-nav-market-detail\"\n      },\n      \"ac2-wait-recent-activity\": {\n        \"action\": \"wait_for\",\n        \"test_id\": \"perps-market-detail-view-all-activity\",\n        \"timeout_ms\": 10000,\n        \"next\": \"ac2-scroll-recent-activity\",\n        \"id\": \"ac2-wait-recent-activity\"\n      },\n      \"ac2-scroll-recent-activity\": {\n        \"action\": \"scroll\",\n        \"test_id\": \"perps-market-detail-view-all-activity\",\n        \"next\": \"ac2-force-hover\",\n        \"id\": \"ac2-scroll-recent-activity\"\n      },\n      \"ac2-force-hover\": {\n        \"action\": \"eval_sync\",\n        \"expression\": \"(function(){var b=document.querySelector('[data-testid=\\\"perps-market-detail-view-all-activity\\\"]');if(!b)return JSON.stringify({ok:false});b.style.backgroundColor='rgba(255,255,255,0.15)';var br=b.getBoundingClientRect();var pr=b.parentElement.getBoundingClientRect();var inlinePadL=b.style.paddingLeft;var inlinePadR=b.style.paddingRight;return JSON.stringify({ok:Math.round(br.left)===Math.round(pr.left)&&Math.round(br.right)===Math.round(pr.right)&&!inlinePadL&&!inlinePadR,btnLeft:Math.round(br.left),btnRight:Math.round(br.right),parentLeft:Math.round(pr.left),parentRight:Math.round(pr.right),inlinePadL:inlinePadL||null,inlinePadR:inlinePadR||null});})()\",\n        \"assert\": {\n          \"operator\": \"eq\",\n          \"field\": \"ok\",\n          \"value\": true\n        },\n        \"save_as\": \"ac2_hover_bounds\",\n        \"next\": \"ac2-screenshot-market-detail\",\n        \"id\": \"ac2-force-hover\"\n      },\n      \"ac2-screenshot-market-detail\": {\n        \"action\": \"screenshot\",\n        \"filename\": \"evidence-ac2-market-detail-hover\",\n        \"note\": \"AC2: Market detail Recent activity header hover bg spans full row edge-to-edge (no parent L/R inset, no inline padding override)\",\n        \"next\": \"teardown-done\",\n        \"id\": \"ac2-screenshot-market-detail\"\n      },\n      \"teardown-done\": {\n        \"action\": \"end\",\n        \"status\": \"pass\",\n        \"id\": \"teardown-done\"\n      }\n    }\n  }\n}\n```\n\n</details>\n",
+  "evidenceManifest": [
+    {
+      "path": "artifacts/console-errors.json",
+      "purpose": "other",
+      "sizeBytes": 3257,
+      "sha256": "ad911d233736a28298350241bda7d09a1c4698147644c3083161216e5ed7a81a"
+    },
+    {
+      "path": "artifacts/console-warnings.json",
+      "purpose": "other",
+      "sizeBytes": 2687,
+      "sha256": "c48882c27acbbe96f5353a2f1e12753269b22593b898c1ef1d52cb5e2e11c8e0"
+    },
+    {
+      "path": "artifacts/evidence-manifest.json",
+      "purpose": "evidence-manifest",
+      "sizeBytes": 1626,
+      "sha256": "2480a12fbd7bbf1d17fa153bd3c382797c05b1f8c2c9e9e37bc97147187734ad"
+    },
+    {
+      "path": "artifacts/latest-valid-recipe-run.json",
+      "purpose": "other",
+      "sizeBytes": 125,
+      "sha256": "47cd24bad404cd21a700d517d9599403c18b81f6e96c41608c6c7512296569ad"
+    },
+    {
+      "path": "artifacts/no-change-report.md",
+      "purpose": "other",
+      "sizeBytes": 1666,
+      "sha256": "4942a8154e8c1aec2297717702271ae5fe75bfdb8417d355ab8ab17ec4d3bf45"
+    },
+    {
+      "path": "artifacts/pr-description.md",
+      "purpose": "pr-description",
+      "sizeBytes": 13405,
+      "sha256": "d24d3d2bf9fcbbb26a823b0a1345b9abedb150d65cc6811ea7f878d115b304eb"
+    },
+    {
+      "path": "artifacts/recipe-baseline.json",
+      "purpose": "other",
+      "sizeBytes": 3474,
+      "sha256": "9ff2910c7b044dc00ad8e2ba0b9e1d205f344de6c6a574f9996631dc267749cd"
+    },
+    {
+      "path": "artifacts/recipe-issues-review.json",
+      "purpose": "other",
+      "sizeBytes": 5936,
+      "sha256": "28151d9f54a12a57d02d061a86c3d35ddb5950930d5cf32af60d22eb20e23769"
+    },
+    {
+      "path": "artifacts/recipe-issues-review.md",
+      "purpose": "other",
+      "sizeBytes": 4783,
+      "sha256": "ad4147bd707b6e11452b74e991a50fa31212758e2c39648eef5a6033254c7d76"
+    },
+    {
+      "path": "artifacts/recipe-issues.json",
+      "purpose": "other",
+      "sizeBytes": 5941,
+      "sha256": "07cac661aa43bef55439da98fb7fe6922c13e9d8d6820763b0b5695bfa3b7b44"
+    },
+    {
+      "path": "artifacts/recipe.json",
+      "purpose": "recipe",
+      "sizeBytes": 4867,
+      "sha256": "3de3955a3c8fb8dea889679a21c607e4c93e9968bfe3052eb4b119f49acdc0b8"
+    },
+    {
+      "path": "artifacts/review-feedback.md",
+      "purpose": "other",
+      "sizeBytes": 3283,
+      "sha256": "b36d0651edbe8e0eec3a787a09a03d0caf70aef774d4bd82370a5718d94cc752"
+    },
+    {
+      "path": "artifacts/runtime-exceptions.json",
+      "purpose": "other",
+      "sizeBytes": 3,
+      "sha256": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570"
+    },
+    {
+      "path": "artifacts/screenshots-captions.json",
+      "purpose": "other",
+      "sizeBytes": 313,
+      "sha256": "4c88975b3986af387babddc5ba3ca79b01f2ae409fcd0e5a8de2662b8e5f68df"
+    },
+    {
+      "path": "artifacts/summary.json",
+      "purpose": "other",
+      "sizeBytes": 1619,
+      "sha256": "66a1cd9ef7601d828cbd276c79252bd272fa157be96f5b8109339518f948be6c"
+    },
+    {
+      "path": "artifacts/trace.json",
+      "purpose": "other",
+      "sizeBytes": 475092,
+      "sha256": "06c18de90a31bc7c3353a9ca270559af6be2c09d6b4800a6b6e4ce1494aca5d2"
+    },
+    {
+      "path": "artifacts/workflow.json",
+      "purpose": "other",
+      "sizeBytes": 5558,
+      "sha256": "9194f72e065111023bfa1d272b0c7d75bf3076a6ef81d6c368cb911849f17785"
+    }
+  ],
+  "selectedEvidenceKeys": [],
+  "validationSummaryPath": null,
+  "validationSummaryHash": null,
+  "reviewArtifactIds": [
+    "artifacts/review-loop-1/review.diff",
+    "artifacts/review-loop-1/review-diff-stat.json",
+    "artifacts/review-loop-1/self-review.md",
+    "artifacts/review-loop-1/review-feedback.md",
+    "artifacts/self-review-1.json",
+    "artifacts/self-review-1.md",
+    "artifacts/independent-review-2/review-loop-1/review.diff",
+    "artifacts/independent-review-2/review-loop-1/review-diff-stat.json",
+    "artifacts/independent-review-2/review-loop-1/self-review.md",
+    "artifacts/independent-review-2/review-loop-1/self-review-signal.json",
+    "artifacts/independent-review-2/review-loop-1/review-feedback.md",
+    "artifacts/independent-review-2.json",
+    "artifacts/independent-review-2.md",
+    "artifacts/independent-review-3/review-loop-1/review.diff",
+    "artifacts/independent-review-3/review-loop-1/review-diff-stat.json",
+    "artifacts/independent-review-3/review-loop-1/self-review.md",
+    "artifacts/independent-review-3/review-loop-1/review-feedback.md",
+    "artifacts/independent-review-3.json",
+    "artifacts/independent-review-3.md"
+  ],
+  "dispatchMode": "autonomous",
+  "gatePolicy": {
+    "owner": "human",
+    "dispatchMode": "autonomous",
+    "publishAuthority": "human",
+    "reason": "v1 autonomous local-first runs still require human publication approval"
+  },
+  "reviewDepth": {
+    "minimumIndependentReviews": 1,
+    "requireCrossRunner": false,
+    "extraLoopsRequested": 0,
+    "requestedBy": "human-gate"
+  },
+  "publicationTarget": "ready",
+  "publicationStatus": "not_published",
+  "createdAt": "2026-05-22T16:58:10.105Z",
+  "packageInputHash": "612eda742984d05fb59e72aef71f553b028e991e7bfc429518936a847aceb886",
+  "reviewSubjectHash": "fba7386bf958b0f9c16aec44027417636d6d4ebdef967f6194c6367d9a787334",
+  "packageHash": "746400dea6b0347edc349faf13bf8fc55f9a929569220948649ce9a4568dec7e"
+}
