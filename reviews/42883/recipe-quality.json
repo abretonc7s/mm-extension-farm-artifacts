@@ -1,0 +1,72 @@
+{
+  "version": 1,
+  "verdict": "pass",
+  "compact": {
+    "verdict": "PASS",
+    "reasons": [
+      "AC1 and AC2 are covered by ac<N>-* nodes with bounding-box assertions and screenshots.",
+      "Trace summary reports 13/13 passed, with 0 failed nodes.",
+      "Visual evidence was audited directly; non-AC setup screenshots were pruned."
+    ],
+    "better_version_guidance": []
+  },
+  "dimensions": {
+    "graph_integrity": {
+      "status": "pass",
+      "reason": "Workflow graph dry-ran successfully and all main recipe nodes are reachable.",
+      "evidence": ["artifacts/recipe.json", "artifacts/evidence/workflow.json"]
+    },
+    "action_contract": {
+      "status": "pass",
+      "reason": "Reusable Perps flows are used for setup/navigation, and AC nodes use strict eval assertions plus screenshots.",
+      "evidence": ["artifacts/recipe.json"]
+    },
+    "ac_coverage": {
+      "status": "pass",
+      "reason": "Both review claims are PROVEN with ac<N>-prefixed nodes and trace-backed assertions.",
+      "evidence": ["artifacts/recipe-coverage.md", "artifacts/evidence/trace.json"]
+    },
+    "evidence_contract_basics": {
+      "status": "pass",
+      "reason": "Each visual claim has a direct screenshot showing the target row and HUD caption.",
+      "evidence": [
+        "artifacts/evidence/screenshots/evidence-ac1-perps-tab-hover-1779762026465.png",
+        "artifacts/evidence/screenshots/evidence-ac2-market-detail-hover-1779762026926.png"
+      ]
+    },
+    "perps_state_setup": {
+      "status": "pass",
+      "reason": "Existing open/close position flows create recent activity before assertions run.",
+      "evidence": ["artifacts/evidence/trace.json"]
+    }
+  },
+  "structural_findings": [],
+  "contextual_findings": [],
+  "suggested_recipe_delta": [],
+  "training_fields": {
+    "farm": "metamask-extension",
+    "project": "metamask-extension-farm",
+    "flow_type": "review-pr",
+    "task_type": "review-pr",
+    "claim_is_visual": true,
+    "proof_mode": "mixed",
+    "anti_patterns": [],
+    "good_patterns": [
+      "Used existing Perps open/close/navigation flows for setup.",
+      "Paired screenshots with bounding-box and inline-style assertions.",
+      "Pruned non-AC setup screenshots after self-audit."
+    ]
+  },
+  "meta": {
+    "producer": "worker",
+    "fallback_used": false,
+    "legacy_task": false,
+    "artifact_required": true,
+    "source_signals": [
+      "artifacts/recipe.json",
+      "artifacts/recipe-coverage.md",
+      "artifacts/evidence/trace.json",
+      "artifacts/evidence/summary.json"
+    ]
+  }
+}

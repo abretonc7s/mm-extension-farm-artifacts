@@ -1,0 +1,14 @@
+flowchart TD
+  %% PR 42883 preflight state probe
+  __entry__(["ENTRY"]) --> node_gate_wallet
+  node_gate_wallet["gate-wallet<br/>wallet-state"]
+  node_gate_accounts["gate-accounts<br/>accounts"]
+  node_gate_provider["gate-provider<br/>perps-provider"]
+  node_gate_balance["gate-balance<br/>perps-balance"]
+  node_gate_positions["gate-positions<br/>perps-positions"]
+  node_teardown_done(["teardown-done<br/>PASS"])
+  node_gate_wallet --> node_gate_accounts
+  node_gate_accounts --> node_gate_provider
+  node_gate_provider --> node_gate_balance
+  node_gate_balance --> node_gate_positions
+  node_gate_positions --> node_teardown_done

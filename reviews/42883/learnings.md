@@ -1,0 +1,9 @@
+- `status.ts --cdp-port 6666` confirmed the slot was already unlocked, Perps-active, and funded enough for open/close setup.
+- Existing Perps flows `perps/open-long-position`, `perps/close-position`, `perps/navigate-perps-tab`, and `perps/navigate-to-market-detail` were sufficient to create recent activity and reach both affected screens.
+- For edge-to-edge hover proof, a screenshot alone is not enough; pair it with a bounding-box `eval_sync` comparing button and parent left/right bounds.
+- `scroll` can leave a market-detail target partly hidden by the sticky footer; calling `scrollIntoView({ block: 'center' })` inside the assertion made the screenshot prove the target row.
+- The relevant selectors are `perps-recent-activity-see-all` for the Perps tab and `perps-market-detail-view-all-activity` for market detail.
+- The recipe runner stores screenshots under `artifacts/evidence/screenshots/` and captions in `screenshots-captions.json`; setup screenshots from called flows should be pruned when they do not prove an AC.
+- The runner may report non-gating React unmounted-state-update warnings during Perps setup/teardown; check `recipe-issues-review.md` before treating console noise as PR-specific.
+- Mobile Perps home uses a pressable Recent activity header with 16px horizontal inset, which is a useful alignment reference; mobile market detail uses Recent Trades instead of this exact Recent activity header.
+- Avoid adding formatting-related findings for this PR; it does not touch Perps fiat/decimal formatting paths.

@@ -1,0 +1,94 @@
+{
+  "title": "TAT-3077 Recent activity hover row alignment",
+  "description": "Validates Perps Recent activity hover row bounds on wallet home and market detail.",
+  "schema_version": 1,
+  "validate": {
+    "workflow": {
+      "pre_conditions": ["wallet.unlocked", "perps.feature_enabled"],
+      "entry": "setup-open-position",
+      "nodes": {
+        "setup-open-position": {
+          "action": "call",
+          "ref": "perps/open-long-position",
+          "params": { "symbol": "ETH", "side": "long", "amount": "10" },
+          "next": "setup-close-position"
+        },
+        "setup-close-position": {
+          "action": "call",
+          "ref": "perps/close-position",
+          "params": { "symbol": "ETH", "percent": "100" },
+          "next": "setup-nav-perps-tab"
+        },
+        "setup-nav-perps-tab": {
+          "action": "call",
+          "ref": "perps/navigate-perps-tab",
+          "next": "ac1-wait-recent-activity"
+        },
+        "ac1-wait-recent-activity": {
+          "action": "wait_for",
+          "test_id": "perps-recent-activity-see-all",
+          "timeout_ms": 10000,
+          "next": "ac1-scroll-recent-activity"
+        },
+        "ac1-scroll-recent-activity": {
+          "action": "scroll",
+          "test_id": "perps-recent-activity-see-all",
+          "next": "ac1-force-hover"
+        },
+        "ac1-force-hover": {
+          "action": "eval_sync",
+          "expression": "(function(){var b=document.querySelector('[data-testid=\"perps-recent-activity-see-all\"]');if(!b)return JSON.stringify({ok:false,reason:'missing button'});b.scrollIntoView({block:'center'});b.style.backgroundColor='rgba(255,255,255,0.15)';var br=b.getBoundingClientRect();var pr=b.parentElement.getBoundingClientRect();var first=b.firstElementChild&&b.firstElementChild.getBoundingClientRect();var last=b.lastElementChild&&b.lastElementChild.getBoundingClientRect();var cs=getComputedStyle(b);var leftInset=first?Math.round(first.left-br.left):null;var rightInset=last?Math.round(br.right-last.right):null;var ok=Math.round(br.left)===Math.round(pr.left)&&Math.round(br.right)===Math.round(pr.right)&&leftInset===16&&rightInset===16&&cs.paddingTop===cs.paddingBottom;return JSON.stringify({ok:ok,btnLeft:Math.round(br.left),btnRight:Math.round(br.right),parentLeft:Math.round(pr.left),parentRight:Math.round(pr.right),leftInset:leftInset,rightInset:rightInset,paddingTop:cs.paddingTop,paddingBottom:cs.paddingBottom});})()",
+          "assert": { "operator": "eq", "field": "ok", "value": true },
+          "save_as": "ac1_hover_bounds",
+          "next": "ac1-screenshot-perps-tab"
+        },
+        "ac1-screenshot-perps-tab": {
+          "action": "screenshot",
+          "filename": "evidence-ac1-perps-tab-hover",
+          "note": "AC1: Perps tab recent activity row hover spans full width",
+          "next": "ac1-clear-hover"
+        },
+        "ac1-clear-hover": {
+          "action": "eval_sync",
+          "expression": "(function(){var b=document.querySelector('[data-testid=\"perps-recent-activity-see-all\"]');if(b)b.style.backgroundColor='';return JSON.stringify({ok:true});})()",
+          "assert": { "operator": "eq", "field": "ok", "value": true },
+          "next": "setup-nav-market-detail"
+        },
+        "setup-nav-market-detail": {
+          "action": "call",
+          "ref": "perps/navigate-to-market-detail",
+          "params": { "symbol": "ETH" },
+          "next": "ac2-wait-recent-activity"
+        },
+        "ac2-wait-recent-activity": {
+          "action": "wait_for",
+          "test_id": "perps-market-detail-view-all-activity",
+          "timeout_ms": 10000,
+          "next": "ac2-scroll-recent-activity"
+        },
+        "ac2-scroll-recent-activity": {
+          "action": "scroll",
+          "test_id": "perps-market-detail-view-all-activity",
+          "next": "ac2-force-hover"
+        },
+        "ac2-force-hover": {
+          "action": "eval_sync",
+          "expression": "(function(){var b=document.querySelector('[data-testid=\"perps-market-detail-view-all-activity\"]');if(!b)return JSON.stringify({ok:false,reason:'missing button'});b.scrollIntoView({block:'center'});b.style.backgroundColor='rgba(255,255,255,0.15)';var br=b.getBoundingClientRect();var pr=b.parentElement.getBoundingClientRect();var first=b.firstElementChild&&b.firstElementChild.getBoundingClientRect();var last=b.lastElementChild&&b.lastElementChild.getBoundingClientRect();var cs=getComputedStyle(b);var inlinePadL=b.style.paddingLeft;var inlinePadR=b.style.paddingRight;var leftInset=first?Math.round(first.left-br.left):null;var rightInset=last?Math.round(br.right-last.right):null;var ok=Math.round(br.left)===Math.round(pr.left)&&Math.round(br.right)===Math.round(pr.right)&&!inlinePadL&&!inlinePadR&&leftInset===16&&rightInset===16;return JSON.stringify({ok:ok,btnLeft:Math.round(br.left),btnRight:Math.round(br.right),parentLeft:Math.round(pr.left),parentRight:Math.round(pr.right),inlinePadL:inlinePadL||null,inlinePadR:inlinePadR||null,leftInset:leftInset,rightInset:rightInset,paddingTop:cs.paddingTop,paddingBottom:cs.paddingBottom});})()",
+          "assert": { "operator": "eq", "field": "ok", "value": true },
+          "save_as": "ac2_hover_bounds",
+          "next": "ac2-screenshot-market-detail"
+        },
+        "ac2-screenshot-market-detail": {
+          "action": "screenshot",
+          "filename": "evidence-ac2-market-detail-hover",
+          "note": "AC2: Market detail recent activity row hover spans full width",
+          "next": "teardown-done"
+        },
+        "teardown-done": {
+          "action": "end",
+          "status": "pass"
+        }
+      }
+    }
+  }
+}

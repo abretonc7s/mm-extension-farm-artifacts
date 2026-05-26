@@ -1,0 +1,57 @@
+{
+  "title": "PR 42883 preflight state probe",
+  "description": "Checks wallet, Perps provider, account balance, and positions before UI validation.",
+  "schema_version": 1,
+  "validate": {
+    "workflow": {
+      "pre_conditions": ["wallet.unlocked", "perps.feature_enabled"],
+      "entry": "gate-wallet",
+      "nodes": {
+        "gate-wallet": {
+          "action": "eval_ref",
+          "ref": "wallet-state",
+          "assert": { "operator": "eq", "field": "hasVault", "value": true },
+          "save_as": "wallet_state",
+          "next": "gate-accounts"
+        },
+        "gate-accounts": {
+          "action": "eval_ref",
+          "ref": "accounts",
+          "assert": {
+            "operator": "not_null",
+            "field": "selectedAddress"
+          },
+          "save_as": "accounts",
+          "next": "gate-provider"
+        },
+        "gate-provider": {
+          "action": "eval_ref",
+          "ref": "perps-provider",
+          "assert": { "operator": "eq", "value": "hyperliquid" },
+          "save_as": "perps_provider",
+          "next": "gate-balance"
+        },
+        "gate-balance": {
+          "action": "eval_ref",
+          "ref": "perps-balance",
+          "assert": {
+            "operator": "not_null",
+            "field": "spendableBalance"
+          },
+          "save_as": "perps_balance",
+          "next": "gate-positions"
+        },
+        "gate-positions": {
+          "action": "eval_ref",
+          "ref": "perps-positions",
+          "save_as": "perps_positions",
+          "next": "teardown-done"
+        },
+        "teardown-done": {
+          "action": "end",
+          "status": "pass"
+        }
+      }
+    }
+  }
+}
