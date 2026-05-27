@@ -1,0 +1,25 @@
+{
+  "pr_number": "42972",
+  "recommendation": "COMMENT",
+  "summary": "Clean analytics-only enrichment with good shared helper. Three test gaps: close-position-modal test not updated for trackingData, no unit test for buildPerpsVipTrackingData, and VIP-specific fields never tested with non-null mock.",
+  "comments": [
+    {
+      "path": "ui/components/app/perps/close-position/close-position-modal.tsx",
+      "line": 408,
+      "body": "The `trackingData` assignment here is functionally correct, but the corresponding test file (`close-position-modal.test.tsx`) was not updated to assert `trackingData` in `perpsClosePosition` calls — unlike `reverse-position-modal.test.tsx` and `perps-order-entry-page.test.tsx` which both got matching test updates. Consider adding the same `expect.objectContaining({ trackingData: ... })` assertion for consistency and to catch regressions.",
+      "severity": "suggestion"
+    },
+    {
+      "path": "ui/components/app/perps/utils/trackingData.ts",
+      "line": 23,
+      "body": "The conditional spread logic (`vipTier !== null`, `vipDiscount !== undefined`) is the core behavior this PR adds, but it has no unit test. A small test for `buildPerpsVipTrackingData` covering four cases (both present, both absent, each individually) would catch regressions and verify the null/undefined boundary conditions.",
+      "severity": "suggestion"
+    },
+    {
+      "path": "ui/components/app/perps/reverse-position/reverse-position-modal.test.tsx",
+      "line": 348,
+      "body": "This assertion verifies `trackingData` contains `totalFee` and `marketPrice`, which is good. However, since `useVipTier` is not mocked to return a non-null value in any test, the `vipTier` and `vipDiscount` fields are never actually present in the payload. Consider adding one test case with a mocked non-null VIP tier to verify the full payload shape.",
+      "severity": "suggestion"
+    }
+  ]
+}
