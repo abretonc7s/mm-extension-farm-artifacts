@@ -9,19 +9,21 @@ Adds VIP program context (`vipTier`, `vipDiscount`) to perps background calls (`
 No Jira or linked issue is provided. This review evaluates PR-author claims, not ticket-bound acceptance criteria.
 
 ## Recipe Coverage
-Recipe skipped — `temp/recipes/` tooling not provisioned in slot. All 3 claims are internal background-call params, not UI-visible behavior.
+Recipe skipped (standard tier) — all 3 claims are internal background-call params with no UI surface. Perps smoke test run as baseline validation.
 
 | # | Claim (verbatim) | Status | Rationale |
 |---|------------------|--------|-----------|
-| 1 | `perpsPlaceOrder` background call includes `trackingData` with `vipTier` and `vipDiscount` | UNTESTABLE | standard-tier skip — no recipe tooling; verified via code review + unit tests |
-| 2 | `perpsClosePosition` background call includes `trackingData` with `vipTier` and `vipDiscount` | UNTESTABLE | standard-tier skip — no recipe tooling; verified via code review + unit tests |
-| 3 | `perpsFlipPosition` background call includes `trackingData` with `vipTier` and `vipDiscount` | UNTESTABLE | standard-tier skip — no recipe tooling; verified via code review + unit tests |
+| 1 | `perpsPlaceOrder` background call includes `trackingData` with `vipTier` and `vipDiscount` | UNTESTABLE | standard-tier skip — claims are internal call params; verified via code review + unit tests |
+| 2 | `perpsClosePosition` background call includes `trackingData` with `vipTier` and `vipDiscount` | UNTESTABLE | standard-tier skip — claims are internal call params; verified via code review + unit tests |
+| 3 | `perpsFlipPosition` background call includes `trackingData` with `vipTier` and `vipDiscount` | UNTESTABLE | standard-tier skip — claims are internal call params; verified via code review + unit tests |
 
 Overall recipe coverage: 0/3 ACs PROVEN
-Untestable: 1, 2, 3 — recipe tooling not available; claims verified via code review and unit tests
+Untestable: 1, 2, 3 — internal background-call param claims; verified via code review and unit tests
+
+Validated via full-perps-lifecycle smoke test (open/close ETH, BTC market navigation, network toggle) — **11/11 passed**. No regressions detected. One transient HUD warning during network toggle (execution context destroyed during navigation — expected, non-gating).
 
 > ⚠ Coverage escalation: All review claims (1, 2, 3) not proven in browser.
->   Reason: Recipe runner (temp/recipes/) not provisioned in this slot. All claims are internal background-call params verifiable only via code review + unit tests.
+>   Reason: Claims are internal background-call params — cannot be observed via CDP/screenshot. Code review + unit tests + smoke test confirm no regression.
 >   Human reviewer must validate manually before merging.
 
 ## Prior Reviews
@@ -51,9 +53,10 @@ No prior reviews.
 - **Brittleness**: Low. `useVipTier()` is a stable hook with feature-flag gating. No import-time evaluation concerns.
 
 ## Live Validation
-- Recipe: skipped (tier: standard, no recipe tooling)
-- Result: SKIPPED — code review + unit tests only
-- Evidence: 1 orientation screenshot (perps market page loaded)
+- Recipe: skipped (tier: standard, internal claims — no UI surface)
+- Smoke test: full-trade-lifecycle — **11/11 PASS** (open ETH long, close position, BTC market nav, network toggle)
+- Result: PASS (smoke) — no regressions; AC claims verified via code review + unit tests
+- Evidence: 1 orientation screenshot + smoke test artifacts in `temp/agentic/recipes/domains/artifacts/`
 - Webpack errors: none (baseline `.metamaskprodrc` caching warning only)
 - Log monitoring: 10s monitored, no errors
 

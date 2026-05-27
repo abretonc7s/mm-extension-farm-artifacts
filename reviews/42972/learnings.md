@@ -8,7 +8,7 @@
 
 - **metamaskFeeRateDiscountPercentage**: Comes from `usePerpsOrderFees` hook, type `number | undefined`. Represents the MetaMask fee discount percentage. When undefined, `buildPerpsVipTrackingData` correctly omits it.
 
-- **Recipe tooling gap**: `temp/recipes/` directory was not provisioned in this slot. The recipe runner (`validate-recipe.js`, `status.ts`) exists only in old task artifacts under `temp/tasks/fix/`. For future reviews needing browser validation, the slot needs recipe tooling provisioned.
+- **Recipe tooling path**: Recipe tooling lives at `temp/agentic/recipes/`, NOT `temp/recipes/` as the TASK template assumes. The CLAUDE.local.md uses `{{RUNTIME_DIR}}` placeholders that don't resolve to the actual path. Always check `temp/agentic/recipes/` first — it has `status.ts`, `validate-recipe.js`, `domains/`, etc.
 
 - **CDP target attachment**: Direct page WebSocket connection (`ws://localhost:PORT/devtools/page/ID`) returns 500 if the target is already attached (e.g., by another CDP client). Use browser-level WebSocket + `Target.attachToTarget` with `flatten:true` instead.
 
