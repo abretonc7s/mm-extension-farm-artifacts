@@ -1,0 +1,28 @@
+flowchart TD
+  %% PR #42613 — close-all-positions confirmation modal (AC1, AC2, AC4)
+  __entry__(["ENTRY"]) --> node_ac1_assert_close_all_button_visible
+  node_ac1_assert_close_all_button_visible["ac1-assert-close-all-button-visible<br/>ext_check_dom"]
+  node_ac1_assert_positions_present["ac1-assert-positions-present<br/>eval_sync"]
+  node_ac1_screenshot_close_all_button["ac1-screenshot-close-all-button<br/>screenshot"]
+  node_ac2_open_confirmation_modal["ac2-open-confirmation-modal<br/>press"]
+  node_ac2_wait_modal_submit["ac2-wait-modal-submit<br/>wait_for"]
+  node_ac2_wait_fees_loaded["ac2-wait-fees-loaded<br/>wait_for"]
+  node_ac2_assert_summary_rows["ac2-assert-summary-rows<br/>eval_sync"]
+  node_ac2_screenshot_confirmation_modal["ac2-screenshot-confirmation-modal<br/>screenshot"]
+  node_ac4_cancel_keep_positions["ac4-cancel-keep-positions<br/>press"]
+  node_ac4_wait_modal_gone["ac4-wait-modal-gone<br/>wait_for"]
+  node_ac4_assert_positions_intact["ac4-assert-positions-intact<br/>eval_sync"]
+  node_ac4_screenshot_positions_intact["ac4-screenshot-positions-intact<br/>screenshot"]
+  node_done(["done<br/>PASS"])
+  node_ac1_assert_close_all_button_visible --> node_ac1_assert_positions_present
+  node_ac1_assert_positions_present --> node_ac1_screenshot_close_all_button
+  node_ac1_screenshot_close_all_button --> node_ac2_open_confirmation_modal
+  node_ac2_open_confirmation_modal --> node_ac2_wait_modal_submit
+  node_ac2_wait_modal_submit --> node_ac2_wait_fees_loaded
+  node_ac2_wait_fees_loaded --> node_ac2_assert_summary_rows
+  node_ac2_assert_summary_rows --> node_ac2_screenshot_confirmation_modal
+  node_ac2_screenshot_confirmation_modal --> node_ac4_cancel_keep_positions
+  node_ac4_cancel_keep_positions --> node_ac4_wait_modal_gone
+  node_ac4_wait_modal_gone --> node_ac4_assert_positions_intact
+  node_ac4_assert_positions_intact --> node_ac4_screenshot_positions_intact
+  node_ac4_screenshot_positions_intact --> node_done
