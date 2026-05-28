@@ -1,114 +1,92 @@
 # PR Review: #42613 — feat(perps): add close-all-positions confirmation modal
 
-**Tier:** standard
+**Tier:** standard (RECIPE_STRATEGY: full-qa)
 
 ## Summary
-
-Re-enables the Perps "Close All" button and wires it to a new `CloseAllPositionsModal` that summarises margin (with PnL), estimated fees, and net receive before submitting a batch close via `perpsClosePositions`. Adds `close_all_tapped/confirmed/cancelled` interaction events and a `number_positions_closed` property on `PerpsPositionCloseTransaction`. Toast keys cover in-progress/success/partial/failure. The flow itself achieves the ticket's stated goal, and the latest commits applied fee discount + partial-success handling from the earlier review pass. **However**, the most recent CHANGES_REQUESTED review (geositta, 2026-05-19T14:14:34Z) is **not yet addressed** — see Prior Reviews / Fix Quality.
+The PR re-enables the previously hidden "Close all" button in the Perps positions tab (TAT-2852) and wires it to a new `CloseAllPositionsModal` confirmation step before firing the batch close. The modal summarises Margin (with aggregate P&L), estimated Fees (per-symbol `perpsCalculateFees` + MetaMask fee discount, with `PERPS_FALLBACK_FEE_RATES` on failure) and "You'll receive". Confirm runs the existing `perpsClosePositions [{ closeAll: true }]` path, drives in-progress/success/partial/failed toasts, fires Mixpanel events (`close_all_tapped/confirmed/cancelled` + `number_positions_closed` on `Perp Position Close`), and refreshes positions. Cancel ("Keep positions") skips the RPC. It achieves its stated goal and matches the ticket's confirmation-flow intent. The fallback-fee-rate constant was DRY-extracted to `shared/constants/perps.ts` and `usePerpsOrderFees` now exports `BASIS_POINTS_DIVISOR`/`ORIGINAL_METAMASK_FEE_BIPS`.
 
 ## Recipe Coverage
 
-Recipe skipped (standard tier, CDP offline). All ACs are UNTESTABLE in this lane; jest unit tests cover the major behaviours.
+| # | AC (verbatim) | Target env | Recipe nodes | Screenshot | Verdict | Justification |
+|---|---------------|------------|--------------|------------|---------|---------------|
+| 1 | AC1 — at least one open position → "Close All" button visible on Perps tab | fullscreen | ac1-assert-close-all-button-visible, ac1-assert-positions-present, ac1-screenshot-close-all-button | evidence-ac1-close-all-button-visible.png | PROVEN | "Close all" control visible beside Positions header with BTC + HYPE open; DOM assert visible + positionCount>0 |
+| 2 | AC2 — tap → confirmation screen shows expected outcome | fullscreen | ac2-open-confirmation-modal, ac2-wait-modal-submit, ac2-wait-fees-loaded, ac2-assert-summary-rows, ac2-screenshot-confirmation-modal | evidence-ac2-confirmation-modal.png | PROVEN | Modal shows Margin $6.43 (incl P&L −$0.3521), Fees −$0.03, You'll receive $6.41 + Keep/Close buttons |
+| 3 | AC3 — confirm → all positions submitted for closure | fullscreen | — (not run live; real irreversible market close on mainnet funds) | n/a | UNTESTABLE-live → PROVEN via unit test + code | `perps-view.test.tsx` asserts `perpsClosePositions [{closeAll:true}]` fires only after modal submit |
+| 4 | AC4 — cancel → no positions closed, return to Perps tab | fullscreen | ac4-cancel-keep-positions, ac4-wait-modal-gone, ac4-assert-positions-intact, ac4-screenshot-positions-intact | evidence-ac4-cancelled-positions-intact.png | PROVEN | "Keep positions" dismisses modal, positions intact, still on Perps tab |
+| 5 | AC5 — no open positions → button hidden or disabled | fullscreen | — (live account has positions; cannot zero non-destructively) | n/a | UNTESTABLE-live → PROVEN via code + unit test | Button rendered only inside `{hasPositions && …}`; component returns null when no positions/orders; modal test covers empty→disabled submit |
 
-| # | AC | Status | Reason |
-|---|----|--------|--------|
-| 1 | "Close All" button visible when ≥1 open position | UNTESTABLE (live) | CDP offline; unit test `displays close all button in positions section` covers the rendering path |
-| 2 | Tap opens confirmation screen with expected outcome | UNTESTABLE (live) | CDP offline; unit test `opens confirmation modal when close all button is clicked` + modal-render tests cover |
-| 3 | Confirm → submit all closures | UNTESTABLE (live) | CDP offline; unit test `calls batch close after confirmation and applies a single positions snapshot` covers |
-| 4 | Cancel → no positions closed, return to tab | UNTESTABLE (live) | CDP offline; unit test `does not execute close all when confirmation is cancelled` covers |
-| 5 | No positions → button hidden/disabled | UNTESTABLE (live) | CDP offline; `perps-positions-orders.tsx` `if (!hasPositions && !hasOrders) return null;` and modal-level `disabled` when positions empty cover |
-
-Overall recipe coverage: 0/5 ACs PROVEN in browser; 5/5 UNTESTABLE (CDP offline, standard tier).
-Untestable: AC1–AC5 — CDP offline in this slot.
-
-> ⚠ Coverage escalation: AC1–AC5 not proven in browser.
->   Reason: CDP not responding on port 6666 at slot start; standard tier proceeds code-only.
->   Human reviewer must validate manually before merging.
+Overall recipe coverage: 3/5 ACs PROVEN (live browser)
+Untestable: AC3 (irreversible live market close — proven via unit test asserting `perpsClosePositions([{closeAll:true}])`), AC5 (cannot reach zero-position state on the live mainnet account — proven via code path + unit test). Both have concrete rationale and passing test/code evidence; no WEAK/MISSING rows. AC3/AC5 were validated by test+code rather than live execution purely to avoid an irreversible action on real funds — not due to a coverage failure.
 
 ## Prior Reviews
-
 | Reviewer | State | Date | Addressed? | Notes |
 |----------|-------|------|------------|-------|
-| geositta | CHANGES_REQUESTED | 2026-05-18T18:56:40Z | addressed | Fee-discount omission + partial-batch success-toast issues — both fixed in `c1afce69` (apply discount in modal, handle partial failures) |
-| geositta | CHANGES_REQUESTED | 2026-05-19T14:14:34Z | **unaddressed** | "Always-on discount lookup": `usePerpsMetamaskFeeDiscountBips` runs on every PerpsView render because `CloseAllPositionsModal` is mounted unconditionally; triggers `rewardsGetPerpsDiscountForAccount` + drives the new console-baseline act warnings. No commits since this review. |
-| cursor | COMMENTED ×9 | various | n/a | Automated bot comments — not blocking |
+| cursor (bot) | COMMENTED ×9 | 2026-05-13 → 05-18 | n/a | Automated bot passes during iteration |
+| geositta | CHANGES_REQUESTED | 2026-05-18 | addressed | Discounted-user inflated fee + partial-failure full-success toast → fixed in c1afce69 (apply discount + handle partial) |
+| geositta | CHANGES_REQUESTED | 2026-05-19 14:14 | addressed | Always-on discount lookup / console baseline → modal now mounts only when open (`{isCloseAllModalOpen && …}`), so the discount hook no longer runs on every Perps render |
+| abretonc7s | CHANGES_REQUESTED | 2026-05-19 15:11 | addressed | Automated review; many commits pushed 05-19 → 05-27 |
+| geositta | CHANGES_REQUESTED | 2026-05-19 16:32 | addressed | First-render fee state → isLoadingFees init + reset on reopen + effect cleanup (05ec880b, 7b5688da, 86c3fcfd) |
+| georgewrmarshall | COMMENTED | 2026-05-21 | n/a | |
+| geositta | **APPROVED** | 2026-05-28 03:27 | — | Approved after the final commit (de8bfb4a, 05-27). All prior change requests resolved. |
+
+This PR is already human-approved; the items below are non-blocking and were not re-raised.
 
 ## Acceptance Criteria Validation
-
 | # | Criterion | Status | Evidence |
 |---|-----------|--------|----------|
-| 1 | Close All button visible with ≥1 position | PASS (unit) | `perps-view.test.tsx` `displays close all button in positions section`; `perps-positions-orders.tsx:66-78` |
-| 2 | Tap opens confirmation modal | PASS (unit) | `perps-view.test.tsx` `opens confirmation modal when close all button is clicked`; modal render-tests in `close-all-positions-modal.test.tsx` |
-| 3 | Confirm submits batch close | PASS (unit) | `perps-view.test.tsx` `calls batch close after confirmation and applies a single positions snapshot` (calls `perpsClosePositions [{closeAll:true}]`) |
-| 4 | Cancel does nothing | PASS (unit) | `perps-view.test.tsx` `does not execute close all when confirmation is cancelled` |
-| 5 | No positions → button hidden/disabled | PASS (code review) | `perps-positions-orders.tsx:40-42` returns null when both arrays empty; `close-all-positions-modal.tsx:193` disables submit when `positions.length === 0` |
+| 1 | Button visible with ≥1 position | PASS | recipe ac1-* (ok), evidence-ac1 screenshot |
+| 2 | Confirmation screen shows expected outcome | PASS | recipe ac2-* (ok), evidence-ac2 screenshot |
+| 3 | Confirm submits all closures | PASS (test/code) | perps-view.test "calls batch close after confirmation"; not executed live (irreversible) |
+| 4 | Cancel closes nothing, returns to tab | PASS | recipe ac4-* (ok), evidence-ac4; unit test "does not execute close all when cancelled" |
+| 5 | No positions → button hidden/disabled | PASS (code/test) | perps-positions-orders.tsx `{hasPositions && …}`; modal test empty→disabled |
 
 ## Code Quality
-
-- Pattern adherence: follows existing perps modal patterns (`ClosePositionModal`); uses `submitRequestToBackground` (MV3-safe), `data-testid` everywhere, `useI18nContext` for strings.
-- Complexity: `CloseAllPositionsModal` aggregates per-symbol notionals then dispatches one fee RPC per unique symbol — appropriate. Memoization via `symbolNotionalKey` (JSON-stringified sorted pairs) correctly avoids re-fetch on identity-only array swaps from the stream.
-- Type safety: clean; no `as any`, no `as unknown as`. New props use explicit types.
-- Error handling: `try/catch` around batch close with failure-path toast + telemetry; refresh failure swallowed by design (positions already closed).
-- Anti-pattern findings: none flagged for import boundaries / LavaMoat / chrome.runtime.
+- Pattern adherence: follows perps conventions (design-system-react components, `useI18nContext`, `submitRequestToBackground`, `usePerpsEventTracking`). Modal-only-when-open mount pattern is correct.
+- Complexity: appropriate. Fee effect uses a stable `symbolNotionalKey` + `feeRequestId` race guard + `cancelled` flag — reasonable.
+- Type safety: `yarn lint:tsc` exit 0, no new type errors. `Position`/`FeeCalculationResult` typed from `@metamask/perps-controller`.
+- Error handling: per-symbol fee fetch falls back to `PERPS_FALLBACK_FEE_RATES` on reject; confirm flow has try/catch with failed toast + analytics; position refresh failure is swallowed (non-critical, commented).
+- Anti-pattern findings: none. No `getBackgroundPage`, no yarn.lock/LavaMoat delta, all interactive elements have `data-testid`, no `.toFixed`/`{min:2,max:2}` in display code (uses `formatPerpsFiat`).
 
 ## Fix Quality
-
-- **Best approach (mostly):** flow design (button → modal → confirm → execute) matches mobile and is the right shape. Latest fee-discount and partial-failure fixes are correct.
-- **Would NOT ship:**
-  - `ui/components/app/perps/close-position/close-all-positions-modal.tsx:109` — `usePerpsMetamaskFeeDiscountBips(...)` runs unconditionally inside a modal that PerpsView always mounts. Result: every Perps tab render fires `rewardsGetPerpsDiscountForAccount`, and the closed-modal test path now exceeds the act-warning baseline (+9 on modal test, +2 on perps-view test in this run). Reviewer geositta flagged this in the open CHANGES_REQUESTED review. Fix in `ui/components/app/perps/perps-view.tsx:402` by gating the JSX: `{isCloseAllModalOpen && <CloseAllPositionsModal .../>}`, OR pass `isOpen` to the hook and short-circuit there.
-- **Test quality:**
-  - `close-all-positions-modal.test.tsx:61` and `:166` mock `submitRequestToBackground` to return `{ feeRate: 0.00145 }`, but the modal reads `result?.protocolFeeRate` / `result?.metamaskFeeRate`. The tests therefore exercise the fallback branch on every assertion path — the per-symbol "fetches fees per unique symbol rather than using a single rate" test verifies that the RPC was called per symbol but does **not** verify that the symbol-specific rates were actually applied. Suggestion: return a full `FeeCalculationResult` with distinct `protocolFeeRate`/`metamaskFeeRate` per symbol and assert the rendered `perps-close-all-fees-value`.
-  - `close-all-positions-modal.test.tsx:84` etc. only assert that `data-testid` nodes exist; they don't assert the displayed value. Reverting the corresponding math would still pass these tests.
-- **Brittleness:**
-  - `setIsLoadingFees(isOpen && positions.length > 0)` (modal.tsx:104-106) — initial state derived from props at mount time. Safe because the `useEffect` re-derives on open, but the redundancy reads as defensive duplication.
-  - `youWillReceive = roundedMargin - roundedFees` (modal.tsx:188-191) double-rounds; the absolute drift is <$0.005 so not a correctness bug, but `Math.round((totalMargin - estimatedFees) * 100) / 100` is the simpler equivalent.
+- **Best approach:** Solid and shippable. Reuses the existing `perpsClosePositions {closeAll:true}` path; adds a confirmation gate only. The `successCount || positionCount` fallback correctly handles count-less v6 API success responses.
+- **Would not ship:** nothing blocking.
+- **Test quality:** Modal tests are strong — the "fetches fees per unique symbol" test asserts the exact computed value (`-$52.13`) and would fail if fee math regressed; `perps-view` tests assert the confirmation gate (open/confirm/cancel) and would fail if the gate were removed. GAP: the new partial-success (`successCount>0 && failureCount>0`) and failed branches in `handleCloseAllConfirm` have no `perps-view` unit coverage (the old cancel-all failure tests were deleted, not replaced).
+- **Brittleness:** Low. `PERPS_FALLBACK_FEE_RATES` is a module const used only as a fallback. The fee-discount hook runs only while the modal is mounted. No mock-coupling issues.
 
 ## Live Validation
-
-- Recipe: skipped (standard tier, CDP offline).
-- Result: SKIPPED.
-- Evidence: skipped (CDP offline — no browser session available).
-- Webpack errors: not monitored (CDP offline).
-- Log monitoring: skipped (CDP offline).
+- Recipe: generated (full-qa) — `artifacts/recipe.json`
+- Result: PASS — 12/12 nodes `ok:true` (trace-derived), setup via `perps/navigate-perps-tab`
+- Evidence: 3 AC screenshots (ac1/ac2/ac4); standard tier — no video
+- Webpack errors: none (compiled OK, watch mode; only the known non-gating `.metamaskprodrc` cache warning)
+- Log monitoring: recipe console review status `clean` — 0 warnings/errors/exceptions
 
 ## Correctness
-
-- Diff vs stated goal: aligned. Button re-enabled, modal added, batch close + telemetry wired.
-- Edge cases:
-  - Positions array streaming updates during modal-open window: handled via `symbolNotionalKey` memo — re-fetches fees only when symbol/notional content changes.
-  - PnL sign rendering: `Math.abs()` before `formatPerpsFiatUniversal`, sign prefixed by template — correct for both positive and negative PnL.
-  - Modal dismissal via overlay click → calls `onClose` → fires `CLOSE_ALL_CANCELLED` telemetry. Intentional (overlay-click is equivalent to cancel).
-  - `successCount = result?.successCount ?? positionCount` (perps-view.tsx:207) — provider may not return counts on `success:true`; falling back to attempted count is reasonable but means the analytics value can be optimistic when the provider is partial without reporting it. Low risk.
-- Race conditions: `feeRequestId.current` increment + match guards stale RPC resolves. Good.
-- Backward compatibility: button was previously hidden; re-enabling is the intended user-visible change.
+- Diff vs stated goal: aligned. Button re-enabled, modal gates the batch close, analytics + toasts wired.
+- Edge cases: empty positions → submit disabled + early return; fee fetch failure → fallback rates; partial close → partial toast + refresh; reopen → fees reset.
+- Minor display issue: the modal rounds Margin, Fees and "You'll receive" independently, so displayed `Margin − Fees` can be off by a cent vs the displayed "You'll receive" (observed $6.43 − $0.03 vs $6.41). Cosmetic only.
+- Race conditions: handled via `feeRequestId` + `cancelled` flag in the fee effect; `useEffect` cleanup present.
+- Backward compatibility: preserved. No controller state-shape change → no migration needed. Cancel-all-orders button remains commented out (out of scope per ticket).
 
 ## Static Analysis
-
-- lint:tsc: PASS (exit 0, no errors).
-- Tests: 49/49 pass. **Console baseline check FAILS** for two files: `close-all-positions-modal.test.tsx` Act warnings 16→25 (+9), `perps-view.test.tsx` 4→6 (+2). This is the direct consequence of the unconditional discount-hook call; fix the mount-gating and the regression goes away.
+- lint:tsc: PASS (exit 0, no errors)
+- Tests: 43/43 pass (close-all-positions-modal 14 + perps-view 29), no console baseline violations
 
 ## Mobile Comparison
-
-- Status: ALIGNED (with minor pattern divergence).
-- Details: mobile bundles fee + rewards computation in a dedicated `usePerpsCloseAllCalculations` hook (`metamask-mobile-ref/app/components/UI/Perps/Views/PerpsCloseAllPositionsView/PerpsCloseAllPositionsView.tsx:76-83`). Extension reimplements the fee-aggregation logic inline in the modal. Both apply the MetaMask fee discount; both surface "you'll receive". Extension currently lacks the rewards-points display path — that's out of scope per the ticket. Not a divergence to fix in this PR, but a candidate for a follow-up `usePerpsCloseAllFees` hook to match mobile's structure.
+- Status: ALIGNED (minor intentional divergence)
+- Details: Core math matches mobile `usePerpsCloseAllCalculations.ts` — `totalMargin = Σ marginUsed`, `receiveAmount = totalMargin − totalFees`, `marginUsed` treated as already PnL-inclusive (no double-count), per-symbol/coin fee rates, uniform discount applied (`rate × (1 − bips/10000)`). Divergences: (a) extension's simpler Figma summary omits the rewards/points estimate mobile shows — intentional per PR; (b) on fee-fetch failure extension uses hardcoded `PERPS_FALLBACK_FEE_RATES` while mobile leaves fees `undefined` (receive = margin); (c) extension passes only `{orderType,isMaker,symbol}` to `perpsCalculateFees` and applies the returned rate to its own notional, vs mobile passing `amount` — functionally equivalent for flat taker rates. None are correctness defects.
 
 ## Architecture & Domain
-
-- MV3-safe: uses `submitRequestToBackground`, no `window.background`.
-- LavaMoat: no `yarn.lock` change → no policy update needed.
-- Import boundaries: `shared/constants/perps.ts` `PERPS_FALLBACK_FEE_RATES` is the new SSOT, consumed by both `usePerpsOrderFees` and the modal — good consolidation.
-- Controller usage: no controller code touched; only background RPC method names referenced.
+- MV3: no service-worker/background changes; UI-only + shared constant. No `getBackgroundPage`.
+- LavaMoat: no dependency or policy changes (`yarn.lock`/`lavamoat/` untouched) → no policy regen needed.
+- Import boundaries: clean — no `ui → app/scripts` imports; shared constant correctly placed in `shared/constants/perps.ts`.
+- Jest: a global `moduleNameMapper` stub for `@metamask/perps-controller` was added (resolves ESM transitive import for all suites). Broad but standard; suites can still override with `jest.mock`. `PERPS_ERROR_CODES` proxy returns the key name as its value.
 
 ## Risk Assessment
-
-- MEDIUM — wires a destructive batch action (close all positions). The flow itself is gated by a confirmation modal and existing batch-close backend logic. The unaddressed reviewer concern is performance/test-quality, not correctness of the destructive path, but the act-warning regression breaks the unit-test baseline gate.
+- MEDIUM — touches a live batch-close trading flow, but adds an explicit confirmation gate, reuses the existing close path, and handles partial/failed outcomes. Already human-approved.
 
 ## Recommended Action
+**COMMENT** (read-only review; approval is the human reviewer's decision — already APPROVED by geositta).
 
-REQUEST_CHANGES — address the open CHANGES_REQUESTED before merging.
-
-Specific items:
-1. **must_fix** `ui/components/app/perps/perps-view.tsx:402` — gate the modal mount: `{isCloseAllModalOpen && <CloseAllPositionsModal ... />}`. This removes the unconditional `rewardsGetPerpsDiscountForAccount` call on every Perps tab render and resolves the console-baseline regression.
-2. **suggestion** `ui/components/app/perps/close-position/close-all-positions-modal.test.tsx:61` — return a full `FeeCalculationResult` from the mock so tests actually exercise the symbol-specific rate application.
-3. **suggestion** `ui/components/app/perps/close-position/close-all-positions-modal.tsx:188` — compute `youWillReceive` from raw values then round once.
-4. **nitpick** `ui/components/app/perps/close-position/close-all-positions-modal.tsx:104` — `useState(isOpen && positions.length > 0)` is redundant given the open-effect already manages this; initialise to `false`.
+Non-blocking items:
+- `ui/components/app/perps/perps-view.tsx:197` — add unit coverage for the partial-success and failed close-all branches (toast key + `number_positions_closed` analytics); consider whether a partial close should report `STATUS.FAILED`. (suggestion)
+- `ui/components/app/perps/close-position/close-all-positions-modal.tsx:197` — `youWillReceive` is computed from unrounded margin/fees while the rows display independently-rounded values, so the summary can be off by a cent. (nitpick)

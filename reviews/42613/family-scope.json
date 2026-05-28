@@ -1,0 +1,6 @@
+{
+  "originalFamilyScopeSummary": "feat(perps): add close-all-positions confirmation modal",
+  "currentTriggerSummary": "review-pr: feat(perps): add close-all-positions confirmation modal",
+  "scopeVerdict": "full-scope-addressed",
+  "notes": "Review covers the full PR scope. All 5 ticket ACs (TAT-2852) accounted for: AC1/AC2/AC4 PROVEN live (recipe 12/12 ok, 3 screenshots), AC3 and AC5 proven via passing unit tests + code path (not run live to avoid an irreversible market close on the funded mainnet account / unreachable zero-position state). yarn lint:tsc clean, 43/43 unit tests pass, no console baseline violations, no domain anti-patterns, mobile math aligned. PR is already human-approved (geositta, 2026-05-28). Recommendation COMMENT with 1 suggestion (missing unit coverage for partial/failed close-all branches) and 1 nitpick (cent-level rounding drift in modal summary). No blocking issues."
+}

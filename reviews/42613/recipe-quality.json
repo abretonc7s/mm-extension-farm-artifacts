@@ -1,0 +1,76 @@
+{
+  "version": 1,
+  "verdict": "pass",
+  "compact": {
+    "verdict": "PASS",
+    "reasons": [
+      "AC1/AC2/AC4 bound to ac<N>-* nodes; trace.json shows 12/12 ok=true with screenshots proving the visible button, modal summary, and post-cancel state.",
+      "AC3 (irreversible live market close) and AC5 (cannot reach zero-position state on live account) marked UNTESTABLE-live with concrete rationale and backed by passing unit tests + code path.",
+      "Console review status clean (0 warnings/errors/exceptions)."
+    ],
+    "better_version_guidance": [
+      "AC3 could be proven non-destructively in-browser by intercepting/stubbing the perpsClosePositions background call and asserting the request payload, rather than relying solely on the unit test."
+    ]
+  },
+  "dimensions": {
+    "graph_integrity": {
+      "status": "pass",
+      "reason": "Linear workflow; schema validation PASS, dry-run clean, all nodes reachable, single end node status=pass.",
+      "evidence": ["recipe.json", "trace.json"]
+    },
+    "action_contract": {
+      "status": "pass",
+      "reason": "Uses call for navigation (perps/navigate-perps-tab), wait_for instead of fixed waits, strict assertions (gt/eq/contains, not_null). No forbidden patterns.",
+      "evidence": ["recipe.json"]
+    },
+    "ac_coverage": {
+      "status": "pass",
+      "reason": "AC1/2/4 PROVEN in-browser; AC3/AC5 explicitly UNTESTABLE-live with rationale + unit-test/code proof. Zero WEAK/MISSING.",
+      "evidence": ["recipe-coverage.md", "trace.json"]
+    },
+    "evidence_contract_basics": {
+      "status": "pass",
+      "reason": "Visual ACs (1,2,4) have screenshots showing the real target; state-mutation AC3 proven via test (correct proof type for a background call); AC5 proven via code path.",
+      "evidence": [
+        "screenshots/evidence-ac1-close-all-button-visible-1779956050315.png",
+        "screenshots/evidence-ac2-confirmation-modal-1779956050740.png",
+        "screenshots/evidence-ac4-cancelled-positions-intact-1779956051180.png"
+      ]
+    },
+    "perps_state_setup": {
+      "status": "pass",
+      "reason": "Live account already had 2 open positions (BTC, HYPE); no destructive seeding needed for AC1/2/4. Recipe asserts positionCount>0 so it cannot pass on empty state.",
+      "evidence": ["recipe.json", "trace.json"]
+    },
+    "mobile_alignment": {
+      "status": "pass",
+      "reason": "Margin/receive math and per-symbol fee + uniform-discount logic match mobile usePerpsCloseAllCalculations (receive = totalMargin - totalFees, marginUsed treated as PnL-inclusive). Divergences (no rewards display, fallback-rate-on-error) are intentional.",
+      "evidence": ["/Users/deeeed/dev/metamask/metamask-mobile-ref/app/components/UI/Perps/hooks/usePerpsCloseAllCalculations.ts"]
+    }
+  },
+  "structural_findings": [],
+  "contextual_findings": [],
+  "suggested_recipe_delta": [
+    "Add an AC3 node that stubs perpsClosePositions via CDP and asserts the {closeAll:true} payload to give AC3 in-browser coverage without closing real funds."
+  ],
+  "training_fields": {
+    "farm": "metamask-extension",
+    "project": "metamask-extension-farm",
+    "flow_type": "review-pr",
+    "task_type": "review-pr",
+    "claim_is_visual": true,
+    "proof_mode": "mixed",
+    "anti_patterns": [],
+    "good_patterns": [
+      "positionCount>0 assertion prevents empty-state false pass",
+      "wait_for on fees-loaded (textContent !== '--') before capturing modal screenshot"
+    ]
+  },
+  "meta": {
+    "producer": "worker",
+    "fallback_used": false,
+    "legacy_task": false,
+    "artifact_required": true,
+    "source_signals": ["recipe.json", "recipe-coverage.md", "trace.json", "summary.json"]
+  }
+}
