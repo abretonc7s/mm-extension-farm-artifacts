@@ -1,0 +1,655 @@
+{
+  "metadata": {
+    "runner": {
+      "source": "/Users/deeeed/dev/metamask/metamask-recipe-runner",
+      "git_ref": "b32a1ab3b6edfefefb2bf616d32905b13fc52858",
+      "name": "@metamask/recipe-runner"
+    }
+  },
+  "entries": [
+    {
+      "nodeId": "status",
+      "action": "app.status",
+      "startedAt": "2026-06-02T09:09:24.681Z",
+      "endedAt": "2026-06-02T09:09:25.170Z",
+      "durationMs": 489,
+      "ok": true,
+      "next": "fixture",
+      "output": {
+        "platform": "extension",
+        "projectRoot": "/Users/deeeed/dev/metamask/metamask-extension-6",
+        "compatibilityMode": "bridge injectable",
+        "shape": {
+          "packageName": "metamask-crx",
+          "packageJsonStatus": "valid",
+          "packageJsonError": null,
+          "extensionProject": true,
+          "mobileProject": false,
+          "agenticService": false,
+          "mobileProductHarness": false,
+          "mobileBridgeScript": false,
+          "extensionRuntime": false,
+          "injectedHarness": false,
+          "walletFixture": true
+        }
+      }
+    },
+    {
+      "nodeId": "fixture",
+      "action": "metamask.wallet.fixture_status",
+      "startedAt": "2026-06-02T09:09:25.610Z",
+      "endedAt": "2026-06-02T09:09:25.638Z",
+      "durationMs": 28,
+      "ok": true,
+      "next": "wallet-setup",
+      "output": {
+        "status": "ready",
+        "path": "temp/runtime/wallet-fixture.json",
+        "accountCount": 4,
+        "hasPassword": true
+      }
+    },
+    {
+      "nodeId": "wallet-setup",
+      "action": "metamask.wallet.setup",
+      "startedAt": "2026-06-02T09:09:25.710Z",
+      "endedAt": "2026-06-02T09:09:30.212Z",
+      "durationMs": 4502,
+      "ok": true,
+      "next": "wallet-unlock",
+      "output": {
+        "action": "metamask.wallet.setup",
+        "setup": "preseeded-profile-verified",
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/",
+        "runtimeState": {
+          "href": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/",
+          "passwordInput": false,
+          "completedOnboarding": true,
+          "selectedAccount": {
+            "id": "0285a92b-905c-4814-8a16-52fe1db60357",
+            "address": "0x8dc623e964475d4d669da601fd15ea9125469003"
+          }
+        },
+        "proofPath": "extension-fixture-profile",
+        "cdpPort": 7666,
+        "runtimeLaunch": null,
+        "liveAdapter": "/Users/deeeed/dev/metamask/metamask-recipe-runner/live-adapters/extension/wallet/setup.mjs"
+      }
+    },
+    {
+      "nodeId": "wallet-unlock",
+      "action": "metamask.wallet.ensure_unlocked",
+      "startedAt": "2026-06-02T09:09:30.237Z",
+      "endedAt": "2026-06-02T09:09:32.927Z",
+      "durationMs": 2690,
+      "ok": true,
+      "next": "select-account",
+      "output": {
+        "action": "metamask.wallet.ensure_unlocked",
+        "unlocked": true,
+        "alreadyUnlocked": true,
+        "proofPath": "extension-unlocked-state",
+        "cdpPort": 7666,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/",
+        "runtimeLaunch": null,
+        "liveAdapter": "/Users/deeeed/dev/metamask/metamask-recipe-runner/live-adapters/extension/wallet/ensure_unlocked.mjs"
+      }
+    },
+    {
+      "nodeId": "select-account",
+      "action": "metamask.wallet.select_account",
+      "startedAt": "2026-06-02T09:09:32.937Z",
+      "endedAt": "2026-06-02T09:09:35.251Z",
+      "durationMs": 2314,
+      "ok": true,
+      "next": "wallet-read-state",
+      "output": {
+        "action": "metamask.wallet.select_account",
+        "selected": {
+          "id": "0285a92b-905c-4814-8a16-52fe1db60357",
+          "address": "0x8dc623e964475d4d669da601fd15ea9125469003",
+          "name": "Account 1",
+          "type": "eip155:eoa"
+        },
+        "proofPath": "extension-account-selection",
+        "cdpPort": 7666,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/",
+        "runtimeLaunch": null,
+        "liveAdapter": "/Users/deeeed/dev/metamask/metamask-recipe-runner/live-adapters/extension/wallet/select_account.mjs"
+      }
+    },
+    {
+      "nodeId": "wallet-read-state",
+      "action": "metamask.wallet.read_state",
+      "startedAt": "2026-06-02T09:09:35.305Z",
+      "endedAt": "2026-06-02T09:09:36.535Z",
+      "durationMs": 1230,
+      "ok": true,
+      "next": "navigate-perps",
+      "output": {
+        "action": "metamask.wallet.read_state",
+        "source": "extension-stateHooks-store",
+        "state": {
+          "href": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/",
+          "selectedAccount": {
+            "id": "0285a92b-905c-4814-8a16-52fe1db60357",
+            "address": "0x8dc623e964475d4d669da601fd15ea9125469003",
+            "name": "Account 1",
+            "type": "eip155:eoa"
+          },
+          "completedOnboarding": true,
+          "selectedNetworkClientId": "mainnet"
+        },
+        "redacted": true,
+        "proofPath": "extension-wallet-state",
+        "cdpPort": 7666,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/",
+        "runtimeLaunch": null,
+        "liveAdapter": "/Users/deeeed/dev/metamask/metamask-recipe-runner/live-adapters/extension/wallet/read_state.mjs"
+      }
+    },
+    {
+      "nodeId": "navigate-perps",
+      "action": "ui.navigate",
+      "startedAt": "2026-06-02T09:09:36.541Z",
+      "endedAt": "2026-06-02T09:09:37.248Z",
+      "durationMs": 707,
+      "ok": true,
+      "next": "navigate-market",
+      "output": {
+        "action": "ui.navigate",
+        "hash": "#/?tab=perps",
+        "navigation": {
+          "frameId": "84EECAE3012D6F95F1E80FAEE1B149D6",
+          "isDownload": false
+        },
+        "proofPath": "ui-navigation",
+        "cdpPort": 7666,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/",
+        "runtimeLaunch": null,
+        "liveAdapter": "/Users/deeeed/dev/metamask/metamask-recipe-runner/live-adapters/extension/ui/navigate.mjs"
+      }
+    },
+    {
+      "nodeId": "navigate-market",
+      "action": "ui.navigate",
+      "startedAt": "2026-06-02T09:09:37.263Z",
+      "endedAt": "2026-06-02T09:09:38.299Z",
+      "durationMs": 1036,
+      "ok": true,
+      "next": "start-state",
+      "output": {
+        "action": "ui.navigate",
+        "hash": "#/perps/market/ETH",
+        "navigation": {
+          "frameId": "84EECAE3012D6F95F1E80FAEE1B149D6",
+          "isDownload": false
+        },
+        "proofPath": "ui-navigation",
+        "cdpPort": 7666,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/?tab=perps",
+        "runtimeLaunch": null,
+        "liveAdapter": "/Users/deeeed/dev/metamask/metamask-recipe-runner/live-adapters/extension/ui/navigate.mjs"
+      }
+    },
+    {
+      "nodeId": "start-state",
+      "action": "metamask.perps.start_state",
+      "startedAt": "2026-06-02T09:09:38.308Z",
+      "endedAt": "2026-06-02T09:09:42.545Z",
+      "durationMs": 4237,
+      "ok": true,
+      "next": "assert-clean-position",
+      "output": {
+        "action": "metamask.perps.start_state",
+        "profile": "clean_market_testnet",
+        "phase": "start_state",
+        "provider": {
+          "requested": "hyperliquid",
+          "activeProvider": "hyperliquid",
+          "changed": false,
+          "cdpPort": 7666,
+          "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/ETH",
+          "runtimeLaunch": null
+        },
+        "network": {
+          "requested": "testnet",
+          "isTestnet": true,
+          "changed": true,
+          "result": {
+            "success": true,
+            "isTestnet": true
+          },
+          "cdpPort": 7666,
+          "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/ETH",
+          "runtimeLaunch": null
+        },
+        "readyToTrade": {
+          "skipped": true
+        },
+        "balance": {
+          "skipped": true
+        },
+        "market": "ETH",
+        "orders": {
+          "action": "metamask.perps.start_state",
+          "expectedOpen": false,
+          "matchingCount": 0,
+          "orders": [],
+          "source": "perps-stream-manager-cache",
+          "cdpPort": 7666,
+          "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/ETH",
+          "runtimeLaunch": null,
+          "close": {
+            "action": "metamask.perps.start_state",
+            "canceled": false,
+            "matchingCount": 0,
+            "symbols": [],
+            "result": null,
+            "cdpPort": 7666,
+            "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/ETH",
+            "runtimeLaunch": null
+          }
+        },
+        "positions": {
+          "action": "metamask.perps.start_state",
+          "expectedOpen": false,
+          "matchingCount": 0,
+          "positions": [],
+          "source": "background-perpsGetPositions",
+          "cdpPort": 7666,
+          "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/ETH",
+          "runtimeLaunch": null,
+          "close": {
+            "action": "metamask.perps.start_state",
+            "closed": false,
+            "matchingCount": 0,
+            "symbols": [],
+            "reason": "no matching open positions",
+            "cdpPort": 7666,
+            "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/ETH",
+            "runtimeLaunch": null
+          }
+        },
+        "navigation": {
+          "action": "metamask.perps.start_state",
+          "target": "market",
+          "market": "ETH",
+          "navigation": {
+            "frameId": "84EECAE3012D6F95F1E80FAEE1B149D6",
+            "isDownload": false
+          },
+          "proofPath": "ui-navigation",
+          "cdpPort": 7666,
+          "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/ETH",
+          "runtimeLaunch": null
+        },
+        "proofPath": "metamask-perps-start-state",
+        "liveAdapter": "/Users/deeeed/dev/metamask/metamask-recipe-runner/live-adapters/extension/perps/perps.mjs"
+      }
+    },
+    {
+      "nodeId": "assert-clean-position",
+      "action": "metamask.perps.assert_positions",
+      "startedAt": "2026-06-02T09:09:42.552Z",
+      "endedAt": "2026-06-02T09:09:44.211Z",
+      "durationMs": 1659,
+      "ok": true,
+      "next": "assert-clean-orders",
+      "output": {
+        "action": "metamask.perps.assert_positions",
+        "expectedOpen": false,
+        "matchingCount": 0,
+        "positions": [],
+        "source": "background-perpsGetPositions",
+        "cdpPort": 7666,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/ETH",
+        "runtimeLaunch": null,
+        "liveAdapter": "/Users/deeeed/dev/metamask/metamask-recipe-runner/live-adapters/extension/perps/assert_positions.mjs"
+      }
+    },
+    {
+      "nodeId": "assert-clean-orders",
+      "action": "metamask.perps.assert_orders",
+      "startedAt": "2026-06-02T09:09:44.231Z",
+      "endedAt": "2026-06-02T09:09:46.473Z",
+      "durationMs": 2242,
+      "ok": true,
+      "next": "place-order",
+      "output": {
+        "action": "metamask.perps.assert_orders",
+        "expectedOpen": false,
+        "matchingCount": 0,
+        "orders": [],
+        "source": "perps-stream-manager-cache",
+        "cdpPort": 7666,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/ETH",
+        "runtimeLaunch": null,
+        "liveAdapter": "/Users/deeeed/dev/metamask/metamask-recipe-runner/live-adapters/extension/perps/assert_orders.mjs"
+      }
+    },
+    {
+      "nodeId": "place-order",
+      "action": "metamask.perps.place_order",
+      "startedAt": "2026-06-02T09:09:46.481Z",
+      "endedAt": "2026-06-02T09:09:54.633Z",
+      "durationMs": 8152,
+      "ok": true,
+      "next": "assert-open",
+      "output": {
+        "action": "metamask.perps.place_order",
+        "expectedOpen": true,
+        "matchingCount": 1,
+        "positions": [
+          {
+            "coin": "ETH",
+            "size": "0.0056",
+            "side": null,
+            "entryPrice": "1971.0"
+          }
+        ],
+        "source": "background-perpsGetPositions",
+        "cdpPort": 7666,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/ETH?direction=long&mode=new",
+        "runtimeLaunch": null,
+        "submitted": true,
+        "order": {
+          "action": "metamask.perps.place_order",
+          "market": "ETH",
+          "side": "long",
+          "amount": "11",
+          "leverage": 3,
+          "submitted": true,
+          "order": {
+            "result": {
+              "success": true,
+              "orderId": "54144657751",
+              "filledSize": "0.0056",
+              "averagePrice": "1971.0"
+            },
+            "orderParams": {
+              "symbol": "ETH",
+              "isBuy": true,
+              "size": "0.01670970682059851",
+              "orderType": "market",
+              "leverage": 3,
+              "currentPrice": 1974.9,
+              "usdAmount": "11",
+              "maxSlippageBps": 300
+            }
+          },
+          "proofPath": "background-perpsPlaceOrder",
+          "cdpPort": 7666,
+          "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/ETH",
+          "runtimeLaunch": null
+        },
+        "liveAdapter": "/Users/deeeed/dev/metamask/metamask-recipe-runner/live-adapters/extension/perps/place_order.mjs"
+      }
+    },
+    {
+      "nodeId": "assert-open",
+      "action": "metamask.perps.assert_positions",
+      "startedAt": "2026-06-02T09:09:54.877Z",
+      "endedAt": "2026-06-02T09:09:57.003Z",
+      "durationMs": 2126,
+      "ok": true,
+      "next": "read-orders",
+      "output": {
+        "action": "metamask.perps.assert_positions",
+        "expectedOpen": true,
+        "matchingCount": 1,
+        "positions": [
+          {
+            "coin": "ETH",
+            "size": "0.0056",
+            "side": null,
+            "entryPrice": "1971.0"
+          }
+        ],
+        "source": "background-perpsGetPositions",
+        "cdpPort": 7666,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/ETH?direction=long&mode=new",
+        "runtimeLaunch": null,
+        "liveAdapter": "/Users/deeeed/dev/metamask/metamask-recipe-runner/live-adapters/extension/perps/assert_positions.mjs"
+      }
+    },
+    {
+      "nodeId": "read-orders",
+      "action": "metamask.perps.read_orders",
+      "startedAt": "2026-06-02T09:09:57.203Z",
+      "endedAt": "2026-06-02T09:10:00.236Z",
+      "durationMs": 3033,
+      "ok": true,
+      "next": "close-orders",
+      "output": {
+        "action": "metamask.perps.read_orders",
+        "source": "perps-stream-manager-cache",
+        "count": 0,
+        "matchingCount": 0,
+        "orders": [],
+        "cdpPort": 7666,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/ETH?direction=long&mode=new",
+        "runtimeLaunch": null,
+        "liveAdapter": "/Users/deeeed/dev/metamask/metamask-recipe-runner/live-adapters/extension/perps/read_orders.mjs"
+      }
+    },
+    {
+      "nodeId": "close-orders",
+      "action": "metamask.perps.close_orders",
+      "startedAt": "2026-06-02T09:10:00.460Z",
+      "endedAt": "2026-06-02T09:10:02.347Z",
+      "durationMs": 1887,
+      "ok": true,
+      "next": "close-position",
+      "output": {
+        "action": "metamask.perps.close_orders",
+        "expectedOpen": false,
+        "matchingCount": 0,
+        "orders": [],
+        "source": "perps-stream-manager-cache",
+        "cdpPort": 7666,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/ETH?direction=long&mode=new",
+        "runtimeLaunch": null,
+        "close": {
+          "action": "metamask.perps.close_orders",
+          "canceled": false,
+          "matchingCount": 0,
+          "symbols": [],
+          "result": null,
+          "cdpPort": 7666,
+          "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/ETH?direction=long&mode=new",
+          "runtimeLaunch": null
+        },
+        "liveAdapter": "/Users/deeeed/dev/metamask/metamask-recipe-runner/live-adapters/extension/perps/close_orders.mjs"
+      }
+    },
+    {
+      "nodeId": "close-position",
+      "action": "metamask.perps.close_positions",
+      "startedAt": "2026-06-02T09:10:02.371Z",
+      "endedAt": "2026-06-02T09:10:05.095Z",
+      "durationMs": 2724,
+      "ok": true,
+      "next": "assert-closed",
+      "output": {
+        "action": "metamask.perps.close_positions",
+        "expectedOpen": false,
+        "matchingCount": 0,
+        "positions": [],
+        "source": "background-perpsGetPositions",
+        "cdpPort": 7666,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/ETH?direction=long&mode=new",
+        "runtimeLaunch": null,
+        "close": {
+          "action": "metamask.perps.close_positions",
+          "closed": true,
+          "matchingCount": 1,
+          "symbols": [
+            "ETH"
+          ],
+          "closeResult": {
+            "success": true,
+            "successCount": 1,
+            "failureCount": 0,
+            "results": [
+              {
+                "symbol": "ETH",
+                "success": true,
+                "result": {
+                  "success": true,
+                  "orderId": "54144667984",
+                  "filledSize": "0.0056",
+                  "averagePrice": "1970.9",
+                  "attempts": [
+                    {
+                      "attempt": 1,
+                      "currentPrice": 1974.9,
+                      "result": {
+                        "success": true,
+                        "orderId": "54144667984",
+                        "filledSize": "0.0056",
+                        "averagePrice": "1970.9"
+                      }
+                    }
+                  ],
+                  "params": {
+                    "symbol": "ETH",
+                    "size": "",
+                    "orderType": "market",
+                    "priceAtCalculation": 1974.9,
+                    "maxSlippageBps": 300,
+                    "position": {
+                      "symbol": "ETH",
+                      "size": "0.0056",
+                      "entryPrice": "1971.0",
+                      "positionValue": "11.0376",
+                      "unrealizedPnl": "0.0",
+                      "marginUsed": "3.663395",
+                      "leverage": {
+                        "type": "isolated",
+                        "value": 3,
+                        "rawUsd": "-7.374205"
+                      },
+                      "liquidationPrice": "1343.6962463557",
+                      "maxLeverage": 25,
+                      "returnOnEquity": "0.0",
+                      "cumulativeFunding": {
+                        "allTime": "0.825432",
+                        "sinceOpen": "0.0",
+                        "sinceChange": "0.0"
+                      },
+                      "takeProfitCount": 0,
+                      "stopLossCount": 0
+                    }
+                  }
+                }
+              }
+            ]
+          },
+          "proofPath": "background-perpsClosePosition",
+          "cdpPort": 7666,
+          "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/ETH?direction=long&mode=new",
+          "runtimeLaunch": null
+        },
+        "liveAdapter": "/Users/deeeed/dev/metamask/metamask-recipe-runner/live-adapters/extension/perps/close_positions.mjs"
+      }
+    },
+    {
+      "nodeId": "assert-closed",
+      "action": "metamask.perps.assert_positions",
+      "startedAt": "2026-06-02T09:10:05.202Z",
+      "endedAt": "2026-06-02T09:10:06.275Z",
+      "durationMs": 1073,
+      "ok": true,
+      "next": "teardown-state",
+      "output": {
+        "action": "metamask.perps.assert_positions",
+        "expectedOpen": false,
+        "matchingCount": 0,
+        "positions": [],
+        "source": "background-perpsGetPositions",
+        "cdpPort": 7666,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/ETH?direction=long&mode=new",
+        "runtimeLaunch": null,
+        "liveAdapter": "/Users/deeeed/dev/metamask/metamask-recipe-runner/live-adapters/extension/perps/assert_positions.mjs"
+      }
+    },
+    {
+      "nodeId": "teardown-state",
+      "action": "metamask.perps.teardown_state",
+      "startedAt": "2026-06-02T09:10:06.382Z",
+      "endedAt": "2026-06-02T09:10:07.518Z",
+      "durationMs": 1136,
+      "ok": true,
+      "next": "done",
+      "output": {
+        "action": "metamask.perps.teardown_state",
+        "phase": "teardown",
+        "market": "ETH",
+        "orders": {
+          "action": "metamask.perps.teardown_state",
+          "expectedOpen": false,
+          "matchingCount": 0,
+          "orders": [],
+          "source": "perps-stream-manager-cache",
+          "cdpPort": 7666,
+          "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/ETH?direction=long&mode=new",
+          "runtimeLaunch": null,
+          "close": {
+            "action": "metamask.perps.teardown_state",
+            "canceled": false,
+            "matchingCount": 0,
+            "symbols": [],
+            "result": null,
+            "cdpPort": 7666,
+            "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/ETH?direction=long&mode=new",
+            "runtimeLaunch": null
+          }
+        },
+        "positions": {
+          "action": "metamask.perps.teardown_state",
+          "expectedOpen": false,
+          "matchingCount": 0,
+          "positions": [],
+          "source": "background-perpsGetPositions",
+          "cdpPort": 7666,
+          "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/ETH?direction=long&mode=new",
+          "runtimeLaunch": null,
+          "close": {
+            "action": "metamask.perps.teardown_state",
+            "closed": false,
+            "matchingCount": 0,
+            "symbols": [],
+            "reason": "no matching open positions",
+            "cdpPort": 7666,
+            "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/ETH?direction=long&mode=new",
+            "runtimeLaunch": null
+          }
+        },
+        "navigation": {
+          "action": "metamask.perps.teardown_state",
+          "target": "home",
+          "navigation": {
+            "frameId": "84EECAE3012D6F95F1E80FAEE1B149D6",
+            "isDownload": false
+          },
+          "proofPath": "ui-navigation",
+          "cdpPort": 7666,
+          "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/ETH?direction=long&mode=new",
+          "runtimeLaunch": null
+        },
+        "proofPath": "metamask-perps-teardown-state",
+        "liveAdapter": "/Users/deeeed/dev/metamask/metamask-recipe-runner/live-adapters/extension/perps/perps.mjs"
+      }
+    },
+    {
+      "nodeId": "done",
+      "action": "end",
+      "startedAt": "2026-06-02T09:10:07.610Z",
+      "endedAt": "2026-06-02T09:10:07.687Z",
+      "durationMs": 77,
+      "ok": true,
+      "status": "pass"
+    }
+  ]
+}

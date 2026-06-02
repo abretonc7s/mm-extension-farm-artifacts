@@ -1,0 +1,34 @@
+{
+  "title": "PR #42613 non-destructive perps positions probe",
+  "description": "PR #42613 non-destructive probe: read live perps positions and capture perps tab orientation screenshot",
+  "schema_version": 1,
+  "validate": {
+    "workflow": {
+      "setup": [
+        { "id": "setup-ensure-unlocked", "action": "metamask.wallet.ensure_unlocked" },
+        { "id": "setup-nav-perps", "action": "ui.navigate", "hash": "#/?tab=perps" }
+      ],
+      "entry": "gate-read-positions",
+      "nodes": {
+        "gate-read-positions": {
+          "action": "metamask.perps.read_positions",
+          "save_as": "positions",
+          "next": "gate-wait-perps-view"
+        },
+        "gate-wait-perps-view": {
+          "action": "ui.wait_for",
+          "test_id": "perps-view",
+          "timeout_ms": 15000,
+          "next": "gate-screenshot-perps-tab"
+        },
+        "gate-screenshot-perps-tab": {
+          "action": "ui.screenshot",
+          "filename": "evidence-orientation-perps-tab",
+          "note": "Orientation: perps tab renders on PR branch (live positions state)",
+          "next": "done"
+        },
+        "done": { "action": "end", "status": "pass" }
+      }
+    }
+  }
+}

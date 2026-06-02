@@ -1,19 +1,13 @@
 {
   "pr_number": "42613",
   "recommendation": "COMMENT",
-  "summary": "Re-enables Close All with a confirmation modal; goal achieved, types/tests/lint green, live-validated (AC1/2/4) and test+code-proven (AC3/5). Already human-approved. Two non-blocking items: missing unit coverage for the partial/failed close-all branches, and a cosmetic cent-level rounding mismatch in the modal summary.",
+  "summary": "Solid implementation; all ACs validated (3 proven live, AC3/AC5 via unit+code), all prior review feedback addressed, tsc + 45 unit tests green. One non-blocking test-coverage suggestion; approval is the human reviewer's call.",
   "comments": [
     {
       "path": "ui/components/app/perps/perps-view.tsx",
-      "line": 197,
-      "body": "The new partial-success branch (`successCount > 0 && failureCount > 0`) and the failed branch below it have no unit coverage in perps-view.test.tsx — the old cancel-all failure tests were removed, not replaced, so only the all-success and cancel paths are exercised. A mock returning `{ success: false, successCount: 1, failureCount: 1 }` would let you assert the CLOSE_ALL_PARTIAL toast and the `number_positions_closed: successCount` analytics. Separately, worth confirming with product that a partial close should be reported as `STATUS.FAILED` rather than a distinct partial status.",
+      "line": 239,
+      "body": "suggestion — This outer `catch` path (when `perpsClosePositions` rejects/throws → FAILED status, `number_positions_closed: 0`, CLOSE_ALL_FAILED toast) has no unit coverage. The new failure tests in perps-view.test.tsx exercise only resolved `{ success: false, ... }` results, not a rejected promise. Adding a `mockRejectedValueOnce` case would close the remaining sibling gap to the partial/failed branches that were added in cc776be5.",
       "severity": "suggestion"
-    },
-    {
-      "path": "ui/components/app/perps/close-position/close-all-positions-modal.tsx",
-      "line": 197,
-      "body": "`youWillReceive` is computed from the unrounded `totalMargin` and `estimatedFees`, but the Margin and Fees rows display independently-rounded values (`roundedMargin`, `roundedFees`). So the summary can fail to reconcile by a cent — e.g. the live modal showed Margin $6.43 − Fees $0.03 but \"You'll receive\" $6.41. Cosmetic only; deriving receive from the same rounded values shown (or accepting the drift) would avoid the mismatch.",
-      "severity": "nitpick"
     }
   ]
 }

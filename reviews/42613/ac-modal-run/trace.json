@@ -1,0 +1,240 @@
+{
+  "metadata": {
+    "runner": {
+      "source": "/Users/deeeed/dev/metamask/metamask-recipe-runner",
+      "git_ref": "b32a1ab3b6edfefefb2bf616d32905b13fc52858",
+      "name": "@metamask/recipe-runner"
+    }
+  },
+  "entries": [
+    {
+      "nodeId": "setup-ensure-unlocked",
+      "action": "metamask.wallet.ensure_unlocked",
+      "phase": "setup",
+      "startedAt": "2026-06-02T09:23:23.250Z",
+      "endedAt": "2026-06-02T09:23:27.362Z",
+      "durationMs": 4112,
+      "ok": true,
+      "next": "setup-nav-perps",
+      "output": {
+        "action": "metamask.wallet.ensure_unlocked",
+        "unlocked": true,
+        "alreadyUnlocked": true,
+        "proofPath": "extension-unlocked-state",
+        "cdpPort": 7666,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/",
+        "runtimeLaunch": null,
+        "liveAdapter": "/Users/deeeed/dev/metamask/metamask-recipe-runner/live-adapters/extension/wallet/ensure_unlocked.mjs"
+      }
+    },
+    {
+      "nodeId": "setup-nav-perps",
+      "action": "ui.navigate",
+      "phase": "setup",
+      "startedAt": "2026-06-02T09:23:27.471Z",
+      "endedAt": "2026-06-02T09:23:31.254Z",
+      "durationMs": 3783,
+      "ok": true,
+      "next": "setup-read-positions-before",
+      "output": {
+        "action": "ui.navigate",
+        "hash": "#/?tab=perps",
+        "navigation": {
+          "frameId": "7A9DA224394C1A15AAB52D642392118D",
+          "isDownload": false
+        },
+        "proofPath": "ui-navigation",
+        "cdpPort": 7666,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/",
+        "runtimeLaunch": null,
+        "liveAdapter": "/Users/deeeed/dev/metamask/metamask-recipe-runner/live-adapters/extension/ui/navigate.mjs"
+      }
+    },
+    {
+      "nodeId": "setup-read-positions-before",
+      "action": "metamask.perps.read_positions",
+      "startedAt": "2026-06-02T09:23:31.532Z",
+      "endedAt": "2026-06-02T09:23:35.414Z",
+      "durationMs": 3882,
+      "ok": true,
+      "next": "ac1-wait-close-all-button",
+      "output": {
+        "action": "metamask.perps.read_positions",
+        "source": "background-perpsGetPositions",
+        "count": 1,
+        "matchingCount": 0,
+        "positions": [],
+        "cdpPort": 7666,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/?tab=perps",
+        "runtimeLaunch": null,
+        "liveAdapter": "/Users/deeeed/dev/metamask/metamask-recipe-runner/live-adapters/extension/perps/read_positions.mjs"
+      }
+    },
+    {
+      "nodeId": "ac1-wait-close-all-button",
+      "action": "ui.wait_for",
+      "startedAt": "2026-06-02T09:23:35.438Z",
+      "endedAt": "2026-06-02T09:23:35.608Z",
+      "durationMs": 170,
+      "ok": true,
+      "next": "ac2-open-confirmation-modal",
+      "output": {
+        "matched": true,
+        "cdpPort": 7666,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/?tab=perps",
+        "runtimeLaunch": null
+      }
+    },
+    {
+      "nodeId": "ac2-open-confirmation-modal",
+      "action": "ui.press",
+      "startedAt": "2026-06-02T09:23:35.645Z",
+      "endedAt": "2026-06-02T09:23:35.880Z",
+      "durationMs": 235,
+      "ok": true,
+      "next": "ac2-wait-modal-submit",
+      "output": {
+        "clicked": true,
+        "cdpPort": 7666,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/?tab=perps",
+        "runtimeLaunch": null
+      }
+    },
+    {
+      "nodeId": "ac2-wait-modal-submit",
+      "action": "ui.wait_for",
+      "startedAt": "2026-06-02T09:23:36.065Z",
+      "endedAt": "2026-06-02T09:23:36.081Z",
+      "durationMs": 16,
+      "ok": true,
+      "next": "ac2-wait-fees-value",
+      "output": {
+        "matched": true,
+        "cdpPort": 7666,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/?tab=perps",
+        "runtimeLaunch": null
+      }
+    },
+    {
+      "nodeId": "ac2-wait-fees-value",
+      "action": "ui.wait_for",
+      "startedAt": "2026-06-02T09:23:36.091Z",
+      "endedAt": "2026-06-02T09:23:36.109Z",
+      "durationMs": 18,
+      "ok": true,
+      "next": "ac2-screenshot-confirmation-modal",
+      "output": {
+        "matched": true,
+        "cdpPort": 7666,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/?tab=perps",
+        "runtimeLaunch": null
+      }
+    },
+    {
+      "nodeId": "ac2-screenshot-confirmation-modal",
+      "action": "ui.screenshot",
+      "artifacts": [
+        {
+          "path": "ac2-screenshot-confirmation-modal.png",
+          "type": "screenshot",
+          "nodeId": "ac2-screenshot-confirmation-modal",
+          "label": "UI screenshot",
+          "category": "evidence",
+          "mimeType": "image/png"
+        }
+      ],
+      "startedAt": "2026-06-02T09:23:36.309Z",
+      "endedAt": "2026-06-02T09:23:36.652Z",
+      "durationMs": 343,
+      "ok": true,
+      "next": "ac4-cancel-keep-positions",
+      "output": {
+        "captured": true,
+        "path": "ac2-screenshot-confirmation-modal.png",
+        "artifact": {
+          "path": "ac2-screenshot-confirmation-modal.png",
+          "type": "screenshot",
+          "nodeId": "ac2-screenshot-confirmation-modal",
+          "label": "UI screenshot",
+          "category": "evidence",
+          "mimeType": "image/png"
+        }
+      }
+    },
+    {
+      "nodeId": "ac4-cancel-keep-positions",
+      "action": "ui.press",
+      "startedAt": "2026-06-02T09:23:36.661Z",
+      "endedAt": "2026-06-02T09:23:36.679Z",
+      "durationMs": 18,
+      "ok": true,
+      "next": "ac4-read-positions-after",
+      "output": {
+        "clicked": true,
+        "cdpPort": 7666,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/?tab=perps",
+        "runtimeLaunch": null
+      }
+    },
+    {
+      "nodeId": "ac4-read-positions-after",
+      "action": "metamask.perps.read_positions",
+      "startedAt": "2026-06-02T09:23:36.736Z",
+      "endedAt": "2026-06-02T09:23:41.706Z",
+      "durationMs": 4970,
+      "ok": true,
+      "next": "ac4-screenshot-positions-intact",
+      "output": {
+        "action": "metamask.perps.read_positions",
+        "source": "background-perpsGetPositions",
+        "count": 1,
+        "matchingCount": 0,
+        "positions": [],
+        "cdpPort": 7666,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/?tab=perps",
+        "runtimeLaunch": null,
+        "liveAdapter": "/Users/deeeed/dev/metamask/metamask-recipe-runner/live-adapters/extension/perps/read_positions.mjs"
+      }
+    },
+    {
+      "nodeId": "ac4-screenshot-positions-intact",
+      "action": "ui.screenshot",
+      "artifacts": [
+        {
+          "path": "ac4-screenshot-positions-intact.png",
+          "type": "screenshot",
+          "nodeId": "ac4-screenshot-positions-intact",
+          "label": "UI screenshot",
+          "category": "evidence",
+          "mimeType": "image/png"
+        }
+      ],
+      "startedAt": "2026-06-02T09:23:41.719Z",
+      "endedAt": "2026-06-02T09:23:41.821Z",
+      "durationMs": 102,
+      "ok": true,
+      "next": "done",
+      "output": {
+        "captured": true,
+        "path": "ac4-screenshot-positions-intact.png",
+        "artifact": {
+          "path": "ac4-screenshot-positions-intact.png",
+          "type": "screenshot",
+          "nodeId": "ac4-screenshot-positions-intact",
+          "label": "UI screenshot",
+          "category": "evidence",
+          "mimeType": "image/png"
+        }
+      }
+    },
+    {
+      "nodeId": "done",
+      "action": "end",
+      "startedAt": "2026-06-02T09:23:41.831Z",
+      "endedAt": "2026-06-02T09:23:41.838Z",
+      "durationMs": 7,
+      "ok": true,
+      "status": "pass"
+    }
+  ]
+}

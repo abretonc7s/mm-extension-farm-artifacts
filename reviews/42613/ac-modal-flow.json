@@ -1,0 +1,67 @@
+{
+  "title": "PR #42613 AC1/AC2/AC4 non-destructive close-all modal flow",
+  "description": "Open close-all confirmation modal and cancel it (Keep positions) — never confirms, so no positions are closed. Proves AC1 (button visible), AC2 (modal summary), AC4 (cancel keeps positions).",
+  "schema_version": 1,
+  "validate": {
+    "workflow": {
+      "setup": [
+        { "id": "setup-ensure-unlocked", "action": "metamask.wallet.ensure_unlocked" },
+        { "id": "setup-nav-perps", "action": "ui.navigate", "hash": "#/?tab=perps" }
+      ],
+      "entry": "setup-read-positions-before",
+      "nodes": {
+        "setup-read-positions-before": {
+          "action": "metamask.perps.read_positions",
+          "save_as": "positions_before",
+          "next": "ac1-wait-close-all-button"
+        },
+        "ac1-wait-close-all-button": {
+          "action": "ui.wait_for",
+          "test_id": "perps-close-all-positions",
+          "timeout_ms": 15000,
+          "next": "ac2-open-confirmation-modal"
+        },
+        "ac2-open-confirmation-modal": {
+          "action": "ui.press",
+          "test_id": "perps-close-all-positions",
+          "next": "ac2-wait-modal-submit"
+        },
+        "ac2-wait-modal-submit": {
+          "action": "ui.wait_for",
+          "test_id": "perps-close-all-positions-modal-submit",
+          "timeout_ms": 10000,
+          "next": "ac2-wait-fees-value"
+        },
+        "ac2-wait-fees-value": {
+          "action": "ui.wait_for",
+          "test_id": "perps-close-all-fees-value",
+          "timeout_ms": 10000,
+          "next": "ac2-screenshot-confirmation-modal"
+        },
+        "ac2-screenshot-confirmation-modal": {
+          "action": "ui.screenshot",
+          "filename": "evidence-ac2-confirmation-modal",
+          "note": "AC2: close-all modal shows margin, fees and you-will-receive summary",
+          "next": "ac4-cancel-keep-positions"
+        },
+        "ac4-cancel-keep-positions": {
+          "action": "ui.press",
+          "test_id": "perps-close-all-positions-modal-cancel",
+          "next": "ac4-read-positions-after"
+        },
+        "ac4-read-positions-after": {
+          "action": "metamask.perps.read_positions",
+          "save_as": "positions_after",
+          "next": "ac4-screenshot-positions-intact"
+        },
+        "ac4-screenshot-positions-intact": {
+          "action": "ui.screenshot",
+          "filename": "evidence-ac4-cancelled-positions-intact",
+          "note": "AC4: Keep positions dismisses modal and positions remain on Perps tab",
+          "next": "done"
+        },
+        "done": { "action": "end", "status": "pass" }
+      }
+    }
+  }
+}
