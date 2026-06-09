@@ -1,0 +1,6 @@
+{
+  "originalFamilyScopeSummary": "Fix Add Funds navigation stack corruption from order entry (TAT-3131), plus TAT-3272: Add Funds did nothing when the Arbitrum network was not added.",
+  "currentTriggerSummary": "pr-complete: make PR #43367 merge-ready — address review comments and ensure CI is green.",
+  "scopeVerdict": "full-scope-addressed",
+  "notes": "No review comments were outstanding (0 inline, 0 CHANGES_REQUESTED; conversation comments were bot/CI/worker-report noise). The branch was brought up to date with origin/main (merge da77714ea3, clean, no conflicts; yarn reinstalled). CI parity gate fully green: lint:changed, verify-locales, circular-deps, 17/17 affected unit tests, coverage PASS (new code 100%). The inherited validation recipe (family-inherited, trusted; pure UI/nav flow) was re-run against the post-merge state and PASSED, proving both TAT-3131 (single back tap from order entry returns to market detail, no phantom history entry) and TAT-3272 (Add Funds opens the deposit confirmation with Arbitrum auto-added). The only code change this run was a prettier-formatting fix on the 3 PR-touched perps hooks, required because the committed versions failed prettier --check and would have broken CI lint. Both family tickets are fully covered and validated."
+}

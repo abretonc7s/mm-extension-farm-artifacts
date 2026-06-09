@@ -1,0 +1,149 @@
+{
+  "schema_version": 1,
+  "title": "TAT-3131 + TAT-3272 — Add Funds deposit opens and one back tap returns to market detail",
+  "description": "End-to-end proof of the original bug: from the Perps order-entry screen, tapping the Available-to-trade Add Funds (+) icon opens the deposit confirmation (TAT-3272: the Arbitrum network is added automatically), and after returning from the deposit screen a SINGLE tap of the order-entry back button returns to the Perps market detail screen (TAT-3131: no phantom history entry, no double-tap). Reverting either fix makes this recipe FAIL: revert TAT-3272 and the deposit never opens (ac1-wait-deposit times out); revert TAT-3131 and one back tap lands on the phantom confirmation instead of market detail (ac1-wait-market-detail times out).",
+  "pre_conditions": {
+    "account": "any unlocked fixture account on a Perps-enabled wallet",
+    "network": "Arbitrum may be absent; TAT-3272 adds it on Add Funds"
+  },
+  "validate": {
+    "workflow": {
+      "entry": "setup-unlock",
+      "nodes": {
+        "setup-unlock": {
+          "action": "metamask.wallet.ensure_unlocked",
+          "next": "setup-nav-perps",
+          "intent": "Ensure the wallet is unlocked",
+          "flow": "setup"
+        },
+        "setup-nav-perps": {
+          "action": "ui.navigate",
+          "hash": "#/?tab=perps",
+          "next": "setup-nav-market",
+          "intent": "Open the Perps tab (pushes a history entry)",
+          "flow": "setup"
+        },
+        "setup-nav-market": {
+          "action": "ui.navigate",
+          "hash": "#/perps/market/BTC",
+          "next": "setup-wait-market",
+          "intent": "Open the BTC market detail screen (pushes a history entry)",
+          "flow": "setup"
+        },
+        "setup-wait-market": {
+          "action": "ui.wait_for",
+          "selector": "[data-testid=perps-market-detail-page]",
+          "visible": true,
+          "timeout_ms": 15000,
+          "next": "setup-nav-order",
+          "intent": "Wait for market detail before opening order entry",
+          "flow": "setup"
+        },
+        "setup-nav-order": {
+          "action": "ui.navigate",
+          "hash": "#/perps/trade/BTC?direction=long&mode=new",
+          "next": "ac1-wait-order-entry",
+          "intent": "Open the order entry screen (pushes a history entry on top of market detail)",
+          "flow": "setup"
+        },
+        "ac1-wait-order-entry": {
+          "action": "ui.wait_for",
+          "selector": "[data-testid=perps-order-entry-page]",
+          "visible": true,
+          "timeout_ms": 15000,
+          "next": "ac1-press-add-funds",
+          "intent": "AC1: order entry screen is rendered with the Add Funds entry point",
+          "flow": "ac1"
+        },
+        "ac1-press-add-funds": {
+          "action": "ui.press",
+          "selector": "[data-testid=amount-input-add-funds]",
+          "next": "ac1-wait-deposit",
+          "intent": "AC1/TAT-3272: tap the Available-to-trade Add Funds (+) icon",
+          "flow": "ac1"
+        },
+        "ac1-wait-deposit": {
+          "action": "ui.wait_for",
+          "selector": "[data-testid=wallet-initiated-header-back-button]",
+          "visible": true,
+          "timeout_ms": 15000,
+          "next": "ac1-screenshot-deposit",
+          "intent": "TAT-3272: the deposit confirmation opens (Arbitrum network added automatically). Before the fix this never appeared.",
+          "flow": "ac1"
+        },
+        "ac1-screenshot-deposit": {
+          "action": "ui.screenshot",
+          "path": "screenshots/evidence-ac1-deposit-open.png",
+          "timeout_ms": 10000,
+          "note": "TAT-3272: deposit confirmation screen opened after tapping Add Funds",
+          "claims": {
+            "must_show": ["deposit / Add Funds confirmation screen", "back arrow"],
+            "must_not_show": ["unchanged order entry screen"]
+          },
+          "next": "ac1-press-deposit-back",
+          "intent": "Capture the opened deposit confirmation",
+          "flow": "ac1"
+        },
+        "ac1-press-deposit-back": {
+          "action": "ui.press",
+          "selector": "[data-testid=wallet-initiated-header-back-button]",
+          "next": "ac1-wait-back-order-entry",
+          "intent": "Return from the deposit screen to the order entry screen",
+          "flow": "ac1"
+        },
+        "ac1-wait-back-order-entry": {
+          "action": "ui.wait_for",
+          "selector": "[data-testid=perps-order-entry-page]",
+          "visible": true,
+          "timeout_ms": 15000,
+          "next": "ac1-press-order-back",
+          "intent": "Back on the order entry screen after the deposit round-trip",
+          "flow": "ac1"
+        },
+        "ac1-press-order-back": {
+          "action": "ui.press",
+          "selector": "[data-testid=perps-order-entry-back-button]",
+          "next": "ac1-wait-market-detail",
+          "intent": "AC1/TAT-3131: tap the order-entry back button ONCE",
+          "flow": "ac1"
+        },
+        "ac1-wait-market-detail": {
+          "action": "ui.wait_for",
+          "selector": "[data-testid=perps-market-detail-page]",
+          "visible": true,
+          "timeout_ms": 15000,
+          "next": "ac1-assert-market-detail-control",
+          "intent": "TAT-3131: a SINGLE back tap returns to the market detail screen (no phantom, no double-tap). Before the fix one tap landed on the phantom confirmation.",
+          "flow": "ac1"
+        },
+        "ac1-assert-market-detail-control": {
+          "action": "ui.wait_for",
+          "selector": "[data-testid=perps-market-detail-back-button]",
+          "visible": true,
+          "timeout_ms": 8000,
+          "next": "ac1-screenshot-market-detail",
+          "intent": "Confirm a market-detail-specific control is present after the single back tap",
+          "flow": "ac1"
+        },
+        "ac1-screenshot-market-detail": {
+          "action": "ui.screenshot",
+          "path": "screenshots/evidence-ac1-one-tap-back-to-market.png",
+          "timeout_ms": 10000,
+          "note": "TAT-3131: one tap of the order-entry back button (after visiting Add Funds) lands on the Perps market detail screen",
+          "claims": {
+            "must_show": ["perps market detail screen for BTC"],
+            "must_not_show": ["order entry screen", "deposit / Add Funds confirmation"]
+          },
+          "next": "done",
+          "intent": "Capture market detail reached in a single back tap after the deposit round-trip",
+          "flow": "ac1"
+        },
+        "done": {
+          "action": "end",
+          "status": "pass",
+          "intent": "Finish: Add Funds opens and one back tap returns to market detail"
+        }
+      }
+    }
+  }
+}

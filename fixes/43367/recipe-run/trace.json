@@ -1,0 +1,416 @@
+{
+  "metadata": {
+    "runner": {
+      "source": "/Users/deeeed/dev/metamask/metamask-recipe-runner",
+      "git_ref": "e839061cd2a255ecc1f77eeee9d4990ae9a9af8e",
+      "name": "@metamask/recipe-runner"
+    }
+  },
+  "entries": [
+    {
+      "nodeId": "setup-unlock",
+      "action": "metamask.wallet.ensure_unlocked",
+      "intent": "Ensure the wallet is unlocked",
+      "startedAt": "2026-06-09T13:23:27.638Z",
+      "endedAt": "2026-06-09T13:23:29.591Z",
+      "durationMs": 1953,
+      "ok": true,
+      "next": "setup-nav-perps",
+      "output": {
+        "action": "metamask.wallet.ensure_unlocked",
+        "unlocked": true,
+        "alreadyUnlocked": true,
+        "proofPath": "extension-unlocked-state",
+        "cdpPort": 7666,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/",
+        "runtimeLaunch": null,
+        "liveAdapter": "/Users/deeeed/dev/metamask/metamask-recipe-runner/live-adapters/extension/wallet/ensure_unlocked.mjs"
+      }
+    },
+    {
+      "nodeId": "setup-nav-perps",
+      "action": "ui.navigate",
+      "intent": "Open the Perps tab (pushes a history entry)",
+      "startedAt": "2026-06-09T13:23:29.630Z",
+      "endedAt": "2026-06-09T13:23:34.225Z",
+      "durationMs": 4595,
+      "ok": true,
+      "next": "setup-nav-market",
+      "output": {
+        "action": "ui.navigate",
+        "hash": "#/?tab=perps",
+        "navigation": {
+          "frameId": "0AC1B833D5EAE48D0C76570E7CD18F32",
+          "isDownload": false
+        },
+        "proofPath": "ui-navigation",
+        "cdpPort": 7666,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/",
+        "runtimeLaunch": null,
+        "liveAdapter": "/Users/deeeed/dev/metamask/metamask-recipe-runner/live-adapters/extension/ui/navigate.mjs"
+      }
+    },
+    {
+      "nodeId": "setup-nav-market",
+      "action": "ui.navigate",
+      "intent": "Open the BTC market detail screen (pushes a history entry)",
+      "startedAt": "2026-06-09T13:23:34.475Z",
+      "endedAt": "2026-06-09T13:23:35.703Z",
+      "durationMs": 1228,
+      "ok": true,
+      "next": "setup-wait-market",
+      "output": {
+        "action": "ui.navigate",
+        "hash": "#/perps/market/BTC",
+        "navigation": {
+          "frameId": "0AC1B833D5EAE48D0C76570E7CD18F32",
+          "isDownload": false
+        },
+        "proofPath": "ui-navigation",
+        "cdpPort": 7666,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/?tab=perps",
+        "runtimeLaunch": null,
+        "liveAdapter": "/Users/deeeed/dev/metamask/metamask-recipe-runner/live-adapters/extension/ui/navigate.mjs"
+      }
+    },
+    {
+      "nodeId": "setup-wait-market",
+      "action": "ui.wait_for",
+      "intent": "Wait for market detail before opening order entry",
+      "startedAt": "2026-06-09T13:23:35.710Z",
+      "endedAt": "2026-06-09T13:23:36.163Z",
+      "durationMs": 453,
+      "ok": true,
+      "next": "setup-nav-order",
+      "output": {
+        "matched": true,
+        "cdpPort": 7666,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/BTC",
+        "runtimeLaunch": null
+      }
+    },
+    {
+      "nodeId": "setup-nav-order",
+      "action": "ui.navigate",
+      "intent": "Open the order entry screen (pushes a history entry on top of market detail)",
+      "startedAt": "2026-06-09T13:23:36.174Z",
+      "endedAt": "2026-06-09T13:23:37.180Z",
+      "durationMs": 1006,
+      "ok": true,
+      "next": "ac1-wait-order-entry",
+      "output": {
+        "action": "ui.navigate",
+        "hash": "#/perps/trade/BTC?direction=long&mode=new",
+        "navigation": {
+          "frameId": "0AC1B833D5EAE48D0C76570E7CD18F32",
+          "isDownload": false
+        },
+        "proofPath": "ui-navigation",
+        "cdpPort": 7666,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/BTC",
+        "runtimeLaunch": null,
+        "liveAdapter": "/Users/deeeed/dev/metamask/metamask-recipe-runner/live-adapters/extension/ui/navigate.mjs"
+      }
+    },
+    {
+      "nodeId": "ac1-wait-order-entry",
+      "action": "ui.wait_for",
+      "intent": "AC1: order entry screen is rendered with the Add Funds entry point",
+      "startedAt": "2026-06-09T13:23:37.198Z",
+      "endedAt": "2026-06-09T13:23:37.208Z",
+      "durationMs": 10,
+      "ok": true,
+      "next": "ac1-press-add-funds",
+      "output": {
+        "matched": true,
+        "cdpPort": 7666,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/BTC?direction=long&mode=new",
+        "runtimeLaunch": null
+      }
+    },
+    {
+      "nodeId": "ac1-press-add-funds",
+      "action": "ui.press",
+      "intent": "AC1/TAT-3272: tap the Available-to-trade Add Funds (+) icon",
+      "startedAt": "2026-06-09T13:23:37.213Z",
+      "endedAt": "2026-06-09T13:23:37.232Z",
+      "durationMs": 19,
+      "ok": true,
+      "next": "ac1-wait-deposit",
+      "output": {
+        "clicked": true,
+        "selector": "[data-testid=amount-input-add-funds]",
+        "tagName": "svg",
+        "cdpPort": 7666,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/BTC?direction=long&mode=new",
+        "runtimeLaunch": null
+      }
+    },
+    {
+      "nodeId": "ac1-wait-deposit",
+      "action": "ui.wait_for",
+      "intent": "TAT-3272: the deposit confirmation opens (Arbitrum network added automatically). Before the fix this never appeared.",
+      "startedAt": "2026-06-09T13:23:37.279Z",
+      "endedAt": "2026-06-09T13:23:39.247Z",
+      "durationMs": 1968,
+      "ok": true,
+      "next": "ac1-screenshot-deposit",
+      "output": {
+        "matched": true,
+        "cdpPort": 7666,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/BTC?direction=long&mode=new",
+        "runtimeLaunch": null
+      }
+    },
+    {
+      "nodeId": "ac1-screenshot-deposit",
+      "action": "ui.screenshot",
+      "intent": "Capture the opened deposit confirmation",
+      "artifacts": [
+        {
+          "path": "screenshots/evidence-ac1-deposit-open.png",
+          "type": "screenshot",
+          "nodeId": "ac1-screenshot-deposit",
+          "label": "UI screenshot",
+          "category": "evidence",
+          "mimeType": "image/png",
+          "metadata": {
+            "provider": "capture-helper",
+            "mode": "snapshot",
+            "pid": 70841,
+            "captureHelper": {
+              "bytes": 463525,
+              "output": "/Users/deeeed/dev/metamask/metamask-extension-6/temp/tasks/fix/43367-0609-204953/artifacts/recipe-run/screenshots/evidence-ac1-deposit-open.png",
+              "selected": {
+                "app": "Google Chrome for Testing",
+                "height": 800,
+                "id": 13342,
+                "layer": 0,
+                "onScreen": true,
+                "pid": 70841,
+                "title": "mme-6 — MetaMask",
+                "width": 500,
+                "x": -2034,
+                "y": 417
+              },
+              "selector": "pid",
+              "type": "snapshot"
+            }
+          }
+        }
+      ],
+      "startedAt": "2026-06-09T13:23:39.257Z",
+      "endedAt": "2026-06-09T13:23:39.793Z",
+      "durationMs": 536,
+      "ok": true,
+      "next": "ac1-press-deposit-back",
+      "output": {
+        "captured": true,
+        "path": "screenshots/evidence-ac1-deposit-open.png",
+        "artifact": {
+          "path": "screenshots/evidence-ac1-deposit-open.png",
+          "type": "screenshot",
+          "nodeId": "ac1-screenshot-deposit",
+          "label": "UI screenshot",
+          "category": "evidence",
+          "mimeType": "image/png",
+          "metadata": {
+            "provider": "capture-helper",
+            "mode": "snapshot",
+            "pid": 70841,
+            "captureHelper": {
+              "bytes": 463525,
+              "output": "/Users/deeeed/dev/metamask/metamask-extension-6/temp/tasks/fix/43367-0609-204953/artifacts/recipe-run/screenshots/evidence-ac1-deposit-open.png",
+              "selected": {
+                "app": "Google Chrome for Testing",
+                "height": 800,
+                "id": 13342,
+                "layer": 0,
+                "onScreen": true,
+                "pid": 70841,
+                "title": "mme-6 — MetaMask",
+                "width": 500,
+                "x": -2034,
+                "y": 417
+              },
+              "selector": "pid",
+              "type": "snapshot"
+            }
+          }
+        }
+      }
+    },
+    {
+      "nodeId": "ac1-press-deposit-back",
+      "action": "ui.press",
+      "intent": "Return from the deposit screen to the order entry screen",
+      "startedAt": "2026-06-09T13:23:39.806Z",
+      "endedAt": "2026-06-09T13:23:39.930Z",
+      "durationMs": 124,
+      "ok": true,
+      "next": "ac1-wait-back-order-entry",
+      "output": {
+        "clicked": true,
+        "selector": "[data-testid=wallet-initiated-header-back-button]",
+        "tagName": "BUTTON",
+        "cdpPort": 7666,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/confirm-transaction/6ce9a970-6406-11f1-a8ab-d30e98c0aae2?loader=customAmount&goBackTo=%2Fperps%2Ftrade%2FBTC%3Fdirection%3Dlong%26mode%3Dnew",
+        "runtimeLaunch": null
+      }
+    },
+    {
+      "nodeId": "ac1-wait-back-order-entry",
+      "action": "ui.wait_for",
+      "intent": "Back on the order entry screen after the deposit round-trip",
+      "startedAt": "2026-06-09T13:23:39.976Z",
+      "endedAt": "2026-06-09T13:23:39.986Z",
+      "durationMs": 10,
+      "ok": true,
+      "next": "ac1-press-order-back",
+      "output": {
+        "matched": true,
+        "cdpPort": 7666,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/BTC?direction=long&mode=new",
+        "runtimeLaunch": null
+      }
+    },
+    {
+      "nodeId": "ac1-press-order-back",
+      "action": "ui.press",
+      "intent": "AC1/TAT-3131: tap the order-entry back button ONCE",
+      "startedAt": "2026-06-09T13:23:39.990Z",
+      "endedAt": "2026-06-09T13:23:40.014Z",
+      "durationMs": 24,
+      "ok": true,
+      "next": "ac1-wait-market-detail",
+      "output": {
+        "clicked": true,
+        "selector": "[data-testid=perps-order-entry-back-button]",
+        "tagName": "DIV",
+        "cdpPort": 7666,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/BTC?direction=long&mode=new",
+        "runtimeLaunch": null
+      }
+    },
+    {
+      "nodeId": "ac1-wait-market-detail",
+      "action": "ui.wait_for",
+      "intent": "TAT-3131: a SINGLE back tap returns to the market detail screen (no phantom, no double-tap). Before the fix one tap landed on the phantom confirmation.",
+      "startedAt": "2026-06-09T13:23:40.034Z",
+      "endedAt": "2026-06-09T13:23:40.044Z",
+      "durationMs": 10,
+      "ok": true,
+      "next": "ac1-assert-market-detail-control",
+      "output": {
+        "matched": true,
+        "cdpPort": 7666,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/BTC",
+        "runtimeLaunch": null
+      }
+    },
+    {
+      "nodeId": "ac1-assert-market-detail-control",
+      "action": "ui.wait_for",
+      "intent": "Confirm a market-detail-specific control is present after the single back tap",
+      "startedAt": "2026-06-09T13:23:40.048Z",
+      "endedAt": "2026-06-09T13:23:40.056Z",
+      "durationMs": 8,
+      "ok": true,
+      "next": "ac1-screenshot-market-detail",
+      "output": {
+        "matched": true,
+        "cdpPort": 7666,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/BTC",
+        "runtimeLaunch": null
+      }
+    },
+    {
+      "nodeId": "ac1-screenshot-market-detail",
+      "action": "ui.screenshot",
+      "intent": "Capture market detail reached in a single back tap after the deposit round-trip",
+      "artifacts": [
+        {
+          "path": "screenshots/evidence-ac1-one-tap-back-to-market.png",
+          "type": "screenshot",
+          "nodeId": "ac1-screenshot-market-detail",
+          "label": "UI screenshot",
+          "category": "evidence",
+          "mimeType": "image/png",
+          "metadata": {
+            "provider": "capture-helper",
+            "mode": "snapshot",
+            "pid": 70841,
+            "captureHelper": {
+              "bytes": 515219,
+              "output": "/Users/deeeed/dev/metamask/metamask-extension-6/temp/tasks/fix/43367-0609-204953/artifacts/recipe-run/screenshots/evidence-ac1-one-tap-back-to-market.png",
+              "selected": {
+                "app": "Google Chrome for Testing",
+                "height": 800,
+                "id": 13342,
+                "layer": 0,
+                "onScreen": true,
+                "pid": 70841,
+                "title": "mme-6 — MetaMask",
+                "width": 500,
+                "x": -2034,
+                "y": 417
+              },
+              "selector": "pid",
+              "type": "snapshot"
+            }
+          }
+        }
+      ],
+      "startedAt": "2026-06-09T13:23:40.061Z",
+      "endedAt": "2026-06-09T13:23:44.132Z",
+      "durationMs": 4071,
+      "ok": true,
+      "next": "done",
+      "output": {
+        "captured": true,
+        "path": "screenshots/evidence-ac1-one-tap-back-to-market.png",
+        "artifact": {
+          "path": "screenshots/evidence-ac1-one-tap-back-to-market.png",
+          "type": "screenshot",
+          "nodeId": "ac1-screenshot-market-detail",
+          "label": "UI screenshot",
+          "category": "evidence",
+          "mimeType": "image/png",
+          "metadata": {
+            "provider": "capture-helper",
+            "mode": "snapshot",
+            "pid": 70841,
+            "captureHelper": {
+              "bytes": 515219,
+              "output": "/Users/deeeed/dev/metamask/metamask-extension-6/temp/tasks/fix/43367-0609-204953/artifacts/recipe-run/screenshots/evidence-ac1-one-tap-back-to-market.png",
+              "selected": {
+                "app": "Google Chrome for Testing",
+                "height": 800,
+                "id": 13342,
+                "layer": 0,
+                "onScreen": true,
+                "pid": 70841,
+                "title": "mme-6 — MetaMask",
+                "width": 500,
+                "x": -2034,
+                "y": 417
+              },
+              "selector": "pid",
+              "type": "snapshot"
+            }
+          }
+        }
+      }
+    },
+    {
+      "nodeId": "done",
+      "action": "end",
+      "intent": "Finish: Add Funds opens and one back tap returns to market detail",
+      "startedAt": "2026-06-09T13:23:44.137Z",
+      "endedAt": "2026-06-09T13:23:44.144Z",
+      "durationMs": 7,
+      "ok": true,
+      "status": "pass"
+    }
+  ]
+}

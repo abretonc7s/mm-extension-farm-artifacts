@@ -1,0 +1,59 @@
+{
+  "version": 1,
+  "verdict": "pass",
+  "compact": {
+    "verdict": "PASS",
+    "reasons": [
+      "End-to-end recipe proves both fixes: trace recipe-run-e2e 16/16 nodes ok.",
+      "TAT-3272 proven: ac1-press-add-funds -> ac1-wait-deposit -> ac1-screenshot-deposit (deposit confirmation opens; Arbitrum added automatically).",
+      "TAT-3131 proven: after the deposit round-trip, a single ac1-press-order-back -> ac1-wait-market-detail reaches market detail (no double-tap).",
+      "Revert-sensitive: reverting TAT-3272 fails ac1-wait-deposit; reverting TAT-3131 fails ac1-wait-market-detail."
+    ],
+    "better_version_guidance": []
+  },
+  "dimensions": {
+    "graph_integrity": {
+      "status": "pass",
+      "reason": "Workflow graph is structurally valid; all 16 nodes reachable and ok in trace.json.",
+      "evidence": ["recipe.json", "recipe-run-e2e/trace.json"]
+    },
+    "action_contract": {
+      "status": "pass",
+      "reason": "Only manifest-declared actions used (metamask.wallet.ensure_unlocked, ui.navigate, ui.wait_for, ui.press, ui.screenshot). No manual steps, no UI value injection.",
+      "evidence": ["recipe.json"]
+    },
+    "ac_coverage": {
+      "status": "pass",
+      "reason": "AC1 (TAT-3131) and TAT-3272 proven end-to-end and revert-sensitive; AC2/AC3 post-trade nav proven by the shared navigate(-1) mechanism + useConfirmActions unit test.",
+      "evidence": ["recipe-coverage.md", "recipe-run-e2e/trace.json"]
+    },
+    "evidence_contract_basics": {
+      "status": "pass",
+      "reason": "Visual claims have capture-helper screenshots on the correct screens (deposit confirmation; BTC-USD market detail); navigation-logic claims also have before/after unit-test evidence.",
+      "evidence": ["after-ac1-deposit-open.png", "after-ac1-one-tap-back-to-market.png"]
+    }
+  },
+  "structural_findings": [],
+  "contextual_findings": [],
+  "suggested_recipe_delta": [],
+  "training_fields": {
+    "farm": "metamask-extension",
+    "project": "metamask-extension-farm",
+    "flow_type": "fix-bug",
+    "task_type": "fix-bug",
+    "claim_is_visual": true,
+    "proof_mode": "mixed",
+    "anti_patterns": [],
+    "good_patterns": [
+      "end-to-end round-trip recipe that is revert-sensitive for both bundled fixes",
+      "single back-tap assertion distinguishes fixed (market detail) from buggy (phantom confirmation)"
+    ]
+  },
+  "meta": {
+    "producer": "worker",
+    "fallback_used": false,
+    "legacy_task": false,
+    "artifact_required": true,
+    "source_signals": ["recipe.json", "recipe-coverage.md", "recipe-run-e2e/trace.json", "after-ac1-deposit-open.png", "after-ac1-one-tap-back-to-market.png"]
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "version": 1,
+  "preferred_mode": "screenshots",
+  "summary": "End-to-end proof of the Add Funds flow: tapping the Available-to-trade + icon opens the deposit confirmation (TAT-3272, Arbitrum network added automatically), and after returning a single tap of the order-entry back button reaches the market detail screen (TAT-3131, no double-tap).",
+  "before_after_pairs": [],
+  "standalone": [
+    {
+      "label": "Add Funds opens the deposit confirmation (TAT-3272)",
+      "covers": ["ac1", "tat-3272"],
+      "file": "after-ac1-deposit-open.png",
+      "note": "Tapping the + icon now adds the Arbitrum network and opens the deposit screen; previously nothing happened."
+    },
+    {
+      "label": "One back tap from the order screen returns to market detail (TAT-3131)",
+      "covers": ["ac1", "tat-3131"],
+      "file": "after-ac1-one-tap-back-to-market.png",
+      "note": "After visiting Add Funds and returning, a single tap of the back button reaches market detail (no phantom history entry, no double-tap)."
+    }
+  ],
+  "omit": [
+    "before-evidence-ac4-order-entry.png",
+    "before-evidence-ac4-back-to-market-detail.png",
+    "after-ac4-order-entry.png",
+    "after-ac4-back-to-market-detail.png",
+    "probe-order-entry.png"
+  ],
+  "videos": {
+    "preferred": false,
+    "note": "browser.pid missing -- recording skipped. Check browser.log for PID resolution errors. (The recipe runner launches its own per-run validation browser, so the slot browser.pid could not be targeted for window recording; capture-helper screenshots are the authoritative visual evidence.)"
+  }
+}
