@@ -1,5 +1,7 @@
-- **Shared stream ownership:** When a hook uses `manageStream: false`, the page that owns stream activation must pass the same depth/options the consumer needs — slippage estimation needs `SlippageEstimateBookLevels` on `perpsActivateOrderBookStream`, not only in the read-only hook.
-- **Async modal persist:** Slippage config modals must await controller persist before `onClose`; closing early hides failures from the modal surface.
-- **Loading gates for caps:** Max-slippage UI and submit blocking must wait for `isMaxSlippageLoading` so users do not see transient default caps.
-- **Symbol switch hygiene:** Throttled order-book values need a `resetKey` on symbol change to avoid cross-market slippage estimates.
-- **Error lifecycle:** After a successful max-slippage save, clear any prior slippage submit error so summary and inline error state stay consistent.
+# Reviewer-Driven Learnings — PR #43357
+
+- **Readiness gate on derived estimates**: bugbot caught `exceedsMaxSlippage` using throttled L2 data before `isReady` — order entry must treat hook readiness as part of the validation predicate, not only null checks on the numeric field.
+- **Conditional error clearing**: clearing `submitError` after a successful settings save must respect remaining blockers; fix-bug should compare the new cap against the live estimate instead of blanket `setSubmitError(null)`.
+- **Shared stream ownership**: hooks that subscribe to a global order-book channel must not deactivate streams owned by the page (`manageStream: false`) — fix-bug should map stream lifecycle to the component that opens the channel.
+- **Throttle reset on identity change**: throttled book snapshots need a `resetKey` (symbol) so symbol switches do not reuse the prior market during the throttle window.
+- **Async modal close**: config modals wrapping async persistence must await `onSave` and keep the sheet open on failure rather than closing optimistically.
