@@ -1,0 +1,51 @@
+{
+  "schema_version": 1,
+  "title": "TAT-3264 — perps market detail orders section top spacing",
+  "description": "Proves the orders section header on the extension perps market detail page uses the same top spacing token (paddingTop=16px) as the stats section header, and that with no open orders the orders section does not render. Builds real testnet order state through the order-entry UI.",
+  "pre_conditions": [
+    "Wallet fixture present and unlockable",
+    "Account 1 (0x8dc623…9003) funded for Hyperliquid testnet perps"
+  ],
+  "validate": {
+    "workflow": {
+      "entry": "setup-status",
+      "nodes": {
+        "setup-status": { "action": "app.status", "flow": "setup", "intent": "Read runner compatibility status", "next": "setup-unlock" },
+        "setup-unlock": { "action": "metamask.wallet.ensure_unlocked", "flow": "setup", "intent": "Ensure wallet is unlocked", "next": "setup-select" },
+        "setup-select": { "action": "metamask.wallet.select_account", "address": "0x8dc623e964475d4d669da601fd15ea9125469003", "flow": "setup", "intent": "Select the funded validation account", "next": "setup-clean" },
+        "setup-clean": { "action": "metamask.perps.start_state", "profile": "clean_market_testnet", "network": "testnet", "market": "ETH", "positions": false, "orders": false, "page": "market", "timeout_ms": 60000, "flow": "setup", "intent": "Switch to testnet and open the ETH market (explicit order cleanup happens below)", "next": "setup-reload-a" },
+        "setup-reload-a": { "action": "command", "cmd": "node temp/tasks/fix/tat-3264-0608-143758/artifacts/reload-market.mjs '#/perps/market/ETH' '[data-testid=\"perps-stats-section-header\"]' 7665", "flow": "setup", "intent": "Reload the market detail after the testnet switch so the perps context is active", "next": "setup-close" },
+        "setup-close": { "action": "metamask.perps.close_orders", "market": "ETH", "timeout_ms": 90000, "flow": "setup", "intent": "Cancel any leftover orders from the market page (reliable cancel context)", "next": "setup-wait-absent" },
+        "setup-wait-absent": { "action": "command", "cmd": "node temp/tasks/fix/tat-3264-0608-143758/artifacts/wait-orders-absent.mjs ETH 60000 7665", "flow": "setup", "intent": "Poll the live orders cache until zero ETH orders remain", "next": "setup-reload-b" },
+        "setup-reload-b": { "action": "command", "cmd": "node temp/tasks/fix/tat-3264-0608-143758/artifacts/reload-market.mjs '#/perps/market/ETH' '[data-testid=\"perps-stats-section-header\"]' 7665", "flow": "setup", "intent": "Reload again so the DOM reflects the confirmed empty-orders state", "next": "setup-wait-market" },
+        "setup-wait-market": { "action": "ui.wait_for", "selector": "[data-testid=\"perps-stats-section-header\"]", "visible": true, "timeout_ms": 20000, "flow": "setup", "intent": "Wait for the market detail to render", "next": "ac2-measure-empty" },
+
+        "ac2-measure-empty": { "action": "command", "cmd": "node temp/tasks/fix/tat-3264-0608-143758/artifacts/measure-spacing.mjs temp/tasks/fix/tat-3264-0608-143758/artifacts/recipe-run/measure-empty.json 7665", "flow": "ac2", "intent": "Measure section state with no open orders", "next": "ac2-assert-rendered" },
+        "ac2-assert-rendered": { "action": "assert_json", "path": "temp/tasks/fix/tat-3264-0608-143758/artifacts/recipe-run/measure-empty.json", "assert": { "path": "$.statsExists", "operator": "eq", "value": true }, "flow": "ac2", "intent": "Market detail is rendered (stats section present)", "next": "ac2-assert-absent" },
+        "ac2-assert-absent": { "action": "assert_json", "path": "temp/tasks/fix/tat-3264-0608-143758/artifacts/recipe-run/measure-empty.json", "assert": { "path": "$.ordersExists", "operator": "eq", "value": false }, "flow": "ac2", "intent": "With no open orders the orders section header is absent (no regression to empty state)", "next": "ac2-focus" },
+        "ac2-focus": { "action": "command", "cmd": "node temp/tasks/fix/tat-3264-0608-143758/artifacts/focus-market.mjs 7665", "flow": "ac2", "intent": "Bring the market detail tab to the foreground for the screenshot", "next": "ac2-screenshot-empty" },
+        "ac2-screenshot-empty": { "action": "ui.screenshot", "path": "screenshots/evidence-ac2-empty-state.png", "timeout_ms": 5000, "flow": "ac2", "intent": "Capture empty-state market detail (orders section not rendered)", "note": "AC2: no open orders — orders section does not render", "claims": { "must_show": ["Stats"], "must_not_show": ["Orders"] }, "next": "ac1-nav-trade" },
+
+        "ac1-nav-trade": { "action": "ui.navigate", "hash": "#/perps/trade/ETH?direction=long&mode=new", "flow": "ac1", "intent": "Open the order entry page to place a resting limit order", "next": "ac1-wait-entry" },
+        "ac1-wait-entry": { "action": "ui.wait_for", "selector": "[data-testid=\"perps-order-entry-page\"]", "visible": true, "timeout_ms": 30000, "flow": "ac1", "intent": "Wait for the order entry page", "next": "ac1-place-order" },
+        "ac1-place-order": { "action": "command", "cmd": "node temp/tasks/fix/tat-3264-0608-143758/artifacts/place-limit-order.mjs ETH 1600 12 7665", "flow": "ac1", "intent": "Switch to Limit, fill price/size into the real React inputs, click the real submit button, and confirm the order rests (retried for testnet flakiness)", "next": "ac1-assert-order" },
+        "ac1-assert-order": { "action": "metamask.perps.assert_orders", "market": "ETH", "state": "open", "mode": "matching", "timeout_ms": 45000, "flow": "ac1", "intent": "Wait for and confirm the real open order before leaving the trade page", "next": "ac1-nav-market" },
+        "ac1-nav-market": { "action": "command", "cmd": "node temp/tasks/fix/tat-3264-0608-143758/artifacts/reload-market.mjs '#/perps/market/ETH' '[data-testid=\"perps-orders-section-header\"]' 7665", "flow": "ac1", "intent": "Open the market detail fresh (reload) so the orders section renders reliably", "next": "ac1-wait-stats" },
+        "ac1-wait-stats": { "action": "ui.wait_for", "selector": "[data-testid=\"perps-stats-section-header\"]", "visible": true, "timeout_ms": 15000, "flow": "ac1", "intent": "Wait for the market detail to render (stats header present)", "next": "ac1-wait-orders" },
+        "ac1-wait-orders": { "action": "ui.wait_for", "selector": "[data-testid=\"perps-orders-section-header\"]", "visible": true, "visibility": "viewport", "timeout_ms": 15000, "flow": "ac1", "intent": "Wait for the orders section header to be visible", "next": "ac1-scroll-orders" },
+        "ac1-scroll-orders": { "action": "ui.scroll", "selector": "[data-testid=\"perps-orders-section-header\"]", "scroll_into_view": true, "flow": "ac1", "intent": "Bring the orders section header into view", "next": "ac1-measure" },
+        "ac1-measure": { "action": "command", "cmd": "node temp/tasks/fix/tat-3264-0608-143758/artifacts/measure-spacing.mjs temp/tasks/fix/tat-3264-0608-143758/artifacts/recipe-run/measure-orders.json 7665", "flow": "ac1", "intent": "Measure orders vs stats header top padding via getComputedStyle + getBoundingClientRect", "next": "ac1-assert-padding" },
+        "ac1-assert-padding": { "action": "assert_json", "path": "temp/tasks/fix/tat-3264-0608-143758/artifacts/recipe-run/measure-orders.json", "assert": { "path": "$.ordersPaddingTopPx", "operator": "eq", "value": 16 }, "flow": "ac1", "intent": "Orders header top padding equals the 16px section spacing token", "next": "ac1-assert-match" },
+        "ac1-assert-match": { "action": "assert_json", "path": "temp/tasks/fix/tat-3264-0608-143758/artifacts/recipe-run/measure-orders.json", "assert": { "path": "$.match", "operator": "eq", "value": true }, "flow": "ac1", "intent": "Orders header top padding equals the stats header top padding (same spacing convention)", "next": "ac1-focus" },
+        "ac1-focus": { "action": "command", "cmd": "node temp/tasks/fix/tat-3264-0608-143758/artifacts/focus-market.mjs 7665", "flow": "ac1", "intent": "Bring the market detail tab to the foreground for the screenshot", "next": "ac1-screenshot-orders" },
+        "ac1-screenshot-orders": { "action": "ui.screenshot", "path": "screenshots/evidence-ac1-orders-spacing.png", "timeout_ms": 5000, "flow": "ac1", "intent": "Capture the orders section with correct top spacing", "note": "AC1: orders section top spacing matches adjacent sections (16px)", "claims": { "must_show": ["Orders", "Stats"], "must_not_show": [] }, "next": "teardown-nav-market" },
+
+        "teardown-nav-market": { "action": "command", "cmd": "node temp/tasks/fix/tat-3264-0608-143758/artifacts/reload-market.mjs '#/perps/market/ETH' '[data-testid=\"perps-stats-section-header\"]' 7665", "flow": "teardown", "intent": "Ensure the market detail is active before cancelling the order", "next": "teardown-close" },
+        "teardown-close": { "action": "metamask.perps.close_orders", "market": "ETH", "timeout_ms": 90000, "flow": "teardown", "intent": "Cancel the testnet limit order created by this recipe", "next": "teardown-wait-absent" },
+        "teardown-wait-absent": { "action": "command", "cmd": "node temp/tasks/fix/tat-3264-0608-143758/artifacts/wait-orders-absent.mjs ETH 60000 7665", "flow": "teardown", "intent": "Poll the live orders cache until zero ETH orders remain", "next": "teardown-state" },
+        "teardown-state": { "action": "metamask.perps.teardown_state", "market": "ETH", "positions": false, "orders": false, "page": "home", "timeout_ms": 60000, "flow": "teardown", "intent": "Return to the wallet home (order cleanup already done above)", "next": "teardown-done" },
+        "teardown-done": { "action": "end", "status": "pass", "flow": "complete", "intent": "Recipe passed: orders section spacing matches convention" }
+      }
+    }
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "originalFamilyScopeSummary": "Fix extension market detail orders section spacing to match adjacent section padding",
+  "currentTriggerSummary": "pr-complete: Fix extension market detail orders section spacing to match adjacent section padding",
+  "scopeVerdict": "full-scope-addressed",
+  "notes": "PR #43350 adds paddingTop={4} (16px) to the orders section heading wrapper on perps-market-detail-page.tsx so its top spacing matches the Stats/Activity/Details section headers, plus locator data-testids and two regression tests. This pr-complete run merged origin/main cleanly (no conflicts), applied the required prettier reflow on the stats-section-header Box to keep the prettier CI check green, and re-validated: lint:changed/verify-locales/circular-deps all pass, 86 unit tests pass (incl. the TAT-3264 spacing tests asserting orders header matches stats header pt-4 and orders section hidden when empty), coverage VERDICT PASS (87%). No reviewer-requested changes existed (no inline comments, no CHANGES_REQUESTED). Recipe re-validation could not run due to a recipe-runner tooling bug (live-adapters/extension/platform/cdp.mjs imports extensionIdPath that src/paths.ts no longer exports) — unrelated to this PR; behavior covered by unit tests. The original family scope is fully addressed in code and remains green after the main merge."
+}

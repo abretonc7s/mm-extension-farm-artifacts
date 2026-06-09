@@ -1,0 +1,32 @@
+{
+  "version": 1,
+  "preferred_mode": "screenshots",
+  "summary": "Orders section header now uses the same 16px top spacing as the other market-detail sections; empty state still renders no orders section. Screenshots are real macOS window captures (capture-helper).",
+  "before_after_pairs": [
+    {
+      "label": "Market detail — orders section top spacing (0px → 16px, matches Stats)",
+      "covers": ["ac1"],
+      "before": "before-capture-helper-ac1-orders-spacing.png",
+      "after": "after-capture-helper-ac1-orders-spacing.png",
+      "note": "Before: the 'Orders' heading sits flush under the chart block. After: it has the conventional 16px gap above it, matching the 'Stats' heading."
+    }
+  ],
+  "standalone": [
+    {
+      "label": "Market detail — empty state (no open orders, orders section not rendered)",
+      "covers": ["ac2"],
+      "file": "after-capture-helper-ac2-empty-state.png"
+    }
+  ],
+  "omit": [
+    "before-evidence-ac1-orders-spacing.png",
+    "after-ac1-orders-spacing.png",
+    "before-evidence-ac2-empty-state.png",
+    "after-ac2-empty-state.png",
+    "before-capture-helper-ac2-empty-state.png"
+  ],
+  "videos": {
+    "preferred": false,
+    "note": "Recording unavailable: capture-helper/ffmpeg could not record video in this SSH environment (Screen Recording TCC for the launcher). Still-image screenshots are real macOS window captures and are the primary evidence."
+  }
+}

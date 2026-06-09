@@ -1,0 +1,77 @@
+{
+  "version": 1,
+  "verdict": "pass",
+  "compact": {
+    "verdict": "PASS",
+    "reasons": [
+      "AC1-2 bound to ac<N>-* nodes; trace shows 18/18 ac nodes passed on the fixed build.",
+      "AC1 proven by getComputedStyle measurement (orders paddingTop 0px->16px, match false->true) plus before/after screenshots; reverting the fix fails ac1-assert-padding/ac1-assert-match.",
+      "AC2 proven by live-state assertion (ordersExists=false while statsExists=true) on a confirmed zero-order state."
+    ],
+    "better_version_guidance": []
+  },
+  "dimensions": {
+    "graph_integrity": {
+      "status": "pass",
+      "reason": "Single entry, all nodes reachable, all node IDs prefixed setup-/ac1-/ac2-/teardown-; no dangling next refs.",
+      "evidence": ["recipe.json"]
+    },
+    "action_contract": {
+      "status": "pass",
+      "reason": "Uses manifest-declared metamask.*/ui.* actions for setup/teardown; real order entry is driven via the real React inputs and the real submit button (no UI value injection).",
+      "evidence": ["recipe.json", "place-limit-order.mjs"]
+    },
+    "ac_coverage": {
+      "status": "pass",
+      "reason": "Both ACs bind to ac<N>-* nodes with assertions; trace passed-count matches the coverage matrix (2/2 PROVEN).",
+      "evidence": ["recipe-coverage.md", "recipe-run/trace.json"]
+    },
+    "evidence_contract_basics": {
+      "status": "pass",
+      "reason": "AC1 (visual/mixed) has a bounding-box + computed-style measurement AND before/after real-window screenshots (capture-helper); AC2 (state) proven by live-cache assertion.",
+      "evidence": ["before-capture-helper-ac1-orders-spacing.png", "after-capture-helper-ac1-orders-spacing.png", "after-capture-helper-ac2-empty-state.png"]
+    },
+    "perps_state_setup": {
+      "status": "pass",
+      "reason": "Resting limit order built on testnet through the real order-entry UI with retry; deterministic clean state enforced via close + live-cache poll before measuring the empty state.",
+      "evidence": ["place-limit-order.mjs", "wait-orders-absent.mjs"]
+    }
+  },
+  "structural_findings": [],
+  "contextual_findings": [
+    {
+      "code": "visual-evidence-via-capture-helper",
+      "message": "Recipe screenshot checkpoints are captured with capture-helper snapshot (real macOS window) via recipe-capture-helper.json / recipe-baseline-capture-helper.json. These replace the earlier ui.screenshot images, which used the runner extension-dom-raster fallback (CDP Page.captureScreenshot timed out) and rendered overlapping/doubled text.",
+      "dimension": "evidence_contract_basics",
+      "evidence": ["recipe-capture-helper.json", "recipe-baseline-capture-helper.json", "after-capture-helper-ac1-orders-spacing.png", "before-capture-helper-ac1-orders-spacing.png"]
+    },
+    {
+      "code": "video-evidence-unavailable",
+      "message": "Video could not be recorded: capture-helper/ffmpeg cannot capture in this SSH environment (Screen Recording TCC for the launcher). Still-image real-window captures are the primary visual evidence.",
+      "dimension": "evidence_contract_basics",
+      "evidence": ["before-record.log", "after-record.log"]
+    }
+  ],
+  "suggested_recipe_delta": [],
+  "training_fields": {
+    "farm": "metamask-extension",
+    "project": "metamask-extension-farm",
+    "flow_type": "fix-bug",
+    "task_type": "fix-bug",
+    "claim_is_visual": true,
+    "proof_mode": "mixed",
+    "anti_patterns": [],
+    "good_patterns": [
+      "computed-style + getBoundingClientRect measurement paired with before/after screenshots for a spacing claim",
+      "dual recipe (baseline asserts buggy values, verify asserts fixed values) for honest before-evidence",
+      "deterministic perps state via real-UI order placement with retry and live-cache absence polling"
+    ]
+  },
+  "meta": {
+    "producer": "worker",
+    "fallback_used": false,
+    "legacy_task": false,
+    "artifact_required": true,
+    "source_signals": ["recipe.json", "recipe-baseline.json", "recipe-capture-helper.json", "recipe-baseline-capture-helper.json", "recipe-coverage.md", "recipe-run/trace.json", "recipe-run/measure-orders.json", "recipe-run/measure-empty.json"]
+  }
+}
