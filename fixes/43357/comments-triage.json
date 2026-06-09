@@ -9,7 +9,7 @@
     "source_kind": "bugbot",
     "path": "ui/hooks/perps/usePerpsOrderForm.ts",
     "line": null,
-    "body": "Default amount never recaps — when order entry mounts before valid price, capped initialAmountValue is never applied.",
+    "body": "Default amount never recaps — form prefills uncapped default before price resolves; capped initialAmountValue never applied.",
     "triage": "REAL",
     "action": "Fixed in 033330b — recap capped default when price resolves after mount",
     "fixed_in_commit": "033330b505c456d7f91bfe8c7786f78441b56165"
@@ -24,7 +24,7 @@
     "source_kind": "bugbot",
     "path": "ui/components/app/perps/slippage-config/perps-slippage-config-modal.tsx",
     "line": null,
-    "body": "Modal closes before persist — onSave is async but modal dismisses immediately.",
+    "body": "Modal closes before persist — onClose called before async setMaxSlippage completes.",
     "triage": "REAL",
     "action": "Fixed in 033330b — modal awaits async onSave before closing",
     "fixed_in_commit": "033330b505c456d7f91bfe8c7786f78441b56165"
@@ -39,10 +39,10 @@
     "source_kind": "bugbot",
     "path": "ui/hooks/perps/stream/usePerpsLiveOrderBook.ts",
     "line": 85,
-    "body": "Slippage hook kills order book — slippage estimation cleanup deactivates shared order-book stream.",
+    "body": "Slippage hook kills order book — usePerpsLiveOrderBook cleanup deactivates shared stream used by order entry top-of-book.",
     "triage": "REAL",
-    "action": "Fixed in 6d1ff88 — use manageStream: false in slippage hook",
-    "fixed_in_commit": "6d1ff88c6b3e6beaaa295fc40ba98d52a97bc244"
+    "action": "Fixed in 6d1ff88 — slippage hook uses manageStream: false",
+    "fixed_in_commit": "6d1ff88c6b"
   },
   {
     "comment_id": 3379710699,
@@ -54,10 +54,10 @@
     "source_kind": "bugbot",
     "path": "ui/pages/perps/perps-order-entry-page.tsx",
     "line": 694,
-    "body": "Max slippage defaults while loading — UI uses default cap before controller read completes.",
+    "body": "Max slippage defaults while loading — slippage display/submit should wait for isMaxSlippageLoading.",
     "triage": "REAL",
-    "action": "Fixed in f6a5ff2 — gate slippage display and submit on isMaxSlippageLoading",
-    "fixed_in_commit": "f6a5ff2acda30af32a5204d657992da4c1d4abc1"
+    "action": "Fixed in f6a5ff2 — gate slippage UI on max-slippage loading",
+    "fixed_in_commit": "f6a5ff2acd"
   },
   {
     "comment_id": 3380027394,
@@ -69,10 +69,10 @@
     "source_kind": "bugbot",
     "path": "ui/hooks/perps/usePerpsOrderForm.ts",
     "line": 421,
-    "body": "Price load resets user amount — later price update overwrites manual edits.",
+    "body": "Price load resets user amount — manual edits should lock hasSetInitialAmount.",
     "triage": "REAL",
-    "action": "Fixed in 7b627376 — manual edits set hasSetInitialAmount",
-    "fixed_in_commit": "7b6273760892be8894ff0693f8bda48ab29d337f"
+    "action": "Fixed in 7b627376 — lock initial amount on manual edit",
+    "fixed_in_commit": "7b62737608"
   },
   {
     "comment_id": 3380464575,
@@ -84,9 +84,9 @@
     "source_kind": "bugbot",
     "path": "ui/hooks/perps/usePerpsEstimatedSlippage.ts",
     "line": 108,
-    "body": "Throttled book stale after symbol — previous market data retained after asset switch.",
+    "body": "Throttled book stale after symbol — previous symbol order book can linger after asset switch.",
     "triage": "REAL",
-    "action": "Fixed in 7b84f8217c — symbol resetKey clears throttled order book on switch",
+    "action": "Fixed in 7b84f8217c — symbol resetKey clears throttled order book on asset switch",
     "fixed_in_commit": "7b84f8217c7b30581afe61325f29aa719763cf17"
   },
   {
@@ -99,9 +99,24 @@
     "source_kind": "bugbot",
     "path": "ui/pages/perps/perps-order-entry-page.tsx",
     "line": 1014,
-    "body": "Stale slippage submit error — successful max-slippage save does not clear submitError.",
+    "body": "Stale slippage submit error — successful max-slippage save does not clear prior submitError.",
     "triage": "REAL",
-    "action": "Clear submitError after successful max-slippage persist from config modal",
+    "action": "Fixed in 33037de501 — clear submitError after successful max-slippage save",
     "fixed_in_commit": "33037de5019141aedcf0f360618b11a4dd949736"
+  },
+  {
+    "comment_id": 3381373427,
+    "review_id": null,
+    "author_login": "cursor[bot]",
+    "author_type": "Bot",
+    "reviewer_login": "cursor[bot]",
+    "review_state": null,
+    "source_kind": "bugbot",
+    "path": "ui/pages/perps/perps-order-entry-page.tsx",
+    "line": 342,
+    "body": "Order book depth not requested — order entry activates stream with symbol only; slippage hook uses manageStream:false so SlippageEstimateBookLevels never reaches background.",
+    "triage": "REAL",
+    "action": "Fixed in 3db46a41a3 — pass PERFORMANCE_CONFIG.SlippageEstimateBookLevels in perpsActivateOrderBookStream",
+    "fixed_in_commit": "3db46a41a3dddee7fddb6bd8e592e871069f641b"
   }
 ]

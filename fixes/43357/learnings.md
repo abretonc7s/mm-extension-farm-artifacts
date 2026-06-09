@@ -1,5 +1,5 @@
-- **Error state lifecycle**: reviewer flagged stale slippage submit error after config save — fix-bug should clear domain-specific submit errors when the user action that caused the block is reversed (e.g. raising max slippage).
-- **Async modal close**: reviewer caught modal closing before persist — await user-facing async actions in modals before dismiss.
-- **Shared stream ownership**: slippage hook must not tear down order-book streams owned by the order entry page — use `manageStream: false` when subscribing read-only.
-- **Loading gates for persisted prefs**: gate slippage cap display and submit blocking on `isMaxSlippageLoading` so defaults are not shown as authoritative.
-- **Throttle reset on context change**: pass symbol as `resetKey` to throttled order-book values so asset switches do not briefly use the prior market.
+- **Shared stream ownership:** When a hook uses `manageStream: false`, the page that owns stream activation must pass the same depth/options the consumer needs — slippage estimation needs `SlippageEstimateBookLevels` on `perpsActivateOrderBookStream`, not only in the read-only hook.
+- **Async modal persist:** Slippage config modals must await controller persist before `onClose`; closing early hides failures from the modal surface.
+- **Loading gates for caps:** Max-slippage UI and submit blocking must wait for `isMaxSlippageLoading` so users do not see transient default caps.
+- **Symbol switch hygiene:** Throttled order-book values need a `resetKey` on symbol change to avoid cross-market slippage estimates.
+- **Error lifecycle:** After a successful max-slippage save, clear any prior slippage submit error so summary and inline error state stay consistent.
