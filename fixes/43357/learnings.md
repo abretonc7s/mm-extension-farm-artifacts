@@ -1,6 +1,7 @@
-# Reviewer-Driven Learnings
+# Reviewer-driven learnings (PR #43357)
 
-- **Async hook loading gates:** reviewer flagged max-slippage defaulting to 3% before controller read — fix-bug should wire `isLoading` from `usePerpsMaxSlippage` into display, validation, and submit-disable paths on first integration.
-- **Shared stream ownership:** reviewer caught slippage estimation deactivating the order-book stream the page still needs — add `manageStream: false` (or equivalent) when a hook only reads a shared channel.
-- **Modal close vs async persist:** reviewer noted modal dismissed before `setMaxSlippage` finished — await persistence in `onSave` and close only after success.
-- **Deferred default amount cap:** reviewer found initial amount set before price was available and never re-capped — defer `hasSetInitialAmount` until price exists and re-apply capped default when price resolves.
+- **Async modal close**: bugbot caught modal dismissing before `setMaxSlippage` finished — await persist in the modal save handler before calling `onClose`.
+- **Deferred price cap**: default order size must re-apply when `currentPrice` resolves after mount, not only on first render with zero price.
+- **Shared stream ownership**: hooks that read the order book for slippage must not deactivate the stream the order entry page owns (`manageStream: false`).
+- **Loading-gated config**: persisted max-slippage must block UI/submit until the background read completes, not fall back to the 3% default during load.
+- **User edit wins over prefill**: any manual amount change should lock `hasSetInitialAmount` so a later price tick cannot overwrite typed input.
