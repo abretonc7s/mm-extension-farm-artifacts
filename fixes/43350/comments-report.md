@@ -3,74 +3,44 @@
 PR: fix(perps): fix padding issue on extension market detail page
 Branch: TAT-3264-fix-fix-orders-section-spacing
 
-## Context
-
-PR adds `paddingTop={4}` to the orders section heading wrapper on the perps market
-detail page so its top spacing matches the adjacent Stats/Activity sections, plus
-locator-only `data-testid`s and two regression tests. PR diff = 2 files
-(`perps-market-detail-page.tsx` +6/-2, `perps-market-detail-page.test.tsx` +38).
-
 ## Triage
 
-| # | Author | Type | Where | Body summary | Triage | Action |
-|---|--------|------|-------|--------------|--------|--------|
-| 1 | github-actions[bot] | Bot | conversation | CLA signature OK | OUT OF SCOPE | CI notice — no action |
-| 2 | mm-token-exchange-service[bot] | Bot | conversation | Codeowners review notice (@MetaMask/perps) | OUT OF SCOPE | CI notice — no action |
-| 3 | abretonc7s | User | conversation | Family worker report (run 5cc0471f) | OUT OF SCOPE | Automation bookkeeping — no action |
-| 4 | abretonc7s | User | conversation | Family worker report (run 5cc0471f, dup) | OUT OF SCOPE | Automation bookkeeping — no action |
-| 5 | metamaskbotv2[bot] | Bot | conversation | Builds ready notification | OUT OF SCOPE | CI notice — no action |
+| # | Author | File | Triage | Action |
+|---|--------|------|--------|--------|
+| 1 | github-actions[bot] | conversation | OUT OF SCOPE | CLA signature status — informational, no action |
+| 2 | mm-token-exchange-service[bot] | conversation | OUT OF SCOPE | CODEOWNERS review request — informational, no action |
+| 3 | abretonc7s | conversation | OUT OF SCOPE | farmslot run summary (`5cc0471f`) — automated worker report, not review feedback |
+| 4 | abretonc7s | conversation | OUT OF SCOPE | farmslot run summary (`5cc0471f`) — automated worker report, not review feedback |
+| 5 | metamaskbotv2[bot] | conversation | OUT OF SCOPE | "Builds ready" notice — informational, no action |
+| 6 | abretonc7s | conversation | OUT OF SCOPE | farmslot run summary (`8315492e`) — automated worker report, not review feedback |
+| 7 | metamaskbotv2[bot] | conversation | OUT OF SCOPE | "Builds ready" notice — informational, no action |
+| 8 | cursor[bot] (PR summary) | PR body | FALSE POSITIVE | Cursor Bugbot: "Low Risk", no findings — nothing to fix |
 
-**No inline review comments. No CHANGES_REQUESTED reviews. No cursor[bot]/bugbot findings.**
-No comment requires a code fix.
+## Notes
 
-## Merge-readiness work performed
+- No inline review comments (`pulls/.../comments` empty).
+- No CHANGES_REQUESTED reviews.
+- No cursor[bot]/bugbot actionable findings — Bugbot summary reports "Low Risk" with zero issues.
+- All conversation comments are CI/bot notices or automated farmslot run summaries, none requiring a code change.
 
-- Merged `origin/main` into the branch — **clean, no conflicts**. yarn.lock changed →
-  `yarn install --immutable` re-run.
-- Working tree carried an uncommitted prettier reflow of the `perps-stats-section-header`
-  Box (committed line 1588 was ~85 chars, exceeds prettier printWidth 80). Kept it — it is
-  the required formatting fix to keep the prettier/lint CI check green.
+**Result: no REAL comments → no code fixes required.**
 
-## Recipe re-validation — SKIPPED (runner tooling broken, unrelated to PR)
+## Recipe re-validation (step 10)
 
-`HAS_RECIPE=yes` (family-inherited, trusted). Recipe present at
-`artifacts/recipe.json`. Extension rebuilt (webpack compiled successfully) and the
-home page reloaded via CDP before attempting the run.
+- `HAS_RECIPE: yes`, `RECIPE_SOURCE: family-inherited` (trusted).
+- CDP runtime-health on port 7665: **PASS** (extension responsive, store/perps hooks present).
+- Recipe execution: **SKIPPED — unrelated tooling failure.** The external recipe runner failed to load with `The requested module '../../../src/paths.ts' does not provide an export named 'extensionIdPath'` — its precompiled `live-adapters/extension/platform/cdp.mjs` expects a `paths.ts` export that the current runner `src/paths.ts` no longer provides (runner-version mismatch). This is in the framework-injected recipe runner, not this PR's branch (which has zero code changes from this run) nor the `origin/main` merge (which only touched two e2e test files). Did not modify framework tooling per agent rules.
+- Did NOT use `--launch-existing-dist` (would kill+relaunch the orchestrator-owned browser on 7665); attached to the live CDP instead.
+- Fix already proven in the parent run (`5cc0471f`): inherited `evidence-manifest.json` carries real before/after macOS captures showing the orders header gap going 0px → 16px to match Stats, plus the empty-state screenshot. The PR's two new unit tests (`pt-4` on both headers; orders section absent when no orders) pass locally (86/86).
 
-The recipe **could not execute** due to a bug inside the recipe-runner checkout, NOT
-this PR:
+**Merge-main status: clean** (no conflicts; `origin/main` merged, only e2e test files changed).
 
-```
-The requested module '../../../src/paths.ts' does not provide an export named 'extensionIdPath'
-```
+## Final Summary
 
-Root cause: `metamask-recipe-runner/live-adapters/extension/platform/cdp.mjs:10`
-imports `extensionIdPath` from `../../../src/paths.ts`, but the runner's current
-`src/paths.ts` no longer exports it — a version skew between the live-adapters
-overlay and the runner core. This is framework-injected external tooling; per the
-worker rules it is surfaced here rather than patched.
-
-**Behavior coverage instead:** the exact assertions the recipe makes are covered by
-the PR's unit tests (`perps-market-detail-page.test.tsx`, 86 passed):
-- orders section header carries the same `pt-4` (16px) top-spacing class as the stats
-  section header;
-- with no open orders, the orders section does not render while the rest of the page
-  does.
-
-CI-parity gate (`lint:changed`, `verify-locales`, `circular-deps:check`) all green;
-coverage VERDICT PASS (perps file 87%). Recipe FAIL is unrelated to the PR diff (a JSX
-`paddingTop` value + tests) and does not block the push.
-
-## Summary
-
-- **Total comments: 5** (0 REAL, 0 FALSE POSITIVE, 5 OUT OF SCOPE — all non-actionable
-  CI/bot notices + automation worker reports).
-- **Commit SHA (fixes):** `31b5528815` — applied the required prettier reflow on the
-  `perps-stats-section-header` Box (committed line was ~85 chars, exceeded printWidth 80;
-  would fail the prettier CI check otherwise).
-- **Merge-main status:** clean — no conflicts. `origin/main` merged as `d113740dab`.
-- **Files changed (this run):** `ui/pages/perps/perps-market-detail-page.tsx` (prettier
-  reflow only).
-- **Recipe re-validation:** SKIPPED — recipe-runner tooling broken (live-adapters vs
-  src/paths.ts `extensionIdPath` skew), unrelated to PR. Behavior covered by 86 passing
-  unit tests.
+- **Total comments: 8** (0 REAL, 1 FALSE POSITIVE, 7 OUT OF SCOPE).
+- **Code fixes: none** — no actionable reviewer feedback.
+- **Commit pushed:** `dd0f64fd2d` (merge of `origin/main` into branch — keeps PR mergeable; no review-fix commit needed).
+- **Files changed by this run:** none (merge only brought in upstream e2e test files).
+- **Recipe re-validation:** SKIPPED (unrelated recipe-runner tooling regression; CDP healthy; fix already proven by inherited screenshot evidence + passing unit tests).
+- **Merge-main status:** clean.
+- **CI parity gate:** PASS (lint:changed, verify-locales, circular-deps). Unit tests 86/86 PASS. Coverage VERDICT PASS.
