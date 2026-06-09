@@ -9,17 +9,18 @@
 | 5 | abretonc7s | (conversation) | OUT OF SCOPE | Duplicate worker report — not a review request |
 | 6 | metamaskbotv2[bot] | (conversation) | OUT OF SCOPE | Build artifact notification — informational |
 | 7 | abretonc7s | (conversation) | OUT OF SCOPE | Prior pr-complete triage report — not a review request |
-| 8 | cursor[bot] | ui/hooks/perps/usePerpsOrderForm.ts | REAL | Recap default amount when price resolves after mount (fixed in 033330b505) |
-| 9 | cursor[bot] | ui/components/app/perps/slippage-config/perps-slippage-config-modal.tsx | REAL | Await async persist before closing slippage modal (fixed in 033330b505) |
-| 10 | cursor[bot] | ui/hooks/perps/stream/usePerpsLiveOrderBook.ts:72 | REAL | Add manageStream option so slippage hook does not deactivate shared order-book stream (fixed in 6d1ff88c6b) |
+| 8 | abretonc7s | (conversation) | OUT OF SCOPE | Farmslot run summary — not a review request |
+| 9 | cursor[bot] | ui/hooks/perps/usePerpsOrderForm.ts | REAL | Recap default amount when price resolves after mount (fixed in 033330b505) |
+| 10 | cursor[bot] | ui/components/app/perps/slippage-config/perps-slippage-config-modal.tsx | REAL | Await async persist before closing slippage modal (fixed in 033330b505) |
+| 11 | cursor[bot] | ui/hooks/perps/stream/usePerpsLiveOrderBook.ts:85 | REAL | Add manageStream option so slippage hook does not deactivate shared order-book stream (fixed in 6d1ff88c6b) |
+| 12 | cursor[bot] | ui/pages/perps/perps-order-entry-page.tsx:689 | REAL | Gate slippage display, exceed check, and submit on isMaxSlippageLoading |
 
 ## Summary
 
-- **Total comments:** 10 (3 REAL, 0 FALSE POSITIVE, 7 OUT OF SCOPE)
-- **Fix commits:** `033330b505`, `6d1ff88c6b`
-- **Files changed (this run):**
-  - `ui/hooks/perps/stream/usePerpsLiveOrderBook.ts`
-  - `ui/hooks/perps/usePerpsEstimatedSlippage.ts`
-  - `ui/hooks/perps/stream/usePerpsLiveOrderBook.test.ts`
-- **Recipe re-validation:** SKIPPED — CDP unavailable (0 extension targets; browser reopen failed with ERR_BLOCKED_BY_CLIENT). Prior family recipe run artifacts under `artifacts/recipe-runs/`.
-- **Merge-main status:** clean (merge commit `4bf3d00ad0`)
+- **Total comments:** 12 (4 REAL, 0 FALSE POSITIVE, 8 OUT OF SCOPE)
+- **Fix commit:** `f6a5ff2acd`
+- **Files changed:**
+  - `ui/pages/perps/perps-order-entry-page.tsx`
+  - `ui/pages/perps/perps-order-entry-page.test.tsx`
+- **Recipe re-validation:** SKIPPED — CDP unavailable (browser reopen failed with ECONNREFUSED / ERR_BLOCKED_BY_CLIENT after merge rebuild). Prior family recipe run artifacts remain under `artifacts/recipe-runs/`.
+- **Merge-main status:** clean (merge commit `eaffaf0d1b`)

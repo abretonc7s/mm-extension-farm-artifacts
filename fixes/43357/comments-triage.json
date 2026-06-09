@@ -6,12 +6,12 @@
     "author_type": "Bot",
     "reviewer_login": "github-actions[bot]",
     "review_state": null,
-    "source_kind": "bot",
+    "source_kind": "ci",
     "path": null,
     "line": null,
     "body": "CLA Signature Action: All authors have signed the CLA.",
     "triage": "OUT_OF_SCOPE",
-    "action": "CLA bot notification — no code change needed",
+    "action": "CLA signature bot — no code change needed",
     "fixed_in_commit": null
   },
   {
@@ -39,9 +39,9 @@
     "source_kind": "human",
     "path": null,
     "line": null,
-    "body": "Worker implementation report (dev run)",
+    "body": "Worker implementation report",
     "triage": "OUT_OF_SCOPE",
-    "action": "Worker report — not a review request",
+    "action": "Worker implementation report — not a review request",
     "fixed_in_commit": null
   },
   {
@@ -54,9 +54,9 @@
     "source_kind": "ci",
     "path": null,
     "line": null,
-    "body": "Feature Flag Registry Check — unregistered flags",
+    "body": "Feature Flag Registry Check",
     "triage": "OUT_OF_SCOPE",
-    "action": "CI feature-flag registry notice — pre-existing",
+    "action": "Feature flag registry check — pre-existing CI notice",
     "fixed_in_commit": null
   },
   {
@@ -86,7 +86,7 @@
     "line": null,
     "body": "Builds ready notification",
     "triage": "OUT_OF_SCOPE",
-    "action": "Build artifact bot — informational",
+    "action": "Build artifact notification — informational",
     "fixed_in_commit": null
   },
   {
@@ -101,7 +101,22 @@
     "line": null,
     "body": "Prior pr-complete triage report",
     "triage": "OUT_OF_SCOPE",
-    "action": "Prior worker triage report — not a review request",
+    "action": "Prior pr-complete triage report — not a review request",
+    "fixed_in_commit": null
+  },
+  {
+    "comment_id": 4658637810,
+    "review_id": null,
+    "author_login": "abretonc7s",
+    "author_type": "User",
+    "reviewer_login": "abretonc7s",
+    "review_state": null,
+    "source_kind": "human",
+    "path": null,
+    "line": null,
+    "body": "Farmslot run summary",
+    "triage": "OUT_OF_SCOPE",
+    "action": "Farmslot run summary — not a review request",
     "fixed_in_commit": null
   },
   {
@@ -131,7 +146,7 @@
     "line": null,
     "body": "Modal closes before persist completes",
     "triage": "REAL",
-    "action": "Await async onSave before closing slippage config modal",
+    "action": "Await async persist before closing slippage modal",
     "fixed_in_commit": "033330b505"
   },
   {
@@ -143,10 +158,25 @@
     "review_state": "COMMENTED",
     "source_kind": "bugbot",
     "path": "ui/hooks/perps/stream/usePerpsLiveOrderBook.ts",
-    "line": 72,
-    "body": "Slippage hook kills order book when estimation turns off",
+    "line": 85,
+    "body": "Slippage hook kills order book stream",
     "triage": "REAL",
     "action": "Add manageStream option so slippage hook does not deactivate shared order-book stream",
     "fixed_in_commit": "6d1ff88c6b"
+  },
+  {
+    "comment_id": 3379710699,
+    "review_id": null,
+    "author_login": "cursor[bot]",
+    "author_type": "Bot",
+    "reviewer_login": "cursor[bot]",
+    "review_state": "COMMENTED",
+    "source_kind": "bugbot",
+    "path": "ui/pages/perps/perps-order-entry-page.tsx",
+    "line": 689,
+    "body": "Max slippage defaults while loading",
+    "triage": "REAL",
+    "action": "Gate slippage display, exceed check, and submit on isMaxSlippageLoading",
+    "fixed_in_commit": "f6a5ff2acd"
   }
 ]
