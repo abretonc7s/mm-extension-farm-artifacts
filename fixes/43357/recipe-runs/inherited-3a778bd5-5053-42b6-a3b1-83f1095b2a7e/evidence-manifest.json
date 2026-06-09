@@ -1,0 +1,26 @@
+{
+  "version": 1,
+  "preferred_mode": "screenshots",
+  "summary": "Recipe screenshots prove slippage row visibility, max-slippage configuration, persistence, and default 3% cap on the perps order entry screen.",
+  "standalone": [
+    {
+      "label": "AC1/AC4 — slippage row shows Est/Max after order size (default max 3%)",
+      "file": "recipe-run/ac1-screenshot-slippage-row.png",
+      "covers": ["ac1", "ac4"]
+    },
+    {
+      "label": "AC2/AC3 — slippage config modal saved; summary shows Max 2%",
+      "file": "recipe-run/ac2-screenshot-config-applied.png",
+      "covers": ["ac2", "ac3"]
+    },
+    {
+      "label": "AC5 — funded order with custom 0.1% max slippage cap applied",
+      "file": "recipe-run/ac5-screenshot-config.png",
+      "covers": ["ac5"]
+    }
+  ],
+  "videos": {
+    "preferred": false,
+    "note": "AC5 submit-block guard is covered by perps-order-entry-page unit test; live recipe proves config UI only."
+  }
+}

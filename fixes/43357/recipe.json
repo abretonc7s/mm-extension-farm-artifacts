@@ -1,0 +1,256 @@
+{
+  "schema_version": 1,
+  "title": "TAT-1043 perps slippage config",
+  "description": "Validates estimated slippage display, max-slippage configuration, persistence, default 3%, and in-balance preset/custom config (AC5 submit-block guard covered by unit test — live testnet ETH depth rarely exceeds min cap within funded size).",
+  "validate": {
+    "workflow": {
+      "entry": "setup-ensure-unlocked",
+      "nodes": {
+        "setup-ensure-unlocked": {
+          "action": "metamask.wallet.ensure_unlocked",
+          "intent": "Ensure wallet is unlocked",
+          "next": "setup-perps-start-state"
+        },
+        "setup-perps-start-state": {
+          "action": "metamask.perps.start_state",
+          "market": "ETH",
+          "network": "testnet",
+          "positions": "none",
+          "orders": "none",
+          "intent": "Prepare clean ETH testnet perps state",
+          "next": "setup-enable-slippage-flag"
+        },
+        "setup-enable-slippage-flag": {
+          "action": "command",
+          "cmd": "node temp/tasks/feat/tat-1043-0608-144339/artifacts/enable-slippage-flag.mjs",
+          "intent": "Opt-in remote flag perps-slippage-config2 for recipe validation",
+          "next": "setup-open-trade"
+        },
+        "setup-open-trade": {
+          "action": "ui.navigate",
+          "hash": "#/perps/trade/ETH?direction=long&orderType=market&mode=new",
+          "intent": "Open ETH market order entry screen",
+          "next": "gate-wait-order-entry"
+        },
+        "gate-wait-order-entry": {
+          "action": "ui.wait_for",
+          "intent": "Wait for order entry page",
+          "test_id": "perps-order-entry-page",
+          "timeout_ms": 20000,
+          "poll_ms": 500,
+          "next": "ac1-set-order-size"
+        },
+        "ac1-set-order-size": {
+          "action": "ui.set_input",
+          "intent": "Set USD size on inner amount input (harness insertText)",
+          "selector": "[data-testid=\"amount-input-field\"] input",
+          "value": "100",
+          "next": "ac1-wait-slippage-row"
+        },
+        "ac1-wait-slippage-row": {
+          "action": "ui.wait_for",
+          "intent": "Wait until slippage row is visible in viewport",
+          "test_id": "perps-order-summary-slippage-row",
+          "visibility": "viewport",
+          "scroll": { "strategy": "into_view", "settle_ms": 300 },
+          "timeout_ms": 10000,
+          "poll_ms": 500,
+          "next": "ac4-assert-default-max"
+        },
+        "ac4-assert-default-max": {
+          "action": "ui.wait_for",
+          "intent": "AC4: default max slippage row shows 3%",
+          "test_id": "perps-order-summary-slippage-value",
+          "text": "Max: 3%",
+          "timeout_ms": 10000,
+          "poll_ms": 500,
+          "next": "ac1-wait-slippage-value"
+        },
+        "ac1-wait-slippage-value": {
+          "action": "ui.wait_for",
+          "intent": "AC1: slippage row shows Est/Max after size input",
+          "test_id": "perps-order-summary-slippage-value",
+          "text": "Est:",
+          "timeout_ms": 15000,
+          "poll_ms": 500,
+          "next": "ac1-screenshot-slippage-row"
+        },
+        "ac1-screenshot-slippage-row": {
+          "action": "ui.screenshot",
+          "intent": "Capture proof that estimated slippage row is visible",
+          "filename": "evidence-ac1-slippage-row.png",
+          "note": "AC1: slippage row shows Est/Max after size input",
+          "claims": {
+            "must_show": [
+              {
+                "test_id": "perps-order-summary-slippage-value",
+                "visibility": "viewport"
+              }
+            ]
+          },
+          "next": "ac2-open-slippage-config"
+        },
+        "ac2-open-slippage-config": {
+          "action": "ui.press",
+          "intent": "Open max slippage configuration",
+          "test_id": "perps-order-summary-slippage-row",
+          "next": "ac2-wait-modal"
+        },
+        "ac2-wait-modal": {
+          "action": "ui.wait_for",
+          "intent": "Wait for slippage config modal in viewport",
+          "test_id": "perps-slippage-config-modal",
+          "visibility": "viewport",
+          "timeout_ms": 10000,
+          "poll_ms": 500,
+          "next": "ac2-select-preset"
+        },
+        "ac2-select-preset": {
+          "action": "ui.press",
+          "intent": "Select 2% max slippage preset",
+          "test_id": "perps-slippage-config-preset-2",
+          "next": "ac2-save-preset"
+        },
+        "ac2-save-preset": {
+          "action": "ui.press",
+          "intent": "Save slippage configuration",
+          "test_id": "perps-slippage-config-set",
+          "next": "ac2-wait-updated-value"
+        },
+        "ac2-wait-updated-value": {
+          "action": "ui.wait_for",
+          "intent": "AC2/AC3: configured max slippage applied to summary row",
+          "test_id": "perps-order-summary-slippage-value",
+          "text": "Max: 2%",
+          "timeout_ms": 10000,
+          "poll_ms": 500,
+          "next": "ac2-screenshot-config-applied"
+        },
+        "ac2-screenshot-config-applied": {
+          "action": "ui.screenshot",
+          "intent": "Capture proof that max slippage updated to 2%",
+          "filename": "evidence-ac2-slippage-config.png",
+          "note": "AC2: slippage config saved; summary shows Max 2%",
+          "claims": {
+            "must_show": [
+              {
+                "test_id": "perps-order-summary-slippage-value",
+                "visibility": "viewport"
+              }
+            ]
+          },
+          "next": "ac3-reload-trade"
+        },
+        "ac3-reload-trade": {
+          "action": "ui.navigate",
+          "hash": "#/perps/trade/ETH?direction=long&orderType=market&mode=new",
+          "intent": "Reload order entry to verify persisted max slippage",
+          "next": "ac3-wait-persisted"
+        },
+        "ac3-wait-persisted": {
+          "action": "ui.wait_for",
+          "intent": "AC3: persisted max slippage survives reload",
+          "test_id": "perps-order-summary-slippage-value",
+          "text": "Max: 2%",
+          "timeout_ms": 15000,
+          "poll_ms": 500,
+          "next": "ac5-set-funded-size"
+        },
+        "ac5-set-funded-size": {
+          "action": "ui.set_input",
+          "intent": "AC5: funded in-balance USD size (not oversized — avoids insufficient-funds false positive)",
+          "selector": "[data-testid=\"amount-input-field\"] input",
+          "value": "100",
+          "next": "ac5-wait-estimate-ready"
+        },
+        "ac5-wait-estimate-ready": {
+          "action": "ui.wait_for",
+          "intent": "Wait for live slippage estimate at funded size",
+          "test_id": "perps-order-summary-slippage-value",
+          "text": "Est:",
+          "timeout_ms": 30000,
+          "poll_ms": 500,
+          "next": "ac5-open-config"
+        },
+        "ac5-open-config": {
+          "action": "ui.press",
+          "intent": "Open slippage config for AC5 preset + custom harness proof",
+          "test_id": "perps-order-summary-slippage-row",
+          "next": "ac5-wait-modal-open"
+        },
+        "ac5-wait-modal-open": {
+          "action": "ui.wait_for",
+          "intent": "Wait for slippage config modal",
+          "test_id": "perps-slippage-config-modal",
+          "visibility": "viewport",
+          "timeout_ms": 10000,
+          "poll_ms": 500,
+          "next": "ac5-select-preset-min"
+        },
+        "ac5-select-preset-min": {
+          "action": "ui.press",
+          "intent": "AC5: select lowest preset chip (0.5%) within funded order context",
+          "test_id": "perps-slippage-config-preset-0.5",
+          "next": "ac5-open-custom"
+        },
+        "ac5-open-custom": {
+          "action": "ui.press",
+          "intent": "Open custom slippage editor",
+          "test_id": "perps-slippage-config-edit",
+          "next": "ac5-wait-custom-input"
+        },
+        "ac5-wait-custom-input": {
+          "action": "ui.wait_for",
+          "intent": "Wait for custom slippage inner input",
+          "selector": "[data-testid=\"perps-slippage-config-custom-input\"]",
+          "visibility": "viewport",
+          "timeout_ms": 10000,
+          "poll_ms": 500,
+          "next": "ac5-set-custom-min"
+        },
+        "ac5-set-custom-min": {
+          "action": "ui.set_input",
+          "intent": "Harness proof: type 0.1% on inner custom input (CDP insertText)",
+          "selector": "[data-testid=\"perps-slippage-config-custom-input\"]",
+          "value": "0.1",
+          "next": "ac5-save-cap"
+        },
+        "ac5-save-cap": {
+          "action": "ui.press",
+          "intent": "Save custom 0.1% max slippage cap",
+          "test_id": "perps-slippage-config-set",
+          "next": "ac5-wait-custom-cap"
+        },
+        "ac5-wait-custom-cap": {
+          "action": "ui.wait_for",
+          "intent": "Confirm custom cap applied to summary row",
+          "test_id": "perps-order-summary-slippage-value",
+          "text": "Max: 0.1%",
+          "timeout_ms": 10000,
+          "poll_ms": 500,
+          "next": "ac5-screenshot-config"
+        },
+        "ac5-screenshot-config": {
+          "action": "ui.screenshot",
+          "intent": "AC5 live: funded order + custom cap via harness; submit-block guard in unit test",
+          "filename": "evidence-ac5-slippage-config-funded.png",
+          "note": "AC5 live partial: in-balance $100, custom 0.1% cap via ui.set_input; exceeds/submit-block covered by perps-order-entry-page unit test (testnet depth rarely exceeds min cap within balance)",
+          "claims": {
+            "must_show": [
+              {
+                "test_id": "perps-order-summary-slippage-value",
+                "visibility": "viewport"
+              }
+            ]
+          },
+          "next": "done"
+        },
+        "done": {
+          "action": "end",
+          "status": "pass",
+          "intent": "Slippage validation complete"
+        }
+      }
+    }
+  }
+}

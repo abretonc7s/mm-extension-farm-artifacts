@@ -1,0 +1,70 @@
+{
+  "version": 1,
+  "verdict": "pass",
+  "compact": {
+    "verdict": "PASS",
+    "reasons": [
+      "27/27 recipe nodes passed after removing oversized-order AC5 path.",
+      "ui.set_input on [data-testid=\"amount-input-field\"] input ($100) and [data-testid=\"perps-slippage-config-custom-input\"] (0.1) verified via harness CDP insertText.",
+      "AC5 submit-block when estimate exceeds max is covered by perps-order-entry-page unit test; live testnet ETH depth at funded size rarely triggers exceeds indicator."
+    ],
+    "better_version_guidance": [
+      "If a funded testnet account with deeper book impact becomes available, add optional ac5-wait-exceeds behind a switch without using balance-busting notional."
+    ]
+  },
+  "dimensions": {
+    "graph_integrity": {
+      "status": "pass",
+      "reason": "Linear setup → AC1–AC4 → AC5 config proof → done; no orphan nodes.",
+      "evidence": ["artifacts/recipe.json", "artifacts/recipe-run/trace.json"]
+    },
+    "action_contract": {
+      "status": "pass",
+      "reason": "Uses metamask.* setup, ui.set_input with inner selectors, ui.press presets, ui.wait_for assertions, screenshots.",
+      "evidence": ["artifacts/recipe.json"]
+    },
+    "ac_coverage": {
+      "status": "pass",
+      "reason": "AC1 visual estimate row; AC2 modal preset 2%; AC3 persistence after reload; AC4 default Max 3%; AC5 split — live preset/custom config at $100 + unit test for submit guard (AC6 guardrail out of scope).",
+      "evidence": [
+        "artifacts/recipe-run/trace.json",
+        "ui/pages/perps/perps-order-entry-page.test.tsx"
+      ]
+    },
+    "evidence_contract_basics": {
+      "status": "pass",
+      "reason": "Invalid insufficient-funds evidence from $5000/$50000 orders removed; AC5 no longer asserts exceeds indicator or submit error in live run.",
+      "evidence": ["artifacts/recipe-run/trace.json"]
+    }
+  },
+  "contextual_findings": [
+    {
+      "code": "ac5-live-exceeds-environment-limit",
+      "message": "Testnet ETH at $100 notional shows Est well below 0.1% min cap; live exceeds/submit-block proof deferred to unit test with mocked bps.",
+      "dimension": "ac_coverage",
+      "evidence": ["artifacts/recipe-run/trace.json"]
+    },
+    {
+      "code": "harness-set-input-fixed",
+      "message": "Farmslot ui.set_input (focus, Backspace, Input.insertText, change, verify) succeeds on amount and custom slippage native inputs.",
+      "dimension": "action_contract",
+      "evidence": [
+        "artifacts/recipe-run/trace.json ac5-set-custom-min",
+        "artifacts/recipe-run/trace.json ac1-set-order-size"
+      ]
+    }
+  ],
+  "training_fields": {
+    "farm": "metamask-extension",
+    "proof_mode": "mixed",
+    "anti_patterns": [
+      "oversized-order-for-slippage-exceeds",
+      "insufficient-funds-misread-as-slippage-block"
+    ],
+    "good_patterns": [
+      "in-balance-notional-for-live-perps-recipes",
+      "unit-test-for-environment-sensitive-guards",
+      "inner-input-selector-for-ui-set-input"
+    ]
+  }
+}
