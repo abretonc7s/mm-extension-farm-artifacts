@@ -1,7 +1,5 @@
-# Reviewer-Driven Learnings
-
-- **Throttle reset on context switch**: bugbot flagged stale throttled order-book data after symbol change — pass a resetKey (symbol) into throttled hooks when the underlying channel clears on navigation.
-- **Shared stream lifecycle**: slippage estimation must not deactivate order-book streams owned by order entry — use `manageStream: false` when reading shared perps channels.
-- **Async modal persist**: config modals that call async persistence must await `onSave` before closing so failures stay recoverable in-context.
-- **Deferred default application**: initial amount prefills should not lock until price is valid, and manual edits must mark the field as user-owned so late price loads cannot overwrite input.
-- **Loading-gated caps**: persisted max-slippage reads are async — block submit and cap comparisons until `isLoading` is false to avoid transient 3% default behavior.
+- **Error state lifecycle**: reviewer flagged stale slippage submit error after config save — fix-bug should clear domain-specific submit errors when the user action that caused the block is reversed (e.g. raising max slippage).
+- **Async modal close**: reviewer caught modal closing before persist — await user-facing async actions in modals before dismiss.
+- **Shared stream ownership**: slippage hook must not tear down order-book streams owned by the order entry page — use `manageStream: false` when subscribing read-only.
+- **Loading gates for persisted prefs**: gate slippage cap display and submit blocking on `isMaxSlippageLoading` so defaults are not shown as authoritative.
+- **Throttle reset on context change**: pass symbol as `resetKey` to throttled order-book values so asset switches do not briefly use the prior market.
