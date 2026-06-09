@@ -6,12 +6,12 @@
     "author_type": "Bot",
     "reviewer_login": "github-actions[bot]",
     "review_state": null,
-    "source_kind": "ci",
+    "source_kind": "bot",
     "path": null,
     "line": null,
     "body": "CLA Signature Action: All authors have signed the CLA.",
     "triage": "OUT_OF_SCOPE",
-    "action": "Automated CLA check — no code change required.",
+    "action": "CLA bot notification — no code change needed",
     "fixed_in_commit": null
   },
   {
@@ -24,9 +24,9 @@
     "source_kind": "bot",
     "path": null,
     "line": null,
-    "body": "Files requiring CODEOWNER review notification.",
+    "body": "Files requiring CODEOWNER review",
     "triage": "OUT_OF_SCOPE",
-    "action": "Informational CODEOWNERS bot comment.",
+    "action": "CODEOWNERS notification — informational",
     "fixed_in_commit": null
   },
   {
@@ -39,9 +39,9 @@
     "source_kind": "human",
     "path": null,
     "line": null,
-    "body": "Worker implementation report for TAT-1043.",
+    "body": "Worker implementation report (dev run)",
     "triage": "OUT_OF_SCOPE",
-    "action": "Implementation report, not a review request.",
+    "action": "Worker report — not a review request",
     "fixed_in_commit": null
   },
   {
@@ -54,9 +54,9 @@
     "source_kind": "ci",
     "path": null,
     "line": null,
-    "body": "Feature Flag Registry Check — unregistered flag references.",
+    "body": "Feature Flag Registry Check — unregistered flags",
     "triage": "OUT_OF_SCOPE",
-    "action": "CI informational notice unrelated to review fixes.",
+    "action": "CI feature-flag registry notice — pre-existing",
     "fixed_in_commit": null
   },
   {
@@ -69,9 +69,39 @@
     "source_kind": "human",
     "path": null,
     "line": null,
-    "body": "Duplicate worker implementation report for TAT-1043.",
+    "body": "Duplicate worker implementation report",
     "triage": "OUT_OF_SCOPE",
-    "action": "Duplicate implementation report, not a review request.",
+    "action": "Duplicate worker report — not a review request",
+    "fixed_in_commit": null
+  },
+  {
+    "comment_id": 4657908951,
+    "review_id": null,
+    "author_login": "metamaskbotv2[bot]",
+    "author_type": "Bot",
+    "reviewer_login": "metamaskbotv2[bot]",
+    "review_state": null,
+    "source_kind": "bot",
+    "path": null,
+    "line": null,
+    "body": "Builds ready notification",
+    "triage": "OUT_OF_SCOPE",
+    "action": "Build artifact bot — informational",
+    "fixed_in_commit": null
+  },
+  {
+    "comment_id": 4658300447,
+    "review_id": null,
+    "author_login": "abretonc7s",
+    "author_type": "User",
+    "reviewer_login": "abretonc7s",
+    "review_state": null,
+    "source_kind": "human",
+    "path": null,
+    "line": null,
+    "body": "Prior pr-complete triage report",
+    "triage": "OUT_OF_SCOPE",
+    "action": "Prior worker triage report — not a review request",
     "fixed_in_commit": null
   },
   {
@@ -83,10 +113,10 @@
     "review_state": "COMMENTED",
     "source_kind": "bugbot",
     "path": "ui/hooks/perps/usePerpsOrderForm.ts",
-    "line": 411,
-    "body": "Default amount never recaps — when order entry mounts before a valid price, the uncapped trading default is locked via hasSetInitialAmount and never recapped after getMaxAllowedAmount resolves.",
+    "line": null,
+    "body": "Default amount never recaps when price resolves after mount",
     "triage": "REAL",
-    "action": "Only lock initial amount after valid price; re-apply capped default when price resolves.",
+    "action": "Recap default amount when price resolves after mount",
     "fixed_in_commit": "033330b505"
   },
   {
@@ -98,10 +128,25 @@
     "review_state": "COMMENTED",
     "source_kind": "bugbot",
     "path": "ui/components/app/perps/slippage-config/perps-slippage-config-modal.tsx",
-    "line": 148,
-    "body": "Modal closes before persist — onClose runs immediately after onSave while setMaxSlippage is async, so failures dismiss the modal before the user can retry.",
+    "line": null,
+    "body": "Modal closes before persist completes",
     "triage": "REAL",
-    "action": "Await async onSave in the modal and close only after successful persist.",
+    "action": "Await async onSave before closing slippage config modal",
     "fixed_in_commit": "033330b505"
+  },
+  {
+    "comment_id": 3379427329,
+    "review_id": null,
+    "author_login": "cursor[bot]",
+    "author_type": "Bot",
+    "reviewer_login": "cursor[bot]",
+    "review_state": "COMMENTED",
+    "source_kind": "bugbot",
+    "path": "ui/hooks/perps/stream/usePerpsLiveOrderBook.ts",
+    "line": 72,
+    "body": "Slippage hook kills order book when estimation turns off",
+    "triage": "REAL",
+    "action": "Add manageStream option so slippage hook does not deactivate shared order-book stream",
+    "fixed_in_commit": "6d1ff88c6b"
   }
 ]
