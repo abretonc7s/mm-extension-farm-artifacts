@@ -9,9 +9,9 @@
     "source_kind": "bugbot",
     "path": "ui/hooks/perps/usePerpsOrderForm.ts",
     "line": null,
-    "body": "Default amount never recaps — capped initialAmountValue not applied after price resolves",
+    "body": "### Default amount never recaps\n\nWhen the order entry page mounts before a valid price, the form prefills the uncapped trading default and sets `hasSetInitialAmount`. After price and `getMaxAllowedAmount` resolve, the capped `initialAmountValue` is never applied.",
     "triage": "REAL",
-    "action": "Fixed in 033330b — defer hasSetInitialAmount until valid price, re-apply capped default on price load",
+    "action": "Re-apply capped default when price resolves after mount.",
     "fixed_in_commit": "033330b505"
   },
   {
@@ -24,9 +24,9 @@
     "source_kind": "bugbot",
     "path": "ui/components/app/perps/slippage-config/perps-slippage-config-modal.tsx",
     "line": null,
-    "body": "Modal closes before persist — onClose runs before async setMaxSlippage completes",
+    "body": "### Modal closes before persist\n\n`PerpsSlippageConfigModal` calls `onClose()` right after `onSave`, while the page's `onSave` only persists via async `setMaxSlippage`.",
     "triage": "REAL",
-    "action": "Fixed in 033330b — await onSave and only close modal on success",
+    "action": "Await async onSave before closing the slippage config modal.",
     "fixed_in_commit": "033330b505"
   },
   {
@@ -39,10 +39,10 @@
     "source_kind": "bugbot",
     "path": "ui/hooks/perps/stream/usePerpsLiveOrderBook.ts",
     "line": 85,
-    "body": "Slippage hook kills order book — slippage estimation deactivates shared order-book stream",
+    "body": "### Slippage hook kills order book\n\nWhen slippage estimation turns off, `usePerpsLiveOrderBook` cleanup deactivates the global stream still needed for limit mid-price.",
     "triage": "REAL",
-    "action": "Fixed in 6d1ff88 — usePerpsEstimatedSlippage uses manageStream: false",
-    "fixed_in_commit": "6d1ff88c6b"
+    "action": "Pass manageStream: false from the slippage estimation hook.",
+    "fixed_in_commit": "6d1ff88"
   },
   {
     "comment_id": 3379710699,
@@ -53,11 +53,11 @@
     "review_state": null,
     "source_kind": "bugbot",
     "path": "ui/pages/perps/perps-order-entry-page.tsx",
-    "line": 700,
-    "body": "Max slippage defaults while loading — UI uses default cap before controller read completes",
+    "line": 702,
+    "body": "### Max slippage defaults while loading\n\nSlippage UI used default cap before controller preference finished loading.",
     "triage": "REAL",
-    "action": "Fixed in f6a5ff2 — gate slippage UI and exceedsMaxSlippage on isMaxSlippageLoading",
-    "fixed_in_commit": "f6a5ff2acd"
+    "action": "Gate slippage display and submit blocking on max-slippage loading state.",
+    "fixed_in_commit": "f6a5ff2"
   },
   {
     "comment_id": 3380027394,
@@ -69,9 +69,9 @@
     "source_kind": "bugbot",
     "path": "ui/hooks/perps/usePerpsOrderForm.ts",
     "line": 421,
-    "body": "Price load resets user amount — default recap overwrites manual edits when price arrives",
+    "body": "### Price load resets user amount\n\nManual amount edits were overwritten when price later resolved.",
     "triage": "REAL",
-    "action": "Fixed in 7b62737 — set hasSetInitialAmount on manual amount edits",
+    "action": "Set hasSetInitialAmount on manual edits to prevent price-load overwrite.",
     "fixed_in_commit": "7b62737608"
   },
   {
@@ -84,9 +84,9 @@
     "source_kind": "bugbot",
     "path": "ui/hooks/perps/usePerpsEstimatedSlippage.ts",
     "line": 108,
-    "body": "Throttled book stale after symbol — previous market estimate retained across symbol switch",
+    "body": "### Throttled book stale after symbol\n\nThrottled L2 data could remain from the prior market after symbol change.",
     "triage": "REAL",
-    "action": "Fixed in 7b84f82 — pass symbol as resetKey to useThrottledValue",
+    "action": "Reset throttled order book via symbol resetKey on asset switch.",
     "fixed_in_commit": "7b84f8217c"
   },
   {
@@ -98,11 +98,11 @@
     "review_state": null,
     "source_kind": "bugbot",
     "path": "ui/pages/perps/perps-order-entry-page.tsx",
-    "line": 1020,
-    "body": "Stale slippage submit error — error persists after user raises max slippage cap",
+    "line": 1023,
+    "body": "### Stale slippage submit error\n\nSuccessful max-slippage save did not clear a prior slippage submit error.",
     "triage": "REAL",
-    "action": "Fixed in 33037de — clear submit error after successful save (refined in 766493b0e6)",
-    "fixed_in_commit": "766493b0e6"
+    "action": "Clear submitError after successful max-slippage save from config modal.",
+    "fixed_in_commit": "33037de501"
   },
   {
     "comment_id": 3381373427,
@@ -114,9 +114,9 @@
     "source_kind": "bugbot",
     "path": "ui/pages/perps/perps-order-entry-page.tsx",
     "line": 345,
-    "body": "Order book depth not requested — stream activated without SlippageEstimateBookLevels",
+    "body": "### Order book depth not requested\n\nOrder entry stream activation omitted slippage estimate book depth parameters.",
     "triage": "REAL",
-    "action": "Fixed in 3db46a41 — pass PERFORMANCE_CONFIG.SlippageEstimateBookLevels on stream activation",
+    "action": "Pass SlippageEstimateBookLevels on order-book stream activation.",
     "fixed_in_commit": "3db46a41a3"
   },
   {
@@ -128,10 +128,10 @@
     "review_state": null,
     "source_kind": "bugbot",
     "path": "ui/pages/perps/perps-order-entry-page.tsx",
-    "line": 700,
-    "body": "Stale slippage ignores readiness — exceedsMaxSlippage uses estimate while isReady is false",
+    "line": 702,
+    "body": "### Stale slippage ignores readiness\n\nOrder entry ignored isReady and could use stale estimate after symbol change.",
     "triage": "REAL",
-    "action": "Fixed in 766493b0e6 — gate exceedsMaxSlippage and Est/Max display on isEstimatedSlippageReady",
+    "action": "Gate exceedsMaxSlippage and Est/Max row on isEstimatedSlippageReady.",
     "fixed_in_commit": "766493b0e6"
   },
   {
@@ -143,10 +143,25 @@
     "review_state": null,
     "source_kind": "bugbot",
     "path": "ui/pages/perps/perps-order-entry-page.tsx",
-    "line": 1773,
-    "body": "Clears slippage error too broadly — setSubmitError(null) after save even when cap still exceeded",
+    "line": null,
+    "body": "### Clears slippage error too broadly\n\nsetSubmitError(null) after save cleared errors even when the new cap still did not cover the live estimate.",
     "triage": "REAL",
-    "action": "Fixed in 766493b0e6 — only clear submit error when saved cap covers live estimate",
+    "action": "Only clear submit error after save when the new cap covers the live estimate.",
     "fixed_in_commit": "766493b0e6"
+  },
+  {
+    "comment_id": 3381948859,
+    "review_id": null,
+    "author_login": "cursor[bot]",
+    "author_type": "Bot",
+    "reviewer_login": "cursor[bot]",
+    "review_state": null,
+    "source_kind": "bugbot",
+    "path": "ui/pages/perps/perps-order-entry-page.tsx",
+    "line": 713,
+    "body": "### Pending slippage max shows incorrectly\n\nPending slippage row used '--' for max even after max slippage resolved, hiding the configured cap while estimate loads.",
+    "triage": "REAL",
+    "action": "Show resolved max percent in pending row while estimate is still loading.",
+    "fixed_in_commit": "35b7ff77bc"
   }
 ]
