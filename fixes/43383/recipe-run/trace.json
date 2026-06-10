@@ -1,0 +1,147 @@
+{
+  "metadata": {
+    "runner": {
+      "source": "/private/tmp/metamask-recipe-runner-validation",
+      "git_ref": "unknown",
+      "name": "@metamask/recipe-runner"
+    }
+  },
+  "entries": [
+    {
+      "nodeId": "setup-status",
+      "action": "app.status",
+      "startedAt": "2026-06-10T05:18:06.506Z",
+      "endedAt": "2026-06-10T05:18:06.514Z",
+      "durationMs": 8,
+      "ok": true,
+      "next": "setup-unlock",
+      "output": {
+        "platform": "extension",
+        "projectRoot": "/Users/deeeed/dev/metamask/metamask-extension-1",
+        "compatibilityMode": "bridge present",
+        "shape": {
+          "packageName": "metamask-crx",
+          "packageJsonStatus": "valid",
+          "packageJsonError": null,
+          "extensionProject": true,
+          "mobileProject": false,
+          "agenticService": false,
+          "mobileProductHarness": false,
+          "mobileBridgeScript": true,
+          "extensionRuntime": true,
+          "injectedHarness": true,
+          "walletFixture": true
+        }
+      }
+    },
+    {
+      "nodeId": "setup-unlock",
+      "action": "metamask.wallet.ensure_unlocked",
+      "startedAt": "2026-06-10T05:18:06.522Z",
+      "endedAt": "2026-06-10T05:18:06.677Z",
+      "durationMs": 155,
+      "ok": true,
+      "next": "setup-navigate-order-entry",
+      "output": {
+        "action": "metamask.wallet.ensure_unlocked",
+        "unlocked": true,
+        "alreadyUnlocked": true,
+        "proofPath": "extension-unlocked-state",
+        "cdpPort": 7665,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/ETH?direction=long",
+        "runtimeLaunch": null,
+        "liveAdapter": "/private/tmp/metamask-recipe-runner-validation/live-adapters/extension/wallet/ensure_unlocked.mjs"
+      }
+    },
+    {
+      "nodeId": "setup-navigate-order-entry",
+      "action": "ui.navigate",
+      "startedAt": "2026-06-10T05:18:06.685Z",
+      "endedAt": "2026-06-10T05:18:06.845Z",
+      "durationMs": 160,
+      "ok": true,
+      "next": "ac1-drive-max-size",
+      "output": {
+        "action": "ui.navigate",
+        "hash": "#/perps/trade/ETH?direction=long",
+        "navigation": {
+          "frameId": "E70638D21A205A735C44B815B134615F",
+          "isDownload": false
+        },
+        "proofPath": "ui-navigation",
+        "cdpPort": 7665,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/ETH?direction=long",
+        "runtimeLaunch": null,
+        "liveAdapter": "/private/tmp/metamask-recipe-runner-validation/live-adapters/extension/ui/navigate.mjs"
+      }
+    },
+    {
+      "nodeId": "ac1-drive-max-size",
+      "action": "command",
+      "startedAt": "2026-06-10T05:18:06.851Z",
+      "endedAt": "2026-06-10T05:18:07.096Z",
+      "durationMs": 245,
+      "ok": true,
+      "next": "ac1-assert-actionable",
+      "output": {
+        "exitCode": 0,
+        "stdout": "{\"ok\":true,\"pct\":\"100\",\"amount\":\"62.89\",\"button\":\"Open long ETH\",\"disabled\":false,\"insufficient\":false}\n",
+        "stderr": ""
+      }
+    },
+    {
+      "nodeId": "ac1-assert-actionable",
+      "action": "assert_exit_code",
+      "startedAt": "2026-06-10T05:18:07.103Z",
+      "endedAt": "2026-06-10T05:18:07.108Z",
+      "durationMs": 5,
+      "ok": true,
+      "next": "ac1-screenshot-submit-actionable",
+      "output": {
+        "source": "ac1-drive-max-size",
+        "expected": 0,
+        "actual": 0
+      }
+    },
+    {
+      "nodeId": "ac1-screenshot-submit-actionable",
+      "action": "ui.screenshot",
+      "artifacts": [
+        {
+          "path": "evidence-ac1-submit-actionable.png",
+          "type": "screenshot",
+          "nodeId": "ac1-screenshot-submit-actionable",
+          "label": "UI screenshot",
+          "category": "evidence",
+          "mimeType": "image/png"
+        }
+      ],
+      "startedAt": "2026-06-10T05:18:07.117Z",
+      "endedAt": "2026-06-10T05:18:07.189Z",
+      "durationMs": 72,
+      "ok": true,
+      "next": "teardown-end",
+      "output": {
+        "captured": true,
+        "path": "evidence-ac1-submit-actionable.png",
+        "artifact": {
+          "path": "evidence-ac1-submit-actionable.png",
+          "type": "screenshot",
+          "nodeId": "ac1-screenshot-submit-actionable",
+          "label": "UI screenshot",
+          "category": "evidence",
+          "mimeType": "image/png"
+        }
+      }
+    },
+    {
+      "nodeId": "teardown-end",
+      "action": "end",
+      "startedAt": "2026-06-10T05:18:07.195Z",
+      "endedAt": "2026-06-10T05:18:07.201Z",
+      "durationMs": 6,
+      "ok": true,
+      "status": "pass"
+    }
+  ]
+}

@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "title": "TAT-3312 \u2014 Size slider at 100% must not show Insufficient funds",
+  "description": "Navigates to the ETH perps order-entry screen with a funded account, sets size to 100% via the percentage input, and proves the submit button shows the normal trade action label (Open long ETH) instead of a false 'Insufficient funds' error. Reverting the fix (amount rounds up past available margin) makes ac1-assert-submit-actionable time out.",
+  "pre_conditions": {
+    "notes": [
+      "Active account is the funded testnet perps account; do not switch accounts.",
+      "Balance and price stream live from HyperLiquid and DRIFT between runs \u2014 the recipe must not hardcode any amount; it gates on stable labels + a non-zero-balance signal and asserts the margin relationship.",
+      "Default leverage 3 -> maxSize = availableBalance * 3; the fix floors the 100% amount to 2dp so margin (amount/leverage) <= availableBalance and the submit button stays actionable."
+    ]
+  },
+  "validate": {
+    "workflow": {
+      "entry": "setup-status",
+      "nodes": {
+        "setup-status": {
+          "action": "app.status",
+          "intent": "Read runner compatibility status",
+          "detail": "Confirm the extension adapter is connected before driving the UI.",
+          "flow": "setup",
+          "next": "setup-unlock"
+        },
+        "setup-unlock": {
+          "action": "metamask.wallet.ensure_unlocked",
+          "intent": "Ensure the wallet is unlocked",
+          "detail": "Unlock only if currently locked.",
+          "flow": "setup",
+          "next": "setup-navigate-order-entry"
+        },
+        "setup-navigate-order-entry": {
+          "action": "ui.navigate",
+          "hash": "#/perps/trade/ETH?direction=long",
+          "intent": "Open the ETH perps order-entry screen",
+          "detail": "Raw extension hash route /perps/trade/:symbol for the order form.",
+          "flow": "setup",
+          "next": "ac1-drive-max-size"
+        },
+        "ac1-screenshot-submit-actionable": {
+          "action": "ui.screenshot",
+          "path": "evidence-ac1-submit-actionable.png",
+          "timeout_ms": 8000,
+          "note": "AC1: size at 100% \u2014 submit button reads 'Open long ETH', no Insufficient funds error.",
+          "claims": {
+            "must_show": [
+              "Open long ETH"
+            ],
+            "must_not_show": [
+              "Insufficient funds"
+            ]
+          },
+          "intent": "Capture visual proof of the actionable submit button at 100% size",
+          "detail": "Visual evidence for AC1 (mixed proof mode).",
+          "flow": "ac1",
+          "next": "teardown-end"
+        },
+        "teardown-end": {
+          "action": "end",
+          "status": "pass",
+          "intent": "Recipe complete",
+          "detail": "AC1 proven: 100% size shows the normal trade action label.",
+          "flow": "teardown"
+        },
+        "ac1-drive-max-size": {
+          "action": "command",
+          "cmd": "CDP_PORT=${CDP_PORT:-7665} SCREENSHOT_OUT=temp/tasks/fix/43383-0610-123532/artifacts/recipe-run/evidence-ac1-submit-actionable.png node temp/tasks/fix/43383-0610-123532/artifacts/drive-max-size.cjs",
+          "flow": "ac1",
+          "next": "ac1-assert-actionable",
+          "intent": "Drive the size to 100% (React-correct native setter) and verify the submit button is actionable",
+          "detail": "The harness ui.set_input assigns el.value directly, which React's value-tracker swallows so onChange never fires and the amount never recomputes. This driver uses the native value-setter (the real user keystroke) so handlePercentInputChange fires; it waits for the live (drifting) balance to load, drives 100%, then asserts the submit button reads 'Open long ETH' and that 'Insufficient funds' is absent \u2014 proving margin (amount/leverage) <= availableBalance after the floor fix. Exits non-zero if the bug is present. No balance/amount is hardcoded."
+        },
+        "ac1-assert-actionable": {
+          "action": "assert_exit_code",
+          "source": "ac1-drive-max-size",
+          "expected": 0,
+          "flow": "ac1",
+          "next": "ac1-screenshot-submit-actionable",
+          "intent": "AC1: fix verified \u2014 100% size is actionable, not 'Insufficient funds'",
+          "detail": "Driver exit 0 means the submit button was actionable at 100% size with no insufficient-funds error."
+        }
+      }
+    }
+  }
+}
