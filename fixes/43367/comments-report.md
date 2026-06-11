@@ -1,50 +1,50 @@
-# PR #43367 — Comments Report
+# PR #43367 — Comments Report (interactive re-entry)
 
 PR: fix(perps): navigation issue when you tap "add funds" in order screen
 Branch: `TAT-3131-fix-fix-add-funds-nav`
-Base: `main` (merged `origin/main` @ `3c83fc8d86` into branch — clean, no conflicts)
+Head SHA: `b8c962dc0f` (local HEAD == remote PR head; working tree had the comment edit below applied locally, uncommitted)
+Inherited context: present (family `d964d349-d20a-41b8-a022-07537f97ade3`, root TAT-3131). Inherited report/learnings/recipe reloaded from `inputs/inherited/`.
 
-## Triage
+## Context summary (reload)
 
-| # | Author | Type | File | Triage | Action |
-|---|--------|------|------|--------|--------|
-| 1 | github-actions[bot] | Bot | — (conversation) | N/A — informational | CLA signature notice. No action. |
-| 2 | mm-token-exchange-service[bot] | Bot | — (conversation) | N/A — informational | CODEOWNERS review listing. No action. |
-| 3 | abretonc7s | User | — (conversation) | N/A — not review feedback | farmslot worker report posted by orchestrator. No action. |
-| 4 | metamaskbotv2[bot] | Bot | — (conversation) | N/A — informational | "Builds ready" CI artifact links. No action. |
+Family-inherited PR bundling two fixes on the Add Funds flow:
+- **TAT-3131** — phantom `confirm-transaction` history entry after visiting Add Funds. Root cause: `useConfirmActions.ts` `navigateBackToPreviousPage` branch used `navigate(goBackTo)` (push) while entry navigated with `{ replace: true }`. Fix: return with `{ replace: true }` (symmetric with confirm-context auto-exit). One-line behavior change + test assertions.
+- **TAT-3272** (bundled) — Add Funds did nothing on a wallet without Arbitrum. `PerpsController.depositWithConfirmation` throws `Invalid chain ID "0xa4b1"`; deposit hook swallowed it. Fix: new `usePerpsNetworkManagement.ensureArbitrumNetworkExists`, called from `usePerpsDepositConfirmation` before creating the deposit tx.
 
-## Summary
+## Live comment triage
 
-- **Inline review comments:** 0
+| # | Author | Type | Where | Triage | Action |
+|---|--------|------|-------|--------|--------|
+| 1 | github-actions[bot] | Bot | conversation | N/A informational | CLA signature notice. No action. |
+| 2 | mm-token-exchange-service[bot] | Bot | conversation | N/A informational | CODEOWNERS listing (`@MetaMask/confirmations`, 2 files). No action. |
+| 3 | abretonc7s | User | conversation | N/A — orchestrator worker-report post, not review feedback | No action. |
+| 4 | abretonc7s | User | conversation | N/A — orchestrator comments-report post, not review feedback | No action. |
+| 5 | metamaskbotv2[bot] | Bot | conversation | N/A informational | "Builds ready" CI artifact links (x3). No action. |
+
+- **Inline review comments (top-level):** 0
 - **CHANGES_REQUESTED reviews:** 0
-- **Conversation comments:** 4, all informational bot/CI noise or the orchestrator's own worker-report post. None are actionable review feedback.
+- **Actionable GitHub review comments requiring a code fix:** 0
 
-**Actionable comments requiring a code fix: 0.**
+## Operator-requested fix (this session)
 
-No review-fix commit was made — there is nothing to fix. The branch was brought up to date with `origin/main` (merge commit `da77714ea3`) and re-validated through the CI parity gate + recipe.
+The operator flagged that code comments referenced the JIRA ticket number (`TAT-3131`) and were too verbose — unacceptable for the **`@MetaMask/confirmations`-owned** files (`useConfirmActions.ts`, `useConfirmActions.test.ts`), which would block the confirmations team's review.
 
-## CI parity gate (step 9)
-- `yarn lint:changed` — PASS
-- `yarn verify-locales --quiet` — PASS (No invalid entries)
+**Triage: REAL (style/codeowner).** Fixed minimally — removed the `TAT-3131` references and condensed both comments to a concise "why", touching only the two confirmation-owned files (the perps-owned files had no ticket refs, so were left untouched to keep the diff minimal).
+
+- `ui/pages/confirmations/hooks/useConfirmActions.ts` — 7-line comment (with `TAT-3131`) → 3-line concise comment, no ticket number.
+- `ui/pages/confirmations/hooks/useConfirmActions.test.ts` — 5-line comment (with `TAT-3131`) → 2-line concise comment, no ticket number.
+
+No runtime behavior change. The shipped source fix (`navigate(..., { replace: true })`) is unchanged.
+
+## Validation (this session)
+
+- `yarn lint:changed` — PASS (2 changed files)
+- `yarn verify-locales --quiet` — PASS
 - `yarn circular-deps:check` — PASS
-- Unit tests (PR delta): `usePerpsDepositConfirmation.test.ts`, `usePerpsNetworkManagement.test.ts`, `useConfirmActions.test.ts` — 17/17 PASS
-- Coverage: PASS — new code 100% (8/8 lines), all 3 source files ≥80%.
-  - Note: first coverage run reported FAIL because the local `main` ref was stale (pre-merge); it diffed the branch against old main and pulled in `origin/main`'s batch-sell/bridge files. Synced `git branch -f main origin/main` → re-run PASS. None of the flagged files belong to this PR.
+- `yarn jest ui/pages/confirmations/hooks/useConfirmActions.test.ts --no-coverage` — 7/7 PASS
+- Full PR-delta jest (`usePerpsDepositConfirmation`, `usePerpsNetworkManagement`, `useConfirmActions`) — 17/17 PASS
+- Recipe (`artifacts/recipe.json`, family-inherited/trusted) re-run against freshly rebuilt dist on CDP 7666 — **16/16 nodes pass** (`artifacts/recipe-run/summary.json`); screenshots `evidence-ac1-deposit-open.png`, `evidence-ac1-one-tap-back-to-market.png`.
 
-## Recipe re-validation (step 10) — post-merge state
-- `RECIPE_SOURCE: family-inherited` (trusted). Recipe reviewed: pure UI/navigation flow, no `expression`/`eval`/`shell`/`exec` primitives.
-- Reloaded extension (`Page.reload` ignoreCache) to load freshly-built dist, then ran recipe against `branch + origin/main` merged.
-- **Result: PASS.** Proves TAT-3272 (Add Funds opens deposit; Arbitrum auto-added) + TAT-3131 (single back tap returns to market detail, no phantom history entry). Evidence screenshots: `evidence-ac1-deposit-open.png`, `evidence-ac1-one-tap-back-to-market.png`. No console errors/exceptions captured.
+## Status
 
-## Merge-main status (step 3)
-clean — no conflicts. yarn.lock changed during merge → `yarn install --immutable` re-run successfully.
-
-## Final summary
-
-- **Total comments:** 4 (0 REAL, 0 FALSE POSITIVE, 4 OUT OF SCOPE — all bot/CI/worker-report noise, no review feedback)
-- **Commit SHA (review fixes):** `628ded2d41` — `style(perps): apply prettier formatting to add-funds nav hooks`. No review comments existed; this commit only normalizes prettier formatting on the 3 PR-touched perps hooks (committed versions failed `prettier --check`, which would break CI lint). Verified via `prettier --check` before/after.
-- **Merge commit:** `da77714ea3` (origin/main @ `3c83fc8d86` → branch). Pushed together with the format commit.
-- **Files changed (this run):** `ui/components/app/perps/hooks/usePerpsDepositConfirmation.test.ts`, `ui/components/app/perps/hooks/usePerpsNetworkManagement.test.ts`, `ui/components/app/perps/hooks/usePerpsNetworkManagement.ts` (formatting only).
-- **Recipe re-validation:** PASS (post-merge state).
-- **Merge-main status:** clean / conflicts-resolved → clean.
-- **PR mergeable state at start:** `blocked` (pending required checks/reviews, not a conflict).
+No GitHub replies posted, no threads resolved, nothing pushed (interactive re-entry). The comment-cleanup edit is in the working tree, **uncommitted** — see `report.md` for handoff.
