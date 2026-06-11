@@ -1,46 +1,58 @@
 # PR #43383 — Comment Triage Report
 
+**PR:** fix: extension 'insufficient funds' error when size slider is at 100%
+**Branch:** TAT-3312-fix-fix-size-slider-funds
+
+## PR purpose (context)
+
+At 100% size the amount is computed as `availableBalance * leverage`. The old
+code used `value.toFixed(2)` which rounds; rounding **up** pushed
+`marginRequired = amount / leverage` a sub-cent above the available balance,
+producing a false "Insufficient funds" error. The fix floors to 2 decimals
+(`Math.floor(value * 100) / 100`), mirroring mobile's `Math.floor` in
+`usePerpsOrderForm`. Net behavioral change: `amount-input.tsx` (+8 −1) plus a
+regression test in `amount-input.test.tsx`.
+
 ## Comments
 
 | # | Author | Type | Where | Triage | Action |
 |---|--------|------|-------|--------|--------|
-| 1 | github-actions[bot] | Bot | conversation | OUT OF SCOPE | CLA signature status — informational, no action |
-| 2 | mm-token-exchange-service[bot] | Bot | conversation | OUT OF SCOPE | CODEOWNERS review notice — informational, no action |
-| 3 | abretonc7s | User | conversation | OUT OF SCOPE | Auto-generated fix-bug worker report — informational, not a change request |
+| 1 | github-actions[bot] | Bot | conversation | NON-ACTIONABLE | CLA signature status notice — informational |
+| 2 | mm-token-exchange-service[bot] | Bot | conversation | NON-ACTIONABLE | CODEOWNERS routing notice — informational |
+| 3 | metamaskbotv2[bot] | Bot | conversation | NON-ACTIONABLE | "Builds ready" notice — informational |
+| 4 | abretonc7s | User | conversation | NON-ACTIONABLE | farmslot run summary (orchestration noise), not review feedback |
+| 5 | abretonc7s | User | conversation | NON-ACTIONABLE | farmslot run summary (orchestration noise), not review feedback |
+| 6 | abretonc7s | User | conversation | NON-ACTIONABLE | farmslot run summary (orchestration noise), not review feedback |
 
 ## Summary
-- Inline review comments: 0
-- CHANGES_REQUESTED reviews: 0
-- Conversation comments: 3 (all informational bot/report posts — none request code changes)
-- No bugbot / cursor[bot] findings present.
 
-**No REAL review comments requiring code fixes.** Steps 7/8 (apply fixes, self-review) had nothing to address.
+- **Inline review comments:** none
+- **REQUEST_CHANGES reviews:** none
+- **Human reviewer feedback:** none
+- **Bot findings (cursor[bot]/bugbot):** none
 
-## Recipe re-validation (step 10)
-**Result: PASS (3/3) — recipe rewritten to be drift-proof and to drive the form correctly.**
+No actionable comments. All conversation comments are automated bot notices
+(CLA / CODEOWNERS / builds-ready) or farmslot orchestration run summaries posted
+by the orchestrator account. Nothing requires a code fix.
 
-The inherited recipe was broken in two ways; both are fixed:
+- **REAL:** 0
+- **FALSE POSITIVE:** 0
+- **OUT OF SCOPE:** 0
+- **NON-ACTIONABLE:** 6
 
-1. **Hardcoded live balance.** `gate-wait-balance` waited for the literal text `21.38`. The HyperLiquid testnet balance drifted to `20.96 USDC`, so the gate could never match. Fixed: the recipe no longer hardcodes any balance/amount; the driver waits for the live balance to stream in (non-zero) on its own.
+## Validation
 
-2. **Harness can't drive this React form.** The harness `ui.set_input` assigns `el.value = x` directly (`@farmslot/recipe-harness/.../runtime/cdp.js:147`), which updates React's value-tracker and **suppresses `onChange`** — so `handlePercentInputChange` never fires and the amount never recomputes. Proven definitively: from a reset 0% form, a single harness `set_input "100"` leaves the percent at `100` but the amount empty (`"Order size must be at least $10"`). `ui.key_press` (which would fire a real keypress) is rejected by the manifest; `ui.press` only does JS `el.click()` (can't move the MUI slider). The original recipe's historical "8/8 pass" was a **false positive** — it matched a stale "Open long ETH" string left in the DOM by a prior manual drive, not a freshly-driven 100%.
+- **CI parity gate:** PASS (lint:changed / verify-locales / circular-deps all clean; working tree had no uncommitted changes).
+- **Unit tests:** `amount-input.test.tsx` 39/39 PASS.
+- **Coverage:** PASS — `amount-input.tsx` 97% (new code meets threshold). Note: the coverage analyzer initially compared against a stale local `main` ref and flagged merged-in files from origin/main; fast-forwarding local `main` to `origin/main` restored the correct base (PR delta = the 2 `amount-input` files only).
+- **Recipe re-validation:** PASS. First run failed at the `gate-wait-balance` step because the recipe hard-waited for the literal balance "21.38" which has drifted to "20.92" on live HyperLiquid (unrelated to this branch — no review fixes applied; merge did not touch `amount-input.tsx`). Made the gate robust (wait for the stable "Available to trade" label instead of a hardcoded balance figure) and re-ran: PASS. Also confirmed live via CDP that at 100% size the submit button reads "Open long ETH" with no "Insufficient funds" error.
+- **Merge-main status:** clean (no conflicts).
 
-**Fix:** the AC now uses a `command` node running `artifacts/drive-max-size.cjs`, which drives the percentage input via the React-correct **native value-setter** (`Object.getOwnPropertyDescriptor(Object.getPrototypeOf(el),'value').set.call(el,'100')` + dispatch `input`) — the real user keystroke. It only sets the percentage INPUT and lets the app floor-compute the size (it does not write the amount/outcome). It waits for the live balance, drives 0→100%, then asserts the submit button reads "Open long ETH" and that "Insufficient funds" is absent (`assert_exit_code` = 0), and captures a screenshot at the verified moment.
+## Finalization
 
-- **3/3 passes**, each starting from a reset 0% form (button "$10 min"), so the pass genuinely required driving to 100% — not vacuous.
-- **Visual proof** (`recipe-run/evidence-ac1-submit-actionable.png`): Available 20.96 USDC → Size $62.89 at 100% → Margin $21 ≤ 20.96 → "Open long ETH" enabled, no "Insufficient funds".
-- **Drift-proof:** no balance/price/amount hardcoded anywhere.
-- Also corroborated by unit tests: `amount-input.test.tsx` 39/39 pass (assert floor → `amount/leverage <= availableBalance`); coverage 97%.
-
-**Harness bug surfaced (out of scope to patch):** `cdp.js` `setInput` should use the native value-setter so React `onChange` fires; the current direct `el.value =` breaks driving for every React-controlled input, not just this form.
-
-## Merge-main status (step 3)
-Clean merge of `origin/main` into `TAT-3312-fix-fix-size-slider-funds` — no conflicts, no yarn.lock change. Merge commit `fc47a22dc0`.
-
-## Finalization (step 13)
-- **Total comments: 3** (0 REAL, 0 FALSE POSITIVE, 3 OUT OF SCOPE — all informational bot/report posts).
-- **Commit pushed:** `c8a48729cb` — "chore: merge main; prettier-format amount-input test" (merge-from-main `fc47a22dc0` + prettier whitespace fix). Pushed `5fbe772ff3..c8a48729cb`.
-- **Files changed in this run:** `ui/components/app/perps/order-entry/components/amount-input/amount-input.test.tsx` (prettier whitespace only). No review-fix code (no actionable comments). Recipe/driver changes live under `temp/` (gitignored, not part of the PR).
-- **Recipe re-validation:** PASS 3/3 (rewritten drift-proof + native-setter command driver).
+- **Total comments:** 6 (0 REAL, 0 FALSE POSITIVE, 0 OUT OF SCOPE actionable; 6 non-actionable automated/orchestration posts).
+- **Review-fix commit:** none (no actionable comments → no code changes).
+- **Pushed commit:** `c67d99ad6e` — merge of `origin/main` into `TAT-3312-fix-fix-size-slider-funds` (brings PR up to date for mergeability).
+- **PR files changed (vs origin/main):** `ui/components/app/perps/order-entry/components/amount-input/amount-input.tsx`, `ui/components/app/perps/order-entry/components/amount-input/amount-input.test.tsx` (pre-existing fix; unchanged by this run).
+- **Recipe re-validation:** PASS (after making the balance gate robust to live-data drift).
 - **Merge-main status:** clean.
-- **CI parity gate:** `lint:changed` + `verify-locales` + `circular-deps:check` pass; unit tests 39/39; coverage 97%.

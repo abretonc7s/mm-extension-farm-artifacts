@@ -1,7 +1,7 @@
 {
   "metadata": {
     "runner": {
-      "source": "/private/tmp/metamask-recipe-runner-validation",
+      "source": "/Users/deeeed/dev/metamask/metamask-recipe-runner",
       "git_ref": "unknown",
       "name": "@metamask/recipe-runner"
     }
@@ -10,9 +10,10 @@
     {
       "nodeId": "setup-status",
       "action": "app.status",
-      "startedAt": "2026-06-10T05:18:06.506Z",
-      "endedAt": "2026-06-10T05:18:06.514Z",
-      "durationMs": 8,
+      "intent": "Read runner compatibility status",
+      "startedAt": "2026-06-11T07:21:48.882Z",
+      "endedAt": "2026-06-11T07:21:48.896Z",
+      "durationMs": 14,
       "ok": true,
       "next": "setup-unlock",
       "output": {
@@ -37,9 +38,10 @@
     {
       "nodeId": "setup-unlock",
       "action": "metamask.wallet.ensure_unlocked",
-      "startedAt": "2026-06-10T05:18:06.522Z",
-      "endedAt": "2026-06-10T05:18:06.677Z",
-      "durationMs": 155,
+      "intent": "Ensure the wallet is unlocked",
+      "startedAt": "2026-06-11T07:21:48.902Z",
+      "endedAt": "2026-06-11T07:21:49.118Z",
+      "durationMs": 216,
       "ok": true,
       "next": "setup-navigate-order-entry",
       "output": {
@@ -50,62 +52,87 @@
         "cdpPort": 7665,
         "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/ETH?direction=long",
         "runtimeLaunch": null,
-        "liveAdapter": "/private/tmp/metamask-recipe-runner-validation/live-adapters/extension/wallet/ensure_unlocked.mjs"
+        "liveAdapter": "/Users/deeeed/dev/metamask/metamask-recipe-runner/live-adapters/extension/wallet/ensure_unlocked.mjs"
       }
     },
     {
       "nodeId": "setup-navigate-order-entry",
       "action": "ui.navigate",
-      "startedAt": "2026-06-10T05:18:06.685Z",
-      "endedAt": "2026-06-10T05:18:06.845Z",
-      "durationMs": 160,
+      "intent": "Open the ETH perps order-entry screen",
+      "startedAt": "2026-06-11T07:21:49.126Z",
+      "endedAt": "2026-06-11T07:21:49.376Z",
+      "durationMs": 250,
       "ok": true,
-      "next": "ac1-drive-max-size",
+      "next": "gate-wait-balance",
       "output": {
         "action": "ui.navigate",
         "hash": "#/perps/trade/ETH?direction=long",
         "navigation": {
-          "frameId": "E70638D21A205A735C44B815B134615F",
+          "frameId": "2CD39BA47B400B01105FC44215FEDA52",
           "isDownload": false
         },
         "proofPath": "ui-navigation",
         "cdpPort": 7665,
         "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/ETH?direction=long",
         "runtimeLaunch": null,
-        "liveAdapter": "/private/tmp/metamask-recipe-runner-validation/live-adapters/extension/ui/navigate.mjs"
+        "liveAdapter": "/Users/deeeed/dev/metamask/metamask-recipe-runner/live-adapters/extension/ui/navigate.mjs"
       }
     },
     {
-      "nodeId": "ac1-drive-max-size",
-      "action": "command",
-      "startedAt": "2026-06-10T05:18:06.851Z",
-      "endedAt": "2026-06-10T05:18:07.096Z",
-      "durationMs": 245,
+      "nodeId": "gate-wait-balance",
+      "action": "ui.wait_for",
+      "intent": "Wait for the tradeable balance to load",
+      "startedAt": "2026-06-11T07:21:49.382Z",
+      "endedAt": "2026-06-11T07:21:49.392Z",
+      "durationMs": 10,
       "ok": true,
-      "next": "ac1-assert-actionable",
+      "next": "ac1-set-max-size",
       "output": {
-        "exitCode": 0,
-        "stdout": "{\"ok\":true,\"pct\":\"100\",\"amount\":\"62.89\",\"button\":\"Open long ETH\",\"disabled\":false,\"insufficient\":false}\n",
-        "stderr": ""
+        "matched": true,
+        "cdpPort": 7665,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/ETH?direction=long",
+        "runtimeLaunch": null
       }
     },
     {
-      "nodeId": "ac1-assert-actionable",
-      "action": "assert_exit_code",
-      "startedAt": "2026-06-10T05:18:07.103Z",
-      "endedAt": "2026-06-10T05:18:07.108Z",
-      "durationMs": 5,
+      "nodeId": "ac1-set-max-size",
+      "action": "ui.set_input",
+      "intent": "Set the size slider/percentage to 100%",
+      "startedAt": "2026-06-11T07:21:49.396Z",
+      "endedAt": "2026-06-11T07:21:49.419Z",
+      "durationMs": 23,
+      "ok": true,
+      "next": "ac1-assert-submit-actionable",
+      "output": {
+        "set": true,
+        "selector": "[data-testid=balance-percent-input] input",
+        "tagName": "INPUT",
+        "previousValue": "100",
+        "cdpPort": 7665,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/ETH?direction=long",
+        "runtimeLaunch": null
+      }
+    },
+    {
+      "nodeId": "ac1-assert-submit-actionable",
+      "action": "ui.wait_for",
+      "intent": "AC1: submit button shows the normal trade label at 100% size",
+      "startedAt": "2026-06-11T07:21:49.426Z",
+      "endedAt": "2026-06-11T07:21:49.432Z",
+      "durationMs": 6,
       "ok": true,
       "next": "ac1-screenshot-submit-actionable",
       "output": {
-        "source": "ac1-drive-max-size",
-        "expected": 0,
-        "actual": 0
+        "matched": true,
+        "cdpPort": 7665,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/ETH?direction=long",
+        "runtimeLaunch": null
       }
     },
     {
       "nodeId": "ac1-screenshot-submit-actionable",
       "action": "ui.screenshot",
+      "intent": "Capture visual proof of the actionable submit button at 100% size",
       "artifacts": [
         {
           "path": "evidence-ac1-submit-actionable.png",
@@ -113,12 +140,35 @@
           "nodeId": "ac1-screenshot-submit-actionable",
           "label": "UI screenshot",
           "category": "evidence",
-          "mimeType": "image/png"
+          "mimeType": "image/png",
+          "metadata": {
+            "provider": "capture-helper",
+            "mode": "snapshot",
+            "pid": 51851,
+            "captureHelper": {
+              "bytes": 122815,
+              "output": "/Users/deeeed/dev/metamask/metamask-extension-1/temp/tasks/fix/43383-0611-131838/artifacts/recipe-run/evidence-ac1-submit-actionable.png",
+              "selected": {
+                "app": "Google Chrome for Testing",
+                "height": 800,
+                "id": 1933,
+                "layer": 0,
+                "onScreen": true,
+                "pid": 51851,
+                "title": "MetaMask",
+                "width": 500,
+                "x": 22,
+                "y": 52
+              },
+              "selector": "pid",
+              "type": "snapshot"
+            }
+          }
         }
       ],
-      "startedAt": "2026-06-10T05:18:07.117Z",
-      "endedAt": "2026-06-10T05:18:07.189Z",
-      "durationMs": 72,
+      "startedAt": "2026-06-11T07:21:49.439Z",
+      "endedAt": "2026-06-11T07:21:49.668Z",
+      "durationMs": 229,
       "ok": true,
       "next": "teardown-end",
       "output": {
@@ -130,16 +180,40 @@
           "nodeId": "ac1-screenshot-submit-actionable",
           "label": "UI screenshot",
           "category": "evidence",
-          "mimeType": "image/png"
+          "mimeType": "image/png",
+          "metadata": {
+            "provider": "capture-helper",
+            "mode": "snapshot",
+            "pid": 51851,
+            "captureHelper": {
+              "bytes": 122815,
+              "output": "/Users/deeeed/dev/metamask/metamask-extension-1/temp/tasks/fix/43383-0611-131838/artifacts/recipe-run/evidence-ac1-submit-actionable.png",
+              "selected": {
+                "app": "Google Chrome for Testing",
+                "height": 800,
+                "id": 1933,
+                "layer": 0,
+                "onScreen": true,
+                "pid": 51851,
+                "title": "MetaMask",
+                "width": 500,
+                "x": 22,
+                "y": 52
+              },
+              "selector": "pid",
+              "type": "snapshot"
+            }
+          }
         }
       }
     },
     {
       "nodeId": "teardown-end",
       "action": "end",
-      "startedAt": "2026-06-10T05:18:07.195Z",
-      "endedAt": "2026-06-10T05:18:07.201Z",
-      "durationMs": 6,
+      "intent": "Recipe complete",
+      "startedAt": "2026-06-11T07:21:49.674Z",
+      "endedAt": "2026-06-11T07:21:49.678Z",
+      "durationMs": 4,
       "ok": true,
       "status": "pass"
     }
