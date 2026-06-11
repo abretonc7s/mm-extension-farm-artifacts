@@ -1,0 +1,792 @@
+{
+  "metadata": {
+    "runner": {
+      "source": "/Users/deeeed/dev/metamask/metamask-recipe-runner",
+      "git_ref": "cd26d3aac7e7c337a0128449a54fc105b2ec7de6",
+      "name": "@metamask/recipe-runner"
+    }
+  },
+  "entries": [
+    {
+      "nodeId": "setup-ensure-unlocked",
+      "action": "metamask.wallet.ensure_unlocked",
+      "intent": "Ensure wallet is unlocked",
+      "startedAt": "2026-06-11T01:31:49.957Z",
+      "endedAt": "2026-06-11T01:31:51.247Z",
+      "durationMs": 1290,
+      "ok": true,
+      "next": "setup-perps-start-state",
+      "output": {
+        "action": "metamask.wallet.ensure_unlocked",
+        "unlocked": true,
+        "alreadyUnlocked": true,
+        "proofPath": "extension-unlocked-state",
+        "cdpPort": 6662,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/",
+        "runtimeLaunch": null,
+        "liveAdapter": "/Users/deeeed/dev/metamask/metamask-recipe-runner/live-adapters/extension/wallet/ensure_unlocked.mjs"
+      }
+    },
+    {
+      "nodeId": "setup-perps-start-state",
+      "action": "metamask.perps.start_state",
+      "intent": "Prepare clean ETH testnet perps state",
+      "startedAt": "2026-06-11T01:31:51.265Z",
+      "endedAt": "2026-06-11T01:31:55.031Z",
+      "durationMs": 3766,
+      "ok": true,
+      "next": "setup-enable-slippage-flag",
+      "output": {
+        "action": "metamask.perps.start_state",
+        "profile": "clean_market_testnet",
+        "phase": "start_state",
+        "provider": {
+          "requested": "hyperliquid",
+          "activeProvider": "hyperliquid",
+          "changed": false,
+          "cdpPort": 6662,
+          "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/",
+          "runtimeLaunch": null
+        },
+        "network": {
+          "requested": "testnet",
+          "isTestnet": true,
+          "changed": true,
+          "result": {
+            "success": true,
+            "isTestnet": true
+          },
+          "cdpPort": 6662,
+          "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/",
+          "runtimeLaunch": null
+        },
+        "readyToTrade": {
+          "skipped": true
+        },
+        "balance": {
+          "skipped": true
+        },
+        "market": "ETH",
+        "orders": {
+          "action": "metamask.perps.start_state",
+          "expectedOpen": false,
+          "matchingCount": 0,
+          "orders": [],
+          "source": "perps-stream-manager-cache",
+          "cdpPort": 6662,
+          "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/",
+          "runtimeLaunch": null,
+          "close": {
+            "action": "metamask.perps.start_state",
+            "canceled": false,
+            "matchingCount": 0,
+            "symbols": [],
+            "result": null,
+            "cdpPort": 6662,
+            "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/",
+            "runtimeLaunch": null
+          }
+        },
+        "positions": {
+          "action": "metamask.perps.start_state",
+          "expectedOpen": false,
+          "matchingCount": 0,
+          "positions": [],
+          "source": "background-perpsGetPositions",
+          "cdpPort": 6662,
+          "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/",
+          "runtimeLaunch": null,
+          "close": {
+            "action": "metamask.perps.start_state",
+            "closed": false,
+            "matchingCount": 0,
+            "symbols": [],
+            "reason": "no matching open positions",
+            "cdpPort": 6662,
+            "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/",
+            "runtimeLaunch": null
+          }
+        },
+        "navigation": {
+          "action": "metamask.perps.start_state",
+          "target": "market",
+          "market": "ETH",
+          "navigation": {
+            "frameId": "F8A95F9DFFDDE2605D6B10A6194E3355",
+            "isDownload": false
+          },
+          "proofPath": "ui-navigation",
+          "cdpPort": 6662,
+          "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/",
+          "runtimeLaunch": null
+        },
+        "proofPath": "metamask-perps-start-state",
+        "liveAdapter": "/Users/deeeed/dev/metamask/metamask-recipe-runner/live-adapters/extension/perps/perps.mjs"
+      }
+    },
+    {
+      "nodeId": "setup-enable-slippage-flag",
+      "action": "command",
+      "intent": "Opt-in remote flag perps-slippage-config2 for recipe validation",
+      "startedAt": "2026-06-11T01:31:55.101Z",
+      "endedAt": "2026-06-11T01:31:55.363Z",
+      "durationMs": 262,
+      "ok": true,
+      "next": "setup-open-trade",
+      "output": {
+        "exitCode": 0,
+        "stdout": "perps-slippage-config2 enabled\n",
+        "stderr": ""
+      }
+    },
+    {
+      "nodeId": "setup-open-trade",
+      "action": "ui.navigate",
+      "intent": "Open ETH market order entry screen",
+      "startedAt": "2026-06-11T01:31:55.368Z",
+      "endedAt": "2026-06-11T01:31:56.097Z",
+      "durationMs": 729,
+      "ok": true,
+      "next": "gate-wait-order-entry",
+      "output": {
+        "action": "ui.navigate",
+        "hash": "#/perps/trade/ETH?direction=long&orderType=market&mode=new",
+        "navigation": {
+          "frameId": "F8A95F9DFFDDE2605D6B10A6194E3355",
+          "isDownload": false
+        },
+        "proofPath": "ui-navigation",
+        "cdpPort": 6662,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/ETH",
+        "runtimeLaunch": null,
+        "liveAdapter": "/Users/deeeed/dev/metamask/metamask-recipe-runner/live-adapters/extension/ui/navigate.mjs"
+      }
+    },
+    {
+      "nodeId": "gate-wait-order-entry",
+      "action": "ui.wait_for",
+      "intent": "Wait for order entry page",
+      "startedAt": "2026-06-11T01:31:56.173Z",
+      "endedAt": "2026-06-11T01:31:56.185Z",
+      "durationMs": 12,
+      "ok": true,
+      "next": "ac1-set-order-size",
+      "output": {
+        "matched": true,
+        "cdpPort": 6662,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/ETH?direction=long&orderType=market&mode=new",
+        "runtimeLaunch": null
+      }
+    },
+    {
+      "nodeId": "ac1-set-order-size",
+      "action": "ui.set_input",
+      "intent": "Set USD size on inner amount input (harness insertText)",
+      "startedAt": "2026-06-11T01:31:56.191Z",
+      "endedAt": "2026-06-11T01:31:56.206Z",
+      "durationMs": 15,
+      "ok": true,
+      "next": "ac1-wait-slippage-row",
+      "output": {
+        "set": true,
+        "selector": "[data-testid=\"amount-input-field\"] input",
+        "tagName": "INPUT",
+        "previousValue": "10",
+        "cdpPort": 6662,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/ETH?direction=long&orderType=market&mode=new",
+        "runtimeLaunch": null
+      }
+    },
+    {
+      "nodeId": "ac1-wait-slippage-row",
+      "action": "ui.wait_for",
+      "intent": "Wait until slippage row is visible in viewport",
+      "startedAt": "2026-06-11T01:31:56.221Z",
+      "endedAt": "2026-06-11T01:31:56.357Z",
+      "durationMs": 136,
+      "ok": true,
+      "next": "ac4-assert-default-max",
+      "output": {
+        "matched": true,
+        "cdpPort": 6662,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/ETH?direction=long&orderType=market&mode=new",
+        "runtimeLaunch": null
+      }
+    },
+    {
+      "nodeId": "ac4-assert-default-max",
+      "action": "ui.wait_for",
+      "intent": "AC4: default max slippage row shows 3%",
+      "startedAt": "2026-06-11T01:31:56.362Z",
+      "endedAt": "2026-06-11T01:31:56.399Z",
+      "durationMs": 37,
+      "ok": true,
+      "next": "ac1-wait-slippage-value",
+      "output": {
+        "matched": true,
+        "cdpPort": 6662,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/ETH?direction=long&orderType=market&mode=new",
+        "runtimeLaunch": null
+      }
+    },
+    {
+      "nodeId": "ac1-wait-slippage-value",
+      "action": "ui.wait_for",
+      "intent": "AC1: slippage row shows Est/Max after size input",
+      "startedAt": "2026-06-11T01:31:56.469Z",
+      "endedAt": "2026-06-11T01:31:56.482Z",
+      "durationMs": 13,
+      "ok": true,
+      "next": "ac1-screenshot-slippage-row",
+      "output": {
+        "matched": true,
+        "cdpPort": 6662,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/ETH?direction=long&orderType=market&mode=new",
+        "runtimeLaunch": null
+      }
+    },
+    {
+      "nodeId": "ac1-screenshot-slippage-row",
+      "action": "ui.screenshot",
+      "intent": "Capture proof that estimated slippage row is visible",
+      "artifacts": [
+        {
+          "path": "ac1-screenshot-slippage-row.png",
+          "type": "screenshot",
+          "nodeId": "ac1-screenshot-slippage-row",
+          "label": "UI screenshot",
+          "category": "evidence",
+          "mimeType": "image/png",
+          "metadata": {
+            "provider": "capture-helper",
+            "mode": "snapshot",
+            "pid": 47049,
+            "captureHelper": {
+              "bytes": 159471,
+              "output": "/Users/deeeed/dev/metamask/metamask-extension-2/temp/tasks/fix/43357-0611-090019/artifacts/recipe-run/ac1-screenshot-slippage-row.png",
+              "selected": {
+                "app": "Google Chrome for Testing",
+                "height": 800,
+                "id": 1700,
+                "layer": 0,
+                "onScreen": true,
+                "pid": 47049,
+                "title": "mme-2 — MetaMask",
+                "width": 500,
+                "x": 22,
+                "y": 52
+              },
+              "selector": "pid",
+              "type": "snapshot"
+            }
+          }
+        }
+      ],
+      "startedAt": "2026-06-11T01:31:56.493Z",
+      "endedAt": "2026-06-11T01:31:57.805Z",
+      "durationMs": 1312,
+      "ok": true,
+      "next": "ac2-open-slippage-config",
+      "output": {
+        "captured": true,
+        "path": "ac1-screenshot-slippage-row.png",
+        "artifact": {
+          "path": "ac1-screenshot-slippage-row.png",
+          "type": "screenshot",
+          "nodeId": "ac1-screenshot-slippage-row",
+          "label": "UI screenshot",
+          "category": "evidence",
+          "mimeType": "image/png",
+          "metadata": {
+            "provider": "capture-helper",
+            "mode": "snapshot",
+            "pid": 47049,
+            "captureHelper": {
+              "bytes": 159471,
+              "output": "/Users/deeeed/dev/metamask/metamask-extension-2/temp/tasks/fix/43357-0611-090019/artifacts/recipe-run/ac1-screenshot-slippage-row.png",
+              "selected": {
+                "app": "Google Chrome for Testing",
+                "height": 800,
+                "id": 1700,
+                "layer": 0,
+                "onScreen": true,
+                "pid": 47049,
+                "title": "mme-2 — MetaMask",
+                "width": 500,
+                "x": 22,
+                "y": 52
+              },
+              "selector": "pid",
+              "type": "snapshot"
+            }
+          }
+        }
+      }
+    },
+    {
+      "nodeId": "ac2-open-slippage-config",
+      "action": "ui.press",
+      "intent": "Open max slippage configuration",
+      "startedAt": "2026-06-11T01:31:57.828Z",
+      "endedAt": "2026-06-11T01:31:57.916Z",
+      "durationMs": 88,
+      "ok": true,
+      "next": "ac2-wait-modal",
+      "output": {
+        "clicked": true,
+        "selector": "[data-testid=\"perps-order-summary-slippage-row\"], [data-test-id=\"perps-order-summary-slippage-row\"], [data-test=\"perps-order-summary-slippage-row\"]",
+        "tagName": "BUTTON",
+        "cdpPort": 6662,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/ETH?direction=long&orderType=market&mode=new",
+        "runtimeLaunch": null
+      }
+    },
+    {
+      "nodeId": "ac2-wait-modal",
+      "action": "ui.wait_for",
+      "intent": "Wait for slippage config modal in viewport",
+      "startedAt": "2026-06-11T01:31:57.922Z",
+      "endedAt": "2026-06-11T01:31:57.933Z",
+      "durationMs": 11,
+      "ok": true,
+      "next": "ac2-select-preset",
+      "output": {
+        "matched": true,
+        "cdpPort": 6662,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/ETH?direction=long&orderType=market&mode=new",
+        "runtimeLaunch": null
+      }
+    },
+    {
+      "nodeId": "ac2-select-preset",
+      "action": "ui.press",
+      "intent": "Select 2% max slippage preset",
+      "startedAt": "2026-06-11T01:31:57.939Z",
+      "endedAt": "2026-06-11T01:31:57.984Z",
+      "durationMs": 45,
+      "ok": true,
+      "next": "ac2-save-preset",
+      "output": {
+        "clicked": true,
+        "selector": "[data-testid=\"perps-slippage-config-preset-2\"], [data-test-id=\"perps-slippage-config-preset-2\"], [data-test=\"perps-slippage-config-preset-2\"]",
+        "tagName": "BUTTON",
+        "cdpPort": 6662,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/ETH?direction=long&orderType=market&mode=new",
+        "runtimeLaunch": null
+      }
+    },
+    {
+      "nodeId": "ac2-save-preset",
+      "action": "ui.press",
+      "intent": "Save slippage configuration",
+      "startedAt": "2026-06-11T01:31:58.065Z",
+      "endedAt": "2026-06-11T01:31:58.123Z",
+      "durationMs": 58,
+      "ok": true,
+      "next": "ac2-wait-updated-value",
+      "output": {
+        "clicked": true,
+        "selector": "[data-testid=\"perps-slippage-config-set\"], [data-test-id=\"perps-slippage-config-set\"], [data-test=\"perps-slippage-config-set\"]",
+        "tagName": "BUTTON",
+        "cdpPort": 6662,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/ETH?direction=long&orderType=market&mode=new",
+        "runtimeLaunch": null
+      }
+    },
+    {
+      "nodeId": "ac2-wait-updated-value",
+      "action": "ui.wait_for",
+      "intent": "AC2/AC3: configured max slippage applied to summary row",
+      "startedAt": "2026-06-11T01:31:58.129Z",
+      "endedAt": "2026-06-11T01:31:58.138Z",
+      "durationMs": 9,
+      "ok": true,
+      "next": "ac2-screenshot-config-applied",
+      "output": {
+        "matched": true,
+        "cdpPort": 6662,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/ETH?direction=long&orderType=market&mode=new",
+        "runtimeLaunch": null
+      }
+    },
+    {
+      "nodeId": "ac2-screenshot-config-applied",
+      "action": "ui.screenshot",
+      "intent": "Capture proof that max slippage updated to 2%",
+      "artifacts": [
+        {
+          "path": "ac2-screenshot-config-applied.png",
+          "type": "screenshot",
+          "nodeId": "ac2-screenshot-config-applied",
+          "label": "UI screenshot",
+          "category": "evidence",
+          "mimeType": "image/png",
+          "metadata": {
+            "provider": "capture-helper",
+            "mode": "snapshot",
+            "pid": 47049,
+            "captureHelper": {
+              "bytes": 158903,
+              "output": "/Users/deeeed/dev/metamask/metamask-extension-2/temp/tasks/fix/43357-0611-090019/artifacts/recipe-run/ac2-screenshot-config-applied.png",
+              "selected": {
+                "app": "Google Chrome for Testing",
+                "height": 800,
+                "id": 1700,
+                "layer": 0,
+                "onScreen": true,
+                "pid": 47049,
+                "title": "mme-2 — MetaMask",
+                "width": 500,
+                "x": 22,
+                "y": 52
+              },
+              "selector": "pid",
+              "type": "snapshot"
+            }
+          }
+        }
+      ],
+      "startedAt": "2026-06-11T01:31:58.143Z",
+      "endedAt": "2026-06-11T01:31:59.276Z",
+      "durationMs": 1133,
+      "ok": true,
+      "next": "ac3-reload-trade",
+      "output": {
+        "captured": true,
+        "path": "ac2-screenshot-config-applied.png",
+        "artifact": {
+          "path": "ac2-screenshot-config-applied.png",
+          "type": "screenshot",
+          "nodeId": "ac2-screenshot-config-applied",
+          "label": "UI screenshot",
+          "category": "evidence",
+          "mimeType": "image/png",
+          "metadata": {
+            "provider": "capture-helper",
+            "mode": "snapshot",
+            "pid": 47049,
+            "captureHelper": {
+              "bytes": 158903,
+              "output": "/Users/deeeed/dev/metamask/metamask-extension-2/temp/tasks/fix/43357-0611-090019/artifacts/recipe-run/ac2-screenshot-config-applied.png",
+              "selected": {
+                "app": "Google Chrome for Testing",
+                "height": 800,
+                "id": 1700,
+                "layer": 0,
+                "onScreen": true,
+                "pid": 47049,
+                "title": "mme-2 — MetaMask",
+                "width": 500,
+                "x": 22,
+                "y": 52
+              },
+              "selector": "pid",
+              "type": "snapshot"
+            }
+          }
+        }
+      }
+    },
+    {
+      "nodeId": "ac3-reload-trade",
+      "action": "ui.navigate",
+      "intent": "Reload order entry to verify persisted max slippage",
+      "startedAt": "2026-06-11T01:31:59.283Z",
+      "endedAt": "2026-06-11T01:31:59.984Z",
+      "durationMs": 701,
+      "ok": true,
+      "next": "ac3-wait-persisted",
+      "output": {
+        "action": "ui.navigate",
+        "hash": "#/perps/trade/ETH?direction=long&orderType=market&mode=new",
+        "navigation": {
+          "frameId": "F8A95F9DFFDDE2605D6B10A6194E3355",
+          "isDownload": false
+        },
+        "proofPath": "ui-navigation",
+        "cdpPort": 6662,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/ETH?direction=long&orderType=market&mode=new",
+        "runtimeLaunch": null,
+        "liveAdapter": "/Users/deeeed/dev/metamask/metamask-recipe-runner/live-adapters/extension/ui/navigate.mjs"
+      }
+    },
+    {
+      "nodeId": "ac3-wait-persisted",
+      "action": "ui.wait_for",
+      "intent": "AC3: persisted max slippage survives reload",
+      "startedAt": "2026-06-11T01:31:59.990Z",
+      "endedAt": "2026-06-11T01:32:00.000Z",
+      "durationMs": 10,
+      "ok": true,
+      "next": "ac5-set-funded-size",
+      "output": {
+        "matched": true,
+        "cdpPort": 6662,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/ETH?direction=long&orderType=market&mode=new",
+        "runtimeLaunch": null
+      }
+    },
+    {
+      "nodeId": "ac5-set-funded-size",
+      "action": "ui.set_input",
+      "intent": "AC5: funded in-balance USD size (not oversized — avoids insufficient-funds false positive)",
+      "startedAt": "2026-06-11T01:32:00.005Z",
+      "endedAt": "2026-06-11T01:32:00.025Z",
+      "durationMs": 20,
+      "ok": true,
+      "next": "ac5-wait-estimate-ready",
+      "output": {
+        "set": true,
+        "selector": "[data-testid=\"amount-input-field\"] input",
+        "tagName": "INPUT",
+        "previousValue": "100.00",
+        "cdpPort": 6662,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/ETH?direction=long&orderType=market&mode=new",
+        "runtimeLaunch": null
+      }
+    },
+    {
+      "nodeId": "ac5-wait-estimate-ready",
+      "action": "ui.wait_for",
+      "intent": "Wait for live slippage estimate at funded size",
+      "startedAt": "2026-06-11T01:32:00.049Z",
+      "endedAt": "2026-06-11T01:32:00.137Z",
+      "durationMs": 88,
+      "ok": true,
+      "next": "ac5-open-config",
+      "output": {
+        "matched": true,
+        "cdpPort": 6662,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/ETH?direction=long&orderType=market&mode=new",
+        "runtimeLaunch": null
+      }
+    },
+    {
+      "nodeId": "ac5-open-config",
+      "action": "ui.press",
+      "intent": "Open slippage config for AC5 preset + custom harness proof",
+      "startedAt": "2026-06-11T01:32:00.164Z",
+      "endedAt": "2026-06-11T01:32:00.221Z",
+      "durationMs": 57,
+      "ok": true,
+      "next": "ac5-wait-modal-open",
+      "output": {
+        "clicked": true,
+        "selector": "[data-testid=\"perps-order-summary-slippage-row\"], [data-test-id=\"perps-order-summary-slippage-row\"], [data-test=\"perps-order-summary-slippage-row\"]",
+        "tagName": "BUTTON",
+        "cdpPort": 6662,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/ETH?direction=long&orderType=market&mode=new",
+        "runtimeLaunch": null
+      }
+    },
+    {
+      "nodeId": "ac5-wait-modal-open",
+      "action": "ui.wait_for",
+      "intent": "Wait for slippage config modal",
+      "startedAt": "2026-06-11T01:32:00.227Z",
+      "endedAt": "2026-06-11T01:32:00.238Z",
+      "durationMs": 11,
+      "ok": true,
+      "next": "ac5-select-preset-min",
+      "output": {
+        "matched": true,
+        "cdpPort": 6662,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/ETH?direction=long&orderType=market&mode=new",
+        "runtimeLaunch": null
+      }
+    },
+    {
+      "nodeId": "ac5-select-preset-min",
+      "action": "ui.press",
+      "intent": "AC5: select lowest preset chip (0.5%) within funded order context",
+      "startedAt": "2026-06-11T01:32:00.244Z",
+      "endedAt": "2026-06-11T01:32:00.255Z",
+      "durationMs": 11,
+      "ok": true,
+      "next": "ac5-open-custom",
+      "output": {
+        "clicked": true,
+        "selector": "[data-testid=\"perps-slippage-config-preset-0.5\"], [data-test-id=\"perps-slippage-config-preset-0.5\"], [data-test=\"perps-slippage-config-preset-0.5\"]",
+        "tagName": "BUTTON",
+        "cdpPort": 6662,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/ETH?direction=long&orderType=market&mode=new",
+        "runtimeLaunch": null
+      }
+    },
+    {
+      "nodeId": "ac5-open-custom",
+      "action": "ui.press",
+      "intent": "Open custom slippage editor",
+      "startedAt": "2026-06-11T01:32:00.258Z",
+      "endedAt": "2026-06-11T01:32:00.285Z",
+      "durationMs": 27,
+      "ok": true,
+      "next": "ac5-wait-custom-input",
+      "output": {
+        "clicked": true,
+        "selector": "[data-testid=\"perps-slippage-config-edit\"], [data-test-id=\"perps-slippage-config-edit\"], [data-test=\"perps-slippage-config-edit\"]",
+        "tagName": "BUTTON",
+        "cdpPort": 6662,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/ETH?direction=long&orderType=market&mode=new",
+        "runtimeLaunch": null
+      }
+    },
+    {
+      "nodeId": "ac5-wait-custom-input",
+      "action": "ui.wait_for",
+      "intent": "Wait for custom slippage inner input",
+      "startedAt": "2026-06-11T01:32:00.337Z",
+      "endedAt": "2026-06-11T01:32:00.366Z",
+      "durationMs": 29,
+      "ok": true,
+      "next": "ac5-set-custom-min",
+      "output": {
+        "matched": true,
+        "cdpPort": 6662,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/ETH?direction=long&orderType=market&mode=new",
+        "runtimeLaunch": null
+      }
+    },
+    {
+      "nodeId": "ac5-set-custom-min",
+      "action": "ui.set_input",
+      "intent": "Harness proof: type 0.1% on inner custom input (CDP insertText)",
+      "startedAt": "2026-06-11T01:32:00.383Z",
+      "endedAt": "2026-06-11T01:32:00.457Z",
+      "durationMs": 74,
+      "ok": true,
+      "next": "ac5-save-cap",
+      "output": {
+        "set": true,
+        "selector": "[data-testid=\"perps-slippage-config-custom-input\"]",
+        "tagName": "INPUT",
+        "previousValue": "",
+        "cdpPort": 6662,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/ETH?direction=long&orderType=market&mode=new",
+        "runtimeLaunch": null
+      }
+    },
+    {
+      "nodeId": "ac5-save-cap",
+      "action": "ui.press",
+      "intent": "Save custom 0.1% max slippage cap",
+      "startedAt": "2026-06-11T01:32:00.462Z",
+      "endedAt": "2026-06-11T01:32:00.490Z",
+      "durationMs": 28,
+      "ok": true,
+      "next": "ac5-wait-custom-cap",
+      "output": {
+        "clicked": true,
+        "selector": "[data-testid=\"perps-slippage-config-set\"], [data-test-id=\"perps-slippage-config-set\"], [data-test=\"perps-slippage-config-set\"]",
+        "tagName": "BUTTON",
+        "cdpPort": 6662,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/ETH?direction=long&orderType=market&mode=new",
+        "runtimeLaunch": null
+      }
+    },
+    {
+      "nodeId": "ac5-wait-custom-cap",
+      "action": "ui.wait_for",
+      "intent": "Confirm custom cap applied to summary row",
+      "startedAt": "2026-06-11T01:32:00.495Z",
+      "endedAt": "2026-06-11T01:32:00.503Z",
+      "durationMs": 8,
+      "ok": true,
+      "next": "ac5-screenshot-config",
+      "output": {
+        "matched": true,
+        "cdpPort": 6662,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/ETH?direction=long&orderType=market&mode=new",
+        "runtimeLaunch": null
+      }
+    },
+    {
+      "nodeId": "ac5-screenshot-config",
+      "action": "ui.screenshot",
+      "intent": "AC5 live: funded order + custom cap via harness; submit-block guard in unit test",
+      "artifacts": [
+        {
+          "path": "ac5-screenshot-config.png",
+          "type": "screenshot",
+          "nodeId": "ac5-screenshot-config",
+          "label": "UI screenshot",
+          "category": "evidence",
+          "mimeType": "image/png",
+          "metadata": {
+            "provider": "capture-helper",
+            "mode": "snapshot",
+            "pid": 47049,
+            "captureHelper": {
+              "bytes": 159906,
+              "output": "/Users/deeeed/dev/metamask/metamask-extension-2/temp/tasks/fix/43357-0611-090019/artifacts/recipe-run/ac5-screenshot-config.png",
+              "selected": {
+                "app": "Google Chrome for Testing",
+                "height": 800,
+                "id": 1700,
+                "layer": 0,
+                "onScreen": true,
+                "pid": 47049,
+                "title": "mme-2 — MetaMask",
+                "width": 500,
+                "x": 22,
+                "y": 52
+              },
+              "selector": "pid",
+              "type": "snapshot"
+            }
+          }
+        }
+      ],
+      "startedAt": "2026-06-11T01:32:00.508Z",
+      "endedAt": "2026-06-11T01:32:03.605Z",
+      "durationMs": 3097,
+      "ok": true,
+      "next": "done",
+      "output": {
+        "captured": true,
+        "path": "ac5-screenshot-config.png",
+        "artifact": {
+          "path": "ac5-screenshot-config.png",
+          "type": "screenshot",
+          "nodeId": "ac5-screenshot-config",
+          "label": "UI screenshot",
+          "category": "evidence",
+          "mimeType": "image/png",
+          "metadata": {
+            "provider": "capture-helper",
+            "mode": "snapshot",
+            "pid": 47049,
+            "captureHelper": {
+              "bytes": 159906,
+              "output": "/Users/deeeed/dev/metamask/metamask-extension-2/temp/tasks/fix/43357-0611-090019/artifacts/recipe-run/ac5-screenshot-config.png",
+              "selected": {
+                "app": "Google Chrome for Testing",
+                "height": 800,
+                "id": 1700,
+                "layer": 0,
+                "onScreen": true,
+                "pid": 47049,
+                "title": "mme-2 — MetaMask",
+                "width": 500,
+                "x": 22,
+                "y": 52
+              },
+              "selector": "pid",
+              "type": "snapshot"
+            }
+          }
+        }
+      }
+    },
+    {
+      "nodeId": "done",
+      "action": "end",
+      "intent": "Slippage validation complete",
+      "startedAt": "2026-06-11T01:32:03.610Z",
+      "endedAt": "2026-06-11T01:32:03.614Z",
+      "durationMs": 4,
+      "ok": true,
+      "status": "pass"
+    }
+  ]
+}

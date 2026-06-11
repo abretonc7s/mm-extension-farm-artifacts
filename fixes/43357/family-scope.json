@@ -1,6 +1,6 @@
 {
   "originalFamilyScopeSummary": "Add estimated and configurable persisted slippage controls to Perps order screens",
-  "currentTriggerSummary": "pr-complete: Add estimated and configurable persisted slippage controls to Perps order screens",
+  "currentTriggerSummary": "pr-complete: feat(perps): add configurable slippage controls",
   "scopeVerdict": "full-scope-addressed",
-  "notes": "Extension order entry shows Est/Max slippage, persisted max-slippage config modal, submit blocking when estimate exceeds cap, and controller-backed persistence. Eleven bugbot review threads were triaged REAL and fixed across the family branch; latest commit 35b7ff77bc addresses pending-row max display. Recipe re-validation skipped due unhealthy CDP runtime after rebuild; unit tests and lint gate passed for this fix."
+  "notes": "All 16 cursor[bot] inline review threads were already addressed and isResolved=true from prior family runs; no unresolved actionable comments and no REQUEST_CHANGES reviews remained. This pr-complete run's contribution was bringing the branch up to date with origin/main (748e345458) and resolving 4 merge conflicts (jest.integration.config.js comment, perps-controller mock export union, perps-layout.test.tsx requireActual mock pattern, perps-order-entry-page.tsx import union). Post-merge validation all green: lint:changed, verify-locales, circular-deps, affected unit tests (205 passing across conflict-touched suites), changed-file coverage VERDICT PASS (new code 95%), and the inherited validation recipe re-ran PASS against the merged state. PR is conflict-free with main and merge-ready."
 }
