@@ -3,58 +3,41 @@
 PR: feat(perps): add configurable slippage controls
 Branch: TAT-1043-feat-add-perps-slippage-config
 
-## Triage
+## Triage table
 
-| # | Author | File:Line | Triage | Action |
-|---|--------|-----------|--------|--------|
-| 1 | cursor[bot] | ui/hooks/perps/usePerpsOrderForm.ts:411 | REAL (resolved prior) | Default amount recap — already fixed, thread resolved |
-| 2 | cursor[bot] | ui/components/app/perps/slippage-config/perps-slippage-config-modal.tsx:148 | REAL (resolved prior) | Modal closes before persist — already fixed, thread resolved |
-| 3 | cursor[bot] | ui/hooks/perps/stream/usePerpsLiveOrderBook.ts:85 | REAL (resolved prior) | Slippage hook kills order book — already fixed, thread resolved |
-| 4 | cursor[bot] | ui/pages/perps/perps-order-entry-page.tsx:702 | REAL (resolved prior) | Max slippage defaults while loading — already fixed, thread resolved |
-| 5 | cursor[bot] | ui/hooks/perps/usePerpsOrderForm.ts:421 | REAL (resolved prior) | Price load resets user amount — already fixed, thread resolved |
-| 6 | cursor[bot] | ui/hooks/perps/usePerpsEstimatedSlippage.ts:108 | REAL (resolved prior) | Throttled book stale after symbol — already fixed, thread resolved |
-| 7 | cursor[bot] | ui/pages/perps/perps-order-entry-page.tsx:1031 | REAL (resolved prior) | Stale slippage submit error — already fixed, thread resolved |
-| 8 | cursor[bot] | ui/pages/perps/perps-order-entry-page.tsx:345 | REAL (resolved prior) | Order book depth not requested — already fixed, thread resolved |
-| 9 | cursor[bot] | ui/pages/perps/perps-order-entry-page.tsx:702 | REAL (resolved prior) | Stale slippage ignores readiness — already fixed, thread resolved |
-| 10 | cursor[bot] | ui/pages/perps/perps-order-entry-page.tsx:1773 | REAL (resolved prior) | Clears slippage error too broadly — already fixed, thread resolved |
-| 11 | cursor[bot] | ui/pages/perps/perps-order-entry-page.tsx:713 | REAL (resolved prior) | Pending slippage max shows incorrectly — already fixed, thread resolved |
-| 12 | cursor[bot] | ui/pages/perps/perps-order-entry-page.tsx:680 | REAL (resolved prior) | Slippage direction desyncs from form — already fixed, thread resolved |
-| 13 | cursor[bot] | ui/hooks/perps/usePerpsOrderForm.ts:421 | REAL (resolved prior) | Prefill locks after low balance — already fixed, thread resolved |
-| 14 | cursor[bot] | ui/pages/perps/perps-order-entry-page.tsx:754 | REAL (resolved prior) | Submit before slippage estimate ready — already fixed, thread resolved |
-| 15 | cursor[bot] | ui/pages/perps/perps-order-entry-page.tsx:1814 | REAL (resolved prior) | Modal saves before preference loads — already fixed, thread resolved |
-| 16 | cursor[bot] | ui/hooks/perps/usePerpsOrderForm.ts:417 | REAL (resolved prior) | Leverage ignored in amount recap — already fixed, thread resolved |
+| # | Author | File | Triage | Action |
+|---|--------|------|--------|--------|
+| 1 | cursor[bot] | test/e2e/tests/perps/perps-fixture-config.ts:101 | REAL | Add `perpsSlippageConfig2` override to `mockEligibleFeatureFlags` HTTP mock so the background `/v1/flags` fetch returns `enabled:false`, matching the seeded controller state. |
+
+## Notes
+
+- **16 other cursor[bot] inline review threads are already RESOLVED** by prior family runs (GraphQL `isResolved: true`). No new action needed this pass. Per SINGLE-PASS rule, not re-triaged.
+- **Conversation comments**: all non-actionable — CI bots (CLA signature, codeowners, `metamaskbotv2` build-ready) and `abretonc7s` farmslot run-summary reports (automated, not human review feedback). No code changes required.
+- **No CHANGES_REQUESTED reviews.**
+
+## Detail — Comment #1 (REAL)
+
+> ### E2E slippage flag HTTP mismatch (Medium Severity)
+> Disabling `perpsSlippageConfig2` only in `PERPS_ELIGIBLE_REMOTE_FEATURE_FLAGS` seeds the fixture with slippage off, but `mockEligibleFeatureFlags` still returns the production default (`enabled: true`) for that flag. Background `updateRemoteFeatureFlags` on load/UI open can overwrite seeded state, re-enabling slippage gating and leaving submit disabled without order-book estimates.
+
+Root cause: `mockEligibleFeatureFlags` (line 260) builds the `/v1/flags` response from `getProductionRemoteFlagApiResponseWithOverrides()` without including `perpsSlippageConfig2`, so production default (`enabled:true`) leaks through and the background controller overwrites the seeded `enabled:false`.
+
+Fix: add `perpsSlippageConfig2: PERPS_ELIGIBLE_REMOTE_FEATURE_FLAGS.perpsSlippageConfig2` to the overrides map in `mockEligibleFeatureFlags`, mirroring the seed exactly.
+
+## Validation
+
+- **Merge main (step 3):** clean — no conflicts (`origin/main` 1ab4918c86 merged).
+- **CI parity gate:** lint:changed ✓, verify-locales ✓, circular-deps ✓.
+- **Unit tests (first 5 changed test files):** all pass (73/137/24/3/11, 0 failures).
+- **Coverage:** VERDICT PASS — new code 95% (210/220). Warnings pre-existing only.
+- **Recipe re-validation:** PASS (CDP health PASS, `recipe-run/summary.json` status `pass`). Re-validated post-merge branch state. Note: the only code change this pass is in `test/e2e/` (not bundled into `dist/chrome`), so the live extension behaviour is identical — recipe confirms the merge from main did not regress.
 
 ## Summary
 
-- **Inline review comments:** 16, all from `cursor[bot]`. **All 16 review threads are already `isResolved=true`** — addressed by prior family runs (latest fix commit `50af04c4d7` on this branch). No new code change required this run.
-- **Conversation comments:** 11 from `abretonc7s`, all automated farmslot run summaries — informational, not actionable review feedback.
-- **REQUEST_CHANGES reviews:** none.
-- **No unresolved actionable review comments remain.**
-
-## This run's primary contribution
-
-Merged latest `origin/main` (`748e345458`) into the branch and resolved 4 merge conflicts:
-
-- `jest.integration.config.js` — comment-only conflict; kept main's descriptive stub comment.
-- `test/mocks/metamask-perps-controller.js` — unioned both export sets (slippage config exports + market-category exports).
-- `ui/pages/perps/perps-layout.test.tsx` — kept branch's `...jest.requireActual` mock pattern (resolves through moduleNameMapper to stub, which now exports `MARKET_CATEGORIES`).
-- `ui/pages/perps/perps-order-entry-page.tsx` — unioned imports (slippage-config + compliance gate).
-
-## Validation (post-merge: branch + origin/main)
-
-- **lint:changed:** PASS (no uncommitted changed files)
-- **verify-locales:** PASS (`No invalid entries!`)
-- **circular-deps:check:** PASS
-- **Unit tests (conflict-touched files):** PASS — `perps-layout.test.tsx` + `perps-order-entry-page.test.tsx` (85), `usePerpsOrderForm.test.ts` + `perps-market-detail-page.test.tsx` (120)
-- **Coverage (changed files):** VERDICT PASS — new code 95% (193/203 lines); warnings pre-existing only
-- **Recipe re-validation:** PASS — inherited recipe ran green against merged state (extension reloaded via CDP first). `artifacts/recipe-run/summary.json` = `pass`
-- **Merge-main status:** conflicts-resolved (4 files)
-
-## Finalization
-
-- **Total comments:** 16 inline (16 REAL — all already resolved in prior family runs, 0 FALSE POSITIVE, 0 OUT OF SCOPE) + 11 conversation (automated farmslot summaries, non-actionable).
-- **Review-fix commit:** none required this run (zero unresolved comments).
-- **Pushed commit (merge):** `93f1ff5ef1` — `Merge remote-tracking branch 'origin/main' into TAT-1043-feat-add-perps-slippage-config`.
-- **Files changed this run (conflict resolutions only):** `jest.integration.config.js`, `test/mocks/metamask-perps-controller.js`, `ui/pages/perps/perps-layout.test.tsx`, `ui/pages/perps/perps-order-entry-page.tsx`.
-- **Recipe re-validation:** PASS.
-- **CI parity:** lint:changed / verify-locales / circular-deps all PASS; unit tests PASS; coverage VERDICT PASS.
+- **Total comments triaged: 1 actionable** (1 REAL, 0 FALSE POSITIVE, 0 OUT OF SCOPE).
+- 16 other cursor[bot] inline threads already RESOLVED by prior runs; conversation comments all non-actionable (CI bots + farmslot run summaries).
+- **Commit SHA:** `7720371fa8`
+- **Files changed:** `test/e2e/tests/perps/perps-fixture-config.ts` (+6)
+- **Recipe re-validation:** PASS
+- **Merge-main status (step 3):** clean (no conflicts)
+- Replied to comment 3393346780 and resolved its thread.
