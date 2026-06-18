@@ -1,0 +1,174 @@
+{
+  "metadata": {
+    "runner": {
+      "source": "/Users/deeeed/dev/metamask/metamask-recipe-runner",
+      "git_ref": "93246f407645e6b7b0b150618a31203afdd77caa",
+      "name": "@metamask/recipe-runner"
+    }
+  },
+  "entries": [
+    {
+      "nodeId": "gate-unlock",
+      "action": "metamask.wallet.ensure_unlocked",
+      "intent": "Ensure wallet unlocked",
+      "startedAt": "2026-06-18T14:45:37.370Z",
+      "endedAt": "2026-06-18T14:45:37.628Z",
+      "durationMs": 258,
+      "ok": true,
+      "next": "nav-home",
+      "output": {
+        "action": "metamask.wallet.ensure_unlocked",
+        "unlocked": true,
+        "alreadyUnlocked": true,
+        "proofPath": "extension-unlocked-state",
+        "cdpPort": 6661,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/",
+        "runtimeLaunch": null,
+        "liveAdapter": "/Users/deeeed/dev/metamask/metamask-recipe-runner/library/actions/extension/wallet/ensure_unlocked.mjs"
+      }
+    },
+    {
+      "nodeId": "nav-home",
+      "action": "ui.navigate",
+      "intent": "Open wallet overview",
+      "startedAt": "2026-06-18T14:45:37.633Z",
+      "endedAt": "2026-06-18T14:45:37.834Z",
+      "durationMs": 201,
+      "ok": true,
+      "next": "wait-perps-tab",
+      "output": {
+        "action": "ui.navigate",
+        "page": "home",
+        "hash": "#/",
+        "navigation": {
+          "frameId": "F7961953782607DD6096548D77C6510B",
+          "isDownload": false
+        },
+        "proofPath": "ui-navigation",
+        "cdpPort": 6661,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/",
+        "runtimeLaunch": null,
+        "liveAdapter": "/Users/deeeed/dev/metamask/metamask-recipe-runner/library/actions/extension/ui/navigate.mjs"
+      }
+    },
+    {
+      "nodeId": "wait-perps-tab",
+      "action": "ui.wait_for",
+      "intent": "Perps tab present",
+      "startedAt": "2026-06-18T14:45:37.839Z",
+      "endedAt": "2026-06-18T14:45:37.848Z",
+      "durationMs": 9,
+      "ok": true,
+      "next": "wait-badge",
+      "output": {
+        "matched": true,
+        "cdpPort": 6661,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/",
+        "runtimeLaunch": null
+      }
+    },
+    {
+      "nodeId": "wait-badge",
+      "action": "ui.wait_for",
+      "intent": "Treatment New badge visible",
+      "startedAt": "2026-06-18T14:45:37.852Z",
+      "endedAt": "2026-06-18T14:45:37.859Z",
+      "durationMs": 7,
+      "ok": true,
+      "next": "shot",
+      "output": {
+        "matched": true,
+        "cdpPort": 6661,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/",
+        "runtimeLaunch": null
+      }
+    },
+    {
+      "nodeId": "shot",
+      "action": "ui.screenshot",
+      "intent": "Capture the treatment badge",
+      "artifacts": [
+        {
+          "path": "evidence-treatment-badge.png",
+          "type": "screenshot",
+          "nodeId": "shot",
+          "label": "Treatment — New badge on the Perps tab",
+          "category": "evidence",
+          "mimeType": "image/png",
+          "metadata": {
+            "provider": "capture-helper",
+            "mode": "snapshot",
+            "pid": 15753,
+            "captureHelper": {
+              "bytes": 505361,
+              "output": "/Users/deeeed/dev/metamask/metamask-extension-1/temp/tasks/feat/tat-3382-0618-141118/artifacts/treatment-capture-run/evidence-treatment-badge.png",
+              "selected": {
+                "app": "Google Chrome for Testing",
+                "height": 800,
+                "id": 8138,
+                "layer": 0,
+                "onScreen": true,
+                "pid": 15753,
+                "title": "mme-1 — MetaMask",
+                "width": 500,
+                "x": 22,
+                "y": 61
+              },
+              "selector": "pid",
+              "type": "snapshot"
+            }
+          }
+        }
+      ],
+      "startedAt": "2026-06-18T14:45:37.862Z",
+      "endedAt": "2026-06-18T14:45:38.227Z",
+      "durationMs": 365,
+      "ok": true,
+      "next": "done",
+      "output": {
+        "captured": true,
+        "path": "evidence-treatment-badge.png",
+        "artifact": {
+          "path": "evidence-treatment-badge.png",
+          "type": "screenshot",
+          "nodeId": "shot",
+          "label": "Treatment — New badge on the Perps tab",
+          "category": "evidence",
+          "mimeType": "image/png",
+          "metadata": {
+            "provider": "capture-helper",
+            "mode": "snapshot",
+            "pid": 15753,
+            "captureHelper": {
+              "bytes": 505361,
+              "output": "/Users/deeeed/dev/metamask/metamask-extension-1/temp/tasks/feat/tat-3382-0618-141118/artifacts/treatment-capture-run/evidence-treatment-badge.png",
+              "selected": {
+                "app": "Google Chrome for Testing",
+                "height": 800,
+                "id": 8138,
+                "layer": 0,
+                "onScreen": true,
+                "pid": 15753,
+                "title": "mme-1 — MetaMask",
+                "width": 500,
+                "x": 22,
+                "y": 61
+              },
+              "selector": "pid",
+              "type": "snapshot"
+            }
+          }
+        }
+      }
+    },
+    {
+      "nodeId": "done",
+      "action": "end",
+      "startedAt": "2026-06-18T14:45:38.231Z",
+      "endedAt": "2026-06-18T14:45:38.235Z",
+      "durationMs": 4,
+      "ok": true,
+      "status": "pass"
+    }
+  ]
+}

@@ -1,0 +1,65 @@
+{
+  "version": 1,
+  "verdict": "warn",
+  "compact": {
+    "verdict": "WARN",
+    "reasons": [
+      "Recipe proves AC1 live via a real user flow: ac1-wait-perps-tab + ac1-assert-badge-absent + ac1-screenshot pass (trace 6/6), no flag patching or reload.",
+      "AC2 (treatment badge), AC3 (dismissal + persistence), AC5 (Experiment Viewed), AC6 (active_ab_tests enrichment) are proven by unit tests, not the recipe.",
+      "The A/B variant is a remote feature flag (perpsTAT3382AbtestTabBadge) that must be seeded at launch in the fixture's RemoteFeatureFlagController; forcing it at runtime requires an extension reload that destroys the FixtureServer wallet state, so it is intentionally not done in the recipe."
+    ],
+    "better_version_guidance": [
+      "Seed perpsTAT3382AbtestTabBadge={name:'treatment'} in the launch fixture's RemoteFeatureFlagController.remoteFeatureFlags, then add ac2-/ac3- nodes that assert the badge is visible and dismisses on click for a live treatment proof.",
+      "Once the flag is launch-seeded, a second recipe run in treatment would let ac2-screenshot directly prove the badge."
+    ]
+  },
+  "dimensions": {
+    "graph_integrity": {
+      "status": "pass",
+      "reason": "Workflow graph is structurally valid; all nodes reachable and terminal.",
+      "evidence": ["recipe.json", "recipe-run/trace.json"]
+    },
+    "ac_coverage": {
+      "status": "warn",
+      "reason": "AC1 is bound to ac1-* nodes and proven live; AC2/AC3/AC4/AC5/AC6 are covered by unit tests rather than recipe nodes because the variant must be launch-seeded.",
+      "evidence": ["recipe-run/trace.json", "report.md"]
+    },
+    "evidence_contract_basics": {
+      "status": "pass",
+      "reason": "AC1 visual claim has a capture-helper snapshot on the real overview screen; internal/treatment claims are proven by unit tests.",
+      "evidence": ["after-ac1-control-no-badge.png"]
+    }
+  },
+  "structural_findings": [],
+  "contextual_findings": [
+    {
+      "code": "variant-not-launch-seeded",
+      "message": "Treatment variant cannot be forced at runtime without an extension reload that destroys FixtureServer wallet state; covered by unit tests instead.",
+      "dimension": "ac_coverage",
+      "evidence": ["report.md"]
+    }
+  ],
+  "suggested_recipe_delta": [
+    "Seed perpsTAT3382AbtestTabBadge={name:'treatment'} at launch and add ac2-/ac3- assertion nodes for a live treatment proof."
+  ],
+  "training_fields": {
+    "farm": "metamask-extension",
+    "project": "metamask-extension-farm",
+    "flow_type": "dev",
+    "task_type": "dev",
+    "claim_is_visual": true,
+    "proof_mode": "mixed",
+    "anti_patterns": [],
+    "good_patterns": [
+      "user-flow-only recipe with no manifest patching or reload",
+      "capture-helper snapshot on the real target screen"
+    ]
+  },
+  "meta": {
+    "producer": "worker",
+    "fallback_used": false,
+    "legacy_task": false,
+    "artifact_required": true,
+    "source_signals": ["recipe.json", "recipe-run/trace.json", "report.md"]
+  }
+}

@@ -1,0 +1,63 @@
+{
+  "schema_version": 1,
+  "title": "Evidence capture — treatment badge",
+  "description": "Screenshot the Perps tab New badge with the treatment variant forced (evidence only).",
+  "validate": {
+    "workflow": {
+      "entry": "gate-unlock",
+      "nodes": {
+        "gate-unlock": {
+          "action": "metamask.wallet.ensure_unlocked",
+          "intent": "Ensure wallet unlocked",
+          "next": "nav-home"
+        },
+        "nav-home": {
+          "action": "ui.navigate",
+          "page": "home",
+          "intent": "Open wallet overview",
+          "next": "wait-perps-tab"
+        },
+        "wait-perps-tab": {
+          "action": "ui.wait_for",
+          "test_id": "account-overview__perps-tab",
+          "expected": "visible",
+          "timeout_ms": 20000,
+          "poll_ms": 500,
+          "intent": "Perps tab present",
+          "next": "wait-badge"
+        },
+        "wait-badge": {
+          "action": "ui.wait_for",
+          "test_id": "perps-tab-new-badge",
+          "expected": "visible",
+          "timeout_ms": 10000,
+          "poll_ms": 500,
+          "intent": "Treatment New badge visible",
+          "next": "shot"
+        },
+        "shot": {
+          "action": "ui.screenshot",
+          "path": "evidence-treatment-badge.png",
+          "label": "Treatment — New badge on the Perps tab",
+          "note": "Treatment: the Perps tab label shows a 'New' badge",
+          "intent": "Capture the treatment badge",
+          "claims": {
+            "must_show": [
+              {
+                "test_id": "perps-tab-new-badge"
+              },
+              {
+                "text_contains": "New"
+              }
+            ]
+          },
+          "next": "done"
+        },
+        "done": {
+          "action": "end",
+          "status": "pass"
+        }
+      }
+    }
+  }
+}
