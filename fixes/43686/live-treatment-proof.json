@@ -1,0 +1,11 @@
+{
+  "context": "PR #43686 interactive re-entry — live CDP proof of the two P2 review fixes against the running extension (CDP 6661).",
+  "runtimeAssignment": "treatment",
+  "note": "This profile's RemoteFeatureFlagController resolved the badge A/B to TREATMENT, so the inherited CONTROL recipe (artifacts/recipe.json) cannot pass here (assignment mismatch, not a code defect). Treatment dismissal/persistence is proven below.",
+  "newBundleLoaded": true,
+  "steps": [
+    { "step": "reload home (new bundle)", "badgePresent": true, "perpsTabPresent": true, "meaning": "treatment + unseen + perps NOT active -> badge shown (correct)" },
+    { "step": "click Perps tab", "badgePresent": false, "perpsTabPresent": true, "meaning": "dismissed on becoming active (effect path)" },
+    { "step": "reload home (persistence check)", "badgePresent": false, "perpsTabPresent": true, "meaning": "dismissal persisted via AppStateController across reload" }
+  ]
+}

@@ -1,0 +1,81 @@
+{
+  "metadata": {
+    "runner": {
+      "source": "/Users/deeeed/dev/metamask/metamask-recipe-runner",
+      "git_ref": "93246f407645e6b7b0b150618a31203afdd77caa",
+      "name": "@metamask/recipe-runner"
+    }
+  },
+  "entries": [
+    {
+      "nodeId": "gate-unlock",
+      "action": "metamask.wallet.ensure_unlocked",
+      "intent": "Ensure the wallet is unlocked before proof steps",
+      "startedAt": "2026-06-18T16:33:46.338Z",
+      "endedAt": "2026-06-18T16:33:47.388Z",
+      "durationMs": 1050,
+      "ok": true,
+      "next": "ac1-nav-home",
+      "output": {
+        "action": "metamask.wallet.ensure_unlocked",
+        "unlocked": true,
+        "alreadyUnlocked": true,
+        "proofPath": "extension-unlocked-state",
+        "cdpPort": 6661,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/",
+        "runtimeLaunch": null,
+        "liveAdapter": "/Users/deeeed/dev/metamask/metamask-recipe-runner/library/actions/extension/wallet/ensure_unlocked.mjs"
+      }
+    },
+    {
+      "nodeId": "ac1-nav-home",
+      "action": "ui.navigate",
+      "intent": "AC1: open the account overview home tab bar",
+      "startedAt": "2026-06-18T16:33:47.396Z",
+      "endedAt": "2026-06-18T16:33:48.290Z",
+      "durationMs": 894,
+      "ok": true,
+      "next": "ac1-wait-perps-tab",
+      "output": {
+        "action": "ui.navigate",
+        "page": "home",
+        "hash": "#/",
+        "navigation": {
+          "frameId": "AF0CB787172841550DE184E8D599EBE7",
+          "isDownload": false
+        },
+        "proofPath": "ui-navigation",
+        "cdpPort": 6661,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/",
+        "runtimeLaunch": null,
+        "liveAdapter": "/Users/deeeed/dev/metamask/metamask-recipe-runner/library/actions/extension/ui/navigate.mjs"
+      }
+    },
+    {
+      "nodeId": "ac1-wait-perps-tab",
+      "action": "ui.wait_for",
+      "intent": "AC1: the Perps tab is present in the overview tab bar",
+      "startedAt": "2026-06-18T16:33:48.305Z",
+      "endedAt": "2026-06-18T16:33:48.379Z",
+      "durationMs": 74,
+      "ok": true,
+      "next": "ac1-assert-badge-absent",
+      "output": {
+        "matched": true,
+        "cdpPort": 6661,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/",
+        "runtimeLaunch": null
+      }
+    },
+    {
+      "nodeId": "ac1-assert-badge-absent",
+      "action": "ui.wait_for",
+      "intent": "AC1: control assignment shows the Perps tab with NO New badge",
+      "startedAt": "2026-06-18T16:33:48.423Z",
+      "endedAt": "2026-06-18T16:33:56.486Z",
+      "durationMs": 8063,
+      "ok": false,
+      "error": "Error: ui.wait_for timed out\n    at <anonymous>:1:350"
+    }
+  ]
+}
