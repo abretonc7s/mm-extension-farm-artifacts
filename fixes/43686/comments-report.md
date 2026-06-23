@@ -1,55 +1,68 @@
 # PR #43686 — Comments Report & Triage
 
 **PR:** feat(perps): A/B test "New" badge on Perps tab label in wallet overview
-**Branch:** `TAT-3382-feat-add-perps-new-badge`
-**Inherited context:** present (family `e7d88cea-5a9c-49d1-9373-ef79496f16fc`, TAT-3382). Read `inputs/inherited/report.md`, `recipe.json`, `recipe-quality.json`, `evidence-manifest.json`, `inherited-context.json`.
+**Branch:** TAT-3382-feat-add-perps-new-badge
+**Run:** 43686-0623-204041
 
-## Context summary
+## Summary
 
-Standalone re-entry on top of inherited Farmslot family context. The PR adds a remote-flag-gated A/B test (`perpsTAT3382AbtestTabBadge`) that shows a "New" badge on the Perps tab in the treatment variant, dismissed on first Perps-tab click and persisted via `AppStateController` (mirrors `musdConversionEducationSeen`). Analytics reuse the existing `Perp Screen Viewed` event, enriched with `active_ab_tests`.
+This is a **re-invocation** of the pr-complete flow. Branch HEAD (`6a27d4b8dc`) is
+fully synced with `origin` (0 ahead / 0 behind), working tree clean, and already merged
+with latest `origin/main`. **All five review threads were already resolved by prior
+farmslot runs**, and every cursor[bot] finding is verified present-and-fixed in current
+code. No new code changes were required this run.
 
 ## Triage
 
-| Source | Author | Where | Classification | Resolution |
-|---|---|---|---|---|
-| review (inline) | geositta | `test/e2e/feature-flags/feature-flag-registry.ts:2277` | **REAL** | Fixed — see below |
-| inline | michalconsensys | `app/scripts/controllers/app-state-controller.test.ts:1112` ("Do we need a migration here?") | **FALSE_POSITIVE** (no code change) | No migration needed — explained below; operator replied directly. |
-| inline | cursor[bot] | `ui/store/actions.ts` — "Background API missing badge setter" | **FALSE_POSITIVE** (outdated) | `metamask-controller.js:3331` already binds `setPerpsTabBadgeSeen`. |
-| inline | cursor[bot] | `shared/constants/app-state.ts` — "Duplicate Perp Screen Viewed events" | **FALSE_POSITIVE** | `app-state.ts:27` maps the Perps tab to a **trace** name (`AccountOverviewPerpsTab`), not the MetaMetrics event. No double-count. |
-| inline | cursor[bot] | `account-overview-tabs.tsx` — "Dismisses badge without Perps tab" | **FALSE_POSITIVE** (outdated) | Dismissal effect (`account-overview-tabs.tsx:155`) is gated on `showPerpsTabBadge`, which requires `isPerpsExperienceAvailable`. |
-| issue/bot | github-actions, mm-token-exchange, sonarqube | conversation | N/A | CLA/build/quality bots — no action. SonarQube quality gate passed. |
+| # | Author | File:Line | Severity | Triage | Status / Action |
+|---|--------|-----------|----------|--------|-----------------|
+| 1 | cursor[bot] | ui/store/actions.ts:7709 | High | REAL (already fixed) | `setPerpsTabBadgeSeen` IS registered on background API — `app-state-controller.ts:757` (controller methods), handler `:1335`, action type `app-state-controller-method-action-types.ts:285`, wired via legacy-background-api-service. Thread resolved. |
+| 2 | cursor[bot] | shared/constants/app-state.ts:19-20 | Medium | REAL (already fixed) | Perps is NOT in `ACCOUNT_OVERVIEW_TAB_KEY_TO_METAMETRICS_EVENT_NAME_MAP` (only Tokens/DeFi/Activity). No duplicate `Perp Screen Viewed`. Thread resolved + outdated. |
+| 3 | cursor[bot] | account-overview-tabs.tsx:127-132 | Medium | REAL (already fixed) | Mount effect (`account-overview-tabs.tsx:154-158`) is gated on `showPerpsTabBadge`, which requires `isPerpsExperienceAvailable` (`:119-122`). Badge can't be marked seen when Perps unavailable. Thread resolved + outdated. |
+| 4 | michalconsensys | app-state-controller.test.ts:1112 | — | FALSE POSITIVE (answered) | "Do we need a migration here?" — No: `perpsTabBadgeSeen` is a new field, defaults handled by controller state init. Author replied (`3451236916`), thread resolved. |
+| 5 | geositta | test/e2e/feature-flags/feature-flag-registry.ts | — | REAL (already fixed) | A/B flag now mirrors exact production remote JSON (version-scoped threshold array) instead of `{ enabled: false }`, fixed in `eb67e67`. Author replied (`3460274214`), thread resolved. |
 
-## REAL fix — geositta (feature-flag registry shape)
+### Conversation comments
+All three `issues/comments` from `abretonc7s` are farmslot run summaries (own automated
+worker reports), not actionable reviewer feedback. NOOP / informational.
 
-**Concern:** new A/B flag used the `{ enabled: false }` feature-toggle shape instead of the threshold-array shape required by `docs/ab-testing.md` (DoD: "uses the threshold-array format"; "store the exact remote JSON value … including the threshold array, so E2E mocks exercise the same bucketing path as production").
+## Recipe re-validation (step 10)
 
-**Fix:** updated `perpsTAT3382AbtestTabBadge.productionDefault` to mirror the **exact production remote JSON** (operator-confirmed value from the flag dashboard):
+- **Recipe:** `artifacts/recipe.json` — "TAT-3382 — Perps tab New badge (control user flow)".
+- **Result:** FAIL (3/4 nodes pass). Failing node = `ac1-assert-badge-absent` (`ui.wait_for perps-tab-new-badge expected=absent` timed out).
+- **Root cause:** NOT a regression. Live DOM probe confirms the runtime is bucketed into the
+  **treatment** variant: `{perpsTab:true, badge:true, badgeText:"New", tabText:"PerpsNew"}`.
+  The recipe asserts the **control** assignment (no badge), but per its own description the A/B
+  variant is a remote feature flag seeded at fixture launch and cannot be forced to control at
+  runtime. This runtime happened to bucket to treatment, so the badge correctly renders — the
+  feature is working, not broken.
+- **Attribution:** No code changed this run (clean tree, 0 ahead/behind origin); the step-3 merge
+  was a no-op (already up to date). The failure is independent of this branch — it is a
+  fixture/bucketing condition. Both control and treatment paths are authoritatively validated by
+  the 47 passing unit tests (account-overview-tabs, perps-tab-badge, useABTest, persisted-state).
+- **Decision (per step-10 rule):** unrelated to this branch → logged as environment variance, not
+  blocking. CI parity gate + coverage (PASS, 100% new-code) cover code correctness.
 
-```ts
-productionDefault: {
-  versions: {
-    '13.37.0': [
-      { name: 'control',   scope: { type: 'threshold', value: 0.5 } },
-      { name: 'treatment', scope: { type: 'threshold', value: 1 } },
-    ],
-  },
-},
-```
+## Verdict
+- Total reviewer comments: 5 inline (3 bot, 2 human) + 3 conversation (bot/self reports).
+- REAL: 4 (all already fixed in prior commits on this branch). FALSE POSITIVE: 1. OUT OF SCOPE: 0.
+- **Commit SHA for fixes (this run):** none — no code changes were required. Branch HEAD `6a27d4b8dc`
+  already contains every fix and is 0 ahead / 0 behind origin.
+- **Files changed (this run):** none.
+- **Recipe re-validation:** FAIL on control-path assertion, attributed to treatment-bucket
+  environment variance (see Recipe section) — NOT a regression. Code correctness covered by CI
+  gate + 100% new-code coverage + 47 passing unit tests.
+- **Merge-main status (step 3):** clean — already up to date with `origin/main`.
+- **Step 11 (commit/push):** no-op — nothing to stage, branch already synced.
+- **Step 12 (replies/resolve):** no-op — all 5 threads already resolved; human threads already
+  have author replies (#5 cites fix commit `eb67e67`); cursor threads resolved by prior handling.
+  No new commit to cite, so re-replying would be duplicate noise (consistent with 3 prior runs).
 
-Verified against `@metamask/remote-feature-flag-controller`: the version-scoped wrapper is resolved by `processVersionBasedFlag` → `getVersionData(value, clientVersion)`, then the threshold array is bucketed via `calculateThresholdForFlag(metaMetricsId)` selecting the first group where `threshold <= scope.value`, falling back to control when no `metaMetricsId`. So the E2E mock now drives the same resolution path as production (version select → metaMetricsId bucketing, ~50/50).
-
-Commits: `9e38d8c` (initial threshold array) → `eb67e67` (corrected to exact production version-scoped value).
-
-geositta thread replied + updated: https://github.com/MetaMask/metamask-extension/pull/43686#discussion_r3460274214
-
-## Migration question — michalconsensys
-
-**No migration needed.** `perpsTabBadgeSeen` is added to `getDefaultAppStateControllerState()` (default `false`) which is spread before persisted `state` at controller init (`app-state-controller.ts:802-804`), so existing users automatically get `false`. Migrations are only for transforming/renaming existing persisted data, not adding a new defaulted field. Same pattern as `musdConversionEducationSeen`, which shipped with no migration (none exists in `app/scripts/migrations/`). Operator replied to michal directly.
-
-## Validation
-
-- `yarn lint:changed` — PASS (1 file: feature-flag-registry.ts)
-- `yarn verify-locales --quiet` — "No invalid entries!"
-- `yarn circular-deps:check` — passed (verified earlier in session; gate later timed out on the slow walk only, lint+locales clean)
-- `yarn jest test/e2e/feature-flags/feature-flag-registry.test.ts test/e2e/feature-flags/sync-production-flags.test.ts --no-coverage` — 26/26 PASS
-- Recipe: runtime-health PASS (CDP 6661); control recipe run hit `ui.wait_for` timeout (runtime/timing, unrelated to this test-only registry change — registry value affects only the Playwright E2E mock, not the live recipe). Not treated as a regression.
+## CI parity gate (step 9) — all green
+- `yarn lint:changed`: no changed files to lint (branch fully committed).
+- `yarn verify-locales --quiet`: No invalid entries.
+- `yarn circular-deps:check`: passed.
+- Unit tests (badge feature): 47/47 passed (account-overview-tabs, perps-tab-badge, useABTest, persisted-state).
+- Coverage: PASS — new code 100% (25/25 changed lines) after correcting the analyzer's stale-base
+  misattribution (the original FAIL flagged `legacy-background-api-service` migration lines that
+  belong to main, not this PR).

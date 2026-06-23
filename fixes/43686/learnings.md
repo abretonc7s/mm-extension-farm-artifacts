@@ -1,0 +1,10 @@
+# Reviewer-driven learnings — PR #43686 (TAT-3382 Perps "New" badge)
+
+What reviewers (cursor[bot] + humans) caught on this branch that the original fix-bug worker
+should have derived up front:
+
+- **New background action needs handler registration: cursor flagged `setPerpsTabBadgeSeen` calling `submitRequestToBackground(...)` with no handler registered on `MetamaskController` — when adding any UI→background action thunk, register the setter alongside the existing AppState setters (controller method list + action-types + legacy-background-api-service) in the same change, or dismissal silently no-ops at runtime.**
+- **Don't double-count analytics: cursor flagged adding the Perps tab to the generic `ACCOUNT_OVERVIEW_TAB_KEY_TO_METAMETRICS_EVENT_NAME_MAP` while `PerpsView` already emits the screen-viewed event — before mapping a tab into a shared metrics map, check whether the destination view already fires that event; otherwise every visit double-counts.**
+- **Gate side-effects on the same condition as visibility: cursor flagged the badge-seen persistence effect firing without requiring `isPerpsExperienceAvailable`, which would permanently hide the badge for `?tab=perps`/persisted-default users while Perps is disabled — a "mark dismissed" effect must be gated on the exact availability/visibility predicate that renders the thing being dismissed.**
+- **A/B flags must mirror production remote JSON: geositta flagged the flag using `{ enabled: false }` instead of the version-scoped threshold-array shape from docs/ab-testing.md — new A/B test registry entries should store the exact production remote JSON value so E2E mocks exercise the real bucketing path, not a feature-toggle shortcut (fixed in `eb67e67`).**
+- **Recipe bucket assumptions: a runtime recipe that asserts a single A/B assignment (control "no badge") will fail when the live fixture buckets to the other variant — remote-flag A/B variants can't be forced at runtime, so prove both arms with unit tests and keep the recipe's runtime assertion tolerant of (or explicit about) the seeded bucket.**
