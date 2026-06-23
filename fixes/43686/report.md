@@ -1,57 +1,45 @@
-# PR #43686 — Interactive PR-complete Report
+# PR #43686 — Interactive PR-complete report
 
-**PR:** feat(perps): [Extension] A/B test "New" badge on Perps tab label in wallet overview
-**Branch:** `TAT-3382-feat-add-perps-new-badge` · **Status:** waiting-human (interactive re-entry; no terminal SIGNAL written)
+**PR:** feat(perps): A/B test "New" badge on Perps tab label in wallet overview
+**Branch:** `TAT-3382-feat-add-perps-new-badge`
+**Mode:** interactive re-entry, operator-supervised. Operator explicitly confirmed completion.
 
 ## Summary
 
-Re-entered the Perps "New" badge A/B-test PR. Inherited Farmslot family context (`e7d88cea…`) was present and reloaded.
-Triaged all live PR comments and fixed the actionable issues:
+Re-opened PR #43686 with inherited Farmslot family context. Triaged all live PR comments. One review comment (geositta) was REAL and required a code change; the rest (3 cursor-bot, 1 migration question) were false positives / no-change. Applied the minimal fix, validated, committed, pushed, and replied to geositta. Operator handled the michal migration reply directly.
 
-- The two **cursor[bot]** inline comments (background API missing setter; duplicate `Perp Screen Viewed`) were already
-  resolved by the earlier commit `f4badbc231` — verified against current HEAD, no further change.
-- Two **operator-supplied P2** review comments were **REAL** and are now fixed (see below).
-
-## Files changed (this session)
+## Files changed
 
 | File | Change |
 |---|---|
-| `ui/components/multichain/account-overview/account-overview-tabs.tsx` | **Fix P2-A.** Moved Perps badge dismissal from a click-only branch in `handleTabClick` into a `useEffect` that marks the badge seen whenever the Perps tab is the active/visible tab. Covers landing directly on Perps (persisted default tab or `?tab=perps`), which the click handler missed. Removed `showPerpsTabBadge` from `handleTabClick` deps. |
-| `ui/components/multichain/account-overview/account-overview-tabs.test.tsx` | Added `route` param to `renderTabs`; added 2 tests (treatment-on-mount persists dismissal; control-on-mount does not). Existing click-dismissal test retained and still passes via the new effect. |
-| `test/e2e/feature-flags/feature-flag-registry.ts` | **Fix P2-B.** Registered `perpsTAT3382AbtestTabBadge` (`Remote`, `inProd: true`, `productionDefault: { enabled: false }`) so the E2E global remote-flag mock serves a production-accurate default (resolves to control/inactive). |
-| `shared/lib/ab-testing/ab-test-analytics.ts` | Pre-existing Prettier reflow only (no logic). |
-| `shared/lib/ab-testing/perps-tab-badge.test.ts` | Pre-existing Prettier reflow only (no logic). |
+| `test/e2e/feature-flags/feature-flag-registry.ts` | `perpsTAT3382AbtestTabBadge.productionDefault`: `{ enabled: false }` → exact production version-scoped threshold array (`{ versions: { '13.37.0': [control 0.5, treatment 1] } }`). Test-only file; no production/runtime code touched. |
 
-## Validation
+## Commits (pushed to origin)
 
-| Check | Result |
-|---|---|
-| `yarn jest` account-overview-tabs + ab-testing + feature-flag-registry + sync-production-flags | **43/43 pass** (incl. 2 new mount tests) |
-| `yarn lint:changed` | exit 0 (5 files) |
-| `yarn verify-locales --quiet` | exit 0 (No invalid entries) |
-| `yarn circular-deps:check` | exit 0 |
-| Live CDP proof (treatment runtime, port 6661) | reload → badge shown → click Perps → badge gone → reload → still gone (persisted). `live-treatment-proof.json` |
+- `9e38d8c460` — test(perps): use threshold array for badge A/B flag (initial)
+- `eb67e67894` — test(perps): mirror exact production value for badge A/B flag (corrected to operator-confirmed dashboard value)
 
-### Recipe note
+## Validation (exact results)
 
-The inherited recipe `artifacts/recipe.json` proves the **control** flow (Perps tab, no badge). In this slot the
-running profile's `RemoteFeatureFlagController` resolved the A/B test to **treatment**, so the control recipe times
-out at `ac1-assert-badge-absent` (badge is correctly present) — an assignment mismatch, **not** a code defect. The
-parent run already proved control live (trace 6/6) when its profile bucketed to control. This session proves the
-treatment dismissal/persistence path live instead (above). Forcing a specific variant requires launch-seeding the
-flag in the fixture's `RemoteFeatureFlagController` (documented limitation in `recipe-quality.json`).
+- `yarn lint:changed` → PASS (feature-flag-registry.ts)
+- `yarn verify-locales --quiet` → "No invalid entries!"
+- `yarn circular-deps:check` → "Circular dependencies check passed." (clean run earlier in session)
+- `yarn jest test/e2e/feature-flags/feature-flag-registry.test.ts test/e2e/feature-flags/sync-production-flags.test.ts --no-coverage` → 26 passed, 26 total
+- `metamask-recipe runtime-health` → status PASS, CDP 6661, extension `hebhblbkkdabgoldnojllkipeoacjioc`
+- Control recipe run → `ui.wait_for` timeout (runtime/timing, unrelated to test-only registry change; registry default only feeds the Playwright E2E mock, not the live recipe). Not a regression.
 
-## Commit / push status
+## Comments handled
 
-**Not committed, not pushed.** Changes are staged-only-eligible per project git-safety rules. No GitHub replies or
-thread resolutions were posted.
+- **geositta** (REAL): registry flag shape → fixed + thread replied/updated (`#discussion_r3460274214`).
+- **michalconsensys** (migration question): no migration needed (new defaulted AppState field, spread before persisted state). Operator replied directly.
+- **cursor[bot] ×3**: all false positives / outdated against current HEAD (setter binding present, trace-name not event-name, dismissal gated on `isPerpsExperienceAvailable`).
 
-## Remaining manual work (operator)
+## Committed / pushed?
 
-1. Review the two P2 fixes (`account-overview-tabs.tsx`, `feature-flag-registry.ts`) + new tests.
-2. Decide whether to also discard the 2 pre-existing Prettier-only reflows in the `shared/lib/ab-testing/*` files or fold them into a commit.
-3. Commit the fixes (suggested: `fix(perps): dismiss badge when Perps tab active on mount + register A/B flag in E2E registry`).
-4. Optional GitHub replies once committed:
-   - To the cursor[bot] "Background API missing badge setter" + "Duplicate Perp Screen Viewed" threads: "Fixed in f4badbc231." (already resolved; bots reviewed the older commit).
-   - For the two P2 review comments: reply with the new commit sha + one-line of what changed, then resolve.
-5. If a live **treatment** recipe proof is wanted in-PR, launch-seed `perpsTAT3382AbtestTabBadge={name:'treatment'}` in the fixture and add `ac2-/ac3-` nodes.
+**Yes** — operator explicitly requested commit + push during this interactive session. Both commits are on `origin/TAT-3382-feat-add-perps-new-badge`. CI + review bots re-running on push.
+
+## Remaining manual work
+
+- michal migration thread: operator replied directly; resolve thread if satisfied.
+- geositta thread: reply posted; resolve once geositta acks.
+- No fresh approval expected to be required — michalconsensys already APPROVED and MetaMask does not dismiss stale approvals on push (verify if repo policy differs).
