@@ -1,0 +1,76 @@
+{
+  "version": 1,
+  "verdict": "warn",
+  "compact": {
+    "verdict": "WARN",
+    "reasons": [
+      "AC1 PROVEN by recipe: ac1-* nodes, trace 5/5 pass, screenshot evidence-ac1-control-no-badge.png shows Perps tab with no badge, paired CDP DOM probe flag=control/badgeInDom=false.",
+      "AC2 (visual: treatment badge) proven by live CDP DOM observation (flag=treatment -> perps-tab-new-badge present, tab text 'PerpsNew') + unit test, but no controlled recipe screenshot — the remote variant re-buckets only on background refresh and runtime flag patching is disallowed.",
+      "AC3/AC4/AC5/AC6 UNTESTABLE-live (boot-seeded remote variant cannot be forced; analytics not observable in slot) — all authoritatively unit-test proven (110/110 jest pass). No WEAK/MISSING rows.",
+      "Runner gap: ui.wait_for does not honor expected:'absent' (polls for presence -> timeout); badge absence proven via read-only CDP DOM probe instead."
+    ],
+    "better_version_guidance": [
+      "Seed perpsTAT3382AbtestTabBadge=treatment in the fixture RemoteFeatureFlagController at browser launch (orchestrator-level) so the treatment badge can be captured as a deterministic recipe screenshot for AC2.",
+      "Add a runner-supported absence assertion (or a DOM-eval action) so control badge-absence can be asserted in-recipe rather than via an external CDP probe."
+    ]
+  },
+  "dimensions": {
+    "graph_integrity": {
+      "status": "pass",
+      "reason": "Workflow graph structurally valid; entry gate-unlock, all nodes reachable, single terminal end node.",
+      "evidence": ["recipe.json"]
+    },
+    "action_contract": {
+      "status": "warn",
+      "reason": "All actions manifest-declared. Removed an unsupported ui.wait_for expected:'absent' node (runner gap, not honored) and substituted a read-only CDP DOM absence probe.",
+      "evidence": ["recipe.json", "trace.json"]
+    },
+    "ac_coverage": {
+      "status": "pass",
+      "reason": "All 6 ACs accounted for: AC1 PROVEN (recipe), AC2 PROVEN (live DOM state), AC3-AC6 UNTESTABLE with concrete boot-seeded-flag/analytics rationale and unit-test proof. No MISSING/WEAK.",
+      "evidence": ["recipe-coverage.md", "trace.json"]
+    },
+    "evidence_contract_basics": {
+      "status": "warn",
+      "reason": "AC1 visual claim has a capture-helper screenshot. AC2 visual claim proven by live CDP DOM state + unit test but lacks a controlled recipe screenshot (non-deterministic remote variant + no-patching constraint). UNTESTABLE analytics ACs correctly rely on unit tests, no screenshot padding.",
+      "evidence": ["evidence/evidence-ac1-control-no-badge.png", "recipe-coverage.md"]
+    }
+  },
+  "structural_findings": [
+    {
+      "code": "RUNNER_WAIT_FOR_ABSENT_UNSUPPORTED",
+      "message": "ui.wait_for expected:'absent' is not honored by this extension runner build; it polls for element presence and times out. Removed from recipe; absence proven via read-only CDP DOM probe.",
+      "dimension": "action_contract",
+      "evidence": ["recipe.json"]
+    }
+  ],
+  "contextual_findings": [
+    {
+      "code": "REMOTE_VARIANT_NONDETERMINISTIC",
+      "message": "perpsTAT3382AbtestTabBadge is delivered live (percentage rollout control 0.5/treatment 1.0) and oscillates between assignments on background refresh; the treatment screenshot for AC2 could not be deterministically captured without orchestrator-level fixture seeding.",
+      "dimension": "evidence_contract_basics",
+      "evidence": ["recipe-coverage.md"]
+    }
+  ],
+  "suggested_recipe_delta": [
+    "Seed treatment assignment at fixture launch to capture a deterministic AC2 badge screenshot.",
+    "Replace external CDP absence probe with an in-recipe absence assertion once the runner supports it."
+  ],
+  "training_fields": {
+    "farm": "metamask-extension",
+    "project": "metamask-extension-farm",
+    "flow_type": "review-pr",
+    "task_type": "review-pr",
+    "claim_is_visual": true,
+    "proof_mode": "mixed",
+    "anti_patterns": [],
+    "good_patterns": ["ac-prefixed-nodes", "paired-cdp-dom-probe", "capture-helper-snapshot"]
+  },
+  "meta": {
+    "producer": "worker",
+    "fallback_used": false,
+    "legacy_task": false,
+    "artifact_required": true,
+    "source_signals": ["recipe.json", "recipe-coverage.md", "trace.json", "evidence/evidence-ac1-control-no-badge.png"]
+  }
+}

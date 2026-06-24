@@ -1,0 +1,19 @@
+# Learnings — PR #43686 review (TAT-3382 Perps tab "New" badge)
+
+- **Remote A/B flags are NOT deterministically seeded in this slot.** `perpsTAT3382AbtestTabBadge` resolves live from the background `RemoteFeatureFlagController` with a percentage rollout (control 0.5 / treatment 1.0) and oscillates control↔treatment on background refresh. It re-buckets only on background refresh, NOT on UI page reload (12 CDP reloads stayed control; UI reload just re-reads the background's cached value). To capture a treatment screenshot deterministically you must seed the variant in the fixture `RemoteFeatureFlagController.remoteFeatureFlags` at browser launch — runtime patching is disallowed.
+
+- **Runner gap: `ui.wait_for expected:"absent"` is not honored** by this extension runner build. It polls for element *presence* and times out when the element is genuinely absent (error surfaces as `Error: ui.wait_for timed out` at `<anonymous>:1:NNN`, i.e. an injected eval). Use `expected:"visible"` for presence; prove absence with a read-only CDP DOM probe (`document.querySelector('[data-testid=...]') === null`) instead. The inherited recipe used `expected:"absent"` and failed here.
+
+- **`ui.navigate` reloads the page and re-reads the remote flag**, so it can flip the rendered variant mid-recipe. For state that depends on a non-deterministic remote flag, prefer a no-nav recipe that captures the already-loaded page (gate-unlock does not reload when the wallet is already unlocked).
+
+- **Read-only CDP eval against the UI store** is fast and reliable for extension state checks: connect to the `home.html` page target's `webSocketDebuggerUrl` (from `GET :7666/json`), then `Runtime.evaluate` `window.stateHooks.store.getState().metamask` — exposes `remoteFeatureFlags`, `perpsTabBadgeSeen`, etc. `window.stateHooks` hook keys are listed by `runtime-health`.
+
+- **Extension has no `NavTabClicked`/screen-opened event for the Perps tab.** `ACCOUNT_OVERVIEW_TAB_KEY_TO_METAMETRICS_EVENT_NAME_MAP` (shared/constants/app-state.ts) maps only Tokens/DeFi/Activity. `Perp Screen Viewed` is fired by `PerpsView` (and ~10 other perps surfaces) on tab content mount, not by `handleTabClick`. Any AC/ticket that assumes a Perps `NavTabClicked` is wrong for the extension — verify the tab→event map before trusting it.
+
+- **`Tabs` clamps `activeTab` to the first rendered child (index 0)** when the active key isn't found (`Math.max(findChildByKey(activeTab), 0)` + `clamp`). The badge-dismissal effect's `perpsIsEffectiveActiveTab` reconstructs this rule (Tokens is the only tab that can precede Perps, so `!showTokens` ⇒ Perps is first). Useful pattern to know when reasoning about which overview tab is "active."
+
+- **New `AppStateController` fields with a default need no migration.** `perpsTabBadgeSeen: false` is added to `getDefaultAppStateControllerState()` and merged on init — same as the neighbouring `musdConversionEducationSeen`. Reviewers (michalconsensys) asked about a migration; the answer is no for defaulted new fields. Don't flag missing migrations for these.
+
+- **`registerABTestAnalyticsMapping` is idempotent per `flagKey`** and is called in the MetaMetrics controller constructor; the mapping enriches the named event for bucketed users only (enrichWithABTests injects only when `resolveABTestAssignment` returns `isActive`). When reviewing AB enrichment, check the full set of call sites for the mapped event name — `Perp Screen Viewed` is used very broadly.
+
+- **Coverage gaps this run:** AC2 (treatment badge visible) proven by live CDP DOM state + unit test but NOT by a controlled recipe screenshot (non-deterministic flag + no-patching). AC3–AC6 UNTESTABLE-live (boot-seeded variant / analytics) — all unit-test proven. This is the expected ceiling for remote-flag-gated A/B UI in a non-seeded slot; lean on unit tests + live DOM observation and disclose the screenshot gap rather than faking it.

@@ -1,0 +1,6 @@
+{
+  "originalFamilyScopeSummary": "feat(perps): A/B test \"New\" badge on Perps tab label in wallet overview",
+  "currentTriggerSummary": "review-pr: feat(perps): A/B test \"New\" badge on Perps tab label in wallet overview",
+  "scopeVerdict": "full-scope-addressed",
+  "notes": "Reviewed all 24 changed files in full and all 6 TAT-3382 acceptance criteria. The PR fully implements the badge A/B test: control (no badge) and treatment (badge) both confirmed live via read-only CDP DOM; dismissal/persistence, perps-unavailable, Experiment Viewed exposure, and active_ab_tests enrichment are covered by 110/110 passing unit tests. lint:tsc clean. Two documented divergences from the literal ticket wording are improvements/necessary adaptations (AppStateController persistence over localStorage; Perp Screen Viewed enrichment because the extension has no NavTabClicked event for the Perps tab). All prior bot/human review findings are addressed; PR already has one human APPROVE. No blocking issues — review recommendation is COMMENT with 2 suggestions + 1 a11y nitpick."
+}

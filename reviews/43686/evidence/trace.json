@@ -1,0 +1,158 @@
+{
+  "metadata": {
+    "runner": {
+      "source": "/Users/deeeed/dev/metamask/metamask-recipe-runner",
+      "git_ref": "7b17f4f0ba839e1f6ad691892f42d3bdc4800c47",
+      "name": "@metamask/recipe-runner"
+    }
+  },
+  "entries": [
+    {
+      "nodeId": "gate-unlock",
+      "action": "metamask.wallet.ensure_unlocked",
+      "intent": "Ensure the wallet is unlocked before proof steps",
+      "startedAt": "2026-06-24T11:42:10.576Z",
+      "endedAt": "2026-06-24T11:42:10.761Z",
+      "durationMs": 185,
+      "ok": true,
+      "next": "ac1-nav-home",
+      "output": {
+        "action": "metamask.wallet.ensure_unlocked",
+        "unlocked": true,
+        "alreadyUnlocked": true,
+        "proofPath": "extension-unlocked-state",
+        "cdpPort": 7666,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/",
+        "runtimeLaunch": null,
+        "liveAdapter": "/Users/deeeed/dev/metamask/metamask-recipe-runner/library/actions/extension/wallet/ensure_unlocked.mjs"
+      }
+    },
+    {
+      "nodeId": "ac1-nav-home",
+      "action": "ui.navigate",
+      "intent": "AC1: open the account overview home tab bar",
+      "startedAt": "2026-06-24T11:42:10.765Z",
+      "endedAt": "2026-06-24T11:42:10.965Z",
+      "durationMs": 200,
+      "ok": true,
+      "next": "ac1-wait-perps-tab",
+      "output": {
+        "action": "ui.navigate",
+        "page": "home",
+        "hash": "#/",
+        "navigation": {
+          "frameId": "66259BC49A23D6D6ECE9FE4E48D3DD1C",
+          "isDownload": false
+        },
+        "proofPath": "ui-navigation",
+        "cdpPort": 7666,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/",
+        "runtimeLaunch": null,
+        "liveAdapter": "/Users/deeeed/dev/metamask/metamask-recipe-runner/library/actions/extension/ui/navigate.mjs"
+      }
+    },
+    {
+      "nodeId": "ac1-wait-perps-tab",
+      "action": "ui.wait_for",
+      "intent": "AC1: the Perps tab is present in the overview tab bar",
+      "startedAt": "2026-06-24T11:42:10.970Z",
+      "endedAt": "2026-06-24T11:42:10.978Z",
+      "durationMs": 8,
+      "ok": true,
+      "next": "ac1-screenshot",
+      "output": {
+        "matched": true,
+        "cdpPort": 7666,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/",
+        "runtimeLaunch": null
+      }
+    },
+    {
+      "nodeId": "ac1-screenshot",
+      "action": "ui.screenshot",
+      "intent": "Capture AC1 proof (Perps tab present, no New badge)",
+      "artifacts": [
+        {
+          "path": "evidence-ac1-control-no-badge.png",
+          "type": "screenshot",
+          "nodeId": "ac1-screenshot",
+          "label": "Control — Perps tab with no New badge",
+          "category": "evidence",
+          "mimeType": "image/png",
+          "metadata": {
+            "provider": "capture-helper",
+            "mode": "snapshot",
+            "pid": 98144,
+            "captureHelper": {
+              "bytes": 506351,
+              "output": "/Users/deeeed/dev/metamask/metamask-extension-6/temp/tasks/review/43686-0624-131637/artifacts/recipe-run/evidence-ac1-control-no-badge.png",
+              "selected": {
+                "app": "Google Chrome for Testing",
+                "height": 800,
+                "id": 3248,
+                "layer": 0,
+                "onScreen": true,
+                "pid": 98144,
+                "title": "mme-6 — MetaMask",
+                "width": 500,
+                "x": 22,
+                "y": 61
+              },
+              "selector": "pid",
+              "type": "snapshot"
+            }
+          }
+        }
+      ],
+      "startedAt": "2026-06-24T11:42:10.982Z",
+      "endedAt": "2026-06-24T11:42:11.282Z",
+      "durationMs": 300,
+      "ok": true,
+      "next": "done",
+      "output": {
+        "captured": true,
+        "path": "evidence-ac1-control-no-badge.png",
+        "artifact": {
+          "path": "evidence-ac1-control-no-badge.png",
+          "type": "screenshot",
+          "nodeId": "ac1-screenshot",
+          "label": "Control — Perps tab with no New badge",
+          "category": "evidence",
+          "mimeType": "image/png",
+          "metadata": {
+            "provider": "capture-helper",
+            "mode": "snapshot",
+            "pid": 98144,
+            "captureHelper": {
+              "bytes": 506351,
+              "output": "/Users/deeeed/dev/metamask/metamask-extension-6/temp/tasks/review/43686-0624-131637/artifacts/recipe-run/evidence-ac1-control-no-badge.png",
+              "selected": {
+                "app": "Google Chrome for Testing",
+                "height": 800,
+                "id": 3248,
+                "layer": 0,
+                "onScreen": true,
+                "pid": 98144,
+                "title": "mme-6 — MetaMask",
+                "width": 500,
+                "x": 22,
+                "y": 61
+              },
+              "selector": "pid",
+              "type": "snapshot"
+            }
+          }
+        }
+      }
+    },
+    {
+      "nodeId": "done",
+      "action": "end",
+      "startedAt": "2026-06-24T11:42:11.287Z",
+      "endedAt": "2026-06-24T11:42:11.291Z",
+      "durationMs": 4,
+      "ok": true,
+      "status": "pass"
+    }
+  ]
+}

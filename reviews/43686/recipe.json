@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "title": "TAT-3382 — Perps tab \"New\" badge (control user flow)",
+  "description": "Real user-flow proof against the live fixture-backed wallet, no flag patching and no extension reset. This slot's RemoteFeatureFlagController currently resolves perpsTAT3382AbtestTabBadge to the control assignment (background cache; re-buckets only on remote refresh, not on UI reload), so the Perps tab renders in the wallet overview with NO \"New\" badge. The screenshot proves the Perps tab is present; badge absence is proven by the paired read-only CDP DOM probe recorded in review.md (querySelector('[data-testid=perps-tab-new-badge]') === null), because this runner's ui.wait_for does not honor expected:'absent'. The treatment variant (badge VISIBLE) was also directly observed live via CDP DOM during a treatment window (Perps tab text 'PerpsNew', perps-tab-new-badge present) — see review.md — but could not be re-captured as a recipe screenshot because the flag re-bucketed to control and runtime flag patching is disallowed. AC3 (dismissal/persistence), AC4 (perps unavailable), AC5 (Experiment Viewed exposure) and AC6 (active_ab_tests enrichment) are proven authoritatively by unit tests.",
+  "validate": {
+    "workflow": {
+      "entry": "gate-unlock",
+      "nodes": {
+        "gate-unlock": {
+          "action": "metamask.wallet.ensure_unlocked",
+          "intent": "Ensure the wallet is unlocked before proof steps",
+          "next": "ac1-nav-home"
+        },
+        "ac1-nav-home": {
+          "action": "ui.navigate",
+          "page": "home",
+          "intent": "AC1: open the account overview home tab bar",
+          "next": "ac1-wait-perps-tab"
+        },
+        "ac1-wait-perps-tab": {
+          "action": "ui.wait_for",
+          "test_id": "account-overview__perps-tab",
+          "expected": "visible",
+          "timeout_ms": 20000,
+          "poll_ms": 500,
+          "intent": "AC1: the Perps tab is present in the overview tab bar",
+          "next": "ac1-screenshot"
+        },
+        "ac1-screenshot": {
+          "action": "ui.screenshot",
+          "path": "evidence-ac1-control-no-badge.png",
+          "label": "Control — Perps tab with no New badge",
+          "note": "AC1: in control the Perps tab label has no 'New' badge (badge absence corroborated by CDP DOM probe in review.md)",
+          "intent": "Capture AC1 proof (Perps tab present, no New badge)",
+          "claims": {
+            "must_show": [{ "test_id": "account-overview__perps-tab" }]
+          },
+          "next": "done"
+        },
+        "done": { "action": "end", "status": "pass" }
+      }
+    }
+  }
+}

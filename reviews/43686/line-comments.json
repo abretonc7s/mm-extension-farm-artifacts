@@ -1,0 +1,25 @@
+{
+  "pr_number": "43686",
+  "recommendation": "COMMENT",
+  "summary": "Well-implemented, well-tested (110/110), type-clean A/B badge with two sensible documented divergences from the ticket (AppStateController over localStorage; Perp Screen Viewed over the non-existent NavTabClicked). Live DOM confirmed both badge states. No blocking issues; 3 optional suggestions/nitpicks.",
+  "comments": [
+    {
+      "path": "ui/components/multichain/account-overview/account-overview-tabs.tsx",
+      "line": 143,
+      "body": "`perpsIsEffectiveActiveTab` reconstructs the `Tabs` component's internal \"clamp to the first rendered tab (index 0)\" behavior (it special-cases `!showTokens` because Tokens is the only tab that can precede Perps). This is correct today and well-tested, but it couples this component to `Tabs`' default-selection logic — if `Tabs` ever changes which index it clamps to, this duplicated rule will silently drift and the badge could be marked seen (or not) incorrectly. Consider having `Tabs` surface the resolved active `tabKey` (e.g. via the existing `onTabClick`/a callback) so consumers don't have to re-derive it.",
+      "severity": "suggestion"
+    },
+    {
+      "path": "shared/lib/ab-testing/perps-tab-badge.ts",
+      "line": 45,
+      "body": "Mapping enrichment to `PerpsScreenViewed` means every `Perp Screen Viewed` event — fired from ~11 perps surfaces (perps-view, close-position/edit-margin/reverse-position/update-tpsl modals, order-entry/activity/market-list/market-detail pages, tutorial, compliance) — gets the `active_ab_tests` annotation for bucketed users, not just the tab open. This is the standard active_ab_tests pattern and only fires for users with an active assignment, so it's safe; just confirm this broad attribution scope is intended versus tab-open-only (the AC implies the latter).",
+      "severity": "suggestion"
+    },
+    {
+      "path": "ui/components/multichain/account-overview/account-overview-tabs.tsx",
+      "line": 282,
+      "body": "Minor a11y nit: with the badge present, the Perps tab's accessible name concatenates to \"PerpsNew\" (the flex `gap` is visual only, so there's no text whitespace between \"Perps\" and \"New\"). Screen readers will announce it as one token. Consider adding a separating space or an explicit aria handling so it reads as \"Perps, New\".",
+      "severity": "nitpick"
+    }
+  ]
+}
