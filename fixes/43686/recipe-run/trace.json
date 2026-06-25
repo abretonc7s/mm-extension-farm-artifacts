@@ -2,7 +2,7 @@
   "metadata": {
     "runner": {
       "source": "/Users/deeeed/dev/metamask/metamask-recipe-runner",
-      "git_ref": "cc31c309c4c1180f9e981c25fcffbe19c66f8f92",
+      "git_ref": "53829b56f05a76367d0bcca7806c1d062b280e53",
       "name": "@metamask/recipe-runner"
     }
   },
@@ -11,9 +11,9 @@
       "nodeId": "gate-unlock",
       "action": "metamask.wallet.ensure_unlocked",
       "intent": "Ensure the wallet is unlocked before proof steps",
-      "startedAt": "2026-06-23T19:00:26.063Z",
-      "endedAt": "2026-06-23T19:00:27.918Z",
-      "durationMs": 1855,
+      "startedAt": "2026-06-25T10:52:53.860Z",
+      "endedAt": "2026-06-25T10:52:57.805Z",
+      "durationMs": 3945,
       "ok": true,
       "next": "ac1-nav-home",
       "output": {
@@ -21,7 +21,7 @@
         "unlocked": true,
         "alreadyUnlocked": true,
         "proofPath": "extension-unlocked-state",
-        "cdpPort": 6661,
+        "cdpPort": 7666,
         "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/",
         "runtimeLaunch": null,
         "liveAdapter": "/Users/deeeed/dev/metamask/metamask-recipe-runner/library/actions/extension/wallet/ensure_unlocked.mjs"
@@ -31,9 +31,9 @@
       "nodeId": "ac1-nav-home",
       "action": "ui.navigate",
       "intent": "AC1: open the account overview home tab bar",
-      "startedAt": "2026-06-23T19:00:27.925Z",
-      "endedAt": "2026-06-23T19:00:28.460Z",
-      "durationMs": 535,
+      "startedAt": "2026-06-25T10:52:58.113Z",
+      "endedAt": "2026-06-25T10:53:00.151Z",
+      "durationMs": 2038,
       "ok": true,
       "next": "ac1-wait-perps-tab",
       "output": {
@@ -41,11 +41,11 @@
         "page": "home",
         "hash": "#/",
         "navigation": {
-          "frameId": "28AB6649C7042D7960A941148FE45FE2",
+          "frameId": "6E788E6EBFCB79E1B7EA9166E3DFB044",
           "isDownload": false
         },
         "proofPath": "ui-navigation",
-        "cdpPort": 6661,
+        "cdpPort": 7666,
         "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/",
         "runtimeLaunch": null,
         "liveAdapter": "/Users/deeeed/dev/metamask/metamask-recipe-runner/library/actions/extension/ui/navigate.mjs"
@@ -55,27 +55,104 @@
       "nodeId": "ac1-wait-perps-tab",
       "action": "ui.wait_for",
       "intent": "AC1: the Perps tab is present in the overview tab bar",
-      "startedAt": "2026-06-23T19:00:28.466Z",
-      "endedAt": "2026-06-23T19:00:28.476Z",
-      "durationMs": 10,
+      "startedAt": "2026-06-25T10:53:00.162Z",
+      "endedAt": "2026-06-25T10:53:00.566Z",
+      "durationMs": 404,
       "ok": true,
-      "next": "ac1-assert-badge-absent",
+      "next": "ac1-screenshot",
       "output": {
         "matched": true,
-        "cdpPort": 6661,
+        "cdpPort": 7666,
         "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/",
         "runtimeLaunch": null
       }
     },
     {
-      "nodeId": "ac1-assert-badge-absent",
-      "action": "ui.wait_for",
-      "intent": "AC1: control assignment shows the Perps tab with NO New badge",
-      "startedAt": "2026-06-23T19:00:28.481Z",
-      "endedAt": "2026-06-23T19:00:36.523Z",
-      "durationMs": 8042,
-      "ok": false,
-      "error": "Error: ui.wait_for timed out\n    at <anonymous>:1:350"
+      "nodeId": "ac1-screenshot",
+      "action": "ui.screenshot",
+      "intent": "Capture AC1 proof (Perps tab present, no New badge)",
+      "artifacts": [
+        {
+          "path": "evidence-ac1-control-no-badge.png",
+          "type": "screenshot",
+          "nodeId": "ac1-screenshot",
+          "label": "Control — Perps tab with no New badge",
+          "category": "evidence",
+          "mimeType": "image/png",
+          "metadata": {
+            "provider": "capture-helper",
+            "mode": "snapshot",
+            "pid": 52147,
+            "captureHelper": {
+              "bytes": 509869,
+              "output": "/Users/deeeed/dev/metamask/metamask-extension-6/temp/tasks/fix/43686-0625-115335/artifacts/recipe-run/evidence-ac1-control-no-badge.png",
+              "selected": {
+                "app": "Google Chrome for Testing",
+                "height": 800,
+                "id": 18335,
+                "layer": 0,
+                "onScreen": true,
+                "pid": 52147,
+                "title": "mme-6 — MetaMask",
+                "width": 500,
+                "x": 22,
+                "y": 61
+              },
+              "selector": "pid",
+              "type": "snapshot"
+            }
+          }
+        }
+      ],
+      "startedAt": "2026-06-25T10:53:00.579Z",
+      "endedAt": "2026-06-25T10:53:02.272Z",
+      "durationMs": 1693,
+      "ok": true,
+      "next": "done",
+      "output": {
+        "captured": true,
+        "path": "evidence-ac1-control-no-badge.png",
+        "artifact": {
+          "path": "evidence-ac1-control-no-badge.png",
+          "type": "screenshot",
+          "nodeId": "ac1-screenshot",
+          "label": "Control — Perps tab with no New badge",
+          "category": "evidence",
+          "mimeType": "image/png",
+          "metadata": {
+            "provider": "capture-helper",
+            "mode": "snapshot",
+            "pid": 52147,
+            "captureHelper": {
+              "bytes": 509869,
+              "output": "/Users/deeeed/dev/metamask/metamask-extension-6/temp/tasks/fix/43686-0625-115335/artifacts/recipe-run/evidence-ac1-control-no-badge.png",
+              "selected": {
+                "app": "Google Chrome for Testing",
+                "height": 800,
+                "id": 18335,
+                "layer": 0,
+                "onScreen": true,
+                "pid": 52147,
+                "title": "mme-6 — MetaMask",
+                "width": 500,
+                "x": 22,
+                "y": 61
+              },
+              "selector": "pid",
+              "type": "snapshot"
+            }
+          }
+        }
+      }
+    },
+    {
+      "nodeId": "done",
+      "action": "end",
+      "startedAt": "2026-06-25T10:53:02.278Z",
+      "endedAt": "2026-06-25T10:53:02.287Z",
+      "durationMs": 9,
+      "ok": true,
+      "status": "pass"
     }
   ]
 }
