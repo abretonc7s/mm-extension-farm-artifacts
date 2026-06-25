@@ -1,0 +1,66 @@
+{
+  "version": 1,
+  "verdict": "pass",
+  "compact": {
+    "verdict": "PASS",
+    "reasons": [
+      "AC1-AC4 covered by ac<N>-* nodes; trace shows 18/18 passed (status pass).",
+      "AC1/AC4 visual claim proven by a real capture-helper screenshot showing Entry/Current/Liquidation above Take profit with adaptive precision.",
+      "AC3 (no regression) proven by an absent-state wait with teeth on the order-entry surface.",
+      "AC2 real-time binding proven by live $ value + a rerender unit test."
+    ],
+    "better_version_guidance": []
+  },
+  "dimensions": {
+    "graph_integrity": {
+      "status": "pass",
+      "reason": "Single linear workflow; all nodes reachable; ends at end/pass after teardown.",
+      "evidence": ["recipe.json", "trace.json"]
+    },
+    "action_contract": {
+      "status": "pass",
+      "reason": "Only manifest-declared actions used (metamask.perps.*, ui.navigate/press/wait_for/screenshot). No manual steps, no mid-recipe state injection.",
+      "evidence": ["recipe.json"]
+    },
+    "ac_coverage": {
+      "status": "pass",
+      "reason": "Every AC binds to ac<N>-* nodes; 4/4 PROVEN in recipe-coverage.md; trace passed-count (18) matches.",
+      "evidence": ["recipe-coverage.md", "trace.json"]
+    },
+    "evidence_contract_basics": {
+      "status": "pass",
+      "reason": "Visual AC (AC1/AC4) has a capture-helper screenshot preceded by viewport wait_for with claims.must_show; AC3 uses a state absent-wait; AC2 uses live value + rerender unit test.",
+      "evidence": ["evidence-ac1-ac4-price-block.png", "recipe-run/summary.json"]
+    }
+  },
+  "structural_findings": [],
+  "contextual_findings": [
+    {
+      "code": "video_omitted",
+      "message": "after.mp4 omitted: capture-helper record yields empty output in this slot (shared screen-capture session) and conflicts with the recipe ui.screenshot. Screenshot is valid primary proof.",
+      "dimension": "evidence_contract_basics",
+      "evidence": ["report.md"]
+    }
+  ],
+  "suggested_recipe_delta": [],
+  "training_fields": {
+    "farm": "metamask-extension",
+    "project": "metamask-extension-farm",
+    "flow_type": "dev",
+    "task_type": "dev",
+    "claim_is_visual": true,
+    "proof_mode": "mixed",
+    "anti_patterns": [],
+    "good_patterns": [
+      "absent-state wait used as a non-regression guard with verified teeth",
+      "displayed values asserted against the shared formatter in unit tests"
+    ]
+  },
+  "meta": {
+    "producer": "worker",
+    "fallback_used": false,
+    "legacy_task": false,
+    "artifact_required": true,
+    "source_signals": ["recipe.json", "recipe-coverage.md", "trace.json", "recipe-run/summary.json", "report.md"]
+  }
+}

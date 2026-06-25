@@ -1,0 +1,185 @@
+{
+  "schema_version": 1,
+  "title": "TAT-3407 — Auto Close modal price context (entry / current / liquidation)",
+  "description": "Proves the Extension Auto Close (TP/SL) modal opened from an active position shows Entry price, Current price, and Liquidation price rows above the Take profit section using the adaptive-precision perps formatter; that the order-entry Auto Close section does NOT show the block (no regression); and that the current price renders the live market value.",
+  "validate": {
+    "workflow": {
+      "entry": "setup-open-eth",
+      "nodes": {
+        "setup-open-eth": {
+          "action": "metamask.perps.place_order",
+          "market": "ETH",
+          "side": "long",
+          "notional": "10",
+          "leverage": 2,
+          "timeout_ms": 30000,
+          "network": "testnet",
+          "intent": "Open an active ETH Perps position so the Auto Close modal has entry/current/liquidation data",
+          "next": "ac1-assert-eth-open"
+        },
+        "ac1-assert-eth-open": {
+          "action": "metamask.perps.assert_positions",
+          "state": "open",
+          "market": "ETH",
+          "timeout_ms": 30000,
+          "intent": "AC1/AC4: assert an open ETH position exists (source of entry/current/liquidation prices)",
+          "next": "ac1-nav-market"
+        },
+        "ac1-nav-market": {
+          "action": "ui.navigate",
+          "hash": "#/perps/market/ETH",
+          "intent": "AC1: open the ETH Perps market detail page that hosts the Auto Close modal trigger",
+          "next": "ac1-wait-auto-close-row"
+        },
+        "ac1-wait-auto-close-row": {
+          "action": "ui.wait_for",
+          "test_id": "perps-auto-close-row",
+          "visibility": "viewport",
+          "scroll": { "strategy": "into_view", "settle_ms": 300 },
+          "timeout_ms": 15000,
+          "poll_ms": 500,
+          "intent": "AC1: wait until the Auto Close row (modal trigger) is visible for the open position",
+          "next": "ac1-open-modal"
+        },
+        "ac1-open-modal": {
+          "action": "ui.press",
+          "selector": "[data-testid=\"perps-auto-close-row\"]",
+          "intent": "AC1: open the Auto Close (TP/SL) modal from the active position",
+          "next": "ac1-wait-price-info"
+        },
+        "ac1-wait-price-info": {
+          "action": "ui.wait_for",
+          "test_id": "perps-update-tpsl-price-info",
+          "visibility": "viewport",
+          "scroll": { "strategy": "into_view", "settle_ms": 300 },
+          "timeout_ms": 10000,
+          "poll_ms": 500,
+          "intent": "AC1: wait until the price-context block is visible inside the Auto Close modal",
+          "next": "ac1-wait-entry-row"
+        },
+        "ac1-wait-entry-row": {
+          "action": "ui.wait_for",
+          "test_id": "perps-update-tpsl-entry-price",
+          "text_contains": "Entry price",
+          "visibility": "viewport",
+          "scroll": { "strategy": "into_view", "settle_ms": 300 },
+          "timeout_ms": 10000,
+          "poll_ms": 500,
+          "intent": "AC1: wait until the Entry price row is visible",
+          "next": "ac1-wait-current-row"
+        },
+        "ac1-wait-current-row": {
+          "action": "ui.wait_for",
+          "test_id": "perps-update-tpsl-current-price",
+          "text_contains": "Current price",
+          "visibility": "viewport",
+          "scroll": { "strategy": "into_view", "settle_ms": 300 },
+          "timeout_ms": 10000,
+          "poll_ms": 500,
+          "intent": "AC1: wait until the Current price row is visible",
+          "next": "ac1-wait-liq-row"
+        },
+        "ac1-wait-liq-row": {
+          "action": "ui.wait_for",
+          "test_id": "perps-update-tpsl-liquidation-price",
+          "text_contains": "Liquidation price",
+          "visibility": "viewport",
+          "scroll": { "strategy": "into_view", "settle_ms": 300 },
+          "timeout_ms": 10000,
+          "poll_ms": 500,
+          "intent": "AC1: wait until the Liquidation price row is visible",
+          "next": "ac4-wait-entry-value"
+        },
+        "ac4-wait-entry-value": {
+          "action": "ui.wait_for",
+          "test_id": "perps-update-tpsl-entry-price-value",
+          "text_contains": "$",
+          "visibility": "viewport",
+          "scroll": { "strategy": "into_view", "settle_ms": 300 },
+          "timeout_ms": 10000,
+          "poll_ms": 500,
+          "intent": "AC4: entry price renders a formatted ($) value via the adaptive perps formatter",
+          "next": "ac2-wait-current-value"
+        },
+        "ac2-wait-current-value": {
+          "action": "ui.wait_for",
+          "test_id": "perps-update-tpsl-current-price-value",
+          "text_contains": "$",
+          "visibility": "viewport",
+          "scroll": { "strategy": "into_view", "settle_ms": 300 },
+          "timeout_ms": 10000,
+          "poll_ms": 500,
+          "intent": "AC2: current price renders the live ($) market value bound to the page's live currentPrice prop",
+          "next": "ac4-wait-liq-value"
+        },
+        "ac4-wait-liq-value": {
+          "action": "ui.wait_for",
+          "test_id": "perps-update-tpsl-liquidation-price-value",
+          "text_contains": "$",
+          "visibility": "viewport",
+          "scroll": { "strategy": "into_view", "settle_ms": 300 },
+          "timeout_ms": 10000,
+          "poll_ms": 500,
+          "intent": "AC4: liquidation price renders a formatted ($) value via the adaptive perps formatter",
+          "next": "ac1-screenshot-price-block"
+        },
+        "ac1-screenshot-price-block": {
+          "action": "ui.screenshot",
+          "filename": "evidence-ac1-ac4-price-block.png",
+          "intent": "AC1/AC4: capture the Auto Close modal showing the entry/current/liquidation block above the Take profit section",
+          "note": "AC1/AC4: Auto Close modal for an open ETH position shows Entry/Current/Liquidation price rows with adaptive-precision values, stacked above the Take profit section header.",
+          "claims": {
+            "must_show": [
+              { "test_id": "perps-update-tpsl-price-info", "visibility": "viewport" },
+              { "test_id": "perps-update-tpsl-entry-price-value", "visibility": "viewport" },
+              { "test_id": "perps-update-tpsl-current-price-value", "visibility": "viewport" },
+              { "test_id": "perps-update-tpsl-liquidation-price-value", "visibility": "viewport" },
+              { "text_contains": "Take profit", "visibility": "viewport" }
+            ],
+            "must_not_show": [
+              { "text_contains": "Fund your wallet" }
+            ]
+          },
+          "next": "ac3-nav-order-entry"
+        },
+        "ac3-nav-order-entry": {
+          "action": "ui.navigate",
+          "hash": "#/perps/trade/ETH",
+          "intent": "AC3: open the order-entry screen whose Auto Close section must NOT show the price block",
+          "next": "ac3-wait-section"
+        },
+        "ac3-wait-section": {
+          "action": "ui.wait_for",
+          "test_id": "auto-close-section",
+          "visibility": "viewport",
+          "scroll": { "strategy": "into_view", "settle_ms": 300 },
+          "timeout_ms": 15000,
+          "poll_ms": 500,
+          "intent": "AC3: confirm the order-entry Auto Close section renders (the surface that must NOT show the price block)",
+          "next": "ac3-assert-no-block"
+        },
+        "ac3-assert-no-block": {
+          "action": "ui.wait_for",
+          "test_id": "perps-update-tpsl-price-info",
+          "expected": "absent",
+          "timeout_ms": 8000,
+          "poll_ms": 500,
+          "intent": "AC3: assert the entry/current/liquidation price block is ABSENT on the order-entry Auto Close surface (no regression). This wait fails if the block leaks onto order entry.",
+          "next": "teardown-close-eth"
+        },
+        "teardown-close-eth": {
+          "action": "metamask.perps.close_positions",
+          "market": "ETH",
+          "timeout_ms": 30000,
+          "network": "testnet",
+          "intent": "Restore Perps state by closing the ETH position opened for proof",
+          "next": "done"
+        },
+        "done": {
+          "action": "end",
+          "status": "pass"
+        }
+      }
+    }
+  }
+}
