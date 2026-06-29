@@ -1,0 +1,537 @@
+{
+  "metadata": {
+    "runner": {
+      "source": "/Users/deeeed/dev/metamask/metamask-recipe-runner",
+      "git_ref": "838e70916ce7be0a08a775ad37a52b3be544bee2",
+      "name": "@metamask/recipe-runner"
+    }
+  },
+  "entries": [
+    {
+      "nodeId": "status",
+      "action": "app.status",
+      "intent": "Read runner compatibility status",
+      "startedAt": "2026-06-29T20:34:21.437Z",
+      "endedAt": "2026-06-29T20:34:21.550Z",
+      "durationMs": 113,
+      "ok": true,
+      "next": "fixture",
+      "output": {
+        "platform": "extension",
+        "projectRoot": "/Users/deeeed/dev/metamask/metamask-extension-5",
+        "compatibilityMode": "bridge present",
+        "shape": {
+          "packageName": "metamask-crx",
+          "packageJsonStatus": "valid",
+          "packageJsonError": null,
+          "extensionProject": true,
+          "mobileProject": false,
+          "agenticService": false,
+          "mobileProductHarness": false,
+          "mobileBridgeScript": true,
+          "extensionRuntime": true,
+          "injectedHarness": true,
+          "walletFixture": true
+        }
+      }
+    },
+    {
+      "nodeId": "fixture",
+      "action": "metamask.wallet.fixture_status",
+      "intent": "Verify wallet fixture availability",
+      "startedAt": "2026-06-29T20:34:21.560Z",
+      "endedAt": "2026-06-29T20:34:21.656Z",
+      "durationMs": 96,
+      "ok": true,
+      "next": "setup-unlock",
+      "output": {
+        "status": "ready",
+        "path": "temp/recipe/runtime/wallet-fixture.json",
+        "accountCount": 4,
+        "hasPassword": true
+      }
+    },
+    {
+      "nodeId": "setup-unlock",
+      "action": "metamask.wallet.ensure_unlocked",
+      "intent": "Ensure the wallet is unlocked",
+      "startedAt": "2026-06-29T20:34:21.795Z",
+      "endedAt": "2026-06-29T20:34:23.535Z",
+      "durationMs": 1740,
+      "ok": true,
+      "next": "setup-clean-perf",
+      "output": {
+        "action": "metamask.wallet.ensure_unlocked",
+        "unlocked": true,
+        "alreadyUnlocked": true,
+        "proofPath": "extension-unlocked-state",
+        "cdpPort": 7665,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/",
+        "runtimeLaunch": null,
+        "liveAdapter": "/Users/deeeed/dev/metamask/metamask-recipe-runner/library/actions/extension/wallet/ensure_unlocked.mjs"
+      }
+    },
+    {
+      "nodeId": "setup-clean-perf",
+      "action": "command",
+      "intent": "Start from a clean perf-metrics file",
+      "startedAt": "2026-06-29T20:34:23.570Z",
+      "endedAt": "2026-06-29T20:34:23.670Z",
+      "durationMs": 100,
+      "ok": true,
+      "next": "setup-assert-clean",
+      "output": {
+        "exitCode": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    },
+    {
+      "nodeId": "setup-assert-clean",
+      "action": "assert_exit_code",
+      "intent": "Confirm perf-metrics reset",
+      "startedAt": "2026-06-29T20:34:23.706Z",
+      "endedAt": "2026-06-29T20:34:23.774Z",
+      "durationMs": 68,
+      "ok": true,
+      "next": "setup-open-sidebar",
+      "output": {
+        "source": "setup-clean-perf",
+        "expected": 0,
+        "actual": 0
+      }
+    },
+    {
+      "nodeId": "setup-open-sidebar",
+      "action": "command",
+      "intent": "Open the extension side panel (primary product surface)",
+      "startedAt": "2026-06-29T20:34:23.793Z",
+      "endedAt": "2026-06-29T20:34:29.323Z",
+      "durationMs": 5530,
+      "ok": true,
+      "next": "setup-assert-sidebar",
+      "output": {
+        "exitCode": 0,
+        "stdout": "[sidepanel] opened\n",
+        "stderr": ""
+      }
+    },
+    {
+      "nodeId": "setup-assert-sidebar",
+      "action": "assert_exit_code",
+      "intent": "Confirm the side panel opened",
+      "startedAt": "2026-06-29T20:34:29.335Z",
+      "endedAt": "2026-06-29T20:34:29.344Z",
+      "durationMs": 9,
+      "ok": true,
+      "next": "ac4-sidebar-nav-detail",
+      "output": {
+        "source": "setup-open-sidebar",
+        "expected": 0,
+        "actual": 0
+      }
+    },
+    {
+      "nodeId": "ac4-sidebar-nav-detail",
+      "action": "command",
+      "intent": "Open the ETH perps market in the side panel",
+      "startedAt": "2026-06-29T20:34:29.351Z",
+      "endedAt": "2026-06-29T20:34:33.547Z",
+      "durationMs": 4196,
+      "ok": true,
+      "next": "ac4-sidebar-wait-detail",
+      "output": {
+        "exitCode": 0,
+        "stdout": "navigated #/perps/market/ETH\n",
+        "stderr": ""
+      }
+    },
+    {
+      "nodeId": "ac4-sidebar-wait-detail",
+      "action": "command",
+      "intent": "Wait for the detail page in the side panel",
+      "startedAt": "2026-06-29T20:34:33.977Z",
+      "endedAt": "2026-06-29T20:34:34.738Z",
+      "durationMs": 761,
+      "ok": true,
+      "next": "ac4-sidebar-assert-detail",
+      "output": {
+        "exitCode": 0,
+        "stdout": "found perps-market-detail-page\n",
+        "stderr": ""
+      }
+    },
+    {
+      "nodeId": "ac4-sidebar-assert-detail",
+      "action": "assert_exit_code",
+      "intent": "Confirm the detail page rendered in the side panel",
+      "startedAt": "2026-06-29T20:34:34.767Z",
+      "endedAt": "2026-06-29T20:34:34.778Z",
+      "durationMs": 11,
+      "ok": true,
+      "next": "ac4-sidebar-wait-expand-button",
+      "output": {
+        "source": "ac4-sidebar-wait-detail",
+        "expected": 0,
+        "actual": 0
+      }
+    },
+    {
+      "nodeId": "ac4-sidebar-wait-expand-button",
+      "action": "command",
+      "intent": "Confirm the Expand button is present in the side panel",
+      "startedAt": "2026-06-29T20:34:34.789Z",
+      "endedAt": "2026-06-29T20:34:35.198Z",
+      "durationMs": 409,
+      "ok": true,
+      "next": "ac4-sidebar-assert-expand-button",
+      "output": {
+        "exitCode": 0,
+        "stdout": "found perps-market-detail-expand-button\n",
+        "stderr": ""
+      }
+    },
+    {
+      "nodeId": "ac4-sidebar-assert-expand-button",
+      "action": "assert_exit_code",
+      "intent": "Confirm the Expand affordance exists on the detail page",
+      "startedAt": "2026-06-29T20:34:35.383Z",
+      "endedAt": "2026-06-29T20:34:35.392Z",
+      "durationMs": 9,
+      "ok": true,
+      "next": "ac4-sidebar-click-expand",
+      "output": {
+        "source": "ac4-sidebar-wait-expand-button",
+        "expected": 0,
+        "actual": 0
+      }
+    },
+    {
+      "nodeId": "ac4-sidebar-click-expand",
+      "action": "command",
+      "intent": "Click Expand in the side panel (trusted gesture opens a full tab)",
+      "startedAt": "2026-06-29T20:34:35.397Z",
+      "endedAt": "2026-06-29T20:34:39.629Z",
+      "durationMs": 4232,
+      "ok": true,
+      "next": "ac4-sidebar-assert-click",
+      "output": {
+        "exitCode": 0,
+        "stdout": "clicked perps-market-detail-expand-button\n",
+        "stderr": ""
+      }
+    },
+    {
+      "nodeId": "ac4-sidebar-assert-click",
+      "action": "assert_exit_code",
+      "intent": "Confirm the Expand click dispatched",
+      "startedAt": "2026-06-29T20:34:39.635Z",
+      "endedAt": "2026-06-29T20:34:39.640Z",
+      "durationMs": 5,
+      "ok": true,
+      "next": "ac4-wait-expanded-tab",
+      "output": {
+        "source": "ac4-sidebar-click-expand",
+        "expected": 0,
+        "actual": 0
+      }
+    },
+    {
+      "nodeId": "ac4-wait-expanded-tab",
+      "action": "command",
+      "intent": "Wait for the expanded view to open in a new browser tab",
+      "startedAt": "2026-06-29T20:34:39.644Z",
+      "endedAt": "2026-06-29T20:34:39.710Z",
+      "durationMs": 66,
+      "ok": true,
+      "next": "ac4-assert-expanded-tab",
+      "output": {
+        "exitCode": 0,
+        "stdout": "tab present: market-expanded/ETH\n",
+        "stderr": ""
+      }
+    },
+    {
+      "nodeId": "ac4-assert-expanded-tab",
+      "action": "assert_exit_code",
+      "intent": "Confirm the Expand button opened the expanded tab",
+      "startedAt": "2026-06-29T20:34:39.715Z",
+      "endedAt": "2026-06-29T20:34:39.719Z",
+      "durationMs": 4,
+      "ok": true,
+      "next": "ac2-reset-expanded",
+      "output": {
+        "source": "ac4-wait-expanded-tab",
+        "expected": 0,
+        "actual": 0
+      }
+    },
+    {
+      "nodeId": "ac2-reset-expanded",
+      "action": "command",
+      "intent": "Reset Long-Task/TBT counters on the expanded tab",
+      "startedAt": "2026-06-29T20:34:39.723Z",
+      "endedAt": "2026-06-29T20:34:39.814Z",
+      "durationMs": 91,
+      "ok": true,
+      "next": "ac4-wait-expanded-page",
+      "output": {
+        "exitCode": 0,
+        "stdout": "metrics reset\n",
+        "stderr": ""
+      }
+    },
+    {
+      "nodeId": "ac4-wait-expanded-page",
+      "action": "command",
+      "intent": "Wait for the expanded terminal to render in the new tab",
+      "startedAt": "2026-06-29T20:34:39.820Z",
+      "endedAt": "2026-06-29T20:34:39.918Z",
+      "durationMs": 98,
+      "ok": true,
+      "next": "ac4-assert-expanded-page",
+      "output": {
+        "exitCode": 0,
+        "stdout": "found perps-market-expanded-page\n",
+        "stderr": ""
+      }
+    },
+    {
+      "nodeId": "ac4-assert-expanded-page",
+      "action": "assert_exit_code",
+      "intent": "Confirm the expanded page rendered",
+      "startedAt": "2026-06-29T20:34:39.925Z",
+      "endedAt": "2026-06-29T20:34:39.932Z",
+      "durationMs": 7,
+      "ok": true,
+      "next": "ac4-check-panels",
+      "output": {
+        "source": "ac4-wait-expanded-page",
+        "expected": 0,
+        "actual": 0
+      }
+    },
+    {
+      "nodeId": "ac4-check-panels",
+      "action": "command",
+      "intent": "Assert all five expanded panels render",
+      "startedAt": "2026-06-29T20:34:39.938Z",
+      "endedAt": "2026-06-29T20:34:40.173Z",
+      "durationMs": 235,
+      "ok": true,
+      "next": "ac4-assert-panels",
+      "output": {
+        "exitCode": 0,
+        "stdout": "{\"ok\":true,\"missing\":[]}\n",
+        "stderr": ""
+      }
+    },
+    {
+      "nodeId": "ac4-assert-panels",
+      "action": "assert_exit_code",
+      "intent": "Confirm every panel rendered",
+      "startedAt": "2026-06-29T20:34:40.185Z",
+      "endedAt": "2026-06-29T20:34:40.192Z",
+      "durationMs": 7,
+      "ok": true,
+      "next": "ac4-check-full-width",
+      "output": {
+        "source": "ac4-check-panels",
+        "expected": 0,
+        "actual": 0
+      }
+    },
+    {
+      "nodeId": "ac4-check-full-width",
+      "action": "command",
+      "intent": "Assert the expanded page spans the full viewport width",
+      "startedAt": "2026-06-29T20:34:40.205Z",
+      "endedAt": "2026-06-29T20:34:40.756Z",
+      "durationMs": 551,
+      "ok": true,
+      "next": "ac4-assert-full-width",
+      "output": {
+        "exitCode": 0,
+        "stdout": "{\"ok\":true,\"width\":500,\"viewport\":500}\n",
+        "stderr": ""
+      }
+    },
+    {
+      "nodeId": "ac4-assert-full-width",
+      "action": "assert_exit_code",
+      "intent": "Confirm RootLayout max-width was bypassed",
+      "startedAt": "2026-06-29T20:34:40.792Z",
+      "endedAt": "2026-06-29T20:34:40.962Z",
+      "durationMs": 170,
+      "ok": true,
+      "next": "ac2-measure-expanded",
+      "output": {
+        "source": "ac4-check-full-width",
+        "expected": 0,
+        "actual": 0
+      }
+    },
+    {
+      "nodeId": "ac2-measure-expanded",
+      "action": "command",
+      "intent": "Capture expanded-view Long-Task/TBT baseline",
+      "startedAt": "2026-06-29T20:34:41.078Z",
+      "endedAt": "2026-06-29T20:34:41.673Z",
+      "durationMs": 595,
+      "ok": true,
+      "next": "ac2-assert-measure-expanded",
+      "output": {
+        "exitCode": 0,
+        "stdout": "expanded: {\"ok\":true,\"tbt\":0,\"tbtRating\":\"good\",\"longTasks\":0,\"totalDuration\":0,\"maxDuration\":0}\n",
+        "stderr": ""
+      }
+    },
+    {
+      "nodeId": "ac2-assert-measure-expanded",
+      "action": "assert_exit_code",
+      "intent": "Confirm expanded perf metrics captured",
+      "startedAt": "2026-06-29T20:34:41.854Z",
+      "endedAt": "2026-06-29T20:34:41.875Z",
+      "durationMs": 21,
+      "ok": true,
+      "next": "ac4-runner-warm-detail",
+      "output": {
+        "source": "ac2-measure-expanded",
+        "expected": 0,
+        "actual": 0
+      }
+    },
+    {
+      "nodeId": "ac4-runner-warm-detail",
+      "action": "ui.navigate",
+      "intent": "Warm the runner tab on the detail route for the evidence screenshot",
+      "startedAt": "2026-06-29T20:34:41.892Z",
+      "endedAt": "2026-06-29T20:34:44.453Z",
+      "durationMs": 2561,
+      "ok": true,
+      "next": "ac4-runner-wait-detail",
+      "output": {
+        "action": "ui.navigate",
+        "hash": "#/perps/market/ETH",
+        "navigation": {
+          "frameId": "8207B8AC1D0AC9D8942022F816B45250",
+          "isDownload": false
+        },
+        "proofPath": "ui-navigation",
+        "cdpPort": 7665,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market-expanded/ETH",
+        "runtimeLaunch": null,
+        "liveAdapter": "/Users/deeeed/dev/metamask/metamask-recipe-runner/library/actions/extension/ui/navigate.mjs"
+      }
+    },
+    {
+      "nodeId": "ac4-runner-wait-detail",
+      "action": "command",
+      "intent": "Wait for the detail page on the runner tab",
+      "startedAt": "2026-06-29T20:34:44.916Z",
+      "endedAt": "2026-06-29T20:34:45.308Z",
+      "durationMs": 392,
+      "ok": true,
+      "next": "ac2-reset-popup",
+      "output": {
+        "exitCode": 0,
+        "stdout": "found perps-market-detail-page\n",
+        "stderr": ""
+      }
+    },
+    {
+      "nodeId": "ac2-reset-popup",
+      "action": "command",
+      "intent": "Reset counters before the popup measurement",
+      "startedAt": "2026-06-29T20:34:45.426Z",
+      "endedAt": "2026-06-29T20:34:45.564Z",
+      "durationMs": 138,
+      "ok": true,
+      "next": "ac2-measure-popup",
+      "output": {
+        "exitCode": 0,
+        "stdout": "metrics reset\n",
+        "stderr": ""
+      }
+    },
+    {
+      "nodeId": "ac2-measure-popup",
+      "action": "command",
+      "intent": "Capture popup detail Long-Task/TBT baseline for comparison",
+      "startedAt": "2026-06-29T20:34:45.567Z",
+      "endedAt": "2026-06-29T20:34:45.698Z",
+      "durationMs": 131,
+      "ok": true,
+      "next": "ac2-assert-measure-popup",
+      "output": {
+        "exitCode": 0,
+        "stdout": "popup: {\"ok\":true,\"tbt\":0,\"tbtRating\":\"good\",\"longTasks\":0,\"totalDuration\":0,\"maxDuration\":0}\n",
+        "stderr": ""
+      }
+    },
+    {
+      "nodeId": "ac2-assert-measure-popup",
+      "action": "assert_exit_code",
+      "intent": "Confirm popup perf metrics captured",
+      "startedAt": "2026-06-29T20:34:45.705Z",
+      "endedAt": "2026-06-29T20:34:45.711Z",
+      "durationMs": 6,
+      "ok": true,
+      "next": "ac4-runner-nav-expanded",
+      "output": {
+        "source": "ac2-measure-popup",
+        "expected": 0,
+        "actual": 0
+      }
+    },
+    {
+      "nodeId": "ac4-runner-nav-expanded",
+      "action": "ui.navigate",
+      "intent": "Navigate the runner tab to the expanded route for the screenshot",
+      "startedAt": "2026-06-29T20:34:45.719Z",
+      "endedAt": "2026-06-29T20:34:46.071Z",
+      "durationMs": 352,
+      "ok": true,
+      "next": "ac4-runner-wait-expanded",
+      "output": {
+        "action": "ui.navigate",
+        "hash": "#/perps/market-expanded/ETH",
+        "navigation": {
+          "frameId": "8207B8AC1D0AC9D8942022F816B45250",
+          "isDownload": false
+        },
+        "proofPath": "ui-navigation",
+        "cdpPort": 7665,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/ETH",
+        "runtimeLaunch": null,
+        "liveAdapter": "/Users/deeeed/dev/metamask/metamask-recipe-runner/library/actions/extension/ui/navigate.mjs"
+      }
+    },
+    {
+      "nodeId": "ac4-runner-wait-expanded",
+      "action": "ui.wait_for",
+      "intent": "Wait for the expanded terminal (order book visible)",
+      "startedAt": "2026-06-29T20:34:46.089Z",
+      "endedAt": "2026-06-29T20:34:46.097Z",
+      "durationMs": 8,
+      "ok": true,
+      "next": "ac4-screenshot",
+      "output": {
+        "matched": true,
+        "cdpPort": 7665,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market-expanded/ETH",
+        "runtimeLaunch": null
+      }
+    },
+    {
+      "nodeId": "ac4-screenshot",
+      "action": "ui.screenshot",
+      "intent": "Capture the full-width expanded perps terminal",
+      "startedAt": "2026-06-29T20:34:46.102Z",
+      "endedAt": "2026-06-29T20:35:01.295Z",
+      "durationMs": 15193,
+      "ok": false,
+      "error": "Command timed out after 15000ms: capture-helper snapshot --pid 89007 --output /Users/deeeed/dev/metamask/metamask-extension-5/temp/tasks/feat/tat-3461-0629-191632/artifacts/recipe-run/evidence-ac4-expanded-view.png"
+    }
+  ]
+}
