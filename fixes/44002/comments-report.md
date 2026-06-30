@@ -1,48 +1,54 @@
-# PR 44002 — Comment Triage & Context (Interactive Re-Entry `44002-0630-090132`)
+# PR 44002 — Comment Triage & Context (Interactive Re-Entry `44002-0630-164729`)
 
 **PR:** feat(perps): [Extension] Spike: de-risk performance impact of the expanded (extended) view [NOT-READY]
-**Branch:** `TAT-3461-feat-spike-expanded-view-perf` · **Family:** `e20e0dd0` (TAT-3461) · parent run `a76774ba`
-**Mode:** interactive re-entry, operator-supervised. **Not committed / not pushed.**
+**Branch:** `TAT-3461-feat-spike-expanded-view-perf` · HEAD `09ed8c1f3d`
+**Family:** `e20e0dd0` (TAT-3461) · parent run `1fe3a188`
 
 ## Context reload
 
-Inherited context: **present** (`inputs/inherited-context.json`, `inputs/inherited/`).
-Read prior `report.md`, `recipe.json`, `recipe-quality.json`, `evidence-manifest.json`.
+Inherited context: **present**.
 
-Prior re-entry (`44002-0630-073950`) already fixed both `cursor[bot]` order-correctness
-findings in the uncommitted working tree and re-validated the recipe (32/33;
-only `ac4-screenshot` failed on macOS Screen-Recording TCC permission, not a regression).
+- `inputs/inherited-context.json` — family manifest present.
+- `inputs/inherited/report.md` — prior re-entry (`44002-0630-090132`) already committed + pushed the submit-path fix as `09ed8c1f3d` and posted replies to both cursor[bot] threads.
+- `inputs/inherited/recipe.json` + `artifacts/recipe.json` — trusted family recipe (RECIPE_SOURCE: family-inherited).
+- `inputs/inherited/recipe-quality.json` — verdict `pass` (35/35 nodes in the family run).
+- `inputs/inherited/evidence-manifest.json` — expanded-view screenshot evidence.
 
-This run re-fetched live PR data, re-confirmed the working-tree fix is present, and
-re-verified exact parity against the reference `ui/pages/perps/perps-order-entry-page.tsx`
-submit flow. **No new code changes required.**
+### Prior-run state (carried forward)
 
-## Live PR state (this run)
+The previous re-entry resolved the two `cursor[bot]` order-correctness findings on
+`perps-expanded-trade-panel.tsx`:
 
-- Inline review comments: 2, both `cursor[bot]`, both on
-  `ui/components/app/perps/perps-market-expanded/perps-expanded-trade-panel.tsx:84`,
-  both for commit `241ac084c3` (current HEAD). No new comments since prior run.
-- CHANGES_REQUESTED reviews: **none**.
-- Issue/conversation comments: auto-posted Farmslot worker reports by `abretonc7s`
-  (spike + prior pr-complete runs). Not regression reports.
+1. **TP/SL wrong path** (id 3494838412) — REAL — fixed via two-step `perpsPlaceOrder` (TP/SL stripped) → `perpsUpdatePositionTPSL`.
+2. **Trades skip slippage guards** (id 3494838418) — REAL (data-correctness) — fixed by passing gated `maxSlippageBps` into `formStateToOrderParams`. Pre-submit confirmation modal = follow-up (OUT_OF_SCOPE).
 
-## Triage
+Both fixes are in commit `09ed8c1f3d` (current HEAD) and were pushed. Replies posted on both threads.
 
-| # | Source | Finding | Verdict | Resolution |
+## Step 7 — Live comment triage (re-entry `44002-0630-164729`)
+
+Re-fetched live comments, reviews, and thread replies. PR `open`, not draft, `mergeable: true`. **No CHANGES_REQUESTED reviews.**
+
+| ID | Source | Where | Verdict | Resolution |
 |---|---|---|---|---|
-| 1 | cursor[bot] (id 3494838412) | Expanded market TP/SL wrong path — single `perpsPlaceOrder` mis-tags TP/SL instead of two-step `perpsUpdatePositionTPSL` | **REAL** | Fixed in working tree. `handleSubmit` now strips TP/SL on new/flipping market orders and attaches via `perpsUpdatePositionTPSL`, mirroring reference order-entry page (`shouldHandleTpslSeparately` + `willFlipPosition` + `normalizeTpslPrices`). |
-| 2 | cursor[bot] (id 3494838418) | Expanded trades skip slippage guards — no `maxSlippageBps` passed; no pre-submit estimated-slippage check | **REAL (data-correctness portion)** | Fixed in working tree. Gated `maxSlippageBps` (`isSlippageConfigEnabled ? maxSlippageBps : undefined`) now passed into `formStateToOrderParams` — controller-level cap enforced, parity with reference. Pre-submit estimated-slippage **confirmation modal** = **OUT_OF_SCOPE** follow-up on this `[NOT-READY]` spike. |
-| 3 | abretonc7s ×N | Conversation comments | **N/A** | Auto-posted Farmslot worker reports, not regressions. |
-| 4 | CI / CLA / sonarqube / codeowners bots | build/CLA/quality/codeowners | **OUT_OF_SCOPE** | Standard CI; SonarQube informational on a `[NOT-READY]` spike. |
+| 3494838412 | cursor[bot] — Expanded market TP/SL wrong path | `perps-expanded-trade-panel.tsx` L79-84 (commit `241ac084c3`) | REAL — **already fixed** | Two-step `perpsPlaceOrder` (TP/SL stripped) → `perpsUpdatePositionTPSL` in HEAD `09ed8c1f3d`. Reply already posted (id 3499252834). Thread auto-resolves on cursor re-review. |
+| 3494838418 | cursor[bot] — Expanded trades skip slippage guards | `perps-expanded-trade-panel.tsx` L67-84 (commit `241ac084c3`) | REAL (data-correctness) — **already fixed** | Gated `maxSlippageBps` passed into `formStateToOrderParams` in HEAD `09ed8c1f3d`. Reply already posted (id 3499253176). Pre-submit estimated-slippage modal = follow-up (OUT_OF_SCOPE). |
+| 4837269569 / 4840231357 / 4840690296 / 4844645868 | abretonc7s | conversation | OUT_OF_SCOPE | Auto-posted Farmslot worker run summaries, not regression reports. |
 
-## Parity evidence
+### Code verification (current HEAD `09ed8c1f3d`)
 
-Reference `ui/pages/perps/perps-order-entry-page.tsx` (lines ~1219-1290) uses the
-identical pattern the expanded panel now replicates:
-`formStateToOrderParams(..., isSlippageConfigEnabled ? maxSlippageBps : undefined)`
-→ `shouldHandleTpslSeparately` (`willFlipPosition`) → strip TP/SL → `perpsPlaceOrder`
-→ `perpsUpdatePositionTPSL` with `normalizeTpslPrices`. `formStateToOrderParams`
-signature (`order-params.ts:18`) confirms `maxSlippageBps` is the 5th param.
+`ui/components/app/perps/perps-market-expanded/perps-expanded-trade-panel.tsx` confirmed to contain both fixes:
+- `usePerpsLivePositions`, `usePerpsMaxSlippage`, `getIsPerpsSlippageConfigEnabled` imported and wired (L7, L11-12, L60-65).
+- `formStateToOrderParams(..., isSlippageConfigEnabled ? maxSlippageBps : undefined)` (L96-101).
+- `shouldHandleTpslSeparately` via `willFlipPosition` → strip TP/SL → `perpsPlaceOrder` → `perpsUpdatePositionTPSL` with `normalizeTpslPrices` (L112-141).
 
-## Validation
-See `report.md` for commands and exact results.
+Both cursor findings reference the pre-fix commit `241ac084c3`; the fix commit `09ed8c1f3d` is the current HEAD. Working tree clean (only untracked `.agent/`).
+
+**Conclusion: no new code changes required this re-entry.** All REAL findings resolved upstream; replies posted; threads pending cursor re-review.
+
+## Step 11 — Validation / runtime blocker (honest)
+
+- CI parity gate (step 10): ✅ `yarn lint:changed` (no changed files — clean tree) + `yarn verify-locales --quiet` ("No invalid entries!") + `yarn circular-deps:check` ("Circular dependencies check passed.") — gate exit 0.
+- Recipe validation: ✅ **PASS this session.** Runtime came up cleanly on retry (build ~89s, browser + extension + wallet-fixture finalize all completed; the earlier `connectOverCDP` 30s timeout did not recur). `runtime-health` PASS (CDP on 7665, `backgroundProbeOk: true`).
+- Trusted family recipe (`artifacts/recipe.json`) run with `--launch-existing-dist`: **35/35 nodes passed, 0 failed, 16.3s**, including the AC4 expanded-view screenshot node (`evidence-ac4-expanded-view.png` captured; prior TCC failure also cleared). Artifacts under `artifacts/recipe-run/`.
+- Matches upstream family run (`recipe-quality.json` verdict `pass`, 35/35). Submit-path fix additionally validated by code parity with the reference order-entry page.
+
