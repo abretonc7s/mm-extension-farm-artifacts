@@ -1,6 +1,11 @@
 {
-  "originalFamilyScopeSummary": "Assess expanded extension view architecture and performance risks against popup baselines (TAT-3461 spike).",
-  "currentTriggerSummary": "pr-complete re-entry: re-triage live PR comments and re-verify the prior submit-path fix on the expanded perps trade panel.",
+  "familyId": "e20e0dd0-2175-4696-854f-672cf954707a",
+  "familyRoot": "TAT-3461",
+  "parentRun": "d8410b5e-5159-42e8-b5b9-ca7ebb39d183",
+  "currentRun": "44002-0630-195057",
+  "headSha": "09ed8c1f3d388e26d2e23d851b6a8304a522168f",
+  "originalFamilyScopeSummary": "Assess expanded extension view architecture and performance risks against popup baselines",
+  "currentTriggerSummary": "pr-complete: re-entry comment triage and validation for PR 44002 expanded perps view spike",
   "scopeVerdict": "partial-symptom-only",
-  "notes": "Full family scope (performance/architecture assessment) was delivered by the upstream spike run (e20e0dd0) and documented in report.md with recipe-quality verdict 'pass' (35/35 family nodes). This re-entry addressed the narrower review symptoms only: the two cursor[bot] order-correctness findings on perps-expanded-trade-panel.tsx (TP/SL routing + slippage cap) were already fixed and committed/pushed in HEAD 09ed8c1f3d by the prior re-entry (44002-0630-090132); replies posted on both threads. No new code changes were required this session. Fix presence re-verified against current HEAD by code parity with the reference order-entry page. The trusted family recipe was re-run this session and passed fully (35/35 nodes, 0 failed, 16.3s, including the AC4 expanded-view screenshot), confirming the upstream family recipe pass on current HEAD 09ed8c1f3d."
+  "notes": "Full family spike scope (expanded-view architecture/perf de-risk) was addressed upstream by the dev run (e20e0dd0) and the PR remains an explicit [NOT-READY] spike. This re-entry re-triaged live PR comments: the only REAL review findings (cursor[bot] 3494838412 wrong TP/SL submit path, 3494838418 missing slippage guards) were already fixed in HEAD 09ed8c1f3d with replies posted; both verified present in perps-expanded-trade-panel.tsx. No new comments, no CHANGES_REQUESTED. No code changes this run. CI parity gate clean (no changed files); trusted family recipe re-ran PASS 35/35 nodes, 0 failed, 16.2s. SonarCloud quality-gate failure left as productionization follow-up out of spike scope."
 }
