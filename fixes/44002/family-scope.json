@@ -1,11 +1,10 @@
 {
   "familyId": "e20e0dd0-2175-4696-854f-672cf954707a",
   "familyRoot": "TAT-3461",
-  "parentRun": "d8410b5e-5159-42e8-b5b9-ca7ebb39d183",
-  "currentRun": "44002-0630-195057",
-  "headSha": "09ed8c1f3d388e26d2e23d851b6a8304a522168f",
+  "parentRun": "ac00dc9b-40e1-4526-a660-5b8f269e692b",
+  "currentRun": "44002-0630-213234",
   "originalFamilyScopeSummary": "Assess expanded extension view architecture and performance risks against popup baselines",
-  "currentTriggerSummary": "pr-complete: re-entry comment triage and validation for PR 44002 expanded perps view spike",
+  "currentTriggerSummary": "pr-complete: Assess expanded extension view architecture and performance risks against popup baselines",
   "scopeVerdict": "partial-symptom-only",
-  "notes": "Full family spike scope (expanded-view architecture/perf de-risk) was addressed upstream by the dev run (e20e0dd0) and the PR remains an explicit [NOT-READY] spike. This re-entry re-triaged live PR comments: the only REAL review findings (cursor[bot] 3494838412 wrong TP/SL submit path, 3494838418 missing slippage guards) were already fixed in HEAD 09ed8c1f3d with replies posted; both verified present in perps-expanded-trade-panel.tsx. No new comments, no CHANGES_REQUESTED. No code changes this run. CI parity gate clean (no changed files); trusted family recipe re-ran PASS 35/35 nodes, 0 failed, 16.2s. SonarCloud quality-gate failure left as productionization follow-up out of spike scope."
+  "notes": "Interactive re-entry. The full family scope (expanded-view perf de-risk + production-shaped architecture) was addressed upstream by the original spike run and documented in the PR body (~21ms render, 0ms TBT, per-panel subscriptions). This re-entry re-verified the narrower review symptoms only: the two cursor[bot] order-correctness findings (TP/SL wrong path; skipped slippage guards) on perps-expanded-trade-panel.tsx remain fixed in HEAD 09ed8c1f3d (usePerpsMaxSlippage + getIsPerpsSlippageConfigEnabled gating maxSlippageBps into formStateToOrderParams; shouldHandleTpslSeparately strips market TP/SL then routes via perpsUpdatePositionTPSL). Both cursor threads carry 'Fixed in 09ed8c1f3d' replies. Trusted family recipe re-ran green (35/35 nodes, 0 failed, ~20s). No new code changes required. Out-of-scope productionization (SonarCloud quality gate, pre-submit estimated-slippage confirmation modal in expanded panel, TAT-3462 nav leak) remains deferred for this [NOT-READY] spike."
 }

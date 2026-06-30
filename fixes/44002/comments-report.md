@@ -1,42 +1,40 @@
-# PR 44002 — Comment Triage & Context (Interactive Re-Entry `44002-0630-195057`)
+# PR 44002 — Comment Triage & Context (Interactive Re-Entry `44002-0630-213234`)
 
-**PR:** [feat(perps): [Extension] Spike: de-risk performance impact of the expanded (extended) view [NOT-READY]](https://github.com/MetaMask/metamask-extension/pull/44002)
+**PR:** feat(perps): [Extension] Spike: de-risk performance impact of the expanded (extended) view [NOT-READY]
 **Branch:** `TAT-3461-feat-spike-expanded-view-perf`
-**Family:** `e20e0dd0` (TAT-3461) · parent run `d8410b5e`
+**Family:** `e20e0dd0` (TAT-3461) · parent run `ac00dc9b`
 **Mode:** interactive re-entry, operator-supervised.
 
 ## Context reload
 
-Inherited context: **present**.
-- Manifest: `inputs/inherited-context.json`
-- Inherited artifacts: `inputs/inherited/{TASK.md, report.md, recipe.json, recipe-quality.json, evidence-manifest.json}`
-- Trusted family recipe staged at `artifacts/recipe.json` (`RECIPE_SOURCE: family-inherited`, HAS_RECIPE yes).
+Inherited context: **present** (`inputs/inherited/` + `inputs/inherited-context.json`).
 
-### Prior run summary (`44002-0630-164729`, report inherited)
+Read inherited `report.md` (re-entry `44002-0630-195057`), `recipe.json`, `recipe-quality.json`,
+`evidence-manifest.json`, `TASK.md`. Key prior state:
 
-The two `cursor[bot]` order-correctness findings on the expanded trade panel were fixed,
-committed, and pushed in HEAD `09ed8c1f3d` by an earlier re-entry (`44002-0630-090132`),
-with replies posted to both threads:
+- Two `cursor[bot]` order-correctness findings on the expanded trade panel were already fixed,
+  committed, and pushed in `09ed8c1f3d` by an earlier re-entry, with replies posted on both threads.
+- Trusted family recipe re-ran green (35/35 nodes) in the prior run.
+- No new code changes were required in the prior re-entry; working tree clean.
+- Outstanding items are all out-of-scope for this `[NOT-READY]` spike (SonarCloud quality gate,
+  pre-submit slippage modal replication, TAT-3462 nav leak).
 
-1. **3494838412** — Expanded market TP/SL took wrong submit path → REAL, fixed. Two-step
-   `perpsPlaceOrder` (TP/SL stripped) → `perpsUpdatePositionTPSL`.
-2. **3494838418** — Expanded trades skipped slippage guards → REAL, fixed. `maxSlippageBps`
-   gated into `formStateToOrderParams`.
+## Live comment triage (re-entry `44002-0630-213234`)
 
-Prior re-entry made **no new code changes** — the fixes were already in HEAD. Validation passed
-(lint:changed clean, locales, circular-deps; recipe 35/35 nodes, 0 failed).
-
-## Live comment triage (this re-entry, HEAD `09ed8c1f3d`)
+PR state: `open`, not draft, `mergeable: true`. HEAD = origin = PR head = `09ed8c1f3d`.
+No `CHANGES_REQUESTED` reviews. Working tree clean (only framework-injected `.agent/`).
 
 | ID | Source | Where | Verdict | Resolution |
 |---|---|---|---|---|
-| 3494838412 | cursor[bot] | `perps-expanded-trade-panel.tsx:130` — Expanded market TP/SL wrong path | REAL — already fixed | Two-step `perpsPlaceOrder` (TP/SL stripped via `shouldHandleTpslSeparately`) → `perpsUpdatePositionTPSL` present in HEAD (L106-141). Reply `3499252834` already posted. Thread auto-resolves on cursor re-review. |
-| 3494838418 | cursor[bot] | `perps-expanded-trade-panel.tsx:130` — Expanded trades skip slippage guards | REAL — already fixed | `maxSlippageBps` gated into `formStateToOrderParams` via `getIsPerpsSlippageConfigEnabled`/`usePerpsMaxSlippage` (L11-12, L60-101). Reply `3499253176` already posted. |
-| 4837269569 / 4840231357 / 4840690296 / 4844645868 / 4846391441 | abretonc7s | conversation | OUT_OF_SCOPE | Auto-posted Farmslot worker run summaries, not regression reports. No action. |
-| 4844356355 | sonarqubecloud[bot] | conversation | OUT_OF_SCOPE (spike) | SonarCloud Quality Gate failed. PR is `[NOT-READY]` spike; gate items are productionization follow-ups, not review regressions. No fix this re-entry. |
-| 4835238421 / 4835247809 / 4837083222 / 4844512414 | github-actions / token-exchange | conversation | INFRA | CLA, builds-ready, codeowner-bot notices. No action. |
+| 3494838412 | cursor[bot] — Expanded market TP/SL wrong path | `perps-expanded-trade-panel.tsx:130` | REAL — already fixed | Two-step `perpsPlaceOrder` (TP/SL stripped) → `perpsUpdatePositionTPSL` present in HEAD (`shouldHandleTpslSeparately` L112-141). Reply `3499252834` already posted. |
+| 3494838418 | cursor[bot] — Expanded trades skip slippage guards | `perps-expanded-trade-panel.tsx:130` | REAL — already fixed | `maxSlippageBps` gated into `formStateToOrderParams` (L60-62,101). Reply `3499253176` already posted. |
+| 4837269569 / 4840231357 / 4840690296 / 4844645868 / 4846391441 / 4847170158 | abretonc7s | conversation | OUT_OF_SCOPE | Farmslot worker run summaries, not regression reports. |
 
-**Verdict:** No new actionable comments since the prior re-entry. No `CHANGES_REQUESTED` reviews.
-Both cursor findings (the only REAL review issues) are already fixed in HEAD `09ed8c1f3d` with
-replies posted. PR `open`, not draft, `mergeable: true`. **No new code changes required.**
+**Verification this re-entry:** fix code confirmed present via grep on
+`ui/components/app/perps/perps-market-expanded/perps-expanded-trade-panel.tsx`
+(`usePerpsMaxSlippage` L11/62, `getIsPerpsSlippageConfigEnabled` L12/60,
+`isSlippageConfigEnabled ? maxSlippageBps : undefined` L101, `shouldHandleTpslSeparately` →
+strip TP/SL → `perpsUpdatePositionTPSL` L112-141).
+
+**No new code changes required.** No new actionable comments since the prior re-entry.
 
