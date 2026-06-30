@@ -1,61 +1,48 @@
-# PR 44002 — Comment Triage & Context (Interactive Re-Entry, run 44002-0630-073950)
+# PR 44002 — Comment Triage & Context (Interactive Re-Entry `44002-0630-090132`)
+
+**PR:** feat(perps): [Extension] Spike: de-risk performance impact of the expanded (extended) view [NOT-READY]
+**Branch:** `TAT-3461-feat-spike-expanded-view-perf` · **Family:** `e20e0dd0` (TAT-3461) · parent run `a76774ba`
+**Mode:** interactive re-entry, operator-supervised. **Not committed / not pushed.**
 
 ## Context reload
 
-**Inherited context: present** (family `e20e0dd0`, TAT-3461, parent run `c5fb046f`).
+Inherited context: **present** (`inputs/inherited-context.json`, `inputs/inherited/`).
+Read prior `report.md`, `recipe.json`, `recipe-quality.json`, `evidence-manifest.json`.
 
-Materialized inherited artifacts read:
-- `inputs/inherited/report.md` — prior interactive PR-complete report
-- `inputs/inherited/recipe.json` (seeded → `artifacts/recipe.json`)
-- `inputs/inherited/recipe-quality.json`, `evidence-manifest.json`, `TASK.md`
-- Missing (per manifest): worker learnings, recipe-flows bundle, recipe-coverage.
+Prior re-entry (`44002-0630-073950`) already fixed both `cursor[bot]` order-correctness
+findings in the uncommitted working tree and re-validated the recipe (32/33;
+only `ac4-screenshot` failed on macOS Screen-Recording TCC permission, not a regression).
 
-**Working tree state:** `ui/components/app/perps/perps-market-expanded/perps-expanded-trade-panel.tsx`
-carries the prior run's uncommitted fix (76 insertions, 2 deletions). Not committed, not pushed.
+This run re-fetched live PR data, re-confirmed the working-tree fix is present, and
+re-verified exact parity against the reference `ui/pages/perps/perps-order-entry-page.tsx`
+submit flow. **No new code changes required.**
 
-Prior run already triaged the two `cursor[bot]` findings as REAL and applied a minimal
-parity fix to `handleSubmit`. This re-entry re-fetches live PR comments, re-triages,
-re-validates, and prepares operator handoff.
+## Live PR state (this run)
 
-## Live comment triage
+- Inline review comments: 2, both `cursor[bot]`, both on
+  `ui/components/app/perps/perps-market-expanded/perps-expanded-trade-panel.tsx:84`,
+  both for commit `241ac084c3` (current HEAD). No new comments since prior run.
+- CHANGES_REQUESTED reviews: **none**.
+- Issue/conversation comments: auto-posted Farmslot worker reports by `abretonc7s`
+  (spike + prior pr-complete runs). Not regression reports.
 
-Live fetch (commit under review `241ac084c3`) returned 2 inline review comments,
-2 user issue comments, 0 CHANGES_REQUESTED reviews. Matches `inputs/pr-comments.json`.
+## Triage
 
-| # | Source | Author | Where | Verdict | Action |
-|---|---|---|---|---|---|
-| 1 | review | cursor[bot] | `perps-expanded-trade-panel.tsx:79-84` — Expanded market TP/SL wrong path | **REAL** | Fixed (already in working tree) |
-| 2 | review | cursor[bot] | `perps-expanded-trade-panel.tsx:67-84` — Expanded trades skip slippage guards | **REAL** | Fixed — controller-level cap restored. Pre-submit confirmation modal = OUT_OF_SCOPE follow-up |
-| 3 | issue | abretonc7s | conversation (`e20e0dd0` spike report) | **N/A** | Worker-report auto-post, not a regression. No action |
-| 4 | issue | abretonc7s | conversation (`c5fb046f` pr-complete report) | **N/A** | Worker-report auto-post, not a regression. No action |
-| 5 | issue | github-actions / mm-token-exchange / sonarqube / codeowners bots | conversation | **OUT_OF_SCOPE** | CI/CLA/build/codeowners bots; SonarQube quality-gate informational on a `[NOT-READY]` spike. No code action |
+| # | Source | Finding | Verdict | Resolution |
+|---|---|---|---|---|
+| 1 | cursor[bot] (id 3494838412) | Expanded market TP/SL wrong path — single `perpsPlaceOrder` mis-tags TP/SL instead of two-step `perpsUpdatePositionTPSL` | **REAL** | Fixed in working tree. `handleSubmit` now strips TP/SL on new/flipping market orders and attaches via `perpsUpdatePositionTPSL`, mirroring reference order-entry page (`shouldHandleTpslSeparately` + `willFlipPosition` + `normalizeTpslPrices`). |
+| 2 | cursor[bot] (id 3494838418) | Expanded trades skip slippage guards — no `maxSlippageBps` passed; no pre-submit estimated-slippage check | **REAL (data-correctness portion)** | Fixed in working tree. Gated `maxSlippageBps` (`isSlippageConfigEnabled ? maxSlippageBps : undefined`) now passed into `formStateToOrderParams` — controller-level cap enforced, parity with reference. Pre-submit estimated-slippage **confirmation modal** = **OUT_OF_SCOPE** follow-up on this `[NOT-READY]` spike. |
+| 3 | abretonc7s ×N | Conversation comments | **N/A** | Auto-posted Farmslot worker reports, not regressions. |
+| 4 | CI / CLA / sonarqube / codeowners bots | build/CLA/quality/codeowners | **OUT_OF_SCOPE** | Standard CI; SonarQube informational on a `[NOT-READY]` spike. |
 
-### Finding 1 — Expanded market TP/SL wrong path (REAL)
-Panel sent market orders with TP/SL in a single `perpsPlaceOrder` call. Reference
-`ui/pages/perps/perps-order-entry-page.tsx` (new-order branch) strips TP/SL from the
-market fill on a new/flipping position and attaches them via a second
-`perpsUpdatePositionTPSL` so triggers are tagged under `grouping: 'positionTpsl'`.
-Single-call submission falls back to the controller's `normalTpsl` default →
-mis-tagged triggers → broken auto-close / orders partition.
-**Fix (working tree):** `handleSubmit` now replicates `shouldHandleTpslSeparately`
-→ strip TP/SL → place → `perpsUpdatePositionTPSL` with `normalizeTpslPrices`, plus a
-TP/SL-specific `UPDATE_FAILED` toast. Verified byte-for-byte parity with reference
-(`willFlipPosition`, same guard conditions).
+## Parity evidence
 
-### Finding 2 — Expanded trades skip slippage guards (REAL, data-correctness fixed)
-Panel called `formStateToOrderParams(formState, currentPrice)` with no
-`maxSlippageBps`, so market orders always used `DefaultMarketSlippageBps`, ignoring
-the user's configured cap when the slippage-config flag is on. Reference passes
-`isSlippageConfigEnabled ? maxSlippageBps : undefined`.
-**Fix (working tree):** reads `usePerpsMaxSlippage()` + `getIsPerpsSlippageConfigEnabled`
-and passes the gated `maxSlippageBps` into `formStateToOrderParams`. Restores
-controller-level cap enforcement.
-**Out of scope:** the reference page's pre-submit estimated-slippage **confirmation
-modal** (`PerpsSlippageConfigModal` + estimated-slippage hook) is heavier UX
-productionization; not replicated. Recommended as a follow-up. The data-correctness
-half of the finding is resolved.
+Reference `ui/pages/perps/perps-order-entry-page.tsx` (lines ~1219-1290) uses the
+identical pattern the expanded panel now replicates:
+`formStateToOrderParams(..., isSlippageConfigEnabled ? maxSlippageBps : undefined)`
+→ `shouldHandleTpslSeparately` (`willFlipPosition`) → strip TP/SL → `perpsPlaceOrder`
+→ `perpsUpdatePositionTPSL` with `normalizeTpslPrices`. `formStateToOrderParams`
+signature (`order-params.ts:18`) confirms `maxSlippageBps` is the 5th param.
 
-## Verdict
-Both REAL findings already fixed in the (uncommitted) working tree by the prior
-run; this re-entry re-verified parity against the live reference and re-validated.
-No new code changes required.
+## Validation
+See `report.md` for commands and exact results.
