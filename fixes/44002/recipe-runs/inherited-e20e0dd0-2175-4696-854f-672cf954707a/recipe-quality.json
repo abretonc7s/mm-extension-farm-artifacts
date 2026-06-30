@@ -1,0 +1,64 @@
+{
+  "version": 1,
+  "verdict": "pass",
+  "compact": {
+    "verdict": "PASS",
+    "reasons": [
+      "AC4 covered by ac4-* nodes that open the side panel, click the real Expand button, and assert the expanded tab opens with all five panels + full-width; trace shows 35/35 passed.",
+      "AC2 covered by ac2-* nodes recording getLongTaskMetricsWithTBT for expanded and popup into perf-metrics.json (both TBT 0/good).",
+      "Recipe exercises the real entry flow (trusted sidebar click), not direct-URL navigation; reverting the route/layout/button would FAIL it."
+    ],
+    "better_version_guidance": []
+  },
+  "dimensions": {
+    "graph_integrity": {
+      "status": "pass",
+      "reason": "Workflow graph is structurally valid; all 35 nodes reachable and passed.",
+      "evidence": ["recipe.json", "recipe-run/summary.json"]
+    },
+    "action_contract": {
+      "status": "pass",
+      "reason": "Only manifest-declared actions used (app.status, metamask.wallet.*, ui.navigate, ui.wait_for, ui.screenshot, command, assert_exit_code, assert_json, end).",
+      "evidence": ["recipe.json"]
+    },
+    "ac_coverage": {
+      "status": "pass",
+      "reason": "AC4 (expanded render via sidebar Expand) and AC2 (perf baseline) bind to ac4-*/ac2-* nodes. AC1 (PoC assessment) and AC3 (ranked risks incl. pre-existing leak) are written deliverables in report.md, not runtime-provable.",
+      "evidence": ["report.md", "recipe-run/trace.json", "perf-metrics.json"]
+    },
+    "evidence_contract_basics": {
+      "status": "pass",
+      "reason": "Visual claim has a capture-helper ui.screenshot; perf claims have state reads (TBT) and Performance.getMetrics; leak claim has churn data.",
+      "evidence": ["recipe-run/evidence-ac4-expanded-view.png", "perf-metrics.json", "perf-churn.json"]
+    }
+  },
+  "structural_findings": [],
+  "contextual_findings": [
+    {
+      "code": "absolute_memory_session_confounded",
+      "message": "Absolute heap/listener single-point numbers are session-cumulative across a browser session; reliable signals are TBT, time-to-render, per-cycle growth slopes, and per-panel DOM attribution. Documented in report.md.",
+      "dimension": "evidence_contract_basics"
+    }
+  ],
+  "suggested_recipe_delta": [],
+  "training_fields": {
+    "farm": "metamask-extension",
+    "project": "metamask-extension-farm",
+    "flow_type": "dev",
+    "task_type": "dev",
+    "claim_is_visual": true,
+    "proof_mode": "mixed",
+    "anti_patterns": [],
+    "good_patterns": [
+      "trusted-gesture sidebar entry flow",
+      "reproducible CDP perf + leak harness driven by command nodes"
+    ]
+  },
+  "meta": {
+    "producer": "worker",
+    "fallback_used": false,
+    "legacy_task": false,
+    "artifact_required": true,
+    "source_signals": ["recipe.json", "recipe-run/summary.json", "recipe-run/trace.json", "perf-metrics.json", "perf-churn.json", "report.md"]
+  }
+}
