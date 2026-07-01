@@ -1,0 +1,32 @@
+[
+  {
+    "comment_id": 3494838412,
+    "review_id": null,
+    "author_login": "cursor[bot]",
+    "author_type": "Bot",
+    "reviewer_login": "cursor[bot]",
+    "review_state": "COMMENTED",
+    "source_kind": "bugbot",
+    "path": "ui/components/app/perps/perps-market-expanded/perps-expanded-trade-panel.tsx",
+    "line": 84,
+    "body": "Expanded market TP/SL wrong path (Medium). The expanded trade panel sends market orders with take-profit/stop-loss in a single perpsPlaceOrder call. The order entry page strips TP/SL from the market fill and attaches them via perpsUpdatePositionTPSL so triggers are position-scoped; skipping that flow mis-tags TP/SL and breaks how auto-close orders appear in the UI.",
+    "triage": "REAL",
+    "action": "Already resolved on branch by commit 956fb1b0e6 — expanded panel now uses the two-step flow (place order without TP/SL, then perpsUpdatePositionTPSL for position-scoped triggers).",
+    "fixed_in_commit": "956fb1b0e6"
+  },
+  {
+    "comment_id": 3494838418,
+    "review_id": null,
+    "author_login": "cursor[bot]",
+    "author_type": "Bot",
+    "reviewer_login": "cursor[bot]",
+    "review_state": "COMMENTED",
+    "source_kind": "bugbot",
+    "path": "ui/components/app/perps/perps-market-expanded/perps-expanded-trade-panel.tsx",
+    "line": 84,
+    "body": "Expanded trades skip slippage guards (Medium). Expanded-view order submission does not apply the slippage configuration used on the order entry page: no maxSlippageBps is passed into formStateToOrderParams, and there is no pre-submit check for estimated slippage exceeding the user's cap. Trades blocked on the dedicated entry route can still be placed from the expanded ticket when slippage config is enabled.",
+    "triage": "REAL",
+    "action": "Part (a) maxSlippageBps passed to formStateToOrderParams fixed by 956fb1b0e6; part (b) estimated-slippage pre-submit block added this run — panel snapshots form state locally, subscribes to usePerpsEstimatedSlippage, and blocks market submits exceeding the cap with a toast.",
+    "fixed_in_commit": "5999a4f2a8"
+  }
+]
