@@ -1,40 +1,36 @@
-# PR 44002 — Comment Triage & Context (Interactive Re-Entry `44002-0630-213234`)
+# PR 44002 — Comment Triage & Context (Interactive Re-Entry `44002-0630-222718`)
 
-**PR:** feat(perps): [Extension] Spike: de-risk performance impact of the expanded (extended) view [NOT-READY]
+**PR:** [feat(perps): [Extension] Spike: de-risk performance impact of the expanded (extended) view [NOT-READY]](https://github.com/MetaMask/metamask-extension/pull/44002)
 **Branch:** `TAT-3461-feat-spike-expanded-view-perf`
-**Family:** `e20e0dd0` (TAT-3461) · parent run `ac00dc9b`
+**Family:** `e20e0dd0` (TAT-3461) · parent run `79bdc720`
 **Mode:** interactive re-entry, operator-supervised.
 
 ## Context reload
 
-Inherited context: **present** (`inputs/inherited/` + `inputs/inherited-context.json`).
+Inherited context: **present** (`inputs/inherited-context.json` + `inputs/inherited/`).
+Read prior `report.md` (run `44002-0630-213234`), inherited `recipe.json`, `recipe-quality.json`,
+`evidence-manifest.json`, and live `pr-comments.json`.
 
-Read inherited `report.md` (re-entry `44002-0630-195057`), `recipe.json`, `recipe-quality.json`,
-`evidence-manifest.json`, `TASK.md`. Key prior state:
+Prior-run state carried forward:
+- Two `cursor[bot]` order-correctness findings on `perps-expanded-trade-panel.tsx` (IDs 3494838412,
+  3494838418) — **REAL, already fixed** in `09ed8c1f3d`; both threads have "Fixed in 09ed8c1f3d" replies.
+- Operator-reported expanded-order-page invalid-amount (`09` = $9) UX bug — **fixed** in
+  `76b604569c` via submit guards in `ui/components/app/perps/order-entry/order-entry.tsx`.
+- Trusted family recipe re-ran green (35/35) on prior runs.
+- All `abretonc7s` conversation comments are Farmslot run summaries → **OUT_OF_SCOPE**.
 
-- Two `cursor[bot]` order-correctness findings on the expanded trade panel were already fixed,
-  committed, and pushed in `09ed8c1f3d` by an earlier re-entry, with replies posted on both threads.
-- Trusted family recipe re-ran green (35/35 nodes) in the prior run.
-- No new code changes were required in the prior re-entry; working tree clean.
-- Outstanding items are all out-of-scope for this `[NOT-READY]` spike (SonarCloud quality gate,
-  pre-submit slippage modal replication, TAT-3462 nav leak).
+## Live triage (run `44002-0630-222718`)
 
-## Live comment triage (re-entry `44002-0630-213234`)
-
-PR state: `open`, not draft, `mergeable: true`. HEAD = origin = PR head = `09ed8c1f3d`.
-No `CHANGES_REQUESTED` reviews. Working tree clean (only framework-injected `.agent/`).
+PR state: `open`, not draft, `mergeable: true`. Local HEAD = PR head = `76b604569c`.
+No new comments since prior run. **No `CHANGES_REQUESTED` reviews.**
 
 | ID | Source | Where | Verdict | Resolution |
 |---|---|---|---|---|
-| 3494838412 | cursor[bot] — Expanded market TP/SL wrong path | `perps-expanded-trade-panel.tsx:130` | REAL — already fixed | Two-step `perpsPlaceOrder` (TP/SL stripped) → `perpsUpdatePositionTPSL` present in HEAD (`shouldHandleTpslSeparately` L112-141). Reply `3499252834` already posted. |
-| 3494838418 | cursor[bot] — Expanded trades skip slippage guards | `perps-expanded-trade-panel.tsx:130` | REAL — already fixed | `maxSlippageBps` gated into `formStateToOrderParams` (L60-62,101). Reply `3499253176` already posted. |
-| 4837269569 / 4840231357 / 4840690296 / 4844645868 / 4846391441 / 4847170158 | abretonc7s | conversation | OUT_OF_SCOPE | Farmslot worker run summaries, not regression reports. |
+| 3494838412 | cursor[bot] — Expanded market TP/SL wrong path | `perps-expanded-trade-panel.tsx:130` | **REAL — already fixed** | Two-step `perpsPlaceOrder` (TP/SL stripped) → `perpsUpdatePositionTPSL` in `09ed8c1f3d`. Reply `3499252834` present ("Fixed in 09ed8c1f3d"). |
+| 3494838418 | cursor[bot] — Expanded trades skip slippage guards | `perps-expanded-trade-panel.tsx:130` | **REAL — already fixed** | `maxSlippageBps` gated into order params in `09ed8c1f3d`. Reply `3499253176` present ("Fixed in 09ed8c1f3d"). |
+| 4837269569 / 4840231357 / 4840690296 / 4844645868 / 4846391441 / 4847170158 / 4847626972 | abretonc7s | conversation | **OUT_OF_SCOPE** | Farmslot worker run summaries, not regression reports. |
+| (bots) CLA / builds / CODEOWNERS / SonarCloud | github-actions, mm-token-exchange, sonarqubecloud | conversation | **OUT_OF_SCOPE** | Automated status. SonarCloud Quality Gate is out of scope for this `[NOT-READY]` spike. |
 
-**Verification this re-entry:** fix code confirmed present via grep on
-`ui/components/app/perps/perps-market-expanded/perps-expanded-trade-panel.tsx`
-(`usePerpsMaxSlippage` L11/62, `getIsPerpsSlippageConfigEnabled` L12/60,
-`isSlippageConfigEnabled ? maxSlippageBps : undefined` L101, `shouldHandleTpslSeparately` →
-strip TP/SL → `perpsUpdatePositionTPSL` L112-141).
-
-**No new code changes required.** No new actionable comments since the prior re-entry.
+**No `REAL` issues require new code changes this run.** Both cursor findings are resolved in shipped
+commits with replies posted; the operator `09` invalid-amount fix is in `76b604569c`.
 

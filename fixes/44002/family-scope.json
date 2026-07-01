@@ -1,10 +1,6 @@
 {
-  "familyId": "e20e0dd0-2175-4696-854f-672cf954707a",
-  "familyRoot": "TAT-3461",
-  "parentRun": "ac00dc9b-40e1-4526-a660-5b8f269e692b",
-  "currentRun": "44002-0630-213234",
-  "originalFamilyScopeSummary": "Assess expanded extension view architecture and performance risks against popup baselines",
-  "currentTriggerSummary": "pr-complete: Assess expanded extension view architecture and performance risks against popup baselines",
+  "originalFamilyScopeSummary": "Assess expanded extension view architecture and performance risks against popup baselines (TAT-3461 spike).",
+  "currentTriggerSummary": "pr-complete: interactive re-entry to triage PR 44002 comments, verify prior order-correctness fixes, and re-run validation.",
   "scopeVerdict": "partial-symptom-only",
-  "notes": "Interactive re-entry. The full family scope (expanded-view perf de-risk + production-shaped architecture) was addressed upstream by the original spike run and documented in the PR body (~21ms render, 0ms TBT, per-panel subscriptions). This re-entry re-verified the narrower review symptoms only: the two cursor[bot] order-correctness findings (TP/SL wrong path; skipped slippage guards) on perps-expanded-trade-panel.tsx remain fixed in HEAD 09ed8c1f3d (usePerpsMaxSlippage + getIsPerpsSlippageConfigEnabled gating maxSlippageBps into formStateToOrderParams; shouldHandleTpslSeparately strips market TP/SL then routes via perpsUpdatePositionTPSL). Both cursor threads carry 'Fixed in 09ed8c1f3d' replies. Trusted family recipe re-ran green (35/35 nodes, 0 failed, ~20s). No new code changes required. Out-of-scope productionization (SonarCloud quality gate, pre-submit estimated-slippage confirmation modal in expanded panel, TAT-3462 nav leak) remains deferred for this [NOT-READY] spike."
+  "notes": "This re-entry handled PR-complete triage symptoms only, not the full architectural/performance spike scope. Both cursor[bot] order-correctness findings (TP/SL wrong path, missing slippage guards) are confirmed fixed in shipped commit 09ed8c1f3d (verified in perps-expanded-trade-panel.tsx: maxSlippageBps gated, two-step perpsPlaceOrder->perpsUpdatePositionTPSL) with 'Fixed in 09ed8c1f3d' replies posted on both threads. Operator-reported invalid-amount ('09'=$9) submit guard is in 76b604569c. No new comments, no CHANGES_REQUESTED. Trusted family recipe re-ran green (35/35, 0 failed, 25.3s). Out of scope and unaddressed: SonarCloud Quality Gate, pre-submit estimated-slippage confirmation modal, broader perf benchmarking vs popup baseline — appropriate to defer given the [NOT-READY] spike status."
 }

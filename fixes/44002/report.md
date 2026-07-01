@@ -1,41 +1,33 @@
-# PR 44002 — Interactive PR-Complete Report (re-entry `44002-0630-213234`)
+# PR 44002 — Interactive PR-Complete Report (re-entry `44002-0630-222718`)
 
 **PR:** [feat(perps): [Extension] Spike: de-risk performance impact of the expanded (extended) view [NOT-READY]](https://github.com/MetaMask/metamask-extension/pull/44002)
-**Branch:** `TAT-3461-feat-spike-expanded-view-perf` · HEAD `09ed8c1f3d` (= origin = PR head)
-**Family:** `e20e0dd0` (TAT-3461) · parent run `ac00dc9b`
+**Branch:** `TAT-3461-feat-spike-expanded-view-perf` · HEAD `76b604569c` (= origin = PR head)
+**Family:** `e20e0dd0` (TAT-3461) · parent run `79bdc720`
 **Mode:** interactive re-entry, operator-supervised.
 
 ## Summary
 
 Re-entered PR with inherited family context. Re-fetched live PR comments/reviews, re-triaged, and
-re-verified the prior submit-path fix against current HEAD. The two `cursor[bot]` order-correctness
-findings on `perps-expanded-trade-panel.tsx` remain fixed in `09ed8c1f3d`, with "Fixed in 09ed8c1f3d"
-replies on both threads. **No new code changes required.** Trusted family recipe re-ran green (35/35).
+re-verified the prior fixes against current HEAD. **No new code changes required.** Both cursor[bot]
+order-correctness findings remain fixed in `09ed8c1f3d` (verified in source), with replies present on
+both threads. The operator `09` invalid-amount submit guard is in `76b604569c`. Trusted family recipe
+re-ran green (35/35).
 
 ## Comments handled
 
 | ID | Source | Verdict | Resolution |
 |---|---|---|---|
-| 3494838412 | cursor[bot] — Expanded TP/SL wrong path | REAL — already fixed | Two-step `perpsPlaceOrder` (TP/SL stripped) → `perpsUpdatePositionTPSL` in HEAD. Reply 3499252834 present. |
-| 3494838418 | cursor[bot] — Expanded trades skip slippage guards | REAL — already fixed | `maxSlippageBps` gated into `formStateToOrderParams`. Reply 3499253176 present. |
-| 4837269569 / 4840231357 / 4840690296 / 4844645868 / 4846391441 / 4847170158 | abretonc7s | OUT_OF_SCOPE | Farmslot worker run summaries, not regressions. |
+| 3494838412 | cursor[bot] — Expanded TP/SL wrong path | REAL — already fixed | Two-step `perpsPlaceOrder` (TP/SL stripped) → `perpsUpdatePositionTPSL` in HEAD. Reply `3499252834` present. |
+| 3494838418 | cursor[bot] — Expanded trades skip slippage guards | REAL — already fixed | `maxSlippageBps` gated into `formStateToOrderParams`. Reply `3499253176` present. |
+| 4837269569 / 4840231357 / 4840690296 / 4844645868 / 4846391441 / 4847170158 / 4847626972 | abretonc7s | OUT_OF_SCOPE | Farmslot worker run summaries, not regressions. |
+| CLA / builds / CODEOWNERS / SonarCloud bots | bots | OUT_OF_SCOPE | Automated status. |
 
 No new comments since prior run. No `CHANGES_REQUESTED`. PR `open`, not draft, `mergeable: true`.
 
 ## Files changed (this re-entry)
 
-Operator-reported UX fix (not a GitHub comment) — expanded order page accepted invalid
-amounts (e.g. `09` = $9) because `OrderEntry`'s **internal** submit button had no validation,
-while the regular order-entry page renders `OrderEntry` with `showSubmitButton={false}` and owns a
-button gated by `isSubmitDisabled`. Added matching guards to the internal button:
-
-| File | Change |
-|---|---|
-| `ui/components/app/perps/order-entry/order-entry.tsx` | Added `isBelowMinOrderSize` ($10 min, market), `isInsufficientFunds` (margin > balance), `isLimitPriceInvalid`, and `currentPrice<=0` guards → `isSubmitDisabled`; internal submit button now `disabled` + shows "Order size must be at least $10" / "Insufficient funds" text, mirroring the page. |
-| `ui/components/app/perps/order-entry/order-entry.test.tsx` | New `submit guards` suite (below-min `09`, zero, insufficient funds, valid-amount enable); updated the limit-submit test to set a price first (empty limit price is now correctly blocked). |
-
-Both flows share `usePerpsOrderForm`, so the default order amount (`TRADING_DEFAULTS.amount` = $10)
-was already consistent — the gap was purely the missing submit-disable on the internal button.
+**None.** All REAL findings were resolved in previously-shipped commits (`09ed8c1f3d`, `76b604569c`).
+Working tree clean (only untracked `.agent/`).
 
 ## Validation
 
@@ -46,36 +38,48 @@ was already consistent — the gap was purely the missing submit-disable on the 
 | Locales | `yarn verify-locales --quiet` | ✅ pass — "No invalid entries!" |
 | Circular deps | `yarn circular-deps:check` | ✅ pass — "Circular dependencies check passed." |
 | Runtime health | `ensure-runtime-ready.sh` + `runtime-health --cdp-port 7665` | ✅ PASS — CDP reachable, `backgroundProbeOk: true`, provider hyperliquid |
-| Recipe | `metamask-recipe run artifacts/recipe.json --launch-existing-dist` | ✅ **PASS — 35/35 nodes, 0 failed, 19961 ms** (pre-fix; runtime uses an immutable static build) |
-| Operator-fix unit tests | `yarn jest order-entry.test.tsx` | ✅ **PASS — 41/41** (4 new submit-guard tests incl. `09` below-min) |
+| Recipe | `metamask-recipe run artifacts/recipe.json --launch-existing-dist` | ✅ **PASS — 35/35 nodes, 0 failed, 25256 ms** |
+| Source verify | `grep` of `perps-expanded-trade-panel.tsx` | ✅ `maxSlippageBps` gated + two-step TP/SL path present |
 
 Recipe artifacts: `artifacts/recipe-run/{summary.json, trace.json, artifact-manifest.json, recipe.json}`.
 
-**Note on live validation of the operator fix:** this slot's runtime runs an immutable static dev
-build (`watch=off`), so the source change is not reflected in `dist/` without a full `yarn build:test`.
-The fix is proven by the new Jest guard tests rather than a live CDP run. A funded manual run on a
-rebuilt dist is the remaining optional confirmation.
-
 ## Commit / push status
 
-Operator explicitly asked to commit + push the expanded-panel submit-guard fix.
-Committed as `76b604569c` and pushed to `origin/TAT-3461-feat-spike-expanded-view-perf`
-(`09ed8c1f3d..76b604569c`). The two cursor-finding fixes were already in `09ed8c1f3d`.
+**No commits, no pushes this run** — no code changes were needed and operator has not asked to push.
+PR head already at `76b604569c` (origin in sync).
 
-## Operator-reported follow-up (new this session)
+## CI check-runs (added after operator flagged missing CI review)
 
-Operator noticed a UX bug on the full-screen (expanded) order page: it does **not** prevent
-submitting an order on an invalid amount such as `09` (leading zero). Investigation appended in a
-separate section / `comments-report.md` once analyzed. This is a new finding, not one of the
-triaged GitHub comments.
+Fetched live via `gh pr checks 44002`. Failing checks the earlier passes missed:
+
+| Check | Status | Root cause | Action |
+|---|---|---|---|
+| **Test lint** | ❌ fail → **fixed** | CI runs `yarn lint` = json+**oxfmt**+eslint+tsc+styles. `oxfmt -c oxfmt.config.mts --check` failed on 8 PR files (line-wrap; oxfmt is sole TS/TSX formatter, disagrees w/ prettier). Local gate only ran `lint:changed` (eslint) → never caught it; on re-entry it also saw "no changed files" since all committed. | Ran `yarn lint:format:fix` on the 8 files. oxfmt + eslint + locales + circular-deps now green. Staged, awaiting commit/push decision. |
+| check-pr-max-lines | ❌ fail | PR = +2087 lines > 1000 limit. | Size-label/human override for a `[NOT-READY]` spike — not a code fix. |
+| SonarCloud | ❌ fail | Quality Gate. | Out of scope for `[NOT-READY]` spike (prior triage). |
+| policy-bot | ⏳ pending | 0/1 rules approved — needs human review. | Operator/reviewer action. |
+
+### Template learning
+The checklist's step-10 "CI parity gate" is **not** CI parity: it runs `lint:changed` (eslint only) and
+skips `yarn lint:format` (oxfmt). It also never fetches `gh pr checks`, so a red PR passed local
+validation ~6 re-entries in a row. Fix logged to memory `pr-complete-check-ci-checkruns.md`.
+Recommended template change: add `gh pr checks <N>` fetch during comment triage, treat failing
+check-runs as REAL, and run `yarn lint:format` in the parity gate.
+
+## Files changed (oxfmt fix — this session)
+
+8 PR files reformatted by oxfmt (formatting only, no logic): `order-entry.tsx`,
+`perps-expanded-header.test.tsx`, `perps-expanded-positions-panel.test.tsx`,
+`perps-expanded-trade-panel.tsx`, `use-auth-guard-redirect.test.tsx`,
+`perps-market-expanded-page.test.tsx`, `perps-order-entry-page.tsx`, `routes.component.tsx`. Staged.
 
 ## Remaining manual work
 
-1. Operator review of the already-pushed submit-path change (`09ed8c1f3d`).
+1. Operator review of already-shipped fixes (`09ed8c1f3d`, `76b604569c`).
 2. cursor threads: both already have "Fixed in 09ed8c1f3d" replies; auto-resolve on cursor re-review.
-3. **New:** expanded order-page invalid-amount (`09`) validation — see operator follow-up section.
-4. Out of scope for this `[NOT-READY]` spike: SonarCloud Quality Gate, pre-submit estimated-slippage
-   confirmation modal replication, TAT-3462 shared nav leak.
+3. Out of scope for this `[NOT-READY]` spike: SonarCloud Quality Gate, pre-submit estimated-slippage
+   confirmation modal replication, broader perf benchmarking vs popup baseline.
+4. No GitHub replies/thread resolutions performed this run (interactive mode — operator owns those).
 
 ## Family scope
 
