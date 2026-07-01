@@ -1,11 +1,7 @@
-# Reviewer-driven learnings — PR #44002 (TAT-3461)
+# Reviewer-driven learnings — PR 44002 (TAT-3461)
 
-- Partial flow mirroring: reviewer caught that the expanded trade panel mirrored the order-entry submit flow's *param passing* (maxSlippageBps into formStateToOrderParams) but omitted the *pre-submit guard* (block when estimatedSlippageBps > maxSlippageBps) — when mirroring a submit flow, enumerate every guard/branch the source path runs, not just the happy-path arguments.
-
-- Shared-component gap: the order-entry slippage guard lives in the page, not in the shared OrderEntry component, so wrapping OrderEntry does NOT inherit it — fix-bug should treat page-level guards around a shared form as separate obligations that each caller must re-implement.
-
-- Leaf-panel state can be lifted safely: covering the guard required snapshotting form state via onFormStateChange, which the "no top-level price-lift" perf design initially avoided — local snapshot in an already-memoized leaf panel is fine (re-renders stay local); the perf constraint is about the page tree, not the panel itself.
-
-- Formatting gate is a real CI blocker: the branch failed CI Test lint purely on oxfmt (lint:format) with no source edits committed — fix-bug should run `yarn lint:format:fix` (oxfmt), not just eslint/prettier, before considering a perps PR green.
-
-- Coverage guards can be unreachable: handleExpandClick's `!decodedSymbol` early return is dead-defensive (page redirects before the button renders), so component tests cannot hit it — derive coverage targets from reachable branches and flag defensively-unreachable lines instead of chasing 100%.
+- Snapshot-vs-arg divergence: reviewer flagged the expanded trade panel gating slippage on `formSnapshot` (from `onFormStateChange`) while submitting from the `formState` callback arg — validate against the authoritative submit argument, and when an async estimate is keyed off separate render state, gate on an explicit inputs-match check rather than assuming the two are in sync.
+- Loading terminal states: reviewer caught `markets.length === 0` holding an endless skeleton — a loading guard must have a terminal exit; gate purely on the loading flag and let empty-but-loaded fall through to not-found/error, mirroring the sibling production page (`perps-market-detail-page`) instead of inventing a new guard.
+- Mirror the proven page: the endless-skeleton bug came from the expanded page adding an extra guard the popup detail page never had — when building a parallel view, copy the established loading/not-found pattern verbatim unless there's a concrete reason to diverge.
+- Test-file typing is a real CI gate: `jest.fn(() => ({ arr: [] }))` infers `never[]`, so later `mockReturnValue({ arr: [obj] })` fails `Test lint` (tsc) even though tests run fine under babel-jest — annotate mock return types (and rest args on spread-forwarded mocks) up front so the tsc lane stays green.
+- Fix-and-update-the-test-together: the empty-markets fix inverted an existing test's expectation (skeleton → not-found); a behavior fix that contradicts a committed assertion should update that test in the same commit, or CI/self-review will bounce it.
