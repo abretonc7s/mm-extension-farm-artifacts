@@ -1,0 +1,126 @@
+{
+  "schema_version": 1,
+  "title": "PR 44067 — perps market detail header",
+  "description": "Prove redesigned market detail header layout and chevron navigation to market list.",
+  "validate": {
+    "workflow": {
+      "entry": "setup-unlock",
+      "nodes": {
+        "setup-unlock": {
+          "action": "metamask.wallet.ensure_unlocked",
+          "intent": "Ensure wallet is unlocked before Perps navigation",
+          "flow": "setup",
+          "next": "setup-navigate-btc"
+        },
+        "setup-navigate-btc": {
+          "action": "ui.navigate",
+          "page": "perps-market",
+          "market": "BTC",
+          "intent": "Open BTC perps market detail page",
+          "flow": "setup",
+          "next": "ac1-wait-page"
+        },
+        "ac1-wait-page": {
+          "action": "ui.wait_for",
+          "test_id": "perps-market-detail-page",
+          "intent": "Wait for market detail page shell",
+          "flow": "ac1",
+          "next": "ac1-wait-name"
+        },
+        "ac1-wait-name": {
+          "action": "ui.wait_for",
+          "test_id": "perps-market-detail-name",
+          "intent": "AC1: full market name visible on first row",
+          "flow": "ac1",
+          "next": "ac1-wait-leverage"
+        },
+        "ac1-wait-leverage": {
+          "action": "ui.wait_for",
+          "test_id": "perps-market-max-leverage",
+          "intent": "AC1: leverage pill visible on first row",
+          "flow": "ac1",
+          "next": "ac1-wait-chevron"
+        },
+        "ac1-wait-chevron": {
+          "action": "ui.wait_for",
+          "test_id": "perps-market-detail-market-list-button",
+          "intent": "AC1: chevron control visible on first row",
+          "flow": "ac1",
+          "next": "ac1-screenshot-first-row"
+        },
+        "ac1-screenshot-first-row": {
+          "action": "ui.screenshot",
+          "path": "evidence/evidence-ac1-header-first-row.png",
+          "note": "AC1: Bitcoin name, leverage pill, and chevron on first header row",
+          "intent": "Capture first-row market identity layout",
+          "flow": "ac1",
+          "next": "ac2-wait-pair"
+        },
+        "ac2-wait-pair": {
+          "action": "ui.wait_for",
+          "test_id": "perps-market-detail-pair",
+          "intent": "AC2: ticker-collateral perp subtitle on second row",
+          "flow": "ac2",
+          "next": "ac2-screenshot-pair"
+        },
+        "ac2-screenshot-pair": {
+          "action": "ui.screenshot",
+          "path": "evidence/evidence-ac2-market-pair-subtitle.png",
+          "note": "AC2: BTC-USDC perp subtitle below market name",
+          "intent": "Capture second-row pair subtitle",
+          "flow": "ac2",
+          "next": "ac3-wait-price"
+        },
+        "ac3-wait-price": {
+          "action": "ui.wait_for",
+          "test_id": "perps-market-detail-price",
+          "intent": "AC3: price row visible below header",
+          "flow": "ac3",
+          "next": "ac3-wait-change"
+        },
+        "ac3-wait-change": {
+          "action": "ui.wait_for",
+          "test_id": "perps-market-detail-change",
+          "intent": "AC3: 24h price change visible below header",
+          "flow": "ac3",
+          "next": "ac3-screenshot-price-row"
+        },
+        "ac3-screenshot-price-row": {
+          "action": "ui.screenshot",
+          "path": "evidence/evidence-ac3-price-and-change.png",
+          "note": "AC3: price and 24h change on dedicated row beneath header",
+          "intent": "Capture price and 24h change row",
+          "flow": "ac3",
+          "next": "ac4-press-chevron"
+        },
+        "ac4-press-chevron": {
+          "action": "ui.press",
+          "test_id": "perps-market-detail-market-list-button",
+          "intent": "AC4: click chevron to open market list",
+          "flow": "ac4",
+          "next": "ac4-wait-market-list"
+        },
+        "ac4-wait-market-list": {
+          "action": "ui.wait_for",
+          "test_id": "market-list-view",
+          "intent": "AC4: navigated to perps market list",
+          "flow": "ac4",
+          "next": "ac4-screenshot-market-list"
+        },
+        "ac4-screenshot-market-list": {
+          "action": "ui.screenshot",
+          "path": "evidence/evidence-ac4-market-list-navigation.png",
+          "note": "AC4: market list after chevron navigation",
+          "intent": "Capture market list destination screen",
+          "flow": "ac4",
+          "next": "end-pass"
+        },
+        "end-pass": {
+          "action": "end",
+          "status": "pass",
+          "intent": "All header AC nodes completed"
+        }
+      }
+    }
+  }
+}

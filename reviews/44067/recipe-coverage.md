@@ -1,0 +1,8 @@
+| # | AC (verbatim) | Target env | Recipe nodes (IDs) | Screenshot filename | Visual verdict | Justification |
+|---|---------------|------------|---------------------|---------------------|----------------|---------------|
+| 1 | Then I see the full market name with the leverage pill and a chevron on the first row | fullscreen | ac1-wait-page, ac1-wait-name, ac1-wait-leverage, ac1-wait-chevron, ac1-screenshot-first-row | evidence-ac1-header-first-row.png | PROVEN | Screenshot shows "Bitcoin", "40x" pill, and down-chevron on the first identity row |
+| 2 | And I see the "[ticker]-[collateral] perp" subtitle (e.g. "BTC-USDC perp") on the second row | fullscreen | ac2-wait-pair, ac2-screenshot-pair | evidence-ac2-market-pair-subtitle.png | PROVEN | Screenshot shows "BTC-USDC perp" subtitle directly under the market name |
+| 3 | And I see the price and 24h price change below the header | fullscreen | ac3-wait-price, ac3-wait-change, ac3-screenshot-price-row | evidence-ac3-price-and-change.png | PROVEN | Screenshot shows prominent price ($61,147) and green 24h change (+4.15%) on a dedicated row below the header block |
+| 4 | Then I am taken to the perps market list | fullscreen | ac4-press-chevron, ac4-wait-market-list, ac4-screenshot-market-list | evidence-ac4-market-list-navigation.png | PROVEN | Trace navigated to `#/perps/market-list`; screenshot shows Markets list with `market-list-view` |
+
+Overall recipe coverage: 4/4 ACs PROVEN (untestable: none, weak: 0, missing: 0)

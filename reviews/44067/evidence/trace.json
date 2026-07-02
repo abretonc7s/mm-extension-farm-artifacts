@@ -1,0 +1,523 @@
+{
+  "metadata": {
+    "runner": {
+      "source": "/Users/deeeed/dev/metamask/metamask-recipe-runner",
+      "git_ref": "36a1120d1b93a0183da59ba8e55306cb80283ffa",
+      "name": "@metamask/recipe-runner"
+    }
+  },
+  "entries": [
+    {
+      "nodeId": "setup-unlock",
+      "action": "metamask.wallet.ensure_unlocked",
+      "intent": "Ensure wallet is unlocked before Perps navigation",
+      "startedAt": "2026-07-02T10:23:51.197Z",
+      "endedAt": "2026-07-02T10:23:51.598Z",
+      "durationMs": 401,
+      "ok": true,
+      "next": "setup-navigate-btc",
+      "output": {
+        "action": "metamask.wallet.ensure_unlocked",
+        "unlocked": true,
+        "alreadyUnlocked": true,
+        "proofPath": "extension-unlocked-state",
+        "cdpPort": 6663,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/",
+        "runtimeLaunch": null,
+        "liveAdapter": "/Users/deeeed/dev/metamask/metamask-recipe-runner/library/actions/extension/wallet/ensure_unlocked.mjs"
+      }
+    },
+    {
+      "nodeId": "setup-navigate-btc",
+      "action": "ui.navigate",
+      "intent": "Open BTC perps market detail page",
+      "startedAt": "2026-07-02T10:23:51.614Z",
+      "endedAt": "2026-07-02T10:23:52.384Z",
+      "durationMs": 770,
+      "ok": true,
+      "next": "ac1-wait-page",
+      "output": {
+        "action": "ui.navigate",
+        "page": "perps-market",
+        "hash": "#/perps/market/BTC",
+        "navigation": {
+          "frameId": "4DE486FB53A105A9DAA3EE7235D0FA3C",
+          "isDownload": false
+        },
+        "proofPath": "ui-navigation",
+        "cdpPort": 6663,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/",
+        "runtimeLaunch": null,
+        "liveAdapter": "/Users/deeeed/dev/metamask/metamask-recipe-runner/library/actions/extension/ui/navigate.mjs"
+      }
+    },
+    {
+      "nodeId": "ac1-wait-page",
+      "action": "ui.wait_for",
+      "intent": "Wait for market detail page shell",
+      "startedAt": "2026-07-02T10:23:52.412Z",
+      "endedAt": "2026-07-02T10:23:55.101Z",
+      "durationMs": 2689,
+      "ok": true,
+      "next": "ac1-wait-name",
+      "output": {
+        "matched": true,
+        "cdpPort": 6663,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/BTC",
+        "runtimeLaunch": null
+      }
+    },
+    {
+      "nodeId": "ac1-wait-name",
+      "action": "ui.wait_for",
+      "intent": "AC1: full market name visible on first row",
+      "startedAt": "2026-07-02T10:23:55.107Z",
+      "endedAt": "2026-07-02T10:23:55.121Z",
+      "durationMs": 14,
+      "ok": true,
+      "next": "ac1-wait-leverage",
+      "output": {
+        "matched": true,
+        "cdpPort": 6663,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/BTC",
+        "runtimeLaunch": null
+      }
+    },
+    {
+      "nodeId": "ac1-wait-leverage",
+      "action": "ui.wait_for",
+      "intent": "AC1: leverage pill visible on first row",
+      "startedAt": "2026-07-02T10:23:55.128Z",
+      "endedAt": "2026-07-02T10:23:55.245Z",
+      "durationMs": 117,
+      "ok": true,
+      "next": "ac1-wait-chevron",
+      "output": {
+        "matched": true,
+        "cdpPort": 6663,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/BTC",
+        "runtimeLaunch": null
+      }
+    },
+    {
+      "nodeId": "ac1-wait-chevron",
+      "action": "ui.wait_for",
+      "intent": "AC1: chevron control visible on first row",
+      "startedAt": "2026-07-02T10:23:55.326Z",
+      "endedAt": "2026-07-02T10:23:55.377Z",
+      "durationMs": 51,
+      "ok": true,
+      "next": "ac1-screenshot-first-row",
+      "output": {
+        "matched": true,
+        "cdpPort": 6663,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/BTC",
+        "runtimeLaunch": null
+      }
+    },
+    {
+      "nodeId": "ac1-screenshot-first-row",
+      "action": "ui.screenshot",
+      "intent": "Capture first-row market identity layout",
+      "artifacts": [
+        {
+          "path": "evidence/evidence-ac1-header-first-row.png",
+          "type": "screenshot",
+          "nodeId": "ac1-screenshot-first-row",
+          "label": "UI screenshot",
+          "category": "evidence",
+          "mimeType": "image/png",
+          "metadata": {
+            "provider": "capture-helper",
+            "mode": "snapshot",
+            "pid": 26367,
+            "captureHelper": {
+              "bytes": 153957,
+              "output": "/Users/deeeed/dev/metamask/metamask-extension-3/temp/tasks/review/44067-0702-121454/artifacts/recipe-run/evidence/evidence-ac1-header-first-row.png",
+              "selected": {
+                "app": "Google Chrome for Testing",
+                "height": 800,
+                "id": 4316,
+                "layer": 0,
+                "onScreen": true,
+                "pid": 26367,
+                "title": "mme-3 — MetaMask",
+                "width": 500,
+                "x": 2078,
+                "y": -269
+              },
+              "selector": "pid",
+              "type": "snapshot"
+            }
+          }
+        }
+      ],
+      "startedAt": "2026-07-02T10:23:55.383Z",
+      "endedAt": "2026-07-02T10:23:56.058Z",
+      "durationMs": 675,
+      "ok": true,
+      "next": "ac2-wait-pair",
+      "output": {
+        "captured": true,
+        "path": "evidence/evidence-ac1-header-first-row.png",
+        "artifact": {
+          "path": "evidence/evidence-ac1-header-first-row.png",
+          "type": "screenshot",
+          "nodeId": "ac1-screenshot-first-row",
+          "label": "UI screenshot",
+          "category": "evidence",
+          "mimeType": "image/png",
+          "metadata": {
+            "provider": "capture-helper",
+            "mode": "snapshot",
+            "pid": 26367,
+            "captureHelper": {
+              "bytes": 153957,
+              "output": "/Users/deeeed/dev/metamask/metamask-extension-3/temp/tasks/review/44067-0702-121454/artifacts/recipe-run/evidence/evidence-ac1-header-first-row.png",
+              "selected": {
+                "app": "Google Chrome for Testing",
+                "height": 800,
+                "id": 4316,
+                "layer": 0,
+                "onScreen": true,
+                "pid": 26367,
+                "title": "mme-3 — MetaMask",
+                "width": 500,
+                "x": 2078,
+                "y": -269
+              },
+              "selector": "pid",
+              "type": "snapshot"
+            }
+          }
+        }
+      }
+    },
+    {
+      "nodeId": "ac2-wait-pair",
+      "action": "ui.wait_for",
+      "intent": "AC2: ticker-collateral perp subtitle on second row",
+      "startedAt": "2026-07-02T10:23:56.064Z",
+      "endedAt": "2026-07-02T10:23:56.072Z",
+      "durationMs": 8,
+      "ok": true,
+      "next": "ac2-screenshot-pair",
+      "output": {
+        "matched": true,
+        "cdpPort": 6663,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/BTC",
+        "runtimeLaunch": null
+      }
+    },
+    {
+      "nodeId": "ac2-screenshot-pair",
+      "action": "ui.screenshot",
+      "intent": "Capture second-row pair subtitle",
+      "artifacts": [
+        {
+          "path": "evidence/evidence-ac2-market-pair-subtitle.png",
+          "type": "screenshot",
+          "nodeId": "ac2-screenshot-pair",
+          "label": "UI screenshot",
+          "category": "evidence",
+          "mimeType": "image/png",
+          "metadata": {
+            "provider": "capture-helper",
+            "mode": "snapshot",
+            "pid": 26367,
+            "captureHelper": {
+              "bytes": 153955,
+              "output": "/Users/deeeed/dev/metamask/metamask-extension-3/temp/tasks/review/44067-0702-121454/artifacts/recipe-run/evidence/evidence-ac2-market-pair-subtitle.png",
+              "selected": {
+                "app": "Google Chrome for Testing",
+                "height": 800,
+                "id": 4316,
+                "layer": 0,
+                "onScreen": true,
+                "pid": 26367,
+                "title": "mme-3 — MetaMask",
+                "width": 500,
+                "x": 2078,
+                "y": -269
+              },
+              "selector": "pid",
+              "type": "snapshot"
+            }
+          }
+        }
+      ],
+      "startedAt": "2026-07-02T10:23:56.078Z",
+      "endedAt": "2026-07-02T10:23:56.495Z",
+      "durationMs": 417,
+      "ok": true,
+      "next": "ac3-wait-price",
+      "output": {
+        "captured": true,
+        "path": "evidence/evidence-ac2-market-pair-subtitle.png",
+        "artifact": {
+          "path": "evidence/evidence-ac2-market-pair-subtitle.png",
+          "type": "screenshot",
+          "nodeId": "ac2-screenshot-pair",
+          "label": "UI screenshot",
+          "category": "evidence",
+          "mimeType": "image/png",
+          "metadata": {
+            "provider": "capture-helper",
+            "mode": "snapshot",
+            "pid": 26367,
+            "captureHelper": {
+              "bytes": 153955,
+              "output": "/Users/deeeed/dev/metamask/metamask-extension-3/temp/tasks/review/44067-0702-121454/artifacts/recipe-run/evidence/evidence-ac2-market-pair-subtitle.png",
+              "selected": {
+                "app": "Google Chrome for Testing",
+                "height": 800,
+                "id": 4316,
+                "layer": 0,
+                "onScreen": true,
+                "pid": 26367,
+                "title": "mme-3 — MetaMask",
+                "width": 500,
+                "x": 2078,
+                "y": -269
+              },
+              "selector": "pid",
+              "type": "snapshot"
+            }
+          }
+        }
+      }
+    },
+    {
+      "nodeId": "ac3-wait-price",
+      "action": "ui.wait_for",
+      "intent": "AC3: price row visible below header",
+      "startedAt": "2026-07-02T10:23:56.501Z",
+      "endedAt": "2026-07-02T10:23:56.511Z",
+      "durationMs": 10,
+      "ok": true,
+      "next": "ac3-wait-change",
+      "output": {
+        "matched": true,
+        "cdpPort": 6663,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/BTC",
+        "runtimeLaunch": null
+      }
+    },
+    {
+      "nodeId": "ac3-wait-change",
+      "action": "ui.wait_for",
+      "intent": "AC3: 24h price change visible below header",
+      "startedAt": "2026-07-02T10:23:56.518Z",
+      "endedAt": "2026-07-02T10:23:56.527Z",
+      "durationMs": 9,
+      "ok": true,
+      "next": "ac3-screenshot-price-row",
+      "output": {
+        "matched": true,
+        "cdpPort": 6663,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/BTC",
+        "runtimeLaunch": null
+      }
+    },
+    {
+      "nodeId": "ac3-screenshot-price-row",
+      "action": "ui.screenshot",
+      "intent": "Capture price and 24h change row",
+      "artifacts": [
+        {
+          "path": "evidence/evidence-ac3-price-and-change.png",
+          "type": "screenshot",
+          "nodeId": "ac3-screenshot-price-row",
+          "label": "UI screenshot",
+          "category": "evidence",
+          "mimeType": "image/png",
+          "metadata": {
+            "provider": "capture-helper",
+            "mode": "snapshot",
+            "pid": 26367,
+            "captureHelper": {
+              "bytes": 153830,
+              "output": "/Users/deeeed/dev/metamask/metamask-extension-3/temp/tasks/review/44067-0702-121454/artifacts/recipe-run/evidence/evidence-ac3-price-and-change.png",
+              "selected": {
+                "app": "Google Chrome for Testing",
+                "height": 800,
+                "id": 4316,
+                "layer": 0,
+                "onScreen": true,
+                "pid": 26367,
+                "title": "mme-3 — MetaMask",
+                "width": 500,
+                "x": 2078,
+                "y": -269
+              },
+              "selector": "pid",
+              "type": "snapshot"
+            }
+          }
+        }
+      ],
+      "startedAt": "2026-07-02T10:23:56.532Z",
+      "endedAt": "2026-07-02T10:23:56.951Z",
+      "durationMs": 419,
+      "ok": true,
+      "next": "ac4-press-chevron",
+      "output": {
+        "captured": true,
+        "path": "evidence/evidence-ac3-price-and-change.png",
+        "artifact": {
+          "path": "evidence/evidence-ac3-price-and-change.png",
+          "type": "screenshot",
+          "nodeId": "ac3-screenshot-price-row",
+          "label": "UI screenshot",
+          "category": "evidence",
+          "mimeType": "image/png",
+          "metadata": {
+            "provider": "capture-helper",
+            "mode": "snapshot",
+            "pid": 26367,
+            "captureHelper": {
+              "bytes": 153830,
+              "output": "/Users/deeeed/dev/metamask/metamask-extension-3/temp/tasks/review/44067-0702-121454/artifacts/recipe-run/evidence/evidence-ac3-price-and-change.png",
+              "selected": {
+                "app": "Google Chrome for Testing",
+                "height": 800,
+                "id": 4316,
+                "layer": 0,
+                "onScreen": true,
+                "pid": 26367,
+                "title": "mme-3 — MetaMask",
+                "width": 500,
+                "x": 2078,
+                "y": -269
+              },
+              "selector": "pid",
+              "type": "snapshot"
+            }
+          }
+        }
+      }
+    },
+    {
+      "nodeId": "ac4-press-chevron",
+      "action": "ui.press",
+      "intent": "AC4: click chevron to open market list",
+      "startedAt": "2026-07-02T10:23:56.956Z",
+      "endedAt": "2026-07-02T10:23:56.993Z",
+      "durationMs": 37,
+      "ok": true,
+      "next": "ac4-wait-market-list",
+      "output": {
+        "clicked": true,
+        "selector": "[data-testid=\"perps-market-detail-market-list-button\"], [data-test-id=\"perps-market-detail-market-list-button\"], [data-test=\"perps-market-detail-market-list-button\"]",
+        "tagName": "DIV",
+        "cdpPort": 6663,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/BTC",
+        "runtimeLaunch": null
+      }
+    },
+    {
+      "nodeId": "ac4-wait-market-list",
+      "action": "ui.wait_for",
+      "intent": "AC4: navigated to perps market list",
+      "startedAt": "2026-07-02T10:23:57.002Z",
+      "endedAt": "2026-07-02T10:23:57.481Z",
+      "durationMs": 479,
+      "ok": true,
+      "next": "ac4-screenshot-market-list",
+      "output": {
+        "matched": true,
+        "cdpPort": 6663,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market-list",
+        "runtimeLaunch": null
+      }
+    },
+    {
+      "nodeId": "ac4-screenshot-market-list",
+      "action": "ui.screenshot",
+      "intent": "Capture market list destination screen",
+      "artifacts": [
+        {
+          "path": "evidence/evidence-ac4-market-list-navigation.png",
+          "type": "screenshot",
+          "nodeId": "ac4-screenshot-market-list",
+          "label": "UI screenshot",
+          "category": "evidence",
+          "mimeType": "image/png",
+          "metadata": {
+            "provider": "capture-helper",
+            "mode": "snapshot",
+            "pid": 26367,
+            "captureHelper": {
+              "bytes": 182131,
+              "output": "/Users/deeeed/dev/metamask/metamask-extension-3/temp/tasks/review/44067-0702-121454/artifacts/recipe-run/evidence/evidence-ac4-market-list-navigation.png",
+              "selected": {
+                "app": "Google Chrome for Testing",
+                "height": 800,
+                "id": 4316,
+                "layer": 0,
+                "onScreen": true,
+                "pid": 26367,
+                "title": "mme-3 — MetaMask",
+                "width": 500,
+                "x": 2078,
+                "y": -269
+              },
+              "selector": "pid",
+              "type": "snapshot"
+            }
+          }
+        }
+      ],
+      "startedAt": "2026-07-02T10:23:57.503Z",
+      "endedAt": "2026-07-02T10:23:57.920Z",
+      "durationMs": 417,
+      "ok": true,
+      "next": "end-pass",
+      "output": {
+        "captured": true,
+        "path": "evidence/evidence-ac4-market-list-navigation.png",
+        "artifact": {
+          "path": "evidence/evidence-ac4-market-list-navigation.png",
+          "type": "screenshot",
+          "nodeId": "ac4-screenshot-market-list",
+          "label": "UI screenshot",
+          "category": "evidence",
+          "mimeType": "image/png",
+          "metadata": {
+            "provider": "capture-helper",
+            "mode": "snapshot",
+            "pid": 26367,
+            "captureHelper": {
+              "bytes": 182131,
+              "output": "/Users/deeeed/dev/metamask/metamask-extension-3/temp/tasks/review/44067-0702-121454/artifacts/recipe-run/evidence/evidence-ac4-market-list-navigation.png",
+              "selected": {
+                "app": "Google Chrome for Testing",
+                "height": 800,
+                "id": 4316,
+                "layer": 0,
+                "onScreen": true,
+                "pid": 26367,
+                "title": "mme-3 — MetaMask",
+                "width": 500,
+                "x": 2078,
+                "y": -269
+              },
+              "selector": "pid",
+              "type": "snapshot"
+            }
+          }
+        }
+      }
+    },
+    {
+      "nodeId": "end-pass",
+      "action": "end",
+      "intent": "All header AC nodes completed",
+      "startedAt": "2026-07-02T10:23:57.938Z",
+      "endedAt": "2026-07-02T10:23:57.943Z",
+      "durationMs": 5,
+      "ok": true,
+      "status": "pass"
+    }
+  ]
+}

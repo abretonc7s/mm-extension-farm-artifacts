@@ -1,0 +1,5 @@
+- Checklist `mark N` uses sequential checkbox index (e.g. `mark 10` = step 9b), not the visible sub-step label — `mark 9b` fails.
+- `ui.navigate` with `page: perps-market` and `market: BTC` is sufficient setup for market-detail header recipes; no perps lifecycle smoke required for read-only layout ACs.
+- Live BTC max leverage (40x) differs from ETH mock fixtures (20x) in unit tests — live screenshots should not be compared to mock leverage values.
+- Ticket TAT-3349 mentions a fullscreen chart button, but PR gherkin claims omit it; scope reviews should track PR-body claims when the Acceptance Criteria section is `_Not specified_`.
+- capture-helper snapshot metadata in trace.json (`provider: capture-helper`) is the reliable signal for valid extension screenshot evidence.

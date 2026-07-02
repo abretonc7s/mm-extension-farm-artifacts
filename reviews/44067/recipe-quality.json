@@ -1,0 +1,55 @@
+{
+  "version": 1,
+  "verdict": "pass",
+  "compact": {
+    "verdict": "PASS",
+    "reasons": [
+      "All 4 review claims bind to ac<N>-* nodes; trace.json shows 16/16 nodes ok including end-pass.",
+      "Screenshots use capture-helper snapshot provider and visibly prove header layout plus market-list navigation.",
+      "Reverting the PR would break ui.wait_for on perps-market-detail-name/pair and market-list navigation."
+    ],
+    "better_version_guidance": [
+      "AC1–AC3 could share one screenshot after a single scroll-into-view of the sticky header to reduce redundant full-page captures."
+    ]
+  },
+  "dimensions": {
+    "graph_integrity": {
+      "status": "pass",
+      "reason": "Workflow graph is valid; every node reachable from setup-unlock through end-pass.",
+      "evidence": ["recipe.json", "trace.json"]
+    },
+    "ac_coverage": {
+      "status": "pass",
+      "reason": "Each of 4 review claims has wait_for assertions and dedicated screenshot or navigation proof.",
+      "evidence": ["recipe-coverage.md", "trace.json"]
+    },
+    "evidence_contract_basics": {
+      "status": "pass",
+      "reason": "Visual claims use capture-helper screenshots; navigation claim confirmed by URL and market-list-view selector.",
+      "evidence": [
+        "evidence/evidence-ac1-header-first-row.png",
+        "evidence/evidence-ac4-market-list-navigation.png"
+      ]
+    }
+  },
+  "structural_findings": [],
+  "contextual_findings": [],
+  "suggested_recipe_delta": [],
+  "training_fields": {
+    "farm": "metamask-extension",
+    "project": "metamask-extension-farm",
+    "flow_type": "review-pr",
+    "task_type": "review-pr",
+    "claim_is_visual": true,
+    "proof_mode": "mixed",
+    "anti_patterns": [],
+    "good_patterns": ["ac-prefixed node IDs", "test_id wait_for chain", "capture-helper screenshots"]
+  },
+  "meta": {
+    "producer": "worker",
+    "fallback_used": false,
+    "legacy_task": false,
+    "artifact_required": true,
+    "source_signals": ["recipe.json", "recipe-coverage.md", "trace.json"]
+  }
+}
