@@ -1,0 +1,97 @@
+{
+  "schema_version": 1,
+  "title": "PR 43989 Perps Terminal Backend Flag Review",
+  "description": "Validate that Perps market REST routing is gated by perpsTerminalBackendEnabled.",
+  "validate": {
+    "workflow": {
+      "entry": "setup-status",
+      "nodes": {
+        "setup-status": {
+          "action": "app.status",
+          "intent": "Confirm the Extension recipe runner is connected before PR validation",
+          "next": "setup-fixture"
+        },
+        "setup-fixture": {
+          "action": "metamask.wallet.fixture_status",
+          "intent": "Confirm the debug wallet fixture is available",
+          "next": "setup-wallet"
+        },
+        "setup-wallet": {
+          "action": "metamask.wallet.setup",
+          "intent": "Prepare the debug wallet fixture for Perps route validation",
+          "next": "setup-unlock"
+        },
+        "setup-unlock": {
+          "action": "metamask.wallet.ensure_unlocked",
+          "intent": "Ensure the wallet is unlocked before opening Perps",
+          "next": "ac7-navigate-perps"
+        },
+        "ac7-navigate-perps": {
+          "action": "ui.navigate",
+          "page": "perps",
+          "intent": "Open the Perps page to trigger market data loading with the current remote flag state",
+          "next": "ac7-wait-perps"
+        },
+        "ac7-wait-perps": {
+          "action": "ui.wait_for",
+          "text": "Perps",
+          "intent": "Wait for the Perps page to render before capturing live evidence",
+          "next": "ac7-screenshot-perps"
+        },
+        "ac7-screenshot-perps": {
+          "action": "ui.screenshot",
+          "path": "evidence/evidence-ac7-perps-page.png",
+          "intent": "Capture the Perps page after market data load is triggered",
+          "next": "ac1-assert-default-direct"
+        },
+        "ac1-assert-default-direct": {
+          "action": "command",
+          "cmd": "node - <<'NODE'\nconst fs=require('fs');\nconst cache=fs.readFileSync('ui/providers/perps/perps-cache.ts','utf8');\nconst manager=fs.readFileSync('ui/providers/perps/PerpsStreamManager.ts','utf8');\nif (!cache.includes('export function fetchMarketInfos(\\n  cacheKey: string,\\n  useTerminalApi = false,\\n)')) throw new Error('fetchMarketInfos default false not found');\nif (!cache.includes(\"'perpsGetMarkets',\\n      [{ useTerminalApi }],\")) throw new Error('perpsGetMarkets does not forward useTerminalApi');\nif (!manager.includes('private _useTerminalApi = false;')) throw new Error('PerpsStreamManager default terminal flag is not false');\nif (!manager.includes(\"'perpsGetMarketDataWithPrices',\\n            [{ useTerminalApi: this._useTerminalApi }],\")) throw new Error('market data fallback does not forward manager terminal flag');\nNODE",
+          "intent": "Assert absent or disabled terminal flag defaults market REST calls to the direct provider path",
+          "next": "ac2-assert-enabled-terminal"
+        },
+        "ac2-assert-enabled-terminal": {
+          "action": "command",
+          "cmd": "node - <<'NODE'\nconst fs=require('fs');\nconst selector=fs.readFileSync('ui/selectors/perps/feature-flags.ts','utf8');\nconst bridge=fs.readFileSync('app/scripts/controllers/perps/perps-stream-bridge.ts','utf8');\nconst controller=fs.readFileSync('app/scripts/metamask-controller.js','utf8');\nif (!selector.includes('remoteFeatureFlags.perpsTerminalBackendEnabled')) throw new Error('selector does not read perpsTerminalBackendEnabled');\nif (!selector.includes('isPerpsRemoteConfigSatisfied(')) throw new Error('selector does not use version-gated helper');\nif (!bridge.includes('useTerminalApi: this.#isTerminalBackendEnabled(),')) throw new Error('bridge hydration does not call terminal backend callback');\nif (!controller.includes(\"'RemoteFeatureFlagController:getState'\")) throw new Error('RemoteFeatureFlagController:getState not delegated');\nif (!controller.includes('remoteFeatureFlags?.perpsTerminalBackendEnabled')) throw new Error('metamask-controller does not wire terminal flag to bridge');\nNODE",
+          "intent": "Assert enabled and version-satisfied terminal flag is wired to Terminal API routing",
+          "next": "ac3-run-selector-tests"
+        },
+        "ac3-run-selector-tests": {
+          "action": "command",
+          "cmd": "yarn jest ui/selectors/perps/feature-flags.test.ts --no-coverage",
+          "intent": "Run selector tests covering perpsTerminalBackendEnabled version-gated behavior",
+          "next": "ac4-run-cache-tests"
+        },
+        "ac4-run-cache-tests": {
+          "action": "command",
+          "cmd": "yarn jest ui/providers/perps/perps-cache.test.ts --no-coverage",
+          "intent": "Run cache tests proving fetchMarketInfos forwards useTerminalApi and separates cache entries",
+          "next": "ac5-run-stream-manager-tests"
+        },
+        "ac5-run-stream-manager-tests": {
+          "action": "command",
+          "cmd": "yarn jest ui/providers/perps/PerpsStreamManager.test.ts --no-coverage",
+          "intent": "Run stream manager tests proving setUseTerminalApi controls market REST fallback",
+          "next": "ac6-run-bridge-tests"
+        },
+        "ac6-run-bridge-tests": {
+          "action": "command",
+          "cmd": "yarn jest app/scripts/controllers/perps/perps-stream-bridge.test.ts --no-coverage",
+          "intent": "Run bridge tests proving reconnect hydration reads the terminal backend callback",
+          "next": "ac8-assert-enabled-proof-scope"
+        },
+        "ac8-assert-enabled-proof-scope": {
+          "action": "command",
+          "cmd": "node - <<'NODE'\nconst fs=require('fs');\nconst tests=fs.readFileSync('ui/providers/perps/perps-cache.test.ts','utf8') + fs.readFileSync('ui/providers/perps/PerpsStreamManager.test.ts','utf8') + fs.readFileSync('app/scripts/controllers/perps/perps-stream-bridge.test.ts','utf8') + fs.readFileSync('ui/selectors/perps/feature-flags.test.ts','utf8');\nfor (const needle of ['useTerminalApi: true', 'isTerminalBackendEnabled: () => true', 'perpsTerminalBackendEnabled']) {\n  if (!tests.includes(needle)) throw new Error(`missing enabled proof: ${needle}`);\n}\nNODE",
+          "intent": "Assert enabled Terminal API path is covered by tests while live network proof remains outside the current slot",
+          "next": "teardown-done"
+        },
+        "teardown-done": {
+          "action": "end",
+          "status": "pass",
+          "intent": "Finish PR 43989 internal-proof validation"
+        }
+      }
+    }
+  }
+}

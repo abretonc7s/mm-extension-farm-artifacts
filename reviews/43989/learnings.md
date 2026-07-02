@@ -1,0 +1,5 @@
+- Symlink mtimes can be misleading for webpack readiness; the target `recipe-harness-webpack.log` and `dist/chrome/manifest.json` had the current timestamps.
+- Recipe `pre_conditions` must be manifest-declared; free-form strings are rejected by the runner.
+- Extension screenshot paths must stay inside the recipe artifacts directory; copy into the review evidence directory afterward if needed.
+- For perps backend-routing reviews, controller preload caches need the same scrutiny as explicit UI fetch and reconnect fallback paths.
+- A Perps tab screenshot can show route navigation while still being a skeleton; do not treat that as market-data-loaded proof.

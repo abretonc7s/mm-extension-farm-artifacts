@@ -1,0 +1,336 @@
+{
+  "metadata": {
+    "runner": {
+      "source": "/Users/deeeed/dev/metamask/metamask-recipe-runner",
+      "git_ref": "36a1120d1b93a0183da59ba8e55306cb80283ffa",
+      "name": "@metamask/recipe-runner"
+    }
+  },
+  "entries": [
+    {
+      "nodeId": "setup-status",
+      "action": "app.status",
+      "intent": "Confirm the Extension recipe runner is connected before PR validation",
+      "startedAt": "2026-07-02T10:22:43.792Z",
+      "endedAt": "2026-07-02T10:22:43.839Z",
+      "durationMs": 47,
+      "ok": true,
+      "next": "setup-fixture",
+      "output": {
+        "platform": "extension",
+        "projectRoot": "/Users/deeeed/dev/metamask/metamask-extension-2",
+        "compatibilityMode": "bridge present",
+        "shape": {
+          "packageName": "metamask-crx",
+          "packageJsonStatus": "valid",
+          "packageJsonError": null,
+          "extensionProject": true,
+          "mobileProject": false,
+          "agenticService": false,
+          "mobileProductHarness": false,
+          "mobileBridgeScript": true,
+          "extensionRuntime": true,
+          "injectedHarness": true,
+          "walletFixture": true
+        }
+      }
+    },
+    {
+      "nodeId": "setup-fixture",
+      "action": "metamask.wallet.fixture_status",
+      "intent": "Confirm the debug wallet fixture is available",
+      "startedAt": "2026-07-02T10:22:43.868Z",
+      "endedAt": "2026-07-02T10:22:43.905Z",
+      "durationMs": 37,
+      "ok": true,
+      "next": "setup-wallet",
+      "output": {
+        "status": "ready",
+        "path": "temp/recipe/runtime/wallet-fixture.json",
+        "accountCount": 4,
+        "hasPassword": true
+      }
+    },
+    {
+      "nodeId": "setup-wallet",
+      "action": "metamask.wallet.setup",
+      "intent": "Prepare the debug wallet fixture for Perps route validation",
+      "startedAt": "2026-07-02T10:22:43.926Z",
+      "endedAt": "2026-07-02T10:22:44.889Z",
+      "durationMs": 963,
+      "ok": true,
+      "next": "setup-unlock",
+      "output": {
+        "action": "metamask.wallet.setup",
+        "setup": "preseeded-profile-verified",
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/",
+        "runtimeState": {
+          "href": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/",
+          "passwordInput": false,
+          "completedOnboarding": true,
+          "selectedAccount": {
+            "id": "0285a92b-905c-4814-8a16-52fe1db60357",
+            "address": "0x8dc623e964475d4d669da601fd15ea9125469003"
+          }
+        },
+        "proofPath": "extension-fixture-profile",
+        "cdpPort": 6662,
+        "runtimeLaunch": null,
+        "liveAdapter": "/Users/deeeed/dev/metamask/metamask-recipe-runner/library/actions/extension/wallet/setup.mjs"
+      }
+    },
+    {
+      "nodeId": "setup-unlock",
+      "action": "metamask.wallet.ensure_unlocked",
+      "intent": "Ensure the wallet is unlocked before opening Perps",
+      "startedAt": "2026-07-02T10:22:44.902Z",
+      "endedAt": "2026-07-02T10:22:45.976Z",
+      "durationMs": 1074,
+      "ok": true,
+      "next": "ac7-navigate-perps",
+      "output": {
+        "action": "metamask.wallet.ensure_unlocked",
+        "unlocked": true,
+        "alreadyUnlocked": true,
+        "proofPath": "extension-unlocked-state",
+        "cdpPort": 6662,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/",
+        "runtimeLaunch": null,
+        "liveAdapter": "/Users/deeeed/dev/metamask/metamask-recipe-runner/library/actions/extension/wallet/ensure_unlocked.mjs"
+      }
+    },
+    {
+      "nodeId": "ac7-navigate-perps",
+      "action": "ui.navigate",
+      "intent": "Open the Perps page to trigger market data loading with the current remote flag state",
+      "startedAt": "2026-07-02T10:22:45.993Z",
+      "endedAt": "2026-07-02T10:22:46.800Z",
+      "durationMs": 807,
+      "ok": true,
+      "next": "ac7-wait-perps",
+      "output": {
+        "action": "ui.navigate",
+        "page": "perps",
+        "hash": "#/?tab=perps",
+        "navigation": {
+          "frameId": "82598B51F4AF92A252ABC5644335ABF9",
+          "isDownload": false
+        },
+        "proofPath": "ui-navigation",
+        "cdpPort": 6662,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/",
+        "runtimeLaunch": null,
+        "liveAdapter": "/Users/deeeed/dev/metamask/metamask-recipe-runner/library/actions/extension/ui/navigate.mjs"
+      }
+    },
+    {
+      "nodeId": "ac7-wait-perps",
+      "action": "ui.wait_for",
+      "intent": "Wait for the Perps page to render before capturing live evidence",
+      "startedAt": "2026-07-02T10:22:46.838Z",
+      "endedAt": "2026-07-02T10:22:46.852Z",
+      "durationMs": 14,
+      "ok": true,
+      "next": "ac7-screenshot-perps",
+      "output": {
+        "matched": true,
+        "cdpPort": 6662,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/?tab=perps",
+        "runtimeLaunch": null
+      }
+    },
+    {
+      "nodeId": "ac7-screenshot-perps",
+      "action": "ui.screenshot",
+      "intent": "Capture the Perps page after market data load is triggered",
+      "artifacts": [
+        {
+          "path": "evidence/evidence-ac7-perps-page.png",
+          "type": "screenshot",
+          "nodeId": "ac7-screenshot-perps",
+          "label": "UI screenshot",
+          "category": "evidence",
+          "mimeType": "image/png",
+          "metadata": {
+            "provider": "capture-helper",
+            "mode": "snapshot",
+            "pid": 12441,
+            "captureHelper": {
+              "bytes": 151534,
+              "output": "/Users/deeeed/dev/metamask/metamask-extension-2/temp/tasks/review/43989-0702-120628/artifacts/recipe-run/evidence/evidence-ac7-perps-page.png",
+              "selected": {
+                "app": "Google Chrome for Testing",
+                "height": 800,
+                "id": 4287,
+                "layer": 0,
+                "onScreen": true,
+                "pid": 12441,
+                "title": "mme-2 — MetaMask",
+                "width": 500,
+                "x": 2078,
+                "y": -269
+              },
+              "selector": "pid",
+              "type": "snapshot"
+            }
+          }
+        }
+      ],
+      "startedAt": "2026-07-02T10:22:46.859Z",
+      "endedAt": "2026-07-02T10:22:47.412Z",
+      "durationMs": 553,
+      "ok": true,
+      "next": "ac1-assert-default-direct",
+      "output": {
+        "captured": true,
+        "path": "evidence/evidence-ac7-perps-page.png",
+        "artifact": {
+          "path": "evidence/evidence-ac7-perps-page.png",
+          "type": "screenshot",
+          "nodeId": "ac7-screenshot-perps",
+          "label": "UI screenshot",
+          "category": "evidence",
+          "mimeType": "image/png",
+          "metadata": {
+            "provider": "capture-helper",
+            "mode": "snapshot",
+            "pid": 12441,
+            "captureHelper": {
+              "bytes": 151534,
+              "output": "/Users/deeeed/dev/metamask/metamask-extension-2/temp/tasks/review/43989-0702-120628/artifacts/recipe-run/evidence/evidence-ac7-perps-page.png",
+              "selected": {
+                "app": "Google Chrome for Testing",
+                "height": 800,
+                "id": 4287,
+                "layer": 0,
+                "onScreen": true,
+                "pid": 12441,
+                "title": "mme-2 — MetaMask",
+                "width": 500,
+                "x": 2078,
+                "y": -269
+              },
+              "selector": "pid",
+              "type": "snapshot"
+            }
+          }
+        }
+      }
+    },
+    {
+      "nodeId": "ac1-assert-default-direct",
+      "action": "command",
+      "intent": "Assert absent or disabled terminal flag defaults market REST calls to the direct provider path",
+      "startedAt": "2026-07-02T10:22:47.420Z",
+      "endedAt": "2026-07-02T10:22:47.512Z",
+      "durationMs": 92,
+      "ok": true,
+      "next": "ac2-assert-enabled-terminal",
+      "output": {
+        "exitCode": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    },
+    {
+      "nodeId": "ac2-assert-enabled-terminal",
+      "action": "command",
+      "intent": "Assert enabled and version-satisfied terminal flag is wired to Terminal API routing",
+      "startedAt": "2026-07-02T10:22:47.526Z",
+      "endedAt": "2026-07-02T10:22:47.645Z",
+      "durationMs": 119,
+      "ok": true,
+      "next": "ac3-run-selector-tests",
+      "output": {
+        "exitCode": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    },
+    {
+      "nodeId": "ac3-run-selector-tests",
+      "action": "command",
+      "intent": "Run selector tests covering perpsTerminalBackendEnabled version-gated behavior",
+      "startedAt": "2026-07-02T10:22:47.652Z",
+      "endedAt": "2026-07-02T10:22:56.839Z",
+      "durationMs": 9187,
+      "ok": true,
+      "next": "ac4-run-cache-tests",
+      "output": {
+        "exitCode": 0,
+        "stdout": "\n✅ No console baseline violations.\n\n",
+        "stderr": "PASS ui/selectors/perps/feature-flags.test.ts (6.35 s)\n\nTest Suites: 1 passed, 1 total\nTests:       21 passed, 21 total\nSnapshots:   0 total\nTime:        7.149 s, estimated 16 s\nRan all test suites matching /ui\\/selectors\\/perps\\/feature-flags.test.ts/i.\n"
+      }
+    },
+    {
+      "nodeId": "ac4-run-cache-tests",
+      "action": "command",
+      "intent": "Run cache tests proving fetchMarketInfos forwards useTerminalApi and separates cache entries",
+      "startedAt": "2026-07-02T10:22:56.875Z",
+      "endedAt": "2026-07-02T10:23:00.132Z",
+      "durationMs": 3257,
+      "ok": true,
+      "next": "ac5-run-stream-manager-tests",
+      "output": {
+        "exitCode": 0,
+        "stdout": "\n✅ No console baseline violations.\n\n",
+        "stderr": "PASS ui/providers/perps/perps-cache.test.ts\n\nTest Suites: 1 passed, 1 total\nTests:       7 passed, 7 total\nSnapshots:   0 total\nTime:        1.681 s, estimated 9 s\nRan all test suites matching /ui\\/providers\\/perps\\/perps-cache.test.ts/i.\n"
+      }
+    },
+    {
+      "nodeId": "ac5-run-stream-manager-tests",
+      "action": "command",
+      "intent": "Run stream manager tests proving setUseTerminalApi controls market REST fallback",
+      "startedAt": "2026-07-02T10:23:00.138Z",
+      "endedAt": "2026-07-02T10:23:08.130Z",
+      "durationMs": 7992,
+      "ok": true,
+      "next": "ac6-run-bridge-tests",
+      "output": {
+        "exitCode": 0,
+        "stdout": "\n✅ No console baseline violations.\n\n",
+        "stderr": "PASS ui/providers/perps/PerpsStreamManager.test.ts\n\nTest Suites: 1 passed, 1 total\nTests:       82 passed, 82 total\nSnapshots:   0 total\nTime:        6.456 s\nRan all test suites matching /ui\\/providers\\/perps\\/PerpsStreamManager.test.ts/i.\n"
+      }
+    },
+    {
+      "nodeId": "ac6-run-bridge-tests",
+      "action": "command",
+      "intent": "Run bridge tests proving reconnect hydration reads the terminal backend callback",
+      "startedAt": "2026-07-02T10:23:08.139Z",
+      "endedAt": "2026-07-02T10:23:11.207Z",
+      "durationMs": 3068,
+      "ok": true,
+      "next": "ac8-assert-enabled-proof-scope",
+      "output": {
+        "exitCode": 0,
+        "stdout": "\n✅ No console baseline violations.\n\n",
+        "stderr": "PASS app/scripts/controllers/perps/perps-stream-bridge.test.ts\n  ● Console\n\n    console.debug\n      [PerpsStreamBridge] startMarketDataPreload failed Error: preload blew up\n          at Object.<anonymous> (/Users/deeeed/dev/metamask/metamask-extension-2/app/scripts/controllers/perps/perps-stream-bridge.test.ts:190:15)\n          at /Users/deeeed/dev/metamask/metamask-extension-2/node_modules/jest-mock/build/index.js:397:39\n          at Object.<anonymous> (/Users/deeeed/dev/metamask/metamask-extension-2/node_modules/jest-mock/build/index.js:404:13)\n          at Object.mockConstructor [as startMarketDataPreload] (/Users/deeeed/dev/metamask/metamask-extension-2/node_modules/jest-mock/build/index.js:148:19)\n          at startMarketDataPreload (/Users/deeeed/dev/metamask/metamask-extension-2/app/scripts/controllers/perps/perps-stream-bridge.ts:183:40)\n          at processTicksAndRejections (node:internal/process/task_queues:104:5)\n\n      at debug (app/scripts/controllers/perps/perps-stream-bridge.ts:185:21)\n\n    console.debug\n      [PerpsStreamBridge] cleanup error Error: static teardown failure\n          at /Users/deeeed/dev/metamask/metamask-extension-2/app/scripts/controllers/perps/perps-stream-bridge.test.ts:1101:15\n          at PerpsStreamBridge.unsub (/Users/deeeed/dev/metamask/metamask-extension-2/app/scripts/controllers/perps/perps-stream-bridge.ts:658:7)\n          at PerpsStreamBridge.call [as destroy] (/Users/deeeed/dev/metamask/metamask-extension-2/app/scripts/controllers/perps/perps-stream-bridge.ts:349:30)\n          at destroy (/Users/deeeed/dev/metamask/metamask-extension-2/app/scripts/controllers/perps/perps-stream-bridge.test.ts:1118:27)\n          at Object.<anonymous> (/Users/deeeed/dev/metamask/metamask-extension-2/node_modules/expect/build/toThrowMatchers.js:74:11)\n          at Object.throwingMatcher [as toThrow] (/Users/deeeed/dev/metamask/metamask-extension-2/node_modules/expect/build/index.js:320:21)\n          at Object.toThrow (/Users/deeeed/dev/metamask/metamask-extension-2/app/scripts/controllers/perps/perps-stream-bridge.test.ts:1118:42)\n          at processTicksAndRejections (node:internal/process/task_queues:104:5)\n\n      at PerpsStreamBridge.debug (app/scripts/controllers/perps/perps-stream-bridge.ts:660:15)\n\n    console.debug\n      [PerpsStreamBridge] cleanup error Error: dynamic teardown failure\n          at /Users/deeeed/dev/metamask/metamask-extension-2/app/scripts/controllers/perps/perps-stream-bridge.test.ts:1104:15\n          at PerpsStreamBridge.unsub (/Users/deeeed/dev/metamask/metamask-extension-2/app/scripts/controllers/perps/perps-stream-bridge.ts:658:7)\n          at PerpsStreamBridge.call (/Users/deeeed/dev/metamask/metamask-extension-2/app/scripts/controllers/perps/perps-stream-bridge.ts:675:30)\n          at PerpsStreamBridge.call [as destroy] (/Users/deeeed/dev/metamask/metamask-extension-2/app/scripts/controllers/perps/perps-stream-bridge.ts:353:29)\n          at destroy (/Users/deeeed/dev/metamask/metamask-extension-2/app/scripts/controllers/perps/perps-stream-bridge.test.ts:1118:27)\n          at Object.<anonymous> (/Users/deeeed/dev/metamask/metamask-extension-2/node_modules/expect/build/toThrowMatchers.js:74:11)\n          at Object.throwingMatcher [as toThrow] (/Users/deeeed/dev/metamask/metamask-extension-2/node_modules/expect/build/index.js:320:21)\n          at Object.toThrow (/Users/deeeed/dev/metamask/metamask-extension-2/app/scripts/controllers/perps/perps-stream-bridge.test.ts:1118:42)\n          at processTicksAndRejections (node:internal/process/task_queues:104:5)\n\n      at PerpsStreamBridge.debug (app/scripts/controllers/perps/perps-stream-bridge.ts:660:15)\n\n    console.debug\n      [PerpsStreamBridge] health-check reconnect failed Error: reconnect failed\n          at Object.<anonymous> (/Users/deeeed/dev/metamask/metamask-extension-2/app/scripts/controllers/perps/perps-stream-bridge.test.ts:1222:46)\n          at Promise.then.completed (/Users/deeeed/dev/metamask/metamask-extension-2/node_modules/jest-circus/build/utils.js:298:28)\n          at new Promise (<anonymous>)\n          at callAsyncCircusFn (/Users/deeeed/dev/metamask/metamask-extension-2/node_modules/jest-circus/build/utils.js:231:10)\n          at _callCircusTest (/Users/deeeed/dev/metamask/metamask-extension-2/node_modules/jest-circus/build/run.js:316:40)\n          at processTicksAndRejections (node:internal/process/task_queues:104:5)\n          at _runTest (/Users/deeeed/dev/metamask/metamask-extension-2/node_modules/jest-circus/build/run.js:252:3)\n          at _runTestsForDescribeBlock (/Users/deeeed/dev/metamask/metamask-extension-2/node_modules/jest-circus/build/run.js:126:9)\n          at _runTestsForDescribeBlock (/Users/deeeed/dev/metamask/metamask-extension-2/node_modules/jest-circus/build/run.js:121:9)\n          at _runTestsForDescribeBlock (/Users/deeeed/dev/metamask/metamask-extension-2/node_modules/jest-circus/build/run.js:121:9)\n          at run (/Users/deeeed/dev/metamask/metamask-extension-2/node_modules/jest-circus/build/run.js:71:3)\n          at runAndTransformResultsToJestFormat (/Users/deeeed/dev/metamask/metamask-extension-2/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)\n          at jestAdapter (/Users/deeeed/dev/metamask/metamask-extension-2/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)\n          at runTestInternal (/Users/deeeed/dev/metamask/metamask-extension-2/node_modules/jest-runner/build/runTest.js:367:16)\n          at runTest (/Users/deeeed/dev/metamask/metamask-extension-2/node_modules/jest-runner/build/runTest.js:444:34)\n          at Object.worker (/Users/deeeed/dev/metamask/metamask-extension-2/node_modules/jest-runner/build/testWorker.js:106:12)\n\n      at debug (app/scripts/controllers/perps/perps-stream-bridge.ts:331:21)\n\n    console.debug\n      [PerpsStreamBridge] connectivity-change reconnect failed Error: reconnect failed\n          at Object.<anonymous> (/Users/deeeed/dev/metamask/metamask-extension-2/app/scripts/controllers/perps/perps-stream-bridge.test.ts:1515:46)\n          at Promise.then.completed (/Users/deeeed/dev/metamask/metamask-extension-2/node_modules/jest-circus/build/utils.js:298:28)\n          at new Promise (<anonymous>)\n          at callAsyncCircusFn (/Users/deeeed/dev/metamask/metamask-extension-2/node_modules/jest-circus/build/utils.js:231:10)\n          at _callCircusTest (/Users/deeeed/dev/metamask/metamask-extension-2/node_modules/jest-circus/build/run.js:316:40)\n          at processTicksAndRejections (node:internal/process/task_queues:104:5)\n          at _runTest (/Users/deeeed/dev/metamask/metamask-extension-2/node_modules/jest-circus/build/run.js:252:3)\n          at _runTestsForDescribeBlock (/Users/deeeed/dev/metamask/metamask-extension-2/node_modules/jest-circus/build/run.js:126:9)\n          at _runTestsForDescribeBlock (/Users/deeeed/dev/metamask/metamask-extension-2/node_modules/jest-circus/build/run.js:121:9)\n          at _runTestsForDescribeBlock (/Users/deeeed/dev/metamask/metamask-extension-2/node_modules/jest-circus/build/run.js:121:9)\n          at run (/Users/deeeed/dev/metamask/metamask-extension-2/node_modules/jest-circus/build/run.js:71:3)\n          at runAndTransformResultsToJestFormat (/Users/deeeed/dev/metamask/metamask-extension-2/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)\n          at jestAdapter (/Users/deeeed/dev/metamask/metamask-extension-2/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)\n          at runTestInternal (/Users/deeeed/dev/metamask/metamask-extension-2/node_modules/jest-runner/build/runTest.js:367:16)\n          at runTest (/Users/deeeed/dev/metamask/metamask-extension-2/node_modules/jest-runner/build/runTest.js:444:34)\n          at Object.worker (/Users/deeeed/dev/metamask/metamask-extension-2/node_modules/jest-runner/build/testWorker.js:106:12)\n\n      at debug (app/scripts/controllers/perps/perps-stream-bridge.ts:459:19)\n\n\nTest Suites: 1 passed, 1 total\nTests:       74 passed, 74 total\nSnapshots:   0 total\nTime:        1.758 s, estimated 2 s\nRan all test suites matching /app\\/scripts\\/controllers\\/perps\\/perps-stream-bridge.test.ts/i.\n"
+      }
+    },
+    {
+      "nodeId": "ac8-assert-enabled-proof-scope",
+      "action": "command",
+      "intent": "Assert enabled Terminal API path is covered by tests while live network proof remains outside the current slot",
+      "startedAt": "2026-07-02T10:23:11.215Z",
+      "endedAt": "2026-07-02T10:23:11.297Z",
+      "durationMs": 82,
+      "ok": true,
+      "next": "teardown-done",
+      "output": {
+        "exitCode": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    },
+    {
+      "nodeId": "teardown-done",
+      "action": "end",
+      "intent": "Finish PR 43989 internal-proof validation",
+      "startedAt": "2026-07-02T10:23:11.303Z",
+      "endedAt": "2026-07-02T10:23:11.310Z",
+      "durationMs": 7,
+      "ok": true,
+      "status": "pass"
+    }
+  ]
+}

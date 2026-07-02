@@ -1,0 +1,101 @@
+{
+  "version": 1,
+  "verdict": "warn",
+  "compact": {
+    "verdict": "WARN",
+    "reasons": [
+      "Recipe graph passed with 15/15 nodes and no failed trace entries.",
+      "AC1-6 are covered by ac<N>-* command/test nodes.",
+      "AC7 and AC8 are explicitly UNTESTABLE for live network proof in this slot."
+    ],
+    "better_version_guidance": [
+      "Rebuild the runtime with perpsTerminalBackendEnabled enabled and add network-log proof for AC8.",
+      "Wait for a concrete market row or read Perps market data state before taking the AC7 screenshot."
+    ]
+  },
+  "dimensions": {
+    "graph_integrity": {
+      "status": "pass",
+      "reason": "Workflow graph is structurally valid; all nodes were reachable and the summary reports 15 passed, 0 failed.",
+      "evidence": [
+        "recipe.json",
+        "recipe-run/summary.json",
+        "recipe-run/trace.json"
+      ]
+    },
+    "action_contract": {
+      "status": "pass",
+      "reason": "Recipe uses manifest-declared actions and capture-helper screenshot evidence.",
+      "evidence": [
+        "recipe-run/artifact-manifest.json"
+      ]
+    },
+    "ac_coverage": {
+      "status": "warn",
+      "reason": "AC1-6 are proven, but AC7 and AC8 require live network evidence not captured in this slot.",
+      "evidence": [
+        "recipe-coverage.md",
+        "recipe-run/trace.json"
+      ]
+    },
+    "evidence_contract_basics": {
+      "status": "warn",
+      "reason": "Screenshot evidence uses capture-helper but shows Perps skeleton state, so it cannot prove loaded market data.",
+      "evidence": [
+        "evidence/evidence-ac7-perps-page.png",
+        "recipe-run/artifact-manifest.json"
+      ]
+    }
+  },
+  "structural_findings": [],
+  "contextual_findings": [
+    {
+      "code": "live_market_data_not_visible",
+      "message": "AC7 screenshot shows a Perps skeleton/loading state rather than loaded market data.",
+      "dimension": "evidence_contract_basics",
+      "evidence": [
+        "evidence/evidence-ac7-perps-page.png"
+      ]
+    },
+    {
+      "code": "enabled_network_proof_unavailable",
+      "message": "AC8 requires a rebuild with perpsTerminalBackendEnabled enabled and network log capture.",
+      "dimension": "ac_coverage",
+      "evidence": [
+        "recipe-coverage.md"
+      ]
+    }
+  ],
+  "suggested_recipe_delta": [
+    "Add a setup path that applies .manifest-overrides.json, rebuilds, reloads the extension, and captures Terminal network requests for AC8.",
+    "Replace AC7's generic Perps wait with a market-row/state assertion before screenshot capture."
+  ],
+  "training_fields": {
+    "farm": "metamask-extension",
+    "project": "metamask-extension-farm",
+    "flow_type": "review-pr",
+    "task_type": "review-pr",
+    "claim_is_visual": false,
+    "proof_mode": "mixed",
+    "anti_patterns": [
+      "screenshot_before_loaded_state"
+    ],
+    "good_patterns": [
+      "internal command proof tied to ac-prefixed nodes",
+      "capture-helper screenshot provenance"
+    ]
+  },
+  "meta": {
+    "producer": "worker",
+    "fallback_used": false,
+    "legacy_task": false,
+    "artifact_required": true,
+    "source_signals": [
+      "recipe.json",
+      "recipe-coverage.md",
+      "recipe-run/trace.json",
+      "recipe-run/summary.json",
+      "recipe-run/artifact-manifest.json"
+    ]
+  }
+}

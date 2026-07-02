@@ -1,0 +1,13 @@
+{
+  "pr_number": "43989",
+  "recommendation": "REQUEST_CHANGES",
+  "summary": "The explicit UI fetch, stream-manager fallback, and reconnect hydration paths are flag-gated, but the controller market-data preload path still bypasses the flag and can hydrate direct-provider cache when Terminal is enabled.",
+  "comments": [
+    {
+      "path": "app/scripts/metamask-controller.js",
+      "line": 6708,
+      "body": "This callback only gates reconnect hydration. `PerpsStreamBridge.perpsInit` still calls `controller.startMarketDataPreload()`, and the current `@metamask/perps-controller` implementation calls `getMarketDataWithPrices({ standalone: true })` without `useTerminalApi`. That preloaded result is stored in `cachedMarketDataByProvider`, emitted through the bridge, and hydrated by `PerpsLayout`, so with `perpsTerminalBackendEnabled` true the UI can still receive direct-provider market data and then skip the Terminal-enabled fallback because the markets channel is already warm. Please thread the same flag into the preload path or keep/prevent that cache from satisfying Terminal-enabled market data.",
+      "severity": "must_fix"
+    }
+  ]
+}
