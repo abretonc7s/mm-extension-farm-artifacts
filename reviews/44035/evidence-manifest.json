@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "preferred_mode": "screenshots",
+  "summary": "Perps order-entry size input before and after toggling from USD to BTC denomination.",
+  "before_after_pairs": [],
+  "standalone": [
+    {
+      "label": "Default USD size input",
+      "covers": ["ac1"],
+      "file": "artifacts/evidence/evidence-ac1-usd-default.png",
+      "note": "Shows the single Size input with USD unit and swap icon."
+    },
+    {
+      "label": "BTC denomination after toggle",
+      "covers": ["ac2", "ac3"],
+      "file": "artifacts/evidence/evidence-ac2-asset-unit.png",
+      "note": "Shows the Size input after toggling to BTC with the equivalent asset value."
+    }
+  ],
+  "omit": [
+    {
+      "file": "artifacts/evidence/review.mp4",
+      "reason": "Standard-tier review; video recording was not required."
+    }
+  ],
+  "videos": {
+    "preferred": false,
+    "note": "Standard-tier review used screenshots plus trace assertions; no video was recorded."
+  }
+}

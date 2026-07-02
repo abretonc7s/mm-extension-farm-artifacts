@@ -1,0 +1,4 @@
+- Perps order entry lives at `#/perps/trade/:symbol`; `#/perps/market/:symbol` is the market detail route and does not render `amount-input-field`.
+- Repeated `ui.screenshot`/capture-helper snapshots can hang after the first key captures in this slot; trace-backed DOM assertions were more reliable for later UI-state claims.
+- Live CDP validation is useful for accessibility review: the toggle rendered as an `svg` with `tabIndex: -1`, confirming the issue before reporting it.
+- Mobile currently keeps USD as the primary order amount and token size as an equivalent display, so the PR’s USD default aligns with mobile despite the linked ticket wording.

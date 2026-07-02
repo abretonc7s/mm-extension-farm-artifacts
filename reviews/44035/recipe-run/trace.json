@@ -1,0 +1,446 @@
+{
+  "metadata": {
+    "runner": {
+      "source": "/Users/deeeed/dev/metamask/metamask-recipe-runner",
+      "git_ref": "36a1120d1b93a0183da59ba8e55306cb80283ffa",
+      "name": "@metamask/recipe-runner"
+    }
+  },
+  "entries": [
+    {
+      "nodeId": "setup-status",
+      "action": "app.status",
+      "intent": "Read runner status before size input validation",
+      "startedAt": "2026-07-02T12:24:52.948Z",
+      "endedAt": "2026-07-02T12:24:53.394Z",
+      "durationMs": 446,
+      "ok": true,
+      "next": "setup-wallet-state",
+      "output": {
+        "platform": "extension",
+        "projectRoot": "/Users/deeeed/dev/metamask/metamask-extension-4",
+        "compatibilityMode": "bridge present",
+        "shape": {
+          "packageName": "metamask-crx",
+          "packageJsonStatus": "valid",
+          "packageJsonError": null,
+          "extensionProject": true,
+          "mobileProject": false,
+          "agenticService": false,
+          "mobileProductHarness": false,
+          "mobileBridgeScript": true,
+          "extensionRuntime": true,
+          "injectedHarness": true,
+          "walletFixture": true
+        }
+      }
+    },
+    {
+      "nodeId": "setup-wallet-state",
+      "action": "metamask.wallet.read_state",
+      "intent": "Read wallet state before navigating to Perps order entry",
+      "startedAt": "2026-07-02T12:24:53.498Z",
+      "endedAt": "2026-07-02T12:24:55.536Z",
+      "durationMs": 2038,
+      "ok": true,
+      "next": "setup-open-btc-market",
+      "output": {
+        "action": "metamask.wallet.read_state",
+        "source": "extension-stateHooks-store",
+        "state": {
+          "href": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/",
+          "selectedAccount": {
+            "id": "0285a92b-905c-4814-8a16-52fe1db60357",
+            "address": "0x8dc623e964475d4d669da601fd15ea9125469003",
+            "name": "Account 1",
+            "type": "eip155:eoa"
+          },
+          "completedOnboarding": true,
+          "selectedNetworkClientId": "mainnet"
+        },
+        "redacted": true,
+        "proofPath": "extension-wallet-state",
+        "cdpPort": 6664,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/",
+        "runtimeLaunch": null,
+        "liveAdapter": "/Users/deeeed/dev/metamask/metamask-recipe-runner/library/actions/extension/wallet/read_state.mjs"
+      }
+    },
+    {
+      "nodeId": "setup-open-btc-market",
+      "action": "ui.navigate",
+      "intent": "Open the BTC Perps trade order-entry surface",
+      "startedAt": "2026-07-02T12:24:55.750Z",
+      "endedAt": "2026-07-02T12:24:57.558Z",
+      "durationMs": 1808,
+      "ok": true,
+      "next": "setup-wait-size-input",
+      "output": {
+        "action": "ui.navigate",
+        "hash": "#/perps/trade/BTC",
+        "navigation": {
+          "frameId": "0D0EBCE904881AE727DE8594CC9BE960",
+          "isDownload": false
+        },
+        "proofPath": "ui-navigation",
+        "cdpPort": 6664,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/",
+        "runtimeLaunch": null,
+        "liveAdapter": "/Users/deeeed/dev/metamask/metamask-recipe-runner/library/actions/extension/ui/navigate.mjs"
+      }
+    },
+    {
+      "nodeId": "setup-wait-size-input",
+      "action": "ui.wait_for",
+      "intent": "Wait for the single size input to render",
+      "startedAt": "2026-07-02T12:24:57.684Z",
+      "endedAt": "2026-07-02T12:24:59.499Z",
+      "durationMs": 1815,
+      "ok": true,
+      "next": "setup-scroll-size-input",
+      "output": {
+        "matched": true,
+        "cdpPort": 6664,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/BTC",
+        "runtimeLaunch": null
+      }
+    },
+    {
+      "nodeId": "setup-scroll-size-input",
+      "action": "ui.scroll",
+      "intent": "Bring the size input into view for screenshot evidence",
+      "startedAt": "2026-07-02T12:24:59.505Z",
+      "endedAt": "2026-07-02T12:24:59.517Z",
+      "durationMs": 12,
+      "ok": true,
+      "next": "ac1-assert-usd-default",
+      "output": {
+        "scrolled": true,
+        "selector": "[data-testid=\"amount-input-field\"]",
+        "intoView": true,
+        "cdpPort": 6664,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/BTC",
+        "runtimeLaunch": null
+      }
+    },
+    {
+      "nodeId": "ac1-assert-usd-default",
+      "action": "command",
+      "intent": "Assert the Size field is a single USD input with swap toggle",
+      "startedAt": "2026-07-02T12:24:59.522Z",
+      "endedAt": "2026-07-02T12:24:59.618Z",
+      "durationMs": 96,
+      "ok": true,
+      "next": "ac1-screenshot-usd-default",
+      "output": {
+        "exitCode": 0,
+        "stdout": "{\n  \"action\": \"usd-default\",\n  \"ok\": true,\n  \"state\": {\n    \"href\": \"chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/BTC\",\n    \"bodyText\": \"BTC\\n\\n$61,202\\n\\n+4.56%\\n\\nLong\\n\\nShort\\n\\nMarket\\n\\nLimit\\n\\nAvailable to trade\\n\\n24.52 USDC\\n\\nSize\\n\\nUSD\\n\\n%\\n\\nLeverage\\n\\nx\\n\\n1x\\n\\n40x\\n\\nAuto close\\n\\nLiquidation price\\n\\n$41,318\\n\\nSlippage\\n\\nEst: 0.00% / Max: 3%\\n\\nMargin\\n\\n$3.47\\n\\nFees\\n\\n$0.01\\n\\nOpen long BTC\\nRUN 6/24\\nAssert the Size field is a single USD input with swap toggle\",\n    \"amountFieldCount\": 1,\n    \"oldTokenFieldCount\": 0,\n    \"amountVisible\": true,\n    \"amount\": \"10\",\n    \"placeholder\": \"0.00\",\n    \"unit\": \"USD\",\n    \"hasToggle\": true,\n    \"toggleRole\": \"\",\n    \"toggleAriaLabel\": \"Toggle size denomination\",\n    \"priceText\": \"$61,202\",\n    \"price\": 61202,\n    \"marginText\": \"$3.47\",\n    \"margin\": 3.47,\n    \"feeText\": \"$0.01\",\n    \"fees\": 0.01,\n    \"percent\": \"13.59\",\n    \"leverage\": 3\n  }\n}\n",
+        "stderr": ""
+      }
+    },
+    {
+      "nodeId": "ac1-screenshot-usd-default",
+      "action": "command",
+      "intent": "Capture the default single Size input with USD unit and swap icon",
+      "startedAt": "2026-07-02T12:24:59.624Z",
+      "endedAt": "2026-07-02T12:25:00.003Z",
+      "durationMs": 379,
+      "ok": true,
+      "next": "ac2-enter-usd-size",
+      "output": {
+        "exitCode": 0,
+        "stdout": "{\n  \"bytes\" : 126810,\n  \"output\" : \"temp\\/tasks\\/review\\/44035-0702-140106\\/artifacts\\/evidence\\/evidence-ac1-usd-default.png\",\n  \"selected\" : {\n    \"app\" : \"Google Chrome for Testing\",\n    \"height\" : 800,\n    \"id\" : 5791,\n    \"layer\" : 0,\n    \"onScreen\" : true,\n    \"pid\" : 12403,\n    \"title\" : \"mme-4 — MetaMask\",\n    \"width\" : 500,\n    \"x\" : 2078,\n    \"y\" : -269\n  },\n  \"selector\" : \"pid\",\n  \"type\" : \"snapshot\"\n}\nCaptured temp/tasks/review/44035-0702-140106/artifacts/evidence/evidence-ac1-usd-default.png via capture-helper pid 12403\n",
+        "stderr": ""
+      }
+    },
+    {
+      "nodeId": "ac2-enter-usd-size",
+      "action": "ui.set_input",
+      "intent": "Enter a USD size before switching to the asset denomination",
+      "startedAt": "2026-07-02T12:25:00.013Z",
+      "endedAt": "2026-07-02T12:25:00.039Z",
+      "durationMs": 26,
+      "ok": true,
+      "next": "ac2-toggle-to-asset",
+      "output": {
+        "set": true,
+        "selector": "[data-testid=\"amount-input-field\"] input",
+        "tagName": "INPUT",
+        "previousValue": "10",
+        "cdpPort": 6664,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/BTC",
+        "runtimeLaunch": null
+      }
+    },
+    {
+      "nodeId": "ac2-toggle-to-asset",
+      "action": "ui.press",
+      "intent": "Tap the swap icon to switch the size input to BTC",
+      "startedAt": "2026-07-02T12:25:00.044Z",
+      "endedAt": "2026-07-02T12:25:00.072Z",
+      "durationMs": 28,
+      "ok": true,
+      "next": "ac2-assert-asset-unit",
+      "output": {
+        "clicked": true,
+        "selector": "[data-testid=\"toggle-denomination\"], [data-test-id=\"toggle-denomination\"], [data-test=\"toggle-denomination\"]",
+        "tagName": "svg",
+        "cdpPort": 6664,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/BTC",
+        "runtimeLaunch": null
+      }
+    },
+    {
+      "nodeId": "ac2-assert-asset-unit",
+      "action": "command",
+      "intent": "Assert the input switched to BTC and displays the live-price equivalent",
+      "startedAt": "2026-07-02T12:25:00.080Z",
+      "endedAt": "2026-07-02T12:25:00.171Z",
+      "durationMs": 91,
+      "ok": true,
+      "next": "ac2-screenshot-asset-unit",
+      "output": {
+        "exitCode": 0,
+        "stdout": "{\n  \"action\": \"asset-conversion\",\n  \"ok\": true,\n  \"state\": {\n    \"href\": \"chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/BTC\",\n    \"bodyText\": \"BTC\\n\\n$61,201\\n\\n+4.56%\\n\\nLong\\n\\nShort\\n\\nMarket\\n\\nLimit\\n\\nAvailable to trade\\n\\n24.52 USDC\\n\\nSize\\n\\nBTC\\n\\n%\\n\\nLeverage\\n\\nx\\n\\n1x\\n\\n40x\\n\\nAuto close\\n\\nLiquidation price\\n\\n$41,317\\n\\nSlippage\\n\\nEst: 0.00% / Max: 3%\\n\\nMargin\\n\\n$3,000.27\\n\\nFees\\n\\n$12.89\\n\\nInsufficient funds\\nRUN 10/24\\nAssert the input switched to BTC and displays the live-price equivalent\",\n    \"amountFieldCount\": 1,\n    \"oldTokenFieldCount\": 0,\n    \"amountVisible\": true,\n    \"amount\": \"0.14706\",\n    \"placeholder\": \"0\",\n    \"unit\": \"BTC\",\n    \"hasToggle\": true,\n    \"toggleRole\": \"\",\n    \"toggleAriaLabel\": \"Toggle size denomination\",\n    \"priceText\": \"$61,201\",\n    \"price\": 61201,\n    \"marginText\": \"$3,000.27\",\n    \"margin\": 3000.27,\n    \"feeText\": \"$12.89\",\n    \"fees\": 12.89,\n    \"percent\": \"100\",\n    \"leverage\": 3\n  }\n}\n",
+        "stderr": ""
+      }
+    },
+    {
+      "nodeId": "ac2-screenshot-asset-unit",
+      "action": "command",
+      "intent": "Capture the size input after switching to the BTC denomination",
+      "startedAt": "2026-07-02T12:25:00.176Z",
+      "endedAt": "2026-07-02T12:25:00.668Z",
+      "durationMs": 492,
+      "ok": true,
+      "next": "ac3-assert-equivalent-asset",
+      "output": {
+        "exitCode": 0,
+        "stdout": "{\n  \"bytes\" : 128476,\n  \"output\" : \"temp\\/tasks\\/review\\/44035-0702-140106\\/artifacts\\/evidence\\/evidence-ac2-asset-unit.png\",\n  \"selected\" : {\n    \"app\" : \"Google Chrome for Testing\",\n    \"height\" : 800,\n    \"id\" : 5791,\n    \"layer\" : 0,\n    \"onScreen\" : true,\n    \"pid\" : 12403,\n    \"title\" : \"mme-4 — MetaMask\",\n    \"width\" : 500,\n    \"x\" : 2078,\n    \"y\" : -269\n  },\n  \"selector\" : \"pid\",\n  \"type\" : \"snapshot\"\n}\nCaptured temp/tasks/review/44035-0702-140106/artifacts/evidence/evidence-ac2-asset-unit.png via capture-helper pid 12403\n",
+        "stderr": ""
+      }
+    },
+    {
+      "nodeId": "ac3-assert-equivalent-asset",
+      "action": "command",
+      "intent": "Assert the displayed BTC value is equivalent to the entered USD size",
+      "startedAt": "2026-07-02T12:25:00.677Z",
+      "endedAt": "2026-07-02T12:25:00.810Z",
+      "durationMs": 133,
+      "ok": true,
+      "next": "ac4-toggle-back-usd",
+      "output": {
+        "exitCode": 0,
+        "stdout": "{\n  \"action\": \"asset-conversion\",\n  \"ok\": true,\n  \"state\": {\n    \"href\": \"chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/BTC\",\n    \"bodyText\": \"BTC\\n\\n$61,202\\n\\n+4.56%\\n\\nLong\\n\\nShort\\n\\nMarket\\n\\nLimit\\n\\nAvailable to trade\\n\\n24.52 USDC\\n\\nSize\\n\\nBTC\\n\\n%\\n\\nLeverage\\n\\nx\\n\\n1x\\n\\n40x\\n\\nAuto close\\n\\nLiquidation price\\n\\n$41,317\\n\\nSlippage\\n\\nEst: 0.00% / Max: 3%\\n\\nMargin\\n\\n$3,000.27\\n\\nFees\\n\\n$12.89\\n\\nInsufficient funds\\nRUN 12/24\\nAssert the displayed BTC value is equivalent to the entered USD size\",\n    \"amountFieldCount\": 1,\n    \"oldTokenFieldCount\": 0,\n    \"amountVisible\": true,\n    \"amount\": \"0.14705\",\n    \"placeholder\": \"0\",\n    \"unit\": \"BTC\",\n    \"hasToggle\": true,\n    \"toggleRole\": \"\",\n    \"toggleAriaLabel\": \"Toggle size denomination\",\n    \"priceText\": \"$61,202\",\n    \"price\": 61202,\n    \"marginText\": \"$3,000.27\",\n    \"margin\": 3000.27,\n    \"feeText\": \"$12.89\",\n    \"fees\": 12.89,\n    \"percent\": \"100\",\n    \"leverage\": 3\n  }\n}\n",
+        "stderr": ""
+      }
+    },
+    {
+      "nodeId": "ac4-toggle-back-usd",
+      "action": "ui.press",
+      "intent": "Tap the swap icon again to switch back to USD",
+      "startedAt": "2026-07-02T12:25:00.817Z",
+      "endedAt": "2026-07-02T12:25:00.835Z",
+      "durationMs": 18,
+      "ok": true,
+      "next": "ac4-assert-usd-return",
+      "output": {
+        "clicked": true,
+        "selector": "[data-testid=\"toggle-denomination\"], [data-test-id=\"toggle-denomination\"], [data-test=\"toggle-denomination\"]",
+        "tagName": "svg",
+        "cdpPort": 6664,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/BTC",
+        "runtimeLaunch": null
+      }
+    },
+    {
+      "nodeId": "ac4-assert-usd-return",
+      "action": "command",
+      "intent": "Assert the input returns to USD with the equivalent USD value",
+      "startedAt": "2026-07-02T12:25:00.841Z",
+      "endedAt": "2026-07-02T12:25:01.073Z",
+      "durationMs": 232,
+      "ok": true,
+      "next": "ac5-toggle-to-asset-for-typing",
+      "output": {
+        "exitCode": 0,
+        "stdout": "{\n  \"action\": \"usd-return\",\n  \"ok\": true,\n  \"state\": {\n    \"href\": \"chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/BTC\",\n    \"bodyText\": \"BTC\\n\\n$61,202\\n\\n+4.56%\\n\\nLong\\n\\nShort\\n\\nMarket\\n\\nLimit\\n\\nAvailable to trade\\n\\n24.52 USDC\\n\\nSize\\n\\nUSD\\n\\n%\\n\\nLeverage\\n\\nx\\n\\n1x\\n\\n40x\\n\\nAuto close\\n\\nLiquidation price\\n\\n$41,318\\n\\nSlippage\\n\\nEst: 0.00% / Max: 3%\\n\\nMargin\\n\\n$3,000.27\\n\\nFees\\n\\n$12.89\\n\\nInsufficient funds\\nRUN 14/24\\nAssert the input returns to USD with the equivalent USD value\",\n    \"amountFieldCount\": 1,\n    \"oldTokenFieldCount\": 0,\n    \"amountVisible\": true,\n    \"amount\": \"9000.00\",\n    \"placeholder\": \"0.00\",\n    \"unit\": \"USD\",\n    \"hasToggle\": true,\n    \"toggleRole\": \"\",\n    \"toggleAriaLabel\": \"Toggle size denomination\",\n    \"priceText\": \"$61,202\",\n    \"price\": 61202,\n    \"marginText\": \"$3,000.27\",\n    \"margin\": 3000.27,\n    \"feeText\": \"$12.89\",\n    \"fees\": 12.89,\n    \"percent\": \"100\",\n    \"leverage\": 3\n  }\n}\n",
+        "stderr": ""
+      }
+    },
+    {
+      "nodeId": "ac5-toggle-to-asset-for-typing",
+      "action": "ui.press",
+      "intent": "Switch to BTC mode before typing an asset amount",
+      "startedAt": "2026-07-02T12:25:01.080Z",
+      "endedAt": "2026-07-02T12:25:01.104Z",
+      "durationMs": 24,
+      "ok": true,
+      "next": "ac5-type-asset-amount",
+      "output": {
+        "clicked": true,
+        "selector": "[data-testid=\"toggle-denomination\"], [data-test-id=\"toggle-denomination\"], [data-test=\"toggle-denomination\"]",
+        "tagName": "svg",
+        "cdpPort": 6664,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/BTC",
+        "runtimeLaunch": null
+      }
+    },
+    {
+      "nodeId": "ac5-type-asset-amount",
+      "action": "ui.set_input",
+      "intent": "Type a BTC amount in the asset-denominated size input",
+      "startedAt": "2026-07-02T12:25:01.356Z",
+      "endedAt": "2026-07-02T12:25:01.385Z",
+      "durationMs": 29,
+      "ok": true,
+      "next": "ac5-assert-usd-calculations",
+      "output": {
+        "set": true,
+        "selector": "[data-testid=\"amount-input-field\"] input",
+        "tagName": "INPUT",
+        "previousValue": "0.14705",
+        "cdpPort": 6664,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/BTC",
+        "runtimeLaunch": null
+      }
+    },
+    {
+      "nodeId": "ac5-assert-usd-calculations",
+      "action": "command",
+      "intent": "Assert asset typing updates USD-backed margin and fee calculations",
+      "startedAt": "2026-07-02T12:25:01.393Z",
+      "endedAt": "2026-07-02T12:25:02.183Z",
+      "durationMs": 790,
+      "ok": true,
+      "next": "ac6-set-percent",
+      "output": {
+        "exitCode": 0,
+        "stdout": "{\n  \"action\": \"asset-typing\",\n  \"ok\": true,\n  \"state\": {\n    \"href\": \"chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/BTC\",\n    \"bodyText\": \"BTC\\n\\n$61,202\\n\\n+4.56%\\n\\nLong\\n\\nShort\\n\\nMarket\\n\\nLimit\\n\\nAvailable to trade\\n\\n24.52 USDC\\n\\nSize\\n\\nBTC\\n\\n%\\n\\nLeverage\\n\\nx\\n\\n1x\\n\\n40x\\n\\nAuto close\\n\\nLiquidation price\\n\\n$41,318\\n\\nSlippage\\n\\nEst: 0.00% / Max: 3%\\n\\nMargin\\n\\n$2,040.17\\n\\nFees\\n\\n$8.76\\n\\nInsufficient funds\\nRUN 17/24\\nAssert asset typing updates USD-backed margin and fee calculations\",\n    \"amountFieldCount\": 1,\n    \"oldTokenFieldCount\": 0,\n    \"amountVisible\": true,\n    \"amount\": \"0.1\",\n    \"placeholder\": \"0\",\n    \"unit\": \"BTC\",\n    \"hasToggle\": true,\n    \"toggleRole\": \"\",\n    \"toggleAriaLabel\": \"Toggle size denomination\",\n    \"priceText\": \"$61,202\",\n    \"price\": 61202,\n    \"marginText\": \"$2,040.17\",\n    \"margin\": 2040.17,\n    \"feeText\": \"$8.76\",\n    \"fees\": 8.76,\n    \"percent\": \"100\",\n    \"leverage\": 3\n  }\n}\n",
+        "stderr": ""
+      }
+    },
+    {
+      "nodeId": "ac6-set-percent",
+      "action": "ui.set_input",
+      "intent": "Set the balance percentage input while BTC denomination is active",
+      "startedAt": "2026-07-02T12:25:02.204Z",
+      "endedAt": "2026-07-02T12:25:02.477Z",
+      "durationMs": 273,
+      "ok": true,
+      "next": "ac6-assert-percent-updates-size",
+      "output": {
+        "set": true,
+        "selector": "[data-testid=\"balance-percent-input\"] input",
+        "tagName": "INPUT",
+        "previousValue": "100",
+        "cdpPort": 6664,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/BTC",
+        "runtimeLaunch": null
+      }
+    },
+    {
+      "nodeId": "ac6-assert-percent-updates-size",
+      "action": "command",
+      "intent": "Assert percentage input updates the size while preserving BTC denomination",
+      "startedAt": "2026-07-02T12:25:02.487Z",
+      "endedAt": "2026-07-02T12:25:02.946Z",
+      "durationMs": 459,
+      "ok": true,
+      "next": "ac7-navigate-away",
+      "output": {
+        "exitCode": 0,
+        "stdout": "{\n  \"action\": \"percent-update\",\n  \"ok\": true,\n  \"state\": {\n    \"href\": \"chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/BTC\",\n    \"bodyText\": \"BTC\\n\\n$61,208\\n\\n+4.56%\\n\\nLong\\n\\nShort\\n\\nMarket\\n\\nLimit\\n\\nAvailable to trade\\n\\n24.52 USDC\\n\\nSize\\n\\nBTC\\n\\n%\\n\\nLeverage\\n\\nx\\n\\n1x\\n\\n40x\\n\\nAuto close\\n\\nLiquidation price\\n\\n$41,318\\n\\nSlippage\\n\\nEst: 0.00% / Max: 3%\\n\\nMargin\\n\\n$12.45\\n\\nFees\\n\\n$0.05\\n\\nOpen long BTC\\nRUN 19/24\\nAssert percentage input updates the size while preserving BTC denomination\",\n    \"amountFieldCount\": 1,\n    \"oldTokenFieldCount\": 0,\n    \"amountVisible\": true,\n    \"amount\": \"0.0006\",\n    \"placeholder\": \"0\",\n    \"unit\": \"BTC\",\n    \"hasToggle\": true,\n    \"toggleRole\": \"\",\n    \"toggleAriaLabel\": \"Toggle size denomination\",\n    \"priceText\": \"$61,208\",\n    \"price\": 61208,\n    \"marginText\": \"$12.45\",\n    \"margin\": 12.45,\n    \"feeText\": \"$0.05\",\n    \"fees\": 0.05,\n    \"percent\": \"50\",\n    \"leverage\": 3\n  }\n}\n",
+        "stderr": ""
+      }
+    },
+    {
+      "nodeId": "ac7-navigate-away",
+      "action": "ui.navigate",
+      "intent": "Navigate away from the BTC market while BTC denomination is selected",
+      "startedAt": "2026-07-02T12:25:03.144Z",
+      "endedAt": "2026-07-02T12:25:05.612Z",
+      "durationMs": 2468,
+      "ok": true,
+      "next": "ac7-return-btc-market",
+      "output": {
+        "action": "ui.navigate",
+        "page": "perps",
+        "hash": "#/?tab=perps",
+        "navigation": {
+          "frameId": "0D0EBCE904881AE727DE8594CC9BE960",
+          "isDownload": false
+        },
+        "proofPath": "ui-navigation",
+        "cdpPort": 6664,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/BTC",
+        "runtimeLaunch": null,
+        "liveAdapter": "/Users/deeeed/dev/metamask/metamask-recipe-runner/library/actions/extension/ui/navigate.mjs"
+      }
+    },
+    {
+      "nodeId": "ac7-return-btc-market",
+      "action": "ui.navigate",
+      "intent": "Return to the BTC Perps market in the same session",
+      "startedAt": "2026-07-02T12:25:05.844Z",
+      "endedAt": "2026-07-02T12:25:08.589Z",
+      "durationMs": 2745,
+      "ok": true,
+      "next": "ac7-wait-returned-size-input",
+      "output": {
+        "action": "ui.navigate",
+        "hash": "#/perps/trade/BTC",
+        "navigation": {
+          "frameId": "0D0EBCE904881AE727DE8594CC9BE960",
+          "isDownload": false
+        },
+        "proofPath": "ui-navigation",
+        "cdpPort": 6664,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/?tab=perps",
+        "runtimeLaunch": null,
+        "liveAdapter": "/Users/deeeed/dev/metamask/metamask-recipe-runner/library/actions/extension/ui/navigate.mjs"
+      }
+    },
+    {
+      "nodeId": "ac7-wait-returned-size-input",
+      "action": "ui.wait_for",
+      "intent": "Wait for the BTC order-entry size input after returning",
+      "startedAt": "2026-07-02T12:25:08.599Z",
+      "endedAt": "2026-07-02T12:25:08.615Z",
+      "durationMs": 16,
+      "ok": true,
+      "next": "ac7-assert-persisted-asset",
+      "output": {
+        "matched": true,
+        "cdpPort": 6664,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/BTC",
+        "runtimeLaunch": null
+      }
+    },
+    {
+      "nodeId": "ac7-assert-persisted-asset",
+      "action": "command",
+      "intent": "Assert BTC keeps the asset denomination within the session",
+      "startedAt": "2026-07-02T12:25:08.624Z",
+      "endedAt": "2026-07-02T12:25:08.932Z",
+      "durationMs": 308,
+      "ok": true,
+      "next": "teardown-done",
+      "output": {
+        "exitCode": 0,
+        "stdout": "{\n  \"action\": \"persisted-asset\",\n  \"ok\": true,\n  \"state\": {\n    \"href\": \"chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/BTC\",\n    \"bodyText\": \"BTC\\n\\n$61,210\\n\\n+4.58%\\n\\nLong\\n\\nShort\\n\\nMarket\\n\\nLimit\\n\\nAvailable to trade\\n\\n24.52 USDC\\n\\nSize\\n\\nBTC\\n\\n%\\n\\nLeverage\\n\\nx\\n\\n1x\\n\\n40x\\n\\nAuto close\\n\\nLiquidation price\\n\\n$41,323\\n\\nSlippage\\n\\nEst: 0.00% / Max: 3%\\n\\nMargin\\n\\n$3.47\\n\\nFees\\n\\n$0.01\\n\\nOpen long BTC\\nRUN 23/24\\nAssert BTC keeps the asset denomination within the session\",\n    \"amountFieldCount\": 1,\n    \"oldTokenFieldCount\": 0,\n    \"amountVisible\": true,\n    \"amount\": \"0.00016\",\n    \"placeholder\": \"0\",\n    \"unit\": \"BTC\",\n    \"hasToggle\": true,\n    \"toggleRole\": \"\",\n    \"toggleAriaLabel\": \"Toggle size denomination\",\n    \"priceText\": \"$61,210\",\n    \"price\": 61210,\n    \"marginText\": \"$3.47\",\n    \"margin\": 3.47,\n    \"feeText\": \"$0.01\",\n    \"fees\": 0.01,\n    \"percent\": \"13.59\",\n    \"leverage\": 3\n  }\n}\n",
+        "stderr": ""
+      }
+    },
+    {
+      "nodeId": "teardown-done",
+      "action": "end",
+      "intent": "Finish PR 44035 size denomination validation",
+      "startedAt": "2026-07-02T12:25:08.939Z",
+      "endedAt": "2026-07-02T12:25:08.947Z",
+      "durationMs": 8,
+      "ok": true,
+      "status": "pass"
+    }
+  ]
+}

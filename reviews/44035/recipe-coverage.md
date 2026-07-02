@@ -1,0 +1,13 @@
+# Recipe Coverage
+
+| # | AC (verbatim) | Target env | Recipe nodes (IDs) | Screenshot filename | Visual verdict | Justification |
+|---|---|---|---|---|---|---|
+| 1 | "The Size field shows a single input with the \"USD\" unit and a swap icon" | fullscreen | setup-open-btc-market, setup-wait-size-input, setup-scroll-size-input, ac1-assert-usd-default, ac1-screenshot-usd-default | evidence-ac1-usd-default.png | PROVEN | Trace asserts exactly one size input, no old token field, USD unit, visible toggle, and accessible label; screenshot visibly shows the single USD Size input and swap icon. |
+| 2 | "the input switches to the asset unit (e.g. \"BTC\")" | fullscreen | ac2-enter-usd-size, ac2-toggle-to-asset, ac2-assert-asset-unit, ac2-screenshot-asset-unit | evidence-ac2-asset-unit.png | PROVEN | Trace drives the toggle and asserts BTC unit; screenshot visibly shows the size input in BTC mode. |
+| 3 | "the displayed value is the equivalent asset amount at the current price" | fullscreen | ac2-enter-usd-size, ac2-toggle-to-asset, ac2-assert-asset-unit, ac3-assert-equivalent-asset | evidence-ac2-asset-unit.png | PROVEN | The live DOM assertion parses the displayed BTC price and checks the BTC input value is within tolerance of USD size divided by price; the AC2 screenshot shows the same post-toggle value. |
+| 4 | "the input switches back to \"USD\" showing the equivalent USD value" | fullscreen | ac4-toggle-back-usd, ac4-assert-usd-return | none | PROVEN | Trace drives the second toggle and asserts USD unit plus numeric USD value equivalent to 9000. Screenshot capture was unstable after AC2, so this is trace/DOM proof rather than image proof. |
+| 5 | "the internal USD size used for margin/fees updates to amount x price" | fullscreen | ac5-toggle-to-asset-for-typing, ac5-type-asset-amount, ac5-assert-usd-calculations | none | PROVEN | Trace types 0.1 BTC and the live DOM assertion verifies margin and fee values become non-dash and margin roughly equals asset amount x current price / leverage. |
+| 6 | "the size and balance percentage update correctly" | fullscreen | ac6-set-percent, ac6-assert-percent-updates-size | none | PROVEN | Trace sets the percent input to 50 and asserts the percent field, active BTC denomination, positive derived size, and non-dash margin. |
+| 7 | "the size input is still in the asset denomination" | fullscreen | ac7-navigate-away, ac7-return-btc-market, ac7-wait-returned-size-input, ac7-assert-persisted-asset | none | PROVEN | Trace navigates away and back to the BTC trade route, then asserts the denomination unit remains BTC in the same session. |
+
+Overall recipe coverage: 7/7 ACs PROVEN (untestable: none, weak: 0, missing: 0)

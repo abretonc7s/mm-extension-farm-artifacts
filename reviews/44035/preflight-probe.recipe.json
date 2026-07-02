@@ -1,0 +1,33 @@
+{
+  "schema_version": 1,
+  "title": "PR 44035 preflight state probe",
+  "description": "Read wallet and Perps state before drafting UI validation recipe.",
+  "validate": {
+    "workflow": {
+      "entry": "setup-status",
+      "nodes": {
+        "setup-status": {
+          "action": "app.status",
+          "intent": "Read runner status before preflight",
+          "next": "setup-wallet-state"
+        },
+        "setup-wallet-state": {
+          "action": "metamask.wallet.read_state",
+          "intent": "Read wallet state for Perps order-entry prerequisites",
+          "next": "setup-perps-positions"
+        },
+        "setup-perps-positions": {
+          "action": "metamask.perps.read_positions",
+          "market": "BTC",
+          "intent": "Read BTC Perps positions before UI validation",
+          "next": "setup-done"
+        },
+        "setup-done": {
+          "action": "end",
+          "status": "pass",
+          "intent": "Finish preflight state probe"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "pr_number": "44035",
+  "recommendation": "REQUEST_CHANGES",
+  "summary": "The size toggle behavior is implemented and validated, but the new swap control is not exposed as an accessible button. Please fix the toggle semantics before merge.",
+  "comments": [
+    {
+      "path": "ui/components/app/perps/order-entry/components/amount-input/amount-input.tsx",
+      "line": 438,
+      "body": "This is an interactive control, but it renders as an `svg` with no `role`, no `tabIndex`, and no keyboard activation. The live DOM for `toggle-denomination` is `{ tag: \"svg\", role: null, tabIndex: -1, ariaLabel: \"Toggle size denomination\" }`, so keyboard users cannot focus or activate the denomination toggle. Please render this as a real button/icon button, or add equivalent button semantics and Enter/Space handling.",
+      "severity": "must_fix"
+    }
+  ]
+}

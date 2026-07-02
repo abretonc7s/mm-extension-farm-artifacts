@@ -1,0 +1,95 @@
+{
+  "version": 1,
+  "verdict": "warn",
+  "compact": {
+    "verdict": "WARN",
+    "reasons": [
+      "Trace shows 24/24 nodes passed and all 7 review claims have ac<N>-bound assertions.",
+      "AC1 and AC2 have direct capture-helper screenshots; AC3 reuses AC2's visible post-toggle state.",
+      "AC4-AC7 are proven by live DOM assertions only because repeated capture-helper snapshots hung in this slot."
+    ],
+    "better_version_guidance": [
+      "Use a runner-level screenshot action with non-hanging capture-helper behavior so AC4 and AC7 can also have direct image proof.",
+      "Add a recipe-native read/assert action for extension DOM state to avoid shell command assertion helpers."
+    ]
+  },
+  "dimensions": {
+    "graph_integrity": {
+      "status": "pass",
+      "reason": "Workflow graph is structurally valid and all nodes in the final trace passed.",
+      "evidence": [
+        "artifacts/recipe.json",
+        "artifacts/recipe-run/trace.json",
+        "artifacts/recipe-run/summary.json"
+      ]
+    },
+    "ac_coverage": {
+      "status": "pass",
+      "reason": "Every review claim maps to ac<N>-prefixed nodes and ended PROVEN in recipe-coverage.md.",
+      "evidence": [
+        "artifacts/recipe-coverage.md",
+        "artifacts/recipe-run/trace.json"
+      ]
+    },
+    "evidence_contract_basics": {
+      "status": "warn",
+      "reason": "Key visual states have capture-helper screenshots, but later UI-state claims rely on live DOM assertion proof after repeated screenshot helper hangs.",
+      "evidence": [
+        "artifacts/evidence/evidence-ac1-usd-default.png",
+        "artifacts/evidence/evidence-ac2-asset-unit.png",
+        "artifacts/recipe-run-output.log"
+      ]
+    },
+    "action_contract": {
+      "status": "warn",
+      "reason": "The recipe uses official UI actions for navigation/input/press but task-local command helpers for DOM assertions and reliable screenshot capture.",
+      "evidence": [
+        "artifacts/assert-order-entry.cjs",
+        "artifacts/capture-shot.sh"
+      ]
+    }
+  },
+  "structural_findings": [],
+  "contextual_findings": [
+    {
+      "code": "screenshot-helper-instability",
+      "message": "Repeated capture-helper snapshots through the runner hung after the first key screenshots; final recipe kept two strongest screenshots and used DOM assertions for the remaining claims.",
+      "dimension": "evidence_contract_basics",
+      "evidence": [
+        "artifacts/recipe-run-output.log"
+      ]
+    }
+  ],
+  "suggested_recipe_delta": [
+    "Replace task-local screenshot command wrapper with official ui.screenshot once capture-helper exits reliably for repeated snapshots.",
+    "Promote assert-order-entry.cjs checks into a reusable extension DOM read/assert action."
+  ],
+  "training_fields": {
+    "farm": "metamask-extension",
+    "project": "metamask-extension-farm",
+    "flow_type": "review-pr",
+    "task_type": "review-pr",
+    "claim_is_visual": true,
+    "proof_mode": "mixed",
+    "anti_patterns": [
+      "screenshot-helper-hang"
+    ],
+    "good_patterns": [
+      "AC-bound node IDs",
+      "live DOM assertions",
+      "capture-helper screenshot evidence for key states"
+    ]
+  },
+  "meta": {
+    "producer": "worker",
+    "fallback_used": false,
+    "legacy_task": false,
+    "artifact_required": true,
+    "source_signals": [
+      "recipe.json",
+      "recipe-coverage.md",
+      "trace.json",
+      "summary.json"
+    ]
+  }
+}

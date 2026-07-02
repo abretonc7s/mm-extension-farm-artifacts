@@ -1,0 +1,101 @@
+{
+  "metadata": {
+    "runner": {
+      "source": "/Users/deeeed/dev/metamask/metamask-recipe-runner",
+      "git_ref": "36a1120d1b93a0183da59ba8e55306cb80283ffa",
+      "name": "@metamask/recipe-runner"
+    }
+  },
+  "entries": [
+    {
+      "nodeId": "setup-status",
+      "action": "app.status",
+      "intent": "Read runner status before preflight",
+      "startedAt": "2026-07-02T12:08:06.072Z",
+      "endedAt": "2026-07-02T12:08:06.084Z",
+      "durationMs": 12,
+      "ok": true,
+      "next": "setup-wallet-state",
+      "output": {
+        "platform": "extension",
+        "projectRoot": "/Users/deeeed/dev/metamask/metamask-extension-4",
+        "compatibilityMode": "bridge present",
+        "shape": {
+          "packageName": "metamask-crx",
+          "packageJsonStatus": "valid",
+          "packageJsonError": null,
+          "extensionProject": true,
+          "mobileProject": false,
+          "agenticService": false,
+          "mobileProductHarness": false,
+          "mobileBridgeScript": true,
+          "extensionRuntime": true,
+          "injectedHarness": true,
+          "walletFixture": true
+        }
+      }
+    },
+    {
+      "nodeId": "setup-wallet-state",
+      "action": "metamask.wallet.read_state",
+      "intent": "Read wallet state for Perps order-entry prerequisites",
+      "startedAt": "2026-07-02T12:08:06.091Z",
+      "endedAt": "2026-07-02T12:08:06.399Z",
+      "durationMs": 308,
+      "ok": true,
+      "next": "setup-perps-positions",
+      "output": {
+        "action": "metamask.wallet.read_state",
+        "source": "extension-stateHooks-store",
+        "state": {
+          "href": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/",
+          "selectedAccount": {
+            "id": "0285a92b-905c-4814-8a16-52fe1db60357",
+            "address": "0x8dc623e964475d4d669da601fd15ea9125469003",
+            "name": "Account 1",
+            "type": "eip155:eoa"
+          },
+          "completedOnboarding": true,
+          "selectedNetworkClientId": "mainnet"
+        },
+        "redacted": true,
+        "proofPath": "extension-wallet-state",
+        "cdpPort": 6664,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/",
+        "runtimeLaunch": null,
+        "liveAdapter": "/Users/deeeed/dev/metamask/metamask-recipe-runner/library/actions/extension/wallet/read_state.mjs"
+      }
+    },
+    {
+      "nodeId": "setup-perps-positions",
+      "action": "metamask.perps.read_positions",
+      "intent": "Read BTC Perps positions before UI validation",
+      "startedAt": "2026-07-02T12:08:06.405Z",
+      "endedAt": "2026-07-02T12:08:06.873Z",
+      "durationMs": 468,
+      "ok": true,
+      "next": "setup-done",
+      "output": {
+        "action": "metamask.perps.read_positions",
+        "source": "background-perpsGetPositions",
+        "count": 0,
+        "matchingCount": 0,
+        "positions": [],
+        "cdpPort": 6664,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/",
+        "runtimeLaunch": null,
+        "liveAdapter": "/Users/deeeed/dev/metamask/metamask-recipe-runner/library/actions/extension/perps/read_positions.mjs"
+      }
+    },
+    {
+      "nodeId": "setup-done",
+      "action": "end",
+      "intent": "Finish preflight state probe",
+      "startedAt": "2026-07-02T12:08:06.880Z",
+      "endedAt": "2026-07-02T12:08:06.887Z",
+      "durationMs": 7,
+      "ok": true,
+      "status": "pass"
+    }
+  ]
+}

@@ -1,0 +1,162 @@
+{
+  "schema_version": 1,
+  "title": "PR 44035 Perps size denomination toggle review",
+  "description": "Validate the single Perps size input, USD/BTC denomination toggle, conversions, percent input behavior, and in-session market persistence.",
+  "pre_conditions": [
+    "Wallet fixture is onboarded/unlocked and the extension home.html target is reachable over CDP.",
+    "BTC Perps market route is available in the current extension build.",
+    "The order-entry form renders a positive BTC market price."
+  ],
+  "validate": {
+    "workflow": {
+      "entry": "setup-status",
+      "nodes": {
+        "setup-status": {
+          "action": "app.status",
+          "intent": "Read runner status before size input validation",
+          "next": "setup-wallet-state"
+        },
+        "setup-wallet-state": {
+          "action": "metamask.wallet.read_state",
+          "intent": "Read wallet state before navigating to Perps order entry",
+          "next": "setup-open-btc-market"
+        },
+        "setup-open-btc-market": {
+          "action": "ui.navigate",
+          "hash": "#/perps/trade/BTC",
+          "intent": "Open the BTC Perps trade order-entry surface",
+          "next": "setup-wait-size-input"
+        },
+        "setup-wait-size-input": {
+          "action": "ui.wait_for",
+          "test_id": "amount-input-field",
+          "intent": "Wait for the single size input to render",
+          "next": "setup-scroll-size-input"
+        },
+        "setup-scroll-size-input": {
+          "action": "ui.scroll",
+          "selector": "[data-testid=\"amount-input-field\"]",
+          "scroll_into_view": true,
+          "intent": "Bring the size input into view for screenshot evidence",
+          "next": "ac1-assert-usd-default"
+        },
+        "ac1-assert-usd-default": {
+          "action": "command",
+          "cmd": "node temp/tasks/review/44035-0702-140106/artifacts/assert-order-entry.cjs usd-default",
+          "intent": "Assert the Size field is a single USD input with swap toggle",
+          "next": "ac1-screenshot-usd-default"
+        },
+        "ac1-screenshot-usd-default": {
+          "action": "command",
+          "cmd": "temp/tasks/review/44035-0702-140106/artifacts/capture-shot.sh temp/tasks/review/44035-0702-140106/artifacts/evidence/evidence-ac1-usd-default.png",
+          "intent": "Capture the default single Size input with USD unit and swap icon",
+          "next": "ac2-enter-usd-size"
+        },
+        "ac2-enter-usd-size": {
+          "action": "ui.set_input",
+          "selector": "[data-testid=\"amount-input-field\"] input",
+          "value": "9000",
+          "intent": "Enter a USD size before switching to the asset denomination",
+          "next": "ac2-toggle-to-asset"
+        },
+        "ac2-toggle-to-asset": {
+          "action": "ui.press",
+          "test_id": "toggle-denomination",
+          "intent": "Tap the swap icon to switch the size input to BTC",
+          "next": "ac2-assert-asset-unit"
+        },
+        "ac2-assert-asset-unit": {
+          "action": "command",
+          "cmd": "node temp/tasks/review/44035-0702-140106/artifacts/assert-order-entry.cjs asset-conversion",
+          "intent": "Assert the input switched to BTC and displays the live-price equivalent",
+          "next": "ac2-screenshot-asset-unit"
+        },
+        "ac2-screenshot-asset-unit": {
+          "action": "command",
+          "cmd": "temp/tasks/review/44035-0702-140106/artifacts/capture-shot.sh temp/tasks/review/44035-0702-140106/artifacts/evidence/evidence-ac2-asset-unit.png",
+          "intent": "Capture the size input after switching to the BTC denomination",
+          "next": "ac3-assert-equivalent-asset"
+        },
+        "ac3-assert-equivalent-asset": {
+          "action": "command",
+          "cmd": "node temp/tasks/review/44035-0702-140106/artifacts/assert-order-entry.cjs asset-conversion",
+          "intent": "Assert the displayed BTC value is equivalent to the entered USD size",
+          "next": "ac4-toggle-back-usd"
+        },
+        "ac4-toggle-back-usd": {
+          "action": "ui.press",
+          "test_id": "toggle-denomination",
+          "intent": "Tap the swap icon again to switch back to USD",
+          "next": "ac4-assert-usd-return"
+        },
+        "ac4-assert-usd-return": {
+          "action": "command",
+          "cmd": "node temp/tasks/review/44035-0702-140106/artifacts/assert-order-entry.cjs usd-return",
+          "intent": "Assert the input returns to USD with the equivalent USD value",
+          "next": "ac5-toggle-to-asset-for-typing"
+        },
+        "ac5-toggle-to-asset-for-typing": {
+          "action": "ui.press",
+          "test_id": "toggle-denomination",
+          "intent": "Switch to BTC mode before typing an asset amount",
+          "next": "ac5-type-asset-amount"
+        },
+        "ac5-type-asset-amount": {
+          "action": "ui.set_input",
+          "selector": "[data-testid=\"amount-input-field\"] input",
+          "value": "0.1",
+          "intent": "Type a BTC amount in the asset-denominated size input",
+          "next": "ac5-assert-usd-calculations"
+        },
+        "ac5-assert-usd-calculations": {
+          "action": "command",
+          "cmd": "node temp/tasks/review/44035-0702-140106/artifacts/assert-order-entry.cjs asset-typing",
+          "intent": "Assert asset typing updates USD-backed margin and fee calculations",
+          "next": "ac6-set-percent"
+        },
+        "ac6-set-percent": {
+          "action": "ui.set_input",
+          "selector": "[data-testid=\"balance-percent-input\"] input",
+          "value": "50",
+          "intent": "Set the balance percentage input while BTC denomination is active",
+          "next": "ac6-assert-percent-updates-size"
+        },
+        "ac6-assert-percent-updates-size": {
+          "action": "command",
+          "cmd": "node temp/tasks/review/44035-0702-140106/artifacts/assert-order-entry.cjs percent-update",
+          "intent": "Assert percentage input updates the size while preserving BTC denomination",
+          "next": "ac7-navigate-away"
+        },
+        "ac7-navigate-away": {
+          "action": "ui.navigate",
+          "page": "perps",
+          "intent": "Navigate away from the BTC market while BTC denomination is selected",
+          "next": "ac7-return-btc-market"
+        },
+        "ac7-return-btc-market": {
+          "action": "ui.navigate",
+          "hash": "#/perps/trade/BTC",
+          "intent": "Return to the BTC Perps market in the same session",
+          "next": "ac7-wait-returned-size-input"
+        },
+        "ac7-wait-returned-size-input": {
+          "action": "ui.wait_for",
+          "test_id": "amount-input-field",
+          "intent": "Wait for the BTC order-entry size input after returning",
+          "next": "ac7-assert-persisted-asset"
+        },
+        "ac7-assert-persisted-asset": {
+          "action": "command",
+          "cmd": "node temp/tasks/review/44035-0702-140106/artifacts/assert-order-entry.cjs persisted-asset",
+          "intent": "Assert BTC keeps the asset denomination within the session",
+          "next": "teardown-done"
+        },
+        "teardown-done": {
+          "action": "end",
+          "status": "pass",
+          "intent": "Finish PR 44035 size denomination validation"
+        }
+      }
+    }
+  }
+}
