@@ -1,0 +1,135 @@
+{
+  "$schema": "https://farmslot.io/schemas/recipe-v1.schema.json",
+  "title": "MANUAL-000001 perps controller analytics contract",
+  "description": "Validate the Extension consumes the @metamask/perps-controller analytics contract (TAT-3463 / core#9311): package version and controller re-exports as contract asserts, per-AC behaviour proved by the owning Jest suites, and a live UI pass over the market-not-found error screen the analytics gating depends on.",
+  "workflow": {
+    "entry": "gate-repo-root",
+    "nodes": {
+      "gate-repo-root": {
+        "action": "assert_file",
+        "path": "package.json",
+        "contains": "@metamask/perps-controller",
+        "intent": "Ensure the recipe runs from the Extension repo root",
+        "next": "ac1-assert-package-version"
+      },
+      "ac1-assert-package-version": {
+        "action": "command",
+        "cmd": "node -e \"const v=require('./node_modules/@metamask/perps-controller/package.json').version; if(!/^9\\\\.(?:[1-9]|\\\\d{2,})\\\\./.test(v) && !/^9\\\\.(?:[1-9]|\\\\d{2,})$/.test(v)) { console.error('unexpected version', v); process.exit(1);} const c=require('@metamask/perps-controller/constants/eventNames'); if(!c.PERPS_EVENT_PROPERTY.ENTRY_POINT || !c.PERPS_EVENT_PROPERTY.HL_FEE_RATE || !c.PERPS_EVENT_PROPERTY.BULK_ACTION_ID || !c.PERPS_EVENT_PROPERTY.SEARCH_QUERY || !c.PERPS_EVENT_PROPERTY.TIME_ON_SCREEN_MS || c.PERPS_EVENT_VALUE.STATUS.SUBMITTED!=='submitted' || c.PERPS_EVENT_VALUE.ACTION.ABANDON_ORDER!=='abandon_order'){ console.error('missing contract keys'); process.exit(1);} console.log('perps-controller', v);\"",
+        "intent": "AC1: the installed package is >=9.1 and exports every contract key this PR consumes",
+        "next": "ac2-assert-controller-reexports"
+      },
+      "ac2-assert-controller-reexports": {
+        "action": "assert_file",
+        "path": "shared/constants/perps-events.ts",
+        "contains": "from '@metamask/perps-controller'",
+        "intent": "AC2: the Extension constants layer re-exports the controller contract rather than mirroring it",
+        "next": "ac2-assert-no-local-timestamp-mirror"
+      },
+      "ac2-assert-no-local-timestamp-mirror": {
+        "action": "command",
+        "cmd": "node -e \"const fs=require('fs'); const t=fs.readFileSync('shared/constants/perps-events.ts','utf8'); if(t.includes(\\\"TIMESTAMP: 'perps_timestamp'\\\")){ console.error('local TIMESTAMP mirror still present'); process.exit(1);} console.log('re-export ok');\"",
+        "intent": "AC2: no local copy of a controller-owned property key survives",
+        "next": "ac3-attribution-behaviour"
+      },
+      "ac3-attribution-behaviour": {
+        "action": "command",
+        "cmd": "yarn jest ui/providers/perps/PerpsAttributionContext.test.tsx ui/hooks/perps/usePerpsAttribution.test.ts app/scripts/messenger-client-init/perps-controller-init.test.ts app/scripts/controllers/perps/infrastructure.test.ts --no-coverage --runInBand",
+        "timeout_ms": 900000,
+        "intent": "AC3: attribution wiring proved by behaviour (UTM accumulation, controller setAttributionContext forwarding, mergeAttributionContext on controller-emitted events) instead of identifier greps that go stale on rename",
+        "next": "ac4-order-lifecycle-behaviour"
+      },
+      "ac4-order-lifecycle-behaviour": {
+        "action": "command",
+        "cmd": "yarn jest ui/pages/perps/perps-order-entry-page.test.tsx ui/components/app/perps/cancel-order/cancel-order-modal.test.tsx ui/components/app/perps/close-position/close-position-modal.test.tsx ui/components/app/perps/reverse-position/reverse-position-modal.test.tsx --no-coverage --runInBand",
+        "timeout_ms": 1800000,
+        "intent": "AC4: trackingData/hlFeeRate on place, modify, close, cancel and flip proved by the suites that assert the emitted payloads. Serialized (--runInBand) because these suites use userEvent with a 5.5s per-test timeout and flake under parallel load on a busy machine",
+        "next": "ac5-assert-no-duplicate-order-entry-close"
+      },
+      "ac5-assert-no-duplicate-order-entry-close": {
+        "action": "command",
+        "cmd": "node -e \"const fs=require('fs'); const t=fs.readFileSync('ui/pages/perps/perps-order-entry-page.tsx','utf8'); if(t.includes('MetaMetricsEventName.PerpsPositionCloseTransaction') || t.includes('MetaMetricsEventName.PerpsTradeTransaction') || t.includes('MetaMetricsEventName.PerpsRiskManagement')){ console.error('order-entry still emits duplicate transaction analytics'); process.exit(1);} console.log('order-entry deduped');\"",
+        "intent": "AC5: absence claim \u2014 the client no longer emits controller-owned transaction events. Asserted against the stable MetaMetricsEventName identifiers, which are contract names rather than local variables",
+        "next": "ac5-assert-no-duplicate-cancel"
+      },
+      "ac5-assert-no-duplicate-cancel": {
+        "action": "command",
+        "cmd": "node -e \"const fs=require('fs'); const t=fs.readFileSync('ui/components/app/perps/cancel-order/cancel-order-modal.tsx','utf8'); if(t.includes('PerpsOrderCancelTransaction')){ console.error('cancel modal still emits duplicate cancel analytics'); process.exit(1);} console.log('cancel deduped');\"",
+        "intent": "AC5: the cancel modal does not duplicate the controller cancel event",
+        "next": "ac5-assert-no-duplicate-close-modal"
+      },
+      "ac5-assert-no-duplicate-close-modal": {
+        "action": "command",
+        "cmd": "node -e \"const fs=require('fs'); const t=fs.readFileSync('ui/components/app/perps/close-position/close-position-modal.tsx','utf8'); if(t.includes('PerpsPositionCloseTransaction')){ console.error('close modal still emits duplicate close analytics'); process.exit(1);} console.log('close modal deduped');\"",
+        "intent": "AC5: the close modal does not duplicate the controller close event",
+        "next": "ac6-search-funnel-behaviour"
+      },
+      "ac6-search-funnel-behaviour": {
+        "action": "command",
+        "cmd": "yarn jest ui/pages/perps/market-list/index.test.tsx --no-coverage",
+        "timeout_ms": 900000,
+        "intent": "AC6 (TAT-3144/TAT-3202): market search funnel \u2014 debounced query with settled counts, results/no-results screen views, result_rank on tap, abandonment on clear",
+        "next": "ac7-abandonment-behaviour"
+      },
+      "ac7-abandonment-behaviour": {
+        "action": "command",
+        "cmd": "yarn jest ui/hooks/perps/usePerpsAbandonOrderTracking.test.ts --no-coverage",
+        "timeout_ms": 900000,
+        "intent": "AC7 (TAT-3136): abandon_order fires on leaving an uncommitted trade surface, once, with time_on_screen_ms, and never after a commit",
+        "next": "ac8-geo-block-screen-view"
+      },
+      "live-cdp": {
+        "action": "cdp.target",
+        "required": true,
+        "timeout_ms": 15000,
+        "intent": "Confirm the Extension CDP runtime is reachable before live proof",
+        "next": "live-ensure-unlocked"
+      },
+      "live-ensure-unlocked": {
+        "action": "metamask.wallet.ensure_unlocked",
+        "timeout_ms": 45000,
+        "intent": "Unlock the fixture wallet so Perps routes render",
+        "next": "live-open-perps"
+      },
+      "live-open-perps": {
+        "action": "ui.navigate",
+        "page": "perps",
+        "timeout_ms": 30000,
+        "intent": "Open the Perps surface the analytics screen views describe",
+        "next": "live-open-unknown-market"
+      },
+      "live-open-unknown-market": {
+        "action": "ui.navigate",
+        "hash": "#/perps/market/DOESNOTEXIST",
+        "timeout_ms": 30000,
+        "intent": "Show a market that does not exist (route verified live this session), so the user lands on the not-found state whose screen-view gating this PR fixed",
+        "next": "live-assert-error-screen"
+      },
+      "live-assert-error-screen": {
+        "action": "ui.wait_for",
+        "text": "Market not found",
+        "visible": true,
+        "timeout_ms": 20000,
+        "intent": "Prove exactly one error state renders for an unknown symbol, so the single error screen view (and the suppressed asset_details view) describes a real screen",
+        "next": "live-capture-error-screen"
+      },
+      "live-capture-error-screen": {
+        "action": "ui.screenshot",
+        "label": "market-not-found-error-screen",
+        "category": "evidence",
+        "intent": "Register the rendered error screen as visual evidence for the gating fix",
+        "next": "teardown-end"
+      },
+      "teardown-end": {
+        "action": "end",
+        "status": "pass"
+      },
+      "ac8-geo-block-screen-view": {
+        "action": "command",
+        "cmd": "yarn jest ui/components/app/perps/perps-geo-block-modal/perps-geo-block-modal.test.tsx --no-coverage",
+        "timeout_ms": 900000,
+        "intent": "AC8 (TAT-3175 bullet 4): the restriction notice reports screen_type=geo_block_notif once per open and re-arms for the next open",
+        "next": "live-cdp"
+      }
+    }
+  }
+}

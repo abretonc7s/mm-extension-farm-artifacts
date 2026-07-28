@@ -1,0 +1,395 @@
+{
+  "metadata": {
+    "runner": {
+      "source": "/Users/deeeed/dev/metamask/metamask-harness",
+      "git_ref": "c44a21198bebc5fd52c37e9c8058c0ccbe3ed7c7",
+      "name": "@metamask/recipe-runner"
+    }
+  },
+  "entries": [
+    {
+      "nodeId": "gate-repo-root",
+      "action": "assert_file",
+      "intent": "Ensure the recipe runs from the Extension repo root",
+      "startedAt": "2026-07-28T00:56:43.641Z",
+      "endedAt": "2026-07-28T00:56:43.724Z",
+      "durationMs": 83,
+      "ok": true,
+      "next": "ac1-assert-package-version",
+      "output": {
+        "path": "package.json",
+        "sizeBytes": 48527
+      }
+    },
+    {
+      "nodeId": "ac1-assert-package-version",
+      "action": "command",
+      "intent": "AC1: the installed package is >=9.1 and exports every contract key this PR consumes",
+      "startedAt": "2026-07-28T00:56:43.746Z",
+      "endedAt": "2026-07-28T00:56:44.010Z",
+      "durationMs": 264,
+      "ok": true,
+      "next": "ac2-assert-controller-reexports",
+      "output": {
+        "exitCode": 0,
+        "stdout": "perps-controller 9.2.1\n",
+        "stderr": ""
+      }
+    },
+    {
+      "nodeId": "ac2-assert-controller-reexports",
+      "action": "assert_file",
+      "intent": "AC2: the Extension constants layer re-exports the controller contract rather than mirroring it",
+      "startedAt": "2026-07-28T00:56:44.040Z",
+      "endedAt": "2026-07-28T00:56:44.111Z",
+      "durationMs": 71,
+      "ok": true,
+      "next": "ac2-assert-no-local-timestamp-mirror",
+      "output": {
+        "path": "shared/constants/perps-events.ts",
+        "sizeBytes": 5488
+      }
+    },
+    {
+      "nodeId": "ac2-assert-no-local-timestamp-mirror",
+      "action": "command",
+      "intent": "AC2: no local copy of a controller-owned property key survives",
+      "startedAt": "2026-07-28T00:56:44.141Z",
+      "endedAt": "2026-07-28T00:56:44.627Z",
+      "durationMs": 486,
+      "ok": true,
+      "next": "ac3-attribution-behaviour",
+      "output": {
+        "exitCode": 0,
+        "stdout": "re-export ok\n",
+        "stderr": ""
+      }
+    },
+    {
+      "nodeId": "ac3-attribution-behaviour",
+      "action": "command",
+      "intent": "AC3: attribution wiring proved by behaviour (UTM accumulation, controller setAttributionContext forwarding, mergeAttributionContext on controller-emitted events) instead of identifier greps that go stale on rename",
+      "startedAt": "2026-07-28T00:56:44.641Z",
+      "endedAt": "2026-07-28T00:56:59.734Z",
+      "durationMs": 15093,
+      "ok": true,
+      "next": "ac4-order-lifecycle-behaviour",
+      "output": {
+        "exitCode": 0,
+        "stdout": "\n✅ No console baseline violations.\n\n",
+        "stderr": "PASS app/scripts/messenger-client-init/perps-controller-init.test.ts (7.635 s)\nPASS app/scripts/controllers/perps/infrastructure.test.ts\nPASS ui/hooks/perps/usePerpsAttribution.test.ts\nPASS ui/providers/perps/PerpsAttributionContext.test.tsx\n\n ●  Suppressed console messages:\n\nERROR 1     Test errors: Uncaught Errors\n\nTest Suites: 4 passed, 4 total\nTests:       221 passed, 221 total\nSnapshots:   0 total\nTime:        11.549 s, estimated 20 s\nRan all test suites matching /ui\\/providers\\/perps\\/PerpsAttributionContext.test.tsx|ui\\/hooks\\/perps\\/usePerpsAttribution.test.ts|app\\/scripts\\/messenger-client-init\\/perps-controller-init.test.ts|app\\/scripts\\/controllers\\/perps\\/infrastructure.test.ts/i.\n"
+      }
+    },
+    {
+      "nodeId": "ac4-order-lifecycle-behaviour",
+      "action": "command",
+      "intent": "AC4: trackingData/hlFeeRate on place, modify, close, cancel and flip proved by the suites that assert the emitted payloads. Serialized (--runInBand) because these suites use userEvent with a 5.5s per-test timeout and flake under parallel load on a busy machine",
+      "startedAt": "2026-07-28T00:56:59.741Z",
+      "endedAt": "2026-07-28T00:57:42.925Z",
+      "durationMs": 43184,
+      "ok": true,
+      "next": "ac5-assert-no-duplicate-order-entry-close",
+      "output": {
+        "exitCode": 0,
+        "stdout": "\n✅ No console baseline violations.\n\n",
+        "stderr": "PASS ui/pages/perps/perps-order-entry-page.test.tsx (24.142 s)\nPASS ui/components/app/perps/reverse-position/reverse-position-modal.test.tsx\nPASS ui/components/app/perps/close-position/close-position-modal.test.tsx (8.443 s)\nPASS ui/components/app/perps/cancel-order/cancel-order-modal.test.tsx\n\n ●  Suppressed console messages:\n\nERROR 20    React: Act warnings (component updates not wrapped)\nWARN 1     React: componentWill* lifecycle deprecations\n\nTest Suites: 4 passed, 4 total\nTests:       185 passed, 185 total\nSnapshots:   0 total\nTime:        39.007 s, estimated 52 s\nRan all test suites matching /ui\\/pages\\/perps\\/perps-order-entry-page.test.tsx|ui\\/components\\/app\\/perps\\/cancel-order\\/cancel-order-modal.test.tsx|ui\\/components\\/app\\/perps\\/close-position\\/close-position-modal.test.tsx|ui\\/components\\/app\\/perps\\/reverse-position\\/reverse-position-modal.test.tsx/i.\n"
+      }
+    },
+    {
+      "nodeId": "ac5-assert-no-duplicate-order-entry-close",
+      "action": "command",
+      "intent": "AC5: absence claim — the client no longer emits controller-owned transaction events. Asserted against the stable MetaMetricsEventName identifiers, which are contract names rather than local variables",
+      "startedAt": "2026-07-28T00:57:42.931Z",
+      "endedAt": "2026-07-28T00:57:42.994Z",
+      "durationMs": 63,
+      "ok": true,
+      "next": "ac5-assert-no-duplicate-cancel",
+      "output": {
+        "exitCode": 0,
+        "stdout": "order-entry deduped\n",
+        "stderr": ""
+      }
+    },
+    {
+      "nodeId": "ac5-assert-no-duplicate-cancel",
+      "action": "command",
+      "intent": "AC5: the cancel modal does not duplicate the controller cancel event",
+      "startedAt": "2026-07-28T00:57:43.000Z",
+      "endedAt": "2026-07-28T00:57:43.065Z",
+      "durationMs": 65,
+      "ok": true,
+      "next": "ac5-assert-no-duplicate-close-modal",
+      "output": {
+        "exitCode": 0,
+        "stdout": "cancel deduped\n",
+        "stderr": ""
+      }
+    },
+    {
+      "nodeId": "ac5-assert-no-duplicate-close-modal",
+      "action": "command",
+      "intent": "AC5: the close modal does not duplicate the controller close event",
+      "startedAt": "2026-07-28T00:57:43.074Z",
+      "endedAt": "2026-07-28T00:57:43.130Z",
+      "durationMs": 56,
+      "ok": true,
+      "next": "ac6-search-funnel-behaviour",
+      "output": {
+        "exitCode": 0,
+        "stdout": "close modal deduped\n",
+        "stderr": ""
+      }
+    },
+    {
+      "nodeId": "ac6-search-funnel-behaviour",
+      "action": "command",
+      "intent": "AC6 (TAT-3144/TAT-3202): market search funnel — debounced query with settled counts, results/no-results screen views, result_rank on tap, abandonment on clear",
+      "startedAt": "2026-07-28T00:57:43.136Z",
+      "endedAt": "2026-07-28T00:57:51.129Z",
+      "durationMs": 7993,
+      "ok": true,
+      "next": "ac7-abandonment-behaviour",
+      "output": {
+        "exitCode": 0,
+        "stdout": "\n✅ No console baseline violations.\n\n",
+        "stderr": "PASS ui/pages/perps/market-list/index.test.tsx (5.579 s)\n\nTest Suites: 1 passed, 1 total\nTests:       27 passed, 27 total\nSnapshots:   0 total\nTime:        6.089 s, estimated 34 s\nRan all test suites matching /ui\\/pages\\/perps\\/market-list\\/index.test.tsx/i.\n"
+      }
+    },
+    {
+      "nodeId": "ac7-abandonment-behaviour",
+      "action": "command",
+      "intent": "AC7 (TAT-3136): abandon_order fires on leaving an uncommitted trade surface, once, with time_on_screen_ms, and never after a commit",
+      "startedAt": "2026-07-28T00:57:51.135Z",
+      "endedAt": "2026-07-28T00:57:53.985Z",
+      "durationMs": 2850,
+      "ok": true,
+      "next": "ac8-geo-block-screen-view",
+      "output": {
+        "exitCode": 0,
+        "stdout": "\n✅ No console baseline violations.\n\n",
+        "stderr": "PASS ui/hooks/perps/usePerpsAbandonOrderTracking.test.ts\n\nTest Suites: 1 passed, 1 total\nTests:       5 passed, 5 total\nSnapshots:   0 total\nTime:        1.765 s, estimated 7 s\nRan all test suites matching /ui\\/hooks\\/perps\\/usePerpsAbandonOrderTracking.test.ts/i.\n"
+      }
+    },
+    {
+      "nodeId": "ac8-geo-block-screen-view",
+      "action": "command",
+      "intent": "AC8 (TAT-3175 bullet 4): the restriction notice reports screen_type=geo_block_notif once per open and re-arms for the next open",
+      "startedAt": "2026-07-28T00:57:53.991Z",
+      "endedAt": "2026-07-28T00:58:00.652Z",
+      "durationMs": 6661,
+      "ok": true,
+      "next": "live-cdp",
+      "output": {
+        "exitCode": 0,
+        "stdout": "\n✅ No console baseline violations.\n\n",
+        "stderr": "PASS ui/components/app/perps/perps-geo-block-modal/perps-geo-block-modal.test.tsx\n\nTest Suites: 1 passed, 1 total\nTests:       5 passed, 5 total\nSnapshots:   0 total\nTime:        5.202 s\nRan all test suites matching /ui\\/components\\/app\\/perps\\/perps-geo-block-modal\\/perps-geo-block-modal.test.tsx/i.\n"
+      }
+    },
+    {
+      "nodeId": "live-cdp",
+      "action": "cdp.target",
+      "intent": "Confirm the Extension CDP runtime is reachable before live proof",
+      "startedAt": "2026-07-28T00:58:00.657Z",
+      "endedAt": "2026-07-28T00:58:00.664Z",
+      "durationMs": 7,
+      "ok": true,
+      "next": "live-ensure-unlocked",
+      "output": {
+        "platform": "extension",
+        "transport": "chrome-extension-cdp",
+        "cdpPort": "6672",
+        "metroPort": "9012",
+        "probeUrl": "http://127.0.0.1:6672/json/version",
+        "timeoutMs": 15000,
+        "reachable": true,
+        "statusCode": 200,
+        "json": {
+          "Browser": "Chrome/147.0.7727.15",
+          "Protocol-Version": "1.3",
+          "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+          "V8-Version": "14.7.173.6",
+          "WebKit-Version": "537.36 (@6b5a1b80ccc1e8a4967901d8e58fc2e162cdf050)",
+          "webSocketDebuggerUrl": "ws://127.0.0.1:6672/devtools/browser/3bedff70-af85-4908-b5b5-5b5a3f6843cc"
+        }
+      }
+    },
+    {
+      "nodeId": "live-ensure-unlocked",
+      "action": "metamask.wallet.ensure_unlocked",
+      "intent": "Unlock the fixture wallet so Perps routes render",
+      "startedAt": "2026-07-28T00:58:00.672Z",
+      "endedAt": "2026-07-28T00:58:00.800Z",
+      "durationMs": 128,
+      "ok": true,
+      "next": "live-open-perps",
+      "output": {
+        "action": "metamask.wallet.ensure_unlocked",
+        "unlocked": true,
+        "alreadyUnlocked": true,
+        "proofPath": "extension-unlocked-state",
+        "cdpPort": 6672,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/",
+        "runtimeLaunch": null,
+        "liveAdapter": "/Users/deeeed/dev/metamask/metamask-harness/library/actions/extension/wallet/ensure_unlocked.mjs"
+      }
+    },
+    {
+      "nodeId": "live-open-perps",
+      "action": "ui.navigate",
+      "intent": "Open the Perps surface the analytics screen views describe",
+      "startedAt": "2026-07-28T00:58:00.813Z",
+      "endedAt": "2026-07-28T00:58:04.590Z",
+      "durationMs": 3777,
+      "ok": true,
+      "next": "live-open-unknown-market",
+      "output": {
+        "action": "ui.navigate",
+        "page": "perps",
+        "navigation": {
+          "activation": "trusted-pointer",
+          "interaction": {
+            "clicked": true,
+            "selector": "[data-testid=\"account-overview__perps-tab\"]",
+            "tagName": "BUTTON"
+          }
+        },
+        "method": "visible-ui",
+        "href": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/?tab=perps",
+        "selector": "[data-testid=\"account-overview__perps-tab\"]",
+        "steps": [],
+        "proofPath": "ui-navigation",
+        "cdpPort": 6672,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/",
+        "runtimeLaunch": null,
+        "liveAdapter": "/Users/deeeed/dev/metamask/metamask-harness/library/actions/extension/ui/navigate.mjs"
+      }
+    },
+    {
+      "nodeId": "live-open-unknown-market",
+      "action": "ui.navigate",
+      "intent": "Show a market that does not exist (route verified live this session), so the user lands on the not-found state whose screen-view gating this PR fixed",
+      "startedAt": "2026-07-28T00:58:04.599Z",
+      "endedAt": "2026-07-28T00:58:04.784Z",
+      "durationMs": 185,
+      "ok": true,
+      "next": "live-assert-error-screen",
+      "output": {
+        "action": "ui.navigate",
+        "hash": "#/perps/market/DOESNOTEXIST",
+        "navigation": {
+          "before": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/?tab=perps",
+          "href": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/DOESNOTEXIST",
+          "sameDocument": true
+        },
+        "proofPath": "ui-navigation",
+        "cdpPort": 6672,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/?tab=perps",
+        "runtimeLaunch": null,
+        "liveAdapter": "/Users/deeeed/dev/metamask/metamask-harness/library/actions/extension/ui/navigate.mjs"
+      }
+    },
+    {
+      "nodeId": "live-assert-error-screen",
+      "action": "ui.wait_for",
+      "intent": "Prove exactly one error state renders for an unknown symbol, so the single error screen view (and the suppressed asset_details view) describes a real screen",
+      "startedAt": "2026-07-28T00:58:04.793Z",
+      "endedAt": "2026-07-28T00:58:05.264Z",
+      "durationMs": 471,
+      "ok": true,
+      "next": "live-capture-error-screen",
+      "output": {
+        "matched": true,
+        "cdpPort": 6672,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/DOESNOTEXIST",
+        "runtimeLaunch": null
+      }
+    },
+    {
+      "nodeId": "live-capture-error-screen",
+      "action": "ui.screenshot",
+      "intent": "Register the rendered error screen as visual evidence for the gating fix",
+      "artifacts": [
+        {
+          "path": "live-capture-error-screen.png",
+          "type": "screenshot",
+          "nodeId": "live-capture-error-screen",
+          "label": "market-not-found-error-screen",
+          "category": "evidence",
+          "mimeType": "image/png",
+          "metadata": {
+            "provider": "capture-helper",
+            "mode": "snapshot",
+            "pid": 66842,
+            "captureHelper": {
+              "bytes": 316533,
+              "output": "/Users/deeeed/dev/metamask/metamask-extension-2/temp/tasks/fix/44324-0727-174943/artifacts/recipe-run/live-capture-error-screen.png",
+              "selected": {
+                "app": "Google Chrome for Testing",
+                "height": 800,
+                "id": 25905,
+                "layer": 0,
+                "onScreen": false,
+                "pid": 66842,
+                "title": "mmedev-2 — MetaMask",
+                "width": 500,
+                "x": 22,
+                "y": 61
+              },
+              "selector": "pid",
+              "type": "snapshot"
+            }
+          }
+        }
+      ],
+      "startedAt": "2026-07-28T00:58:05.271Z",
+      "endedAt": "2026-07-28T00:58:05.817Z",
+      "durationMs": 546,
+      "ok": true,
+      "next": "teardown-end",
+      "output": {
+        "captured": true,
+        "path": "live-capture-error-screen.png",
+        "artifact": {
+          "path": "live-capture-error-screen.png",
+          "type": "screenshot",
+          "nodeId": "live-capture-error-screen",
+          "label": "market-not-found-error-screen",
+          "category": "evidence",
+          "mimeType": "image/png",
+          "metadata": {
+            "provider": "capture-helper",
+            "mode": "snapshot",
+            "pid": 66842,
+            "captureHelper": {
+              "bytes": 316533,
+              "output": "/Users/deeeed/dev/metamask/metamask-extension-2/temp/tasks/fix/44324-0727-174943/artifacts/recipe-run/live-capture-error-screen.png",
+              "selected": {
+                "app": "Google Chrome for Testing",
+                "height": 800,
+                "id": 25905,
+                "layer": 0,
+                "onScreen": false,
+                "pid": 66842,
+                "title": "mmedev-2 — MetaMask",
+                "width": 500,
+                "x": 22,
+                "y": 61
+              },
+              "selector": "pid",
+              "type": "snapshot"
+            }
+          }
+        }
+      }
+    },
+    {
+      "nodeId": "teardown-end",
+      "action": "end",
+      "startedAt": "2026-07-28T00:58:05.823Z",
+      "endedAt": "2026-07-28T00:58:05.823Z",
+      "durationMs": 0,
+      "ok": true,
+      "status": "pass"
+    }
+  ]
+}

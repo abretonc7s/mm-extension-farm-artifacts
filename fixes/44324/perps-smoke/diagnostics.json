@@ -1,0 +1,84 @@
+{
+  "schemaVersion": 1,
+  "scope": "recipe-run-application",
+  "status": "review",
+  "nonBlocking": true,
+  "note": "Observed 10 distinct application warning/error event(s) during the recipe run; relation to the task is not determined.",
+  "source": {
+    "label": "extension",
+    "path": "/Users/deeeed/dev/metamask/metamask-extension-2/temp/recipe/runtime/extension-console.log",
+    "startOffset": 822376,
+    "endOffset": 845914,
+    "bytesRead": 23538,
+    "truncated": false,
+    "inAppBuffer": "n/a"
+  },
+  "counts": {
+    "total": 10,
+    "warning": 8,
+    "error": 2,
+    "exception": 0
+  },
+  "findings": [
+    {
+      "level": "warning",
+      "fingerprint": "8cd2b844a0a9",
+      "preview": "21:27:49 [extension:sw] WARNING  Unable to create some accounts (batch) with provider \"Solana\" TimeoutError: Timed out after: 3000ms",
+      "count": 1
+    },
+    {
+      "level": "warning",
+      "fingerprint": "9f1bccdfaafe",
+      "preview": "21:27:49 [extension:sw] WARNING  Unable to create some accounts (batch) with provider \"Bitcoin\" TimeoutError: Timed out after: 3000ms",
+      "count": 1
+    },
+    {
+      "level": "warning",
+      "fingerprint": "13a4b2f40467",
+      "preview": "21:27:49 [extension:sw] WARNING  Unable to align some accounts. Providers threw the following errors:",
+      "count": 2
+    },
+    {
+      "level": "warning",
+      "fingerprint": "51364541879a",
+      "preview": "21:27:52 [extension:sw] WARNING  Unable to create some accounts with provider \"Tron\" TimeoutError: Timed out after: 3000ms",
+      "count": 1
+    },
+    {
+      "level": "warning",
+      "fingerprint": "0be486d99c4e",
+      "preview": "21:27:52 [extension:sw] WARNING  Unable to create some accounts with provider \"Solana\" TimeoutError: Timed out after: 3000ms",
+      "count": 1
+    },
+    {
+      "level": "warning",
+      "fingerprint": "3de075225d55",
+      "preview": "21:27:52 [extension:sw] WARNING  Unable to create some accounts with provider \"Bitcoin\" TimeoutError: Timed out after: 3000ms",
+      "count": 1
+    },
+    {
+      "level": "error",
+      "fingerprint": "9be4cf335af4",
+      "preview": "21:27:54 [extension:page:home.html] ERROR  Unknown action Object",
+      "count": 2
+    },
+    {
+      "level": "error",
+      "fingerprint": "e0ddde3d7963",
+      "preview": "21:27:56 [extension:page:home.html] ERROR  Failed to load resource: the server responded with a status of 404 ()",
+      "count": 8
+    },
+    {
+      "level": "warning",
+      "fingerprint": "1b466442d1fa",
+      "preview": "21:27:57 [extension:sw] WARNING  Polling failed for chains 0x1 with interval 300000: Error: Invalid chain ID \"0xa4b1\"",
+      "count": 1
+    },
+    {
+      "level": "warning",
+      "fingerprint": "5574e641ae08",
+      "preview": "21:28:01 [extension:sw] WARNING  Error updating balances after token change: Error: Invalid chain ID \"0xa4b1\"",
+      "count": 1
+    }
+  ]
+}

@@ -1,0 +1,78 @@
+{
+  "schemaVersion": 1,
+  "scope": "recipe-run-application",
+  "status": "review",
+  "nonBlocking": true,
+  "note": "Observed 9 distinct application warning/error event(s) during the recipe run; relation to the task is not determined.",
+  "source": {
+    "label": "extension",
+    "path": "/Users/deeeed/dev/metamask/metamask-extension-2/temp/recipe/runtime/extension-console.log",
+    "startOffset": 762167,
+    "endOffset": 776375,
+    "bytesRead": 14208,
+    "truncated": false,
+    "inAppBuffer": "n/a"
+  },
+  "counts": {
+    "total": 9,
+    "warning": 9,
+    "error": 0,
+    "exception": 0
+  },
+  "findings": [
+    {
+      "level": "warning",
+      "fingerprint": "abcdb14f5f4d",
+      "preview": "21:23:42 [extension:sw] WARNING  Snap \"npm:@metamask/solana-wallet-snap\" has de-synced accounts, Snap has more accounts than MetaMask! (0 < 1)",
+      "count": 1
+    },
+    {
+      "level": "warning",
+      "fingerprint": "8cd2b844a0a9",
+      "preview": "21:23:45 [extension:sw] WARNING  Unable to create some accounts (batch) with provider \"Solana\" TimeoutError: Timed out after: 3000ms",
+      "count": 1
+    },
+    {
+      "level": "warning",
+      "fingerprint": "9f1bccdfaafe",
+      "preview": "21:23:45 [extension:sw] WARNING  Unable to create some accounts (batch) with provider \"Bitcoin\" TimeoutError: Timed out after: 3000ms",
+      "count": 1
+    },
+    {
+      "level": "warning",
+      "fingerprint": "72056a2bd2bf",
+      "preview": "21:23:45 [extension:sw] WARNING  Unable to create some accounts (batch) with provider \"Tron\" TimeoutError: Timed out after: 3000ms",
+      "count": 1
+    },
+    {
+      "level": "warning",
+      "fingerprint": "13a4b2f40467",
+      "preview": "21:23:45 [extension:sw] WARNING  Unable to align some accounts. Providers threw the following errors:",
+      "count": 2
+    },
+    {
+      "level": "warning",
+      "fingerprint": "0be486d99c4e",
+      "preview": "21:23:48 [extension:sw] WARNING  Unable to create some accounts with provider \"Solana\" TimeoutError: Timed out after: 3000ms",
+      "count": 1
+    },
+    {
+      "level": "warning",
+      "fingerprint": "3de075225d55",
+      "preview": "21:23:48 [extension:sw] WARNING  Unable to create some accounts with provider \"Bitcoin\" TimeoutError: Timed out after: 3000ms",
+      "count": 1
+    },
+    {
+      "level": "warning",
+      "fingerprint": "51364541879a",
+      "preview": "21:23:48 [extension:sw] WARNING  Unable to create some accounts with provider \"Tron\" TimeoutError: Timed out after: 3000ms",
+      "count": 1
+    },
+    {
+      "level": "warning",
+      "fingerprint": "276683aff6cd",
+      "preview": "21:23:50 [extension:sw] WARNING  Polling failed for chains 0x1 with interval 30000: Error: Invalid chain ID \"0xa4b1\"",
+      "count": 1
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+PASS gate-repo-root :: package.json contains "@metamask/perps-controller"
+PASS ac1-assert-package-version :: perps-controller 9.2.1
+PASS ac2-assert-controller-reexports :: shared/constants/perps-events.ts contains "from '@metamask/perps-controller'"
+PASS ac2-assert-no-local-timestamp-mirror :: re-export ok
+PASS ac3-assert-attribution-api-wiring :: app/scripts/messenger-client-init/perps-controller-init.ts contains "perpsSetAttributionContext"
+PASS ac3-assert-attribution-provider :: ui/providers/perps/PerpsAttributionContext.tsx contains "perpsSetAttributionContext"
+PASS ac3-assert-layout-provider :: ui/pages/perps/perps-layout.tsx contains "PerpsAttributionProvider"
+PASS ac3-assert-metrics-merge-utm :: utm merge wired
+PASS ac4-assert-tracking-data-builder :: ui/hooks/perps/usePerpsAttribution.ts contains "entryPoint"
+PASS ac4-assert-cancel-tracking-data :: cancel trackingData ok
+PASS ac4-assert-place-hl-fee-rate :: hlFeeRate parity ok 3
+PASS ac5-assert-no-duplicate-order-entry-close :: order-entry deduped
+PASS ac5-assert-no-duplicate-cancel :: cancel deduped
+PASS ac5-assert-no-duplicate-close-modal :: close modal deduped
+VERDICT PASS (0 failing)

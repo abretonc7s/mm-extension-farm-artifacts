@@ -1,0 +1,48 @@
+{
+  "$schema": "https://farmslot.io/schemas/recipe-v1.schema.json",
+  "title": "MetaMask Extension Perps smoke",
+  "description": "Non-mutating Perps domain smoke for MetaMask Extension: verifies CDP, unlocks if needed, opens the Perps page, and reads live Perps positions and orders.",
+  "workflow": {
+    "entry": "status",
+    "nodes": {
+      "status": {
+        "action": "app.status",
+        "next": "cdp",
+        "intent": "Resolve the Extension checkout and adapter status before Perps proof"
+      },
+      "cdp": {
+        "action": "cdp.target",
+        "required": true,
+        "timeout_ms": 15000,
+        "next": "ensure-unlocked",
+        "intent": "Confirm the Extension CDP runtime is reachable"
+      },
+      "ensure-unlocked": {
+        "action": "metamask.wallet.ensure_unlocked",
+        "timeout_ms": 45000,
+        "next": "open-perps",
+        "intent": "Ensure the wallet is unlocked before opening Perps"
+      },
+      "open-perps": {
+        "action": "ui.navigate",
+        "page": "perps",
+        "next": "read-positions",
+        "intent": "Show the Perps home surface"
+      },
+      "read-positions": {
+        "action": "metamask.perps.read_positions",
+        "next": "read-orders",
+        "intent": "Read live Perps positions without mutating account state"
+      },
+      "read-orders": {
+        "action": "metamask.perps.read_orders",
+        "next": "done",
+        "intent": "Read live Perps open orders without mutating account state"
+      },
+      "done": {
+        "action": "end",
+        "status": "pass"
+      }
+    }
+  }
+}
