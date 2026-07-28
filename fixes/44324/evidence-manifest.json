@@ -1,16 +1,17 @@
 {
   "version": 1,
   "preferred_mode": "screenshots",
-  "summary": "Analytics contract migration plus three ticket-gap additions (TAT-3136 abandonment, TAT-3144/3202 search funnel, TAT-3175 geo_block_notif). Most claims are non-visual and proved by behaviour nodes running the owning Jest suites plus contract asserts \u2014 see recipe-coverage.md and recipe-run/report.md. The one visual claim is the market-not-found error screen whose duplicate screen view this PR removed, captured live over CDP in recipe-run/. Recipe run: pass, 19/19 nodes, started 2026-07-28T00:56:43Z.",
+  "summary": "Update-branch run: merged 330 commits of main into PR #44324 (merge commit 3d79f566f9) and re-proved the PR's claims against the post-merge tree. 12 files conflicted; 7 were perps source files resolved manually. The full validation recipe was re-executed after a fresh webpack build: pass, 19/19 nodes, started 2026-07-28T02:28:11Z. Most claims are non-visual and proved by behaviour nodes running the owning Jest suites plus contract asserts -- see recipe-coverage.md and recipe-run/report.md. The one visual claim is the market-not-found error screen whose duplicate screen view this PR removed, captured live over CDP against the post-merge build. Supporting gates: yarn lint (includes full tsc) pass, verify-locales pass, circular-deps:check pass, 180/180 tests across the three conflicted component suites, and GitHub reports the PR MERGEABLE.",
   "standalone": [
     {
-      "label": "market-not-found-error-screen",
+      "label": "market-not-found-error-screen-post-merge",
       "file": "recipe-run/live-capture-error-screen.png",
       "covers": [
-        "An unknown perps symbol (#/perps/market/DOESNOTEXIST) renders exactly one error screen",
-        "The single error screen view, and the suppressed asset_details/trading view, describe a real rendered state"
+        "An unknown perps symbol (#/perps/market/DOESNOTEXIST) still renders exactly one error screen after merging main",
+        "The single error screen view, and the suppressed asset_details/trading view, describe a real rendered state on the post-merge build",
+        "The merge did not regress the screen-view gating fix this PR introduced"
       ],
-      "note": "Captured by the live-capture-error-screen node after live-assert-error-screen matched \"Market not found\"."
+      "note": "Captured by the live-capture-error-screen node after live-assert-error-screen matched \"Market not found\", running against dist rebuilt at merge commit 3d79f566f9."
     }
   ],
   "videos": {

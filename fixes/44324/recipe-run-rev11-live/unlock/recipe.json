@@ -1,0 +1,19 @@
+{
+  "$schema": "https://farmslot.io/schemas/recipe-v1.schema.json",
+  "title": "mm-harness call metamask.wallet.ensure_unlocked",
+  "description": "Ad-hoc single-action execution of metamask.wallet.ensure_unlocked via the real engine path (mm-harness call).",
+  "workflow": {
+    "entry": "call",
+    "nodes": {
+      "call": {
+        "action": "metamask.wallet.ensure_unlocked",
+        "next": "done",
+        "intent": "Complete the requested metamask.wallet.ensure_unlocked operation"
+      },
+      "done": {
+        "action": "end",
+        "status": "pass"
+      }
+    }
+  }
+}

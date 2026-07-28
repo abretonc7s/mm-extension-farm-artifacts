@@ -1,0 +1,143 @@
+{
+  "adapter": "extension",
+  "status": "pass",
+  "liveMode": "live",
+  "runtimeClassification": {
+    "runtimeOwner": "compatible-external-or-harness",
+    "recipeControllable": true,
+    "startedByVerify": false
+  },
+  "cleanupOwnership": {
+    "mayStop": false,
+    "reason": "extension verify inspects the supplied CDP runtime; wrapper/preflight ownership must be recorded by the caller before stopping processes"
+  },
+  "gitStatus": {
+    "branch": "MANUAL-000001-feat-consume-perps-controller-analy",
+    "head": "aba477d058",
+    "dirtyCount": 0,
+    "dirtyPreview": []
+  },
+  "distFreshness": {
+    "status": "fresh",
+    "distGitId": "aba477d0",
+    "head": "aba477d0",
+    "message": "dist id matches HEAD; no uncommitted source."
+  },
+  "runtimePolicy": {
+    "runtimeReusePolicy": "reuse a running harness-compatible CDP target when possible; wrapper auto-start must use a cached/watch-only prepare path unless the human explicitly permits a rebuild"
+  },
+  "fixtureStatus": {
+    "status": "READY",
+    "path": "temp/recipe/runtime/wallet-fixture.json",
+    "type": "file",
+    "sha256": "9e7fe4f0a79e9706ff1b61446bbf50a2087b0f3ae24238a9d5b07ff303bef08f",
+    "modifiedAt": "2026-07-27T15:50:04.582Z",
+    "profileHints": [
+      {
+        "path": "temp/recipe/runtime/extension.id",
+        "type": "extension-id"
+      }
+    ],
+    "hasWalletPassword": true,
+    "mobileAccountShape": true,
+    "message": "Fixture status: READY (temp/recipe/runtime/wallet-fixture.json)."
+  },
+  "cdpHolder": {
+    "port": "6662",
+    "listening": true,
+    "pid": "29666",
+    "command": "/Users/deeeed/Library/Caches/ms-playwright/chromium-1217/chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing --user-data-dir=/Users/deeeed/dev/metamask/metamask-extension-2/temp/recipe/runtime/chrome-profile --remote-debugging-address=127.0.0.1 --remote-debugging-port=6662 --remote-allow-origins=http://127.0.0.1:6662 --no-first-run --disable-first-run-ui --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-renderer-backgrounding --use-mock-keychain --disable-default-apps --disable-popup-blocking --disable-extensions-file-access-check --disable-extensions-content-verification --disable-features=ExtensionContentVerification,DisableLoadExtensionCommandLineSwitch --disable-extensions-except=/Users/deeeed/dev/metamask/metamask-extension-2/temp/recipe/runtime/runtime-dist --load-extension=/Users/deeeed/dev/metamask/metamask-extension-2/temp/recipe/runtime/runtime-dist chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html",
+    "cdpReachable": true,
+    "browser": "Chrome/147.0.7727.15",
+    "targetCount": 11,
+    "extensionTargets": 10
+  },
+  "ensureReady": {
+    "schemaVersion": 1,
+    "adapter": "extension",
+    "target": "/Users/deeeed/dev/metamask/metamask-extension-2",
+    "cdpPort": 6662,
+    "extensionId": "hebhblbkkdabgoldnojllkipeoacjioc",
+    "opened": false,
+    "action": "pruned",
+    "homeTabs": {
+      "before": 2,
+      "closed": 1,
+      "after": 1
+    },
+    "ready": true,
+    "reasonCode": "ready",
+    "health": {
+      "status": "PASS",
+      "findings": []
+    },
+    "slotTitle": {
+      "slotId": "local-extension-2",
+      "stamped": 1,
+      "skipped": 0,
+      "titles": [
+        "local-extension-2 — MetaMask"
+      ]
+    }
+  },
+  "cdpTarget": {
+    "selectedExtensionId": "hebhblbkkdabgoldnojllkipeoacjioc",
+    "markerExtensionId": "hebhblbkkdabgoldnojllkipeoacjioc",
+    "markerMatched": true,
+    "markerRepaired": false,
+    "extensionIds": [
+      "hebhblbkkdabgoldnojllkipeoacjioc",
+      "nkeimhogjdpnpccoofpliimaahmaaome"
+    ],
+    "targetCount": 10,
+    "browser": "Chrome/147.0.7727.15"
+  },
+  "checks": [
+    {
+      "name": "temp/recipe/harness/extension/manifest.json",
+      "status": "pass"
+    },
+    {
+      "name": "temp/recipe/harness/extension/action-manifest.json",
+      "status": "pass"
+    },
+    {
+      "name": "temp/recipe/harness/extension/runner/bin/mm-harness",
+      "status": "pass"
+    },
+    {
+      "name": "temp/recipe/harness/extension/runner/manifests/extension.action-manifest.json",
+      "status": "pass"
+    },
+    {
+      "name": "dist-freshness",
+      "status": "pass"
+    },
+    {
+      "name": "build-health",
+      "status": "pass"
+    },
+    {
+      "name": "fixture/profile status",
+      "status": "pass"
+    },
+    {
+      "name": "home-tab convergence",
+      "status": "pass",
+      "detail": "see logs/extension-ensure-ready.json"
+    },
+    {
+      "name": "live extension readiness",
+      "status": "pass"
+    },
+    {
+      "name": "runner manifest",
+      "status": "pass"
+    },
+    {
+      "name": "runner v1 smoke",
+      "status": "pass"
+    }
+  ],
+  "generatedAt": "2026-07-28T16:33:14.563Z"
+}

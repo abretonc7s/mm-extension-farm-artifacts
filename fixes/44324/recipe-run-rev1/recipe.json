@@ -1,0 +1,21 @@
+{
+  "$schema": "https://farmslot.io/schemas/recipe-v1.schema.json",
+  "title": "mm-harness call ui.screenshot",
+  "description": "Ad-hoc single-action execution of ui.screenshot via the real engine path (mm-harness call).",
+  "workflow": {
+    "entry": "call",
+    "nodes": {
+      "call": {
+        "label": "market-not-found-error-screen-rev1",
+        "category": "evidence",
+        "action": "ui.screenshot",
+        "next": "done",
+        "intent": "Complete the requested ui.screenshot operation"
+      },
+      "done": {
+        "action": "end",
+        "status": "pass"
+      }
+    }
+  }
+}

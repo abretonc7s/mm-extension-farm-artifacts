@@ -1,0 +1,53 @@
+{
+  "metadata": {
+    "runner": {
+      "source": "/Users/deeeed/dev/metamask/metamask-harness",
+      "git_ref": "e0e662ed0de9cd77b8221ecc54d0037b3c9842ca",
+      "name": "@metamask/recipe-runner"
+    }
+  },
+  "entries": [
+    {
+      "nodeId": "call",
+      "action": "ui.navigate",
+      "intent": "Complete the requested ui.navigate operation",
+      "startedAt": "2026-07-28T17:25:54.387Z",
+      "endedAt": "2026-07-28T17:25:54.679Z",
+      "durationMs": 292,
+      "ok": true,
+      "next": "done",
+      "output": {
+        "action": "ui.navigate",
+        "page": "perps",
+        "navigation": {
+          "activation": "trusted-pointer",
+          "interaction": {
+            "clicked": true,
+            "selector": "[data-testid=\"bottom-nav-perps\"]",
+            "tagName": "BUTTON"
+          }
+        },
+        "selector": "[data-testid=\"bottom-nav-perps\"]",
+        "method": "visible-ui",
+        "href": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps-home",
+        "steps": [
+          "[data-testid=\"bottom-nav-perps\"]"
+        ],
+        "proofPath": "ui-navigation",
+        "cdpPort": 6662,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/",
+        "runtimeLaunch": null,
+        "liveAdapter": "/Users/deeeed/dev/metamask/metamask-harness/library/actions/extension/ui/navigate.mjs"
+      }
+    },
+    {
+      "nodeId": "done",
+      "action": "end",
+      "startedAt": "2026-07-28T17:25:54.679Z",
+      "endedAt": "2026-07-28T17:25:54.679Z",
+      "durationMs": 0,
+      "ok": true,
+      "status": "pass"
+    }
+  ]
+}

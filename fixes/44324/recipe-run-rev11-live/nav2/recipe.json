@@ -1,0 +1,20 @@
+{
+  "$schema": "https://farmslot.io/schemas/recipe-v1.schema.json",
+  "title": "mm-harness call ui.navigate",
+  "description": "Ad-hoc single-action execution of ui.navigate via the real engine path (mm-harness call).",
+  "workflow": {
+    "entry": "call",
+    "nodes": {
+      "call": {
+        "hash": "#/perps/market/DOESNOTEXIST",
+        "action": "ui.navigate",
+        "next": "done",
+        "intent": "Complete the requested ui.navigate operation"
+      },
+      "done": {
+        "action": "end",
+        "status": "pass"
+      }
+    }
+  }
+}

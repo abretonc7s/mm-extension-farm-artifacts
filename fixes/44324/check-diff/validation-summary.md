@@ -1,0 +1,106 @@
+# mm-harness check diff
+
+Verdict: fail
+Profile: fast
+Fix: no
+Base: origin/main (github-pr: main)
+Changed files: 88
+
+## Next action
+
+- Remove the newly added eslint-disable directive(s). Fix the underlying violation with existing named styles, project tokens, or another established source pattern; then rerun mm-harness check diff [--fix]. Other checks were skipped until this policy failure is removed.
+
+## Checks
+
+- FAIL policy-suppressions — 8 newly added eslint-disable directive(s) (/Users/deeeed/dev/metamask/metamask-extension-2/temp/tasks/fix/44324-0728-033914/artifacts/check-diff/policy-suppressions.log)
+
+## Changed Files
+
+- .yarn/patches/@metamask-perps-controller-npm-9.2.1-727f87b8bb.patch
+- app/_locales/de/messages.json
+- app/_locales/el/messages.json
+- app/_locales/en/messages.json
+- app/_locales/en_GB/messages.json
+- app/_locales/es_419/messages.json
+- app/_locales/fr/messages.json
+- app/_locales/ga/messages.json
+- app/_locales/hi/messages.json
+- app/_locales/id/messages.json
+- app/_locales/ja/messages.json
+- app/_locales/ko/messages.json
+- app/_locales/pt/messages.json
+- app/_locales/ru/messages.json
+- app/_locales/tl/messages.json
+- app/_locales/tr/messages.json
+- app/_locales/vi/messages.json
+- app/_locales/zh_CN/messages.json
+- app/scripts/controllers/perps/infrastructure.test.ts
+- app/scripts/controllers/perps/infrastructure.ts
+- app/scripts/messenger-client-init/perps-controller-init.test.ts
+- app/scripts/messenger-client-init/perps-controller-init.ts
+- lavamoat/webpack/mv2/beta/policy.json
+- lavamoat/webpack/mv2/experimental/policy.json
+- lavamoat/webpack/mv2/flask/policy.json
+- lavamoat/webpack/mv2/main/policy.json
+- lavamoat/webpack/mv3/beta/policy.json
+- lavamoat/webpack/mv3/experimental/policy.json
+- lavamoat/webpack/mv3/flask/policy.json
+- lavamoat/webpack/mv3/main/policy.json
+- package.json
+- shared/constants/metametrics.ts
+- shared/constants/perps-events.ts
+- shared/lib/deep-links/routes/perps-asset.test.ts
+- shared/lib/deep-links/routes/perps-asset.ts
+- shared/lib/deep-links/routes/perps-attribution.ts
+- shared/lib/deep-links/routes/perps-markets.test.ts
+- shared/lib/deep-links/routes/perps-markets.ts
+- shared/lib/deep-links/routes/perps.test.ts
+- shared/lib/deep-links/routes/perps.ts
+- test/e2e/tests/metrics/state-snapshots/errors-after-init-opt-in-ui-state.json
+- test/e2e/tests/settings/state-logs.json
+- test/jest/console-baseline-unit.json
+- test/mocks/metamask-perps-controller.js
+- ui/__mocks__/perps/perps-controller/index.ts
+- ui/components/app/perps/cancel-order/cancel-order-modal.test.tsx
+- ui/components/app/perps/cancel-order/cancel-order-modal.tsx
+- ui/components/app/perps/close-position/close-position-modal.test.tsx
+- ui/components/app/perps/close-position/close-position-modal.tsx
+- ui/components/app/perps/edit-margin/edit-margin-modal-content.test.tsx
+- ui/components/app/perps/edit-margin/edit-margin-modal-content.tsx
+- ui/components/app/perps/order-entry/components/amount-input/amount-input.tsx
+- ui/components/app/perps/order-entry/order-entry.tsx
+- ui/components/app/perps/order-entry/order-entry.types.ts
+- ui/components/app/perps/perps-geo-block-modal/perps-geo-block-modal.test.tsx
+- ui/components/app/perps/perps-geo-block-modal/perps-geo-block-modal.tsx
+- ui/components/app/perps/perps-market-recent-activity/perps-market-recent-activity.tsx
+- ui/components/app/perps/perps-recent-activity/perps-recent-activity.tsx
+- ui/components/app/perps/perps-tab.tsx
+- ui/components/app/perps/perps-view.test.tsx
+- ui/components/app/perps/perps-view.tsx
+- ui/components/app/perps/reverse-position/reverse-position-modal.test.tsx
+- ui/components/app/perps/reverse-position/reverse-position-modal.tsx
+- ui/components/app/perps/update-tpsl/update-tpsl-modal-content.test.tsx
+- ui/components/app/perps/update-tpsl/update-tpsl-modal-content.tsx
+- ui/components/app/perps/utils.ts
+- ui/components/app/perps/utils/deriveTradeAction.test.ts
+- ui/components/app/perps/utils/deriveTradeAction.ts
+- ui/components/app/perps/utils/index.ts
+- ui/components/app/perps/utils/track-perps-error-screen.test.ts
+- ui/components/app/perps/utils/track-perps-error-screen.ts
+- ui/hooks/perps/index.ts
+- ui/hooks/perps/usePerpsAbandonOrderTracking.test.ts
+- ui/hooks/perps/usePerpsAbandonOrderTracking.ts
+- ui/hooks/perps/usePerpsAttribution.test.ts
+- ui/hooks/perps/usePerpsAttribution.ts
+- ui/hooks/perps/usePerpsEventTracking.test.tsx
+- ui/hooks/perps/usePerpsEventTracking.ts
+- ui/pages/perps/market-list/index.test.tsx
+- ui/pages/perps/market-list/index.tsx
+- ui/pages/perps/perps-layout.tsx
+- ui/pages/perps/perps-market-detail-page.test.tsx
+- ui/pages/perps/perps-market-detail-page.tsx
+- ui/pages/perps/perps-order-entry-page.test.tsx
+- ui/pages/perps/perps-order-entry-page.tsx
+- ui/providers/perps/PerpsAttributionContext.test.tsx
+- ui/providers/perps/PerpsAttributionContext.tsx
+- yarn.lock

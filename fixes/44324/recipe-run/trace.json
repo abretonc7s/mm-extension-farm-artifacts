@@ -11,23 +11,23 @@
       "nodeId": "gate-repo-root",
       "action": "assert_file",
       "intent": "Ensure the recipe runs from the Extension repo root",
-      "startedAt": "2026-07-28T00:56:43.641Z",
-      "endedAt": "2026-07-28T00:56:43.724Z",
-      "durationMs": 83,
+      "startedAt": "2026-07-28T02:28:11.032Z",
+      "endedAt": "2026-07-28T02:28:11.042Z",
+      "durationMs": 10,
       "ok": true,
       "next": "ac1-assert-package-version",
       "output": {
         "path": "package.json",
-        "sizeBytes": 48527
+        "sizeBytes": 46316
       }
     },
     {
       "nodeId": "ac1-assert-package-version",
       "action": "command",
       "intent": "AC1: the installed package is >=9.1 and exports every contract key this PR consumes",
-      "startedAt": "2026-07-28T00:56:43.746Z",
-      "endedAt": "2026-07-28T00:56:44.010Z",
-      "durationMs": 264,
+      "startedAt": "2026-07-28T02:28:11.049Z",
+      "endedAt": "2026-07-28T02:28:11.121Z",
+      "durationMs": 72,
       "ok": true,
       "next": "ac2-assert-controller-reexports",
       "output": {
@@ -40,23 +40,23 @@
       "nodeId": "ac2-assert-controller-reexports",
       "action": "assert_file",
       "intent": "AC2: the Extension constants layer re-exports the controller contract rather than mirroring it",
-      "startedAt": "2026-07-28T00:56:44.040Z",
-      "endedAt": "2026-07-28T00:56:44.111Z",
-      "durationMs": 71,
+      "startedAt": "2026-07-28T02:28:11.128Z",
+      "endedAt": "2026-07-28T02:28:11.135Z",
+      "durationMs": 7,
       "ok": true,
       "next": "ac2-assert-no-local-timestamp-mirror",
       "output": {
         "path": "shared/constants/perps-events.ts",
-        "sizeBytes": 5488
+        "sizeBytes": 5603
       }
     },
     {
       "nodeId": "ac2-assert-no-local-timestamp-mirror",
       "action": "command",
       "intent": "AC2: no local copy of a controller-owned property key survives",
-      "startedAt": "2026-07-28T00:56:44.141Z",
-      "endedAt": "2026-07-28T00:56:44.627Z",
-      "durationMs": 486,
+      "startedAt": "2026-07-28T02:28:11.142Z",
+      "endedAt": "2026-07-28T02:28:11.206Z",
+      "durationMs": 64,
       "ok": true,
       "next": "ac3-attribution-behaviour",
       "output": {
@@ -69,39 +69,39 @@
       "nodeId": "ac3-attribution-behaviour",
       "action": "command",
       "intent": "AC3: attribution wiring proved by behaviour (UTM accumulation, controller setAttributionContext forwarding, mergeAttributionContext on controller-emitted events) instead of identifier greps that go stale on rename",
-      "startedAt": "2026-07-28T00:56:44.641Z",
-      "endedAt": "2026-07-28T00:56:59.734Z",
-      "durationMs": 15093,
+      "startedAt": "2026-07-28T02:28:11.215Z",
+      "endedAt": "2026-07-28T02:28:19.640Z",
+      "durationMs": 8425,
       "ok": true,
       "next": "ac4-order-lifecycle-behaviour",
       "output": {
         "exitCode": 0,
         "stdout": "\n✅ No console baseline violations.\n\n",
-        "stderr": "PASS app/scripts/messenger-client-init/perps-controller-init.test.ts (7.635 s)\nPASS app/scripts/controllers/perps/infrastructure.test.ts\nPASS ui/hooks/perps/usePerpsAttribution.test.ts\nPASS ui/providers/perps/PerpsAttributionContext.test.tsx\n\n ●  Suppressed console messages:\n\nERROR 1     Test errors: Uncaught Errors\n\nTest Suites: 4 passed, 4 total\nTests:       221 passed, 221 total\nSnapshots:   0 total\nTime:        11.549 s, estimated 20 s\nRan all test suites matching /ui\\/providers\\/perps\\/PerpsAttributionContext.test.tsx|ui\\/hooks\\/perps\\/usePerpsAttribution.test.ts|app\\/scripts\\/messenger-client-init\\/perps-controller-init.test.ts|app\\/scripts\\/controllers\\/perps\\/infrastructure.test.ts/i.\n"
+        "stderr": "watchman warning:  Recrawled this watch 1 time, most recently because:\nMustScanSubDirs UserDroppedTo resolve, please review the information on\nhttps://facebook.github.io/watchman/docs/troubleshooting.html#recrawl\nTo clear this warning, run:\n`watchman watch-del '/Users/deeeed/dev/metamask/metamask-extension-2' ; watchman watch-project '/Users/deeeed/dev/metamask/metamask-extension-2'`\n\nPASS app/scripts/messenger-client-init/perps-controller-init.test.ts\nPASS app/scripts/controllers/perps/infrastructure.test.ts\nPASS ui/hooks/perps/usePerpsAttribution.test.ts\nPASS ui/providers/perps/PerpsAttributionContext.test.tsx\n\n ●  Suppressed console messages:\n\nERROR 1     Test errors: Uncaught Errors\n SKIP   18    messages were filtered\n\nTest Suites: 4 passed, 4 total\nTests:       221 passed, 221 total\nSnapshots:   0 total\nTime:        5.345 s, estimated 11 s\nRan all test suites matching /ui\\/providers\\/perps\\/PerpsAttributionContext.test.tsx|ui\\/hooks\\/perps\\/usePerpsAttribution.test.ts|app\\/scripts\\/messenger-client-init\\/perps-controller-init.test.ts|app\\/scripts\\/controllers\\/perps\\/infrastructure.test.ts/i.\n"
       }
     },
     {
       "nodeId": "ac4-order-lifecycle-behaviour",
       "action": "command",
       "intent": "AC4: trackingData/hlFeeRate on place, modify, close, cancel and flip proved by the suites that assert the emitted payloads. Serialized (--runInBand) because these suites use userEvent with a 5.5s per-test timeout and flake under parallel load on a busy machine",
-      "startedAt": "2026-07-28T00:56:59.741Z",
-      "endedAt": "2026-07-28T00:57:42.925Z",
-      "durationMs": 43184,
+      "startedAt": "2026-07-28T02:28:19.646Z",
+      "endedAt": "2026-07-28T02:28:49.200Z",
+      "durationMs": 29554,
       "ok": true,
       "next": "ac5-assert-no-duplicate-order-entry-close",
       "output": {
         "exitCode": 0,
         "stdout": "\n✅ No console baseline violations.\n\n",
-        "stderr": "PASS ui/pages/perps/perps-order-entry-page.test.tsx (24.142 s)\nPASS ui/components/app/perps/reverse-position/reverse-position-modal.test.tsx\nPASS ui/components/app/perps/close-position/close-position-modal.test.tsx (8.443 s)\nPASS ui/components/app/perps/cancel-order/cancel-order-modal.test.tsx\n\n ●  Suppressed console messages:\n\nERROR 20    React: Act warnings (component updates not wrapped)\nWARN 1     React: componentWill* lifecycle deprecations\n\nTest Suites: 4 passed, 4 total\nTests:       185 passed, 185 total\nSnapshots:   0 total\nTime:        39.007 s, estimated 52 s\nRan all test suites matching /ui\\/pages\\/perps\\/perps-order-entry-page.test.tsx|ui\\/components\\/app\\/perps\\/cancel-order\\/cancel-order-modal.test.tsx|ui\\/components\\/app\\/perps\\/close-position\\/close-position-modal.test.tsx|ui\\/components\\/app\\/perps\\/reverse-position\\/reverse-position-modal.test.tsx/i.\n"
+        "stderr": "watchman warning:  Recrawled this watch 1 time, most recently because:\nMustScanSubDirs UserDroppedTo resolve, please review the information on\nhttps://facebook.github.io/watchman/docs/troubleshooting.html#recrawl\nTo clear this warning, run:\n`watchman watch-del '/Users/deeeed/dev/metamask/metamask-extension-2' ; watchman watch-project '/Users/deeeed/dev/metamask/metamask-extension-2'`\n\nPASS ui/components/app/perps/close-position/close-position-modal.test.tsx (12.409 s)\nPASS ui/pages/perps/perps-order-entry-page.test.tsx (6.75 s)\nPASS ui/components/app/perps/reverse-position/reverse-position-modal.test.tsx\nPASS ui/components/app/perps/cancel-order/cancel-order-modal.test.tsx\n\n ●  Suppressed console messages:\n\nERROR 20    React: Act warnings (component updates not wrapped)\nWARN 1     React: componentWill* lifecycle deprecations\n SKIP   229   messages were filtered\n\nTest Suites: 4 passed, 4 total\nTests:       216 passed, 216 total\nSnapshots:   0 total\nTime:        27.552 s, estimated 115 s\nRan all test suites matching /ui\\/pages\\/perps\\/perps-order-entry-page.test.tsx|ui\\/components\\/app\\/perps\\/cancel-order\\/cancel-order-modal.test.tsx|ui\\/components\\/app\\/perps\\/close-position\\/close-position-modal.test.tsx|ui\\/components\\/app\\/perps\\/reverse-position\\/reverse-position-modal.test.tsx/i.\n"
       }
     },
     {
       "nodeId": "ac5-assert-no-duplicate-order-entry-close",
       "action": "command",
       "intent": "AC5: absence claim — the client no longer emits controller-owned transaction events. Asserted against the stable MetaMetricsEventName identifiers, which are contract names rather than local variables",
-      "startedAt": "2026-07-28T00:57:42.931Z",
-      "endedAt": "2026-07-28T00:57:42.994Z",
-      "durationMs": 63,
+      "startedAt": "2026-07-28T02:28:49.204Z",
+      "endedAt": "2026-07-28T02:28:49.314Z",
+      "durationMs": 110,
       "ok": true,
       "next": "ac5-assert-no-duplicate-cancel",
       "output": {
@@ -114,9 +114,9 @@
       "nodeId": "ac5-assert-no-duplicate-cancel",
       "action": "command",
       "intent": "AC5: the cancel modal does not duplicate the controller cancel event",
-      "startedAt": "2026-07-28T00:57:43.000Z",
-      "endedAt": "2026-07-28T00:57:43.065Z",
-      "durationMs": 65,
+      "startedAt": "2026-07-28T02:28:49.323Z",
+      "endedAt": "2026-07-28T02:28:49.391Z",
+      "durationMs": 68,
       "ok": true,
       "next": "ac5-assert-no-duplicate-close-modal",
       "output": {
@@ -129,9 +129,9 @@
       "nodeId": "ac5-assert-no-duplicate-close-modal",
       "action": "command",
       "intent": "AC5: the close modal does not duplicate the controller close event",
-      "startedAt": "2026-07-28T00:57:43.074Z",
-      "endedAt": "2026-07-28T00:57:43.130Z",
-      "durationMs": 56,
+      "startedAt": "2026-07-28T02:28:49.398Z",
+      "endedAt": "2026-07-28T02:28:49.460Z",
+      "durationMs": 62,
       "ok": true,
       "next": "ac6-search-funnel-behaviour",
       "output": {
@@ -144,62 +144,62 @@
       "nodeId": "ac6-search-funnel-behaviour",
       "action": "command",
       "intent": "AC6 (TAT-3144/TAT-3202): market search funnel — debounced query with settled counts, results/no-results screen views, result_rank on tap, abandonment on clear",
-      "startedAt": "2026-07-28T00:57:43.136Z",
-      "endedAt": "2026-07-28T00:57:51.129Z",
-      "durationMs": 7993,
+      "startedAt": "2026-07-28T02:28:49.466Z",
+      "endedAt": "2026-07-28T02:28:59.590Z",
+      "durationMs": 10124,
       "ok": true,
       "next": "ac7-abandonment-behaviour",
       "output": {
         "exitCode": 0,
         "stdout": "\n✅ No console baseline violations.\n\n",
-        "stderr": "PASS ui/pages/perps/market-list/index.test.tsx (5.579 s)\n\nTest Suites: 1 passed, 1 total\nTests:       27 passed, 27 total\nSnapshots:   0 total\nTime:        6.089 s, estimated 34 s\nRan all test suites matching /ui\\/pages\\/perps\\/market-list\\/index.test.tsx/i.\n"
+        "stderr": "watchman warning:  Recrawled this watch 1 time, most recently because:\nMustScanSubDirs UserDroppedTo resolve, please review the information on\nhttps://facebook.github.io/watchman/docs/troubleshooting.html#recrawl\nTo clear this warning, run:\n`watchman watch-del '/Users/deeeed/dev/metamask/metamask-extension-2' ; watchman watch-project '/Users/deeeed/dev/metamask/metamask-extension-2'`\n\nPASS ui/pages/perps/market-list/index.test.tsx (6.716 s)\n\n ●  Suppressed console messages:\n\n SKIP   29    messages were filtered\n\nTest Suites: 1 passed, 1 total\nTests:       27 passed, 27 total\nSnapshots:   0 total\nTime:        7.962 s\nRan all test suites matching /ui\\/pages\\/perps\\/market-list\\/index.test.tsx/i.\n"
       }
     },
     {
       "nodeId": "ac7-abandonment-behaviour",
       "action": "command",
       "intent": "AC7 (TAT-3136): abandon_order fires on leaving an uncommitted trade surface, once, with time_on_screen_ms, and never after a commit",
-      "startedAt": "2026-07-28T00:57:51.135Z",
-      "endedAt": "2026-07-28T00:57:53.985Z",
-      "durationMs": 2850,
+      "startedAt": "2026-07-28T02:28:59.596Z",
+      "endedAt": "2026-07-28T02:29:03.018Z",
+      "durationMs": 3422,
       "ok": true,
       "next": "ac8-geo-block-screen-view",
       "output": {
         "exitCode": 0,
         "stdout": "\n✅ No console baseline violations.\n\n",
-        "stderr": "PASS ui/hooks/perps/usePerpsAbandonOrderTracking.test.ts\n\nTest Suites: 1 passed, 1 total\nTests:       5 passed, 5 total\nSnapshots:   0 total\nTime:        1.765 s, estimated 7 s\nRan all test suites matching /ui\\/hooks\\/perps\\/usePerpsAbandonOrderTracking.test.ts/i.\n"
+        "stderr": "watchman warning:  Recrawled this watch 1 time, most recently because:\nMustScanSubDirs UserDroppedTo resolve, please review the information on\nhttps://facebook.github.io/watchman/docs/troubleshooting.html#recrawl\nTo clear this warning, run:\n`watchman watch-del '/Users/deeeed/dev/metamask/metamask-extension-2' ; watchman watch-project '/Users/deeeed/dev/metamask/metamask-extension-2'`\n\nPASS ui/hooks/perps/usePerpsAbandonOrderTracking.test.ts\n\n ●  Suppressed console messages:\n\n SKIP   8     messages were filtered\n\nTest Suites: 1 passed, 1 total\nTests:       5 passed, 5 total\nSnapshots:   0 total\nTime:        2.044 s\nRan all test suites matching /ui\\/hooks\\/perps\\/usePerpsAbandonOrderTracking.test.ts/i.\n"
       }
     },
     {
       "nodeId": "ac8-geo-block-screen-view",
       "action": "command",
       "intent": "AC8 (TAT-3175 bullet 4): the restriction notice reports screen_type=geo_block_notif once per open and re-arms for the next open",
-      "startedAt": "2026-07-28T00:57:53.991Z",
-      "endedAt": "2026-07-28T00:58:00.652Z",
-      "durationMs": 6661,
+      "startedAt": "2026-07-28T02:29:03.026Z",
+      "endedAt": "2026-07-28T02:29:10.324Z",
+      "durationMs": 7298,
       "ok": true,
       "next": "live-cdp",
       "output": {
         "exitCode": 0,
         "stdout": "\n✅ No console baseline violations.\n\n",
-        "stderr": "PASS ui/components/app/perps/perps-geo-block-modal/perps-geo-block-modal.test.tsx\n\nTest Suites: 1 passed, 1 total\nTests:       5 passed, 5 total\nSnapshots:   0 total\nTime:        5.202 s\nRan all test suites matching /ui\\/components\\/app\\/perps\\/perps-geo-block-modal\\/perps-geo-block-modal.test.tsx/i.\n"
+        "stderr": "watchman warning:  Recrawled this watch 1 time, most recently because:\nMustScanSubDirs UserDroppedTo resolve, please review the information on\nhttps://facebook.github.io/watchman/docs/troubleshooting.html#recrawl\nTo clear this warning, run:\n`watchman watch-del '/Users/deeeed/dev/metamask/metamask-extension-2' ; watchman watch-project '/Users/deeeed/dev/metamask/metamask-extension-2'`\n\nPASS ui/components/app/perps/perps-geo-block-modal/perps-geo-block-modal.test.tsx (5.282 s)\n\n ●  Suppressed console messages:\n\n SKIP   11    messages were filtered\n\nTest Suites: 1 passed, 1 total\nTests:       5 passed, 5 total\nSnapshots:   0 total\nTime:        5.905 s\nRan all test suites matching /ui\\/components\\/app\\/perps\\/perps-geo-block-modal\\/perps-geo-block-modal.test.tsx/i.\n"
       }
     },
     {
       "nodeId": "live-cdp",
       "action": "cdp.target",
       "intent": "Confirm the Extension CDP runtime is reachable before live proof",
-      "startedAt": "2026-07-28T00:58:00.657Z",
-      "endedAt": "2026-07-28T00:58:00.664Z",
-      "durationMs": 7,
+      "startedAt": "2026-07-28T02:29:10.340Z",
+      "endedAt": "2026-07-28T02:29:10.363Z",
+      "durationMs": 23,
       "ok": true,
       "next": "live-ensure-unlocked",
       "output": {
         "platform": "extension",
         "transport": "chrome-extension-cdp",
-        "cdpPort": "6672",
+        "cdpPort": "6662",
         "metroPort": "9012",
-        "probeUrl": "http://127.0.0.1:6672/json/version",
+        "probeUrl": "http://127.0.0.1:6662/json/version",
         "timeoutMs": 15000,
         "reachable": true,
         "statusCode": 200,
@@ -209,7 +209,7 @@
           "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
           "V8-Version": "14.7.173.6",
           "WebKit-Version": "537.36 (@6b5a1b80ccc1e8a4967901d8e58fc2e162cdf050)",
-          "webSocketDebuggerUrl": "ws://127.0.0.1:6672/devtools/browser/3bedff70-af85-4908-b5b5-5b5a3f6843cc"
+          "webSocketDebuggerUrl": "ws://127.0.0.1:6662/devtools/browser/dcd4382b-441a-4eae-9cf9-c7a46442da34"
         }
       }
     },
@@ -217,9 +217,9 @@
       "nodeId": "live-ensure-unlocked",
       "action": "metamask.wallet.ensure_unlocked",
       "intent": "Unlock the fixture wallet so Perps routes render",
-      "startedAt": "2026-07-28T00:58:00.672Z",
-      "endedAt": "2026-07-28T00:58:00.800Z",
-      "durationMs": 128,
+      "startedAt": "2026-07-28T02:29:10.400Z",
+      "endedAt": "2026-07-28T02:29:10.536Z",
+      "durationMs": 136,
       "ok": true,
       "next": "live-open-perps",
       "output": {
@@ -227,7 +227,7 @@
         "unlocked": true,
         "alreadyUnlocked": true,
         "proofPath": "extension-unlocked-state",
-        "cdpPort": 6672,
+        "cdpPort": 6662,
         "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/",
         "runtimeLaunch": null,
         "liveAdapter": "/Users/deeeed/dev/metamask/metamask-harness/library/actions/extension/wallet/ensure_unlocked.mjs"
@@ -237,9 +237,9 @@
       "nodeId": "live-open-perps",
       "action": "ui.navigate",
       "intent": "Open the Perps surface the analytics screen views describe",
-      "startedAt": "2026-07-28T00:58:00.813Z",
-      "endedAt": "2026-07-28T00:58:04.590Z",
-      "durationMs": 3777,
+      "startedAt": "2026-07-28T02:29:10.591Z",
+      "endedAt": "2026-07-28T02:29:10.944Z",
+      "durationMs": 353,
       "ok": true,
       "next": "live-open-unknown-market",
       "output": {
@@ -249,16 +249,18 @@
           "activation": "trusted-pointer",
           "interaction": {
             "clicked": true,
-            "selector": "[data-testid=\"account-overview__perps-tab\"]",
+            "selector": "[data-testid=\"bottom-nav-perps\"]",
             "tagName": "BUTTON"
           }
         },
+        "selector": "[data-testid=\"bottom-nav-perps\"]",
         "method": "visible-ui",
-        "href": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/?tab=perps",
-        "selector": "[data-testid=\"account-overview__perps-tab\"]",
-        "steps": [],
+        "href": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps-home",
+        "steps": [
+          "[data-testid=\"bottom-nav-perps\"]"
+        ],
         "proofPath": "ui-navigation",
-        "cdpPort": 6672,
+        "cdpPort": 6662,
         "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/",
         "runtimeLaunch": null,
         "liveAdapter": "/Users/deeeed/dev/metamask/metamask-harness/library/actions/extension/ui/navigate.mjs"
@@ -268,22 +270,22 @@
       "nodeId": "live-open-unknown-market",
       "action": "ui.navigate",
       "intent": "Show a market that does not exist (route verified live this session), so the user lands on the not-found state whose screen-view gating this PR fixed",
-      "startedAt": "2026-07-28T00:58:04.599Z",
-      "endedAt": "2026-07-28T00:58:04.784Z",
-      "durationMs": 185,
+      "startedAt": "2026-07-28T02:29:10.953Z",
+      "endedAt": "2026-07-28T02:29:11.182Z",
+      "durationMs": 229,
       "ok": true,
       "next": "live-assert-error-screen",
       "output": {
         "action": "ui.navigate",
         "hash": "#/perps/market/DOESNOTEXIST",
         "navigation": {
-          "before": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/?tab=perps",
+          "before": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps-home",
           "href": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/DOESNOTEXIST",
           "sameDocument": true
         },
         "proofPath": "ui-navigation",
-        "cdpPort": 6672,
-        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/?tab=perps",
+        "cdpPort": 6662,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps-home",
         "runtimeLaunch": null,
         "liveAdapter": "/Users/deeeed/dev/metamask/metamask-harness/library/actions/extension/ui/navigate.mjs"
       }
@@ -292,14 +294,14 @@
       "nodeId": "live-assert-error-screen",
       "action": "ui.wait_for",
       "intent": "Prove exactly one error state renders for an unknown symbol, so the single error screen view (and the suppressed asset_details view) describes a real screen",
-      "startedAt": "2026-07-28T00:58:04.793Z",
-      "endedAt": "2026-07-28T00:58:05.264Z",
-      "durationMs": 471,
+      "startedAt": "2026-07-28T02:29:11.193Z",
+      "endedAt": "2026-07-28T02:29:13.721Z",
+      "durationMs": 2528,
       "ok": true,
       "next": "live-capture-error-screen",
       "output": {
         "matched": true,
-        "cdpPort": 6672,
+        "cdpPort": 6662,
         "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/DOESNOTEXIST",
         "runtimeLaunch": null
       }
@@ -319,17 +321,17 @@
           "metadata": {
             "provider": "capture-helper",
             "mode": "snapshot",
-            "pid": 66842,
+            "pid": 17581,
             "captureHelper": {
-              "bytes": 316533,
-              "output": "/Users/deeeed/dev/metamask/metamask-extension-2/temp/tasks/fix/44324-0727-174943/artifacts/recipe-run/live-capture-error-screen.png",
+              "bytes": 315389,
+              "output": "/Users/deeeed/dev/metamask/metamask-extension-2/temp/tasks/fix/44324-0728-033914/artifacts/recipe-run/live-capture-error-screen.png",
               "selected": {
                 "app": "Google Chrome for Testing",
                 "height": 800,
-                "id": 25905,
+                "id": 25917,
                 "layer": 0,
                 "onScreen": false,
-                "pid": 66842,
+                "pid": 17581,
                 "title": "mmedev-2 — MetaMask",
                 "width": 500,
                 "x": 22,
@@ -341,9 +343,9 @@
           }
         }
       ],
-      "startedAt": "2026-07-28T00:58:05.271Z",
-      "endedAt": "2026-07-28T00:58:05.817Z",
-      "durationMs": 546,
+      "startedAt": "2026-07-28T02:29:13.728Z",
+      "endedAt": "2026-07-28T02:29:14.260Z",
+      "durationMs": 532,
       "ok": true,
       "next": "teardown-end",
       "output": {
@@ -359,17 +361,17 @@
           "metadata": {
             "provider": "capture-helper",
             "mode": "snapshot",
-            "pid": 66842,
+            "pid": 17581,
             "captureHelper": {
-              "bytes": 316533,
-              "output": "/Users/deeeed/dev/metamask/metamask-extension-2/temp/tasks/fix/44324-0727-174943/artifacts/recipe-run/live-capture-error-screen.png",
+              "bytes": 315389,
+              "output": "/Users/deeeed/dev/metamask/metamask-extension-2/temp/tasks/fix/44324-0728-033914/artifacts/recipe-run/live-capture-error-screen.png",
               "selected": {
                 "app": "Google Chrome for Testing",
                 "height": 800,
-                "id": 25905,
+                "id": 25917,
                 "layer": 0,
                 "onScreen": false,
-                "pid": 66842,
+                "pid": 17581,
                 "title": "mmedev-2 — MetaMask",
                 "width": 500,
                 "x": 22,
@@ -385,8 +387,8 @@
     {
       "nodeId": "teardown-end",
       "action": "end",
-      "startedAt": "2026-07-28T00:58:05.823Z",
-      "endedAt": "2026-07-28T00:58:05.823Z",
+      "startedAt": "2026-07-28T02:29:14.267Z",
+      "endedAt": "2026-07-28T02:29:14.267Z",
       "durationMs": 0,
       "ok": true,
       "status": "pass"

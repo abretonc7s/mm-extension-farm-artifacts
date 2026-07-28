@@ -4,19 +4,20 @@
   "compact": {
     "verdict": "PASS",
     "reasons": [
-      "All 8 ACs map to ac1-ac8 nodes; recipe-run status=pass 19/19.",
-      "AC3/AC4/AC6/AC7/AC8 upgraded from identifier greps to behaviour proof via the owning Jest suites, after a grep assert was found passing on a stale renamed identifier.",
-      "The one visual claim (market-not-found error screen) is proved live over CDP with a registered screenshot; reverting the gating fix would still pass ac1-ac5 but the analytics claim is anchored to a screen proven to render."
+      "Recipe re-executed unchanged against the post-merge tree (merge commit 3d79f566f9) after a fresh webpack build: pass, 19/19 nodes, startedAt 2026-07-28T02:28:11Z. All 8 ACs map to ac1-ac8 nodes.",
+      "The recipe is well-matched to this update-branch run's actual risk: the merge's three behavioural resolutions are each covered by an existing node (ac5-* for the dropped client-side close tracking, ac2-* for the hand-edited perps-events.ts, ac1 for the patched perps-controller pin surviving yarn.lock regeneration).",
+      "The one visual claim (market-not-found error screen) was re-proved live over CDP against the rebuilt dist, not inherited from the parent run's screenshot."
     ],
     "better_version_guidance": [
-      "Event counts remain Jest-only: the harness exposes no analytics-capture action, so no node observes an actual MetaMetrics payload in the running app.",
+      "Event counts remain Jest-only: the harness exposes no analytics-capture action, so no node observes an actual MetaMetrics payload in the running app. For this merge specifically that means the 'controller emits PerpsPositionCloseTransaction exactly once' assumption behind removing main's client-side emission is proved by absence asserts plus unit tests, not by a live observed emission.",
+      "A recipe node asserting the merged state of shared/constants/perps-events.ts (specifically that SOURCE.BOTTOM_NAV_BAR survives alongside the controller spread) would have caught the exact class of breakage this merge risked. ac2 covers the re-export direction but not Extension-only overrides.",
       "Live nodes require caffeinate -disu; on an idle machine Chrome's compositor suspends and the run aborts before writing artifacts."
     ]
   },
   "dimensions": {
     "graph_integrity": {
       "status": "pass",
-      "reason": "Linear Protocol v1 workflow; all 19 nodes reachable from gate-repo-root to teardown-end; validated with mm-harness run --plan (0 findings).",
+      "reason": "Linear Protocol v1 workflow; all 19 nodes reachable from gate-repo-root to teardown-end. Re-validated this session with mm-harness run --plan: status pass, 0 findings, 19 nodes planned.",
       "evidence": [
         "artifacts/recipe.json",
         "artifacts/recipe-run/trace.json"
@@ -24,7 +25,7 @@
     },
     "ac_coverage": {
       "status": "pass",
-      "reason": "Each AC has ac<N>-prefixed nodes; recipe-coverage.md documents 8/8 PROVEN plus live UI proof, and states the three known limits rather than omitting them.",
+      "reason": "Each AC has ac<N>-prefixed nodes; recipe-coverage.md documents 8/8 PROVEN post-merge plus live UI proof, and restates the known limits rather than dropping them now that the verdicts are green.",
       "evidence": [
         "artifacts/recipe-coverage.md",
         "artifacts/recipe-run/summary.json"
@@ -32,17 +33,18 @@
     },
     "evidence_fit": {
       "status": "pass",
-      "reason": "Non-visual claims use behaviour (Jest) and contract asserts; the single visual claim carries a screenshot registered by the runner.",
+      "reason": "Non-visual claims use behaviour (Jest) and contract asserts; the single visual claim carries a screenshot registered by the runner and re-captured against the post-merge build. Independently corroborated by yarn lint (full tsc) and 180/180 tests on the three conflicted component suites.",
       "evidence": [
         "artifacts/recipe-run/live-capture-error-screen.png",
-        "artifacts/recipe-run/report.md"
+        "artifacts/recipe-run/report.md",
+        "artifacts/report.md"
       ]
     },
     "flake_risk": {
       "status": "pass",
-      "reason": "Jest nodes run with --runInBand after two userEvent-timeout flakes under parallel load; both were confirmed non-regressions by idle re-runs. Live nodes depend on a healthy CDP runtime, which is the residual risk.",
+      "reason": "Run completed in 63s with 0 failures and no retries. Jest nodes run with --runInBand. Residual risk is unchanged: live nodes depend on a healthy CDP runtime, and this session the harness correctly refused to relaunch the orchestrator-owned browser on port 6662, so the run attached via --launch-existing-dist after a separate build.",
       "evidence": [
-        "artifacts/recipe.json",
+        "artifacts/recipe-run/summary.json",
         "artifacts/report.md"
       ]
     }
@@ -50,33 +52,52 @@
   "structural_findings": [],
   "contextual_findings": [
     {
-      "code": "stale_source_assert",
-      "dimension": "evidence_fit",
-      "message": "The predecessor recipe's ac4 node asserted the source string 'hlFeeRate: closeFeeRate', renamed to currentFeeRate in d6893f8f80. It failed on first execution this session - a stale assert, not a product regression. Motivated the move to behaviour nodes.",
+      "code": "silent_automerge_deletion",
+      "dimension": "ac_coverage",
+      "message": "The merge's most dangerous defects were symbol deletions that git auto-merged without reporting a conflict (getDisplayName deleted by main; deriveTpslType and buildPerpsVipTrackingData deleted by the branch). No recipe node would have caught these -- yarn lint's tsc pass did. Recipe verdicts alone are not a sufficient gate for a large merge; the type gate is load-bearing.",
       "evidence": [
-        "artifacts/recipe.json",
         "artifacts/report.md"
       ]
     },
     {
       "code": "stale_summary_on_aborted_run",
       "dimension": "flake_risk",
-      "message": "A failed mm-harness run leaves the previous run's summary.json in place; two aborted runs this session left a stale pass 18/18 that would have read as success. Verify startedAt before trusting a recipe verdict.",
+      "message": "Carried forward from the parent run and re-confirmed as a live hazard: a failed mm-harness run leaves the previous run's summary.json in place. This session's first invocation failed on CLI_UNKNOWN_OPTION (--project-root was renamed to --target), which would have left a stale artifact readable as success. Verified startedAt (2026-07-28T02:28:11Z) and node count (19, vs the parent's 19 at 00:56:43Z) before trusting the verdict.",
       "evidence": [
-        "artifacts/recipe-run/summary.json",
-        "artifacts/report.md"
+        "artifacts/recipe-run/summary.json"
+      ]
+    },
+    {
+      "code": "unreviewed_side_findings",
+      "dimension": "evidence_fit",
+      "message": "The run flagged 6 distinct application warning/error events (4 warning, 2 error) as non-blocking side findings: SW memory-leak warning, two Invalid chain ID \"0xa4b1\" warnings, an HttpRequestError 500, Sentry not initialized, and Unknown action Object from home.html. All read as dev-environment noise unrelated to this merge; none were investigated. Recorded so they are visible rather than implicitly cleared.",
+      "evidence": [
+        "artifacts/recipe-run/diagnostics.json",
+        "artifacts/recipe-coverage.md"
       ]
     }
   ],
   "suggested_recipe_delta": [
-    "If the harness gains an analytics-capture action, add nodes asserting actual PERPS_SCREEN_VIEWED / PERPS_UI_INTERACTION payloads in the running app so event counts leave the Jest layer.",
+    "Add a state assert on shared/constants/perps-events.ts that Extension-only overrides survive alongside the controller spread (specifically PERPS_EVENT_VALUE.SOURCE.BOTTOM_NAV_BAR). This merge nearly dropped it; ac2 covers the controller re-export direction but not the override direction.",
+    "Add a cheap assert that ui/components/app/perps/utils.ts still exports the helpers its consumers import. The merge silently auto-deleted getDisplayName, deriveTpslType and buildPerpsVipTrackingData with no conflict raised, and only the tsc gate caught it.",
+    "If the harness gains an analytics-capture action, add nodes asserting actual PERPS_SCREEN_VIEWED / PERPS_UI_INTERACTION payloads in the running app so event counts leave the Jest layer -- this is what would let ac5 prove 'controller emits close exactly once' rather than only 'the client no longer emits it'.",
     "Extend live proof to the geo-block notice once per-trigger `source` is implemented, so screen_type=geo_block_notif has a rendered-screen anchor like the market-not-found state."
   ],
   "training_fields": {
     "proof_mode": "mixed",
     "project": "metamask-extension-farm",
-    "flow_type": "pr-complete",
-    "claim_is_visual": true
+    "flow_type": "update-branch",
+    "task_type": "update-branch",
+    "claim_is_visual": true,
+    "good_patterns": [
+      "Re-ran the full recipe against the post-merge build instead of inheriting the parent run's verdicts.",
+      "Verified recipe-run summary startedAt and node count before trusting a pass, guarding the known stale-summary hazard.",
+      "Treated the type gate (yarn lint includes tsc) as load-bearing evidence alongside the recipe, which is what caught the silent auto-merge deletions."
+    ],
+    "anti_patterns": [
+      "Taking the union of both sides on an import conflict without checking which symbols the merged body actually uses -- produced imports of deleted helpers that compiled only after triage.",
+      "Assuming constants added by main are new: four of five additions to perps-events.ts were already supplied by the controller spread with identical values."
+    ]
   },
   "meta": {
     "producer": "worker",
@@ -89,7 +110,9 @@
       "recipe-run/summary.json",
       "recipe-run/report.md",
       "recipe-run/trace.json",
-      "recipe-run/live-capture-error-screen.png"
+      "recipe-run/diagnostics.json",
+      "recipe-run/live-capture-error-screen.png",
+      "report.md"
     ]
   }
 }

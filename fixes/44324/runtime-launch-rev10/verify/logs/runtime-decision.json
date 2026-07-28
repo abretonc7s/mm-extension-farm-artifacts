@@ -1,0 +1,48 @@
+{
+  "schemaVersion": 1,
+  "adapter": "extension",
+  "target": "/Users/deeeed/dev/metamask/metamask-extension-2",
+  "decision": "build",
+  "clean": false,
+  "reasonCode": "dist-stale",
+  "reasons": [
+    "dist git id 8334ae52 != HEAD aba477d0; rebuild."
+  ],
+  "checks": {
+    "deps": {
+      "installed": true,
+      "status": "current",
+      "hasBaseline": false
+    },
+    "webpackCache": {
+      "cachePresent": false,
+      "status": "no-cache",
+      "hasBaseline": false
+    },
+    "buildLog": {
+      "status": "ok"
+    },
+    "dist": {
+      "status": "stale",
+      "reason": "commit-mismatch",
+      "distGitId": "8334ae52",
+      "head": "aba477d0"
+    },
+    "runtimeDist": {
+      "status": "fresh"
+    },
+    "cdp": {
+      "status": "skipped"
+    }
+  },
+  "actions": [
+    {
+      "id": "start-webpack-watch",
+      "argv": [
+        "yarn",
+        "start"
+      ],
+      "cwd": "/Users/deeeed/dev/metamask/metamask-extension-2"
+    }
+  ]
+}

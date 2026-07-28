@@ -1,0 +1,21 @@
+{
+  "$schema": "https://farmslot.io/schemas/recipe-v1.schema.json",
+  "title": "mm-harness call ui.wait_for",
+  "description": "Ad-hoc single-action execution of ui.wait_for via the real engine path (mm-harness call).",
+  "workflow": {
+    "entry": "call",
+    "nodes": {
+      "call": {
+        "text": "Market not found",
+        "visible": true,
+        "action": "ui.wait_for",
+        "next": "done",
+        "intent": "Complete the requested ui.wait_for operation"
+      },
+      "done": {
+        "action": "end",
+        "status": "pass"
+      }
+    }
+  }
+}

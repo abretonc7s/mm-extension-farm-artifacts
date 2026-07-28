@@ -1,0 +1,95 @@
+{
+  "version": 1,
+  "verdict": "pass",
+  "compact": {
+    "verdict": "PASS",
+    "reasons": [
+      "All 8 ACs map to ac1-ac8 nodes; recipe-run status=pass 19/19.",
+      "AC3/AC4/AC6/AC7/AC8 upgraded from identifier greps to behaviour proof via the owning Jest suites, after a grep assert was found passing on a stale renamed identifier.",
+      "The one visual claim (market-not-found error screen) is proved live over CDP with a registered screenshot; reverting the gating fix would still pass ac1-ac5 but the analytics claim is anchored to a screen proven to render."
+    ],
+    "better_version_guidance": [
+      "Event counts remain Jest-only: the harness exposes no analytics-capture action, so no node observes an actual MetaMetrics payload in the running app.",
+      "Live nodes require caffeinate -disu; on an idle machine Chrome's compositor suspends and the run aborts before writing artifacts."
+    ]
+  },
+  "dimensions": {
+    "graph_integrity": {
+      "status": "pass",
+      "reason": "Linear Protocol v1 workflow; all 19 nodes reachable from gate-repo-root to teardown-end; validated with mm-harness run --plan (0 findings).",
+      "evidence": [
+        "artifacts/recipe.json",
+        "artifacts/recipe-run/trace.json"
+      ]
+    },
+    "ac_coverage": {
+      "status": "pass",
+      "reason": "Each AC has ac<N>-prefixed nodes; recipe-coverage.md documents 8/8 PROVEN plus live UI proof, and states the three known limits rather than omitting them.",
+      "evidence": [
+        "artifacts/recipe-coverage.md",
+        "artifacts/recipe-run/summary.json"
+      ]
+    },
+    "evidence_fit": {
+      "status": "pass",
+      "reason": "Non-visual claims use behaviour (Jest) and contract asserts; the single visual claim carries a screenshot registered by the runner.",
+      "evidence": [
+        "artifacts/recipe-run/live-capture-error-screen.png",
+        "artifacts/recipe-run/report.md"
+      ]
+    },
+    "flake_risk": {
+      "status": "pass",
+      "reason": "Jest nodes run with --runInBand after two userEvent-timeout flakes under parallel load; both were confirmed non-regressions by idle re-runs. Live nodes depend on a healthy CDP runtime, which is the residual risk.",
+      "evidence": [
+        "artifacts/recipe.json",
+        "artifacts/report.md"
+      ]
+    }
+  },
+  "structural_findings": [],
+  "contextual_findings": [
+    {
+      "code": "stale_source_assert",
+      "dimension": "evidence_fit",
+      "message": "The predecessor recipe's ac4 node asserted the source string 'hlFeeRate: closeFeeRate', renamed to currentFeeRate in d6893f8f80. It failed on first execution this session - a stale assert, not a product regression. Motivated the move to behaviour nodes.",
+      "evidence": [
+        "artifacts/recipe.json",
+        "artifacts/report.md"
+      ]
+    },
+    {
+      "code": "stale_summary_on_aborted_run",
+      "dimension": "flake_risk",
+      "message": "A failed mm-harness run leaves the previous run's summary.json in place; two aborted runs this session left a stale pass 18/18 that would have read as success. Verify startedAt before trusting a recipe verdict.",
+      "evidence": [
+        "artifacts/recipe-run/summary.json",
+        "artifacts/report.md"
+      ]
+    }
+  ],
+  "suggested_recipe_delta": [
+    "If the harness gains an analytics-capture action, add nodes asserting actual PERPS_SCREEN_VIEWED / PERPS_UI_INTERACTION payloads in the running app so event counts leave the Jest layer.",
+    "Extend live proof to the geo-block notice once per-trigger `source` is implemented, so screen_type=geo_block_notif has a rendered-screen anchor like the market-not-found state."
+  ],
+  "training_fields": {
+    "proof_mode": "mixed",
+    "project": "metamask-extension-farm",
+    "flow_type": "pr-complete",
+    "claim_is_visual": true
+  },
+  "meta": {
+    "producer": "worker",
+    "fallback_used": false,
+    "legacy_task": false,
+    "artifact_required": true,
+    "source_signals": [
+      "recipe.json",
+      "recipe-coverage.md",
+      "recipe-run/summary.json",
+      "recipe-run/report.md",
+      "recipe-run/trace.json",
+      "recipe-run/live-capture-error-screen.png"
+    ]
+  }
+}
