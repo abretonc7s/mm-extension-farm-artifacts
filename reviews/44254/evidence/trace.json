@@ -1,0 +1,1141 @@
+{
+  "metadata": {
+    "runner": {
+      "source": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness",
+      "git_ref": "unknown",
+      "name": "@metamask/recipe-runner"
+    }
+  },
+  "entries": [
+    {
+      "nodeId": "setup-status",
+      "action": "app.status",
+      "intent": "Resolve the Extension checkout and adapter status before order-book proof",
+      "startedAt": "2026-07-30T13:12:45.470Z",
+      "endedAt": "2026-07-30T13:12:45.480Z",
+      "durationMs": 10,
+      "ok": true,
+      "next": "setup-cdp",
+      "output": {
+        "platform": "extension",
+        "projectRoot": "/Users/deeeed/dev/metamask/metamask-extension-2",
+        "compatibilityMode": "bridge present",
+        "shape": {
+          "packageName": "metamask-crx",
+          "packageJsonStatus": "valid",
+          "packageJsonError": null,
+          "extensionProject": true,
+          "mobileProject": false,
+          "agenticService": false,
+          "mobileProductHarness": false,
+          "mobileBridgeScript": true,
+          "extensionRuntime": true,
+          "injectedHarness": true,
+          "walletFixture": true
+        }
+      }
+    },
+    {
+      "nodeId": "setup-cdp",
+      "action": "cdp.target",
+      "intent": "Confirm the Extension CDP runtime is reachable",
+      "startedAt": "2026-07-30T13:12:45.489Z",
+      "endedAt": "2026-07-30T13:12:45.499Z",
+      "durationMs": 10,
+      "ok": true,
+      "next": "setup-unlock",
+      "output": {
+        "platform": "extension",
+        "transport": "chrome-extension-cdp",
+        "cdpPort": "7666",
+        "metroPort": "9012",
+        "probeUrl": "http://127.0.0.1:7666/json/version",
+        "timeoutMs": 15000,
+        "reachable": true,
+        "statusCode": 200,
+        "json": {
+          "Browser": "Chrome/147.0.7727.15",
+          "Protocol-Version": "1.3",
+          "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+          "V8-Version": "14.7.173.6",
+          "WebKit-Version": "537.36 (@6b5a1b80ccc1e8a4967901d8e58fc2e162cdf050)",
+          "webSocketDebuggerUrl": "ws://127.0.0.1:7666/devtools/browser/c917d998-6298-4849-961b-d18a0ff39248"
+        }
+      }
+    },
+    {
+      "nodeId": "setup-unlock",
+      "action": "metamask.wallet.ensure_unlocked",
+      "intent": "Ensure the wallet is unlocked before opening the perps order entry page",
+      "startedAt": "2026-07-30T13:12:45.505Z",
+      "endedAt": "2026-07-30T13:12:45.598Z",
+      "durationMs": 93,
+      "ok": true,
+      "next": "setup-open-perps",
+      "output": {
+        "action": "metamask.wallet.ensure_unlocked",
+        "unlocked": true,
+        "alreadyUnlocked": true,
+        "proofPath": "extension-unlocked-state",
+        "cdpPort": 7666,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/ETH",
+        "runtimeLaunch": null,
+        "liveAdapter": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/actions/extension/wallet/ensure_unlocked.mjs"
+      }
+    },
+    {
+      "nodeId": "setup-open-perps",
+      "action": "ui.navigate",
+      "intent": "Leave any previously mounted order entry page so the order book starts from its default state",
+      "startedAt": "2026-07-30T13:12:45.604Z",
+      "endedAt": "2026-07-30T13:12:45.911Z",
+      "durationMs": 307,
+      "ok": true,
+      "next": "ac1-navigate-order-entry",
+      "output": {
+        "action": "ui.navigate",
+        "page": "perps",
+        "method": "visible-ui",
+        "href": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps-home",
+        "steps": [
+          "[data-testid=\"perps-order-entry-back-button\"]"
+        ],
+        "proofPath": "ui-navigation",
+        "cdpPort": 7666,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/ETH",
+        "runtimeLaunch": null,
+        "liveAdapter": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/actions/extension/ui/navigate.mjs"
+      }
+    },
+    {
+      "nodeId": "ac1-navigate-order-entry",
+      "action": "ui.navigate",
+      "intent": "AC1: open the perps order entry page for ETH",
+      "startedAt": "2026-07-30T13:12:45.919Z",
+      "endedAt": "2026-07-30T13:12:46.051Z",
+      "durationMs": 132,
+      "ok": true,
+      "next": "ac1-wait-order-entry-page",
+      "output": {
+        "action": "ui.navigate",
+        "hash": "#/perps/trade/ETH",
+        "navigation": {
+          "before": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps-home",
+          "href": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/ETH",
+          "sameDocument": true
+        },
+        "proofPath": "ui-navigation",
+        "cdpPort": 7666,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps-home",
+        "runtimeLaunch": null,
+        "liveAdapter": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/actions/extension/ui/navigate.mjs"
+      }
+    },
+    {
+      "nodeId": "ac1-wait-order-entry-page",
+      "action": "ui.wait_for",
+      "intent": "AC1: confirm the order entry page is mounted",
+      "startedAt": "2026-07-30T13:12:46.056Z",
+      "endedAt": "2026-07-30T13:12:46.504Z",
+      "durationMs": 448,
+      "ok": true,
+      "next": "ac1-wait-toggle-affordance",
+      "output": {
+        "matched": true,
+        "cdpPort": 7666,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/ETH",
+        "runtimeLaunch": null
+      }
+    },
+    {
+      "nodeId": "ac1-wait-toggle-affordance",
+      "action": "ui.wait_for",
+      "intent": "AC1: confirm the order-book expand affordance is present in the market header",
+      "startedAt": "2026-07-30T13:12:46.514Z",
+      "endedAt": "2026-07-30T13:12:46.863Z",
+      "durationMs": 349,
+      "ok": true,
+      "next": "ac1-assert-book-collapsed",
+      "output": {
+        "matched": true,
+        "cdpPort": 7666,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/ETH",
+        "runtimeLaunch": null
+      }
+    },
+    {
+      "nodeId": "ac1-assert-book-collapsed",
+      "action": "ui.wait_for",
+      "intent": "AC1: assert the order-book panel is NOT rendered on arrival (collapsed by default)",
+      "startedAt": "2026-07-30T13:12:46.872Z",
+      "endedAt": "2026-07-30T13:12:47.216Z",
+      "durationMs": 344,
+      "ok": true,
+      "next": "ac1-assert-divider-collapsed",
+      "output": {
+        "matched": true,
+        "cdpPort": 7666,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/ETH",
+        "runtimeLaunch": null
+      }
+    },
+    {
+      "nodeId": "ac1-assert-divider-collapsed",
+      "action": "ui.wait_for",
+      "intent": "AC1: assert the resize divider is absent while the panel is collapsed",
+      "startedAt": "2026-07-30T13:12:47.225Z",
+      "endedAt": "2026-07-30T13:12:47.576Z",
+      "durationMs": 351,
+      "ok": true,
+      "next": "ac1-screenshot-collapsed-by-default",
+      "output": {
+        "matched": true,
+        "cdpPort": 7666,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/ETH",
+        "runtimeLaunch": null
+      }
+    },
+    {
+      "nodeId": "ac1-screenshot-collapsed-by-default",
+      "action": "ui.screenshot",
+      "intent": "AC1: capture the default collapsed state of the order entry page",
+      "artifacts": [
+        {
+          "path": "evidence/evidence-ac1-collapsed-by-default.png",
+          "type": "screenshot",
+          "nodeId": "ac1-screenshot-collapsed-by-default",
+          "label": "AC1: order entry page on arrival — order form fills the width, no order-book panel, only the collapsed toggle in the header.",
+          "category": "evidence",
+          "mimeType": "image/png",
+          "metadata": {
+            "provider": "capture-helper",
+            "mode": "snapshot",
+            "pid": 62942,
+            "captureHelper": {
+              "bytes": 212334,
+              "output": "/Users/deeeed/dev/metamask/metamask-extension-2/temp/tasks/review/44254-0730-190746/artifacts/recipe-run/evidence/evidence-ac1-collapsed-by-default.png",
+              "selected": {
+                "app": "Google Chrome for Testing",
+                "height": 916,
+                "id": 368,
+                "layer": 0,
+                "onScreen": true,
+                "pid": 62942,
+                "title": "macwork-metamask-extension-2 — MetaMask",
+                "width": 1200,
+                "x": 22,
+                "y": 52
+              },
+              "selector": "pid",
+              "type": "snapshot"
+            }
+          }
+        }
+      ],
+      "startedAt": "2026-07-30T13:12:47.583Z",
+      "endedAt": "2026-07-30T13:12:47.802Z",
+      "durationMs": 219,
+      "ok": true,
+      "next": "ac2-press-toggle",
+      "output": {
+        "captured": true,
+        "path": "evidence/evidence-ac1-collapsed-by-default.png",
+        "artifact": {
+          "path": "evidence/evidence-ac1-collapsed-by-default.png",
+          "type": "screenshot",
+          "nodeId": "ac1-screenshot-collapsed-by-default",
+          "label": "AC1: order entry page on arrival — order form fills the width, no order-book panel, only the collapsed toggle in the header.",
+          "category": "evidence",
+          "mimeType": "image/png",
+          "metadata": {
+            "provider": "capture-helper",
+            "mode": "snapshot",
+            "pid": 62942,
+            "captureHelper": {
+              "bytes": 212334,
+              "output": "/Users/deeeed/dev/metamask/metamask-extension-2/temp/tasks/review/44254-0730-190746/artifacts/recipe-run/evidence/evidence-ac1-collapsed-by-default.png",
+              "selected": {
+                "app": "Google Chrome for Testing",
+                "height": 916,
+                "id": 368,
+                "layer": 0,
+                "onScreen": true,
+                "pid": 62942,
+                "title": "macwork-metamask-extension-2 — MetaMask",
+                "width": 1200,
+                "x": 22,
+                "y": 52
+              },
+              "selector": "pid",
+              "type": "snapshot"
+            }
+          }
+        }
+      }
+    },
+    {
+      "nodeId": "ac2-press-toggle",
+      "action": "ui.press",
+      "intent": "AC2: click the order-book toggle in the market header to expand the panel",
+      "startedAt": "2026-07-30T13:12:47.807Z",
+      "endedAt": "2026-07-30T13:12:48.658Z",
+      "durationMs": 851,
+      "ok": true,
+      "next": "ac2-wait-panel-visible",
+      "output": {
+        "clicked": true,
+        "selector": "[data-testid=\"perps-order-book-toggle\"], [data-test-id=\"perps-order-book-toggle\"], [data-test=\"perps-order-book-toggle\"]",
+        "tagName": "BUTTON",
+        "cdpPort": 7666,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/ETH",
+        "runtimeLaunch": null
+      }
+    },
+    {
+      "nodeId": "ac2-wait-panel-visible",
+      "action": "ui.wait_for",
+      "intent": "AC2: confirm the order-book panel mounted after the click",
+      "startedAt": "2026-07-30T13:12:48.668Z",
+      "endedAt": "2026-07-30T13:12:49.353Z",
+      "durationMs": 685,
+      "ok": true,
+      "next": "ac2-wait-divider-visible",
+      "output": {
+        "matched": true,
+        "cdpPort": 7666,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/ETH",
+        "runtimeLaunch": null
+      }
+    },
+    {
+      "nodeId": "ac2-wait-divider-visible",
+      "action": "ui.wait_for",
+      "intent": "AC2: confirm the resizable split divider appeared with the expanded panel",
+      "startedAt": "2026-07-30T13:12:49.362Z",
+      "endedAt": "2026-07-30T13:12:49.750Z",
+      "durationMs": 388,
+      "ok": true,
+      "next": "ac2-wait-ladder-rows",
+      "output": {
+        "matched": true,
+        "cdpPort": 7666,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/ETH",
+        "runtimeLaunch": null
+      }
+    },
+    {
+      "nodeId": "ac2-wait-ladder-rows",
+      "action": "ui.wait_for",
+      "intent": "AC2: wait for the full live ask ladder (5 levels) so the panel shows real book depth, not a skeleton",
+      "startedAt": "2026-07-30T13:12:49.759Z",
+      "endedAt": "2026-07-30T13:12:50.109Z",
+      "durationMs": 350,
+      "ok": true,
+      "next": "ac2-wait-depth-ratio",
+      "output": {
+        "matched": true,
+        "cdpPort": 7666,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/ETH",
+        "runtimeLaunch": null
+      }
+    },
+    {
+      "nodeId": "ac2-wait-depth-ratio",
+      "action": "ui.wait_for",
+      "intent": "AC2: confirm the buy/sell depth ratio rendered under the ladder",
+      "startedAt": "2026-07-30T13:12:50.117Z",
+      "endedAt": "2026-07-30T13:12:50.459Z",
+      "durationMs": 342,
+      "ok": true,
+      "next": "ac2-screenshot-expanded-order-book",
+      "output": {
+        "matched": true,
+        "cdpPort": 7666,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/ETH",
+        "runtimeLaunch": null
+      }
+    },
+    {
+      "nodeId": "ac2-screenshot-expanded-order-book",
+      "action": "ui.screenshot",
+      "intent": "AC2: capture the expanded order book as the result of the click",
+      "artifacts": [
+        {
+          "path": "evidence/evidence-ac2-expanded-order-book.png",
+          "type": "screenshot",
+          "nodeId": "ac2-screenshot-expanded-order-book",
+          "label": "AC2: after clicking the header toggle — the order-book panel is expanded beside the form, showing asks, spread, bids and the buy/sell depth ratio.",
+          "category": "evidence",
+          "mimeType": "image/png",
+          "metadata": {
+            "provider": "capture-helper",
+            "mode": "snapshot",
+            "pid": 62942,
+            "captureHelper": {
+              "bytes": 244032,
+              "output": "/Users/deeeed/dev/metamask/metamask-extension-2/temp/tasks/review/44254-0730-190746/artifacts/recipe-run/evidence/evidence-ac2-expanded-order-book.png",
+              "selected": {
+                "app": "Google Chrome for Testing",
+                "height": 916,
+                "id": 368,
+                "layer": 0,
+                "onScreen": true,
+                "pid": 62942,
+                "title": "macwork-metamask-extension-2 — MetaMask",
+                "width": 1200,
+                "x": 22,
+                "y": 52
+              },
+              "selector": "pid",
+              "type": "snapshot"
+            }
+          }
+        }
+      ],
+      "startedAt": "2026-07-30T13:12:50.469Z",
+      "endedAt": "2026-07-30T13:12:50.666Z",
+      "durationMs": 197,
+      "ok": true,
+      "next": "ac4-wait-ask-price",
+      "output": {
+        "captured": true,
+        "path": "evidence/evidence-ac2-expanded-order-book.png",
+        "artifact": {
+          "path": "evidence/evidence-ac2-expanded-order-book.png",
+          "type": "screenshot",
+          "nodeId": "ac2-screenshot-expanded-order-book",
+          "label": "AC2: after clicking the header toggle — the order-book panel is expanded beside the form, showing asks, spread, bids and the buy/sell depth ratio.",
+          "category": "evidence",
+          "mimeType": "image/png",
+          "metadata": {
+            "provider": "capture-helper",
+            "mode": "snapshot",
+            "pid": 62942,
+            "captureHelper": {
+              "bytes": 244032,
+              "output": "/Users/deeeed/dev/metamask/metamask-extension-2/temp/tasks/review/44254-0730-190746/artifacts/recipe-run/evidence/evidence-ac2-expanded-order-book.png",
+              "selected": {
+                "app": "Google Chrome for Testing",
+                "height": 916,
+                "id": 368,
+                "layer": 0,
+                "onScreen": true,
+                "pid": 62942,
+                "title": "macwork-metamask-extension-2 — MetaMask",
+                "width": 1200,
+                "x": 22,
+                "y": 52
+              },
+              "selector": "pid",
+              "type": "snapshot"
+            }
+          }
+        }
+      }
+    },
+    {
+      "nodeId": "ac4-wait-ask-price",
+      "action": "ui.wait_for",
+      "intent": "AC4: confirm the ask side renders a price level",
+      "startedAt": "2026-07-30T13:12:50.671Z",
+      "endedAt": "2026-07-30T13:12:51.008Z",
+      "durationMs": 337,
+      "ok": true,
+      "next": "ac4-wait-ask-value",
+      "output": {
+        "matched": true,
+        "cdpPort": 7666,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/ETH",
+        "runtimeLaunch": null
+      }
+    },
+    {
+      "nodeId": "ac4-wait-ask-value",
+      "action": "ui.wait_for",
+      "intent": "AC4: confirm the ask side renders its USD total value column",
+      "startedAt": "2026-07-30T13:12:51.018Z",
+      "endedAt": "2026-07-30T13:12:51.438Z",
+      "durationMs": 420,
+      "ok": true,
+      "next": "ac4-wait-bid-price",
+      "output": {
+        "matched": true,
+        "cdpPort": 7666,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/ETH",
+        "runtimeLaunch": null
+      }
+    },
+    {
+      "nodeId": "ac4-wait-bid-price",
+      "action": "ui.wait_for",
+      "intent": "AC4: confirm the bid side renders a price level",
+      "startedAt": "2026-07-30T13:12:51.444Z",
+      "endedAt": "2026-07-30T13:12:52.059Z",
+      "durationMs": 615,
+      "ok": true,
+      "next": "ac4-wait-bid-value",
+      "output": {
+        "matched": true,
+        "cdpPort": 7666,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/ETH",
+        "runtimeLaunch": null
+      }
+    },
+    {
+      "nodeId": "ac4-wait-bid-value",
+      "action": "ui.wait_for",
+      "intent": "AC4: confirm the bid side renders its USD total value column",
+      "startedAt": "2026-07-30T13:12:52.068Z",
+      "endedAt": "2026-07-30T13:12:52.410Z",
+      "durationMs": 342,
+      "ok": true,
+      "next": "ac4-assert-usd-total-header",
+      "output": {
+        "matched": true,
+        "cdpPort": 7666,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/ETH",
+        "runtimeLaunch": null
+      }
+    },
+    {
+      "nodeId": "ac4-assert-usd-total-header",
+      "action": "ui.wait_for",
+      "intent": "AC4: assert the value column is explicitly labelled as a USD total",
+      "startedAt": "2026-07-30T13:12:52.419Z",
+      "endedAt": "2026-07-30T13:12:52.976Z",
+      "durationMs": 557,
+      "ok": true,
+      "next": "ac4-screenshot-price-levels-usd-totals",
+      "output": {
+        "matched": true,
+        "cdpPort": 7666,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/ETH",
+        "runtimeLaunch": null
+      }
+    },
+    {
+      "nodeId": "ac4-screenshot-price-levels-usd-totals",
+      "action": "ui.screenshot",
+      "intent": "AC4: capture price levels and USD totals for both asks and bids",
+      "artifacts": [
+        {
+          "path": "evidence/evidence-ac4-price-levels-usd-totals.png",
+          "type": "screenshot",
+          "nodeId": "ac4-screenshot-price-levels-usd-totals",
+          "label": "AC4: ladder with the 'Price / Total (USD)' column headers — five ask price levels above the spread and five bid price levels below, each with a USD cumulative total.",
+          "category": "evidence",
+          "mimeType": "image/png",
+          "metadata": {
+            "provider": "capture-helper",
+            "mode": "snapshot",
+            "pid": 62942,
+            "captureHelper": {
+              "bytes": 244765,
+              "output": "/Users/deeeed/dev/metamask/metamask-extension-2/temp/tasks/review/44254-0730-190746/artifacts/recipe-run/evidence/evidence-ac4-price-levels-usd-totals.png",
+              "selected": {
+                "app": "Google Chrome for Testing",
+                "height": 916,
+                "id": 368,
+                "layer": 0,
+                "onScreen": true,
+                "pid": 62942,
+                "title": "macwork-metamask-extension-2 — MetaMask",
+                "width": 1200,
+                "x": 22,
+                "y": 52
+              },
+              "selector": "pid",
+              "type": "snapshot"
+            }
+          }
+        }
+      ],
+      "startedAt": "2026-07-30T13:12:52.986Z",
+      "endedAt": "2026-07-30T13:12:53.155Z",
+      "durationMs": 169,
+      "ok": true,
+      "next": "ac3-run-flag-off-hides-toggle-test",
+      "output": {
+        "captured": true,
+        "path": "evidence/evidence-ac4-price-levels-usd-totals.png",
+        "artifact": {
+          "path": "evidence/evidence-ac4-price-levels-usd-totals.png",
+          "type": "screenshot",
+          "nodeId": "ac4-screenshot-price-levels-usd-totals",
+          "label": "AC4: ladder with the 'Price / Total (USD)' column headers — five ask price levels above the spread and five bid price levels below, each with a USD cumulative total.",
+          "category": "evidence",
+          "mimeType": "image/png",
+          "metadata": {
+            "provider": "capture-helper",
+            "mode": "snapshot",
+            "pid": 62942,
+            "captureHelper": {
+              "bytes": 244765,
+              "output": "/Users/deeeed/dev/metamask/metamask-extension-2/temp/tasks/review/44254-0730-190746/artifacts/recipe-run/evidence/evidence-ac4-price-levels-usd-totals.png",
+              "selected": {
+                "app": "Google Chrome for Testing",
+                "height": 916,
+                "id": 368,
+                "layer": 0,
+                "onScreen": true,
+                "pid": 62942,
+                "title": "macwork-metamask-extension-2 — MetaMask",
+                "width": 1200,
+                "x": 22,
+                "y": 52
+              },
+              "selector": "pid",
+              "type": "snapshot"
+            }
+          }
+        }
+      }
+    },
+    {
+      "nodeId": "ac3-run-flag-off-hides-toggle-test",
+      "action": "command",
+      "intent": "AC3: exercise the flag-OFF render path, unreachable in the live slot (the running fixture pins perpsOrderBookEnabled to enabled:true and remote flags are not writable read-only)",
+      "startedAt": "2026-07-30T13:12:53.161Z",
+      "endedAt": "2026-07-30T13:12:57.414Z",
+      "durationMs": 4253,
+      "ok": true,
+      "next": "ac3-assert-flag-off-exit",
+      "output": {
+        "exitCode": 0,
+        "stdout": "PASS ui/pages/perps/perps-order-entry-page.test.tsx\n\n ●  Suppressed console messages:\n\nWARN 1     React: componentWill* lifecycle deprecations\n\nTest Suites: 1 passed, 1 total\nTests:       89 skipped, 1 passed, 90 total\nSnapshots:   0 total\nTime:        3.412 s, estimated 4 s\nRan all test suites matching /ui\\/pages\\/perps\\/perps-order-entry-page.test.tsx/i with tests matching \"does not render the order book toggle when the feature flag is off\".\n\n✅ No console baseline violations.\n\n",
+        "stderr": ""
+      }
+    },
+    {
+      "nodeId": "ac3-assert-flag-off-exit",
+      "action": "assert_exit_code",
+      "intent": "AC3: the flag-OFF suite run must succeed",
+      "startedAt": "2026-07-30T13:12:57.420Z",
+      "endedAt": "2026-07-30T13:12:57.425Z",
+      "durationMs": 5,
+      "ok": true,
+      "next": "ac3-assert-flag-off-test-passed",
+      "output": {
+        "source": "ac3-run-flag-off-hides-toggle-test",
+        "expected": 0,
+        "actual": 0
+      }
+    },
+    {
+      "nodeId": "ac3-assert-flag-off-test-passed",
+      "action": "assert_output",
+      "intent": "AC3: prove that named flag-OFF test actually matched and PASSED (a non-existent title yields 0 passed at exit 0, so this discriminates)",
+      "startedAt": "2026-07-30T13:12:57.430Z",
+      "endedAt": "2026-07-30T13:12:57.436Z",
+      "durationMs": 6,
+      "ok": true,
+      "next": "ac3-run-flag-selector-test",
+      "output": {
+        "source": "ac3-run-flag-off-hides-toggle-test",
+        "stream": "stdout",
+        "contains": "1 passed"
+      }
+    },
+    {
+      "nodeId": "ac3-run-flag-selector-test",
+      "action": "command",
+      "intent": "AC3: prove the gate defaults to OFF when the remote flag is absent entirely (jest -t is a regex, so the title is matched without its parenthesised suffix)",
+      "startedAt": "2026-07-30T13:12:57.440Z",
+      "endedAt": "2026-07-30T13:12:59.514Z",
+      "durationMs": 2074,
+      "ok": true,
+      "next": "ac3-assert-flag-selector-exit",
+      "output": {
+        "exitCode": 0,
+        "stdout": "PASS ui/selectors/perps/feature-flags.test.ts\n\nTest Suites: 1 passed, 1 total\nTests:       34 skipped, 1 passed, 35 total\nSnapshots:   0 total\nTime:        1.314 s, estimated 2 s\nRan all test suites matching /ui\\/selectors\\/perps\\/feature-flags.test.ts/i with tests matching \"returns false when the perpsOrderBookEnabled flag is absent\".\n\n✅ No console baseline violations.\n\n",
+        "stderr": ""
+      }
+    },
+    {
+      "nodeId": "ac3-assert-flag-selector-exit",
+      "action": "assert_exit_code",
+      "intent": "AC3: the selector default-OFF run must succeed",
+      "startedAt": "2026-07-30T13:12:59.520Z",
+      "endedAt": "2026-07-30T13:12:59.524Z",
+      "durationMs": 4,
+      "ok": true,
+      "next": "ac3-assert-flag-selector-passed",
+      "output": {
+        "source": "ac3-run-flag-selector-test",
+        "expected": 0,
+        "actual": 0
+      }
+    },
+    {
+      "nodeId": "ac3-assert-flag-selector-passed",
+      "action": "assert_output",
+      "intent": "AC3: prove the getIsPerpsOrderBookEnabled default-OFF assertion matched and PASSED",
+      "startedAt": "2026-07-30T13:12:59.530Z",
+      "endedAt": "2026-07-30T13:12:59.534Z",
+      "durationMs": 4,
+      "ok": true,
+      "next": "ac5-run-narrow-body-clamp-test",
+      "output": {
+        "source": "ac3-run-flag-selector-test",
+        "stream": "stdout",
+        "contains": "1 passed"
+      }
+    },
+    {
+      "nodeId": "ac5-run-narrow-body-clamp-test",
+      "action": "command",
+      "intent": "AC5: exercise the compact-layout width clamp that keeps the form usable in the ~360px popup, which this CDP session cannot reach visually (no popup target exposed)",
+      "startedAt": "2026-07-30T13:12:59.539Z",
+      "endedAt": "2026-07-30T13:13:01.028Z",
+      "durationMs": 1489,
+      "ok": true,
+      "next": "ac5-assert-narrow-body-exit",
+      "output": {
+        "exitCode": 0,
+        "stdout": "PASS ui/components/app/perps/order-book/order-book.utils.test.ts\n\nTest Suites: 1 passed, 1 total\nTests:       34 skipped, 1 passed, 35 total\nSnapshots:   0 total\nTime:        0.846 s\nRan all test suites matching /ui\\/components\\/app\\/perps\\/order-book\\/order-book.utils.test.ts/i with tests matching \"caps the width so the form keeps its pixel floor on a narrow body\".\n\n✅ No console baseline violations.\n\n",
+        "stderr": ""
+      }
+    },
+    {
+      "nodeId": "ac5-assert-narrow-body-exit",
+      "action": "assert_exit_code",
+      "intent": "AC5: the narrow-body clamp run must succeed",
+      "startedAt": "2026-07-30T13:13:01.034Z",
+      "endedAt": "2026-07-30T13:13:01.040Z",
+      "durationMs": 6,
+      "ok": true,
+      "next": "ac5-assert-narrow-body-passed",
+      "output": {
+        "source": "ac5-run-narrow-body-clamp-test",
+        "expected": 0,
+        "actual": 0
+      }
+    },
+    {
+      "nodeId": "ac5-assert-narrow-body-passed",
+      "action": "assert_output",
+      "intent": "AC5: prove the narrow-body clamp assertion matched and PASSED",
+      "startedAt": "2026-07-30T13:13:01.048Z",
+      "endedAt": "2026-07-30T13:13:01.056Z",
+      "durationMs": 8,
+      "ok": true,
+      "next": "ac5-run-popup-ceiling-test",
+      "output": {
+        "source": "ac5-run-narrow-body-clamp-test",
+        "stream": "stdout",
+        "contains": "1 passed"
+      }
+    },
+    {
+      "nodeId": "ac5-run-popup-ceiling-test",
+      "action": "command",
+      "intent": "AC5: exercise the popup-width ceiling derivation that drives aria-valuemax and the clamp on a compact body",
+      "startedAt": "2026-07-30T13:13:01.064Z",
+      "endedAt": "2026-07-30T13:13:02.616Z",
+      "durationMs": 1552,
+      "ok": true,
+      "next": "ac5-assert-popup-ceiling-exit",
+      "output": {
+        "exitCode": 0,
+        "stdout": "PASS ui/components/app/perps/order-book/order-book.utils.test.ts\n\nTest Suites: 1 passed, 1 total\nTests:       34 skipped, 1 passed, 35 total\nSnapshots:   0 total\nTime:        0.767 s, estimated 1 s\nRan all test suites matching /ui\\/components\\/app\\/perps\\/order-book\\/order-book.utils.test.ts/i with tests matching \"returns the pixel-aware ceiling on a narrow popup body\".\n\n✅ No console baseline violations.\n\n",
+        "stderr": ""
+      }
+    },
+    {
+      "nodeId": "ac5-assert-popup-ceiling-exit",
+      "action": "assert_exit_code",
+      "intent": "AC5: the popup-ceiling run must succeed",
+      "startedAt": "2026-07-30T13:13:02.623Z",
+      "endedAt": "2026-07-30T13:13:02.630Z",
+      "durationMs": 7,
+      "ok": true,
+      "next": "ac5-assert-popup-ceiling-passed",
+      "output": {
+        "source": "ac5-run-popup-ceiling-test",
+        "expected": 0,
+        "actual": 0
+      }
+    },
+    {
+      "nodeId": "ac5-assert-popup-ceiling-passed",
+      "action": "assert_output",
+      "intent": "AC5: prove the popup-ceiling assertion matched and PASSED",
+      "startedAt": "2026-07-30T13:13:02.635Z",
+      "endedAt": "2026-07-30T13:13:02.640Z",
+      "durationMs": 5,
+      "ok": true,
+      "next": "ac5-screenshot-fullscreen-split-layout",
+      "output": {
+        "source": "ac5-run-popup-ceiling-test",
+        "stream": "stdout",
+        "contains": "1 passed"
+      }
+    },
+    {
+      "nodeId": "ac5-screenshot-fullscreen-split-layout",
+      "action": "ui.screenshot",
+      "intent": "AC5: capture the expanded/fullscreen half of the responsive split",
+      "artifacts": [
+        {
+          "path": "evidence/evidence-ac5-fullscreen-split-layout.png",
+          "type": "screenshot",
+          "nodeId": "ac5-screenshot-fullscreen-split-layout",
+          "label": "AC5 (expanded/fullscreen half only): form and order book share the width via the draggable divider in the fullscreen (home.html) layout. This image does NOT prove the compact popup layout — no popup target is reachable from this CDP session; the compact path is covered by the ac5-* clamp assertions instead.",
+          "category": "evidence",
+          "mimeType": "image/png",
+          "metadata": {
+            "provider": "capture-helper",
+            "mode": "snapshot",
+            "pid": 62942,
+            "captureHelper": {
+              "bytes": 245005,
+              "output": "/Users/deeeed/dev/metamask/metamask-extension-2/temp/tasks/review/44254-0730-190746/artifacts/recipe-run/evidence/evidence-ac5-fullscreen-split-layout.png",
+              "selected": {
+                "app": "Google Chrome for Testing",
+                "height": 916,
+                "id": 368,
+                "layer": 0,
+                "onScreen": true,
+                "pid": 62942,
+                "title": "macwork-metamask-extension-2 — MetaMask",
+                "width": 1200,
+                "x": 22,
+                "y": 52
+              },
+              "selector": "pid",
+              "type": "snapshot"
+            }
+          }
+        }
+      ],
+      "startedAt": "2026-07-30T13:13:02.647Z",
+      "endedAt": "2026-07-30T13:13:02.807Z",
+      "durationMs": 160,
+      "ok": true,
+      "next": "ac6-press-bid-price-row",
+      "output": {
+        "captured": true,
+        "path": "evidence/evidence-ac5-fullscreen-split-layout.png",
+        "artifact": {
+          "path": "evidence/evidence-ac5-fullscreen-split-layout.png",
+          "type": "screenshot",
+          "nodeId": "ac5-screenshot-fullscreen-split-layout",
+          "label": "AC5 (expanded/fullscreen half only): form and order book share the width via the draggable divider in the fullscreen (home.html) layout. This image does NOT prove the compact popup layout — no popup target is reachable from this CDP session; the compact path is covered by the ac5-* clamp assertions instead.",
+          "category": "evidence",
+          "mimeType": "image/png",
+          "metadata": {
+            "provider": "capture-helper",
+            "mode": "snapshot",
+            "pid": 62942,
+            "captureHelper": {
+              "bytes": 245005,
+              "output": "/Users/deeeed/dev/metamask/metamask-extension-2/temp/tasks/review/44254-0730-190746/artifacts/recipe-run/evidence/evidence-ac5-fullscreen-split-layout.png",
+              "selected": {
+                "app": "Google Chrome for Testing",
+                "height": 916,
+                "id": 368,
+                "layer": 0,
+                "onScreen": true,
+                "pid": 62942,
+                "title": "macwork-metamask-extension-2 — MetaMask",
+                "width": 1200,
+                "x": 22,
+                "y": 52
+              },
+              "selector": "pid",
+              "type": "snapshot"
+            }
+          }
+        }
+      }
+    },
+    {
+      "nodeId": "ac6-press-bid-price-row",
+      "action": "ui.press",
+      "intent": "AC6: tap a bid price row — the highest-risk interaction between the new panel and the existing order form",
+      "startedAt": "2026-07-30T13:13:02.813Z",
+      "endedAt": "2026-07-30T13:13:03.633Z",
+      "durationMs": 820,
+      "ok": true,
+      "next": "ac6-wait-limit-price-field",
+      "output": {
+        "clicked": true,
+        "selector": "[data-testid=\"perps-order-book-bid-row-0\"], [data-test-id=\"perps-order-book-bid-row-0\"], [data-test=\"perps-order-book-bid-row-0\"]",
+        "tagName": "DIV",
+        "cdpPort": 7666,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/ETH",
+        "runtimeLaunch": null
+      }
+    },
+    {
+      "nodeId": "ac6-wait-limit-price-field",
+      "action": "ui.wait_for",
+      "intent": "AC6: confirm the limit price field is present and usable after the order type switched to Limit",
+      "startedAt": "2026-07-30T13:13:03.642Z",
+      "endedAt": "2026-07-30T13:13:03.993Z",
+      "durationMs": 351,
+      "ok": true,
+      "next": "ac6-wait-order-type-toggle",
+      "output": {
+        "matched": true,
+        "cdpPort": 7666,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/ETH",
+        "runtimeLaunch": null
+      }
+    },
+    {
+      "nodeId": "ac6-wait-order-type-toggle",
+      "action": "ui.wait_for",
+      "intent": "AC6: confirm the Market/Limit order-type control still renders",
+      "startedAt": "2026-07-30T13:13:04.001Z",
+      "endedAt": "2026-07-30T13:13:04.346Z",
+      "durationMs": 345,
+      "ok": true,
+      "next": "ac6-wait-amount-field",
+      "output": {
+        "matched": true,
+        "cdpPort": 7666,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/ETH",
+        "runtimeLaunch": null
+      }
+    },
+    {
+      "nodeId": "ac6-wait-amount-field",
+      "action": "ui.wait_for",
+      "intent": "AC6: confirm the size/amount field still renders beside the open order book",
+      "startedAt": "2026-07-30T13:13:04.354Z",
+      "endedAt": "2026-07-30T13:13:04.709Z",
+      "durationMs": 355,
+      "ok": true,
+      "next": "ac6-wait-leverage-control",
+      "output": {
+        "matched": true,
+        "cdpPort": 7666,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/ETH",
+        "runtimeLaunch": null
+      }
+    },
+    {
+      "nodeId": "ac6-wait-leverage-control",
+      "action": "ui.wait_for",
+      "intent": "AC6: confirm the leverage control still renders",
+      "startedAt": "2026-07-30T13:13:04.718Z",
+      "endedAt": "2026-07-30T13:13:05.063Z",
+      "durationMs": 345,
+      "ok": true,
+      "next": "ac6-wait-auto-close-tpsl",
+      "output": {
+        "matched": true,
+        "cdpPort": 7666,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/ETH",
+        "runtimeLaunch": null
+      }
+    },
+    {
+      "nodeId": "ac6-wait-auto-close-tpsl",
+      "action": "ui.wait_for",
+      "intent": "AC6: confirm the TP/SL (auto-close) control still renders",
+      "startedAt": "2026-07-30T13:13:05.071Z",
+      "endedAt": "2026-07-30T13:13:05.416Z",
+      "durationMs": 345,
+      "ok": true,
+      "next": "ac6-wait-submit-button",
+      "output": {
+        "matched": true,
+        "cdpPort": 7666,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/ETH",
+        "runtimeLaunch": null
+      }
+    },
+    {
+      "nodeId": "ac6-wait-submit-button",
+      "action": "ui.wait_for",
+      "intent": "AC6: confirm the submit control still renders with the order book open",
+      "startedAt": "2026-07-30T13:13:05.425Z",
+      "endedAt": "2026-07-30T13:13:05.776Z",
+      "durationMs": 351,
+      "ok": true,
+      "next": "ac6-screenshot-form-fields-intact",
+      "output": {
+        "matched": true,
+        "cdpPort": 7666,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/ETH",
+        "runtimeLaunch": null
+      }
+    },
+    {
+      "nodeId": "ac6-screenshot-form-fields-intact",
+      "action": "ui.screenshot",
+      "intent": "AC6: capture the order form intact after the order-book interaction",
+      "artifacts": [
+        {
+          "path": "evidence/evidence-ac6-form-fields-intact.png",
+          "type": "screenshot",
+          "nodeId": "ac6-screenshot-form-fields-intact",
+          "label": "AC6: after tapping a bid price, the form shows Limit selected with the tapped price prefilled, and size, leverage, TP/SL (auto-close) and submit all still render beside the open order book.",
+          "category": "evidence",
+          "mimeType": "image/png",
+          "metadata": {
+            "provider": "capture-helper",
+            "mode": "snapshot",
+            "pid": 62942,
+            "captureHelper": {
+              "bytes": 244355,
+              "output": "/Users/deeeed/dev/metamask/metamask-extension-2/temp/tasks/review/44254-0730-190746/artifacts/recipe-run/evidence/evidence-ac6-form-fields-intact.png",
+              "selected": {
+                "app": "Google Chrome for Testing",
+                "height": 916,
+                "id": 368,
+                "layer": 0,
+                "onScreen": true,
+                "pid": 62942,
+                "title": "macwork-metamask-extension-2 — MetaMask",
+                "width": 1200,
+                "x": 22,
+                "y": 52
+              },
+              "selector": "pid",
+              "type": "snapshot"
+            }
+          }
+        }
+      ],
+      "startedAt": "2026-07-30T13:13:05.785Z",
+      "endedAt": "2026-07-30T13:13:05.983Z",
+      "durationMs": 198,
+      "ok": true,
+      "next": "ac6-run-order-form-regression-tests",
+      "output": {
+        "captured": true,
+        "path": "evidence/evidence-ac6-form-fields-intact.png",
+        "artifact": {
+          "path": "evidence/evidence-ac6-form-fields-intact.png",
+          "type": "screenshot",
+          "nodeId": "ac6-screenshot-form-fields-intact",
+          "label": "AC6: after tapping a bid price, the form shows Limit selected with the tapped price prefilled, and size, leverage, TP/SL (auto-close) and submit all still render beside the open order book.",
+          "category": "evidence",
+          "mimeType": "image/png",
+          "metadata": {
+            "provider": "capture-helper",
+            "mode": "snapshot",
+            "pid": 62942,
+            "captureHelper": {
+              "bytes": 244355,
+              "output": "/Users/deeeed/dev/metamask/metamask-extension-2/temp/tasks/review/44254-0730-190746/artifacts/recipe-run/evidence/evidence-ac6-form-fields-intact.png",
+              "selected": {
+                "app": "Google Chrome for Testing",
+                "height": 916,
+                "id": 368,
+                "layer": 0,
+                "onScreen": true,
+                "pid": 62942,
+                "title": "macwork-metamask-extension-2 — MetaMask",
+                "width": 1200,
+                "x": 22,
+                "y": 52
+              },
+              "selector": "pid",
+              "type": "snapshot"
+            }
+          }
+        }
+      }
+    },
+    {
+      "nodeId": "ac6-run-order-form-regression-tests",
+      "action": "command",
+      "intent": "AC6: run the existing order-form hook suites that own limit price, size and leverage state",
+      "startedAt": "2026-07-30T13:13:05.988Z",
+      "endedAt": "2026-07-30T13:13:09.083Z",
+      "durationMs": 3095,
+      "ok": true,
+      "next": "ac6-assert-order-form-exit",
+      "output": {
+        "exitCode": 0,
+        "stdout": "PASS ui/hooks/perps/usePerpsEstimatedSlippage.test.ts\n  console.error\n    Warning: `ReactDOMTestUtils.act` is deprecated in favor of `React.act`. Import `act` from `react` instead of `react-dom/test-utils`. See https://react.dev/warnings/react-dom-test-utils for more info.\n\n      32 |\n      33 |   it('subscribes to the shared order book without managing the stream', () => {\n    > 34 |     renderHook(() =>\n         |               ^\n      35 |       usePerpsEstimatedSlippage({\n      36 |         symbol: 'BTC',\n      37 |         sizeUsd: 100,\n\n      at console.error (node_modules/@testing-library/react-hooks/lib/core/console.js:19:7)\n      at printWarning (node_modules/react-dom/cjs/react-dom-test-utils.development.js:71:30)\n      at error (node_modules/react-dom/cjs/react-dom-test-utils.development.js:45:7)\n      at actWithWarning (node_modules/react-dom/cjs/react-dom-test-utils.development.js:1736:7)\n      at render (node_modules/@testing-library/react-hooks/lib/dom/pure.js:79:26)\n      at renderHook (node_modules/@testing-library/react-hooks/lib/core/index.js:114:5)\n      at Object.<anonymous> (ui/hooks/perps/usePerpsEstimatedSlippage.test.ts:34:15)\n\n  console.error\n    Warning: ReactDOM.render is no longer supported in React 18. Use createRoot instead. Until you switch to the new API, your app will behave as if it's running React 17. Learn more: https://reactjs.org/link/switch-to-createroot\n\n      32 |\n      33 |   it('subscribes to the shared order book without managing the stream', () => {\n    > 34 |     renderHook(() =>\n         |               ^\n      35 |       usePerpsEstimatedSlippage({\n      36 |         symbol: 'BTC',\n      37 |         sizeUsd: 100,\n\n      at console.error (node_modules/@testing-library/react-hooks/lib/core/console.js:19:7)\n      at printWarning (node_modules/react-dom/cjs/react-dom.development.js:86:30)\n      at error (node_modules/react-dom/cjs/react-dom.development.js:60:7)\n      at Object.render (node_modules/react-dom/cjs/react-dom.development.js:29716:5)\n      at node_modules/@testing-library/react-hooks/lib/dom/pure.js:80:18\n      at act (node_modules/react/cjs/react.development.js:2512:16)\n      at actWithWarning (node_modules/react-dom/cjs/react-dom-test-utils.development.js:1740:10)\n      at render (node_modules/@testing-library/react-hooks/lib/dom/pure.js:79:26)\n      at renderHook (node_modules/@testing-library/react-hooks/lib/core/index.js:114:5)\n      at Object.<anonymous> (ui/hooks/perps/usePerpsEstimatedSlippage.test.ts:34:15)\n\n  console.error\n    Warning: unmountComponentAtNode is deprecated and will be removed in the next major release. Switch to the createRoot API. Learn more: https://reactjs.org/link/switch-to-createroot\n\n      at console.error (node_modules/@testing-library/react-hooks/lib/core/console.js:19:7)\n      at printWarning (node_modules/react-dom/cjs/react-dom.development.js:86:30)\n      at error (node_modules/react-dom/cjs/react-dom.development.js:60:7)\n      at Object.unmountComponentAtNode (node_modules/react-dom/cjs/react-dom.development.js:29754:7)\n      at node_modules/@testing-library/react-hooks/lib/dom/pure.js:92:18\n      at act (node_modules/react/cjs/react.development.js:2512:16)\n      at actWithWarning (node_modules/react-dom/cjs/react-dom-test-utils.development.js:1740:10)\n      at unmount (node_modules/@testing-library/react-hooks/lib/dom/pure.js:91:26)\n      at unmountHook (node_modules/@testing-library/react-hooks/lib/core/index.js:123:7)\n      at cleanup (node_modules/@testing-library/react-hooks/lib/core/cleanup.js:14:11)\n      at Object.<anonymous> (node_modules/@testing-library/react-hooks/lib/core/cleanup.js:42:13)\n\n  console.error\n    Warning: ReactDOM.render is no longer supported in React 18. Use createRoot instead. Until you switch to the new API, your app will behave as if it's running React 17. Learn more: https://reactjs.org/link/switch-to-createroot\n\n      49 |\n      50 |   it('returns null when estimation is disabled', () => {\n    > 51 |     const { result } = renderHook(() =>\n         |                                  ^\n      52 |       usePerpsEstimatedSlippage({\n      53 |         symbol: 'BTC',\n      54 |         sizeUsd: 100,\n\n      at console.error (node_modules/@testing-library/react-hooks/lib/core/console.js:19:7)\n      at printWarning (node_modules/react-dom/cjs/react-dom.development.js:86:30)\n      at error (node_modules/react-dom/cjs/react-dom.development.js:60:7)\n      at Object.render (node_modules/react-dom/cjs/react-dom.development.js:29716:5)\n      at node_modules/@testing-library/react-hooks/lib/dom/pure.js:80:18\n      at act (node_modules/react/cjs/react.development.js:2512:16)\n      at actWithWarning (node_modules/react-dom/cjs/react-dom-test-utils.development.js:1740:10)\n      at render (node_modules/@testing-library/react-hooks/lib/dom/pure.js:79:26)\n      at renderHook (node_modules/@testing-library/react-hooks/lib/core/index.js:114:5)\n      at Object.<anonymous> (ui/hooks/perps/usePerpsEstimatedSlippage.test.ts:51:34)\n\n  console.error\n    Warning: ReactDOM.render is no longer supported in React 18. Use createRoot instead. Until you switch to the new API, your app will behave as if it's running React 17. Learn more: https://reactjs.org/link/switch-to-createroot\n\n      63 |\n      64 |   it('clears readiness immediately when the symbol changes', () => {\n    > 65 |     const { result, rerender } = renderHook(\n         |                                            ^\n      66 |       ({ symbol }: { symbol: string }) =>\n      67 |         usePerpsEstimatedSlippage({\n      68 |           symbol,\n\n      at console.error (node_modules/@testing-library/react-hooks/lib/core/console.js:19:7)\n      at printWarning (node_modules/react-dom/cjs/react-dom.development.js:86:30)\n      at error (node_modules/react-dom/cjs/react-dom.development.js:60:7)\n      at Object.render (node_modules/react-dom/cjs/react-dom.development.js:29716:5)\n      at node_modules/@testing-library/react-hooks/lib/dom/pure.js:80:18\n      at act (node_modules/react/cjs/react.development.js:2512:16)\n      at actWithWarning (node_modules/react-dom/cjs/react-dom-test-utils.development.js:1740:10)\n      at render (node_modules/@testing-library/react-hooks/lib/dom/pure.js:79:26)\n      at renderHook (node_modules/@testing-library/react-hooks/lib/core/index.js:114:5)\n      at Object.<anonymous> (ui/hooks/perps/usePerpsEstimatedSlippage.test.ts:65:44)\n\n  console.error\n    Warning: ReactDOM.render is no longer supported in React 18. Use createRoot instead. Until you switch to the new API, your app will behave as if it's running React 17. Learn more: https://reactjs.org/link/switch-to-createroot\n\n      81 |       reconnect: jest.fn(),\n      82 |     });\n    > 83 |     rerender({ symbol: 'ETH' });\n         |     ^\n      84 |\n      85 |     expect(result.current.isReady).toBe(false);\n      86 |     expect(result.current.estimatedSlippageBps).toBeNull();\n\n      at console.error (node_modules/@testing-library/react-hooks/lib/core/console.js:19:7)\n      at printWarning (node_modules/react-dom/cjs/react-dom.development.js:86:30)\n      at error (node_modules/react-dom/cjs/react-dom.development.js:60:7)\n      at Object.render (node_modules/react-dom/cjs/react-dom.development.js:29716:5)\n      at node_modules/@testing-library/react-hooks/lib/dom/pure.js:86:18\n      at act (node_modules/react/cjs/react.development.js:2512:16)\n      at actWithWarning (node_modules/react-dom/cjs/react-dom-test-utils.development.js:1740:10)\n      at rerender (node_modules/@testing-library/react-hooks/lib/dom/pure.js:85:26)\n      at rerenderHook (node_modules/@testing-library/react-hooks/lib/core/index.js:118:7)\n      at Object.rerender (ui/hooks/perps/usePerpsEstimatedSlippage.test.ts:83:5)\n\n  console.error\n    Warning: `ReactDOMTestUtils.act` is deprecated in favor of `React.act`. Import `act` from `react` instead of `react-dom/test-utils`. See https://react.dev/warnings/react-dom-test-utils for more info.\n\n      193 |     : ProviderWrapper;\n      194 |\n    > 195 |   const hookResult = renderHook(hook, { wrapper });\n          |                                ^\n      196 |\n      197 |   return {\n      198 |     ...hookResult,\n\n      at console.error (node_modules/@testing-library/react-hooks/lib/core/console.js:19:7)\n      at printWarning (node_modules/react-dom/cjs/react-dom-test-utils.development.js:71:30)\n      at error (node_modules/react-dom/cjs/react-dom-test-utils.development.js:45:7)\n      at actWithWarning (node_modules/react-dom/cjs/react-dom-test-utils.development.js:1736:7)\n      at render (node_modules/@testing-library/react-hooks/lib/dom/pure.js:79:26)\n      at renderHook (node_modules/@testing-library/react-hooks/lib/core/index.js:114:5)\n      at renderHookWithProvider (test/lib/render-helpers-navigate.js:195:32)\n      at Object.<anonymous> (ui/hooks/perps/usePerpsOrderForm.test.ts:54:48)\n\n  console.error\n    Warning: ReactDOM.render is no longer supported in React 18. Use createRoot instead. Until you switch to the new API, your app will behave as if it's running React 17. Learn more: https://reactjs.org/link/switch-to-createroot\n\n      193 |     : ProviderWrapper;\n      194 |\n    > 195 |   const hookResult = renderHook(hook, { wrapper });\n          |                                ^\n      196 |\n      197 |   return {\n      198 |     ...hookResult,\n\n      at console.error (node_modules/@testing-library/react-hooks/lib/core/console.js:19:7)\n      at printWarning (node_modules/react-dom/cjs/react-dom.development.js:86:30)\n      at error (node_modules/react-dom/cjs/react-dom.development.js:60:7)\n      at Object.render (node_modules/react-dom/cjs/react-dom.development.js:29716:5)\n      at node_modules/@testing-library/react-hooks/lib/dom/pure.js:80:18\n      at act (node_modules/react/cjs/react.development.js:2512:16)\n      at actWithWarning (node_modules/react-dom/cjs/react-dom-test-utils.development.js:1740:10)\n      at render (node_modules/@testing-library/react-hooks/lib/dom/pure.js:79:26)\n      at renderHook (node_modules/@testing-library/react-hooks/lib/core/index.js:114:5)\n      at renderHookWithProvider (test/lib/render-helpers-navigate.js:195:32)\n      at Object.<anonymous> (ui/hooks/perps/usePerpsOrderForm.test.ts:54:48)\n\n  console.error\n    Warning: unmountComponentAtNode is deprecated and will be removed in the next major release. Switch to the createRoot API. Learn more: https://reactjs.org/link/switch-to-createroot\n\n      at console.error (node_modules/@testing-library/react-hooks/lib/core/console.js:19:7)\n      at printWarning (node_modules/react-dom/cjs/react-dom.development.js:86:30)\n      at error (node_modules/react-dom/cjs/react-dom.development.js:60:7)\n      at Object.unmountComponentAtNode (node_modules/react-dom/cjs/react-dom.development.js:29754:7)\n      at node_modules/@testing-library/react-hooks/lib/dom/pure.js:92:18\n      at act (node_modules/react/cjs/react.development.js:2512:16)\n      at actWithWarning (node_modules/react-dom/cjs/react-dom-test-utils.development.js:1740:10)\n      at unmount (node_modules/@testing-library/react-hooks/lib/dom/pure.js:91:26)\n      at unmountHook (node_modules/@testing-library/react-hooks/lib/core/index.js:123:7)\n      at cleanup (node_modules/@testing-library/react-hooks/lib/core/cleanup.js:14:11)\n      at Object.<anonymous> (node_modules/@testing-library/react-hooks/lib/core/cleanup.js:42:13)\n\n  console.error\n    Warning: ReactDOM.render is no longer supported in React 18. Use createRoot instead. Until you switch to the new API, your app will behave as if it's running React 17. Learn more: https://reactjs.org/link/switch-to-createroot\n\n      193 |     : ProviderWrapper;\n      194 |\n    > 195 |   const hookResult = renderHook(hook, { wrapper });\n          |                                ^\n      196 |\n      197 |   return {\n      198 |     ...hookResult,\n\n      at console.error (node_modules/@testing-library/react-hooks/lib/core/console.js:19:7)\n      at printWarning (node_modules/react-dom/cjs/react-dom.development.js:86:30)\n      at error (node_modules/react-dom/cjs/react-dom.development.js:60:7)\n      at Object.render (node_modules/react-dom/cjs/react-dom.development.js:29716:5)\n      at node_modules/@testing-library/react-hooks/lib/dom/pure.js:80:18\n      at act (node_modules/react/cjs/react.development.js:2512:16)\n      at actWithWarning (node_modules/react-dom/cjs/react-dom-test-utils.development.js:1740:10)\n      at render (node_modules/@testing-library/react-hooks/lib/dom/pure.js:79:26)\n      at renderHook (node_modules/@testing-library/react-hooks/lib/core/index.js:114:5)\n      at renderHookWithProvider (test/lib/render-helpers-navigate.js:195:32)\n      at Object.<anonymous> (ui/hooks/perps/usePerpsOrderForm.test.ts:72:48)\n\n  console.error\n    Warning: ReactDOM.render is no longer supported in React 18. Use createRoot instead. Until you switch to the new API, your app will behave as if it's running React 17. Learn more: https://reactjs.org/link/switch-to-createroot\n\n      193 |     : ProviderWrapper;\n      194 |\n    > 195 |   const hookResult = renderHook(hook, { wrapper });\n          |                                ^\n      196 |\n      197 |   return {\n      198 |     ...hookResult,\n\n      at console.error (node_modules/@testing-library/react-hooks/lib/core/console.js:19:7)\n      at printWarning (node_modules/react-dom/cjs/react-dom.development.js:86:30)\n      at error (node_modules/react-dom/cjs/react-dom.development.js:60:7)\n      at Object.render (node_modules/react-dom/cjs/react-dom.development.js:29716:5)\n      at node_modules/@testing-library/react-hooks/lib/dom/pure.js:80:18\n      at act (node_modules/react/cjs/react.development.js:2512:16)\n      at actWithWarning (node_modules/react-dom/cjs/react-dom-test-utils.development.js:1740:10)\n      at render (node_modules/@testing-library/react-hooks/lib/dom/pure.js:79:26)\n      at renderHook (node_modules/@testing-library/react-hooks/lib/core/index.js:114:5)\n      at renderHookWithProvider (test/lib/render-helpers-navigate.js:195:32)\n      at Object.<anonymous> (ui/hooks/perps/usePerpsOrderForm.test.ts:81:48)\n\n  console.error\n    Warning: ReactDOM.render is no longer supported in React 18. Use createRoot instead. Until you switch to the new API, your app will behave as if it's running React 17. Learn more: https://reactjs.org/link/switch-to-createroot\n\n      193 |     : ProviderWrapper;\n      194 |\n    > 195 |   const hookResult = renderHook(hook, { wrapper });\n          |                                ^\n      196 |\n      197 |   return {\n      198 |     ...hookResult,\n\n      at console.error (node_modules/@testing-library/react-hooks/lib/core/console.js:19:7)\n      at printWarning (node_modules/react-dom/cjs/react-dom.development.js:86:30)\n      at error (node_modules/react-dom/cjs/react-dom.development.js:60:7)\n      at Object.render (node_modules/react-dom/cjs/react-dom.development.js:29716:5)\n      at node_modules/@testing-library/react-hooks/lib/dom/pure.js:80:18\n      at act (node_modules/react/cjs/react.development.js:2512:16)\n      at actWithWarning (node_modules/react-dom/cjs/react-dom-test-utils.development.js:1740:10)\n      at render (node_modules/@testing-library/react-hooks/lib/dom/pure.js:79:26)\n      at renderHook (node_modules/@testing-library/react-hooks/lib/core/index.js:114:5)\n      at renderHookWithProvider (test/lib/render-helpers-navigate.js:195:32)\n      at Object.<anonymous> (ui/hooks/perps/usePerpsOrderForm.test.ts:101:58)\n\n  console.error\n    Warning: ReactDOM.render is no longer supported in React 18. Use createRoot instead. Until you switch to the new API, your app will behave as if it's running React 17. Learn more: https://reactjs.org/link/switch-to-createroot\n\n      108 |       props.currentPrice = 45000;\n      109 |       act(() => {\n    > 110 |         rerender();\n          |         ^\n      111 |       });\n      112 |\n      113 |       expect(result.current.formState.amount).not.toBe('10');\n\n      at console.error (node_modules/@testing-library/react-hooks/lib/core/console.js:19:7)\n      at printWarning (node_modules/react-dom/cjs/react-dom.development.js:86:30)\n      at error (node_modules/react-dom/cjs/react-dom.development.js:60:7)\n      at Object.render (node_modules/react-dom/cjs/react-dom.development.js:29716:5)\n      at node_modules/@testing-library/react-hooks/lib/dom/pure.js:86:18\n      at act (node_modules/react/cjs/react.development.js:2512:16)\n      at actWithWarning (node_modules/react-dom/cjs/react-dom-test-utils.development.js:1740:10)\n      at rerender (node_modules/@testing-library/react-hooks/lib/dom/pure.js:85:26)\n      at rerenderHook (node_modules/@testing-library/react-hooks/lib/core/index.js:118:7)\n      at rerender (ui/hooks/perps/usePerpsOrderForm.test.ts:110:9)\n      at act (node_modules/react/cjs/react.development.js:2512:16)\n      at actWithWarning (node_modules/react-dom/cjs/react-dom-test-utils.development.js:1740:10)\n      at Object.<anonymous> (ui/hooks/perps/usePerpsOrderForm.test.ts:109:10)\n\n  console.error\n    Warning: ReactDOM.render is no longer supported in React 18. Use createRoot instead. Until you switch to the new API, your app will behave as if it's running React 17. Learn more: https://reactjs.org/link/switch-to-createroot\n\n      193 |     : ProviderWrapper;\n      194 |\n    > 195 |   const hookResult = renderHook(hook, { wrapper });\n          |                                ^\n      196 |\n      197 |   return {\n      198 |     ...hookResult,\n\n      at console.error (node_modules/@testing-library/react-hooks/lib/core/console.js:19:7)\n      at printWarning (node_modules/react-dom/cjs/react-dom.development.js:86:30)\n      at error (node_modules/react-dom/cjs/react-dom.development.js:60:7)\n      at Object.render (node_modules/react-dom/cjs/react-dom.development.js:29716:5)\n      at node_modules/@testing-library/react-hooks/lib/dom/pure.js:80:18\n      at act (node_modules/react/cjs/react.development.js:2512:16)\n      at actWithWarning (node_modules/react-dom/cjs/react-dom-test-utils.development.js:1740:10)\n      at render (node_modules/@testing-library/react-hooks/lib/dom/pure.js:79:26)\n      at renderHook (node_modules/@testing-library/react-hooks/lib/core/index.js:114:5)\n      at renderHookWithProvider (test/lib/render-helpers-navigate.js:195:32)\n      at Object.<anonymous> (ui/hooks/perps/usePerpsOrderForm.test.ts:127:58)\n\n  console.error\n    Warning: ReactDOM.render is no longer supported in React 18. Use createRoot instead. Until you switch to the new API, your app will behave as if it's running React 17. Learn more: https://reactjs.org/link/switch-to-createroot\n\n      136 |       props.availableBalance = 1000;\n      137 |       act(() => {\n    > 138 |         rerender();\n          |         ^\n      139 |       });\n      140 |\n      141 |       expect(result.current.formState.amount).toBe('10');\n\n      at console.error (node_modules/@testing-library/react-hooks/lib/core/console.js:19:7)\n      at printWarning (node_modules/react-dom/cjs/react-dom.development.js:86:30)\n      at error (node_modules/react-dom/cjs/react-dom.development.js:60:7)\n      at Object.render (node_modules/react-dom/cjs/react-dom.development.js:29716:5)\n      at node_modules/@testing-library/react-hooks/lib/dom/pure.js:86:18\n      at act (node_modules/react/cjs/react.development.js:2512:16)\n      at actWithWarning (node_modules/react-dom/cjs/react-dom-test-utils.development.js:1740:10)\n      at rerender (node_modules/@testing-library/react-hooks/lib/dom/pure.js:85:26)\n      at rerenderHook (node_modules/@testing-library/react-hooks/lib/core/index.js:118:7)\n      at rerender (ui/hooks/perps/usePerpsOrderForm.test.ts:138:9)\n      at act (node_modules/react/cjs/react.development.js:2512:16)\n      at actWithWarning (node_modules/react-dom/cjs/react-dom-test-utils.development.js:1740:10)\n      at Object.<anonymous> (ui/hooks/perps/usePerpsOrderForm.test.ts:137:10)\n\n  console.error\n    Warning: ReactDOM.render is no longer supported in React 18. Use createRoot instead. Until you switch to the new API, your app will behave as if it's running React 17. Learn more: https://reactjs.org/link/switch-to-createroot\n\n      193 |     : ProviderWrapper;\n      194 |\n    > 195 |   const hookResult = renderHook(hook, { wrapper });\n          |                                ^\n      196 |\n      197 |   return {\n      198 |     ...hookResult,\n\n      at console.error (node_modules/@testing-library/react-hooks/lib/core/console.js:19:7)\n      at printWarning (node_modules/react-dom/cjs/react-dom.development.js:86:30)\n      at error (node_modules/react-dom/cjs/react-dom.development.js:60:7)\n      at Object.render (node_modules/react-dom/cjs/react-dom.development.js:29716:5)\n      at node_modules/@testing-library/react-hooks/lib/dom/pure.js:80:18\n      at act (node_modules/react/cjs/react.development.js:2512:16)\n      at actWithWarning (node_modules/react-dom/cjs/react-dom-test-utils.development.js:1740:10)\n      at render (node_modules/@testing-library/react-hooks/lib/dom/pure.js:79:26)\n      at renderHook (node_modules/@testing-library/react-hooks/lib/core/index.js:114:5)\n      at renderHookWithProvider (test/lib/render-helpers-navigate.js:195:32)\n      at Object.<anonymous> (ui/hooks/perps/usePerpsOrderForm.test.ts:163:58)\n\n  console.error\n    Warning: ReactDOM.render is no longer supported in React 18. Use createRoot instead. Until you switch to the new API, your app will behave as if it's running React 17. Learn more: https://reactjs.org/link/switch-to-createroot\n\n      171 |       props.availableBalance = 1000;\n      172 |       act(() => {\n    > 173 |         rerender();\n          |         ^\n      174 |       });\n      175 |\n      176 |       expect(result.current.formState.amount).toBe('10');\n\n      at console.error (node_modules/@testing-library/react-hooks/lib/core/console.js:19:7)\n      at printWarning (node_modules/react-dom/cjs/react-dom.development.js:86:30)\n      at error (node_modules/react-dom/cjs/react-dom.development.js:60:7)\n      at Object.render (node_modules/react-dom/cjs/react-dom.development.js:29716:5)\n      at node_modules/@testing-library/react-hooks/lib/dom/pure.js:86:18\n      at act (node_modules/react/cjs/react.development.js:2512:16)\n      at actWithWarning (node_modules/react-dom/cjs/react-dom-test-utils.development.js:1740:10)\n      at rerender (node_modules/@testing-library/react-hooks/lib/dom/pure.js:85:26)\n      at rerenderHook (node_modules/@testing-library/react-hooks/lib/core/index.js:118:7)\n      at rerender (ui/hooks/perps/usePerpsOrderForm.test.ts:173:9)\n      at act (node_modules/react/cjs/react.development.js:2512:16)\n      at actWithWarning (node_modules/react-dom/cjs/react-dom-test-utils.development.js:1740:10)\n      at Object.<anonymous> (ui/hooks/perps/usePerpsOrderForm.test.ts:172:10)\n\n  console.error\n    Warning: ReactDOM.render is no longer supported in React 18. Use createRoot instead. Until you switch to the new API, your app will behave as if it's running React 17. Learn more: https://reactjs.org/link/switch-to-createroot\n\n      193 |     : ProviderWrapper;\n      194 |\n    > 195 |   const hookResult = renderHook(hook, { wrapper });\n          |                                ^\n      196 |\n      197 |   return {\n      198 |     ...hookResult,\n\n      at console.error (node_modules/@testing-library/react-hooks/lib/core/console.js:19:7)\n      at printWarning (node_modules/react-dom/cjs/react-dom.development.js:86:30)\n      at error (node_modules/react-dom/cjs/react-dom.development.js:60:7)\n      at Object.render (node_modules/react-dom/cjs/react-dom.development.js:29716:5)\n      at node_modules/@testing-library/react-hooks/lib/dom/pure.js:80:18\n      at act (node_modules/react/cjs/react.development.js:2512:16)\n      at actWithWarning (node_modules/react-dom/cjs/react-dom-test-utils.development.js:1740:10)\n      at render (node_modules/@testing-library/react-hooks/lib/dom/pure.js:79:26)\n      at renderHook (node_modules/@testing-library/react-hooks/lib/core/index.js:114:5)\n      at renderHookWithProvider (test/lib/render-helpers-navigate.js:195:32)\n      at Object.<anonymous> (ui/hooks/perps/usePerpsOrderForm.test.ts:186:58)\n\n  console.error\n    Warning: ReactDOM.render is no longer supported in React 18. Use createRoot instead. Until you switch to the new API, your app will behave as if it's running React 17. Learn more: https://reactjs.org/link/switch-to-createroot\n\n      196 |       props.currentPrice = 45000;\n      197 |       act(() => {\n    > 198 |         rerender();\n          |         ^\n      199 |       });\n      200 |\n      201 |       expect(result.current.formState.amount).toBe('5');\n\n      at console.error (node_modules/@testing-library/react-hooks/lib/core/console.js:19:7)\n      at printWarning (node_modules/react-dom/cjs/react-dom.development.js:86:30)\n      at error (node_modules/react-dom/cjs/react-dom.development.js:60:7)\n      at Object.render (node_modules/react-dom/cjs/react-dom.development.js:29716:5)\n      at node_modules/@testing-library/react-hooks/lib/dom/pure.js:86:18\n      at act (node_modules/react/cjs/react.development.js:2512:16)\n      at actWithWarning (node_modules/react-dom/cjs/react-dom-test-utils.development.js:1740:10)\n      at rerender (node_modules/@testing-library/react-hooks/lib/dom/pure.js:85:26)\n      at rerenderHook (node_modules/@testing-library/react-hooks/lib/core/index.js:118:7)\n      at rerender (ui/hooks/perps/usePerpsOrderForm.test.ts:198:9)\n      at act (node_modules/react/cjs/react.development.js:2512:16)\n      at actWithWarning (node_modules/react-dom/cjs/react-dom-test-utils.development.js:1740:10)\n      at Object.<anonymous> (ui/hooks/perps/usePerpsOrderForm.test.ts:197:10)\n\n  console.error\n    Warning: ReactDOM.render is no longer supported in React 18. Use createRoot instead. Until you switch to the new API, your app will behave as if it's running React 17. Learn more: https://reactjs.org/link/switch-to-createroot\n\n      193 |     : ProviderWrapper;\n      194 |\n    > 195 |   const hookResult = renderHook(hook, { wrapper });\n          |                                ^\n      196 |\n      197 |   return {\n      198 |     ...hookResult,\n\n      at console.error (node_modules/@testing-library/react-hooks/lib/core/console.js:19:7)\n      at printWarning (node_modules/react-dom/cjs/react-dom.development.js:86:30)\n      at error (node_modules/react-dom/cjs/react-dom.development.js:60:7)\n      at Object.render (node_modules/react-dom/cjs/react-dom.development.js:29716:5)\n      at node_modules/@testing-library/react-hooks/lib/dom/pure.js:80:18\n      at act (node_modules/react/cjs/react.development.js:2512:16)\n      at actWithWarning (node_modules/react-dom/cjs/react-dom-test-utils.development.js:1740:10)\n      at render (node_modules/@testing-library/react-hooks/lib/dom/pure.js:79:26)\n      at renderHook (node_modules/@testing-library/react-hooks/lib/core/index.js:114:5)\n      at renderHookWithProvider (test/lib/render-helpers-navigate.js:195:32)\n      at Object.<anonymous> (ui/hooks/perps/usePerpsOrderForm.test.ts:205:48)\n\n  console.error\n    Warning: ReactDOM.render is no longer supported in React 18. Use createRoot instead. Until you switch to the new API, your app will behave as if it's running React 17. Learn more: https://reactjs.org/link/switch-to-createroot\n\n      193 |     : ProviderWrapper;\n      194 |\n    > 195 |   const hookResult = renderHook(hook, { wrapper });\n          |                                ^\n      196 |\n      197 |   return {\n      198 |     ...hookResult,\n\n      at console.error (node_modules/@testing-library/react-hooks/lib/core/console.js:19:7)\n      at printWarning (node_modules/react-dom/cjs/react-dom.development.js:86:30)\n      at error (node_modules/react-dom/cjs/react-dom.development.js:60:7)\n      at Object.render (node_modules/react-dom/cjs/react-dom.development.js:29716:5)\n      at node_modules/@testing-library/react-hooks/lib/dom/pure.js:80:18\n      at act (node_modules/react/cjs/react.development.js:2512:16)\n      at actWithWarning (node_modules/react-dom/cjs/react-dom-test-utils.development.js:1740:10)\n      at render (node_modules/@testing-library/react-hooks/lib/dom/pure.js:79:26)\n      at renderHook (node_modules/@testing-library/react-hooks/lib/core/index.js:114:5)\n      at renderHookWithProvider (test/lib/render-helpers-navigate.js:195:32)\n      at Object.<anonymous> (ui/hooks/perps/usePerpsOrderForm.test.ts:222:58)\n\n  console.error\n    Warning: ReactDOM.render is no longer supported in React 18. Use createRoot instead. Until you switch to the new API, your app will behave as if it's running React 17. Learn more: https://reactjs.org/link/switch-to-createroot\n\n      229 |       props.initialLeverage = 8;\n      230 |       act(() => {\n    > 231 |         rerender();\n          |         ^\n      232 |       });\n      233 |\n      234 |       expect(result.current.formState.leverage).toBe(8);\n\n      at console.error (node_modules/@testing-library/react-hooks/lib/core/console.js:19:7)\n      at printWarning (node_modules/react-dom/cjs/react-dom.development.js:86:30)\n      at error (node_modules/react-dom/cjs/react-dom.development.js:60:7)\n      at Object.render (node_modules/react-dom/cjs/react-dom.development.js:29716:5)\n      at node_modules/@testing-library/react-hooks/lib/dom/pure.js:86:18\n      at act (node_modules/react/cjs/react.development.js:2512:16)\n      at actWithWarning (node_modules/react-dom/cjs/react-dom-test-utils.development.js:1740:10)\n      at rerender (node_modules/@testing-library/react-hooks/lib/dom/pure.js:85:26)\n      at rerenderHook (node_modules/@testing-library/react-hooks/lib/core/index.js:118:7)\n      at rerender (ui/hooks/perps/usePerpsOrderForm.test.ts:231:9)\n      at act (node_modules/react/cjs/react.development.js:2512:16)\n      at actWithWarning (node_modules/react-dom/cjs/react-dom-test-utils.development.js:1740:10)\n      at Object.<anonymous> (ui/hooks/perps/usePerpsOrderForm.test.ts:230:10)\n\n  console.error\n    Warning: ReactDOM.render is no longer supported in React 18. Use createRoot instead. Until you switch to the new API, your app will behave as if it's running React 17. Learn more: https://reactjs.org/link/switch-to-createroot\n\n      193 |     : ProviderWrapper;\n      194 |\n    > 195 |   const hookResult = renderHook(hook, { wrapper });\n          |                                ^\n      196 |\n      197 |   return {\n      198 |     ...hookResult,\n\n      at console.error (node_modules/@testing-library/react-hooks/lib/core/console.js:19:7)\n      at printWarning (node_modules/react-dom/cjs/react-dom.development.js:86:30)\n      at error (node_modules/react-dom/cjs/react-dom.development.js:60:7)\n      at Object.render (node_modules/react-dom/cjs/react-dom.development.js:29716:5)\n      at node_modules/@testing-library/react-hooks/lib/dom/pure.js:80:18\n      at act (node_modules/react/cjs/react.development.js:2512:16)\n      at actWithWarning (node_modules/react-dom/cjs/react-dom-test-utils.development.js:1740:10)\n      at render (node_modules/@testing-library/react-hooks/lib/dom/pure.js:79:26)\n      at renderHook (node_modules/@testing-library/react-hooks/lib/core/index.js:114:5)\n      at renderHookWithProvider (test/lib/render-helpers-navigate.js:195:32)\n      at Object.<anonymous> (ui/hooks/perps/usePerpsOrderForm.test.ts:243:48)\n\n  console.error\n    Warning: ReactDOM.render is no longer supported in React 18. Use createRoot instead. Until you switch to the new API, your app will behave as if it's running React 17. Learn more: https://reactjs.org/link/switch-to-createroot\n\n      193 |     : ProviderWrapper;\n      194 |\n    > 195 |   const hookResult = renderHook(hook, { wrapper });\n          |                                ^\n      196 |\n      197 |   return {\n      198 |     ...hookResult,\n\n      at console.error (node_modules/@testing-library/react-hooks/lib/core/console.js:19:7)\n      at printWarning (node_modules/react-dom/cjs/react-dom.development.js:86:30)\n      at error (node_modules/react-dom/cjs/react-dom.development.js:60:7)\n      at Object.render (node_modules/react-dom/cjs/react-dom.development.js:29716:5)\n      at node_modules/@testing-library/react-hooks/lib/dom/pure.js:80:18\n      at act (node_modules/react/cjs/react.development.js:2512:16)\n      at actWithWarning (node_modules/react-dom/cjs/react-dom-test-utils.development.js:1740:10)\n      at render (node_modules/@testing-library/react-hooks/lib/dom/pure.js:79:26)\n      at renderHook (node_modules/@testing-library/react-hooks/lib/core/index.js:114:5)\n      at renderHookWithProvider (test/lib/render-helpers-navigate.js:195:32)\n      at Object.<anonymous> (ui/hooks/perps/usePerpsOrderForm.test.ts:258:48)\n\n  console.error\n    Warning: ReactDOM.render is no longer supported in React 18. Use createRoot instead. Until you switch to the new API, your app will behave as if it's running React 17. Learn more: https://reactjs.org/link/switch-to-createroot\n\n      193 |     : ProviderWrapper;\n      194 |\n    > 195 |   const hookResult = renderHook(hook, { wrapper });\n          |                                ^\n      196 |\n      197 |   return {\n      198 |     ...hookResult,\n\n      at console.error (node_modules/@testing-library/react-hooks/lib/core/console.js:19:7)\n      at printWarning (node_modules/react-dom/cjs/react-dom.development.js:86:30)\n      at error (node_modules/react-dom/cjs/react-dom.development.js:60:7)\n      at Object.render (node_modules/react-dom/cjs/react-dom.development.js:29716:5)\n      at node_modules/@testing-library/react-hooks/lib/dom/pure.js:80:18\n      at act (node_modules/react/cjs/react.development.js:2512:16)\n      at actWithWarning (node_modules/react-dom/cjs/react-dom-test-utils.development.js:1740:10)\n      at render (node_modules/@testing-library/react-hooks/lib/dom/pure.js:79:26)\n      at renderHook (node_modules/@testing-library/react-hooks/lib/core/index.js:114:5)\n      at renderHookWithProvider (test/lib/render-helpers-navigate.js:195:32)\n      at Object.<anonymous> (ui/hooks/perps/usePerpsOrderForm.test.ts:281:48)\n\n  console.error\n    Warning: ReactDOM.render is no longer supported in React 18. Use createRoot instead. Until you switch to the new API, your app will behave as if it's running React 17. Learn more: https://reactjs.org/link/switch-to-createroot\n\n      193 |     : ProviderWrapper;\n      194 |\n    > 195 |   const hookResult = renderHook(hook, { wrapper });\n          |                                ^\n      196 |\n      197 |   return {\n      198 |     ...hookResult,\n\n      at console.error (node_modules/@testing-library/react-hooks/lib/core/console.js:19:7)\n      at printWarning (node_modules/react-dom/cjs/react-dom.development.js:86:30)\n      at error (node_modules/react-dom/cjs/react-dom.development.js:60:7)\n      at Object.render (node_modules/react-dom/cjs/react-dom.development.js:29716:5)\n      at node_modules/@testing-library/react-hooks/lib/dom/pure.js:80:18\n      at act (node_modules/react/cjs/react.development.js:2512:16)\n      at actWithWarning (node_modules/react-dom/cjs/react-dom-test-utils.development.js:1740:10)\n      at render (node_modules/@testing-library/react-hooks/lib/dom/pure.js:79:26)\n      at renderHook (node_modules/@testing-library/react-hooks/lib/core/index.js:114:5)\n      at renderHookWithProvider (test/lib/render-helpers-navigate.js:195:32)\n      at Object.<anonymous> (ui/hooks/perps/usePerpsOrderForm.test.ts:295:48)\n\n  console.error\n    Warning: ReactDOM.render is no longer supported in React 18. Use createRoot instead. Until you switch to the new API, your app will behave as if it's running React 17. Learn more: https://reactjs.org/link/switch-to-createroot\n\n      193 |     : ProviderWrapper;\n      194 |\n    > 195 |   const hookResult = renderHook(hook, { wrapper });\n          |                                ^\n      196 |\n      197 |   return {\n      198 |     ...hookResult,\n\n      at console.error (node_modules/@testing-library/react-hooks/lib/core/console.js:19:7)\n      at printWarning (node_modules/react-dom/cjs/react-dom.development.js:86:30)\n      at error (node_modules/react-dom/cjs/react-dom.development.js:60:7)\n      at Object.render (node_modules/react-dom/cjs/react-dom.development.js:29716:5)\n      at node_modules/@testing-library/react-hooks/lib/dom/pure.js:80:18\n      at act (node_modules/react/cjs/react.development.js:2512:16)\n      at actWithWarning (node_modules/react-dom/cjs/react-dom-test-utils.development.js:1740:10)\n      at render (node_modules/@testing-library/react-hooks/lib/dom/pure.js:79:26)\n      at renderHook (node_modules/@testing-library/react-hooks/lib/core/index.js:114:5)\n      at renderHookWithProvider (test/lib/render-helpers-navigate.js:195:32)\n      at Object.<anonymous> (ui/hooks/perps/usePerpsOrderForm.test.ts:310:48)\n\n  console.error\n    Warning: ReactDOM.render is no longer supported in React 18. Use createRoot instead. Until you switch to the new API, your app will behave as if it's running React 17. Learn more: https://reactjs.org/link/switch-to-createroot\n\n      193 |     : ProviderWrapper;\n      194 |\n    > 195 |   const hookResult = renderHook(hook, { wrapper });\n          |                                ^\n      196 |\n      197 |   return {\n      198 |     ...hookResult,\n\n      at console.error (node_modules/@testing-library/react-hooks/lib/core/console.js:19:7)\n      at printWarning (node_modules/react-dom/cjs/react-dom.development.js:86:30)\n      at error (node_modules/react-dom/cjs/react-dom.development.js:60:7)\n      at Object.render (node_modules/react-dom/cjs/react-dom.development.js:29716:5)\n      at node_modules/@testing-library/react-hooks/lib/dom/pure.js:80:18\n      at act (node_modules/react/cjs/react.development.js:2512:16)\n      at actWithWarning (node_modules/react-dom/cjs/react-dom-test-utils.development.js:1740:10)\n      at render (node_modules/@testing-library/react-hooks/lib/dom/pure.js:79:26)\n      at renderHook (node_modules/@testing-library/react-hooks/lib/core/index.js:114:5)\n      at renderHookWithProvider (test/lib/render-helpers-navigate.js:195:32)\n      at Object.<anonymous> (ui/hooks/perps/usePerpsOrderForm.test.ts:324:48)\n\n  console.error\n    Warning: ReactDOM.render is no longer supported in React 18. Use createRoot instead. Until you switch to the new API, your app will behave as if it's running React 17. Learn more: https://reactjs.org/link/switch-to-createroot\n\n      193 |     : ProviderWrapper;\n      194 |\n    > 195 |   const hookResult = renderHook(hook, { wrapper });\n          |                                ^\n      196 |\n      197 |   return {\n      198 |     ...hookResult,\n\n      at console.error (node_modules/@testing-library/react-hooks/lib/core/console.js:19:7)\n      at printWarning (node_modules/react-dom/cjs/react-dom.development.js:86:30)\n      at error (node_modules/react-dom/cjs/react-dom.development.js:60:7)\n      at Object.render (node_modules/react-dom/cjs/react-dom.development.js:29716:5)\n      at node_modules/@testing-library/react-hooks/lib/dom/pure.js:80:18\n      at act (node_modules/react/cjs/react.development.js:2512:16)\n      at actWithWarning (node_modules/react-dom/cjs/react-dom-test-utils.development.js:1740:10)\n      at render (node_modules/@testing-library/react-hooks/lib/dom/pure.js:79:26)\n      at renderHook (node_modules/@testing-library/react-hooks/lib/core/index.js:114:5)\n      at renderHookWithProvider (test/lib/render-helpers-navigate.js:195:32)\n      at Object.<anonymous> (ui/hooks/perps/usePerpsOrderForm.test.ts:341:48)\n\n  console.error\n    Warning: ReactDOM.render is no longer supported in React 18. Use createRoot instead. Until you switch to the new API, your app will behave as if it's running React 17. Learn more: https://reactjs.org/link/switch-to-createroot\n\n      193 |     : ProviderWrapper;\n      194 |\n    > 195 |   const hookResult = renderHook(hook, { wrapper });\n          |                                ^\n      196 |\n      197 |   return {\n      198 |     ...hookResult,\n\n      at console.error (node_modules/@testing-library/react-hooks/lib/core/console.js:19:7)\n      at printWarning (node_modules/react-dom/cjs/react-dom.development.js:86:30)\n      at error (node_modules/react-dom/cjs/react-dom.development.js:60:7)\n      at Object.render (node_modules/react-dom/cjs/react-dom.development.js:29716:5)\n      at node_modules/@testing-library/react-hooks/lib/dom/pure.js:80:18\n      at act (node_modules/react/cjs/react.development.js:2512:16)\n      at actWithWarning (node_modules/react-dom/cjs/react-dom-test-utils.development.js:1740:10)\n      at render (node_modules/@testing-library/react-hooks/lib/dom/pure.js:79:26)\n      at renderHook (node_modules/@testing-library/react-hooks/lib/core/index.js:114:5)\n      at renderHookWithProvider (test/lib/render-helpers-navigate.js:195:32)\n      at Object.<anonymous> (ui/hooks/perps/usePerpsOrderForm.test.ts:354:48)\n\n  console.error\n    Warning: ReactDOM.render is no longer supported in React 18. Use createRoot instead. Until you switch to the new API, your app will behave as if it's running React 17. Learn more: https://reactjs.org/link/switch-to-createroot\n\n      193 |     : ProviderWrapper;\n      194 |\n    > 195 |   const hookResult = renderHook(hook, { wrapper });\n          |                                ^\n      196 |\n      197 |   return {\n      198 |     ...hookResult,\n\n      at console.error (node_modules/@testing-library/react-hooks/lib/core/console.js:19:7)\n      at printWarning (node_modules/react-dom/cjs/react-dom.development.js:86:30)\n      at error (node_modules/react-dom/cjs/react-dom.development.js:60:7)\n      at Object.render (node_modules/react-dom/cjs/react-dom.development.js:29716:5)\n      at node_modules/@testing-library/react-hooks/lib/dom/pure.js:80:18\n      at act (node_modules/react/cjs/react.development.js:2512:16)\n      at actWithWarning (node_modules/react-dom/cjs/react-dom-test-utils.development.js:1740:10)\n      at render (node_modules/@testing-library/react-hooks/lib/dom/pure.js:79:26)\n      at renderHook (node_modules/@testing-library/react-hooks/lib/core/index.js:114:5)\n      at renderHookWithProvider (test/lib/render-helpers-navigate.js:195:32)\n      at Object.<anonymous> (ui/hooks/perps/usePerpsOrderForm.test.ts:367:48)\n\n  console.error\n    Warning: ReactDOM.render is no longer supported in React 18. Use createRoot instead. Until you switch to the new API, your app will behave as if it's running React 17. Learn more: https://reactjs.org/link/switch-to-createroot\n\n      193 |     : ProviderWrapper;\n      194 |\n    > 195 |   const hookResult = renderHook(hook, { wrapper });\n          |                                ^\n      196 |\n      197 |   return {\n      198 |     ...hookResult,\n\n      at console.error (node_modules/@testing-library/react-hooks/lib/core/console.js:19:7)\n      at printWarning (node_modules/react-dom/cjs/react-dom.development.js:86:30)\n      at error (node_modules/react-dom/cjs/react-dom.development.js:60:7)\n      at Object.render (node_modules/react-dom/cjs/react-dom.development.js:29716:5)\n      at node_modules/@testing-library/react-hooks/lib/dom/pure.js:80:18\n      at act (node_modules/react/cjs/react.development.js:2512:16)\n      at actWithWarning (node_modules/react-dom/cjs/react-dom-test-utils.development.js:1740:10)\n      at render (node_modules/@testing-library/react-hooks/lib/dom/pure.js:79:26)\n      at renderHook (node_modules/@testing-library/react-hooks/lib/core/index.js:114:5)\n      at renderHookWithProvider (test/lib/render-helpers-navigate.js:195:32)\n      at Object.<anonymous> (ui/hooks/perps/usePerpsOrderForm.test.ts:380:48)\n\n  console.error\n    Warning: ReactDOM.render is no longer supported in React 18. Use createRoot instead. Until you switch to the new API, your app will behave as if it's running React 17. Learn more: https://reactjs.org/link/switch-to-createroot\n\n      193 |     : ProviderWrapper;\n      194 |\n    > 195 |   const hookResult = renderHook(hook, { wrapper });\n          |                                ^\n      196 |\n      197 |   return {\n      198 |     ...hookResult,\n\n      at console.error (node_modules/@testing-library/react-hooks/lib/core/console.js:19:7)\n      at printWarning (node_modules/react-dom/cjs/react-dom.development.js:86:30)\n      at error (node_modules/react-dom/cjs/react-dom.development.js:60:7)\n      at Object.render (node_modules/react-dom/cjs/react-dom.development.js:29716:5)\n      at node_modules/@testing-library/react-hooks/lib/dom/pure.js:80:18\n      at act (node_modules/react/cjs/react.development.js:2512:16)\n      at actWithWarning (node_modules/react-dom/cjs/react-dom-test-utils.development.js:1740:10)\n      at render (node_modules/@testing-library/react-hooks/lib/dom/pure.js:79:26)\n      at renderHook (node_modules/@testing-library/react-hooks/lib/core/index.js:114:5)\n      at renderHookWithProvider (test/lib/render-helpers-navigate.js:195:32)\n      at Object.<anonymous> (ui/hooks/perps/usePerpsOrderForm.test.ts:393:48)\n\n  console.error\n    Warning: ReactDOM.render is no longer supported in React 18. Use createRoot instead. Until you switch to the new API, your app will behave as if it's running React 17. Learn more: https://reactjs.org/link/switch-to-createroot\n\n      193 |     : ProviderWrapper;\n      194 |\n    > 195 |   const hookResult = renderHook(hook, { wrapper });\n          |                                ^\n      196 |\n      197 |   return {\n      198 |     ...hookResult,\n\n      at console.error (node_modules/@testing-library/react-hooks/lib/core/console.js:19:7)\n      at printWarning (node_modules/react-dom/cjs/react-dom.development.js:86:30)\n      at error (node_modules/react-dom/cjs/react-dom.development.js:60:7)\n      at Object.render (node_modules/react-dom/cjs/react-dom.development.js:29716:5)\n      at node_modules/@testing-library/react-hooks/lib/dom/pure.js:80:18\n      at act (node_modules/react/cjs/react.development.js:2512:16)\n      at actWithWarning (node_modules/react-dom/cjs/react-dom-test-utils.development.js:1740:10)\n      at render (node_modules/@testing-library/react-hooks/lib/dom/pure.js:79:26)\n      at renderHook (node_modules/@testing-library/react-hooks/lib/core/index.js:114:5)\n      at renderHookWithProvider (test/lib/render-helpers-navigate.js:195:32)\n      at Object.<anonymous> (ui/hooks/perps/usePerpsOrderForm.test.ts:406:48)\n\n  console.error\n    Warning: ReactDOM.render is no longer supported in React 18. Use createRoot instead. Until you switch to the new API, your app will behave as if it's running React 17. Learn more: https://reactjs.org/link/switch-to-createroot\n\n      193 |     : ProviderWrapper;\n      194 |\n    > 195 |   const hookResult = renderHook(hook, { wrapper });\n          |                                ^\n      196 |\n      197 |   return {\n      198 |     ...hookResult,\n\n      at console.error (node_modules/@testing-library/react-hooks/lib/core/console.js:19:7)\n      at printWarning (node_modules/react-dom/cjs/react-dom.development.js:86:30)\n      at error (node_modules/react-dom/cjs/react-dom.development.js:60:7)\n      at Object.render (node_modules/react-dom/cjs/react-dom.development.js:29716:5)\n      at node_modules/@testing-library/react-hooks/lib/dom/pure.js:80:18\n      at act (node_modules/react/cjs/react.development.js:2512:16)\n      at actWithWarning (node_modules/react-dom/cjs/react-dom-test-utils.development.js:1740:10)\n      at render (node_modules/@testing-library/react-hooks/lib/dom/pure.js:79:26)\n      at renderHook (node_modules/@testing-library/react-hooks/lib/core/index.js:114:5)\n      at renderHookWithProvider (test/lib/render-helpers-navigate.js:195:32)\n      at Object.<anonymous> (ui/hooks/perps/usePerpsOrderForm.test.ts:419:48)\n\n  console.error\n    Warning: ReactDOM.render is no longer supported in React 18. Use createRoot instead. Until you switch to the new API, your app will behave as if it's running React 17. Learn more: https://reactjs.org/link/switch-to-createroot\n\n      193 |     : ProviderWrapper;\n      194 |\n    > 195 |   const hookResult = renderHook(hook, { wrapper });\n          |                                ^\n      196 |\n      197 |   return {\n      198 |     ...hookResult,\n\n      at console.error (node_modules/@testing-library/react-hooks/lib/core/console.js:19:7)\n      at printWarning (node_modules/react-dom/cjs/react-dom.development.js:86:30)\n      at error (node_modules/react-dom/cjs/react-dom.development.js:60:7)\n      at Object.render (node_modules/react-dom/cjs/react-dom.development.js:29716:5)\n      at node_modules/@testing-library/react-hooks/lib/dom/pure.js:80:18\n      at act (node_modules/react/cjs/react.development.js:2512:16)\n      at actWithWarning (node_modules/react-dom/cjs/react-dom-test-utils.development.js:1740:10)\n      at render (node_modules/@testing-library/react-hooks/lib/dom/pure.js:79:26)\n      at renderHook (node_modules/@testing-library/react-hooks/lib/core/index.js:114:5)\n      at renderHookWithProvider (test/lib/render-helpers-navigate.js:195:32)\n      at Object.<anonymous> (ui/hooks/perps/usePerpsOrderForm.test.ts:433:48)\n\n  console.error\n    Warning: ReactDOM.render is no longer supported in React 18. Use createRoot instead. Until you switch to the new API, your app will behave as if it's running React 17. Learn more: https://reactjs.org/link/switch-to-createroot\n\n      193 |     : ProviderWrapper;\n      194 |\n    > 195 |   const hookResult = renderHook(hook, { wrapper });\n          |                                ^\n      196 |\n      197 |   return {\n      198 |     ...hookResult,\n\n      at console.error (node_modules/@testing-library/react-hooks/lib/core/console.js:19:7)\n      at printWarning (node_modules/react-dom/cjs/react-dom.development.js:86:30)\n      at error (node_modules/react-dom/cjs/react-dom.development.js:60:7)\n      at Object.render (node_modules/react-dom/cjs/react-dom.development.js:29716:5)\n      at node_modules/@testing-library/react-hooks/lib/dom/pure.js:80:18\n      at act (node_modules/react/cjs/react.development.js:2512:16)\n      at actWithWarning (node_modules/react-dom/cjs/react-dom-test-utils.development.js:1740:10)\n      at render (node_modules/@testing-library/react-hooks/lib/dom/pure.js:79:26)\n      at renderHook (node_modules/@testing-library/react-hooks/lib/core/index.js:114:5)\n      at renderHookWithProvider (test/lib/render-helpers-navigate.js:195:32)\n      at Object.<anonymous> (ui/hooks/perps/usePerpsOrderForm.test.ts:462:48)\n\n  console.error\n    Warning: ReactDOM.render is no longer supported in React 18. Use createRoot instead. Until you switch to the new API, your app will behave as if it's running React 17. Learn more: https://reactjs.org/link/switch-to-createroot\n\n      193 |     : ProviderWrapper;\n      194 |\n    > 195 |   const hookResult = renderHook(hook, { wrapper });\n          |                                ^\n      196 |\n      197 |   return {\n      198 |     ...hookResult,\n\n      at console.error (node_modules/@testing-library/react-hooks/lib/core/console.js:19:7)\n      at printWarning (node_modules/react-dom/cjs/react-dom.development.js:86:30)\n      at error (node_modules/react-dom/cjs/react-dom.development.js:60:7)\n      at Object.render (node_modules/react-dom/cjs/react-dom.development.js:29716:5)\n      at node_modules/@testing-library/react-hooks/lib/dom/pure.js:80:18\n      at act (node_modules/react/cjs/react.development.js:2512:16)\n      at actWithWarning (node_modules/react-dom/cjs/react-dom-test-utils.development.js:1740:10)\n      at render (node_modules/@testing-library/react-hooks/lib/dom/pure.js:79:26)\n      at renderHook (node_modules/@testing-library/react-hooks/lib/core/index.js:114:5)\n      at renderHookWithProvider (test/lib/render-helpers-navigate.js:195:32)\n      at Object.<anonymous> (ui/hooks/perps/usePerpsOrderForm.test.ts:475:48)\n\n  console.error\n    Warning: ReactDOM.render is no longer supported in React 18. Use createRoot instead. Until you switch to the new API, your app will behave as if it's running React 17. Learn more: https://reactjs.org/link/switch-to-createroot\n\n      193 |     : ProviderWrapper;\n      194 |\n    > 195 |   const hookResult = renderHook(hook, { wrapper });\n          |                                ^\n      196 |\n      197 |   return {\n      198 |     ...hookResult,\n\n      at console.error (node_modules/@testing-library/react-hooks/lib/core/console.js:19:7)\n      at printWarning (node_modules/react-dom/cjs/react-dom.development.js:86:30)\n      at error (node_modules/react-dom/cjs/react-dom.development.js:60:7)\n      at Object.render (node_modules/react-dom/cjs/react-dom.development.js:29716:5)\n      at node_modules/@testing-library/react-hooks/lib/dom/pure.js:80:18\n      at act (node_modules/react/cjs/react.development.js:2512:16)\n      at actWithWarning (node_modules/react-dom/cjs/react-dom-test-utils.development.js:1740:10)\n      at render (node_modules/@testing-library/react-hooks/lib/dom/pure.js:79:26)\n      at renderHook (node_modules/@testing-library/react-hooks/lib/core/index.js:114:5)\n      at renderHookWithProvider (test/lib/render-helpers-navigate.js:195:32)\n      at Object.<anonymous> (ui/hooks/perps/usePerpsOrderForm.test.ts:498:48)\n\n  console.error\n    Warning: ReactDOM.render is no longer supported in React 18. Use createRoot instead. Until you switch to the new API, your app will behave as if it's running React 17. Learn more: https://reactjs.org/link/switch-to-createroot\n\n      193 |     : ProviderWrapper;\n      194 |\n    > 195 |   const hookResult = renderHook(hook, { wrapper });\n          |                                ^\n      196 |\n      197 |   return {\n      198 |     ...hookResult,\n\n      at console.error (node_modules/@testing-library/react-hooks/lib/core/console.js:19:7)\n      at printWarning (node_modules/react-dom/cjs/react-dom.development.js:86:30)\n      at error (node_modules/react-dom/cjs/react-dom.development.js:60:7)\n      at Object.render (node_modules/react-dom/cjs/react-dom.development.js:29716:5)\n      at node_modules/@testing-library/react-hooks/lib/dom/pure.js:80:18\n      at act (node_modules/react/cjs/react.development.js:2512:16)\n      at actWithWarning (node_modules/react-dom/cjs/react-dom-test-utils.development.js:1740:10)\n      at render (node_modules/@testing-library/react-hooks/lib/dom/pure.js:79:26)\n      at renderHook (node_modules/@testing-library/react-hooks/lib/core/index.js:114:5)\n      at renderHookWithProvider (test/lib/render-helpers-navigate.js:195:32)\n      at Object.<anonymous> (ui/hooks/perps/usePerpsOrderForm.test.ts:520:48)\n\n  console.error\n    Warning: ReactDOM.render is no longer supported in React 18. Use createRoot instead. Until you switch to the new API, your app will behave as if it's running React 17. Learn more: https://reactjs.org/link/switch-to-createroot\n\n      193 |     : ProviderWrapper;\n      194 |\n    > 195 |   const hookResult = renderHook(hook, { wrapper });\n          |                                ^\n      196 |\n      197 |   return {\n      198 |     ...hookResult,\n\n      at console.error (node_modules/@testing-library/react-hooks/lib/core/console.js:19:7)\n      at printWarning (node_modules/react-dom/cjs/react-dom.development.js:86:30)\n      at error (node_modules/react-dom/cjs/react-dom.development.js:60:7)\n      at Object.render (node_modules/react-dom/cjs/react-dom.development.js:29716:5)\n      at node_modules/@testing-library/react-hooks/lib/dom/pure.js:80:18\n      at act (node_modules/react/cjs/react.development.js:2512:16)\n      at actWithWarning (node_modules/react-dom/cjs/react-dom-test-utils.development.js:1740:10)\n      at render (node_modules/@testing-library/react-hooks/lib/dom/pure.js:79:26)\n      at renderHook (node_modules/@testing-library/react-hooks/lib/core/index.js:114:5)\n      at renderHookWithProvider (test/lib/render-helpers-navigate.js:195:32)\n      at Object.<anonymous> (ui/hooks/perps/usePerpsOrderForm.test.ts:541:48)\n\n  console.error\n    Warning: ReactDOM.render is no longer supported in React 18. Use createRoot instead. Until you switch to the new API, your app will behave as if it's running React 17. Learn more: https://reactjs.org/link/switch-to-createroot\n\n      193 |     : ProviderWrapper;\n      194 |\n    > 195 |   const hookResult = renderHook(hook, { wrapper });\n          |                                ^\n      196 |\n      197 |   return {\n      198 |     ...hookResult,\n\n      at console.error (node_modules/@testing-library/react-hooks/lib/core/console.js:19:7)\n      at printWarning (node_modules/react-dom/cjs/react-dom.development.js:86:30)\n      at error (node_modules/react-dom/cjs/react-dom.development.js:60:7)\n      at Object.render (node_modules/react-dom/cjs/react-dom.development.js:29716:5)\n      at node_modules/@testing-library/react-hooks/lib/dom/pure.js:80:18\n      at act (node_modules/react/cjs/react.development.js:2512:16)\n      at actWithWarning (node_modules/react-dom/cjs/react-dom-test-utils.development.js:1740:10)\n      at render (node_modules/@testing-library/react-hooks/lib/dom/pure.js:79:26)\n      at renderHook (node_modules/@testing-library/react-hooks/lib/core/index.js:114:5)\n      at renderHookWithProvider (test/lib/render-helpers-navigate.js:195:32)\n      at Object.<anonymous> (ui/hooks/perps/usePerpsOrderForm.test.ts:561:48)\n\n  console.error\n    Warning: ReactDOM.render is no longer supported in React 18. Use createRoot instead. Until you switch to the new API, your app will behave as if it's running React 17. Learn more: https://reactjs.org/link/switch-to-createroot\n\n      193 |     : ProviderWrapper;\n      194 |\n    > 195 |   const hookResult = renderHook(hook, { wrapper });\n          |                                ^\n      196 |\n      197 |   return {\n      198 |     ...hookResult,\n\n      at console.error (node_modules/@testing-library/react-hooks/lib/core/console.js:19:7)\n      at printWarning (node_modules/react-dom/cjs/react-dom.development.js:86:30)\n      at error (node_modules/react-dom/cjs/react-dom.development.js:60:7)\n      at Object.render (node_modules/react-dom/cjs/react-dom.development.js:29716:5)\n      at node_modules/@testing-library/react-hooks/lib/dom/pure.js:80:18\n      at act (node_modules/react/cjs/react.development.js:2512:16)\n      at actWithWarning (node_modules/react-dom/cjs/react-dom-test-utils.development.js:1740:10)\n      at render (node_modules/@testing-library/react-hooks/lib/dom/pure.js:79:26)\n      at renderHook (node_modules/@testing-library/react-hooks/lib/core/index.js:114:5)\n      at renderHookWithProvider (test/lib/render-helpers-navigate.js:195:32)\n      at Object.<anonymous> (ui/hooks/perps/usePerpsOrderForm.test.ts:583:48)\n\n  console.error\n    Warning: ReactDOM.render is no longer supported in React 18. Use createRoot instead. Until you switch to the new API, your app will behave as if it's running React 17. Learn more: https://reactjs.org/link/switch-to-createroot\n\n      193 |     : ProviderWrapper;\n      194 |\n    > 195 |   const hookResult = renderHook(hook, { wrapper });\n          |                                ^\n      196 |\n      197 |   return {\n      198 |     ...hookResult,\n\n      at console.error (node_modules/@testing-library/react-hooks/lib/core/console.js:19:7)\n      at printWarning (node_modules/react-dom/cjs/react-dom.development.js:86:30)\n      at error (node_modules/react-dom/cjs/react-dom.development.js:60:7)\n      at Object.render (node_modules/react-dom/cjs/react-dom.development.js:29716:5)\n      at node_modules/@testing-library/react-hooks/lib/dom/pure.js:80:18\n      at act (node_modules/react/cjs/react.development.js:2512:16)\n      at actWithWarning (node_modules/react-dom/cjs/react-dom-test-utils.development.js:1740:10)\n      at render (node_modules/@testing-library/react-hooks/lib/dom/pure.js:79:26)\n      at renderHook (node_modules/@testing-library/react-hooks/lib/core/index.js:114:5)\n      at renderHookWithProvider (test/lib/render-helpers-navigate.js:195:32)\n      at Object.<anonymous> (ui/hooks/perps/usePerpsOrderForm.test.ts:603:48)\n\n  console.error\n    Warning: ReactDOM.render is no longer supported in React 18. Use createRoot instead. Until you switch to the new API, your app will behave as if it's running React 17. Learn more: https://reactjs.org/link/switch-to-createroot\n\n      193 |     : ProviderWrapper;\n      194 |\n    > 195 |   const hookResult = renderHook(hook, { wrapper });\n          |                                ^\n      196 |\n      197 |   return {\n      198 |     ...hookResult,\n\n      at console.error (node_modules/@testing-library/react-hooks/lib/core/console.js:19:7)\n      at printWarning (node_modules/react-dom/cjs/react-dom.development.js:86:30)\n      at error (node_modules/react-dom/cjs/react-dom.development.js:60:7)\n      at Object.render (node_modules/react-dom/cjs/react-dom.development.js:29716:5)\n      at node_modules/@testing-library/react-hooks/lib/dom/pure.js:80:18\n      at act (node_modules/react/cjs/react.development.js:2512:16)\n      at actWithWarning (node_modules/react-dom/cjs/react-dom-test-utils.development.js:1740:10)\n      at render (node_modules/@testing-library/react-hooks/lib/dom/pure.js:79:26)\n      at renderHook (node_modules/@testing-library/react-hooks/lib/core/index.js:114:5)\n      at renderHookWithProvider (test/lib/render-helpers-navigate.js:195:32)\n      at Object.<anonymous> (ui/hooks/perps/usePerpsOrderForm.test.ts:619:48)\n\n  console.error\n    Warning: ReactDOM.render is no longer supported in React 18. Use createRoot instead. Until you switch to the new API, your app will behave as if it's running React 17. Learn more: https://reactjs.org/link/switch-to-createroot\n\n      193 |     : ProviderWrapper;\n      194 |\n    > 195 |   const hookResult = renderHook(hook, { wrapper });\n          |                                ^\n      196 |\n      197 |   return {\n      198 |     ...hookResult,\n\n      at console.error (node_modules/@testing-library/react-hooks/lib/core/console.js:19:7)\n      at printWarning (node_modules/react-dom/cjs/react-dom.development.js:86:30)\n      at error (node_modules/react-dom/cjs/react-dom.development.js:60:7)\n      at Object.render (node_modules/react-dom/cjs/react-dom.development.js:29716:5)\n      at node_modules/@testing-library/react-hooks/lib/dom/pure.js:80:18\n      at act (node_modules/react/cjs/react.development.js:2512:16)\n      at actWithWarning (node_modules/react-dom/cjs/react-dom-test-utils.development.js:1740:10)\n      at render (node_modules/@testing-library/react-hooks/lib/dom/pure.js:79:26)\n      at renderHook (node_modules/@testing-library/react-hooks/lib/core/index.js:114:5)\n      at renderHookWithProvider (test/lib/render-helpers-navigate.js:195:32)\n      at Object.<anonymous> (ui/hooks/perps/usePerpsOrderForm.test.ts:651:48)\n\n  console.error\n    Warning: ReactDOM.render is no longer supported in React 18. Use createRoot instead. Until you switch to the new API, your app will behave as if it's running React 17. Learn more: https://reactjs.org/link/switch-to-createroot\n\n      193 |     : ProviderWrapper;\n      194 |\n    > 195 |   const hookResult = renderHook(hook, { wrapper });\n          |                                ^\n      196 |\n      197 |   return {\n      198 |     ...hookResult,\n\n      at console.error (node_modules/@testing-library/react-hooks/lib/core/console.js:19:7)\n      at printWarning (node_modules/react-dom/cjs/react-dom.development.js:86:30)\n      at error (node_modules/react-dom/cjs/react-dom.development.js:60:7)\n      at Object.render (node_modules/react-dom/cjs/react-dom.development.js:29716:5)\n      at node_modules/@testing-library/react-hooks/lib/dom/pure.js:80:18\n      at act (node_modules/react/cjs/react.development.js:2512:16)\n      at actWithWarning (node_modules/react-dom/cjs/react-dom-test-utils.development.js:1740:10)\n      at render (node_modules/@testing-library/react-hooks/lib/dom/pure.js:79:26)\n      at renderHook (node_modules/@testing-library/react-hooks/lib/core/index.js:114:5)\n      at renderHookWithProvider (test/lib/render-helpers-navigate.js:195:32)\n      at Object.<anonymous> (ui/hooks/perps/usePerpsOrderForm.test.ts:674:48)\n\n  console.error\n    Warning: ReactDOM.render is no longer supported in React 18. Use createRoot instead. Until you switch to the new API, your app will behave as if it's running React 17. Learn more: https://reactjs.org/link/switch-to-createroot\n\n      193 |     : ProviderWrapper;\n      194 |\n    > 195 |   const hookResult = renderHook(hook, { wrapper });\n          |                                ^\n      196 |\n      197 |   return {\n      198 |     ...hookResult,\n\n      at console.error (node_modules/@testing-library/react-hooks/lib/core/console.js:19:7)\n      at printWarning (node_modules/react-dom/cjs/react-dom.development.js:86:30)\n      at error (node_modules/react-dom/cjs/react-dom.development.js:60:7)\n      at Object.render (node_modules/react-dom/cjs/react-dom.development.js:29716:5)\n      at node_modules/@testing-library/react-hooks/lib/dom/pure.js:80:18\n      at act (node_modules/react/cjs/react.development.js:2512:16)\n      at actWithWarning (node_modules/react-dom/cjs/react-dom-test-utils.development.js:1740:10)\n      at render (node_modules/@testing-library/react-hooks/lib/dom/pure.js:79:26)\n      at renderHook (node_modules/@testing-library/react-hooks/lib/core/index.js:114:5)\n      at renderHookWithProvider (test/lib/render-helpers-navigate.js:195:32)\n      at Object.<anonymous> (ui/hooks/perps/usePerpsOrderForm.test.ts:701:58)\n\n  console.error\n    Warning: ReactDOM.render is no longer supported in React 18. Use createRoot instead. Until you switch to the new API, your app will behave as if it's running React 17. Learn more: https://reactjs.org/link/switch-to-createroot\n\n      711 |       orderType = 'limit';\n      712 |       act(() => {\n    > 713 |         rerender();\n          |         ^\n      714 |       });\n      715 |\n      716 |       expect(result.current.formState.amount).toBe('1000');\n\n      at console.error (node_modules/@testing-library/react-hooks/lib/core/console.js:19:7)\n      at printWarning (node_modules/react-dom/cjs/react-dom.development.js:86:30)\n      at error (node_modules/react-dom/cjs/react-dom.development.js:60:7)\n      at Object.render (node_modules/react-dom/cjs/react-dom.development.js:29716:5)\n      at node_modules/@testing-library/react-hooks/lib/dom/pure.js:86:18\n      at act (node_modules/react/cjs/react.development.js:2512:16)\n      at actWithWarning (node_modules/react-dom/cjs/react-dom-test-utils.development.js:1740:10)\n      at rerender (node_modules/@testing-library/react-hooks/lib/dom/pure.js:85:26)\n      at rerenderHook (node_modules/@testing-library/react-hooks/lib/core/index.js:118:7)\n      at rerender (ui/hooks/perps/usePerpsOrderForm.test.ts:713:9)\n      at act (node_modules/react/cjs/react.development.js:2512:16)\n      at actWithWarning (node_modules/react-dom/cjs/react-dom-test-utils.development.js:1740:10)\n      at Object.<anonymous> (ui/hooks/perps/usePerpsOrderForm.test.ts:712:10)\n\n  console.error\n    Warning: ReactDOM.render is no longer supported in React 18. Use createRoot instead. Until you switch to the new API, your app will behave as if it's running React 17. Learn more: https://reactjs.org/link/switch-to-createroot\n\n      193 |     : ProviderWrapper;\n      194 |\n    > 195 |   const hookResult = renderHook(hook, { wrapper });\n          |                                ^\n      196 |\n      197 |   return {\n      198 |     ...hookResult,\n\n      at console.error (node_modules/@testing-library/react-hooks/lib/core/console.js:19:7)\n      at printWarning (node_modules/react-dom/cjs/react-dom.development.js:86:30)\n      at error (node_modules/react-dom/cjs/react-dom.development.js:60:7)\n      at Object.render (node_modules/react-dom/cjs/react-dom.development.js:29716:5)\n      at node_modules/@testing-library/react-hooks/lib/dom/pure.js:80:18\n      at act (node_modules/react/cjs/react.development.js:2512:16)\n      at actWithWarning (node_modules/react-dom/cjs/react-dom-test-utils.development.js:1740:10)\n      at render (node_modules/@testing-library/react-hooks/lib/dom/pure.js:79:26)\n      at renderHook (node_modules/@testing-library/react-hooks/lib/core/index.js:114:5)\n      at renderHookWithProvider (test/lib/render-helpers-navigate.js:195:32)\n      at Object.<anonymous> (ui/hooks/perps/usePerpsOrderForm.test.ts:729:48)\n\n  console.error\n    Warning: ReactDOM.render is no longer supported in React 18. Use createRoot instead. Until you switch to the new API, your app will behave as if it's running React 17. Learn more: https://reactjs.org/link/switch-to-createroot\n\n      193 |     : ProviderWrapper;\n      194 |\n    > 195 |   const hookResult = renderHook(hook, { wrapper });\n          |                                ^\n      196 |\n      197 |   return {\n      198 |     ...hookResult,\n\n      at console.error (node_modules/@testing-library/react-hooks/lib/core/console.js:19:7)\n      at printWarning (node_modules/react-dom/cjs/react-dom.development.js:86:30)\n      at error (node_modules/react-dom/cjs/react-dom.development.js:60:7)\n      at Object.render (node_modules/react-dom/cjs/react-dom.development.js:29716:5)\n      at node_modules/@testing-library/react-hooks/lib/dom/pure.js:80:18\n      at act (node_modules/react/cjs/react.development.js:2512:16)\n      at actWithWarning (node_modules/react-dom/cjs/react-dom-test-utils.development.js:1740:10)\n      at render (node_modules/@testing-library/react-hooks/lib/dom/pure.js:79:26)\n      at renderHook (node_modules/@testing-library/react-hooks/lib/core/index.js:114:5)\n      at renderHookWithProvider (test/lib/render-helpers-navigate.js:195:32)\n      at Object.<anonymous> (ui/hooks/perps/usePerpsOrderForm.test.ts:743:58)\n\nPASS ui/hooks/perps/usePerpsOrderForm.test.ts\nTest Suites: 2 passed, 2 total\nTests:       42 passed, 42 total\nSnapshots:   0 total\nTime:        2.408 s\nRan all test suites matching /ui\\/hooks\\/perps\\/usePerpsOrderForm.test.ts|ui\\/hooks\\/perps\\/usePerpsEstimatedSlippage.test.ts/i.\n  console.error\n    Warning: ReactDOM.render is no longer supported in React 18. Use createRoot instead. Until you switch to the new API, your app will behave as if it's running React 17. Learn more: https://reactjs.org/link/switch-to-createroot\n\n      755 |       props.limitPricePrefill = { price: '73790' };\n      756 |       act(() => {\n    > 757 |         rerender();\n          |         ^\n      758 |       });\n      759 |\n      760 |       expect(result.current.formState.limitPrice).toBe('73790');\n\n      at console.error (node_modules/@testing-library/react-hooks/lib/core/console.js:19:7)\n      at printWarning (node_modules/react-dom/cjs/react-dom.development.js:86:30)\n      at error (node_modules/react-dom/cjs/react-dom.development.js:60:7)\n      at Object.render (node_modules/react-dom/cjs/react-dom.development.js:29716:5)\n      at node_modules/@testing-library/react-hooks/lib/dom/pure.js:86:18\n      at act (node_modules/react/cjs/react.development.js:2512:16)\n      at actWithWarning (node_modules/react-dom/cjs/react-dom-test-utils.development.js:1740:10)\n      at rerender (node_modules/@testing-library/react-hooks/lib/dom/pure.js:85:26)\n      at rerenderHook (node_modules/@testing-library/react-hooks/lib/core/index.js:118:7)\n      at rerender (ui/hooks/perps/usePerpsOrderForm.test.ts:757:9)\n      at act (node_modules/react/cjs/react.development.js:2512:16)\n      at actWithWarning (node_modules/react-dom/cjs/react-dom-test-utils.development.js:1740:10)\n      at Object.<anonymous> (ui/hooks/perps/usePerpsOrderForm.test.ts:756:10)\n\n  console.error\n    Warning: ReactDOM.render is no longer supported in React 18. Use createRoot instead. Until you switch to the new API, your app will behave as if it's running React 17. Learn more: https://reactjs.org/link/switch-to-createroot\n\n      193 |     : ProviderWrapper;\n      194 |\n    > 195 |   const hookResult = renderHook(hook, { wrapper });\n          |                                ^\n      196 |\n      197 |   return {\n      198 |     ...hookResult,\n\n      at console.error (node_modules/@testing-library/react-hooks/lib/core/console.js:19:7)\n      at printWarning (node_modules/react-dom/cjs/react-dom.development.js:86:30)\n      at error (node_modules/react-dom/cjs/react-dom.development.js:60:7)\n      at Object.render (node_modules/react-dom/cjs/react-dom.development.js:29716:5)\n      at node_modules/@testing-library/react-hooks/lib/dom/pure.js:80:18\n      at act (node_modules/react/cjs/react.development.js:2512:16)\n      at actWithWarning (node_modules/react-dom/cjs/react-dom-test-utils.development.js:1740:10)\n      at render (node_modules/@testing-library/react-hooks/lib/dom/pure.js:79:26)\n      at renderHook (node_modules/@testing-library/react-hooks/lib/core/index.js:114:5)\n      at renderHookWithProvider (test/lib/render-helpers-navigate.js:195:32)\n      at Object.<anonymous> (ui/hooks/perps/usePerpsOrderForm.test.ts:769:58)\n\n  console.error\n    Warning: ReactDOM.render is no longer supported in React 18. Use createRoot instead. Until you switch to the new API, your app will behave as if it's running React 17. Learn more: https://reactjs.org/link/switch-to-createroot\n\n      778 |       // Re-render without changing the prefill reference must not clobber edits.\n      779 |       act(() => {\n    > 780 |         rerender();\n          |         ^\n      781 |       });\n      782 |\n      783 |       expect(result.current.formState.limitPrice).toBe('70000');\n\n      at console.error (node_modules/@testing-library/react-hooks/lib/core/console.js:19:7)\n      at printWarning (node_modules/react-dom/cjs/react-dom.development.js:86:30)\n      at error (node_modules/react-dom/cjs/react-dom.development.js:60:7)\n      at Object.render (node_modules/react-dom/cjs/react-dom.development.js:29716:5)\n      at node_modules/@testing-library/react-hooks/lib/dom/pure.js:86:18\n      at act (node_modules/react/cjs/react.development.js:2512:16)\n      at actWithWarning (node_modules/react-dom/cjs/react-dom-test-utils.development.js:1740:10)\n      at rerender (node_modules/@testing-library/react-hooks/lib/dom/pure.js:85:26)\n      at rerenderHook (node_modules/@testing-library/react-hooks/lib/core/index.js:118:7)\n      at rerender (ui/hooks/perps/usePerpsOrderForm.test.ts:780:9)\n      at act (node_modules/react/cjs/react.development.js:2512:16)\n      at actWithWarning (node_modules/react-dom/cjs/react-dom-test-utils.development.js:1740:10)\n      at Object.<anonymous> (ui/hooks/perps/usePerpsOrderForm.test.ts:779:10)\n\n  console.error\n    Warning: ReactDOM.render is no longer supported in React 18. Use createRoot instead. Until you switch to the new API, your app will behave as if it's running React 17. Learn more: https://reactjs.org/link/switch-to-createroot\n\n      193 |     : ProviderWrapper;\n      194 |\n    > 195 |   const hookResult = renderHook(hook, { wrapper });\n          |                                ^\n      196 |\n      197 |   return {\n      198 |     ...hookResult,\n\n      at console.error (node_modules/@testing-library/react-hooks/lib/core/console.js:19:7)\n      at printWarning (node_modules/react-dom/cjs/react-dom.development.js:86:30)\n      at error (node_modules/react-dom/cjs/react-dom.development.js:60:7)\n      at Object.render (node_modules/react-dom/cjs/react-dom.development.js:29716:5)\n      at node_modules/@testing-library/react-hooks/lib/dom/pure.js:80:18\n      at act (node_modules/react/cjs/react.development.js:2512:16)\n      at actWithWarning (node_modules/react-dom/cjs/react-dom-test-utils.development.js:1740:10)\n      at render (node_modules/@testing-library/react-hooks/lib/dom/pure.js:79:26)\n      at renderHook (node_modules/@testing-library/react-hooks/lib/core/index.js:114:5)\n      at renderHookWithProvider (test/lib/render-helpers-navigate.js:195:32)\n      at Object.<anonymous> (ui/hooks/perps/usePerpsOrderForm.test.ts:790:48)\n\n\n✅ No console baseline violations.\n\n",
+        "stderr": ""
+      }
+    },
+    {
+      "nodeId": "ac6-assert-order-form-exit",
+      "action": "assert_exit_code",
+      "intent": "AC6: the pre-existing order-form suites must still pass with the prefill wiring added",
+      "startedAt": "2026-07-30T13:13:09.089Z",
+      "endedAt": "2026-07-30T13:13:09.094Z",
+      "durationMs": 5,
+      "ok": true,
+      "next": "ac6-assert-order-form-suites-passed",
+      "output": {
+        "source": "ac6-run-order-form-regression-tests",
+        "expected": 0,
+        "actual": 0
+      }
+    },
+    {
+      "nodeId": "ac6-assert-order-form-suites-passed",
+      "action": "assert_output",
+      "intent": "AC6: prove both pre-existing order-form hook suites actually ran and passed, not just that the process exited 0",
+      "startedAt": "2026-07-30T13:13:09.099Z",
+      "endedAt": "2026-07-30T13:13:09.104Z",
+      "durationMs": 5,
+      "ok": true,
+      "next": "teardown-collapse-order-book",
+      "output": {
+        "source": "ac6-run-order-form-regression-tests",
+        "stream": "stdout",
+        "contains": "Test Suites: 2 passed"
+      }
+    },
+    {
+      "nodeId": "teardown-collapse-order-book",
+      "action": "ui.press",
+      "intent": "Collapse the order book so the slot is left in its default state",
+      "startedAt": "2026-07-30T13:13:09.109Z",
+      "endedAt": "2026-07-30T13:13:09.462Z",
+      "durationMs": 353,
+      "ok": true,
+      "next": "teardown-return-perps-home",
+      "output": {
+        "clicked": true,
+        "selector": "[data-testid=\"perps-order-book-toggle\"], [data-test-id=\"perps-order-book-toggle\"], [data-test=\"perps-order-book-toggle\"]",
+        "tagName": "BUTTON",
+        "cdpPort": 7666,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/ETH",
+        "runtimeLaunch": null
+      }
+    },
+    {
+      "nodeId": "teardown-return-perps-home",
+      "action": "ui.navigate",
+      "intent": "Return the slot to the perps home surface",
+      "startedAt": "2026-07-30T13:13:09.468Z",
+      "endedAt": "2026-07-30T13:13:09.793Z",
+      "durationMs": 325,
+      "ok": true,
+      "next": "teardown-done",
+      "output": {
+        "action": "ui.navigate",
+        "page": "perps",
+        "method": "visible-ui",
+        "href": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps-home",
+        "steps": [
+          "[data-testid=\"perps-order-entry-back-button\"]"
+        ],
+        "proofPath": "ui-navigation",
+        "cdpPort": 7666,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/ETH",
+        "runtimeLaunch": null,
+        "liveAdapter": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/actions/extension/ui/navigate.mjs"
+      }
+    },
+    {
+      "nodeId": "teardown-done",
+      "action": "end",
+      "startedAt": "2026-07-30T13:13:09.803Z",
+      "endedAt": "2026-07-30T13:13:09.803Z",
+      "durationMs": 0,
+      "ok": true,
+      "status": "pass"
+    }
+  ]
+}

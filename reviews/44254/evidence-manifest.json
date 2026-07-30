@@ -1,0 +1,35 @@
+{
+  "version": 1,
+  "preferred_mode": "screenshots",
+  "summary": "PR #44254 perps order book — 49/49 recipe nodes passed against the live extension on Hyperliquid testnet, all captures via capture-helper. Three curated screenshots cover the visual ACs; AC3 (flag-off branch) and the compact half of AC5 are proven by test output instead, since neither renders in a reachable surface. 5/6 ACs PROVEN, AC5 UNTESTABLE for the compact popup layout.",
+  "standalone": [
+    {
+      "label": "AC1 — order book collapsed by default on the order entry page",
+      "covers": ["AC1"],
+      "file": "artifacts/evidence/evidence-ac1-collapsed-by-default.png",
+      "note": "ETH order entry page on arrival: the form fills the full width, no order-book panel and no resize divider are present, and the book toggle sits collapsed in the market header. Backed by two absence assertions (ac1-assert-book-collapsed, ac1-assert-divider-collapsed)."
+    },
+    {
+      "label": "AC2/AC4/AC5 — expanded ladder with price levels, USD totals and the resizable split",
+      "covers": ["AC2", "AC4", "AC5"],
+      "file": "artifacts/evidence/evidence-ac2-expanded-order-book.png",
+      "note": "AC2: one click on the header toggle expands the panel — 5 live ask rows, spread row, 5 live bid rows, cumulative depth bars and the Buy 51% / Sell 49% ratio. AC4: the same frame shows the 'Price / Total (USD)' headers with a USD cumulative total on every ask and bid row. AC5: form and panel share the width across the draggable divider. ⚠ For AC5 this proves ONLY the expanded/fullscreen layout — the compact (~360px popup) layout is NOT shown, because this CDP session exposes no popup target; that half rests on the order-book.utils width-clamp unit assertions and needs manual popup validation before merge."
+    },
+    {
+      "label": "AC6 — order form intact and limit price prefilled after tapping a bid row",
+      "covers": ["AC6"],
+      "file": "artifacts/evidence/evidence-ac6-form-fields-intact.png",
+      "note": "After tapping a bid price row the order type switched to Limit and the Limit price field is prefilled with 1924.0; Size, Leverage, Auto close (TP/SL), Liquidation price, Margin, Fees and the submit button all still render beside the open order book. The Slippage summary row is absent by design (market-order only). reduce-only is not part of this new-order screen."
+    }
+  ],
+  "omit": [
+    {
+      "file": "artifacts/recipe-run/evidence/evidence-ac4-price-levels-usd-totals.png",
+      "reason": "Pixel-near-identical to the AC2 capture (same screen, differing only in live tick values). AC4's claim — Price / Total (USD) headers with USD totals on both sides — is fully legible in the grouped AC2 image."
+    },
+    {
+      "file": "artifacts/recipe-run/evidence/evidence-ac5-fullscreen-split-layout.png",
+      "reason": "Same screen as the AC2 capture; the split-layout claim is fully legible there. The popup caveat is carried in the AC2 note and in recipe-coverage.md."
+    }
+  ]
+}

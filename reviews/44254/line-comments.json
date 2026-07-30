@@ -1,0 +1,43 @@
+{
+  "pr_number": "44254",
+  "recommendation": "REQUEST_CHANGES",
+  "summary": "Solid feature with genuinely careful stream-lifecycle handling and strong tests (422 pass, 49/49 live recipe nodes pass, order book verified streaming real testnet depth and prefilling a limit order). Blocking on one item: `yarn lint:tsc` fails on this branch with TS1117 from a duplicate `UNSUPPORTED_COLLATERAL` key introduced by a merge resolution. Everything else is suggestion or nitpick.",
+  "comments": [
+    {
+      "path": "ui/components/app/perps/utils/translate-perps-error.ts",
+      "line": 17,
+      "body": "This duplicates the `UNSUPPORTED_COLLATERAL` mapping already added at line 80, and it breaks the type gate:\n\n```\n$ yarn lint:tsc\nui/components/app/perps/utils/translate-perps-error.ts(80,3): error TS1117: An object literal cannot have multiple properties with the same name.\n```\n\nThat is the only error `lint:tsc` reports on this branch, and `origin/main` has just one occurrence, so it came in with a merge resolution. Beyond the failing gate, this entry is dead: line 80 wins, so the specific `perpsUnsupportedCollateral` string is what actually renders and this generic `somethingWentWrong` never applies.\n\nDeleting this line fixes both.",
+      "severity": "must_fix"
+    },
+    {
+      "path": "test/e2e/tests/settings/state-logs.json",
+      "line": 1364,
+      "body": "`recentlyViewedMarkets` is already defined at line 1336 in this same object, so this second copy is a duplicate JSON key — same merge-resolution artifact as the one in `translate-perps-error.ts`. `origin/main` has only one.\n\nJSON.parse silently keeps the last occurrence rather than erroring, so nothing fails today, but a state-log snapshot that lists a key twice is confusing for the next person diffing controller state, and it sits out of the surrounding alphabetical ordering. Suggest deleting this block and keeping the one at 1336.",
+      "severity": "suggestion"
+    },
+    {
+      "path": "ui/pages/perps/perps-order-entry-page.tsx",
+      "line": 1150,
+      "body": "Opening the order book emits the generic `INTERACTION_TYPE.TAP`, which makes this event indistinguishable from any other tap tracked on this page — the only differentiator is the asset property, which other interactions also send.\n\nThat matters more than usual here: the feature is deliberately dark-launched (`perpsOrderBookEnabled`, production default OFF) for gradual rollout, so open-rate is exactly the signal you'll want to read during that rollout, and it can't be isolated from this event.\n\nThe surrounding code already follows the specific-value convention — `SLIPPAGE_CONFIG_OPENED` a few hundred lines below, and `CLOSE_ALL_TAPPED` / `CLOSE_ALL_CANCELLED` / `CLOSE_ALL_CONFIRMED` in `perps-view.tsx`. Worth adding an order-book-specific `INTERACTION_TYPE` value to match.\n\n(Also: only the open transition is tracked, so open/close ratio isn't recoverable either.)",
+      "severity": "suggestion"
+    },
+    {
+      "path": "ui/hooks/perps/stream/usePerpsLiveOrderBook.ts",
+      "line": 176,
+      "body": "This mutates a module-level counter during the render phase (the enclosing `if (prevActivationKeyRef.current !== activationKey)` block runs in the render body, not in an effect). Render is expected to be pure, and React can invoke it more than once per commit — StrictMode double-invokes in dev, and concurrent rendering may discard a render entirely.\n\nI traced the consequences and did not find a correctness bug: the id is stashed in `subscriptionIdRef`, so a discarded render just burns a generation number, and monotonicity — the property the guard actually relies on — still holds. So this is about purity rather than an observed defect.\n\nIf you want it airtight, allocating inside the `useLayoutEffect` that already registers the id (keying the effect on `activationKey`) would move the side effect out of render without changing the guarantee.",
+      "severity": "suggestion"
+    },
+    {
+      "path": "ui/components/app/perps/order-book/order-book.utils.ts",
+      "line": 21,
+      "body": "`ORDER_BOOK_DISPLAY_LEVELS` is only ever used as `groupOrderBook`'s default parameter at line 201, and every call site passes `ORDER_BOOK_AGGREGATED_LEVELS` explicitly (`order-book.tsx:350`) — so neither the export nor the default is reachable.\n\nIt looks like a leftover from the client-side-aggregation approach that the server-side `nSigFigs`/`mantissa` path replaced. Since the two constants mean different things (subscribed slippage-book depth vs the 5-level fast-mode ladder), leaving both exported invites picking the wrong one later. Suggest dropping it and making `maxLevels` required.",
+      "severity": "nitpick"
+    },
+    {
+      "path": "ui/components/app/perps/order-book/order-book.tsx",
+      "line": 470,
+      "body": "`aria-controls` points at `configModalId`, but `PerpsOrderBookConfigModal` returns `null` while closed, so this references an element id that isn't in the DOM for the entire time the trigger is collapsed — which is most of the time.\n\nThe rest of the ARIA here is right (`aria-haspopup=\"dialog\"` plus `aria-expanded` already convey the relationship), so the simplest fix is to make it conditional: `{...(isConfigOpen && { 'aria-controls': configModalId })}`.",
+      "severity": "nitpick"
+    }
+  ]
+}

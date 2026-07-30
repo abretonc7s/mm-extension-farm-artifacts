@@ -1,0 +1,104 @@
+{
+  "version": 1,
+  "verdict": "warn",
+  "compact": {
+    "verdict": "WARN",
+    "reasons": [
+      "AC1/AC2/AC4/AC6 PROVEN by ac<N>-* nodes; trace.json shows 49/49 executed and passed, 0 failed.",
+      "AC3 proven with the correct proof type: the flag-OFF branch renders nothing, so two name-filtered jest runs assert toggle-absent and selector-default-OFF instead of a screenshot.",
+      "AC3/AC5 command assertions were verified discriminating: a non-existent jest -t title exits 0 with no '1 passed', so contains:'1 passed' cannot pass vacuously.",
+      "AC5 is only half observed — the expanded/fullscreen split is visible, but the compact popup layout is UNTESTABLE from this CDP session (no popup/notification target exposed) and is the sole reason the verdict is warn rather than pass.",
+      "Evidence pruned to 3 curated PNGs: ac4/ac5 captures were pixel-near-identical to the ac2 capture and are listed under omit rather than padding the review."
+    ],
+    "better_version_guidance": [
+      "Prove the AC5 compact half by driving a real popup target (extension popup.html) once the slot exposes one, instead of relying on the order-book.utils clamp unit assertions.",
+      "Add an ac2-* bounding-box read of the form and panel rects so the split ratio is asserted numerically, not only shown in the screenshot.",
+      "Add an ac6-* assertion on the limit-price input value (currently the prefill value is legible in the screenshot but not asserted in trace; the input has no data-testid of its own)."
+    ]
+  },
+  "dimensions": {
+    "graph_integrity": {
+      "status": "pass",
+      "reason": "49 nodes, all reachable from entry, single terminal end node, no orphans; runner --plan validates schema and action existence.",
+      "evidence": ["recipe.json", "trace.json"]
+    },
+    "action_contract": {
+      "status": "pass",
+      "reason": "Only manifest-declared actions used. Screenshot captions moved from the TASK doc's `note` field to the manifest-declared `label` field after the runner rejected `note` as an unknown parameter.",
+      "evidence": ["recipe.json", "/tmp/metamask-recipe-action-manifest.json"]
+    },
+    "ac_coverage": {
+      "status": "warn",
+      "reason": "5/6 ACs PROVEN, 1 UNTESTABLE with concrete rationale (AC5 compact popup layout), 0 weak, 0 missing.",
+      "evidence": ["recipe-coverage.md", "trace.json"]
+    },
+    "evidence_contract_basics": {
+      "status": "pass",
+      "reason": "Visual ACs have capture-helper screenshots whose HUD text matches node intent; the hidden flag-OFF branch and the compact width math use test-output proof. Near-identical duplicates omitted rather than padded.",
+      "evidence": [
+        "evidence/evidence-ac1-collapsed-by-default.png",
+        "evidence/evidence-ac2-expanded-order-book.png",
+        "evidence/evidence-ac6-form-fields-intact.png",
+        "recipe-run/artifact-manifest.json"
+      ]
+    },
+    "perps_state_setup": {
+      "status": "pass",
+      "reason": "No mutating perps state needed: the order book is read-only market data. Setup uses metamask.wallet.ensure_unlocked plus ui.navigate; no position/order was opened, so the slot is left non-mutated.",
+      "evidence": ["recipe.json", "trace.json"]
+    },
+    "mobile_alignment": {
+      "status": "pass",
+      "reason": "calculateAggregationParams, calculateGroupingOptions (decade offset 4, 1-2-5 multipliers), selectDefaultGrouping (index 3), SPREAD_PERCENT_DECIMALS and the USD compact thresholds match metamask-mobile-ref/app/components/UI/Perps/utils/orderBookGrouping.ts; the extension adds finite-guards and precision clamping mobile lacks.",
+      "evidence": ["recipe-coverage.md", "review.md"]
+    }
+  },
+  "structural_findings": [],
+  "contextual_findings": [
+    {
+      "code": "ac_partially_observable",
+      "message": "AC5 names two layouts (compact popup + expanded fullscreen). Only the expanded layout is observable from this CDP session; the compact half rests on unit assertions over the width-clamp helpers and needs manual popup validation before merge.",
+      "dimension": "ac_coverage",
+      "evidence": ["recipe-coverage.md"]
+    },
+    {
+      "code": "runner_doc_drift",
+      "message": "TASK.md documents `note` as the screenshot caption field and `mm-harness manifest` as the manifest command; the installed runner rejects `note` (use `label`) and has no `manifest` command (use `actions --raw`). Recipe was corrected against the live manifest, not the doc.",
+      "dimension": "action_contract",
+      "evidence": ["recipe.json"]
+    }
+  ],
+  "suggested_recipe_delta": [
+    "Add a bounding-box read for the form/panel split so AC5's expanded half is numerically asserted, not screenshot-only.",
+    "Give the limit-price `<input>` its own data-testid so an ac6-* node can assert the prefilled value in trace instead of relying on the screenshot.",
+    "Re-run AC5 against a real popup target when the slot exposes one, and promote the row from UNTESTABLE to PROVEN."
+  ],
+  "training_fields": {
+    "farm": "metamask-extension",
+    "project": "metamask-extension-farm",
+    "flow_type": "review-pr",
+    "task_type": "review-pr",
+    "claim_is_visual": true,
+    "proof_mode": "mixed",
+    "anti_patterns": [],
+    "good_patterns": [
+      "verified a command assertion is discriminating by running the negative case before trusting it",
+      "grouped near-identical screenshots into one strongest proof and recorded the omissions",
+      "used test-output proof for a hidden render branch instead of a screenshot that could not show it"
+    ]
+  },
+  "meta": {
+    "producer": "worker",
+    "fallback_used": false,
+    "legacy_task": false,
+    "artifact_required": true,
+    "source_signals": [
+      "recipe.json",
+      "recipe-coverage.md",
+      "trace.json",
+      "recipe-run/summary.json",
+      "recipe-run/artifact-manifest.json",
+      "recipe-run/diagnostics.json"
+    ]
+  }
+}
