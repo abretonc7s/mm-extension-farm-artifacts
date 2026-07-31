@@ -1,0 +1,103 @@
+{
+  "version": 1,
+  "preferred_mode": "screenshots",
+  "summary": "PR #44254 perps order book — 102/102 recipe nodes passed against the live extension on Hyperliquid testnet, all 9 images captured in-run via capture-helper (zero Page.captureScreenshot fallbacks). 11/11 items PROVEN (6 ticket ACs + 5 verbatim PR-body Gherkin claims), none untestable. Eight curated screenshots cover the visual claims; AC3 (flag-OFF branch) is proven by test output instead, since that branch renders nothing. Unlike the parent run, the compact ~360px popup half of AC5 is proven live via CDP viewport emulation rather than deferred to unit tests — and that capture is also what surfaced the clipped value column raised in the review.",
+  "standalone": [
+    {
+      "label": "AC1 — order book collapsed by default on the order entry page",
+      "covers": [
+        "AC1"
+      ],
+      "file": "artifacts/evidence/evidence-ac1-collapsed-by-default.png",
+      "note": "ETH order entry page on arrival: the form fills the full width, no order-book panel and no resize divider are mounted, and the book toggle sits collapsed in the market header. Backed by two absence assertions (ac1-assert-book-collapsed, ac1-assert-divider-collapsed)."
+    },
+    {
+      "label": "AC2/AC4/PR1 — expanded ladder with price levels, USD totals, spread and depth bars",
+      "covers": [
+        "AC2",
+        "AC4",
+        "PR1"
+      ],
+      "file": "artifacts/evidence/evidence-ac2-expanded-order-book.png",
+      "note": "AC2: one click on the header toggle expands the panel — 5 live ask rows, the spread row, 5 live bid rows, cumulative depth bars and the Buy 54% / Sell 46% ratio; the run waits on ask-row-4/bid-row-4, so a skeleton or partial ladder would fail. AC4: the same frame shows 'Price / Total (USD)' headers with a USD value on every ask and bid row, and a DOM probe asserts all 10 rendered rows carry a USD-formatted value (AC4_OK asks=5 bids=5). PR1: asks above the spread and bids below with depth bars are all legible here. This is also the expanded/fullscreen half of AC5."
+    },
+    {
+      "label": "AC5 — compact (~360px popup-width) layout with both panes on their pixel floors",
+      "covers": [
+        "AC5"
+      ],
+      "file": "artifacts/evidence/evidence-ac5-compact-360px-split.png",
+      "note": "At an emulated 360px popup-width viewport both panes render on their pixel floors — order book 140px, order form 224px, ladder still showing 5 levels (AC5_OK {\"viewport\":360,\"bodyWidth\":338,\"book\":140,\"form\":224,\"askRows\":5}). ⚠ The image also shows the limitation raised in the review: 140 + 224 + 2 = 366px of content in a 338px body, so the split overflows and the value column is clipped ('Size (ET…', truncated numbers) behind a horizontal scrollbar. ⚠ This frame inherits the 'Size (ETH)' denomination applied in PR3 and the Limit prefill from PR4 — it is not a defaults screenshot."
+    },
+    {
+      "label": "AC6 — order form intact beside the expanded order book",
+      "covers": [
+        "AC6"
+      ],
+      "file": "artifacts/evidence/evidence-ac6-form-fields-intact.png",
+      "note": "With the book expanded, the Long/Short tabs, Market/Limit toggle, Size field, Leverage slider, Auto close (TP/SL), Liquidation price, Slippage, Margin, Fees and the submit button all still render and stay usable. The limit price field is proven separately in the PR4 capture. The two pre-existing order-form hook suites were re-run inside the recipe and asserted 'Test Suites: 2 passed'. reduce-only has no control on this new-order surface, so that clause of the AC is not applicable here."
+    },
+    {
+      "label": "PR2 — split resized by keyboard and mouse, clamped to its bounds",
+      "covers": [
+        "PR2"
+      ],
+      "file": "artifacts/evidence/evidence-pr2-split-resized-to-clamped-max.png",
+      "note": "After keyboard resizing (ArrowLeft 33%→35%, End→22% floor, Home→announced max) and a real trusted mouse drag pulled far past the ceiling, the split rests on its clamped 60% maximum with the order form still fully usable. Bounds proven numerically in trace: PR2_HOME_OK {now:60,min:22,max:60} and PR2_DRAG_OK 22% -> 60% (bounds 22-60)."
+    },
+    {
+      "label": "PR3 (1/2) — grouping and denomination config modal",
+      "covers": [
+        "PR3"
+      ],
+      "file": "artifacts/evidence/evidence-pr3-config-modal-open.png",
+      "note": "The 'Listed by & Group by' modal opened from the order-book header: denomination ETH/USD, value type Size/Total, and grouping increments 0.1/0.2/0.5/1/10/100 with '1' currently selected. Kept as a separate frame from the applied result because it is a genuinely distinct state, not a near-duplicate."
+    },
+    {
+      "label": "PR3 (2/2) — ladder and column headers updated after applying the config",
+      "covers": [
+        "PR3"
+      ],
+      "file": "artifacts/evidence/evidence-pr3-ladder-after-config-change.png",
+      "note": "After applying base denomination + the Size metric, the column header changed from 'Total (USD)' to 'Size (ETH)' and the ladder values switched from USD cumulative totals to base-asset sizes. The header change is also a hard ui.wait_for text assertion."
+    },
+    {
+      "label": "PR4 — tapping a price switches to Limit and prefills the limit price",
+      "covers": [
+        "PR4"
+      ],
+      "file": "artifacts/evidence/evidence-pr4-limit-prefilled-from-price-tap.png",
+      "note": "Tapping the $1,890 ask row switched the order type to Limit and prefilled the limit price input with 1890.0 (with the 'Limit price is above current price' warning shown). The probe compares the input value against the tapped row's own rendered price rather than asserting non-empty, so a prefill with any other price would fail the node (PR4_OK)."
+    },
+    {
+      "label": "PR5 — fresh ladder after switching markets with the book open",
+      "covers": [
+        "PR5"
+      ],
+      "file": "artifacts/evidence/evidence-pr5-ladder-after-market-switch.png",
+      "note": "After navigating ETH → BTC with the order book open, the panel shows the new market: #/perps/trade/BTC, a BTC $64,115 header and a BTC-magnitude ladder ($64,141…$64,083). The probe asserts the rendered rows are disjoint from every captured ETH row (PR5_OK ETH -> BTC newTop=$64,141), so a stale carry-over would fail. The 'not even briefly' transient is additionally covered by the cache-clearing unit tests."
+    }
+  ],
+  "omit": [
+    {
+      "file": "artifacts/recipe-run/evidence/evidence-ac4-price-levels-usd-totals.png",
+      "reason": "Would be pixel-near-identical to the AC2 capture (same screen, differing only in live tick values). AC4's claim — 'Price / Total (USD)' headers with USD totals on both sides — is fully legible in the grouped AC2 image, and the per-row USD assertion lives in trace as AC4_OK asks=5 bids=5. Never emitted."
+    },
+    {
+      "file": "artifacts/recipe-run/evidence/evidence-pr1-asks-spread-bids-depth-bars.png",
+      "reason": "Same screen and same moment as the AC2 capture; asks, the spread row, bids and the depth bars are all legible there. Emitting it separately would be padding. Never emitted."
+    },
+    {
+      "file": "artifacts/recipe-run/evidence/evidence-ac3-flag-off-no-toggle.png",
+      "reason": "Wrong proof type. AC3 asserts a branch that renders nothing when perpsOrderBookEnabled is off, and the live slot pins the flag ON, so no screenshot can observe it. Proven instead by running both owning jest tests and asserting exit code 0 AND '1 passed' (exit 0 alone is satisfied by a -t filter that matches nothing)."
+    },
+    {
+      "file": "artifacts/evidence/baseline.png",
+      "reason": "No orientation/baseline shot was captured. Every per-item frame establishes its own context, starting from the AC1 arrival state."
+    },
+    {
+      "file": "artifacts/evidence/final.png",
+      "reason": "No terminal shot was captured. Each item's end state is already proven by its own ac<N>-/pr<N>- screenshot node."
+    }
+  ]
+}

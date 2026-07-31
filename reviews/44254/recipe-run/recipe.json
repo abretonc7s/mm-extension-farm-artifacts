@@ -697,70 +697,70 @@
       },
       "setup-clear-stale-capture-helpers": {
         "action": "command",
-        "cmd": "pkill -f 'capture-helper' 2>/dev/null; sleep 2; echo CAPTURE_HELPERS_CLEARED",
+        "cmd": "pkill -9 -f 'capture-helper' 2>/dev/null; sleep 2; echo CAPTURE_HELPERS_CLEARED",
         "timeout_ms": 30000,
         "next": "setup-cdp",
         "intent": "Kill orphaned capture-helper processes: leftovers hold the macOS capture session and force ui.screenshot to fall back to Page.captureScreenshot, which is not valid review evidence"
       },
       "ac1-clear-capture-before-screenshot-collapsed-by-default": {
         "action": "command",
-        "cmd": "pkill -f 'capture-helper' 2>/dev/null; sleep 1; echo CAPTURE_SLOT_FREE",
+        "cmd": "pkill -9 -f 'capture-helper' 2>/dev/null; sleep 1; echo CAPTURE_SLOT_FREE",
         "timeout_ms": 30000,
         "next": "ac1-screenshot-collapsed-by-default",
         "intent": "Free the macOS capture session immediately before ac1-screenshot-collapsed-by-default so ui.screenshot uses capture-helper instead of the Page.captureScreenshot fallback"
       },
       "ac2-clear-capture-before-screenshot-expanded-order-book": {
         "action": "command",
-        "cmd": "pkill -f 'capture-helper' 2>/dev/null; sleep 1; echo CAPTURE_SLOT_FREE",
+        "cmd": "pkill -9 -f 'capture-helper' 2>/dev/null; sleep 1; echo CAPTURE_SLOT_FREE",
         "timeout_ms": 30000,
         "next": "ac2-screenshot-expanded-order-book",
         "intent": "Free the macOS capture session immediately before ac2-screenshot-expanded-order-book so ui.screenshot uses capture-helper instead of the Page.captureScreenshot fallback"
       },
       "ac6-clear-capture-before-screenshot-form-fields-intact": {
         "action": "command",
-        "cmd": "pkill -f 'capture-helper' 2>/dev/null; sleep 1; echo CAPTURE_SLOT_FREE",
+        "cmd": "pkill -9 -f 'capture-helper' 2>/dev/null; sleep 1; echo CAPTURE_SLOT_FREE",
         "timeout_ms": 30000,
         "next": "ac6-screenshot-form-fields-intact",
         "intent": "Free the macOS capture session immediately before ac6-screenshot-form-fields-intact so ui.screenshot uses capture-helper instead of the Page.captureScreenshot fallback"
       },
       "pr2-clear-capture-before-screenshot-resized-split": {
         "action": "command",
-        "cmd": "pkill -f 'capture-helper' 2>/dev/null; sleep 1; echo CAPTURE_SLOT_FREE",
+        "cmd": "pkill -9 -f 'capture-helper' 2>/dev/null; sleep 1; echo CAPTURE_SLOT_FREE",
         "timeout_ms": 30000,
         "next": "pr2-screenshot-resized-split",
         "intent": "Free the macOS capture session immediately before pr2-screenshot-resized-split so ui.screenshot uses capture-helper instead of the Page.captureScreenshot fallback"
       },
       "pr3-clear-capture-before-screenshot-config-modal": {
         "action": "command",
-        "cmd": "pkill -f 'capture-helper' 2>/dev/null; sleep 1; echo CAPTURE_SLOT_FREE",
+        "cmd": "pkill -9 -f 'capture-helper' 2>/dev/null; sleep 1; echo CAPTURE_SLOT_FREE",
         "timeout_ms": 30000,
         "next": "pr3-screenshot-config-modal",
         "intent": "Free the macOS capture session immediately before pr3-screenshot-config-modal so ui.screenshot uses capture-helper instead of the Page.captureScreenshot fallback"
       },
       "pr3-clear-capture-before-screenshot-config-applied": {
         "action": "command",
-        "cmd": "pkill -f 'capture-helper' 2>/dev/null; sleep 1; echo CAPTURE_SLOT_FREE",
+        "cmd": "pkill -9 -f 'capture-helper' 2>/dev/null; sleep 1; echo CAPTURE_SLOT_FREE",
         "timeout_ms": 30000,
         "next": "pr3-screenshot-config-applied",
         "intent": "Free the macOS capture session immediately before pr3-screenshot-config-applied so ui.screenshot uses capture-helper instead of the Page.captureScreenshot fallback"
       },
       "pr4-clear-capture-before-screenshot-limit-prefilled": {
         "action": "command",
-        "cmd": "pkill -f 'capture-helper' 2>/dev/null; sleep 1; echo CAPTURE_SLOT_FREE",
+        "cmd": "pkill -9 -f 'capture-helper' 2>/dev/null; sleep 1; echo CAPTURE_SLOT_FREE",
         "timeout_ms": 30000,
         "next": "pr4-screenshot-limit-prefilled",
         "intent": "Free the macOS capture session immediately before pr4-screenshot-limit-prefilled so ui.screenshot uses capture-helper instead of the Page.captureScreenshot fallback"
       },
       "ac5-clear-capture-before-screenshot-compact-split": {
         "action": "command",
-        "cmd": "pkill -f 'capture-helper' 2>/dev/null; sleep 1; echo CAPTURE_SLOT_FREE",
+        "cmd": "pkill -9 -f 'capture-helper' 2>/dev/null; sleep 1; echo CAPTURE_SLOT_FREE",
         "timeout_ms": 30000,
         "next": "ac5-screenshot-compact-split",
         "intent": "Free the macOS capture session immediately before ac5-screenshot-compact-split so ui.screenshot uses capture-helper instead of the Page.captureScreenshot fallback"
       },
       "pr5-clear-capture-before-screenshot-btc-ladder": {
         "action": "command",
-        "cmd": "pkill -f 'capture-helper' 2>/dev/null; sleep 1; echo CAPTURE_SLOT_FREE",
+        "cmd": "pkill -9 -f 'capture-helper' 2>/dev/null; sleep 1; echo CAPTURE_SLOT_FREE",
         "timeout_ms": 30000,
         "next": "pr5-screenshot-btc-ladder",
         "intent": "Free the macOS capture session immediately before pr5-screenshot-btc-ladder so ui.screenshot uses capture-helper instead of the Page.captureScreenshot fallback"

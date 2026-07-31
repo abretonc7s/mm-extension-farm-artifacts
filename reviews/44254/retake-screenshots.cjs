@@ -43,7 +43,7 @@ function browserPid() {
 
 function snapshot(filename) {
   try {
-    execSync("pkill -f 'capture-helper' 2>/dev/null || true");
+    execSync("pkill -9 -f 'capture-helper' 2>/dev/null || true");
   } catch {}
   execSync('sleep 1');
   const out = path.join(OUT_DIR, filename);

@@ -1,0 +1,108 @@
+{
+  "version": 1,
+  "verdict": "pass",
+  "compact": {
+    "verdict": "PASS",
+    "reasons": [
+      "AC1-AC6 plus PR1-PR5 all bind to ac<N>-/pr<N>- nodes; trace.json records 102 executed, 102 passed, 0 failed.",
+      "Assertions are behavioural, not presence-only: USD value probe over all 10 rows, aria-valuenow step/clamp checks, a real mouse drag asserted to move AND stay in bounds, tapped-price vs limit-input comparison, and cross-market row disjointness.",
+      "AC3 is proven by executing its two owning jest tests and asserting both exit 0 and '1 passed' — a screenshot cannot observe a branch that does not render.",
+      "AC5 is proven live in both layouts via CDP viewport emulation plus measured pane widths (book 140px, form 224px at a 360px viewport), not only by unit test.",
+      "All 9 images are in-run capture-helper snapshots with zero Page.captureScreenshot fallbacks; the earlier fallback was root-caused to orphaned capture-helper processes and fixed with a SIGKILL guard before each screenshot node."
+    ],
+    "better_version_guidance": []
+  },
+  "dimensions": {
+    "graph_integrity": {
+      "status": "pass",
+      "reason": "102 nodes, all reachable from the entry node, single terminal end node, every non-terminal node carries an intent.",
+      "evidence": [
+        "recipe.json",
+        "recipe-run/trace.json"
+      ]
+    },
+    "action_contract": {
+      "status": "pass",
+      "reason": "Only manifest-declared actions used (app.status, cdp.target, metamask.wallet.ensure_unlocked, ui.navigate/press/key_press/wait_for/screenshot, command, assert_exit_code, assert_output, end); verified via 'mm-harness run --describe'.",
+      "evidence": [
+        "recipe-run/recipe-resolution.json"
+      ]
+    },
+    "ac_coverage": {
+      "status": "pass",
+      "reason": "11/11 items PROVEN with no WEAK, MISSING or UNTESTABLE rows; each row names its node IDs and its proof type.",
+      "evidence": [
+        "recipe-coverage.md",
+        "recipe-run/trace.json"
+      ]
+    },
+    "evidence_contract_basics": {
+      "status": "pass",
+      "reason": "Visual claims have in-run capture-helper screenshots read directly during the audit (9/9, zero fallbacks); AC3 uses test-exit proof; layout claims pair measured getBoundingClientRect widths with images. AC4/PR1 grouped onto the AC2 capture instead of emitting duplicates.",
+      "evidence": [
+        "evidence/evidence-ac1-collapsed-by-default.png",
+        "evidence/evidence-ac2-expanded-order-book.png",
+        "evidence/evidence-ac5-compact-360px-split.png",
+        "recipe-run/artifact-manifest.json"
+      ]
+    },
+    "perps_state_setup": {
+      "status": "pass",
+      "reason": "No mutating perps state needed: the proof is read-only against the live testnet order-book stream (ETH and BTC both streamed a full 5x5 ladder). No position or order was opened, so the slot is left unmutated.",
+      "evidence": [
+        "recipe-run/summary.json"
+      ]
+    },
+    "mobile_alignment": {
+      "status": "pass",
+      "reason": "calculateAggregationParams, calculateGroupingOptions, getDepthRatio and formatSpreadPercent match the mobile order-book utils (getDepthRatio and formatSpreadPercent are byte-identical); divergences are documented and defensible.",
+      "evidence": [
+        "review.md"
+      ]
+    }
+  },
+  "structural_findings": [],
+  "contextual_findings": [
+    {
+      "code": "compact_layout_column_clipped",
+      "message": "At the 360px popup viewport the two pixel floors plus the divider (140 + 224 + 2 = 366px) exceed the available body (338px), so the split overflows and the order book's value column is clipped behind a horizontal scrollbar. Evidence observes this conclusively; whether it satisfies AC5's 'works in compact (mobile popup)' is a product call, raised in the review rather than hidden in the matrix.",
+      "dimension": "ac_coverage",
+      "evidence": [
+        "evidence/evidence-ac5-compact-360px-split.png",
+        "recipe-coverage.md"
+      ]
+    }
+  ],
+  "suggested_recipe_delta": [
+    "If the compact-layout finding is actioned, add an ac5 assertion that the value column is fully readable at 360px (compare the value cell's scrollWidth to its clientWidth) so the fix is regression-locked.",
+    "Promote the 'pkill -9 capture-helper before every ui.screenshot' guard into the shared extension harness so every worker stops losing captures to the Page.captureScreenshot fallback."
+  ],
+  "training_fields": {
+    "farm": "metamask-extension",
+    "project": "metamask-extension-farm",
+    "flow_type": "review-pr",
+    "task_type": "review-pr",
+    "claim_is_visual": true,
+    "proof_mode": "mixed",
+    "anti_patterns": [],
+    "good_patterns": [
+      "asserted both exit code and '1 passed' for jest-backed proof so an unmatched -t filter cannot pass silently",
+      "compared a prefilled input against the actual tapped row rather than asserting non-empty",
+      "captured the pre-switch ladder and asserted post-switch disjointness instead of eyeballing a market change",
+      "drove a real trusted mouse drag past the ceiling to prove movement and clamping in one node"
+    ]
+  },
+  "meta": {
+    "producer": "worker",
+    "fallback_used": false,
+    "legacy_task": false,
+    "artifact_required": true,
+    "source_signals": [
+      "recipe.json",
+      "recipe-coverage.md",
+      "recipe-run/trace.json",
+      "recipe-run/artifact-manifest.json",
+      "recipe-run/diagnostics.json"
+    ]
+  }
+}
