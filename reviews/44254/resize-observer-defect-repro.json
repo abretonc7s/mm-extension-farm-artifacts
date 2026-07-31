@@ -1,0 +1,63 @@
+{
+  "claim": "ResizeObserver in perps-order-entry-page.tsx never attaches on the cold-load path, so aria-valuemax is not the reachable ceiling and the width is not re-clamped on container resize.",
+  "coldLoadAriaValueMaxNeverUpdates": true,
+  "coldLoadCorrectsOnlyAfterInteraction": true,
+  "warmNavAttachesObserver": true,
+  "steps": [
+    {
+      "case": "A-cold-load",
+      "at": "wide 1100px, book opened",
+      "viewport": 1100,
+      "bodyWidth": 787,
+      "ariaValueNow": "33",
+      "ariaValueMax": "60",
+      "bookPaneWidth": 260,
+      "bodyScrollWidth": 787,
+      "overflowsHorizontally": false
+    },
+    {
+      "case": "A-cold-load",
+      "at": "viewport 1100 -> 700, no interaction",
+      "viewport": 700,
+      "bodyWidth": 689,
+      "ariaValueNow": "33",
+      "ariaValueMax": "60",
+      "bookPaneWidth": 227,
+      "bodyScrollWidth": 689,
+      "overflowsHorizontally": false
+    },
+    {
+      "case": "A-cold-load",
+      "at": "viewport 700 -> 360, no interaction",
+      "viewport": 360,
+      "bodyWidth": 349,
+      "ariaValueNow": "33",
+      "ariaValueMax": "60",
+      "bookPaneWidth": 140,
+      "bodyScrollWidth": 366,
+      "overflowsHorizontally": true
+    },
+    {
+      "case": "A-cold-load",
+      "at": "after ONE ArrowRight keypress",
+      "viewport": 360,
+      "bodyWidth": 349,
+      "ariaValueNow": "31",
+      "ariaValueMax": "35",
+      "bookPaneWidth": 140,
+      "bodyScrollWidth": 366,
+      "overflowsHorizontally": true
+    },
+    {
+      "case": "B-warm-spa-nav",
+      "at": "narrow 360px, book opened",
+      "viewport": 360,
+      "bodyWidth": 349,
+      "ariaValueNow": "33",
+      "ariaValueMax": "35",
+      "bookPaneWidth": 140,
+      "bodyScrollWidth": 366,
+      "overflowsHorizontally": true
+    }
+  ]
+}

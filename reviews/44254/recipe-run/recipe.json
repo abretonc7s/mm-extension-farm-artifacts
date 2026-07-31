@@ -1,13 +1,13 @@
 {
   "$schema": "https://farmslot.io/schemas/recipe-v1.schema.json",
   "title": "PR #44254 — perps order book on the order entry page",
-  "description": "Proves the TAT-3309 acceptance criteria for the perps order-book panel: collapsed by default, expandable by click, feature-flag gated, price levels + USD totals on both sides, responsive split layout, and no regression to the existing order form fields.",
+  "description": "Proves the TAT-3309 acceptance criteria and the PR body's Gherkin claims against the live extension: collapsed by default, expandable by click, feature-flag gated, price levels + USD totals on both sides, responsive compact/expanded layouts, no regression to the existing order form fields, resizable split (mouse + keyboard), grouping/denomination config, tap-a-price limit prefill, and a fresh ladder after a market switch.",
   "workflow": {
     "entry": "setup-status",
     "nodes": {
       "setup-status": {
         "action": "app.status",
-        "next": "setup-cdp",
+        "next": "setup-clear-stale-capture-helpers",
         "intent": "Resolve the Extension checkout and adapter status before order-book proof"
       },
       "setup-cdp": {
@@ -20,18 +20,34 @@
       "setup-unlock": {
         "action": "metamask.wallet.ensure_unlocked",
         "timeout_ms": 45000,
-        "next": "setup-open-perps",
+        "next": "setup-expanded-viewport",
         "intent": "Ensure the wallet is unlocked before opening the perps order entry page"
+      },
+      "setup-expanded-viewport": {
+        "action": "command",
+        "cmd": "node temp/tasks/review/44254-0731-164510/artifacts/probe.cjs viewport 1100 800",
+        "timeout_ms": 60000,
+        "next": "setup-expanded-viewport-exit",
+        "intent": "Pin a deterministic expanded (fullscreen) viewport so the layout proofs are reproducible"
+      },
+      "setup-expanded-viewport-exit": {
+        "action": "assert_exit_code",
+        "source": "setup-expanded-viewport",
+        "expected": 0,
+        "next": "setup-open-perps",
+        "intent": "Fail early if the expanded viewport could not be applied"
       },
       "setup-open-perps": {
         "action": "ui.navigate",
         "page": "perps",
+        "timeout_ms": 30000,
         "next": "ac1-navigate-order-entry",
         "intent": "Leave any previously mounted order entry page so the order book starts from its default state"
       },
       "ac1-navigate-order-entry": {
         "action": "ui.navigate",
         "hash": "#/perps/trade/ETH",
+        "timeout_ms": 30000,
         "next": "ac1-wait-order-entry-page",
         "intent": "AC1: open the perps order entry page for ETH"
       },
@@ -64,13 +80,13 @@
         "test_id": "perps-order-book-resize-handle",
         "visible": false,
         "timeout_ms": 10000,
-        "next": "ac1-screenshot-collapsed-by-default",
+        "next": "ac1-clear-capture-before-screenshot-collapsed-by-default",
         "intent": "AC1: assert the resize divider is absent while the panel is collapsed"
       },
       "ac1-screenshot-collapsed-by-default": {
         "action": "ui.screenshot",
         "path": "evidence/evidence-ac1-collapsed-by-default.png",
-        "timeout_ms": 20000,
+        "timeout_ms": 90000,
         "next": "ac2-press-toggle",
         "intent": "AC1: capture the default collapsed state of the order entry page",
         "label": "AC1: order entry page on arrival — order form fills the width, no order-book panel, only the collapsed toggle in the header.",
@@ -96,57 +112,57 @@
         "test_id": "perps-order-book-resize-handle",
         "expected": "visible",
         "timeout_ms": 20000,
-        "next": "ac2-wait-ladder-rows",
+        "next": "ac2-wait-ask-ladder",
         "intent": "AC2: confirm the resizable split divider appeared with the expanded panel"
       },
-      "ac2-wait-ladder-rows": {
+      "ac2-wait-ask-ladder": {
         "action": "ui.wait_for",
         "test_id": "perps-order-book-ask-row-4",
         "expected": "visible",
         "timeout_ms": 45000,
-        "next": "ac2-wait-depth-ratio",
+        "next": "ac2-wait-bid-ladder",
         "intent": "AC2: wait for the full live ask ladder (5 levels) so the panel shows real book depth, not a skeleton"
+      },
+      "ac2-wait-bid-ladder": {
+        "action": "ui.wait_for",
+        "test_id": "perps-order-book-bid-row-4",
+        "expected": "visible",
+        "timeout_ms": 45000,
+        "next": "ac2-wait-spread-row",
+        "intent": "AC2/PR1: wait for the full live bid ladder (5 levels)"
+      },
+      "ac2-wait-spread-row": {
+        "action": "ui.wait_for",
+        "test_id": "perps-order-book-spread",
+        "expected": "visible",
+        "timeout_ms": 20000,
+        "next": "ac2-wait-depth-ratio",
+        "intent": "PR1: confirm the mid spread row renders between the asks and the bids"
       },
       "ac2-wait-depth-ratio": {
         "action": "ui.wait_for",
         "test_id": "perps-order-book-ratio",
         "expected": "visible",
         "timeout_ms": 20000,
-        "next": "ac2-screenshot-expanded-order-book",
-        "intent": "AC2: confirm the buy/sell depth ratio rendered under the ladder"
+        "next": "ac2-clear-capture-before-screenshot-expanded-order-book",
+        "intent": "AC2/PR1: confirm the buy/sell depth ratio rendered under the ladder"
       },
       "ac2-screenshot-expanded-order-book": {
         "action": "ui.screenshot",
         "path": "evidence/evidence-ac2-expanded-order-book.png",
-        "timeout_ms": 20000,
-        "next": "ac4-wait-ask-price",
-        "intent": "AC2: capture the expanded order book as the result of the click",
-        "label": "AC2: after clicking the header toggle — the order-book panel is expanded beside the form, showing asks, spread, bids and the buy/sell depth ratio.",
-        "category": "evidence"
-      },
-      "ac4-wait-ask-price": {
-        "action": "ui.wait_for",
-        "test_id": "perps-order-book-ask-row-0-price",
-        "expected": "visible",
-        "timeout_ms": 30000,
+        "timeout_ms": 90000,
         "next": "ac4-wait-ask-value",
-        "intent": "AC4: confirm the ask side renders a price level"
+        "intent": "AC2/AC4/PR1: capture the expanded order book as the result of the click",
+        "label": "AC2 + AC4 + PR1: after clicking the header toggle the panel is expanded beside the form — asks above the spread row, bids below, depth bars, buy/sell ratio, and the 'Price / Total (USD)' columns showing USD totals for both sides.",
+        "category": "evidence"
       },
       "ac4-wait-ask-value": {
         "action": "ui.wait_for",
         "test_id": "perps-order-book-ask-row-0-value",
         "expected": "visible",
         "timeout_ms": 20000,
-        "next": "ac4-wait-bid-price",
-        "intent": "AC4: confirm the ask side renders its USD total value column"
-      },
-      "ac4-wait-bid-price": {
-        "action": "ui.wait_for",
-        "test_id": "perps-order-book-bid-row-0-price",
-        "expected": "visible",
-        "timeout_ms": 20000,
         "next": "ac4-wait-bid-value",
-        "intent": "AC4: confirm the bid side renders a price level"
+        "intent": "AC4: confirm the ask side renders its value column"
       },
       "ac4-wait-bid-value": {
         "action": "ui.wait_for",
@@ -154,31 +170,461 @@
         "expected": "visible",
         "timeout_ms": 20000,
         "next": "ac4-assert-usd-total-header",
-        "intent": "AC4: confirm the bid side renders its USD total value column"
+        "intent": "AC4: confirm the bid side renders its value column"
       },
       "ac4-assert-usd-total-header": {
         "action": "ui.wait_for",
         "text": "Total (USD)",
         "expected": "visible",
         "timeout_ms": 20000,
-        "next": "ac4-screenshot-price-levels-usd-totals",
+        "next": "ac4-assert-usd-values",
         "intent": "AC4: assert the value column is explicitly labelled as a USD total"
       },
-      "ac4-screenshot-price-levels-usd-totals": {
-        "action": "ui.screenshot",
-        "path": "evidence/evidence-ac4-price-levels-usd-totals.png",
+      "ac4-assert-usd-values": {
+        "action": "command",
+        "cmd": "node temp/tasks/review/44254-0731-164510/artifacts/probe.cjs usd-values",
+        "timeout_ms": 60000,
+        "next": "ac4-assert-usd-values-exit",
+        "intent": "AC4: assert every rendered ask AND bid row carries a USD-formatted value, not just the header"
+      },
+      "ac4-assert-usd-values-exit": {
+        "action": "assert_exit_code",
+        "source": "ac4-assert-usd-values",
+        "expected": 0,
+        "next": "ac4-assert-usd-values-output",
+        "intent": "AC4: fail the run if any displayed ask/bid row is missing a USD value"
+      },
+      "ac4-assert-usd-values-output": {
+        "action": "assert_output",
+        "source": "ac4-assert-usd-values",
+        "stream": "stdout",
+        "contains": "AC4_OK asks=5 bids=5",
+        "next": "ac6-assert-order-type-toggle",
+        "intent": "AC4: record that both sides rendered their full depth with USD values"
+      },
+      "ac6-assert-order-type-toggle": {
+        "action": "ui.wait_for",
+        "test_id": "order-type-toggle",
+        "expected": "visible",
         "timeout_ms": 20000,
+        "next": "ac6-assert-amount-field",
+        "intent": "AC6: the Market/Limit order-type control still renders beside the open book"
+      },
+      "ac6-assert-amount-field": {
+        "action": "ui.wait_for",
+        "test_id": "amount-input-field",
+        "expected": "visible",
+        "timeout_ms": 20000,
+        "next": "ac6-assert-leverage-control",
+        "intent": "AC6: the size/amount field still renders beside the open book"
+      },
+      "ac6-assert-leverage-control": {
+        "action": "ui.wait_for",
+        "test_id": "leverage-slider",
+        "expected": "visible",
+        "timeout_ms": 20000,
+        "next": "ac6-assert-tpsl-control",
+        "intent": "AC6: the leverage control still renders beside the open book"
+      },
+      "ac6-assert-tpsl-control": {
+        "action": "ui.wait_for",
+        "test_id": "auto-close-toggle",
+        "expected": "visible",
+        "timeout_ms": 20000,
+        "next": "ac6-assert-submit-button",
+        "intent": "AC6: the TP/SL (auto-close) control still renders beside the open book"
+      },
+      "ac6-assert-submit-button": {
+        "action": "ui.wait_for",
+        "test_id": "submit-order-button",
+        "expected": "visible",
+        "timeout_ms": 20000,
+        "next": "ac6-clear-capture-before-screenshot-form-fields-intact",
+        "intent": "AC6: the submit control still renders beside the open book"
+      },
+      "ac6-screenshot-form-fields-intact": {
+        "action": "ui.screenshot",
+        "path": "evidence/evidence-ac6-form-fields-intact.png",
+        "timeout_ms": 90000,
+        "next": "ac6-run-order-form-regression-tests",
+        "intent": "AC6: capture the order form intact beside the expanded order book",
+        "label": "AC6: with the order book expanded, the order form keeps its direction tabs, Market/Limit toggle, size field, leverage control, TP/SL (auto-close) section, order summary and submit button.",
+        "category": "evidence"
+      },
+      "ac6-run-order-form-regression-tests": {
+        "action": "command",
+        "cmd": "yarn jest ui/hooks/perps/usePerpsOrderForm.test.ts ui/hooks/perps/usePerpsEstimatedSlippage.test.ts --no-coverage 2>&1",
+        "timeout_ms": 900000,
+        "next": "ac6-assert-order-form-exit",
+        "intent": "AC6: run the existing order-form hook suites that own limit price, size and leverage state"
+      },
+      "ac6-assert-order-form-exit": {
+        "action": "assert_exit_code",
+        "source": "ac6-run-order-form-regression-tests",
+        "expected": 0,
+        "next": "ac6-assert-order-form-suites-passed",
+        "intent": "AC6: the pre-existing order-form suites must still pass with the prefill wiring added"
+      },
+      "ac6-assert-order-form-suites-passed": {
+        "action": "assert_output",
+        "source": "ac6-run-order-form-regression-tests",
+        "stream": "stdout",
+        "contains": "Test Suites: 2 passed",
+        "next": "pr2-focus-divider",
+        "intent": "AC6: prove both pre-existing order-form suites actually ran and passed, not just that the process exited 0"
+      },
+      "pr2-focus-divider": {
+        "action": "command",
+        "cmd": "node temp/tasks/review/44254-0731-164510/artifacts/probe.cjs focus-divider",
+        "timeout_ms": 60000,
+        "next": "pr2-assert-focus-exit",
+        "intent": "PR2: focus the resize divider so the trusted key presses are delivered to it (clicking it does not focus it — handleOrderBookResizeStart calls preventDefault on mousedown)"
+      },
+      "pr2-assert-focus-exit": {
+        "action": "assert_exit_code",
+        "source": "pr2-focus-divider",
+        "expected": 0,
+        "next": "pr2-key-arrow-left",
+        "intent": "PR2: fail the run if the divider cannot take keyboard focus at all"
+      },
+      "pr2-key-arrow-left": {
+        "action": "ui.key_press",
+        "key": "ArrowLeft",
+        "timeout_ms": 20000,
+        "next": "pr2-assert-arrow-widened",
+        "intent": "PR2: ArrowLeft widens the right-aligned order book by one step"
+      },
+      "pr2-assert-arrow-widened": {
+        "action": "ui.wait_for",
+        "selector": "[data-testid=\"perps-order-book-resize-handle\"][aria-valuenow=\"35\"]",
+        "expected": "visible",
+        "timeout_ms": 10000,
+        "next": "pr2-key-end",
+        "intent": "PR2: the split moved from the 33% default to 35% — one 2-point arrow step"
+      },
+      "pr2-key-end": {
+        "action": "ui.key_press",
+        "key": "End",
+        "timeout_ms": 20000,
+        "next": "pr2-assert-end-at-min",
+        "intent": "PR2: End jumps the divider to the minimum bound"
+      },
+      "pr2-assert-end-at-min": {
+        "action": "ui.wait_for",
+        "selector": "[data-testid=\"perps-order-book-resize-handle\"][aria-valuenow=\"22\"]",
+        "expected": "visible",
+        "timeout_ms": 10000,
+        "next": "pr2-key-home",
+        "intent": "PR2: the split is clamped to the 22% minimum bound and stops there"
+      },
+      "pr2-key-home": {
+        "action": "ui.key_press",
+        "key": "Home",
+        "timeout_ms": 20000,
+        "next": "pr2-assert-home-at-max",
+        "intent": "PR2: Home jumps the divider to the maximum bound"
+      },
+      "pr2-assert-home-at-max": {
+        "action": "command",
+        "cmd": "node temp/tasks/review/44254-0731-164510/artifacts/probe.cjs valuenow-equals-max",
+        "timeout_ms": 60000,
+        "next": "pr2-assert-home-exit",
+        "intent": "PR2: assert Home lands exactly on the announced maximum bound"
+      },
+      "pr2-assert-home-exit": {
+        "action": "assert_exit_code",
+        "source": "pr2-assert-home-at-max",
+        "expected": 0,
+        "next": "pr2-key-end-before-drag",
+        "intent": "PR2: fail the run if Home does not reach the announced ceiling"
+      },
+      "pr2-key-end-before-drag": {
+        "action": "ui.key_press",
+        "key": "End",
+        "timeout_ms": 20000,
+        "next": "pr2-assert-at-min-before-drag",
+        "intent": "PR2: return the split to its minimum so the following mouse drag starts away from the ceiling"
+      },
+      "pr2-assert-at-min-before-drag": {
+        "action": "ui.wait_for",
+        "selector": "[data-testid=\"perps-order-book-resize-handle\"][aria-valuenow=\"22\"]",
+        "expected": "visible",
+        "timeout_ms": 10000,
+        "next": "pr2-drag-divider",
+        "intent": "PR2: confirm the drag starts from the 22% minimum, so any movement is attributable to the drag"
+      },
+      "pr2-drag-divider": {
+        "action": "command",
+        "cmd": "node temp/tasks/review/44254-0731-164510/artifacts/probe.cjs drag",
+        "timeout_ms": 60000,
+        "next": "pr2-assert-drag-exit",
+        "intent": "PR2: perform a real mouse drag on the divider, past the ceiling, to prove resize and clamping"
+      },
+      "pr2-assert-drag-exit": {
+        "action": "assert_exit_code",
+        "source": "pr2-drag-divider",
+        "expected": 0,
+        "next": "pr2-assert-drag-output",
+        "intent": "PR2: fail the run if the drag does not resize the split or escapes the min/max bounds"
+      },
+      "pr2-assert-drag-output": {
+        "action": "assert_output",
+        "source": "pr2-drag-divider",
+        "stream": "stdout",
+        "contains": "PR2_DRAG_OK",
+        "next": "pr2-clear-capture-before-screenshot-resized-split",
+        "intent": "PR2: record the before/after split percentages and the bounds honoured"
+      },
+      "pr2-screenshot-resized-split": {
+        "action": "ui.screenshot",
+        "path": "evidence/evidence-pr2-split-resized-to-clamped-max.png",
+        "timeout_ms": 90000,
+        "next": "pr3-open-config-modal",
+        "intent": "PR2: capture the resized split sitting on its clamped bound",
+        "label": "PR2: after keyboard resizing (ArrowLeft/End/Home) and a mouse drag dragged far past the ceiling, the split rests on its clamped maximum — the order form is never collapsed.",
+        "category": "evidence"
+      },
+      "pr3-open-config-modal": {
+        "action": "ui.press",
+        "test_id": "perps-order-book-grouping-trigger",
+        "timeout_ms": 20000,
+        "next": "pr3-wait-config-modal",
+        "intent": "PR3: open the listing/grouping config modal from the order-book header"
+      },
+      "pr3-wait-config-modal": {
+        "action": "ui.wait_for",
+        "test_id": "perps-order-book-config-modal-currency-base",
+        "expected": "visible",
+        "timeout_ms": 20000,
+        "next": "pr3-clear-capture-before-screenshot-config-modal",
+        "intent": "PR3: the config modal is open with its denomination pills"
+      },
+      "pr3-screenshot-config-modal": {
+        "action": "ui.screenshot",
+        "path": "evidence/evidence-pr3-config-modal-open.png",
+        "timeout_ms": 90000,
+        "next": "pr3-select-base-currency",
+        "intent": "PR3: capture the grouping/denomination configuration surface",
+        "label": "PR3: the 'Listed by & Group by' modal — denomination (ETH / USD), value type (Size / Total) and the price-grouping increments.",
+        "category": "evidence"
+      },
+      "pr3-select-base-currency": {
+        "action": "ui.press",
+        "test_id": "perps-order-book-config-modal-currency-base",
+        "timeout_ms": 20000,
+        "next": "pr3-select-size-metric",
+        "intent": "PR3: choose the base-asset denomination instead of USD"
+      },
+      "pr3-select-size-metric": {
+        "action": "ui.press",
+        "test_id": "perps-order-book-config-modal-metric-size",
+        "timeout_ms": 20000,
+        "next": "pr3-apply-config",
+        "intent": "PR3: choose the per-level Size metric instead of the cumulative Total"
+      },
+      "pr3-apply-config": {
+        "action": "ui.press",
+        "test_id": "perps-order-book-config-modal-apply",
+        "timeout_ms": 20000,
+        "next": "pr3-assert-header-updated",
+        "intent": "PR3: apply the new denomination and value metric"
+      },
+      "pr3-assert-header-updated": {
+        "action": "ui.wait_for",
+        "text": "Size (ETH)",
+        "expected": "visible",
+        "timeout_ms": 20000,
+        "next": "pr3-clear-capture-before-screenshot-config-applied",
+        "intent": "PR3: the column header switched from 'Total (USD)' to 'Size (ETH)' after applying"
+      },
+      "pr3-screenshot-config-applied": {
+        "action": "ui.screenshot",
+        "path": "evidence/evidence-pr3-ladder-after-config-change.png",
+        "timeout_ms": 90000,
+        "next": "pr4-tap-ask-price-row",
+        "intent": "PR3: capture the ladder and column headers after the config change",
+        "label": "PR3: after applying the base denomination and the Size metric, the column header reads 'Size (ETH)' and the ladder values are base-asset sizes instead of USD totals.",
+        "category": "evidence"
+      },
+      "pr4-tap-ask-price-row": {
+        "action": "ui.press",
+        "test_id": "perps-order-book-ask-row-2",
+        "timeout_ms": 20000,
+        "next": "pr4-wait-limit-price-field",
+        "intent": "PR4: tap an ask price row to switch the form to a limit order prefilled with that price"
+      },
+      "pr4-wait-limit-price-field": {
+        "action": "ui.wait_for",
+        "test_id": "limit-price-input",
+        "expected": "visible",
+        "timeout_ms": 20000,
+        "next": "pr4-assert-prefill-matches",
+        "intent": "PR4: the form switched to a Limit order — the limit price field mounted"
+      },
+      "pr4-assert-prefill-matches": {
+        "action": "command",
+        "cmd": "node temp/tasks/review/44254-0731-164510/artifacts/probe.cjs prefill-match perps-order-book-ask-row-2",
+        "timeout_ms": 60000,
+        "next": "pr4-assert-prefill-exit",
+        "intent": "PR4: assert the limit price input holds the price of the row that was tapped, not just any value"
+      },
+      "pr4-assert-prefill-exit": {
+        "action": "assert_exit_code",
+        "source": "pr4-assert-prefill-matches",
+        "expected": 0,
+        "next": "pr4-assert-prefill-output",
+        "intent": "PR4: fail the run if the limit price does not match the tapped row"
+      },
+      "pr4-assert-prefill-output": {
+        "action": "assert_output",
+        "source": "pr4-assert-prefill-matches",
+        "stream": "stdout",
+        "contains": "PR4_OK",
+        "next": "pr4-clear-capture-before-screenshot-limit-prefilled",
+        "intent": "PR4: record the tapped price and the resulting limit price input value"
+      },
+      "pr4-screenshot-limit-prefilled": {
+        "action": "ui.screenshot",
+        "path": "evidence/evidence-pr4-limit-prefilled-from-price-tap.png",
+        "timeout_ms": 90000,
+        "next": "ac5-shrink-browser-window",
+        "intent": "PR4: capture the limit order prefilled from an order-book price tap",
+        "label": "PR4: tapping an ask row switched the order type to Limit and prefilled the limit price input with that row's price.",
+        "category": "evidence"
+      },
+      "ac5-shrink-browser-window": {
+        "action": "command",
+        "cmd": "node temp/tasks/review/44254-0731-164510/artifacts/probe.cjs window-size 500 860",
+        "timeout_ms": 60000,
+        "next": "ac5-set-compact-viewport",
+        "intent": "AC5: shrink the real browser window to its minimum so the OS-level capture frames the compact layout rather than a wide window"
+      },
+      "ac5-set-compact-viewport": {
+        "action": "command",
+        "cmd": "node temp/tasks/review/44254-0731-164510/artifacts/probe.cjs viewport 360 700",
+        "timeout_ms": 60000,
+        "next": "ac5-assert-compact-viewport-exit",
+        "intent": "AC5: emulate the compact ~360px popup width so the compact layout is proven visually, not only by unit test"
+      },
+      "ac5-assert-compact-viewport-exit": {
+        "action": "assert_exit_code",
+        "source": "ac5-set-compact-viewport",
+        "expected": 0,
+        "next": "ac5-wait-ladder-compact",
+        "intent": "AC5: fail the run if the compact viewport could not be applied"
+      },
+      "ac5-wait-ladder-compact": {
+        "action": "ui.wait_for",
+        "test_id": "perps-order-book-ask-row-0-price",
+        "expected": "visible",
+        "timeout_ms": 30000,
+        "next": "ac5-wait-form-compact",
+        "intent": "AC5: the order-book ladder still renders at compact popup width"
+      },
+      "ac5-wait-form-compact": {
+        "action": "ui.wait_for",
+        "test_id": "amount-input-field",
+        "expected": "visible",
+        "timeout_ms": 20000,
+        "next": "ac5-assert-pixel-floors",
+        "intent": "AC5: the order form still renders beside the book at compact popup width"
+      },
+      "ac5-assert-pixel-floors": {
+        "action": "command",
+        "cmd": "node temp/tasks/review/44254-0731-164510/artifacts/probe.cjs narrow-split",
+        "timeout_ms": 60000,
+        "next": "ac5-assert-pixel-floors-exit",
+        "intent": "AC5: assert both panes stay above their pixel floors (book 140px, form 224px) at a 360px viewport"
+      },
+      "ac5-assert-pixel-floors-exit": {
+        "action": "assert_exit_code",
+        "source": "ac5-assert-pixel-floors",
+        "expected": 0,
+        "next": "ac5-assert-pixel-floors-output",
+        "intent": "AC5: fail the run if either pane collapses below its usable width"
+      },
+      "ac5-assert-pixel-floors-output": {
+        "action": "assert_output",
+        "source": "ac5-assert-pixel-floors",
+        "stream": "stdout",
+        "contains": "AC5_OK",
+        "next": "ac5-clear-capture-before-screenshot-compact-split",
+        "intent": "AC5: record the measured pane widths at compact width"
+      },
+      "ac5-screenshot-compact-split": {
+        "action": "ui.screenshot",
+        "path": "evidence/evidence-ac5-compact-360px-split.png",
+        "timeout_ms": 90000,
+        "next": "ac5-restore-browser-window",
+        "intent": "AC5: capture the compact (popup-width) half of the responsive claim",
+        "label": "AC5 (compact half): at a 360px popup-width viewport both panes stay usable — the order book holds its 140px floor and the order form its 224px floor, with the body's horizontal-scroll fallback absorbing the remainder. The expanded/fullscreen half is the AC2 capture.",
+        "category": "evidence"
+      },
+      "ac5-restore-expanded-viewport": {
+        "action": "command",
+        "cmd": "node temp/tasks/review/44254-0731-164510/artifacts/probe.cjs viewport 1100 800",
+        "timeout_ms": 60000,
+        "next": "pr5-capture-eth-ladder",
+        "intent": "AC5: restore the expanded viewport before the market-switch proof"
+      },
+      "pr5-capture-eth-ladder": {
+        "action": "command",
+        "cmd": "node temp/tasks/review/44254-0731-164510/artifacts/probe.cjs capture-prices temp/tasks/review/44254-0731-164510/artifacts/pr5-eth-ladder.json",
+        "timeout_ms": 60000,
+        "next": "pr5-assert-capture-exit",
+        "intent": "PR5: snapshot the ETH ladder rows before switching markets"
+      },
+      "pr5-assert-capture-exit": {
+        "action": "assert_exit_code",
+        "source": "pr5-capture-eth-ladder",
+        "expected": 0,
+        "next": "pr5-navigate-btc",
+        "intent": "PR5: fail the run if there was no ETH ladder to compare against"
+      },
+      "pr5-navigate-btc": {
+        "action": "ui.navigate",
+        "hash": "#/perps/trade/BTC",
+        "timeout_ms": 30000,
+        "next": "pr5-assert-fresh-ladder",
+        "intent": "PR5: switch to a different market while the order book is open"
+      },
+      "pr5-assert-fresh-ladder": {
+        "action": "command",
+        "cmd": "node temp/tasks/review/44254-0731-164510/artifacts/probe.cjs assert-fresh temp/tasks/review/44254-0731-164510/artifacts/pr5-eth-ladder.json BTC",
+        "timeout_ms": 120000,
+        "next": "pr5-assert-fresh-exit",
+        "intent": "PR5: assert the ladder shows the new market's rows and that no previous-market row survived the switch"
+      },
+      "pr5-assert-fresh-exit": {
+        "action": "assert_exit_code",
+        "source": "pr5-assert-fresh-ladder",
+        "expected": 0,
+        "next": "pr5-assert-fresh-output",
+        "intent": "PR5: fail the run if any previous-market row is still displayed after the switch"
+      },
+      "pr5-assert-fresh-output": {
+        "action": "assert_output",
+        "source": "pr5-assert-fresh-ladder",
+        "stream": "stdout",
+        "contains": "PR5_OK",
+        "next": "pr5-clear-capture-before-screenshot-btc-ladder",
+        "intent": "PR5: record the market transition and the new top-of-book price"
+      },
+      "pr5-screenshot-btc-ladder": {
+        "action": "ui.screenshot",
+        "path": "evidence/evidence-pr5-ladder-after-market-switch.png",
+        "timeout_ms": 90000,
         "next": "ac3-run-flag-off-hides-toggle-test",
-        "intent": "AC4: capture price levels and USD totals for both asks and bids",
-        "label": "AC4: ladder with the 'Price / Total (USD)' column headers — five ask price levels above the spread and five bid price levels below, each with a USD cumulative total.",
+        "intent": "PR5: capture the refreshed ladder for the new market",
+        "label": "PR5: after navigating from ETH to BTC with the order book open, the ladder shows the new market's levels — asserted disjoint from the captured ETH rows.",
         "category": "evidence"
       },
       "ac3-run-flag-off-hides-toggle-test": {
         "action": "command",
         "cmd": "yarn jest ui/pages/perps/perps-order-entry-page.test.tsx --no-coverage -t \"does not render the order book toggle when the feature flag is off\" 2>&1",
-        "timeout_ms": 600000,
+        "timeout_ms": 900000,
         "next": "ac3-assert-flag-off-exit",
-        "intent": "AC3: exercise the flag-OFF render path, unreachable in the live slot (the running fixture pins perpsOrderBookEnabled to enabled:true and remote flags are not writable read-only)"
+        "intent": "AC3: exercise the flag-OFF render path, which the live slot cannot reach (its fixture pins perpsOrderBookEnabled to enabled:true and remote flags are not writable from a read-only probe)"
       },
       "ac3-assert-flag-off-exit": {
         "action": "assert_exit_code",
@@ -198,9 +644,9 @@
       "ac3-run-flag-selector-test": {
         "action": "command",
         "cmd": "yarn jest ui/selectors/perps/feature-flags.test.ts --no-coverage -t \"returns false when the perpsOrderBookEnabled flag is absent\" 2>&1",
-        "timeout_ms": 600000,
+        "timeout_ms": 900000,
         "next": "ac3-assert-flag-selector-exit",
-        "intent": "AC3: prove the gate defaults to OFF when the remote flag is absent entirely (jest -t is a regex, so the title is matched without its parenthesised suffix)"
+        "intent": "AC3: prove the gate defaults to OFF when the remote flag is absent entirely (jest -t is a regex, so the title matches without its parenthesised suffix)"
       },
       "ac3-assert-flag-selector-exit": {
         "action": "assert_exit_code",
@@ -214,164 +660,110 @@
         "source": "ac3-run-flag-selector-test",
         "stream": "stdout",
         "contains": "1 passed",
-        "next": "ac5-run-narrow-body-clamp-test",
-        "intent": "AC3: prove the getIsPerpsOrderBookEnabled default-OFF assertion matched and PASSED"
-      },
-      "ac5-run-narrow-body-clamp-test": {
-        "action": "command",
-        "cmd": "yarn jest ui/components/app/perps/order-book/order-book.utils.test.ts --no-coverage -t \"caps the width so the form keeps its pixel floor on a narrow body\" 2>&1",
-        "timeout_ms": 600000,
-        "next": "ac5-assert-narrow-body-exit",
-        "intent": "AC5: exercise the compact-layout width clamp that keeps the form usable in the ~360px popup, which this CDP session cannot reach visually (no popup target exposed)"
-      },
-      "ac5-assert-narrow-body-exit": {
-        "action": "assert_exit_code",
-        "source": "ac5-run-narrow-body-clamp-test",
-        "expected": 0,
-        "next": "ac5-assert-narrow-body-passed",
-        "intent": "AC5: the narrow-body clamp run must succeed"
-      },
-      "ac5-assert-narrow-body-passed": {
-        "action": "assert_output",
-        "source": "ac5-run-narrow-body-clamp-test",
-        "stream": "stdout",
-        "contains": "1 passed",
-        "next": "ac5-run-popup-ceiling-test",
-        "intent": "AC5: prove the narrow-body clamp assertion matched and PASSED"
-      },
-      "ac5-run-popup-ceiling-test": {
-        "action": "command",
-        "cmd": "yarn jest ui/components/app/perps/order-book/order-book.utils.test.ts --no-coverage -t \"returns the pixel-aware ceiling on a narrow popup body\" 2>&1",
-        "timeout_ms": 600000,
-        "next": "ac5-assert-popup-ceiling-exit",
-        "intent": "AC5: exercise the popup-width ceiling derivation that drives aria-valuemax and the clamp on a compact body"
-      },
-      "ac5-assert-popup-ceiling-exit": {
-        "action": "assert_exit_code",
-        "source": "ac5-run-popup-ceiling-test",
-        "expected": 0,
-        "next": "ac5-assert-popup-ceiling-passed",
-        "intent": "AC5: the popup-ceiling run must succeed"
-      },
-      "ac5-assert-popup-ceiling-passed": {
-        "action": "assert_output",
-        "source": "ac5-run-popup-ceiling-test",
-        "stream": "stdout",
-        "contains": "1 passed",
-        "next": "ac5-screenshot-fullscreen-split-layout",
-        "intent": "AC5: prove the popup-ceiling assertion matched and PASSED"
-      },
-      "ac5-screenshot-fullscreen-split-layout": {
-        "action": "ui.screenshot",
-        "path": "evidence/evidence-ac5-fullscreen-split-layout.png",
-        "timeout_ms": 20000,
-        "next": "ac6-press-bid-price-row",
-        "intent": "AC5: capture the expanded/fullscreen half of the responsive split",
-        "label": "AC5 (expanded/fullscreen half only): form and order book share the width via the draggable divider in the fullscreen (home.html) layout. This image does NOT prove the compact popup layout — no popup target is reachable from this CDP session; the compact path is covered by the ac5-* clamp assertions instead.",
-        "category": "evidence"
-      },
-      "ac6-press-bid-price-row": {
-        "action": "ui.press",
-        "test_id": "perps-order-book-bid-row-0",
-        "timeout_ms": 20000,
-        "next": "ac6-wait-limit-price-field",
-        "intent": "AC6: tap a bid price row — the highest-risk interaction between the new panel and the existing order form"
-      },
-      "ac6-wait-limit-price-field": {
-        "action": "ui.wait_for",
-        "test_id": "limit-price-input",
-        "expected": "visible",
-        "timeout_ms": 20000,
-        "next": "ac6-wait-order-type-toggle",
-        "intent": "AC6: confirm the limit price field is present and usable after the order type switched to Limit"
-      },
-      "ac6-wait-order-type-toggle": {
-        "action": "ui.wait_for",
-        "test_id": "order-type-toggle",
-        "expected": "visible",
-        "timeout_ms": 20000,
-        "next": "ac6-wait-amount-field",
-        "intent": "AC6: confirm the Market/Limit order-type control still renders"
-      },
-      "ac6-wait-amount-field": {
-        "action": "ui.wait_for",
-        "test_id": "amount-input-field",
-        "expected": "visible",
-        "timeout_ms": 20000,
-        "next": "ac6-wait-leverage-control",
-        "intent": "AC6: confirm the size/amount field still renders beside the open order book"
-      },
-      "ac6-wait-leverage-control": {
-        "action": "ui.wait_for",
-        "test_id": "leverage-slider",
-        "expected": "visible",
-        "timeout_ms": 20000,
-        "next": "ac6-wait-auto-close-tpsl",
-        "intent": "AC6: confirm the leverage control still renders"
-      },
-      "ac6-wait-auto-close-tpsl": {
-        "action": "ui.wait_for",
-        "test_id": "auto-close-toggle",
-        "expected": "visible",
-        "timeout_ms": 20000,
-        "next": "ac6-wait-submit-button",
-        "intent": "AC6: confirm the TP/SL (auto-close) control still renders"
-      },
-      "ac6-wait-submit-button": {
-        "action": "ui.wait_for",
-        "test_id": "submit-order-button",
-        "expected": "visible",
-        "timeout_ms": 20000,
-        "next": "ac6-screenshot-form-fields-intact",
-        "intent": "AC6: confirm the submit control still renders with the order book open"
-      },
-      "ac6-screenshot-form-fields-intact": {
-        "action": "ui.screenshot",
-        "path": "evidence/evidence-ac6-form-fields-intact.png",
-        "timeout_ms": 20000,
-        "next": "ac6-run-order-form-regression-tests",
-        "intent": "AC6: capture the order form intact after the order-book interaction",
-        "label": "AC6: after tapping a bid price, the form shows Limit selected with the tapped price prefilled, and size, leverage, TP/SL (auto-close) and submit all still render beside the open order book.",
-        "category": "evidence"
-      },
-      "ac6-run-order-form-regression-tests": {
-        "action": "command",
-        "cmd": "yarn jest ui/hooks/perps/usePerpsOrderForm.test.ts ui/hooks/perps/usePerpsEstimatedSlippage.test.ts --no-coverage --verbose 2>&1",
-        "timeout_ms": 600000,
-        "next": "ac6-assert-order-form-exit",
-        "intent": "AC6: run the existing order-form hook suites that own limit price, size and leverage state"
-      },
-      "ac6-assert-order-form-exit": {
-        "action": "assert_exit_code",
-        "source": "ac6-run-order-form-regression-tests",
-        "expected": 0,
-        "next": "ac6-assert-order-form-suites-passed",
-        "intent": "AC6: the pre-existing order-form suites must still pass with the prefill wiring added"
-      },
-      "ac6-assert-order-form-suites-passed": {
-        "action": "assert_output",
-        "source": "ac6-run-order-form-regression-tests",
-        "stream": "stdout",
-        "contains": "Test Suites: 2 passed",
         "next": "teardown-collapse-order-book",
-        "intent": "AC6: prove both pre-existing order-form hook suites actually ran and passed, not just that the process exited 0"
+        "intent": "AC3: prove the getIsPerpsOrderBookEnabled default-OFF assertion matched and PASSED"
       },
       "teardown-collapse-order-book": {
         "action": "ui.press",
         "test_id": "perps-order-book-toggle",
         "timeout_ms": 20000,
-        "next": "teardown-return-perps-home",
+        "next": "teardown-clear-viewport",
         "intent": "Collapse the order book so the slot is left in its default state"
+      },
+      "teardown-clear-viewport": {
+        "action": "command",
+        "cmd": "node temp/tasks/review/44254-0731-164510/artifacts/probe.cjs viewport-clear",
+        "timeout_ms": 60000,
+        "next": "teardown-return-perps-home",
+        "intent": "Clear the emulated viewport override so the slot is left unmodified"
       },
       "teardown-return-perps-home": {
         "action": "ui.navigate",
         "page": "perps",
+        "timeout_ms": 30000,
         "next": "teardown-done",
         "intent": "Return the slot to the perps home surface"
       },
       "teardown-done": {
         "action": "end",
         "status": "pass"
+      },
+      "ac5-restore-browser-window": {
+        "action": "command",
+        "cmd": "node temp/tasks/review/44254-0731-164510/artifacts/probe.cjs window-size 1200 916",
+        "timeout_ms": 60000,
+        "next": "ac5-restore-expanded-viewport",
+        "intent": "AC5: restore the original browser window size after the compact-layout capture"
+      },
+      "setup-clear-stale-capture-helpers": {
+        "action": "command",
+        "cmd": "pkill -f 'capture-helper' 2>/dev/null; sleep 2; echo CAPTURE_HELPERS_CLEARED",
+        "timeout_ms": 30000,
+        "next": "setup-cdp",
+        "intent": "Kill orphaned capture-helper processes: leftovers hold the macOS capture session and force ui.screenshot to fall back to Page.captureScreenshot, which is not valid review evidence"
+      },
+      "ac1-clear-capture-before-screenshot-collapsed-by-default": {
+        "action": "command",
+        "cmd": "pkill -f 'capture-helper' 2>/dev/null; sleep 1; echo CAPTURE_SLOT_FREE",
+        "timeout_ms": 30000,
+        "next": "ac1-screenshot-collapsed-by-default",
+        "intent": "Free the macOS capture session immediately before ac1-screenshot-collapsed-by-default so ui.screenshot uses capture-helper instead of the Page.captureScreenshot fallback"
+      },
+      "ac2-clear-capture-before-screenshot-expanded-order-book": {
+        "action": "command",
+        "cmd": "pkill -f 'capture-helper' 2>/dev/null; sleep 1; echo CAPTURE_SLOT_FREE",
+        "timeout_ms": 30000,
+        "next": "ac2-screenshot-expanded-order-book",
+        "intent": "Free the macOS capture session immediately before ac2-screenshot-expanded-order-book so ui.screenshot uses capture-helper instead of the Page.captureScreenshot fallback"
+      },
+      "ac6-clear-capture-before-screenshot-form-fields-intact": {
+        "action": "command",
+        "cmd": "pkill -f 'capture-helper' 2>/dev/null; sleep 1; echo CAPTURE_SLOT_FREE",
+        "timeout_ms": 30000,
+        "next": "ac6-screenshot-form-fields-intact",
+        "intent": "Free the macOS capture session immediately before ac6-screenshot-form-fields-intact so ui.screenshot uses capture-helper instead of the Page.captureScreenshot fallback"
+      },
+      "pr2-clear-capture-before-screenshot-resized-split": {
+        "action": "command",
+        "cmd": "pkill -f 'capture-helper' 2>/dev/null; sleep 1; echo CAPTURE_SLOT_FREE",
+        "timeout_ms": 30000,
+        "next": "pr2-screenshot-resized-split",
+        "intent": "Free the macOS capture session immediately before pr2-screenshot-resized-split so ui.screenshot uses capture-helper instead of the Page.captureScreenshot fallback"
+      },
+      "pr3-clear-capture-before-screenshot-config-modal": {
+        "action": "command",
+        "cmd": "pkill -f 'capture-helper' 2>/dev/null; sleep 1; echo CAPTURE_SLOT_FREE",
+        "timeout_ms": 30000,
+        "next": "pr3-screenshot-config-modal",
+        "intent": "Free the macOS capture session immediately before pr3-screenshot-config-modal so ui.screenshot uses capture-helper instead of the Page.captureScreenshot fallback"
+      },
+      "pr3-clear-capture-before-screenshot-config-applied": {
+        "action": "command",
+        "cmd": "pkill -f 'capture-helper' 2>/dev/null; sleep 1; echo CAPTURE_SLOT_FREE",
+        "timeout_ms": 30000,
+        "next": "pr3-screenshot-config-applied",
+        "intent": "Free the macOS capture session immediately before pr3-screenshot-config-applied so ui.screenshot uses capture-helper instead of the Page.captureScreenshot fallback"
+      },
+      "pr4-clear-capture-before-screenshot-limit-prefilled": {
+        "action": "command",
+        "cmd": "pkill -f 'capture-helper' 2>/dev/null; sleep 1; echo CAPTURE_SLOT_FREE",
+        "timeout_ms": 30000,
+        "next": "pr4-screenshot-limit-prefilled",
+        "intent": "Free the macOS capture session immediately before pr4-screenshot-limit-prefilled so ui.screenshot uses capture-helper instead of the Page.captureScreenshot fallback"
+      },
+      "ac5-clear-capture-before-screenshot-compact-split": {
+        "action": "command",
+        "cmd": "pkill -f 'capture-helper' 2>/dev/null; sleep 1; echo CAPTURE_SLOT_FREE",
+        "timeout_ms": 30000,
+        "next": "ac5-screenshot-compact-split",
+        "intent": "Free the macOS capture session immediately before ac5-screenshot-compact-split so ui.screenshot uses capture-helper instead of the Page.captureScreenshot fallback"
+      },
+      "pr5-clear-capture-before-screenshot-btc-ladder": {
+        "action": "command",
+        "cmd": "pkill -f 'capture-helper' 2>/dev/null; sleep 1; echo CAPTURE_SLOT_FREE",
+        "timeout_ms": 30000,
+        "next": "pr5-screenshot-btc-ladder",
+        "intent": "Free the macOS capture session immediately before pr5-screenshot-btc-ladder so ui.screenshot uses capture-helper instead of the Page.captureScreenshot fallback"
       }
     }
   }

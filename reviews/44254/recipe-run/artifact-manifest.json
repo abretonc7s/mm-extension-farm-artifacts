@@ -29,113 +29,34 @@
       "category": "evidence",
       "mimeType": "image/png",
       "metadata": {
-        "provider": "capture-helper",
-        "mode": "snapshot",
-        "pid": 62942,
-        "captureHelper": {
-          "bytes": 212334,
-          "output": "/Users/deeeed/dev/metamask/metamask-extension-2/temp/tasks/review/44254-0730-190746/artifacts/recipe-run/evidence/evidence-ac1-collapsed-by-default.png",
-          "selected": {
-            "app": "Google Chrome for Testing",
-            "height": 916,
-            "id": 368,
-            "layer": 0,
-            "onScreen": true,
-            "pid": 62942,
-            "title": "macwork-metamask-extension-2 — MetaMask",
-            "width": 1200,
-            "x": 22,
-            "y": 52
-          },
-          "selector": "pid",
-          "type": "snapshot"
-        }
+        "provider": "cdp",
+        "mode": "Page.captureScreenshot",
+        "fallbackFrom": "capture-helper",
+        "captureHelperError": "Command timed out after 90000ms: /Users/deeeed/farmslot-node-dev/node_modules/@siteed/capture-helper/native/capture-helper snapshot --pid 83518 --output /Users/deeeed/dev/metamask/metamask-extension-1/temp/tasks/review/44254-0731-164510/artifacts/recipe-run/.extension-evidence-hozCIC/artifact"
       }
     },
     {
       "path": "evidence/evidence-ac2-expanded-order-book.png",
       "type": "screenshot",
       "nodeId": "ac2-screenshot-expanded-order-book",
-      "label": "AC2: after clicking the header toggle — the order-book panel is expanded beside the form, showing asks, spread, bids and the buy/sell depth ratio.",
+      "label": "AC2 + AC4 + PR1: after clicking the header toggle the panel is expanded beside the form — asks above the spread row, bids below, depth bars, buy/sell ratio, and the 'Price / Total (USD)' columns showing USD totals for both sides.",
       "category": "evidence",
       "mimeType": "image/png",
       "metadata": {
         "provider": "capture-helper",
         "mode": "snapshot",
-        "pid": 62942,
+        "pid": 83518,
         "captureHelper": {
-          "bytes": 244032,
-          "output": "/Users/deeeed/dev/metamask/metamask-extension-2/temp/tasks/review/44254-0730-190746/artifacts/recipe-run/evidence/evidence-ac2-expanded-order-book.png",
+          "bytes": 194992,
+          "output": "/Users/deeeed/dev/metamask/metamask-extension-1/temp/tasks/review/44254-0731-164510/artifacts/recipe-run/.extension-evidence-SGHk4p/artifact",
           "selected": {
             "app": "Google Chrome for Testing",
             "height": 916,
-            "id": 368,
+            "id": 1250,
             "layer": 0,
             "onScreen": true,
-            "pid": 62942,
-            "title": "macwork-metamask-extension-2 — MetaMask",
-            "width": 1200,
-            "x": 22,
-            "y": 52
-          },
-          "selector": "pid",
-          "type": "snapshot"
-        }
-      }
-    },
-    {
-      "path": "evidence/evidence-ac4-price-levels-usd-totals.png",
-      "type": "screenshot",
-      "nodeId": "ac4-screenshot-price-levels-usd-totals",
-      "label": "AC4: ladder with the 'Price / Total (USD)' column headers — five ask price levels above the spread and five bid price levels below, each with a USD cumulative total.",
-      "category": "evidence",
-      "mimeType": "image/png",
-      "metadata": {
-        "provider": "capture-helper",
-        "mode": "snapshot",
-        "pid": 62942,
-        "captureHelper": {
-          "bytes": 244765,
-          "output": "/Users/deeeed/dev/metamask/metamask-extension-2/temp/tasks/review/44254-0730-190746/artifacts/recipe-run/evidence/evidence-ac4-price-levels-usd-totals.png",
-          "selected": {
-            "app": "Google Chrome for Testing",
-            "height": 916,
-            "id": 368,
-            "layer": 0,
-            "onScreen": true,
-            "pid": 62942,
-            "title": "macwork-metamask-extension-2 — MetaMask",
-            "width": 1200,
-            "x": 22,
-            "y": 52
-          },
-          "selector": "pid",
-          "type": "snapshot"
-        }
-      }
-    },
-    {
-      "path": "evidence/evidence-ac5-fullscreen-split-layout.png",
-      "type": "screenshot",
-      "nodeId": "ac5-screenshot-fullscreen-split-layout",
-      "label": "AC5 (expanded/fullscreen half only): form and order book share the width via the draggable divider in the fullscreen (home.html) layout. This image does NOT prove the compact popup layout — no popup target is reachable from this CDP session; the compact path is covered by the ac5-* clamp assertions instead.",
-      "category": "evidence",
-      "mimeType": "image/png",
-      "metadata": {
-        "provider": "capture-helper",
-        "mode": "snapshot",
-        "pid": 62942,
-        "captureHelper": {
-          "bytes": 245005,
-          "output": "/Users/deeeed/dev/metamask/metamask-extension-2/temp/tasks/review/44254-0730-190746/artifacts/recipe-run/evidence/evidence-ac5-fullscreen-split-layout.png",
-          "selected": {
-            "app": "Google Chrome for Testing",
-            "height": 916,
-            "id": 368,
-            "layer": 0,
-            "onScreen": true,
-            "pid": 62942,
-            "title": "macwork-metamask-extension-2 — MetaMask",
+            "pid": 83518,
+            "title": "MetaMask",
             "width": 1200,
             "x": 22,
             "y": 52
@@ -149,24 +70,24 @@
       "path": "evidence/evidence-ac6-form-fields-intact.png",
       "type": "screenshot",
       "nodeId": "ac6-screenshot-form-fields-intact",
-      "label": "AC6: after tapping a bid price, the form shows Limit selected with the tapped price prefilled, and size, leverage, TP/SL (auto-close) and submit all still render beside the open order book.",
+      "label": "AC6: with the order book expanded, the order form keeps its direction tabs, Market/Limit toggle, size field, leverage control, TP/SL (auto-close) section, order summary and submit button.",
       "category": "evidence",
       "mimeType": "image/png",
       "metadata": {
         "provider": "capture-helper",
         "mode": "snapshot",
-        "pid": 62942,
+        "pid": 83518,
         "captureHelper": {
-          "bytes": 244355,
-          "output": "/Users/deeeed/dev/metamask/metamask-extension-2/temp/tasks/review/44254-0730-190746/artifacts/recipe-run/evidence/evidence-ac6-form-fields-intact.png",
+          "bytes": 194625,
+          "output": "/Users/deeeed/dev/metamask/metamask-extension-1/temp/tasks/review/44254-0731-164510/artifacts/recipe-run/.extension-evidence-SFcoOi/artifact",
           "selected": {
             "app": "Google Chrome for Testing",
             "height": 916,
-            "id": 368,
+            "id": 1250,
             "layer": 0,
             "onScreen": true,
-            "pid": 62942,
-            "title": "macwork-metamask-extension-2 — MetaMask",
+            "pid": 83518,
+            "title": "MetaMask",
             "width": 1200,
             "x": 22,
             "y": 52
@@ -174,6 +95,158 @@
           "selector": "pid",
           "type": "snapshot"
         }
+      }
+    },
+    {
+      "path": "evidence/evidence-pr2-split-resized-to-clamped-max.png",
+      "type": "screenshot",
+      "nodeId": "pr2-screenshot-resized-split",
+      "label": "PR2: after keyboard resizing (ArrowLeft/End/Home) and a mouse drag dragged far past the ceiling, the split rests on its clamped maximum — the order form is never collapsed.",
+      "category": "evidence",
+      "mimeType": "image/png",
+      "metadata": {
+        "provider": "capture-helper",
+        "mode": "snapshot",
+        "pid": 83518,
+        "captureHelper": {
+          "bytes": 194729,
+          "output": "/Users/deeeed/dev/metamask/metamask-extension-1/temp/tasks/review/44254-0731-164510/artifacts/recipe-run/.extension-evidence-P7N9q9/artifact",
+          "selected": {
+            "app": "Google Chrome for Testing",
+            "height": 916,
+            "id": 1250,
+            "layer": 0,
+            "onScreen": true,
+            "pid": 83518,
+            "title": "MetaMask",
+            "width": 1200,
+            "x": 22,
+            "y": 52
+          },
+          "selector": "pid",
+          "type": "snapshot"
+        }
+      }
+    },
+    {
+      "path": "evidence/evidence-pr3-config-modal-open.png",
+      "type": "screenshot",
+      "nodeId": "pr3-screenshot-config-modal",
+      "label": "PR3: the 'Listed by & Group by' modal — denomination (ETH / USD), value type (Size / Total) and the price-grouping increments.",
+      "category": "evidence",
+      "mimeType": "image/png",
+      "metadata": {
+        "provider": "capture-helper",
+        "mode": "snapshot",
+        "pid": 83518,
+        "captureHelper": {
+          "bytes": 193863,
+          "output": "/Users/deeeed/dev/metamask/metamask-extension-1/temp/tasks/review/44254-0731-164510/artifacts/recipe-run/.extension-evidence-SfJQI9/artifact",
+          "selected": {
+            "app": "Google Chrome for Testing",
+            "height": 916,
+            "id": 1250,
+            "layer": 0,
+            "onScreen": true,
+            "pid": 83518,
+            "title": "MetaMask",
+            "width": 1200,
+            "x": 22,
+            "y": 52
+          },
+          "selector": "pid",
+          "type": "snapshot"
+        }
+      }
+    },
+    {
+      "path": "evidence/evidence-pr3-ladder-after-config-change.png",
+      "type": "screenshot",
+      "nodeId": "pr3-screenshot-config-applied",
+      "label": "PR3: after applying the base denomination and the Size metric, the column header reads 'Size (ETH)' and the ladder values are base-asset sizes instead of USD totals.",
+      "category": "evidence",
+      "mimeType": "image/png",
+      "metadata": {
+        "provider": "cdp",
+        "mode": "Page.captureScreenshot",
+        "fallbackFrom": "capture-helper",
+        "captureHelperError": "Command timed out after 90000ms: /Users/deeeed/farmslot-node-dev/node_modules/@siteed/capture-helper/native/capture-helper snapshot --pid 83518 --output /Users/deeeed/dev/metamask/metamask-extension-1/temp/tasks/review/44254-0731-164510/artifacts/recipe-run/.extension-evidence-9aXgvk/artifact"
+      }
+    },
+    {
+      "path": "evidence/evidence-pr4-limit-prefilled-from-price-tap.png",
+      "type": "screenshot",
+      "nodeId": "pr4-screenshot-limit-prefilled",
+      "label": "PR4: tapping an ask row switched the order type to Limit and prefilled the limit price input with that row's price.",
+      "category": "evidence",
+      "mimeType": "image/png",
+      "metadata": {
+        "provider": "capture-helper",
+        "mode": "snapshot",
+        "pid": 83518,
+        "captureHelper": {
+          "bytes": 193481,
+          "output": "/Users/deeeed/dev/metamask/metamask-extension-1/temp/tasks/review/44254-0731-164510/artifacts/recipe-run/.extension-evidence-5fc5HM/artifact",
+          "selected": {
+            "app": "Google Chrome for Testing",
+            "height": 916,
+            "id": 1250,
+            "layer": 0,
+            "onScreen": true,
+            "pid": 83518,
+            "title": "MetaMask",
+            "width": 1200,
+            "x": 22,
+            "y": 52
+          },
+          "selector": "pid",
+          "type": "snapshot"
+        }
+      }
+    },
+    {
+      "path": "evidence/evidence-ac5-compact-360px-split.png",
+      "type": "screenshot",
+      "nodeId": "ac5-screenshot-compact-split",
+      "label": "AC5 (compact half): at a 360px popup-width viewport both panes stay usable — the order book holds its 140px floor and the order form its 224px floor, with the body's horizontal-scroll fallback absorbing the remainder. The expanded/fullscreen half is the AC2 capture.",
+      "category": "evidence",
+      "mimeType": "image/png",
+      "metadata": {
+        "provider": "capture-helper",
+        "mode": "snapshot",
+        "pid": 83518,
+        "captureHelper": {
+          "bytes": 151328,
+          "output": "/Users/deeeed/dev/metamask/metamask-extension-1/temp/tasks/review/44254-0731-164510/artifacts/recipe-run/.extension-evidence-L7qWAZ/artifact",
+          "selected": {
+            "app": "Google Chrome for Testing",
+            "height": 860,
+            "id": 1250,
+            "layer": 0,
+            "onScreen": true,
+            "pid": 83518,
+            "title": "MetaMask",
+            "width": 500,
+            "x": 22,
+            "y": 52
+          },
+          "selector": "pid",
+          "type": "snapshot"
+        }
+      }
+    },
+    {
+      "path": "evidence/evidence-pr5-ladder-after-market-switch.png",
+      "type": "screenshot",
+      "nodeId": "pr5-screenshot-btc-ladder",
+      "label": "PR5: after navigating from ETH to BTC with the order book open, the ladder shows the new market's levels — asserted disjoint from the captured ETH rows.",
+      "category": "evidence",
+      "mimeType": "image/png",
+      "metadata": {
+        "provider": "cdp",
+        "mode": "Page.captureScreenshot",
+        "fallbackFrom": "capture-helper",
+        "captureHelperError": "Command timed out after 90000ms: /Users/deeeed/farmslot-node-dev/node_modules/@siteed/capture-helper/native/capture-helper snapshot --pid 83518 --output /Users/deeeed/dev/metamask/metamask-extension-1/temp/tasks/review/44254-0731-164510/artifacts/recipe-run/.extension-evidence-DT3KlL/artifact"
       }
     },
     {
