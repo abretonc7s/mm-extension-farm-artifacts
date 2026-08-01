@@ -1,0 +1,160 @@
+{
+  "$schema": "https://farmslot.io/schemas/recipe-v1.schema.json",
+  "title": "Prove Perps search result analytics",
+  "description": "Search for the selected market in the real market list, observe the settled result funnel, and open the result.",
+  "paramsSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "market": {
+        "type": "string",
+        "default": "BTC",
+        "description": "Perps market symbol used by the live flow."
+      },
+      "market_query": {
+        "type": "string",
+        "default": "btc",
+        "description": "Search query expected to resolve to the selected market."
+      }
+    }
+  },
+  "proofTargets": [
+    {
+      "id": "search-result-analytics",
+      "claim": "A successful query and selected result emit the search funnel contracts without abandonment."
+    }
+  ],
+  "workflow": {
+    "entry": "reset",
+    "nodes": {
+      "reset": {
+        "action": "ui.navigate",
+        "hash": "#/",
+        "intent": "Unmount any prior search session before the proof",
+        "next": "open-list"
+      },
+      "open-list": {
+        "action": "ui.navigate",
+        "hash": "#/perps/market-list",
+        "intent": "Open the live Perps market list",
+        "next": "list-ready"
+      },
+      "list-ready": {
+        "action": "ui.wait_for",
+        "test_id": "search-input",
+        "expected": "visible",
+        "timeout_ms": 20000,
+        "intent": "Prove the searchable market list settled",
+        "next": "capture"
+      },
+      "capture": {
+        "action": "metamask.analytics.start_capture",
+        "intent": "Bracket the search result funnel",
+        "next": "search"
+      },
+      "search": {
+        "action": "ui.set_input",
+        "test_id": "search-input",
+        "value": "{{params.market_query}}",
+        "intent": "Search for a known market through the visible input",
+        "next": "assert-query"
+      },
+      "assert-query": {
+        "action": "metamask.analytics.assert_events",
+        "since": "{{outputs.capture.cursor}}",
+        "timeout_ms": 15000,
+        "settle_ms": 1000,
+        "expect": [
+          {
+            "event": "Perp Search Query",
+            "count": 1
+          },
+          {
+            "event": "Perp Search Query",
+            "count": 1,
+            "properties": {
+              "search_query": "{{params.market_query}}",
+              "query_text": "{{params.market_query}}",
+              "query_length": {
+                "$type": "number",
+                "$gt": 0
+              },
+              "results_count": 1,
+              "result_count": 1,
+              "has_results": true,
+              "mode": "intent",
+              "source": "perp_market_search"
+            }
+          },
+          {
+            "event": "Perp Screen Viewed",
+            "count": 1
+          },
+          {
+            "event": "Perp Screen Viewed",
+            "count": 1,
+            "properties": {
+              "screen_type": "search_results_shown",
+              "search_query": "{{params.market_query}}",
+              "result_count": 1
+            }
+          }
+        ],
+        "intent": "Prove the settled query and results-screen events",
+        "next": "open-result",
+        "proves": [
+          "search-result-analytics"
+        ]
+      },
+      "open-result": {
+        "action": "ui.press",
+        "test_id": "market-row-{{params.market}}",
+        "intent": "Choose the first visible search result",
+        "next": "market-ready"
+      },
+      "market-ready": {
+        "action": "ui.wait_for",
+        "text": "{{params.market}}-USDC perp",
+        "expected": "visible",
+        "timeout_ms": 20000,
+        "intent": "Prove the selected result opened",
+        "next": "assert-result"
+      },
+      "assert-result": {
+        "action": "metamask.analytics.assert_events",
+        "since": "{{outputs.capture.cursor}}",
+        "timeout_ms": 15000,
+        "settle_ms": 1500,
+        "expect": [
+          {
+            "event": "Perp Search Result Tapped",
+            "count": 1
+          },
+          {
+            "event": "Perp Search Result Tapped",
+            "count": 1,
+            "properties": {
+              "search_query": "{{params.market_query}}",
+              "results_count": 1,
+              "result_rank": 1,
+              "asset": "{{params.market}}"
+            }
+          },
+          {
+            "event": "Perp Search Abandoned",
+            "count": 0
+          }
+        ],
+        "intent": "Prove result rank and suppression of abandonment after selection",
+        "next": "done",
+        "proves": [
+          "search-result-analytics"
+        ]
+      },
+      "done": {
+        "action": "end",
+        "status": "pass"
+      }
+    }
+  }
+}

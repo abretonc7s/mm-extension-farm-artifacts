@@ -1,0 +1,294 @@
+{
+  "$schema": "https://farmslot.io/schemas/recipe-v1.schema.json",
+  "title": "Prove the Perps analytics lifecycle — Extension",
+  "description": "Compose independently rerunnable live Extension flows that prove Perps analytics through the real MetaMetrics client on testnet.",
+  "workflow": {
+    "entry": "ensure-clean-market",
+    "teardown": "restore-market",
+    "nodes": {
+      "ensure-clean-market": {
+        "action": "metamask.perps.start_state",
+        "profile": "clean_market_testnet",
+        "network": "testnet",
+        "market": "{{params.market}}",
+        "positions": {
+          "state": "none",
+          "mode": "matching"
+        },
+        "orders": {
+          "state": "none",
+          "mode": "matching"
+        },
+        "page": "home",
+        "intent": "Enforce a clean {{params.market}} testnet market before the composed proof",
+        "next": "ready"
+      },
+      "ready": {
+        "action": "call",
+        "ref": "perps.analytics-runtime-ready",
+        "intent": "Prepare the live Extension once",
+        "next": "attribution"
+      },
+      "attribution": {
+        "action": "call",
+        "ref": "perps.analytics-attributed-screen",
+        "intent": "Prove attributed asset-details analytics",
+        "next": "search-result",
+        "params": {
+          "market": "{{params.market}}",
+          "utm_source": "{{params.utm_source}}",
+          "utm_medium": "{{params.utm_medium}}",
+          "utm_campaign": "{{params.utm_campaign}}"
+        },
+        "proves": [
+          "attributed-screen-analytics"
+        ]
+      },
+      "search-result": {
+        "action": "call",
+        "ref": "perps.analytics-search-result",
+        "intent": "Prove the successful search funnel",
+        "next": "search-abandon",
+        "params": {
+          "market": "{{params.market}}",
+          "market_query": "{{params.market_query}}"
+        },
+        "proves": [
+          "search-result-analytics"
+        ]
+      },
+      "search-abandon": {
+        "action": "call",
+        "ref": "perps.analytics-search-abandon",
+        "intent": "Prove the abandoned search funnel",
+        "next": "discovery-controls",
+        "params": {
+          "missing_query": "{{params.missing_query}}"
+        },
+        "proves": [
+          "search-abandon-analytics"
+        ]
+      },
+      "discovery-controls": {
+        "action": "call",
+        "ref": "perps.analytics-discovery-controls",
+        "intent": "Prove market filter, sort, and watchlist analytics",
+        "next": "trade-close",
+        "params": {
+          "market": "{{params.market}}"
+        },
+        "proves": [
+          "discovery-controls-analytics"
+        ]
+      },
+      "trade-close": {
+        "action": "call",
+        "ref": "perps.analytics-trade-close",
+        "intent": "Prove the committed trade and close lifecycles",
+        "next": "cancel-order",
+        "params": {
+          "market": "{{params.market}}",
+          "notional": "{{params.notional}}",
+          "utm_source": "{{params.utm_source}}",
+          "utm_medium": "{{params.utm_medium}}",
+          "utm_campaign": "{{params.utm_campaign}}"
+        },
+        "proves": [
+          "trade-close-analytics"
+        ]
+      },
+      "cancel-order": {
+        "action": "call",
+        "ref": "perps.analytics-cancel-order",
+        "intent": "Prove the committed order-cancel lifecycle",
+        "next": "risk-management",
+        "params": {
+          "market": "{{params.market}}",
+          "notional": "{{params.notional}}",
+          "limit_offset_percent": "{{params.limit_offset_percent}}",
+          "utm_source": "{{params.utm_source}}",
+          "utm_medium": "{{params.utm_medium}}",
+          "utm_campaign": "{{params.utm_campaign}}"
+        },
+        "proves": [
+          "cancel-order-analytics"
+        ]
+      },
+      "risk-management": {
+        "action": "call",
+        "ref": "perps.analytics-risk-management",
+        "intent": "Prove the committed TP/SL lifecycle",
+        "next": "margin-flip",
+        "params": {
+          "market": "{{params.market}}",
+          "notional": "{{params.notional}}",
+          "utm_source": "{{params.utm_source}}",
+          "utm_medium": "{{params.utm_medium}}",
+          "utm_campaign": "{{params.utm_campaign}}"
+        },
+        "proves": [
+          "risk-management-analytics"
+        ]
+      },
+      "margin-flip": {
+        "action": "call",
+        "ref": "perps.analytics-margin-flip",
+        "intent": "Prove margin screens and the committed flip lifecycle",
+        "next": "considered-abandon",
+        "params": {
+          "market": "{{params.market}}",
+          "notional": "{{params.notional}}",
+          "utm_source": "{{params.utm_source}}",
+          "utm_medium": "{{params.utm_medium}}",
+          "utm_campaign": "{{params.utm_campaign}}"
+        },
+        "proves": [
+          "margin-flip-analytics"
+        ]
+      },
+      "considered-abandon": {
+        "action": "call",
+        "ref": "perps.analytics-considered-abandon",
+        "intent": "Prove considered and abandoned order analytics",
+        "next": "error-screen",
+        "params": {
+          "market": "{{params.market}}",
+          "notional": "{{params.notional}}"
+        },
+        "proves": [
+          "considered-abandon-analytics"
+        ]
+      },
+      "error-screen": {
+        "action": "call",
+        "ref": "perps.analytics-error-screen",
+        "intent": "Prove unknown-market error analytics",
+        "next": "done",
+        "params": {
+          "invalid_market": "{{params.invalid_market}}"
+        },
+        "proves": [
+          "error-screen-analytics"
+        ]
+      },
+      "done": {
+        "action": "end",
+        "status": "pass"
+      },
+      "restore-market": {
+        "action": "metamask.perps.start_state",
+        "profile": "clean_market_testnet",
+        "network": "testnet",
+        "market": "{{params.market}}",
+        "positions": {
+          "state": "none",
+          "mode": "matching"
+        },
+        "orders": {
+          "state": "none",
+          "mode": "matching"
+        },
+        "page": "home",
+        "intent": "Restore the selected testnet market after the composed lifecycle",
+        "next": "teardown-done"
+      },
+      "teardown-done": {
+        "action": "end",
+        "status": "pass"
+      }
+    }
+  },
+  "paramsSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "market": {
+        "type": "string",
+        "default": "BTC",
+        "description": "Perps market symbol used by the live flow."
+      },
+      "market_query": {
+        "type": "string",
+        "default": "btc",
+        "description": "Search query expected to resolve to the selected market."
+      },
+      "missing_query": {
+        "type": "string",
+        "default": "no_such_perp",
+        "description": "Lowercase query expected to return no Perps markets."
+      },
+      "invalid_market": {
+        "type": "string",
+        "default": "DOESNOTEXIST",
+        "description": "Unknown market symbol used to prove the displayed-error contract."
+      },
+      "notional": {
+        "type": "number",
+        "default": 12,
+        "description": "Small testnet order notional entered through the visible form."
+      },
+      "limit_offset_percent": {
+        "type": "number",
+        "default": 5,
+        "description": "Distance from the visible midpoint used to keep the cancellation proof order resting."
+      },
+      "utm_source": {
+        "type": "string",
+        "default": "recipe_validation",
+        "description": "Attribution source asserted on emitted lifecycle events."
+      },
+      "utm_medium": {
+        "type": "string",
+        "default": "automation",
+        "description": "Attribution medium asserted on emitted lifecycle events."
+      },
+      "utm_campaign": {
+        "type": "string",
+        "default": "perps_analytics",
+        "description": "Attribution campaign asserted on emitted lifecycle events."
+      }
+    }
+  },
+  "proofTargets": [
+    {
+      "id": "attributed-screen-analytics",
+      "claim": "The rendered market entry emits exactly one attributed asset-details screen contract."
+    },
+    {
+      "id": "cancel-order-analytics",
+      "claim": "A visible resting-order cancellation emits one submitted and one executed cancellation contract."
+    },
+    {
+      "id": "considered-abandon-analytics",
+      "claim": "A genuine size edit followed by leaving the form emits one considered and one abandoned-order contract."
+    },
+    {
+      "id": "discovery-controls-analytics",
+      "claim": "Visible filter, sort, and watchlist changes emit their exact discovery contracts."
+    },
+    {
+      "id": "error-screen-analytics",
+      "claim": "An unknown market renders and emits one error-screen contract without a false asset-details event."
+    },
+    {
+      "id": "margin-flip-analytics",
+      "claim": "Visible margin screens and a committed position reversal emit their exact analytics contracts."
+    },
+    {
+      "id": "risk-management-analytics",
+      "claim": "A committed TP/SL update emits one submitted and one executed risk-management contract."
+    },
+    {
+      "id": "search-abandon-analytics",
+      "claim": "A no-result query and its explicit clear emit the no-results and abandonment contracts exactly once."
+    },
+    {
+      "id": "search-result-analytics",
+      "claim": "A successful query and selected result emit the search funnel contracts without abandonment."
+    },
+    {
+      "id": "trade-close-analytics",
+      "claim": "A committed market trade and full close each emit one submitted and one executed contract."
+    }
+  ]
+}

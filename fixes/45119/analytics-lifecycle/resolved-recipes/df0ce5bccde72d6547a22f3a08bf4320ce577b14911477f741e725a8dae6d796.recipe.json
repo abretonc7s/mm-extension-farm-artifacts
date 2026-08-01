@@ -1,0 +1,109 @@
+{
+  "$schema": "https://farmslot.io/schemas/recipe-v1.schema.json",
+  "title": "Prove attributed Perps screen analytics",
+  "description": "Enter the selected market through an attributed internal route and prove the built Extension emits exactly one matching asset-details screen event.",
+  "paramsSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "market": {
+        "type": "string",
+        "default": "BTC",
+        "description": "Perps market symbol used by the live flow."
+      },
+      "utm_source": {
+        "type": "string",
+        "default": "recipe_validation",
+        "description": "Attribution source asserted on emitted lifecycle events."
+      },
+      "utm_medium": {
+        "type": "string",
+        "default": "automation",
+        "description": "Attribution medium asserted on emitted lifecycle events."
+      },
+      "utm_campaign": {
+        "type": "string",
+        "default": "perps_analytics",
+        "description": "Attribution campaign asserted on emitted lifecycle events."
+      }
+    }
+  },
+  "proofTargets": [
+    {
+      "id": "attributed-screen-analytics",
+      "claim": "The rendered market entry emits exactly one attributed asset-details screen contract."
+    }
+  ],
+  "workflow": {
+    "entry": "home",
+    "nodes": {
+      "home": {
+        "action": "ui.navigate",
+        "hash": "#/",
+        "intent": "Leave Perps before the attributed entry",
+        "next": "home-ready"
+      },
+      "home-ready": {
+        "action": "ui.wait_for",
+        "test_id": "bottom-nav-home",
+        "expected": "visible",
+        "timeout_ms": 20000,
+        "intent": "Prove the wallet home route settled",
+        "next": "capture"
+      },
+      "capture": {
+        "action": "metamask.analytics.start_capture",
+        "intent": "Bracket only the attributed entry",
+        "next": "open"
+      },
+      "open": {
+        "action": "ui.navigate",
+        "hash": "#/perps/market/{{params.market}}?source=deeplink&utm_source={{params.utm_source}}&utm_medium={{params.utm_medium}}&utm_campaign={{params.utm_campaign}}",
+        "intent": "Enter {{params.market}} through the attributed internal route",
+        "next": "visible"
+      },
+      "visible": {
+        "action": "ui.wait_for",
+        "text": "{{params.market}}-USDC perp",
+        "expected": "visible",
+        "timeout_ms": 20000,
+        "intent": "Anchor the emitted event to the rendered {{params.market}} market",
+        "next": "assert"
+      },
+      "assert": {
+        "action": "metamask.analytics.assert_events",
+        "since": "{{outputs.capture.cursor}}",
+        "timeout_ms": 15000,
+        "settle_ms": 2000,
+        "expect": [
+          {
+            "event": "Perp Screen Viewed",
+            "count": 1
+          },
+          {
+            "event": "Perp Screen Viewed",
+            "count": 1,
+            "properties": {
+              "screen_type": "asset_details",
+              "asset": "{{params.market}}",
+              "source": "deeplink",
+              "utm_source": "{{params.utm_source}}",
+              "utm_medium": "{{params.utm_medium}}",
+              "utm_campaign": "{{params.utm_campaign}}",
+              "environment_type": "fullscreen"
+            }
+          }
+        ],
+        "intent": "Prove one real attributed asset-details event",
+        "next": "done",
+        "proves": [
+          "attributed-screen-analytics"
+        ]
+      },
+      "done": {
+        "action": "end",
+        "status": "pass"
+      }
+    }
+  }
+}

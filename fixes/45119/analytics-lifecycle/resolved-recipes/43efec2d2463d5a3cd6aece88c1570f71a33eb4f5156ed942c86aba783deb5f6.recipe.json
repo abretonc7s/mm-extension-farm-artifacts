@@ -1,0 +1,90 @@
+{
+  "$schema": "https://farmslot.io/schemas/recipe-v1.schema.json",
+  "title": "Prove Perps error-screen analytics",
+  "description": "Open an unknown live market and prove one error screen event without a competing asset-details event.",
+  "paramsSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "invalid_market": {
+        "type": "string",
+        "default": "DOESNOTEXIST",
+        "description": "Unknown market symbol used to prove the displayed-error contract."
+      }
+    }
+  },
+  "proofTargets": [
+    {
+      "id": "error-screen-analytics",
+      "claim": "An unknown market renders and emits one error-screen contract without a false asset-details event."
+    }
+  ],
+  "workflow": {
+    "entry": "home",
+    "nodes": {
+      "home": {
+        "action": "ui.navigate",
+        "hash": "#/",
+        "intent": "Leave Perps before the error proof",
+        "next": "capture"
+      },
+      "capture": {
+        "action": "metamask.analytics.start_capture",
+        "intent": "Bracket the unknown-market entry",
+        "next": "open"
+      },
+      "open": {
+        "action": "ui.navigate",
+        "hash": "#/perps/market/{{params.invalid_market}}",
+        "intent": "Open an unknown market through the real route",
+        "next": "visible"
+      },
+      "visible": {
+        "action": "ui.wait_for",
+        "text": "Market not found",
+        "expected": "visible",
+        "timeout_ms": 20000,
+        "intent": "Anchor the event to the rendered error state",
+        "next": "assert"
+      },
+      "assert": {
+        "action": "metamask.analytics.assert_events",
+        "since": "{{outputs.capture.cursor}}",
+        "timeout_ms": 15000,
+        "settle_ms": 2000,
+        "expect": [
+          {
+            "event": "Perp Screen Viewed",
+            "count": 1
+          },
+          {
+            "event": "Perp Screen Viewed",
+            "count": 1,
+            "properties": {
+              "screen_type": "error",
+              "error_type": "market_not_found",
+              "screen_name": "perps_market_details",
+              "environment_type": "fullscreen"
+            }
+          },
+          {
+            "event": "Perp Screen Viewed",
+            "count": 0,
+            "properties": {
+              "screen_type": "asset_details"
+            }
+          }
+        ],
+        "intent": "Prove exactly one matching error screen and no false asset-details event",
+        "next": "done",
+        "proves": [
+          "error-screen-analytics"
+        ]
+      },
+      "done": {
+        "action": "end",
+        "status": "pass"
+      }
+    }
+  }
+}

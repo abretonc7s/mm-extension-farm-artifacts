@@ -1,0 +1,29 @@
+{
+  "$schema": "https://farmslot.io/schemas/recipe-v1.schema.json",
+  "title": "Ensure a ready Perps session — Extension",
+  "description": "Confirm the selected runtime is reachable, unlock the fixture-backed wallet, and record stable application status.",
+  "workflow": {
+    "entry": "probe-runtime",
+    "nodes": {
+      "probe-runtime": {
+        "action": "cdp.target",
+        "intent": "Confirm the selected MetaMask runtime is reachable",
+        "next": "ensure-wallet"
+      },
+      "ensure-wallet": {
+        "action": "metamask.wallet.ensure_unlocked",
+        "intent": "Ensure the fixture-backed wallet is unlocked",
+        "next": "read-status"
+      },
+      "read-status": {
+        "action": "app.status",
+        "intent": "Record the stable MetaMask application state",
+        "next": "done"
+      },
+      "done": {
+        "action": "end",
+        "status": "pass"
+      }
+    }
+  }
+}

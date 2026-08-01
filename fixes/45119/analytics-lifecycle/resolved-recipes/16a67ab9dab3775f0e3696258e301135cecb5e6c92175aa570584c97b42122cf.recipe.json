@@ -1,0 +1,304 @@
+{
+  "$schema": "https://farmslot.io/schemas/recipe-v1.schema.json",
+  "title": "Prove live Perps risk-management analytics",
+  "description": "Open a small testnet position, attach TP/SL through visible Extension controls, prove the submitted/executed risk pair exactly once, and close the position.",
+  "paramsSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "market": {
+        "type": "string",
+        "default": "BTC",
+        "description": "Perps market symbol used by the live flow."
+      },
+      "notional": {
+        "type": "number",
+        "default": 12,
+        "description": "Small testnet order notional entered through the visible form."
+      },
+      "utm_source": {
+        "type": "string",
+        "default": "recipe_validation",
+        "description": "Attribution source asserted on emitted lifecycle events."
+      },
+      "utm_medium": {
+        "type": "string",
+        "default": "automation",
+        "description": "Attribution medium asserted on emitted lifecycle events."
+      },
+      "utm_campaign": {
+        "type": "string",
+        "default": "perps_analytics",
+        "description": "Attribution campaign asserted on emitted lifecycle events."
+      }
+    }
+  },
+  "proofTargets": [
+    {
+      "id": "risk-management-analytics",
+      "claim": "A committed TP/SL update emits one submitted and one executed risk-management contract."
+    }
+  ],
+  "workflow": {
+    "entry": "ensure-clean-market",
+    "teardown": "restore-market",
+    "nodes": {
+      "ensure-clean-market": {
+        "action": "metamask.perps.start_state",
+        "profile": "clean_market_testnet",
+        "network": "testnet",
+        "market": "{{params.market}}",
+        "positions": {
+          "state": "none",
+          "mode": "matching"
+        },
+        "orders": {
+          "state": "none",
+          "mode": "matching"
+        },
+        "page": "home",
+        "intent": "Enforce a clean {{params.market}} testnet market before the live proof",
+        "next": "open-market"
+      },
+      "open-market": {
+        "action": "ui.navigate",
+        "hash": "#/perps/market/{{params.market}}?source=deeplink&utm_source={{params.utm_source}}&utm_medium={{params.utm_medium}}&utm_campaign={{params.utm_campaign}}",
+        "intent": "Open the real {{params.market}} market with explicit flow attribution",
+        "next": "prove-flat"
+      },
+      "prove-flat": {
+        "action": "ui.wait_for",
+        "test_id": "perps-long-cta-button",
+        "expected": "visible",
+        "timeout_ms": 20000,
+        "intent": "Require no existing {{params.market}} position before the proof",
+        "next": "open-long"
+      },
+      "open-long": {
+        "action": "ui.navigate",
+        "hash": "#/perps/trade/{{params.market}}?direction=long&mode=new",
+        "intent": "Open the visible {{params.market}} long order form",
+        "next": "form-ready"
+      },
+      "form-ready": {
+        "action": "ui.wait_for",
+        "test_id": "submit-order-button",
+        "expected": "visible",
+        "timeout_ms": 20000,
+        "intent": "Prove the order form is interactive",
+        "next": "size"
+      },
+      "size": {
+        "action": "ui.set_input",
+        "selector": "input[inputmode=\"decimal\"]",
+        "value": "{{params.notional}}",
+        "intent": "Limit testnet exposure to {{params.notional}} dollars",
+        "next": "size-settled"
+      },
+      "size-settled": {
+        "action": "wait",
+        "duration_ms": 1500,
+        "intent": "Allow live order calculations to enable submission",
+        "next": "submit"
+      },
+      "submit": {
+        "action": "ui.press",
+        "test_id": "submit-order-button",
+        "intent": "Commit the real {{params.market}} market order",
+        "next": "position-visible"
+      },
+      "position-visible": {
+        "action": "ui.wait_for",
+        "test_id": "perps-auto-close-row",
+        "expected": "visible",
+        "timeout_ms": 45000,
+        "intent": "Prove the submitted order became an open {{params.market}} position",
+        "next": "toast-gone"
+      },
+      "toast-gone": {
+        "action": "ui.wait_for",
+        "test_id": "perps-toast",
+        "visible": false,
+        "timeout_ms": 20000,
+        "intent": "Keep the auto-close control unobstructed",
+        "next": "open-tpsl"
+      },
+      "open-tpsl": {
+        "action": "ui.press",
+        "test_id": "perps-auto-close-row",
+        "intent": "Open the live {{params.market}} auto-close form",
+        "next": "tpsl-ready"
+      },
+      "tpsl-ready": {
+        "action": "ui.wait_for",
+        "test_id": "perps-update-tpsl-modal-submit",
+        "expected": "visible",
+        "timeout_ms": 20000,
+        "intent": "Prove the TP/SL form is interactive",
+        "next": "choose-tp"
+      },
+      "choose-tp": {
+        "action": "ui.set_input",
+        "test_id": "perps-update-tpsl-tp-percent-input",
+        "value": "10",
+        "intent": "Protect profit at ten percent return on equity",
+        "next": "choose-sl"
+      },
+      "choose-sl": {
+        "action": "ui.set_input",
+        "test_id": "perps-update-tpsl-sl-percent-input",
+        "value": "-5",
+        "intent": "Limit loss at five percent return on equity",
+        "next": "capture"
+      },
+      "capture": {
+        "action": "metamask.analytics.start_capture",
+        "intent": "Bracket only the committed TP/SL lifecycle",
+        "next": "save-tpsl"
+      },
+      "save-tpsl": {
+        "action": "ui.press",
+        "test_id": "perps-update-tpsl-modal-submit",
+        "intent": "Commit both {{params.market}} risk controls",
+        "next": "tpsl-saved"
+      },
+      "tpsl-saved": {
+        "action": "ui.wait_for",
+        "test_id": "perps-update-tpsl-modal",
+        "visible": false,
+        "timeout_ms": 45000,
+        "intent": "Prove the TP/SL update completed",
+        "next": "assert-risk"
+      },
+      "assert-risk": {
+        "action": "metamask.analytics.assert_events",
+        "since": "{{outputs.capture.cursor}}",
+        "timeout_ms": 15000,
+        "settle_ms": 2000,
+        "expect": [
+          {
+            "event": "Perp Risk Management",
+            "count": 2
+          },
+          {
+            "event": "Perp Risk Management",
+            "count": 1,
+            "properties": {
+              "status": "submitted",
+              "asset": "{{params.market}}",
+              "source": "asset_detail_screen",
+              "entry_point": "deeplink",
+              "discovery_source": "deeplink",
+              "utm_source": "{{params.utm_source}}",
+              "utm_medium": "{{params.utm_medium}}",
+              "utm_campaign": "{{params.utm_campaign}}",
+              "environment_type": "background"
+            }
+          },
+          {
+            "event": "Perp Risk Management",
+            "count": 1,
+            "properties": {
+              "status": "executed",
+              "asset": "{{params.market}}",
+              "source": "asset_detail_screen",
+              "screen_type": "create_tpsl",
+              "has_take_profit": true,
+              "has_stop_loss": true,
+              "action": "tpsl",
+              "direction": "long",
+              "position_size": {
+                "$type": "number",
+                "$gt": 0
+              },
+              "take_profit_price": {
+                "$type": "number",
+                "$gt": 0
+              },
+              "stop_loss_price": {
+                "$type": "number",
+                "$gt": 0
+              },
+              "completion_duration": {
+                "$type": "number",
+                "$gt": 0
+              },
+              "entry_point": "deeplink",
+              "discovery_source": "deeplink",
+              "utm_source": "{{params.utm_source}}",
+              "utm_medium": "{{params.utm_medium}}",
+              "utm_campaign": "{{params.utm_campaign}}",
+              "environment_type": "background"
+            }
+          }
+        ],
+        "intent": "Prove the risk update submitted and executed once with the complete contract",
+        "next": "risk-toast-gone",
+        "proves": [
+          "risk-management-analytics"
+        ]
+      },
+      "risk-toast-gone": {
+        "action": "ui.wait_for",
+        "test_id": "perps-toast",
+        "visible": false,
+        "timeout_ms": 20000,
+        "intent": "Keep the position close unobstructed",
+        "next": "open-close"
+      },
+      "open-close": {
+        "action": "ui.press",
+        "test_id": "perps-close-cta-button",
+        "intent": "Open the {{params.market}} position cleanup",
+        "next": "close-ready"
+      },
+      "close-ready": {
+        "action": "ui.wait_for",
+        "test_id": "perps-close-position-modal-submit",
+        "expected": "visible",
+        "timeout_ms": 20000,
+        "intent": "Prove the close confirmation is available",
+        "next": "confirm-close"
+      },
+      "confirm-close": {
+        "action": "ui.press",
+        "test_id": "perps-close-position-modal-submit",
+        "intent": "Close the complete {{params.market}} position",
+        "next": "flat-visible"
+      },
+      "flat-visible": {
+        "action": "ui.wait_for",
+        "test_id": "perps-long-cta-button",
+        "expected": "visible",
+        "timeout_ms": 45000,
+        "intent": "Prove the {{params.market}} position cleanup completed",
+        "next": "done"
+      },
+      "done": {
+        "action": "end",
+        "status": "pass"
+      },
+      "restore-market": {
+        "action": "metamask.perps.start_state",
+        "profile": "clean_market_testnet",
+        "network": "testnet",
+        "market": "{{params.market}}",
+        "positions": {
+          "state": "none",
+          "mode": "matching"
+        },
+        "orders": {
+          "state": "none",
+          "mode": "matching"
+        },
+        "page": "home",
+        "intent": "Restore the selected testnet market even when the proof fails",
+        "next": "teardown-done"
+      },
+      "teardown-done": {
+        "action": "end",
+        "status": "pass"
+      }
+    }
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "$schema": "https://farmslot.io/schemas/recipe-v1.schema.json",
+  "title": "Prepare live Perps analytics runtime",
+  "description": "Prepare an unlocked, consented Extension outside every analytics proof window.",
+  "workflow": {
+    "entry": "ensure-session",
+    "nodes": {
+      "ensure-session": {
+        "action": "call",
+        "ref": "perps.ensure-session",
+        "intent": "Make the fixture-backed Extension session ready",
+        "next": "consent"
+      },
+      "consent": {
+        "action": "metamask.analytics.set_consent",
+        "participate": true,
+        "marketing": true,
+        "intent": "Allow the real MetaMetrics client to emit analytics",
+        "next": "home"
+      },
+      "home": {
+        "action": "ui.navigate",
+        "page": "home",
+        "intent": "Begin outside Perps without adding analytics setup noise",
+        "next": "home-ready"
+      },
+      "home-ready": {
+        "action": "ui.wait_for",
+        "test_id": "bottom-nav-home",
+        "expected": "visible",
+        "timeout_ms": 20000,
+        "intent": "Prove the wallet home route settled",
+        "next": "done"
+      },
+      "done": {
+        "action": "end",
+        "status": "pass"
+      }
+    }
+  }
+}

@@ -1,0 +1,138 @@
+{
+  "$schema": "https://farmslot.io/schemas/recipe-v1.schema.json",
+  "title": "Prove considered and abandoned order analytics",
+  "description": "Edit the selected market's live order form, observe the considered event, then leave without submitting and observe one abandonment.",
+  "paramsSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "market": {
+        "type": "string",
+        "default": "BTC",
+        "description": "Perps market symbol used by the live flow."
+      },
+      "notional": {
+        "type": "number",
+        "default": 12,
+        "description": "Small testnet order notional entered through the visible form."
+      }
+    }
+  },
+  "proofTargets": [
+    {
+      "id": "considered-abandon-analytics",
+      "claim": "A genuine size edit followed by leaving the form emits one considered and one abandoned-order contract."
+    }
+  ],
+  "workflow": {
+    "entry": "open-trade",
+    "nodes": {
+      "open-trade": {
+        "action": "ui.navigate",
+        "hash": "#/perps/trade/{{params.market}}?direction=long&mode=new",
+        "intent": "Open the real {{params.market}} long order form",
+        "next": "form-ready"
+      },
+      "form-ready": {
+        "action": "ui.wait_for",
+        "test_id": "submit-order-button",
+        "expected": "visible",
+        "timeout_ms": 20000,
+        "intent": "Prove the order form is interactive",
+        "next": "capture"
+      },
+      "capture": {
+        "action": "metamask.analytics.start_capture",
+        "intent": "Bracket the considered and abandoned order flow",
+        "next": "edit-size"
+      },
+      "edit-size": {
+        "action": "ui.set_input",
+        "selector": "input[inputmode=\"decimal\"]",
+        "value": "{{params.notional}}",
+        "intent": "Make a genuine user size edit",
+        "next": "assert-considered"
+      },
+      "assert-considered": {
+        "action": "metamask.analytics.assert_events",
+        "since": "{{outputs.capture.cursor}}",
+        "timeout_ms": 15000,
+        "settle_ms": 1500,
+        "expect": [
+          {
+            "event": "Perp Transaction Considered",
+            "count": 1
+          },
+          {
+            "event": "Perp Transaction Considered",
+            "count": 1,
+            "properties": {
+              "order_context": "trade",
+              "action": "create_position",
+              "order_size": "{{params.notional}}",
+              "input_method": "keypad",
+              "asset": "{{params.market}}",
+              "direction": "long",
+              "order_type": "market",
+              "order_has_tp": false,
+              "order_has_sl": false,
+              "leverage": 3,
+              "trade_with_token": false
+            }
+          }
+        ],
+        "intent": "Prove one considered event from the real edited form",
+        "next": "leave",
+        "proves": [
+          "considered-abandon-analytics"
+        ]
+      },
+      "leave": {
+        "action": "ui.navigate",
+        "hash": "#/",
+        "intent": "Leave the order form without submitting",
+        "next": "home-ready"
+      },
+      "home-ready": {
+        "action": "ui.wait_for",
+        "test_id": "bottom-nav-home",
+        "expected": "visible",
+        "timeout_ms": 20000,
+        "intent": "Prove the uncommitted form was exited",
+        "next": "assert-abandon"
+      },
+      "assert-abandon": {
+        "action": "metamask.analytics.assert_events",
+        "since": "{{outputs.capture.cursor}}",
+        "timeout_ms": 15000,
+        "settle_ms": 1500,
+        "expect": [
+          {
+            "event": "Perp UI Interaction",
+            "count": 1
+          },
+          {
+            "event": "Perp UI Interaction",
+            "count": 1,
+            "properties": {
+              "action": "abandon_order",
+              "asset": "{{params.market}}",
+              "direction": "long",
+              "order_size": "{{params.notional}}",
+              "leverage_used": 3
+            }
+          }
+        ],
+        "intent": "Prove one abandonment after leaving the uncommitted live form",
+        "next": "done",
+        "proves": [
+          "considered-abandon-analytics"
+        ]
+      },
+      "done": {
+        "action": "end",
+        "status": "pass"
+      }
+    }
+  }
+}

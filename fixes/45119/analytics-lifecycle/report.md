@@ -1,0 +1,211 @@
+# MetaMask Recipe Run
+
+Status: pass
+Duration: 136s
+Nodes: 201/201 passed
+
+## Side findings
+- REVIEW 6 distinct application warning/error event(s) (non-blocking; expanded below and stored in diagnostics.json)
+
+## Steps
+- PASS ensure-clean-market (metamask.perps.start_state, 196ms): proof=metamask-perps-start-state
+- PASS ready/ensure-session/probe-runtime (cdp.target, 10ms): platform=extension
+- PASS ready/ensure-session/ensure-wallet (metamask.wallet.ensure_unlocked, 89ms): proof=extension-unlocked-state
+- PASS ready/ensure-session/read-status (app.status, 11ms): platform=extension
+- PASS ready/ensure-session/done (end, 0ms)
+- PASS ready/ensure-session (call, 144ms): ref=perps.ensure-session, status=pass
+- PASS ready/consent (metamask.analytics.set_consent, 91ms): proof=extension-debug-page-store
+- PASS ready/home (ui.navigate, 370ms): page=home, proof=ui-navigation
+- PASS ready/home-ready (ui.wait_for, 379ms): matched=true, cdpPort=6664, targetUrl=chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/
+- PASS ready/done (end, 0ms)
+- PASS ready (call, 1.0s): ref=perps.analytics-runtime-ready, status=pass
+- PASS attribution/home (ui.navigate, 106ms): proof=ui-navigation
+- PASS attribution/home-ready (ui.wait_for, 355ms): matched=true, cdpPort=6664, targetUrl=chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/
+- PASS attribution/capture (metamask.analytics.start_capture, 86ms): action=metamask.analytics.start_capture, cursor=1785570220984, port=7664, pid=85705, eventsFile=<metamask-extension>/temp/recipe/runtime/analytics/events.jsonl
+- PASS attribution/open (ui.navigate, 133ms): proof=ui-navigation
+- PASS attribution/visible (ui.wait_for, 602ms): matched=true, cdpPort=6664, targetUrl=chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/BTC?source=deeplink&utm_source=recipe_validation&utm_medium=automation&utm_campaign=perps_analytics
+- PASS attribution/assert (metamask.analytics.assert_events, 2.1s): action=metamask.analytics.assert_events, since=1785570220984, exact=false, observed=2 items, capturedCount=4
+- PASS attribution/done (end, 0ms)
+- PASS attribution (call, 3.4s): ref=perps.analytics-attributed-screen, status=pass
+- PASS search-result/reset (ui.navigate, 133ms): proof=ui-navigation
+- PASS search-result/open-list (ui.navigate, 179ms): proof=ui-navigation
+- PASS search-result/list-ready (ui.wait_for, 6.8s): matched=true, cdpPort=6664, targetUrl=chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market-list
+- PASS search-result/capture (metamask.analytics.start_capture, 114ms): action=metamask.analytics.start_capture, cursor=1785570231086, port=7664, pid=85705, eventsFile=<metamask-extension>/temp/recipe/runtime/analytics/events.jsonl
+- PASS search-result/search (ui.set_input, 362ms): set=true, selector=[data-testid="search-input"], [data-test-id="search-input"], [data-test="search-input"], tagName=INPUT, cdpPort=6664, targetUrl=chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market-list
+- PASS search-result/assert-query (metamask.analytics.assert_events, 1.3s): action=metamask.analytics.assert_events, since=1785570231086, exact=false, observed=4 items, capturedCount=2
+- PASS search-result/open-result (ui.press, 424ms): clicked=true, selector=[data-testid="market-row-BTC"], [data-test-id="market-row-BTC"], [data-test="market-row-BTC"], tagName=BUTTON, cdpPort=6664, targetUrl=chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market-list
+- PASS search-result/market-ready (ui.wait_for, 357ms): matched=true, cdpPort=6664, targetUrl=chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/BTC
+- PASS search-result/assert-result (metamask.analytics.assert_events, 1.6s): action=metamask.analytics.assert_events, since=1785570231086, exact=false, observed=3 items, capturedCount=6
+- PASS search-result/done (end, 0ms)
+- PASS search-result (call, 11s): ref=perps.analytics-search-result, status=pass
+- PASS search-abandon/reset (ui.navigate, 126ms): proof=ui-navigation
+- PASS search-abandon/open-list (ui.navigate, 187ms): proof=ui-navigation
+- PASS search-abandon/list-ready (ui.wait_for, 489ms): matched=true, cdpPort=6664, targetUrl=chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market-list
+- PASS search-abandon/capture (metamask.analytics.start_capture, 91ms): action=metamask.analytics.start_capture, cursor=1785570236121, port=7664, pid=85705, eventsFile=<metamask-extension>/temp/recipe/runtime/analytics/events.jsonl
+- PASS search-abandon/search (ui.set_input, 360ms): set=true, selector=[data-testid="search-input"], [data-test-id="search-input"], [data-test="search-input"], tagName=INPUT, cdpPort=6664, targetUrl=chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market-list
+- PASS search-abandon/assert-empty (metamask.analytics.assert_events, 1.3s): action=metamask.analytics.assert_events, since=1785570236121, exact=false, observed=4 items, capturedCount=2
+- PASS search-abandon/clear (ui.press, 621ms): clicked=true, selector=[data-testid="text-field-search-clear-button"], [data-test-id="text-field-search-clear-button"], [data-test="text-field-search-clear-button"], tagName=BUTTON, cdpPort=6664, targetUrl=chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market-list
+- PASS search-abandon/assert-abandoned (metamask.analytics.assert_events, 1.6s): action=metamask.analytics.assert_events, since=1785570236121, exact=false, observed=2 items, capturedCount=3
+- PASS search-abandon/done (end, 0ms)
+- PASS search-abandon (call, 4.8s): ref=perps.analytics-search-abandon, status=pass
+- PASS discovery-controls/prepare-open-market (ui.navigate, 128ms): proof=ui-navigation
+- PASS discovery-controls/prepare-watchlist (metamask.perps.ensure_unwatchlisted, 79ms): action=metamask.perps.ensure_unwatchlisted, changed=false, state=unwatchlisted
+- PASS discovery-controls/open-list (ui.navigate, 226ms): proof=ui-navigation
+- PASS discovery-controls/list-ready (ui.wait_for, 504ms): matched=true, cdpPort=6664, targetUrl=chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market-list
+- PASS discovery-controls/capture-controls (metamask.analytics.start_capture, 106ms): action=metamask.analytics.start_capture, cursor=1785570241124, port=7664, pid=85705, eventsFile=<metamask-extension>/temp/recipe/runtime/analytics/events.jsonl
+- PASS discovery-controls/open-filter (ui.press, 413ms): clicked=true, selector=[data-testid="filter-select-button"], [data-test-id="filter-select-button"], [data-test="filter-select-button"], tagName=BUTTON, cdpPort=6664, targetUrl=chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market-list
+- PASS discovery-controls/filter-opened (wait, 510ms): durationMs=500
+- PASS discovery-controls/choose-filter (ui.press, 554ms): clicked=true, selector=[data-testid="filter-select-option-crypto"], [data-test-id="filter-select-option-crypto"], [data-test="filter-select-option-crypto"], tagName=BUTTON, cdpPort=6664, targetUrl=chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market-list
+- PASS discovery-controls/open-sort (ui.press, 682ms): clicked=true, selector=[data-testid="sort-dropdown-button"], [data-test-id="sort-dropdown-button"], [data-test="sort-dropdown-button"], tagName=BUTTON, cdpPort=6664, targetUrl=chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market-list
+- PASS discovery-controls/sort-opened (wait, 507ms): durationMs=500
+- PASS discovery-controls/choose-sort (ui.press, 372ms): clicked=true, selector=[data-testid="sort-field-option-priceChange"], [data-test-id="sort-field-option-priceChange"], [data-test="sort-field-option-priceChange"], tagName=BUTTON, cdpPort=6664, targetUrl=chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market-list
+- PASS discovery-controls/sort-field-settled (wait, 310ms): durationMs=300
+- PASS discovery-controls/choose-direction (ui.press, 364ms): clicked=true, selector=[data-testid="sort-direction-asc"], [data-test-id="sort-direction-asc"], [data-test="sort-direction-asc"], tagName=BUTTON, cdpPort=6664, targetUrl=chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market-list
+- PASS discovery-controls/apply-sort (ui.press, 437ms): clicked=true, selector=[data-testid="sort-modal-apply"], [data-test-id="sort-modal-apply"], [data-test="sort-modal-apply"], tagName=BUTTON, cdpPort=6664, targetUrl=chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market-list
+- PASS discovery-controls/assert-controls (metamask.analytics.assert_events, 2.1s): action=metamask.analytics.assert_events, since=1785570241124, exact=false, observed=4 items, capturedCount=3
+- PASS discovery-controls/home-before-watchlist (ui.navigate, 137ms): proof=ui-navigation
+- PASS discovery-controls/capture-unwatched (metamask.analytics.start_capture, 103ms): action=metamask.analytics.start_capture, cursor=1785570247672, port=7664, pid=85705, eventsFile=<metamask-extension>/temp/recipe/runtime/analytics/events.jsonl
+- PASS discovery-controls/open-unwatched (ui.navigate, 144ms): proof=ui-navigation
+- PASS discovery-controls/unwatched-ready (ui.wait_for, 409ms): matched=true, cdpPort=6664, targetUrl=chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/BTC
+- PASS discovery-controls/assert-unwatched (metamask.analytics.assert_events, 1.7s): action=metamask.analytics.assert_events, since=1785570247672, exact=false, observed=2 items, capturedCount=2
+- PASS discovery-controls/add-watchlist (ui.press, 607ms): clicked=true, selector=[data-testid="perps-market-detail-favorite-button"], [data-test-id="perps-market-detail-favorite-button"], [data-test="perps-market-detail-favorite-button"], tagName=DIV, cdpPort=6664, targetUrl=chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/BTC
+- PASS discovery-controls/watched-control (ui.wait_for, 564ms): matched=true, cdpPort=6664, targetUrl=chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/BTC
+- PASS discovery-controls/home-before-watched (ui.navigate, 129ms): proof=ui-navigation
+- PASS discovery-controls/capture-watched (metamask.analytics.start_capture, 86ms): action=metamask.analytics.start_capture, cursor=1785570251361, port=7664, pid=85705, eventsFile=<metamask-extension>/temp/recipe/runtime/analytics/events.jsonl
+- PASS discovery-controls/open-watched (ui.navigate, 176ms): proof=ui-navigation
+- PASS discovery-controls/watched-ready (ui.wait_for, 376ms): matched=true, cdpPort=6664, targetUrl=chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/BTC
+- PASS discovery-controls/assert-watched (metamask.analytics.assert_events, 1.6s): action=metamask.analytics.assert_events, since=1785570251361, exact=false, observed=2 items, capturedCount=4
+- PASS discovery-controls/done (end, 0ms)
+- PASS discovery-controls/cleanup-open-market (ui.navigate, 138ms): proof=ui-navigation
+- PASS discovery-controls/cleanup-watchlist (metamask.perps.ensure_unwatchlisted, 318ms): action=metamask.perps.ensure_unwatchlisted, changed=true, state=unwatchlisted
+- PASS discovery-controls/cleanup-done (end, 0ms)
+- PASS discovery-controls (call, 14s): ref=perps.analytics-discovery-controls, status=pass
+- PASS trade-close/ensure-clean-market (metamask.perps.start_state, 353ms): proof=metamask-perps-start-state
+- PASS trade-close/open-market (ui.navigate, 234ms): proof=ui-navigation
+- PASS trade-close/prove-flat (ui.wait_for, 360ms): matched=true, cdpPort=6664, targetUrl=chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/BTC?source=deeplink&utm_source=recipe_validation&utm_medium=automation&utm_campaign=perps_analytics
+- PASS trade-close/open-long (ui.navigate, 148ms): proof=ui-navigation
+- PASS trade-close/form-ready (ui.wait_for, 404ms): matched=true, cdpPort=6664, targetUrl=chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/BTC?direction=long&mode=new
+- PASS trade-close/size (ui.set_input, 1.2s): set=true, selector=input[inputmode="decimal"], tagName=INPUT, previousValue=10, cdpPort=6664
+- PASS trade-close/size-settled (wait, 1.5s): durationMs=1500
+- PASS trade-close/capture (metamask.analytics.start_capture, 140ms): action=metamask.analytics.start_capture, cursor=1785570258458, port=7664, pid=85705, eventsFile=<metamask-extension>/temp/recipe/runtime/analytics/events.jsonl
+- PASS trade-close/submit (ui.press, 471ms): clicked=true, selector=[data-testid="submit-order-button"], [data-test-id="submit-order-button"], [data-test="submit-order-button"], tagName=BUTTON, cdpPort=6664, targetUrl=chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/BTC?direction=long&mode=new
+- PASS trade-close/position-visible (ui.wait_for, 6.5s): matched=true, cdpPort=6664, targetUrl=chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/BTC?direction=long&mode=new
+- PASS trade-close/assert-trade (metamask.analytics.assert_events, 2.1s): action=metamask.analytics.assert_events, since=1785570258458, exact=false, observed=3 items, capturedCount=5
+- PASS trade-close/trade-toast-gone (ui.wait_for, 1.0s): matched=true, cdpPort=6664, targetUrl=chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/BTC?source=deeplink&utm_source=recipe_validation&utm_medium=automation&utm_campaign=perps_analytics
+- PASS trade-close/open-close (ui.press, 641ms): clicked=true, selector=[data-testid="perps-close-cta-button"], [data-test-id="perps-close-cta-button"], [data-test="perps-close-cta-button"], tagName=BUTTON, cdpPort=6664, targetUrl=chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/BTC?source=deeplink&utm_source=recipe_validation&utm_medium=automation&utm_campaign=perps_analytics
+- PASS trade-close/close-ready (ui.wait_for, 358ms): matched=true, cdpPort=6664, targetUrl=chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/BTC?source=deeplink&utm_source=recipe_validation&utm_medium=automation&utm_campaign=perps_analytics
+- PASS trade-close/confirm-close (ui.press, 697ms): clicked=true, selector=[data-testid="perps-close-position-modal-submit"], [data-test-id="perps-close-position-modal-submit"], [data-test="perps-close-position-modal-submit"], tagName=BUTTON, cdpPort=6664, targetUrl=chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/BTC?source=deeplink&utm_source=recipe_validation&utm_medium=automation&utm_campaign=perps_analytics
+- PASS trade-close/flat-visible (ui.wait_for, 865ms): matched=true, cdpPort=6664, targetUrl=chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/BTC?source=deeplink&utm_source=recipe_validation&utm_medium=automation&utm_campaign=perps_analytics
+- PASS trade-close/assert-close (metamask.analytics.assert_events, 2.1s): action=metamask.analytics.assert_events, since=1785570258458, exact=false, observed=3 items, capturedCount=8
+- PASS trade-close/done (end, 0ms)
+- PASS trade-close/restore-market (metamask.perps.start_state, 160ms): proof=metamask-perps-start-state
+- PASS trade-close/teardown-done (end, 0ms)
+- PASS trade-close (call, 19s): ref=perps.analytics-trade-close, status=pass
+- PASS cancel-order/ensure-clean-market (metamask.perps.start_state, 153ms): proof=metamask-perps-start-state
+- PASS cancel-order/open-market (ui.navigate, 132ms): proof=ui-navigation
+- PASS cancel-order/prove-flat (ui.wait_for, 376ms): matched=true, cdpPort=6664, targetUrl=chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/BTC?source=deeplink&utm_source=recipe_validation&utm_medium=automation&utm_campaign=perps_analytics
+- PASS cancel-order/open-long (ui.navigate, 157ms): proof=ui-navigation
+- PASS cancel-order/form-ready (ui.wait_for, 354ms): matched=true, cdpPort=6664, targetUrl=chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/BTC?direction=long&mode=new
+- PASS cancel-order/choose-limit (ui.press, 730ms): clicked=true, selector=[data-testid="order-type-limit"], [data-test-id="order-type-limit"], [data-test="order-type-limit"], tagName=BUTTON, cdpPort=6664, targetUrl=chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/BTC?direction=long&mode=new
+- PASS cancel-order/use-mid-limit-price (ui.press, 794ms): clicked=true, selector=[data-testid="limit-price-mid-button"], [data-test-id="limit-price-mid-button"], [data-test="limit-price-mid-button"], tagName=BUTTON, cdpPort=6664, targetUrl=chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/BTC?direction=long&mode=new
+- PASS cancel-order/calculate-resting-limit-price (metamask.perps.calculate_resting_limit_price, 71ms): proof=extension-visible-midpoint
+- PASS cancel-order/set-price (ui.set_input, 633ms): set=true, selector=[data-testid="limit-price-input"] input, tagName=INPUT, previousValue=63472, cdpPort=6664
+- PASS cancel-order/set-size (ui.set_input, 357ms): set=true, selector=[data-testid="amount-input-field"] input, tagName=INPUT, previousValue=10.00, cdpPort=6664
+- PASS cancel-order/order-settled (wait, 1.5s): durationMs=1500
+- PASS cancel-order/submit (ui.press, 389ms): clicked=true, selector=[data-testid="submit-order-button"], [data-test-id="submit-order-button"], [data-test="submit-order-button"], tagName=BUTTON, cdpPort=6664, targetUrl=chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/BTC?direction=long&mode=new
+- PASS cancel-order/order-visible (ui.wait_for, 6.7s): matched=true, cdpPort=6664, targetUrl=chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/BTC?direction=long&mode=new
+- PASS cancel-order/toast-gone (ui.wait_for, 584ms): matched=true, cdpPort=6664, targetUrl=chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/BTC?source=deeplink&utm_source=recipe_validation&utm_medium=automation&utm_campaign=perps_analytics
+- PASS cancel-order/capture (metamask.analytics.start_capture, 94ms): action=metamask.analytics.start_capture, cursor=1785570286648, port=7664, pid=85705, eventsFile=<metamask-extension>/temp/recipe/runtime/analytics/events.jsonl
+- PASS cancel-order/open-order (ui.press, 892ms): clicked=true, selector=[data-testid^="order-card-"], tagName=BUTTON, cdpPort=6664, targetUrl=chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/BTC?source=deeplink&utm_source=recipe_validation&utm_medium=automation&utm_campaign=perps_analytics
+- PASS cancel-order/cancel-ready (ui.wait_for, 353ms): matched=true, cdpPort=6664, targetUrl=chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/BTC?source=deeplink&utm_source=recipe_validation&utm_medium=automation&utm_campaign=perps_analytics
+- PASS cancel-order/confirm-cancel (ui.press, 633ms): clicked=true, selector=[data-testid="perps-cancel-order-button"], [data-test-id="perps-cancel-order-button"], [data-test="perps-cancel-order-button"], tagName=BUTTON, cdpPort=6664, targetUrl=chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/BTC?source=deeplink&utm_source=recipe_validation&utm_medium=automation&utm_campaign=perps_analytics
+- PASS cancel-order/order-gone (ui.wait_for, 981ms): matched=true, cdpPort=6664, targetUrl=chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/BTC?source=deeplink&utm_source=recipe_validation&utm_medium=automation&utm_campaign=perps_analytics
+- PASS cancel-order/assert-cancel (metamask.analytics.assert_events, 2.1s): action=metamask.analytics.assert_events, since=1785570286648, exact=false, observed=3 items, capturedCount=2
+- PASS cancel-order/done (end, 0ms)
+- PASS cancel-order/restore-market (metamask.perps.start_state, 158ms): proof=metamask-perps-start-state
+- PASS cancel-order/teardown-done (end, 0ms)
+- PASS cancel-order (call, 18s): ref=perps.analytics-cancel-order, status=pass
+- PASS risk-management/ensure-clean-market (metamask.perps.start_state, 144ms): proof=metamask-perps-start-state
+- PASS risk-management/open-market (ui.navigate, 168ms): proof=ui-navigation
+- PASS risk-management/prove-flat (ui.wait_for, 374ms): matched=true, cdpPort=6664, targetUrl=chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/BTC?source=deeplink&utm_source=recipe_validation&utm_medium=automation&utm_campaign=perps_analytics
+- PASS risk-management/open-long (ui.navigate, 122ms): proof=ui-navigation
+- PASS risk-management/form-ready (ui.wait_for, 353ms): matched=true, cdpPort=6664, targetUrl=chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/BTC?direction=long&mode=new
+- PASS risk-management/size (ui.set_input, 388ms): set=true, selector=input[inputmode="decimal"], tagName=INPUT, previousValue=10, cdpPort=6664
+- PASS risk-management/size-settled (wait, 1.5s): durationMs=1500
+- PASS risk-management/submit (ui.press, 625ms): clicked=true, selector=[data-testid="submit-order-button"], [data-test-id="submit-order-button"], [data-test="submit-order-button"], tagName=BUTTON, cdpPort=6664, targetUrl=chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/BTC?direction=long&mode=new
+- PASS risk-management/position-visible (ui.wait_for, 6.2s): matched=true, cdpPort=6664, targetUrl=chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/BTC?direction=long&mode=new
+- PASS risk-management/toast-gone (ui.wait_for, 3.0s): matched=true, cdpPort=6664, targetUrl=chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/BTC?source=deeplink&utm_source=recipe_validation&utm_medium=automation&utm_campaign=perps_analytics
+- PASS risk-management/open-tpsl (ui.press, 811ms): clicked=true, selector=[data-testid="perps-auto-close-row"], [data-test-id="perps-auto-close-row"], [data-test="perps-auto-close-row"], tagName=DIV, cdpPort=6664, targetUrl=chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/BTC?source=deeplink&utm_source=recipe_validation&utm_medium=automation&utm_campaign=perps_analytics
+- PASS risk-management/tpsl-ready (ui.wait_for, 414ms): matched=true, cdpPort=6664, targetUrl=chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/BTC?source=deeplink&utm_source=recipe_validation&utm_medium=automation&utm_campaign=perps_analytics
+- PASS risk-management/choose-tp (ui.set_input, 572ms): set=true, selector=[data-testid="perps-update-tpsl-tp-percent-input"], [data-test-id="perps-update-tpsl-tp-percent-input"], [data-test="perps-update-tpsl-tp-percent-input"], tagName=INPUT, cdpPort=6664, targetUrl=chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/BTC?source=deeplink&utm_source=recipe_validation&utm_medium=automation&utm_campaign=perps_analytics
+- PASS risk-management/choose-sl (ui.set_input, 358ms): set=true, selector=[data-testid="perps-update-tpsl-sl-percent-input"], [data-test-id="perps-update-tpsl-sl-percent-input"], [data-test="perps-update-tpsl-sl-percent-input"], tagName=INPUT, cdpPort=6664, targetUrl=chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/BTC?source=deeplink&utm_source=recipe_validation&utm_medium=automation&utm_campaign=perps_analytics
+- PASS risk-management/capture (metamask.analytics.start_capture, 109ms): action=metamask.analytics.start_capture, cursor=1785570307094, port=7664, pid=85705, eventsFile=<metamask-extension>/temp/recipe/runtime/analytics/events.jsonl
+- PASS risk-management/save-tpsl (ui.press, 504ms): clicked=true, selector=[data-testid="perps-update-tpsl-modal-submit"], [data-test-id="perps-update-tpsl-modal-submit"], [data-test="perps-update-tpsl-modal-submit"], tagName=BUTTON, cdpPort=6664, targetUrl=chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/BTC?source=deeplink&utm_source=recipe_validation&utm_medium=automation&utm_campaign=perps_analytics
+- PASS risk-management/tpsl-saved (ui.wait_for, 1.5s): matched=true, cdpPort=6664, targetUrl=chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/BTC?source=deeplink&utm_source=recipe_validation&utm_medium=automation&utm_campaign=perps_analytics
+- PASS risk-management/assert-risk (metamask.analytics.assert_events, 2.1s): action=metamask.analytics.assert_events, since=1785570307094, exact=false, observed=3 items, capturedCount=2
+- PASS risk-management/risk-toast-gone (ui.wait_for, 866ms): matched=true, cdpPort=6664, targetUrl=chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/BTC?source=deeplink&utm_source=recipe_validation&utm_medium=automation&utm_campaign=perps_analytics
+- PASS risk-management/open-close (ui.press, 579ms): clicked=true, selector=[data-testid="perps-close-cta-button"], [data-test-id="perps-close-cta-button"], [data-test="perps-close-cta-button"], tagName=BUTTON, cdpPort=6664, targetUrl=chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/BTC?source=deeplink&utm_source=recipe_validation&utm_medium=automation&utm_campaign=perps_analytics
+- PASS risk-management/close-ready (ui.wait_for, 543ms): matched=true, cdpPort=6664, targetUrl=chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/BTC?source=deeplink&utm_source=recipe_validation&utm_medium=automation&utm_campaign=perps_analytics
+- PASS risk-management/confirm-close (ui.press, 797ms): clicked=true, selector=[data-testid="perps-close-position-modal-submit"], [data-test-id="perps-close-position-modal-submit"], [data-test="perps-close-position-modal-submit"], tagName=BUTTON, cdpPort=6664, targetUrl=chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/BTC?source=deeplink&utm_source=recipe_validation&utm_medium=automation&utm_campaign=perps_analytics
+- PASS risk-management/flat-visible (ui.wait_for, 1.1s): matched=true, cdpPort=6664, targetUrl=chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/BTC?source=deeplink&utm_source=recipe_validation&utm_medium=automation&utm_campaign=perps_analytics
+- PASS risk-management/done (end, 0ms)
+- PASS risk-management/restore-market (metamask.perps.start_state, 546ms): proof=metamask-perps-start-state
+- PASS risk-management/teardown-done (end, 0ms)
+- PASS risk-management (call, 24s): ref=perps.analytics-risk-management, status=pass
+- PASS margin-flip/ensure-clean-market (metamask.perps.start_state, 704ms): proof=metamask-perps-start-state
+- PASS margin-flip/open-market (ui.navigate, 196ms): proof=ui-navigation
+- PASS margin-flip/prove-flat (ui.wait_for, 353ms): matched=true, cdpPort=6664, targetUrl=chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/BTC?source=deeplink&utm_source=recipe_validation&utm_medium=automation&utm_campaign=perps_analytics
+- PASS margin-flip/open-long (ui.navigate, 119ms): proof=ui-navigation
+- PASS margin-flip/form-ready (ui.wait_for, 352ms): matched=true, cdpPort=6664, targetUrl=chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/BTC?direction=long&mode=new
+- PASS margin-flip/size (ui.set_input, 359ms): set=true, selector=input[inputmode="decimal"], tagName=INPUT, previousValue=10, cdpPort=6664
+- PASS margin-flip/size-settled (wait, 1.5s): durationMs=1500
+- PASS margin-flip/submit (ui.press, 620ms): clicked=true, selector=[data-testid="submit-order-button"], [data-test-id="submit-order-button"], [data-test="submit-order-button"], tagName=BUTTON, cdpPort=6664, targetUrl=chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/BTC?direction=long&mode=new
+- PASS margin-flip/position-visible (ui.wait_for, 6.3s): matched=true, cdpPort=6664, targetUrl=chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/BTC?direction=long&mode=new
+- PASS margin-flip/toast-gone (ui.wait_for, 3.0s): matched=true, cdpPort=6664, targetUrl=chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/BTC?source=deeplink&utm_source=recipe_validation&utm_medium=automation&utm_campaign=perps_analytics
+- PASS margin-flip/capture-margin (metamask.analytics.start_capture, 149ms): action=metamask.analytics.start_capture, cursor=1785570329607, port=7664, pid=85705, eventsFile=<metamask-extension>/temp/recipe/runtime/analytics/events.jsonl
+- PASS margin-flip/open-margin-menu-add (ui.press, 679ms): clicked=true, selector=[data-testid="perps-margin-card"], [data-test-id="perps-margin-card"], [data-test="perps-margin-card"], tagName=DIV, cdpPort=6664, targetUrl=chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/BTC?source=deeplink&utm_source=recipe_validation&utm_medium=automation&utm_campaign=perps_analytics
+- PASS margin-flip/open-add-margin (ui.press, 982ms): clicked=true, selector=[data-testid="perps-margin-menu-add"], [data-test-id="perps-margin-menu-add"], [data-test="perps-margin-menu-add"], tagName=DIV, cdpPort=6664, targetUrl=chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/BTC?source=deeplink&utm_source=recipe_validation&utm_medium=automation&utm_campaign=perps_analytics
+- PASS margin-flip/add-margin-ready (ui.wait_for, 354ms): matched=true, cdpPort=6664, targetUrl=chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/BTC?source=deeplink&utm_source=recipe_validation&utm_medium=automation&utm_campaign=perps_analytics
+- PASS margin-flip/close-add-margin (ui.press, 624ms): clicked=true, selector=[data-testid="perps-edit-margin-modal-cancel"], [data-test-id="perps-edit-margin-modal-cancel"], [data-test="perps-edit-margin-modal-cancel"], tagName=BUTTON, cdpPort=6664, targetUrl=chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/BTC?source=deeplink&utm_source=recipe_validation&utm_medium=automation&utm_campaign=perps_analytics
+- PASS margin-flip/open-margin-menu-remove (ui.press, 385ms): clicked=true, selector=[data-testid="perps-margin-card"], [data-test-id="perps-margin-card"], [data-test="perps-margin-card"], tagName=DIV, cdpPort=6664, targetUrl=chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/BTC?source=deeplink&utm_source=recipe_validation&utm_medium=automation&utm_campaign=perps_analytics
+- PASS margin-flip/open-remove-margin (ui.press, 612ms): clicked=true, selector=[data-testid="perps-margin-menu-remove"], [data-test-id="perps-margin-menu-remove"], [data-test="perps-margin-menu-remove"], tagName=DIV, cdpPort=6664, targetUrl=chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/BTC?source=deeplink&utm_source=recipe_validation&utm_medium=automation&utm_campaign=perps_analytics
+- PASS margin-flip/remove-margin-ready (ui.wait_for, 354ms): matched=true, cdpPort=6664, targetUrl=chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/BTC?source=deeplink&utm_source=recipe_validation&utm_medium=automation&utm_campaign=perps_analytics
+- PASS margin-flip/assert-margin (metamask.analytics.assert_events, 1.7s): action=metamask.analytics.assert_events, since=1785570329607, exact=false, observed=3 items, capturedCount=8
+- PASS margin-flip/close-remove-margin (ui.press, 426ms): clicked=true, selector=[data-testid="perps-edit-margin-modal-cancel"], [data-test-id="perps-edit-margin-modal-cancel"], [data-test="perps-edit-margin-modal-cancel"], tagName=BUTTON, cdpPort=6664, targetUrl=chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/BTC?source=deeplink&utm_source=recipe_validation&utm_medium=automation&utm_campaign=perps_analytics
+- PASS margin-flip/capture-flip (metamask.analytics.start_capture, 141ms): action=metamask.analytics.start_capture, cursor=1785570335863, port=7664, pid=85705, eventsFile=<metamask-extension>/temp/recipe/runtime/analytics/events.jsonl
+- PASS margin-flip/open-modify (ui.press, 422ms): clicked=true, selector=[data-testid="perps-modify-cta-button"], [data-test-id="perps-modify-cta-button"], [data-test="perps-modify-cta-button"], tagName=BUTTON, cdpPort=6664, targetUrl=chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/BTC?source=deeplink&utm_source=recipe_validation&utm_medium=automation&utm_campaign=perps_analytics
+- PASS margin-flip/open-reverse (ui.press, 959ms): clicked=true, selector=[data-testid="perps-modify-menu-reverse-position"], [data-test-id="perps-modify-menu-reverse-position"], [data-test="perps-modify-menu-reverse-position"], tagName=DIV, cdpPort=6664, targetUrl=chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/BTC?source=deeplink&utm_source=recipe_validation&utm_medium=automation&utm_campaign=perps_analytics
+- PASS margin-flip/reverse-ready (ui.wait_for, 374ms): matched=true, cdpPort=6664, targetUrl=chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/BTC?source=deeplink&utm_source=recipe_validation&utm_medium=automation&utm_campaign=perps_analytics
+- PASS margin-flip/confirm-reverse (ui.press, 626ms): clicked=true, selector=[data-testid="perps-reverse-position-modal-save"], [data-test-id="perps-reverse-position-modal-save"], [data-test="perps-reverse-position-modal-save"], tagName=BUTTON, cdpPort=6664, targetUrl=chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/BTC?source=deeplink&utm_source=recipe_validation&utm_medium=automation&utm_campaign=perps_analytics
+- PASS margin-flip/short-visible (ui.wait_for, 425ms): matched=true, cdpPort=6664, targetUrl=chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/BTC?source=deeplink&utm_source=recipe_validation&utm_medium=automation&utm_campaign=perps_analytics
+- PASS margin-flip/assert-short-state (metamask.perps.assert_positions, 283ms): matching=1
+- PASS margin-flip/assert-flip (metamask.analytics.assert_events, 3.2s): action=metamask.analytics.assert_events, since=1785570335863, exact=false, observed=3 items, capturedCount=3
+- PASS margin-flip/flip-toast-gone (ui.wait_for, 1.6s): matched=true, cdpPort=6664, targetUrl=chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/BTC?source=deeplink&utm_source=recipe_validation&utm_medium=automation&utm_campaign=perps_analytics
+- PASS margin-flip/open-close (ui.press, 511ms): clicked=true, selector=[data-testid="perps-close-cta-button"], [data-test-id="perps-close-cta-button"], [data-test="perps-close-cta-button"], tagName=BUTTON, cdpPort=6664, targetUrl=chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/BTC?source=deeplink&utm_source=recipe_validation&utm_medium=automation&utm_campaign=perps_analytics
+- PASS margin-flip/close-ready (ui.wait_for, 367ms): matched=true, cdpPort=6664, targetUrl=chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/BTC?source=deeplink&utm_source=recipe_validation&utm_medium=automation&utm_campaign=perps_analytics
+- PASS margin-flip/confirm-close (ui.press, 508ms): clicked=true, selector=[data-testid="perps-close-position-modal-submit"], [data-test-id="perps-close-position-modal-submit"], [data-test="perps-close-position-modal-submit"], tagName=BUTTON, cdpPort=6664, targetUrl=chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/BTC?source=deeplink&utm_source=recipe_validation&utm_medium=automation&utm_campaign=perps_analytics
+- PASS margin-flip/flat-visible (ui.wait_for, 1.4s): matched=true, cdpPort=6664, targetUrl=chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/BTC?source=deeplink&utm_source=recipe_validation&utm_medium=automation&utm_campaign=perps_analytics
+- PASS margin-flip/done (end, 0ms)
+- PASS margin-flip/restore-market (metamask.perps.start_state, 183ms): proof=metamask-perps-start-state
+- PASS margin-flip/teardown-done (end, 0ms)
+- PASS margin-flip (call, 31s): ref=perps.analytics-margin-flip, status=pass
+- PASS considered-abandon/open-trade (ui.navigate, 134ms): proof=ui-navigation
+- PASS considered-abandon/form-ready (ui.wait_for, 355ms): matched=true, cdpPort=6664, targetUrl=chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/BTC?direction=long&mode=new
+- PASS considered-abandon/capture (metamask.analytics.start_capture, 98ms): action=metamask.analytics.start_capture, cursor=1785570347509, port=7664, pid=85705, eventsFile=<metamask-extension>/temp/recipe/runtime/analytics/events.jsonl
+- PASS considered-abandon/edit-size (ui.set_input, 366ms): set=true, selector=input[inputmode="decimal"], tagName=INPUT, previousValue=10, cdpPort=6664
+- PASS considered-abandon/assert-considered (metamask.analytics.assert_events, 2.3s): action=metamask.analytics.assert_events, since=1785570347509, exact=false, observed=2 items, capturedCount=1
+- PASS considered-abandon/leave (ui.navigate, 139ms): proof=ui-navigation
+- PASS considered-abandon/home-ready (ui.wait_for, 359ms): matched=true, cdpPort=6664, targetUrl=chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/
+- PASS considered-abandon/assert-abandon (metamask.analytics.assert_events, 1.6s): action=metamask.analytics.assert_events, since=1785570347509, exact=false, observed=2 items, capturedCount=6
+- PASS considered-abandon/done (end, 0ms)
+- PASS considered-abandon (call, 5.4s): ref=perps.analytics-considered-abandon, status=pass
+- PASS error-screen/home (ui.navigate, 98ms): proof=ui-navigation
+- PASS error-screen/capture (metamask.analytics.start_capture, 102ms): action=metamask.analytics.start_capture, cursor=1785570352565, port=7664, pid=85705, eventsFile=<metamask-extension>/temp/recipe/runtime/analytics/events.jsonl
+- PASS error-screen/open (ui.navigate, 123ms): proof=ui-navigation
+- PASS error-screen/visible (ui.wait_for, 350ms): matched=true, cdpPort=6664, targetUrl=chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/DOESNOTEXIST
+- PASS error-screen/assert (metamask.analytics.assert_events, 2.1s): action=metamask.analytics.assert_events, since=1785570352565, exact=false, observed=3 items, capturedCount=2
+- PASS error-screen/done (end, 0ms)
+- PASS error-screen (call, 2.8s): ref=perps.analytics-error-screen, status=pass
+- PASS done (end, 0ms)
+- PASS restore-market (metamask.perps.start_state, 201ms): proof=metamask-perps-start-state
+- PASS teardown-done (end, 0ms)

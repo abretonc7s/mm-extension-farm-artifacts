@@ -1,0 +1,298 @@
+{
+  "$schema": "https://farmslot.io/schemas/recipe-v1.schema.json",
+  "title": "Prove Perps discovery-control analytics",
+  "description": "Use the real market filter, sort modal, and watchlist control to prove their live analytics, requiring and restoring an unwatchlisted market.",
+  "paramsSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "market": {
+        "type": "string",
+        "default": "BTC",
+        "description": "Perps market symbol used by the live flow."
+      }
+    }
+  },
+  "proofTargets": [
+    {
+      "id": "discovery-controls-analytics",
+      "claim": "Visible filter, sort, and watchlist changes emit their exact discovery contracts."
+    }
+  ],
+  "workflow": {
+    "entry": "prepare-open-market",
+    "teardown": "cleanup-open-market",
+    "nodes": {
+      "prepare-open-market": {
+        "action": "ui.navigate",
+        "hash": "#/perps/market/{{params.market}}",
+        "intent": "Open {{params.market}} for an idempotent watchlist precondition",
+        "next": "prepare-watchlist"
+      },
+      "prepare-watchlist": {
+        "action": "metamask.perps.ensure_unwatchlisted",
+        "timeout_ms": 20000,
+        "intent": "Require {{params.market}} to begin outside the watchlist",
+        "next": "open-list"
+      },
+      "open-list": {
+        "action": "ui.navigate",
+        "hash": "#/perps/market-list",
+        "intent": "Open the live Perps market catalog",
+        "next": "list-ready"
+      },
+      "list-ready": {
+        "action": "ui.wait_for",
+        "test_id": "filter-select-button",
+        "expected": "visible",
+        "timeout_ms": 20000,
+        "intent": "Prove the discovery controls are interactive",
+        "next": "capture-controls"
+      },
+      "capture-controls": {
+        "action": "metamask.analytics.start_capture",
+        "intent": "Bracket the filter and sort changes",
+        "next": "open-filter"
+      },
+      "open-filter": {
+        "action": "ui.press",
+        "test_id": "filter-select-button",
+        "intent": "Open the market-category choices",
+        "next": "filter-opened"
+      },
+      "filter-opened": {
+        "action": "wait",
+        "duration_ms": 500,
+        "intent": "Allow the filter menu to render",
+        "next": "choose-filter"
+      },
+      "choose-filter": {
+        "action": "ui.press",
+        "test_id": "filter-select-option-crypto",
+        "intent": "Show crypto markets in the live catalog",
+        "next": "open-sort"
+      },
+      "open-sort": {
+        "action": "ui.press",
+        "test_id": "sort-dropdown-button",
+        "intent": "Open the market-ranking choices",
+        "next": "sort-opened"
+      },
+      "sort-opened": {
+        "action": "wait",
+        "duration_ms": 500,
+        "intent": "Allow the sort controls to render",
+        "next": "choose-sort"
+      },
+      "choose-sort": {
+        "action": "ui.press",
+        "test_id": "sort-field-option-priceChange",
+        "intent": "Rank the catalog by price change",
+        "next": "sort-field-settled"
+      },
+      "sort-field-settled": {
+        "action": "wait",
+        "duration_ms": 300,
+        "intent": "Allow the selected sort field to settle",
+        "next": "choose-direction"
+      },
+      "choose-direction": {
+        "action": "ui.press",
+        "test_id": "sort-direction-asc",
+        "intent": "Show the lowest price changes first",
+        "next": "apply-sort"
+      },
+      "apply-sort": {
+        "action": "ui.press",
+        "test_id": "sort-modal-apply",
+        "intent": "Apply the selected market ranking",
+        "next": "assert-controls"
+      },
+      "assert-controls": {
+        "action": "metamask.analytics.assert_events",
+        "since": "{{outputs.capture-controls.cursor}}",
+        "timeout_ms": 15000,
+        "settle_ms": 2000,
+        "expect": [
+          {
+            "event": "Perp UI Interaction",
+            "count": 3
+          },
+          {
+            "event": "Perp UI Interaction",
+            "count": 1,
+            "properties": {
+              "interaction_type": "button_clicked",
+              "tab_name": "crypto",
+              "button_type": "crypto",
+              "button_location": "market_list",
+              "environment_type": "fullscreen"
+            }
+          },
+          {
+            "event": "Perp UI Interaction",
+            "count": 1,
+            "properties": {
+              "interaction_type": "filter_applied",
+              "filter_category": "crypto",
+              "environment_type": "fullscreen"
+            }
+          },
+          {
+            "event": "Perp UI Interaction",
+            "count": 1,
+            "properties": {
+              "interaction_type": "sort_applied",
+              "sort_field": "priceChange",
+              "sort_direction": "asc",
+              "environment_type": "fullscreen"
+            }
+          }
+        ],
+        "intent": "Prove each visible discovery change emitted its complete contract once",
+        "next": "home-before-watchlist",
+        "proves": [
+          "discovery-controls-analytics"
+        ]
+      },
+      "home-before-watchlist": {
+        "action": "ui.navigate",
+        "hash": "#/",
+        "intent": "Start watchlist proof outside the market screen",
+        "next": "capture-unwatched"
+      },
+      "capture-unwatched": {
+        "action": "metamask.analytics.start_capture",
+        "intent": "Bracket the unwatchlisted {{params.market}} entry",
+        "next": "open-unwatched"
+      },
+      "open-unwatched": {
+        "action": "ui.navigate",
+        "hash": "#/perps/market/{{params.market}}",
+        "intent": "Open {{params.market}} before adding it to the watchlist",
+        "next": "unwatched-ready"
+      },
+      "unwatched-ready": {
+        "action": "ui.wait_for",
+        "selector": "[data-testid=\"perps-market-detail-favorite-button\"][aria-label=\"Add to favorites\"]",
+        "expected": "visible",
+        "timeout_ms": 20000,
+        "intent": "Prove {{params.market}} begins outside the watchlist",
+        "next": "assert-unwatched"
+      },
+      "assert-unwatched": {
+        "action": "metamask.analytics.assert_events",
+        "since": "{{outputs.capture-unwatched.cursor}}",
+        "timeout_ms": 15000,
+        "settle_ms": 1500,
+        "expect": [
+          {
+            "event": "Perp Screen Viewed",
+            "count": 1
+          },
+          {
+            "event": "Perp Screen Viewed",
+            "count": 1,
+            "properties": {
+              "screen_type": "asset_details",
+              "asset": "{{params.market}}",
+              "watchlisted": false,
+              "environment_type": "fullscreen"
+            }
+          }
+        ],
+        "intent": "Prove the live asset-details event reports {{params.market}} as unwatchlisted",
+        "next": "add-watchlist",
+        "proves": [
+          "discovery-controls-analytics"
+        ]
+      },
+      "add-watchlist": {
+        "action": "ui.press",
+        "test_id": "perps-market-detail-favorite-button",
+        "intent": "Add {{params.market}} to the real watchlist",
+        "next": "watched-control"
+      },
+      "watched-control": {
+        "action": "ui.wait_for",
+        "selector": "[data-testid=\"perps-market-detail-favorite-button\"][aria-label=\"Remove from favorites\"]",
+        "expected": "visible",
+        "timeout_ms": 20000,
+        "intent": "Prove the controller persisted the watchlist change",
+        "next": "home-before-watched"
+      },
+      "home-before-watched": {
+        "action": "ui.navigate",
+        "hash": "#/",
+        "intent": "Re-enter {{params.market}} to emit a fresh asset-details view",
+        "next": "capture-watched"
+      },
+      "capture-watched": {
+        "action": "metamask.analytics.start_capture",
+        "intent": "Bracket the watchlisted {{params.market}} entry",
+        "next": "open-watched"
+      },
+      "open-watched": {
+        "action": "ui.navigate",
+        "hash": "#/perps/market/{{params.market}}",
+        "intent": "Open {{params.market}} after the watchlist change",
+        "next": "watched-ready"
+      },
+      "watched-ready": {
+        "action": "ui.wait_for",
+        "selector": "[data-testid=\"perps-market-detail-favorite-button\"][aria-label=\"Remove from favorites\"]",
+        "expected": "visible",
+        "timeout_ms": 20000,
+        "intent": "Anchor the event to the persisted watchlisted state",
+        "next": "assert-watched"
+      },
+      "assert-watched": {
+        "action": "metamask.analytics.assert_events",
+        "since": "{{outputs.capture-watched.cursor}}",
+        "timeout_ms": 15000,
+        "settle_ms": 1500,
+        "expect": [
+          {
+            "event": "Perp Screen Viewed",
+            "count": 1
+          },
+          {
+            "event": "Perp Screen Viewed",
+            "count": 1,
+            "properties": {
+              "screen_type": "asset_details",
+              "asset": "{{params.market}}",
+              "watchlisted": true,
+              "environment_type": "fullscreen"
+            }
+          }
+        ],
+        "intent": "Prove the fresh asset-details event reports {{params.market}} as watchlisted",
+        "next": "done",
+        "proves": [
+          "discovery-controls-analytics"
+        ]
+      },
+      "done": {
+        "action": "end",
+        "status": "pass"
+      },
+      "cleanup-open-market": {
+        "action": "ui.navigate",
+        "hash": "#/perps/market/{{params.market}}",
+        "intent": "Open {{params.market}} for idempotent watchlist cleanup",
+        "next": "cleanup-watchlist"
+      },
+      "cleanup-watchlist": {
+        "action": "metamask.perps.ensure_unwatchlisted",
+        "timeout_ms": 20000,
+        "intent": "Restore {{params.market}} to its original unwatchlisted state even after failure",
+        "next": "cleanup-done"
+      },
+      "cleanup-done": {
+        "action": "end",
+        "status": "pass"
+      }
+    }
+  }
+}

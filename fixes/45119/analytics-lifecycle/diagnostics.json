@@ -1,0 +1,60 @@
+{
+  "schemaVersion": 1,
+  "scope": "recipe-run-application",
+  "status": "review",
+  "nonBlocking": true,
+  "note": "Observed 6 distinct application warning/error event(s) during the recipe run; relation to the task is not determined.",
+  "source": {
+    "label": "extension",
+    "path": "<metamask-extension>/temp/recipe/runtime/extension-console.log",
+    "startOffset": 832311,
+    "endOffset": 920577,
+    "bytesRead": 88266,
+    "truncated": false,
+    "inAppBuffer": "n/a"
+  },
+  "counts": {
+    "total": 6,
+    "warning": 2,
+    "error": 4,
+    "exception": 0
+  },
+  "findings": [
+    {
+      "level": "error",
+      "fingerprint": "e9e5d5629243",
+      "preview": "15:43:39 [extension:sw] ERROR  Error: No metadata found for 'autoLockTimeLimit'",
+      "count": 6
+    },
+    {
+      "level": "error",
+      "fingerprint": "e0ddde3d7963",
+      "preview": "15:43:41 [extension:page:home.html] ERROR  Failed to load resource: the server responded with a status of 404 ()",
+      "count": 684
+    },
+    {
+      "level": "warning",
+      "fingerprint": "276683aff6cd",
+      "preview": "15:43:43 [extension:sw] WARNING  Polling failed for chains 0x1 with interval 30000: Error: Invalid chain ID \"0xa4b1\"",
+      "count": 5
+    },
+    {
+      "level": "error",
+      "fingerprint": "9be4cf335af4",
+      "preview": "15:44:15 [extension:page:home.html] ERROR  Unknown action Object",
+      "count": 12
+    },
+    {
+      "level": "error",
+      "fingerprint": "c015bef5a4d0",
+      "preview": "15:45:53 [extension:sw] ERROR  HttpRequestError: 500 Internal Server Error - null",
+      "count": 2
+    },
+    {
+      "level": "warning",
+      "fingerprint": "28b7f21bf134",
+      "preview": "15:45:53 [extension:sw] WARNING  Sentry not initialized",
+      "count": 2
+    }
+  ]
+}
