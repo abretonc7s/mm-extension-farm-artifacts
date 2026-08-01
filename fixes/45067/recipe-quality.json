@@ -1,81 +1,126 @@
 {
   "version": 1,
-  "verdict": "warn",
+  "verdict": "pass",
   "compact": {
-    "verdict": "WARN",
+    "verdict": "PASS",
     "reasons": [
-      "This is an update-branch run with no recipe step in its checklist; the recipe was executed only to produce the run package the artifact contract requires.",
-      "The run reached 6/7 executed nodes green and stopped at setup-start-state with the known harness-library defect (isTestnet read from metamask.PerpsController while this build flattens it onto metamask) — no AC node was reached, so this run contributes no new AC evidence.",
-      "AC1/AC2 evidence is carried forward from the parent run and the carry-forward is justified by content: every file this PR touches is byte-identical before and after the rebase (git diff 8059e8a82f 83b1e4340c over all 15 PR files is empty).",
-      "AC3-AC5 were re-verified in this run by unit tests — 271/271 across the four suites covering the PR diff."
+      "The recipe now runs GREEN END-TO-END on this slot: mm-harness run reports status pass, 28/28 nodes (artifacts/recipe-run/). This supersedes every earlier 'halts at setup-select-account / production LavaMoat build / hasStore: false' statement in this file's history.",
+      "The earlier blocker was the invocation, not the runtime. The checklist's --launch-existing-dist / --project-root form is stale for this harness build; attaching to the live CDP runtime (--cdp-port 7666, no --slot) works. runtime-health reports hasStore: true, hasSubmitRequest: true.",
+      "AC1 and AC2 are therefore PROVEN LIVE rather than carried forward: the graph cancels a live resting order and asserts it gone on the provider, then stages the already-closed race out of band via metamask.perps.close_orders and waits on the perps-toast-cancel-order-already-closed testId.",
+      "Re-run after each fix pass against a dist rebuilt from the current tree (refresh-build.sh + runtime-launch): still 28/28 green, so the fixes introduce no regression.",
+      "Remaining gap: AC3 \u2014 the withdraw stale-balance guard, the ticket's largest bucket \u2014 has no live coverage. Reproducing a suspended service worker in a recipe is not currently feasible, so it is unit-proven only. Documented limitation, not an oversight."
     ],
     "better_version_guidance": [
-      "metamask.perps.start_state must read isTestnet from the flattened metamask slice as well as metamask.PerpsController, otherwise it blocks every extension perps recipe on post-#44324 builds.",
-      "The update-branch checklist should either declare no recipe deliverable (so the artifact contract does not demand a recipe-run package) or add an explicit recipe step, instead of leaving a gateway-seeded recipe.json to trigger the contract."
+      "Add live coverage for AC3 if the harness ever gains a way to suspend/resume the extension service worker, or to drive the account stream stale on demand \u2014 today the ticket's largest withdraw bucket is proven only in unit tests.",
+      "Fix the checklist's recipe invocation: --launch-existing-dist / --project-root exits 'no configured slot maps to this repo' on this harness build and sent two review rounds chasing a non-existent runtime defect.",
+      "The update-branch checklist should either declare no recipe deliverable or add an explicit recipe step, instead of leaving a gateway-seeded recipe.json to trigger the artifact contract."
     ]
   },
   "dimensions": {
     "graph_integrity": {
       "status": "pass",
       "reason": "Single entry, every node reachable, terminal end node, no switch/default routing around an assertion. Unchanged from the family recipe.",
-      "evidence": ["recipe.json", "recipe-run/trace.json"]
+      "evidence": [
+        "recipe.json",
+        "recipe-run/trace.json"
+      ]
     },
     "action_contract": {
-      "status": "fail",
-      "reason": "Only manifest-declared actions are used, but metamask.perps.start_state cannot run on this build and halts the graph at the 7th executed node. The graph cannot be driven end-to-end by `mm-harness run` until the harness library is fixed.",
-      "evidence": ["recipe-run/trace.json", "recipe-run/summary.json", "report.md"]
+      "status": "pass",
+      "reason": "Only manifest-declared actions are used and the graph is driven end-to-end by mm-harness run: 28/28 nodes ok against the live CDP runtime.",
+      "evidence": [
+        "recipe-run/trace.json",
+        "recipe-run/summary.json"
+      ]
     },
     "ac_coverage": {
       "status": "warn",
-      "reason": "No AC node was reached by this run's execution, so AC1/AC2 rest on inherited evidence. The carry-forward is sound because the PR's files are byte-identical across the rebase, but this run independently re-proved only the unit-tested claims (AC3-AC5).",
-      "evidence": ["recipe-coverage.md", "recipe-run/trace.json"]
+      "reason": "AC1 and AC2 are proven live by this run's own execution. AC4 and AC5 are unit-proven. AC3 has no live coverage: a suspended service worker cannot currently be reproduced in a recipe, so the ticket's largest withdraw bucket rests on unit tests alone.",
+      "evidence": [
+        "recipe-coverage.md",
+        "recipe-run/trace.json"
+      ]
     },
     "evidence_contract_basics": {
-      "status": "warn",
-      "reason": "The AC2 before/after screenshots shipped in evidence-manifest.json are the parent run's captures, labelled as carried forward. No new visual evidence was produced by this run because execution stopped before the AC2 nodes.",
+      "status": "pass",
+      "reason": "This run captured its own AC2 evidence (recipe-run/screenshots/evidence-ac2-cancel-order-already-closed.png), gated behind a ui.wait_for on the toast testId, so the screenshot cannot be captured before the asserted element exists. The carried-forward before/after pair remains for contrast.",
       "evidence": [
-        "evidence-ac2-cancel-order-already-closed.png",
+        "recipe-run/screenshots/evidence-ac2-cancel-order-already-closed.png",
         "before-ac2-cancel-order-error.png",
         "evidence-manifest.json"
       ]
     },
     "perps_state_setup": {
-      "status": "fail",
-      "reason": "start_state is the failing node; the run never built the clean testnet order state, so ensure_orders / close_orders / teardown_state did not execute in this run.",
-      "evidence": ["recipe-run/trace.json"]
+      "status": "pass",
+      "reason": "start_state / ensure_orders / close_orders / teardown_state all executed: the graph seeds its own testnet order state at notional 12 / 3x and restores clean state, so it cannot pass on an empty wallet.",
+      "evidence": [
+        "recipe-run/trace.json",
+        "recipe.json"
+      ]
     }
   },
   "structural_findings": [],
   "contextual_findings": [
     {
-      "code": "harness.start_state_perps_shape",
-      "message": "metamask.perps.start_state reads isTestnet from metamask.PerpsController, but post-#44324 extension builds flatten perps controller state onto metamask. The action throws 'Unable to read the current Perps network from persisted controller state.' and halts the graph before any AC node. Harness-library defect, not a product defect, and unrelated to this rebase.",
+      "code": "harness.stale_checklist_invocation",
+      "message": "The checklist's `mm-harness run --launch-existing-dist --project-root ...` form is stale for harness 0.26.5: --project-root is rejected outright and --launch-existing-dist exits 'no configured slot maps to this repo'. Attaching to the live CDP runtime (--cdp-port 7666, no --slot) runs the graph green. This stale command, not any product or runtime defect, is what produced the earlier 'recipe cannot run on this slot' conclusion.",
       "dimension": "action_contract",
-      "evidence": ["recipe-run/trace.json", "recipe-run/summary.json"]
+      "evidence": [
+        "report.md",
+        "recipe-run/summary.json"
+      ]
     },
     {
-      "code": "harness.path_wrapper_broken",
-      "message": "mm-harness on PATH resolves to ~/dotfiles/bin/mm-harness, which aborts because METAMASK_SKILLS_DIR points at a non-existent checkout. The working binary is /Users/deeeed/.npm-global/bin/mm-harness (0.26.5). Carried over from the parent run; PATH was re-pointed rather than patching any repo config.",
-      "dimension": "action_contract",
-      "evidence": ["report.md"]
-    },
-    {
-      "code": "framework.lint_gate_vs_runtime_snapshot",
-      "message": "Step 7's runtime refresh writes temp/recipe/runtime/runtime-dist/** into the working tree, and step 8's bare `yarn lint` then reports 4633 errors across 739 generated bundle files while real repo files have zero. The two checklist steps conflict as written. Re-run with --ignore-pattern 'temp/**' exits 0; no repo ignore config was modified.",
-      "dimension": "action_contract",
-      "evidence": ["report.md"]
-    },
-    {
-      "code": "product.perps_home_route_error",
-      "message": "The #/perps route renders MetaMask's generic error page on this build. Outside the recipe path and outside this PR's diff; ui/components/app/perps/perps-view.tsx was last changed by main's #44324. Carried over from the parent run, unchanged by this rebase.",
+      "code": "recipe.ac3_no_live_coverage",
+      "message": "AC3 (fresh account-state read guarding a stale streamed balance) has no node in the graph. It is the larger half of the diff and the ticket's largest failure bucket, but it needs a suspended service worker to reproduce, which the harness cannot currently stage. Unit-proven only, including a regression test verified to fail without the fix.",
       "dimension": "ac_coverage",
-      "evidence": ["report.md"]
+      "evidence": [
+        "recipe-coverage.md",
+        "report.md"
+      ]
+    },
+    {
+      "code": "framework.lint_gate_vs_stray_artifacts",
+      "message": "`mm-harness check diff` oxfmt fails on a stray untracked artifacts/recipe-run-current-harness/report.md at repo root \u2014 a framework leftover, not a repo file. Per agent rules it was not added to any ignore file; the gate was re-run with it moved aside and passes on all repo-owned files.",
+      "dimension": "action_contract",
+      "evidence": [
+        "report.md",
+        "learnings.md"
+      ]
+    },
+    {
+      "code": "analytics.cancel_ui_event_removed",
+      "message": "The UI-side `Perp Order Cancel Transaction` added for the already-closed path in the previous pass was removed: TradingService.cancelOrder already emits that event (submitted, then failed with the provider message) for the same attempt, so the UI event was a second contradictory-status row for one user action. Verified in the controller source and corroborated live \u2014 the recipe run's diagnostics show the controller logging `cancel 0: Order was never placed, already canceled, or filled` while the UI shows the neutral toast.",
+      "dimension": "ac_coverage",
+      "evidence": [
+        "recipe-coverage.md",
+        "recipe-run/diagnostics.json",
+        "report.md"
+      ]
     }
   ],
   "suggested_recipe_delta": [
-    "Make start_state's network probe tolerant of both perps state shapes so the graph stops being blocked at node 7 on current builds.",
-    "Add a network-assertion node so a recipe cannot proceed to ensure_orders without confirming testnet."
+    "Add an AC3 node for the withdraw stale-balance guard. The AC2 out-of-band pattern is the likely route: consume margin out of band (open a position via the provider) so the streamed balance goes stale, then press Max/withdraw before the stream ticks \u2014 that stages the race without needing a suspended service worker.",
+    "Assert the blocked-withdrawal message via the new testIds \u2014 `perps-withdraw-validation-error` and `perps-withdraw-submit-error` \u2014 rather than matching translated copy. Added in this pass specifically so the AC3 node above is writable when the staging route exists."
   ],
+  "training_fields": {
+    "farm": "metamask-extension",
+    "project": "metamask-extension-farm",
+    "flow_type": "update-branch",
+    "task_type": "update-branch",
+    "claim_is_visual": true,
+    "proof_mode": "mixed",
+    "anti_patterns": [
+      "two earlier passes concluded 'the recipe cannot run on this slot' from a stale checklist command without trying the plain --cdp-port invocation"
+    ],
+    "good_patterns": [
+      "checked the reviewer's central claim against the real controller source before acting on it, instead of trusting the review or defending the previous fix",
+      "removed an analytics event a previous pass had added once its premise (a funnel gap) was disproved \u2014 the fix that shrinks the diff",
+      "verified each new regression test fails without its fix before accepting it",
+      "rebuilt the dist from the current tree before re-running the recipe, so the green run actually exercised the fixes rather than a stale build",
+      "corrected stale evidence documents rather than letting a passing contract gate stand in for accuracy"
+    ]
+  },
   "meta": {
     "producer": "worker",
     "fallback_used": false,
@@ -87,20 +132,6 @@
       "artifacts/recipe-run/summary.json",
       "artifacts/recipe-coverage.md",
       "artifacts/report.md"
-    ]
-  },
-  "training_fields": {
-    "farm": "metamask-extension",
-    "project": "metamask-extension-farm",
-    "flow_type": "update-branch",
-    "task_type": "update-branch",
-    "claim_is_visual": true,
-    "proof_mode": "mixed",
-    "anti_patterns": [],
-    "good_patterns": [
-      "kept a genuinely failing recipe-run package instead of editing it to look like a pass",
-      "justified carrying forward AC evidence with a byte-identical content check rather than an assumption",
-      "bucketed a red lint gate by file path and found every error was in a framework-injected directory"
     ]
   }
 }

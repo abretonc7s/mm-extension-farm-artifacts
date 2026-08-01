@@ -1,0 +1,15 @@
+{
+  "version": 1,
+  "preferred_mode": "screenshots",
+  "summary": "Update-branch run: branch rebased onto origin/main (1bd5a8f781 -> 7c97314f3a) with zero conflicts. Every PR-owned file is byte-identical across the rebase, so the AC1/AC2 visual evidence below is carried forward unchanged from the parent run's live testnet validation; this run re-verified the branch with the full lint gate and 271/271 unit tests.",
+  "standalone": [
+    {
+      "label": "Before: cancel dialog stays open showing \"cancel 0: Order was never placed, already canceled, or filled\"",
+      "file": "before-ac2-cancel-order-error.png"
+    },
+    {
+      "label": "After: dialog closes and the market page shows no error banner; the \"This order is no longer open\" toast was asserted live via ui.wait_for on perps-toast-cancel-order-already-closed (parent run, code unchanged by this rebase)",
+      "file": "evidence-ac2-cancel-order-already-closed.png"
+    }
+  ]
+}

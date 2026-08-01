@@ -1,0 +1,80 @@
+{
+  "adapter": "extension",
+  "action": "launch",
+  "status": "pass",
+  "target": "/Users/deeeed/dev/metamask/metamask-extension-2",
+  "cdpPort": "7666",
+  "prepare": {
+    "commandSupplied": true,
+    "status": "pass",
+    "exitCode": 0,
+    "logPath": "/Users/deeeed/dev/metamask/metamask-extension-2/temp/tasks/fix/45067-0801-230839/artifacts/runtime-launch-rev4b/launch/logs/launch.log"
+  },
+  "runtimePolicy": {
+    "runtimeReusePolicy": "reuse a running harness-compatible CDP target when possible; caller-supplied startup commands must use cached/watch-only paths unless the human explicitly permits a rebuild"
+  },
+  "appControl": {
+    "status": "pass",
+    "readiness": {
+      "target": "/Users/deeeed/dev/metamask/metamask-extension-2",
+      "manifestPath": "/Users/deeeed/dev/metamask/metamask-extension-2/dist/chrome/manifest.json",
+      "manifestVersion": 3,
+      "defaultPage": "home.html",
+      "expectedFiles": [
+        "home.html",
+        "service-worker.js",
+        "popup-init.html",
+        "sidepanel.html"
+      ],
+      "checks": [
+        {
+          "name": "dist/chrome/home.html",
+          "status": "pass"
+        },
+        {
+          "name": "dist/chrome/service-worker.js",
+          "status": "pass"
+        },
+        {
+          "name": "dist/chrome/popup-init.html",
+          "status": "pass"
+        },
+        {
+          "name": "dist/chrome/sidepanel.html",
+          "status": "pass"
+        },
+        {
+          "name": "CDP 7666 extension targets",
+          "status": "pass"
+        }
+      ],
+      "cdp": {
+        "browser": "Chrome/147.0.7727.15",
+        "extensionIds": [
+          "hebhblbkkdabgoldnojllkipeoacjioc",
+          "nkeimhogjdpnpccoofpliimaahmaaome"
+        ],
+        "selectedExtensionId": "hebhblbkkdabgoldnojllkipeoacjioc",
+        "markerMatched": true,
+        "targetCount": 10,
+        "openedPage": false,
+        "openedPagePath": "home.html",
+        "pagePresent": true,
+        "pageInspected": true,
+        "ui": {
+          "title": "MetaMask",
+          "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/",
+          "textSample": "dev1\n\n0x8Dc62...69003\n\n0.00570 ETH\n\n+$0.00\n\n(+0.00%)\n\nDiscover\nBuy\nSwap\nSend\nMore\nTokens\nDeFi\nNFTs\n\nNetwork: Ethereum\n\nEthereum\n\nEarn\n\n$10.64\n\n+0.06%\n\n0.00569 ETH\n\nHome\n\nPerps\n\nSwap\n\nActivity",
+          "hasStartupError": false,
+          "hasErrorBoundary": false,
+          "errorBoundaryName": "",
+          "errorBoundaryMessage": ""
+        },
+        "markerRepaired": false
+      }
+    }
+  },
+  "cleanupCommand": "Use the installed harness manifest cleanupCommand.",
+  "note": "Launch starts/reuses the harness runtime only; it does not run a recipe or claim evidence validation. Extension startup commands are caller-supplied so the runner does not encode local machine aliases.",
+  "generatedAt": "2026-08-01T17:16:56.628Z"
+}

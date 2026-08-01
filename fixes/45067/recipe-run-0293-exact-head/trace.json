@@ -1,0 +1,634 @@
+{
+  "metadata": {
+    "runner": {
+      "source": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness",
+      "git_ref": "unknown",
+      "name": "@metamask/recipe-runner"
+    }
+  },
+  "entries": [
+    {
+      "nodeId": "gate-status",
+      "action": "app.status",
+      "intent": "Read runner compatibility status",
+      "startedAt": "2026-08-01T16:32:34.108Z",
+      "endedAt": "2026-08-01T16:32:34.115Z",
+      "durationMs": 7,
+      "ok": true,
+      "next": "gate-fixture",
+      "output": {
+        "platform": "extension",
+        "projectRoot": "/Users/deeeed/dev/metamask/metamask-extension-2",
+        "compatibilityMode": "bridge present",
+        "shape": {
+          "packageName": "metamask-crx",
+          "packageJsonStatus": "valid",
+          "packageJsonError": null,
+          "extensionProject": true,
+          "mobileProject": false,
+          "agenticService": false,
+          "mobileProductHarness": false,
+          "mobileBridgeScript": true,
+          "extensionRuntime": true,
+          "injectedHarness": true,
+          "walletFixture": true
+        }
+      }
+    },
+    {
+      "nodeId": "gate-fixture",
+      "action": "metamask.wallet.fixture_status",
+      "intent": "Verify wallet fixture availability",
+      "startedAt": "2026-08-01T16:32:34.120Z",
+      "endedAt": "2026-08-01T16:32:34.131Z",
+      "durationMs": 11,
+      "ok": true,
+      "next": "setup-unlock",
+      "output": {
+        "status": "ready",
+        "path": "temp/recipe/runtime/wallet-fixture.json",
+        "accountCount": 4,
+        "hasPassword": true
+      }
+    },
+    {
+      "nodeId": "setup-unlock",
+      "action": "metamask.wallet.ensure_unlocked",
+      "intent": "Ensure the wallet is unlocked",
+      "startedAt": "2026-08-01T16:32:34.136Z",
+      "endedAt": "2026-08-01T16:32:34.381Z",
+      "durationMs": 245,
+      "ok": true,
+      "next": "setup-open-home",
+      "output": {
+        "action": "metamask.wallet.ensure_unlocked",
+        "unlocked": true,
+        "redacted": true,
+        "proofPath": "extension-password-unlock",
+        "cdpPort": 7666,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/unlock",
+        "runtimeLaunch": null,
+        "liveAdapter": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/actions/extension/wallet/ensure_unlocked.mjs"
+      }
+    },
+    {
+      "nodeId": "setup-open-home",
+      "action": "ui.navigate",
+      "intent": "The trader starts on the wallet home screen",
+      "startedAt": "2026-08-01T16:32:34.388Z",
+      "endedAt": "2026-08-01T16:32:34.498Z",
+      "durationMs": 110,
+      "ok": true,
+      "next": "setup-wait-app-ready",
+      "output": {
+        "action": "ui.navigate",
+        "hash": "#/",
+        "navigation": {
+          "before": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/",
+          "href": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/",
+          "sameDocument": true
+        },
+        "proofPath": "ui-navigation",
+        "cdpPort": 7666,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/",
+        "runtimeLaunch": null,
+        "liveAdapter": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/actions/extension/ui/navigate.mjs"
+      },
+      "observations": {
+        "ui.screen": {
+          "provider": "cdp-web",
+          "name": "MetaMask",
+          "title": "MetaMask",
+          "route": "#/",
+          "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
+        },
+        "ui.visible": {
+          "provider": "cdp-web",
+          "items": [
+            {
+              "role": "button",
+              "test_id": "app-header-logo",
+              "selector": "[data-testid=\"app-header-logo\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 514,
+                "y": 31,
+                "width": 162,
+                "height": 30
+              }
+            },
+            {
+              "role": "button",
+              "label": "dev1",
+              "test_id": "account-menu-icon",
+              "selector": "[data-testid=\"account-menu-icon\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 204,
+                "y": 99,
+                "width": 74,
+                "height": 24
+              }
+            },
+            {
+              "role": "button",
+              "label": "Account options",
+              "test_id": "account-options-menu-button",
+              "selector": "[data-testid=\"account-options-menu-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 938,
+                "y": 105,
+                "width": 40,
+                "height": 40
+              }
+            },
+            {
+              "role": "button",
+              "label": "Buy",
+              "test_id": "eth-overview-buy",
+              "selector": "[data-testid=\"eth-overview-buy\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 360,
+                "y": 260,
+                "width": 106,
+                "height": 69
+              }
+            },
+            {
+              "role": "button",
+              "label": "Swap",
+              "test_id": "eth-overview-swap",
+              "selector": "[data-testid=\"eth-overview-swap\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 478,
+                "y": 260,
+                "width": 106,
+                "height": 69
+              }
+            },
+            {
+              "role": "button",
+              "label": "Send",
+              "test_id": "eth-overview-send",
+              "selector": "[data-testid=\"eth-overview-send\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 595,
+                "y": 260,
+                "width": 106,
+                "height": 69
+              }
+            },
+            {
+              "role": "button",
+              "label": "More",
+              "test_id": "eth-overview-more",
+              "selector": "[data-testid=\"eth-overview-more\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 713,
+                "y": 260,
+                "width": 106,
+                "height": 69
+              }
+            },
+            {
+              "role": "tab",
+              "label": "Tokens",
+              "test_id": "account-overview__asset-tab",
+              "selector": "[data-testid=\"account-overview__asset-tab\"]",
+              "enabled": true,
+              "selected": true,
+              "bounds": {
+                "x": 212,
+                "y": 345,
+                "width": 53,
+                "height": 34
+              }
+            },
+            {
+              "role": "tab",
+              "label": "DeFi",
+              "test_id": "account-overview__defi-tab",
+              "selector": "[data-testid=\"account-overview__defi-tab\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 280,
+                "y": 345,
+                "width": 34,
+                "height": 34
+              }
+            },
+            {
+              "role": "tab",
+              "label": "NFTs",
+              "test_id": "account-overview__nfts-tab",
+              "selector": "[data-testid=\"account-overview__nfts-tab\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 330,
+                "y": 345,
+                "width": 38,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "Network: Ethereum",
+              "test_id": "sort-by-networks",
+              "selector": "[data-testid=\"sort-by-networks\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 212,
+                "y": 395,
+                "width": 173,
+                "height": 32
+              }
+            },
+            {
+              "role": "button",
+              "label": "Sort by",
+              "test_id": "sort-by-popover-toggle",
+              "selector": "[data-testid=\"sort-by-popover-toggle\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 903,
+                "y": 399,
+                "width": 32,
+                "height": 24
+              }
+            },
+            {
+              "role": "button",
+              "label": "Asset options",
+              "test_id": "asset-list-control-bar-action-button",
+              "selector": "[data-testid=\"asset-list-control-bar-action-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 935,
+                "y": 399,
+                "width": 32,
+                "height": 24
+              }
+            },
+            {
+              "role": "button",
+              "label": "Earn",
+              "test_id": "staking-entrypoint-0x1",
+              "selector": "[data-testid=\"staking-entrypoint-0x1\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 340,
+                "y": 439,
+                "width": 62,
+                "height": 24
+              }
+            },
+            {
+              "role": "button",
+              "label": "Home",
+              "test_id": "bottom-nav-home",
+              "selector": "[data-testid=\"bottom-nav-home\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 204,
+                "y": 685,
+                "width": 190,
+                "height": 50
+              }
+            },
+            {
+              "role": "button",
+              "label": "Perps",
+              "test_id": "bottom-nav-perps",
+              "selector": "[data-testid=\"bottom-nav-perps\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 401,
+                "y": 685,
+                "width": 190,
+                "height": 50
+              }
+            },
+            {
+              "role": "button",
+              "label": "Swap",
+              "test_id": "bottom-nav-swaps",
+              "selector": "[data-testid=\"bottom-nav-swaps\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 599,
+                "y": 685,
+                "width": 190,
+                "height": 50
+              }
+            },
+            {
+              "role": "button",
+              "label": "Activity",
+              "test_id": "bottom-nav-activity",
+              "selector": "[data-testid=\"bottom-nav-activity\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 796,
+                "y": 685,
+                "width": 190,
+                "height": 50
+              }
+            }
+          ],
+          "hidden_or_offscreen": [],
+          "truncated": false,
+          "limits": {
+            "items": 20,
+            "hidden_or_offscreen": 10
+          }
+        }
+      }
+    },
+    {
+      "nodeId": "setup-wait-app-ready",
+      "action": "ui.wait_for",
+      "intent": "The wallet home screen is ready for the trader to switch accounts",
+      "startedAt": "2026-08-01T16:32:34.501Z",
+      "endedAt": "2026-08-01T16:32:34.842Z",
+      "durationMs": 341,
+      "ok": true,
+      "next": "setup-select-account",
+      "output": {
+        "matched": true,
+        "cdpPort": 7666,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/",
+        "runtimeLaunch": null
+      },
+      "observations": {
+        "ui.screen": {
+          "provider": "cdp-web",
+          "name": "MetaMask",
+          "title": "MetaMask",
+          "route": "#/",
+          "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
+        },
+        "ui.visible": {
+          "provider": "cdp-web",
+          "items": [
+            {
+              "role": "button",
+              "test_id": "app-header-logo",
+              "selector": "[data-testid=\"app-header-logo\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 514,
+                "y": 31,
+                "width": 162,
+                "height": 30
+              }
+            },
+            {
+              "role": "button",
+              "label": "dev1",
+              "test_id": "account-menu-icon",
+              "selector": "[data-testid=\"account-menu-icon\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 204,
+                "y": 99,
+                "width": 74,
+                "height": 24
+              }
+            },
+            {
+              "role": "button",
+              "label": "Account options",
+              "test_id": "account-options-menu-button",
+              "selector": "[data-testid=\"account-options-menu-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 938,
+                "y": 105,
+                "width": 40,
+                "height": 40
+              }
+            },
+            {
+              "role": "button",
+              "label": "Buy",
+              "test_id": "eth-overview-buy",
+              "selector": "[data-testid=\"eth-overview-buy\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 360,
+                "y": 260,
+                "width": 106,
+                "height": 69
+              }
+            },
+            {
+              "role": "button",
+              "label": "Swap",
+              "test_id": "eth-overview-swap",
+              "selector": "[data-testid=\"eth-overview-swap\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 478,
+                "y": 260,
+                "width": 106,
+                "height": 69
+              }
+            },
+            {
+              "role": "button",
+              "label": "Send",
+              "test_id": "eth-overview-send",
+              "selector": "[data-testid=\"eth-overview-send\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 595,
+                "y": 260,
+                "width": 106,
+                "height": 69
+              }
+            },
+            {
+              "role": "button",
+              "label": "More",
+              "test_id": "eth-overview-more",
+              "selector": "[data-testid=\"eth-overview-more\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 713,
+                "y": 260,
+                "width": 106,
+                "height": 69
+              }
+            },
+            {
+              "role": "tab",
+              "label": "Tokens",
+              "test_id": "account-overview__asset-tab",
+              "selector": "[data-testid=\"account-overview__asset-tab\"]",
+              "enabled": true,
+              "selected": true,
+              "bounds": {
+                "x": 212,
+                "y": 345,
+                "width": 53,
+                "height": 34
+              }
+            },
+            {
+              "role": "tab",
+              "label": "DeFi",
+              "test_id": "account-overview__defi-tab",
+              "selector": "[data-testid=\"account-overview__defi-tab\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 280,
+                "y": 345,
+                "width": 34,
+                "height": 34
+              }
+            },
+            {
+              "role": "tab",
+              "label": "NFTs",
+              "test_id": "account-overview__nfts-tab",
+              "selector": "[data-testid=\"account-overview__nfts-tab\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 330,
+                "y": 345,
+                "width": 38,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "Network: Ethereum",
+              "test_id": "sort-by-networks",
+              "selector": "[data-testid=\"sort-by-networks\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 212,
+                "y": 395,
+                "width": 173,
+                "height": 32
+              }
+            },
+            {
+              "role": "button",
+              "label": "Sort by",
+              "test_id": "sort-by-popover-toggle",
+              "selector": "[data-testid=\"sort-by-popover-toggle\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 903,
+                "y": 399,
+                "width": 32,
+                "height": 24
+              }
+            },
+            {
+              "role": "button",
+              "label": "Asset options",
+              "test_id": "asset-list-control-bar-action-button",
+              "selector": "[data-testid=\"asset-list-control-bar-action-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 935,
+                "y": 399,
+                "width": 32,
+                "height": 24
+              }
+            },
+            {
+              "role": "button",
+              "label": "Earn",
+              "test_id": "staking-entrypoint-0x1",
+              "selector": "[data-testid=\"staking-entrypoint-0x1\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 340,
+                "y": 439,
+                "width": 62,
+                "height": 24
+              }
+            },
+            {
+              "role": "button",
+              "label": "Home",
+              "test_id": "bottom-nav-home",
+              "selector": "[data-testid=\"bottom-nav-home\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 204,
+                "y": 685,
+                "width": 190,
+                "height": 50
+              }
+            },
+            {
+              "role": "button",
+              "label": "Perps",
+              "test_id": "bottom-nav-perps",
+              "selector": "[data-testid=\"bottom-nav-perps\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 401,
+                "y": 685,
+                "width": 190,
+                "height": 50
+              }
+            },
+            {
+              "role": "button",
+              "label": "Swap",
+              "test_id": "bottom-nav-swaps",
+              "selector": "[data-testid=\"bottom-nav-swaps\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 599,
+                "y": 685,
+                "width": 190,
+                "height": 50
+              }
+            },
+            {
+              "role": "button",
+              "label": "Activity",
+              "test_id": "bottom-nav-activity",
+              "selector": "[data-testid=\"bottom-nav-activity\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 796,
+                "y": 685,
+                "width": 190,
+                "height": 50
+              }
+            }
+          ],
+          "hidden_or_offscreen": [],
+          "truncated": false,
+          "limits": {
+            "items": 20,
+            "hidden_or_offscreen": 10
+          }
+        }
+      }
+    },
+    {
+      "nodeId": "setup-select-account",
+      "action": "metamask.wallet.select_account",
+      "intent": "Select the funded Perps trading account",
+      "startedAt": "2026-08-01T16:32:34.847Z",
+      "endedAt": "2026-08-01T16:32:34.973Z",
+      "durationMs": 126,
+      "ok": false,
+      "cause_class": "unknown",
+      "error": "Live adapter /Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/actions/extension/wallet/select_account.mjs exited 1: file:///Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/node_modules/@farmslot/recipe-harness/dist/runtime/cdp.js:470\n            throw new Error(result.exceptionDetails.exception?.description ??\n                  ^\n\nError: Error: stateHooks.submitRequestToBackground is unavailable.\n    at ExtensionPage.evaluate (file:///Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/node_modules/@farmslot/recipe-harness/dist/runtime/cdp.js:470:19)\n    at async file:///Users/deeeed/dev/metamask/metamask-extension-2/[eval1]:825:20\n    at async withExtensionPage (file:///Users/deeeed/dev/metamask/metamask-extension-2/[eval1]:678:20)\n    at async runAdapter (file:///Users/deeeed/dev/metamask/metamask-extension-2/[eval1]:745:18)\n\nNode.js v25.8.2\n"
+    }
+  ]
+}

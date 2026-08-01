@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "adapter": "extension",
+  "target": "/Users/deeeed/dev/metamask/metamask-extension-2",
+  "decision": "relaunch",
+  "clean": false,
+  "reasonCode": "cdp-unknown",
+  "reasons": [
+    "Build is fresh; browser liveness unverified (pass --cdp-port to confirm `ready`)."
+  ],
+  "checks": {
+    "deps": {
+      "installed": true,
+      "status": "current",
+      "hasBaseline": true
+    },
+    "webpackCache": {
+      "cachePresent": false,
+      "status": "no-cache",
+      "hasBaseline": false
+    },
+    "buildLog": {
+      "status": "no-watch"
+    },
+    "dist": {
+      "status": "unknown",
+      "head": "eb8f63d8"
+    },
+    "runtimeDist": {
+      "status": "fresh"
+    },
+    "cdp": {
+      "status": "skipped"
+    }
+  },
+  "actions": [
+    {
+      "id": "relaunch-browser"
+    }
+  ]
+}

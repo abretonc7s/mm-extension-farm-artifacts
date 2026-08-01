@@ -1,0 +1,2970 @@
+{
+  "$schema": "https://farmslot.io/schemas/action-manifest-v1.schema.json",
+  "actions": {
+    "command": {
+      "description": "Run a shell command from the project root.",
+      "examples": [
+        {
+          "action": "command",
+          "cmd": "pwd",
+          "intent": "Prepare the project state needed for this proof.",
+          "next": "done"
+        }
+      ],
+      "schema": {
+        "type": "object",
+        "properties": {
+          "cmd": {
+            "type": "string"
+          },
+          "command": {
+            "type": "string"
+          },
+          "cwd": {
+            "type": "string"
+          },
+          "timeout_ms": {
+            "type": "number"
+          },
+          "allow_failure": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "wait": {
+      "description": "Base wait action.",
+      "examples": [
+        {
+          "action": "wait",
+          "duration_ms": 1,
+          "intent": "Allow the requested asynchronous state to settle.",
+          "next": "done"
+        }
+      ],
+      "schema": {
+        "type": "object",
+        "properties": {
+          "duration_ms": {
+            "type": "integer"
+          },
+          "ms": {
+            "type": "integer"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "assert_file": {
+      "description": "Assert that a project file exists and optionally contains text.",
+      "examples": [
+        {
+          "action": "assert_file",
+          "path": "reports/result.txt",
+          "contains": "ok",
+          "intent": "Confirm the requested project file state.",
+          "next": "done"
+        }
+      ],
+      "schema": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "contains": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "path"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "assert_json": {
+      "description": "Assert a JSON file value with a JSONPath-style selector.",
+      "examples": [
+        {
+          "action": "assert_json",
+          "path": "reports/result.json",
+          "assert": {
+            "path": "$.status",
+            "operator": "eq",
+            "value": "ok"
+          },
+          "intent": "Confirm the recorded data satisfies the requested condition.",
+          "next": "done"
+        }
+      ],
+      "schema": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "assert": {
+            "type": "object",
+            "properties": {
+              "path": {
+                "type": "string"
+              },
+              "operator": {
+                "type": "string"
+              },
+              "value": {
+                "type": [
+                  "string",
+                  "number",
+                  "integer",
+                  "boolean",
+                  "object",
+                  "array"
+                ],
+                "items": {
+                  "type": [
+                    "string",
+                    "number",
+                    "integer",
+                    "boolean",
+                    "object"
+                  ]
+                }
+              },
+              "all": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              },
+              "any": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              },
+              "none": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "path",
+          "assert"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "assert_exit_code": {
+      "description": "Assert the exit code captured from a command node output.",
+      "examples": [
+        {
+          "action": "assert_exit_code",
+          "source": "run-tests",
+          "expected": 0,
+          "intent": "Confirm the project command completed with the expected result.",
+          "next": "done"
+        }
+      ],
+      "schema": {
+        "type": "object",
+        "properties": {
+          "source": {
+            "type": "string"
+          },
+          "node": {
+            "type": "string"
+          },
+          "expected": {
+            "type": "number"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "assert_output": {
+      "description": "Assert stdout or stderr captured from a command node output.",
+      "examples": [
+        {
+          "action": "assert_output",
+          "source": "run-tests",
+          "stream": "stdout",
+          "contains": "PASS",
+          "intent": "Confirm the recorded output satisfies the requested condition.",
+          "next": "done"
+        }
+      ],
+      "schema": {
+        "type": "object",
+        "properties": {
+          "source": {
+            "type": "string"
+          },
+          "node": {
+            "type": "string"
+          },
+          "stream": {
+            "type": "string"
+          },
+          "contains": {
+            "type": "string"
+          },
+          "match": {
+            "type": "string"
+          },
+          "assert": {
+            "type": "object",
+            "properties": {
+              "path": {
+                "type": "string"
+              },
+              "operator": {
+                "type": "string"
+              },
+              "value": {
+                "type": [
+                  "string",
+                  "number",
+                  "integer",
+                  "boolean",
+                  "object",
+                  "array"
+                ],
+                "items": {
+                  "type": [
+                    "string",
+                    "number",
+                    "integer",
+                    "boolean",
+                    "object"
+                  ]
+                }
+              },
+              "all": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              },
+              "any": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              },
+              "none": {
+                "type": "array",
+                "items": {
+                  "type": "object"
+                }
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "watch_logs": {
+      "description": "Base log assertion/capture action.",
+      "examples": [
+        {
+          "action": "watch_logs",
+          "path": "logs/app.log",
+          "intent": "Observe the runtime behavior needed for this proof.",
+          "next": "done"
+        }
+      ],
+      "schema": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "contains": {
+            "type": "string"
+          },
+          "scope": {
+            "type": "string",
+            "enum": [
+              "run",
+              "file"
+            ]
+          }
+        },
+        "required": [
+          "path"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "index_artifacts": {
+      "description": "Index extra recipe-authored artifacts that already exist on disk. Do not use after ui.screenshot; screenshots are registered by the runner.",
+      "examples": [
+        {
+          "action": "index_artifacts",
+          "artifacts": [
+            {
+              "path": "reports/result.json",
+              "type": "report",
+              "category": "validation",
+              "label": "Validation report"
+            }
+          ],
+          "intent": "Preserve generated evidence in the review package.",
+          "next": "done"
+        }
+      ],
+      "schema": {
+        "type": "object",
+        "properties": {
+          "artifacts": {
+            "type": "array",
+            "items": {
+              "type": [
+                "string",
+                "object"
+              ],
+              "properties": {
+                "path": {
+                  "type": "string"
+                },
+                "type": {
+                  "type": "string"
+                },
+                "label": {
+                  "type": "string"
+                },
+                "nodeId": {
+                  "type": "string"
+                },
+                "mimeType": {
+                  "type": "string"
+                },
+                "category": {
+                  "type": "string"
+                },
+                "proofTarget": {
+                  "type": "string"
+                },
+                "covers": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              },
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": [
+          "artifacts"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "end": {
+      "description": "Base terminal action.",
+      "examples": [
+        {
+          "action": "end",
+          "status": "pass"
+        }
+      ]
+    },
+    "call": {
+      "description": "Invoke a named recipe by ref and run its steps inline.",
+      "examples": [
+        {
+          "action": "call",
+          "ref": "mydev.open_perps_setup",
+          "intent": "Run a personal Perps setup recipe",
+          "next": "done"
+        }
+      ]
+    },
+    "switch": {
+      "description": "Choose a graph branch when one resolved string equals another.",
+      "examples": [
+        {
+          "action": "switch",
+          "value": "{{params.mode}}",
+          "equals": "background_resume",
+          "cases": {
+            "match": "background"
+          },
+          "default": "warm",
+          "intent": "Choose the graph path matching the observed state."
+        }
+      ],
+      "schema": {
+        "type": "object",
+        "properties": {
+          "value": {
+            "type": "string"
+          },
+          "equals": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "value",
+          "equals"
+        ],
+        "additionalProperties": false
+      },
+      "result_cases": [
+        "match"
+      ]
+    },
+    "ui.navigate": {
+      "description": "Navigate by semantic page intent when available; the adapter uses the current visible UI or a verified route. Raw url/hash/path values must be verified against the current app first.",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "page": {
+            "type": "string",
+            "enum": [
+              "home",
+              "perps",
+              "perps-market"
+            ]
+          },
+          "market": {
+            "type": "string"
+          },
+          "symbol": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string"
+          },
+          "hash": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          },
+          "route": {
+            "type": "string"
+          },
+          "screen": {
+            "type": "string"
+          },
+          "params": {
+            "type": "object"
+          },
+          "timeout_ms": {
+            "type": "number",
+            "default": 20000,
+            "description": "Maximum time to discover and verify the requested page intent."
+          }
+        },
+        "additionalProperties": false
+      },
+      "examples": [
+        {
+          "action": "ui.navigate",
+          "page": "perps",
+          "intent": "Open the requested application surface.",
+          "next": "done"
+        },
+        {
+          "action": "ui.navigate",
+          "page": "perps-market",
+          "market": "ETH",
+          "intent": "Open the requested application surface.",
+          "next": "done"
+        },
+        {
+          "action": "ui.navigate",
+          "hash": "#/perps-home",
+          "intent": "Open the requested application surface.",
+          "next": "done"
+        }
+      ]
+    },
+    "ui.press": {
+      "description": "Press/tap/click a UI target through the platform adapter.",
+      "examples": [
+        {
+          "action": "ui.press",
+          "intent": "Activate the requested visible control.",
+          "text": "Perps",
+          "next": "done"
+        }
+      ],
+      "schema": {
+        "type": "object",
+        "properties": {
+          "selector": {
+            "type": "string"
+          },
+          "test_id": {
+            "type": "string"
+          },
+          "testID": {
+            "type": "string"
+          },
+          "text": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "timeout_ms": {
+            "type": "number"
+          },
+          "settle": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "ui.key_press": {
+      "description": "Send a trusted keyboard press to the currently focused UI element through the UI transport.",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "key": {
+            "type": "string"
+          },
+          "timeout_ms": {
+            "type": "number"
+          },
+          "settle": {
+            "type": "boolean"
+          }
+        },
+        "required": [
+          "key"
+        ],
+        "additionalProperties": false
+      },
+      "examples": [
+        {
+          "action": "ui.key_press",
+          "key": "Enter",
+          "intent": "Continue the requested keyboard interaction.",
+          "next": "done"
+        }
+      ]
+    },
+    "ui.set_input": {
+      "description": "Set text on an extension DOM input through the CDP UI transport.",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "selector": {
+            "type": "string"
+          },
+          "test_id": {
+            "type": "string"
+          },
+          "testID": {
+            "type": "string"
+          },
+          "value": {
+            "type": [
+              "string",
+              "number"
+            ],
+            "description": "Text or a typed numeric recipe parameter; numbers are entered as their decimal text."
+          },
+          "text": {
+            "type": "string"
+          },
+          "timeout_ms": {
+            "type": "number"
+          },
+          "settle": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      },
+      "examples": [
+        {
+          "action": "ui.set_input",
+          "selector": "[data-testid=multichain-account-list-search] input",
+          "value": "Account",
+          "intent": "Provide the requested value in the visible form.",
+          "next": "done"
+        }
+      ]
+    },
+    "ui.scroll": {
+      "description": "Scroll through the UI through the Farmslot base platform adapter. Supports deltas and scroll_into_view for selector/test-id proof positioning.",
+      "examples": [
+        {
+          "action": "ui.scroll",
+          "delta_y": 300,
+          "intent": "Expose the requested content for visible review.",
+          "next": "done"
+        },
+        {
+          "action": "ui.scroll",
+          "selector": "[data-testid=\"example\"]",
+          "scroll_into_view": true,
+          "intent": "Expose the requested content for visible review.",
+          "next": "done"
+        }
+      ],
+      "schema": {
+        "type": "object",
+        "properties": {
+          "selector": {
+            "type": "string"
+          },
+          "test_id": {
+            "type": "string"
+          },
+          "testID": {
+            "type": "string"
+          },
+          "delta_x": {
+            "type": "number"
+          },
+          "delta_y": {
+            "type": "number"
+          },
+          "deltaX": {
+            "type": "number"
+          },
+          "deltaY": {
+            "type": "number"
+          },
+          "offset": {
+            "type": "number"
+          },
+          "scroll_into_view": {
+            "type": "boolean"
+          },
+          "into_view": {
+            "type": "boolean"
+          },
+          "animated": {
+            "type": "boolean"
+          },
+          "timeout_ms": {
+            "type": "number"
+          },
+          "settle": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "ui.wait_for": {
+      "description": "Wait for a UI condition through the Extension CDP adapter.",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "selector": {
+            "type": "string"
+          },
+          "test_id": {
+            "type": "string"
+          },
+          "testID": {
+            "type": "string"
+          },
+          "text": {
+            "type": "string"
+          },
+          "text_match": {
+            "type": "string"
+          },
+          "textMatch": {
+            "type": "string"
+          },
+          "expected": {
+            "type": "string"
+          },
+          "visible": {
+            "type": "boolean"
+          },
+          "timeout_ms": {
+            "type": "number"
+          }
+        },
+        "additionalProperties": false
+      },
+      "examples": [
+        {
+          "action": "ui.wait_for",
+          "text": "Perps",
+          "intent": "Confirm the requested application state is visible.",
+          "next": "done"
+        },
+        {
+          "action": "ui.wait_for",
+          "selector": "[data-testid=example]",
+          "visible": false,
+          "timeout_ms": 2000,
+          "intent": "Confirm the requested application state is visible.",
+          "next": "done"
+        }
+      ]
+    },
+    "ui.screenshot": {
+      "description": "Capture registered visual evidence through capture-helper, bounded Chrome-native capture, or an explicitly labeled computed-style DOM raster fallback. Always read the resulting PNG; artifact metadata records the provider.",
+      "examples": [
+        {
+          "action": "ui.screenshot",
+          "path": "screenshots/example.png",
+          "intent": "Preserve the visible application state as review evidence.",
+          "next": "done"
+        }
+      ],
+      "schema": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string"
+          },
+          "label": {
+            "type": "string"
+          },
+          "category": {
+            "type": "string"
+          },
+          "timeout_ms": {
+            "type": "number"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "app.status": {
+      "description": "Report the adapter's static status — platform, project root, resolved checkout shape, and headless compatibility mode (no live route or account).",
+      "examples": [
+        {
+          "action": "app.status",
+          "intent": "Record the resolved application state before continuing.",
+          "next": "done"
+        }
+      ],
+      "schema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      }
+    },
+    "app.hud": {
+      "description": "Display minimal human-readable recipe progress. The intent must explain the current agent goal; debug metadata and grouping labels are hidden unless explicitly opted in.",
+      "examples": [
+        {
+          "action": "app.hud",
+          "status": "running",
+          "intent": "Show the current goal to the supervising human.",
+          "progress": {
+            "current": 12,
+            "total": 19
+          },
+          "next": "done"
+        }
+      ],
+      "schema": {
+        "type": "object",
+        "properties": {
+          "clear": {
+            "type": "boolean"
+          },
+          "title": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "running",
+              "pass",
+              "fail"
+            ]
+          },
+          "node_id": {
+            "type": "string"
+          },
+          "nodeId": {
+            "type": "string"
+          },
+          "phase": {
+            "type": "string"
+          },
+          "action_name": {
+            "type": "string"
+          },
+          "recipe_action": {
+            "type": "string"
+          },
+          "text": {
+            "type": "string"
+          },
+          "detail": {
+            "type": "string"
+          },
+          "error": {
+            "type": "string"
+          },
+          "display": {
+            "type": "object"
+          },
+          "progress": {
+            "type": "object"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "cdp.target": {
+      "description": "Probe the platform debug transport — Chrome CDP for extension, the React Native debug bridge for mobile — and report whether it is reachable.",
+      "examples": [
+        {
+          "action": "cdp.target",
+          "cdp_port": 9323,
+          "required": true,
+          "intent": "Confirm the requested application target is available.",
+          "next": "done"
+        }
+      ],
+      "schema": {
+        "type": "object",
+        "properties": {
+          "cdp_port": {
+            "type": "number"
+          },
+          "metro_port": {
+            "type": "number"
+          },
+          "watcher_port": {
+            "type": "number"
+          },
+          "probe_timeout_ms": {
+            "type": "number"
+          },
+          "cdp_timeout_ms": {
+            "type": "number"
+          },
+          "timeout_ms": {
+            "type": "number"
+          },
+          "require_reachable": {
+            "type": "boolean"
+          },
+          "required": {
+            "type": "boolean"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "ui.locators": {
+      "description": "List ranked, copy-pasteable ui.press targets from the current ui.visible observation. Prefer high-confidence test IDs when updating durable recipe source after exploratory interaction.",
+      "execution_capabilities": [
+        "host-read-export"
+      ],
+      "schema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "examples": [
+        {
+          "action": "ui.locators",
+          "intent": "Find stable targets for durable recipe authoring.",
+          "next": "done"
+        }
+      ]
+    },
+    "metamask.wallet.fixture_status": {
+      "description": "Report the on-disk wallet fixture status (accounts and password presence) without launching or mutating the app.",
+      "schema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "examples": [
+        {
+          "action": "metamask.wallet.fixture_status",
+          "intent": "Check wallet fixture status",
+          "next": "done"
+        }
+      ],
+      "execution_capabilities": []
+    },
+    "metamask.wallet.setup": {
+      "description": "Import the wallet fixture accounts and password so the app starts from a known signed-in state.",
+      "schema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "examples": [
+        {
+          "action": "metamask.wallet.setup",
+          "intent": "Prepare the wallet fixture for recipe execution",
+          "next": "done"
+        }
+      ],
+      "execution_capabilities": [
+        "app-mutation"
+      ]
+    },
+    "metamask.wallet.ensure_unlocked": {
+      "description": "Unlock the wallet with the fixture password when it is currently locked.",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "timeout_ms": {
+            "type": "number"
+          }
+        },
+        "additionalProperties": false
+      },
+      "examples": [
+        {
+          "action": "metamask.wallet.ensure_unlocked",
+          "intent": "Ensure the wallet is unlocked before proof steps",
+          "next": "done"
+        }
+      ],
+      "execution_capabilities": [
+        "app-mutation"
+      ]
+    },
+    "metamask.wallet.select_account": {
+      "description": "extension action to select a wallet account by address, id, or display name.",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "address": {
+            "type": "string",
+            "description": "EVM address of the account to select."
+          },
+          "id": {
+            "type": "string",
+            "description": "Internal account id to select."
+          },
+          "name": {
+            "type": "string",
+            "description": "Display name of the account to select."
+          }
+        },
+        "additionalProperties": false
+      },
+      "examples": [
+        {
+          "action": "metamask.wallet.select_account",
+          "address": "0x8dc623e964475d4d669da601fd15ea9125469003",
+          "intent": "Select the requested wallet account",
+          "next": "done"
+        },
+        {
+          "action": "metamask.wallet.select_account",
+          "name": "dev1",
+          "intent": "Select the requested wallet account",
+          "next": "done"
+        }
+      ],
+      "execution_capabilities": [
+        "app-mutation"
+      ]
+    },
+    "metamask.wallet.list_accounts": {
+      "description": "List redacted wallet accounts and identify the selected account without mutating the app.",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "scope": {
+            "type": "string",
+            "default": "named",
+            "enum": [
+              "selected",
+              "named",
+              "evm",
+              "all"
+            ],
+            "description": "Account scope. Defaults to named human-visible accounts; use selected for the active account, evm for EVM accounts, or all for the full inventory."
+          }
+        },
+        "additionalProperties": false
+      },
+      "examples": [
+        {
+          "action": "metamask.wallet.list_accounts",
+          "intent": "Discover the available wallet accounts",
+          "next": "done"
+        }
+      ],
+      "execution_capabilities": []
+    },
+    "metamask.wallet.read_state": {
+      "description": "Read the redacted wallet state (selected account, route, and device) from the running app.",
+      "schema": {
+        "type": "object",
+        "properties": {},
+        "additionalProperties": false
+      },
+      "examples": [
+        {
+          "action": "metamask.wallet.read_state",
+          "intent": "Read wallet state needed for the proof",
+          "next": "done"
+        }
+      ],
+      "execution_capabilities": []
+    },
+    "metamask.perps.read_positions": {
+      "description": "extension Read live Perps positions; without a selector, return all live positions.",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "market": {
+            "type": "string",
+            "description": "Single market symbol, e.g. BTC or ETH. Alias: symbol."
+          },
+          "symbol": {
+            "type": "string",
+            "description": "Alias for market."
+          },
+          "markets": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Explicit list of market symbols."
+          },
+          "symbols": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Alias for markets."
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "matching",
+              "all"
+            ],
+            "description": "matching selects requested symbols; all selects every live item returned by the product."
+          },
+          "selector": {
+            "type": "object",
+            "properties": {
+              "mode": {
+                "type": "string",
+                "enum": [
+                  "matching",
+                  "all"
+                ]
+              },
+              "market": {
+                "type": "string"
+              },
+              "symbol": {
+                "type": "string"
+              },
+              "markets": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "symbols": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "side": {
+                "type": "string",
+                "enum": [
+                  "long",
+                  "short"
+                ]
+              }
+            },
+            "additionalProperties": false
+          },
+          "side": {
+            "type": "string",
+            "enum": [
+              "long",
+              "short"
+            ],
+            "description": "Optional position/order side filter."
+          },
+          "timeout_ms": {
+            "type": "number"
+          }
+        },
+        "additionalProperties": false
+      },
+      "examples": [
+        {
+          "action": "metamask.perps.read_positions",
+          "market": "BTC",
+          "intent": "Read Perps positions needed for the proof",
+          "next": "done"
+        }
+      ],
+      "execution_capabilities": []
+    },
+    "metamask.perps.read_orders": {
+      "description": "extension Read live Perps open orders; without a selector, return all live orders.",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "market": {
+            "type": "string",
+            "description": "Single market symbol, e.g. BTC or ETH. Alias: symbol."
+          },
+          "symbol": {
+            "type": "string",
+            "description": "Alias for market."
+          },
+          "markets": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Explicit list of market symbols."
+          },
+          "symbols": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Alias for markets."
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "matching",
+              "all"
+            ],
+            "description": "matching selects requested symbols; all selects every live item returned by the product."
+          },
+          "selector": {
+            "type": "object",
+            "properties": {
+              "mode": {
+                "type": "string",
+                "enum": [
+                  "matching",
+                  "all"
+                ]
+              },
+              "market": {
+                "type": "string"
+              },
+              "symbol": {
+                "type": "string"
+              },
+              "markets": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "symbols": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "side": {
+                "type": "string",
+                "enum": [
+                  "long",
+                  "short"
+                ]
+              }
+            },
+            "additionalProperties": false
+          },
+          "side": {
+            "type": "string",
+            "enum": [
+              "long",
+              "short"
+            ],
+            "description": "Optional position/order side filter."
+          },
+          "timeout_ms": {
+            "type": "number"
+          }
+        },
+        "additionalProperties": false
+      },
+      "examples": [
+        {
+          "action": "metamask.perps.read_orders",
+          "market": "BTC",
+          "intent": "Read Perps open orders needed for the proof",
+          "next": "done"
+        }
+      ],
+      "execution_capabilities": []
+    },
+    "metamask.perps.close_positions": {
+      "description": "extension Default to testnet for Perps mutations; mainnet is read-only unless explicitly requested. Close selected live Perps positions. Use selector/mode params to close matching symbols or all positions.",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "market": {
+            "type": "string",
+            "description": "Single market symbol, e.g. BTC or ETH. Alias: symbol."
+          },
+          "symbol": {
+            "type": "string",
+            "description": "Alias for market."
+          },
+          "markets": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Explicit list of market symbols."
+          },
+          "symbols": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Alias for markets."
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "matching",
+              "all"
+            ],
+            "description": "matching selects requested symbols; all selects every live item returned by the product."
+          },
+          "selector": {
+            "type": "object",
+            "properties": {
+              "mode": {
+                "type": "string",
+                "enum": [
+                  "matching",
+                  "all"
+                ]
+              },
+              "market": {
+                "type": "string"
+              },
+              "symbol": {
+                "type": "string"
+              },
+              "markets": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "symbols": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "side": {
+                "type": "string",
+                "enum": [
+                  "long",
+                  "short"
+                ]
+              }
+            },
+            "additionalProperties": false
+          },
+          "side": {
+            "type": "string",
+            "enum": [
+              "long",
+              "short"
+            ],
+            "description": "Optional position/order side filter."
+          },
+          "timeout_ms": {
+            "type": "number"
+          }
+        },
+        "additionalProperties": false
+      },
+      "examples": [
+        {
+          "action": "metamask.perps.close_positions",
+          "mode": "all",
+          "intent": "Close selected Perps positions before continuing",
+          "next": "done"
+        },
+        {
+          "action": "metamask.perps.close_positions",
+          "markets": [
+            "BTC",
+            "ETH"
+          ],
+          "intent": "Close selected Perps positions before continuing",
+          "next": "done"
+        }
+      ],
+      "execution_capabilities": [
+        "app-mutation",
+        "external-mutation"
+      ]
+    },
+    "metamask.perps.close_orders": {
+      "description": "extension Default to testnet for Perps mutations; mainnet is read-only unless explicitly requested. Cancel selected live Perps open orders. Use selector/mode params to cancel matching symbols or all orders.",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "market": {
+            "type": "string",
+            "description": "Single market symbol, e.g. BTC or ETH. Alias: symbol."
+          },
+          "symbol": {
+            "type": "string",
+            "description": "Alias for market."
+          },
+          "markets": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Explicit list of market symbols."
+          },
+          "symbols": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Alias for markets."
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "matching",
+              "all"
+            ],
+            "description": "matching selects requested symbols; all selects every live item returned by the product."
+          },
+          "selector": {
+            "type": "object",
+            "properties": {
+              "mode": {
+                "type": "string",
+                "enum": [
+                  "matching",
+                  "all"
+                ]
+              },
+              "market": {
+                "type": "string"
+              },
+              "symbol": {
+                "type": "string"
+              },
+              "markets": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "symbols": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "side": {
+                "type": "string",
+                "enum": [
+                  "long",
+                  "short"
+                ]
+              }
+            },
+            "additionalProperties": false
+          },
+          "side": {
+            "type": "string",
+            "enum": [
+              "long",
+              "short"
+            ],
+            "description": "Optional position/order side filter."
+          },
+          "timeout_ms": {
+            "type": "number"
+          }
+        },
+        "additionalProperties": false
+      },
+      "examples": [
+        {
+          "action": "metamask.perps.close_orders",
+          "mode": "all",
+          "intent": "Cancel selected Perps orders before continuing",
+          "next": "done"
+        },
+        {
+          "action": "metamask.perps.close_orders",
+          "market": "BTC",
+          "intent": "Cancel selected Perps orders before continuing",
+          "next": "done"
+        }
+      ],
+      "execution_capabilities": [
+        "app-mutation",
+        "external-mutation"
+      ]
+    },
+    "metamask.perps.place_order": {
+      "description": "extension Place a Perps order through a supported app/API path. Default to testnet; mainnet order placement requires an explicit user request.",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "market": {
+            "type": "string",
+            "description": "Single market symbol, e.g. BTC or ETH. Alias: symbol."
+          },
+          "symbol": {
+            "type": "string",
+            "description": "Alias for market."
+          },
+          "markets": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Explicit list of market symbols."
+          },
+          "symbols": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Alias for markets."
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "matching",
+              "all"
+            ],
+            "description": "matching selects requested symbols; all selects every live item returned by the product."
+          },
+          "selector": {
+            "type": "object",
+            "properties": {
+              "mode": {
+                "type": "string",
+                "enum": [
+                  "matching",
+                  "all"
+                ]
+              },
+              "market": {
+                "type": "string"
+              },
+              "symbol": {
+                "type": "string"
+              },
+              "markets": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "symbols": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "side": {
+                "type": "string",
+                "enum": [
+                  "long",
+                  "short"
+                ]
+              }
+            },
+            "additionalProperties": false
+          },
+          "side": {
+            "type": "string",
+            "enum": [
+              "long",
+              "short"
+            ],
+            "description": "Required order direction."
+          },
+          "timeout_ms": {
+            "type": "number"
+          },
+          "amount": {
+            "type": [
+              "string",
+              "number"
+            ],
+            "description": "USD amount/notional alias."
+          },
+          "notional": {
+            "type": [
+              "string",
+              "number"
+            ],
+            "description": "USD notional alias."
+          },
+          "size": {
+            "type": "string",
+            "description": "Base asset size when supported."
+          },
+          "leverage": {
+            "type": "number",
+            "default": 3
+          }
+        },
+        "additionalProperties": false
+      },
+      "examples": [
+        {
+          "action": "metamask.perps.place_order",
+          "market": "BTC",
+          "side": "long",
+          "notional": "10",
+          "leverage": 2,
+          "intent": "Place the requested Perps order",
+          "next": "done"
+        }
+      ],
+      "execution_capabilities": [
+        "app-mutation",
+        "external-mutation"
+      ]
+    },
+    "metamask.perps.assert_positions": {
+      "description": "extension Assert live Perps positions are present or absent for an explicit market selection or mode=all.",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "market": {
+            "type": "string",
+            "description": "Single market symbol, e.g. BTC or ETH. Alias: symbol."
+          },
+          "symbol": {
+            "type": "string",
+            "description": "Alias for market."
+          },
+          "markets": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Explicit list of market symbols."
+          },
+          "symbols": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Alias for markets."
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "matching",
+              "all"
+            ],
+            "description": "matching selects requested symbols; all selects every live item returned by the product."
+          },
+          "selector": {
+            "type": "object",
+            "properties": {
+              "mode": {
+                "type": "string",
+                "enum": [
+                  "matching",
+                  "all"
+                ]
+              },
+              "market": {
+                "type": "string"
+              },
+              "symbol": {
+                "type": "string"
+              },
+              "markets": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "symbols": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "side": {
+                "type": "string",
+                "enum": [
+                  "long",
+                  "short"
+                ]
+              }
+            },
+            "additionalProperties": false
+          },
+          "side": {
+            "type": "string",
+            "enum": [
+              "long",
+              "short"
+            ],
+            "description": "Optional position/order side filter."
+          },
+          "timeout_ms": {
+            "type": "number"
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "none",
+              "absent",
+              "closed",
+              "open",
+              "present"
+            ],
+            "description": "Desired/expected selected collection state."
+          }
+        },
+        "required": [
+          "state"
+        ],
+        "additionalProperties": false
+      },
+      "examples": [
+        {
+          "action": "metamask.perps.assert_positions",
+          "state": "open",
+          "market": "BTC",
+          "intent": "Assert the expected Perps position state",
+          "next": "done"
+        }
+      ],
+      "execution_capabilities": []
+    },
+    "metamask.perps.assert_orders": {
+      "description": "extension Assert live Perps open orders are present or absent for an explicit market selection or mode=all.",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "market": {
+            "type": "string",
+            "description": "Single market symbol, e.g. BTC or ETH. Alias: symbol."
+          },
+          "symbol": {
+            "type": "string",
+            "description": "Alias for market."
+          },
+          "markets": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Explicit list of market symbols."
+          },
+          "symbols": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Alias for markets."
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "matching",
+              "all"
+            ],
+            "description": "matching selects requested symbols; all selects every live item returned by the product."
+          },
+          "selector": {
+            "type": "object",
+            "properties": {
+              "mode": {
+                "type": "string",
+                "enum": [
+                  "matching",
+                  "all"
+                ]
+              },
+              "market": {
+                "type": "string"
+              },
+              "symbol": {
+                "type": "string"
+              },
+              "markets": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "symbols": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "side": {
+                "type": "string",
+                "enum": [
+                  "long",
+                  "short"
+                ]
+              }
+            },
+            "additionalProperties": false
+          },
+          "side": {
+            "type": "string",
+            "enum": [
+              "long",
+              "short"
+            ],
+            "description": "Optional position/order side filter."
+          },
+          "timeout_ms": {
+            "type": "number"
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "none",
+              "absent",
+              "closed",
+              "open",
+              "present"
+            ],
+            "description": "Desired/expected selected collection state."
+          }
+        },
+        "required": [
+          "state"
+        ],
+        "additionalProperties": false
+      },
+      "examples": [
+        {
+          "action": "metamask.perps.assert_orders",
+          "state": "none",
+          "market": "BTC",
+          "intent": "Assert the expected Perps open order state",
+          "next": "done"
+        }
+      ],
+      "execution_capabilities": []
+    },
+    "metamask.perps.ensure_positions": {
+      "description": "extension Default to testnet for Perps mutations; mainnet is read-only unless explicitly requested. Higher-level wrapper that reads selected positions, closes or places when needed, then asserts final position state.",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "market": {
+            "type": "string",
+            "description": "Single market symbol, e.g. BTC or ETH. Alias: symbol."
+          },
+          "symbol": {
+            "type": "string",
+            "description": "Alias for market."
+          },
+          "markets": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Explicit list of market symbols."
+          },
+          "symbols": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Alias for markets."
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "matching",
+              "all"
+            ],
+            "description": "matching selects requested symbols; all selects every live item returned by the product."
+          },
+          "selector": {
+            "type": "object",
+            "properties": {
+              "mode": {
+                "type": "string",
+                "enum": [
+                  "matching",
+                  "all"
+                ]
+              },
+              "market": {
+                "type": "string"
+              },
+              "symbol": {
+                "type": "string"
+              },
+              "markets": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "symbols": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "side": {
+                "type": "string",
+                "enum": [
+                  "long",
+                  "short"
+                ]
+              }
+            },
+            "additionalProperties": false
+          },
+          "side": {
+            "type": "string",
+            "enum": [
+              "long",
+              "short"
+            ],
+            "description": "Required when state=open/present; otherwise filters selected positions."
+          },
+          "timeout_ms": {
+            "type": "number"
+          },
+          "amount": {
+            "type": [
+              "string",
+              "number"
+            ],
+            "description": "Explicit USD notional used only when creating a missing open position. Alias: notional."
+          },
+          "notional": {
+            "type": [
+              "string",
+              "number"
+            ],
+            "description": "Alias for amount."
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "none",
+              "absent",
+              "closed",
+              "open",
+              "present"
+            ],
+            "description": "Desired/expected selected collection state."
+          }
+        },
+        "required": [
+          "state"
+        ],
+        "additionalProperties": false
+      },
+      "examples": [
+        {
+          "action": "metamask.perps.ensure_positions",
+          "state": "none",
+          "market": "BTC",
+          "intent": "Converge Perps positions to the requested state",
+          "next": "done"
+        },
+        {
+          "action": "metamask.perps.ensure_positions",
+          "state": "none",
+          "mode": "all",
+          "intent": "Converge Perps positions to the requested state",
+          "next": "done"
+        },
+        {
+          "action": "metamask.perps.ensure_positions",
+          "market": "ETH",
+          "side": "long",
+          "state": "open",
+          "notional": "10",
+          "intent": "Converge ETH positions to one explicit testnet precondition",
+          "next": "done"
+        }
+      ],
+      "execution_capabilities": [
+        "app-mutation",
+        "external-mutation"
+      ]
+    },
+    "metamask.perps.ensure_orders": {
+      "description": "extension Converge selected testnet orders to open or absent, then independently assert the final state. Creating an open state uses a resting limit order.",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "market": {
+            "type": "string",
+            "description": "Single market symbol, e.g. BTC or ETH. Alias: symbol."
+          },
+          "symbol": {
+            "type": "string",
+            "description": "Alias for market."
+          },
+          "markets": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Explicit list of market symbols."
+          },
+          "symbols": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "Alias for markets."
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "matching",
+              "all"
+            ],
+            "description": "matching selects requested symbols; all selects every live item returned by the product."
+          },
+          "selector": {
+            "type": "object",
+            "properties": {
+              "mode": {
+                "type": "string",
+                "enum": [
+                  "matching",
+                  "all"
+                ]
+              },
+              "market": {
+                "type": "string"
+              },
+              "symbol": {
+                "type": "string"
+              },
+              "markets": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "symbols": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "side": {
+                "type": "string",
+                "enum": [
+                  "long",
+                  "short"
+                ]
+              }
+            },
+            "additionalProperties": false
+          },
+          "side": {
+            "type": "string",
+            "enum": [
+              "long",
+              "short"
+            ],
+            "description": "Required when state=open/present; otherwise filters selected orders."
+          },
+          "timeout_ms": {
+            "type": "number"
+          },
+          "amount": {
+            "type": [
+              "string",
+              "number"
+            ],
+            "description": "Explicit USD notional used only when creating a missing open order. Alias: notional."
+          },
+          "notional": {
+            "type": [
+              "string",
+              "number"
+            ],
+            "description": "Alias for amount."
+          },
+          "leverage": {
+            "type": "number",
+            "default": 3,
+            "description": "Testnet leverage used only when creating a missing open order."
+          },
+          "state": {
+            "type": "string",
+            "enum": [
+              "none",
+              "absent",
+              "closed",
+              "open",
+              "present"
+            ],
+            "description": "Desired/expected selected collection state."
+          }
+        },
+        "required": [
+          "state"
+        ],
+        "additionalProperties": false
+      },
+      "examples": [
+        {
+          "action": "metamask.perps.ensure_orders",
+          "state": "none",
+          "mode": "all",
+          "intent": "Converge Perps orders to the requested state",
+          "next": "done"
+        },
+        {
+          "action": "metamask.perps.ensure_orders",
+          "market": "ETH",
+          "side": "short",
+          "state": "open",
+          "notional": 10,
+          "leverage": 2,
+          "intent": "Converge ETH open orders to one deterministic testnet precondition",
+          "next": "done"
+        }
+      ],
+      "execution_capabilities": [
+        "app-mutation",
+        "external-mutation"
+      ]
+    },
+    "metamask.perps.start_state": {
+      "description": "extension Default to testnet for Perps mutations; mainnet is read-only unless explicitly requested. Recommended configurable Perps start state that composes reusable domain operations before the proof window.",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "profile": {
+            "type": "string",
+            "description": "Optional profile such as clean_market_testnet, open_position_testnet, open_order_testnet, or provider_mainnet_readonly."
+          },
+          "account": {
+            "type": "string"
+          },
+          "provider": {
+            "type": "string",
+            "description": "Requested Perps provider, e.g. hyperliquid."
+          },
+          "network": {
+            "type": "string",
+            "enum": [
+              "testnet",
+              "mainnet"
+            ]
+          },
+          "market": {
+            "type": "string"
+          },
+          "symbol": {
+            "type": "string"
+          },
+          "markets": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "symbols": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "page": {
+            "type": "string",
+            "enum": [
+              "home",
+              "perps",
+              "perps_home",
+              "market",
+              "market_details",
+              "trade",
+              "order"
+            ],
+            "description": "Initial Perps page target; omit it to use the profile or market default. Extension start_state always enters Perps before convergence."
+          },
+          "positions": {
+            "type": [
+              "object",
+              "boolean"
+            ],
+            "properties": {
+              "mode": {
+                "type": "string",
+                "enum": [
+                  "matching",
+                  "all"
+                ]
+              },
+              "market": {
+                "type": "string"
+              },
+              "symbol": {
+                "type": "string"
+              },
+              "markets": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "symbols": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "side": {
+                "type": "string",
+                "enum": [
+                  "long",
+                  "short"
+                ]
+              },
+              "state": {
+                "type": "string",
+                "enum": [
+                  "none",
+                  "closed",
+                  "absent",
+                  "open",
+                  "present"
+                ]
+              },
+              "amount": {
+                "type": [
+                  "string",
+                  "number"
+                ]
+              },
+              "notional": {
+                "type": [
+                  "string",
+                  "number"
+                ]
+              },
+              "size": {
+                "type": [
+                  "string",
+                  "number"
+                ]
+              },
+              "leverage": {
+                "type": "number"
+              },
+              "order_type": {
+                "type": "string"
+              },
+              "orderType": {
+                "type": "string"
+              },
+              "limit_price": {
+                "type": "number"
+              },
+              "limitPrice": {
+                "type": "number"
+              },
+              "offset_pct": {
+                "type": "number"
+              },
+              "offsetPct": {
+                "type": "number"
+              },
+              "current_price": {
+                "type": "number"
+              },
+              "currentPrice": {
+                "type": "number"
+              },
+              "max_slippage_bps": {
+                "type": "number"
+              },
+              "maxSlippageBps": {
+                "type": "number"
+              },
+              "close_attempts": {
+                "type": "integer"
+              },
+              "close_retry_delay_ms": {
+                "type": "integer"
+              },
+              "timeout_ms": {
+                "type": "number"
+              }
+            },
+            "additionalProperties": false
+          },
+          "orders": {
+            "type": [
+              "object",
+              "boolean"
+            ],
+            "properties": {
+              "mode": {
+                "type": "string",
+                "enum": [
+                  "matching",
+                  "all"
+                ]
+              },
+              "market": {
+                "type": "string"
+              },
+              "symbol": {
+                "type": "string"
+              },
+              "markets": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "symbols": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "side": {
+                "type": "string",
+                "enum": [
+                  "long",
+                  "short"
+                ]
+              },
+              "state": {
+                "type": "string",
+                "enum": [
+                  "none",
+                  "closed",
+                  "absent",
+                  "open",
+                  "present"
+                ]
+              },
+              "amount": {
+                "type": [
+                  "string",
+                  "number"
+                ]
+              },
+              "notional": {
+                "type": [
+                  "string",
+                  "number"
+                ]
+              },
+              "size": {
+                "type": [
+                  "string",
+                  "number"
+                ]
+              },
+              "leverage": {
+                "type": "number"
+              },
+              "order_type": {
+                "type": "string"
+              },
+              "orderType": {
+                "type": "string"
+              },
+              "limit_price": {
+                "type": "number"
+              },
+              "limitPrice": {
+                "type": "number"
+              },
+              "offset_pct": {
+                "type": "number"
+              },
+              "offsetPct": {
+                "type": "number"
+              },
+              "current_price": {
+                "type": "number"
+              },
+              "currentPrice": {
+                "type": "number"
+              },
+              "max_slippage_bps": {
+                "type": "number"
+              },
+              "maxSlippageBps": {
+                "type": "number"
+              },
+              "close_attempts": {
+                "type": "integer"
+              },
+              "close_retry_delay_ms": {
+                "type": "integer"
+              },
+              "timeout_ms": {
+                "type": "number"
+              }
+            },
+            "additionalProperties": false
+          },
+          "hud": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false
+          },
+          "timeout_ms": {
+            "type": "number"
+          },
+          "side": {
+            "type": "string",
+            "enum": [
+              "long",
+              "short"
+            ]
+          },
+          "account_name": {
+            "type": "string"
+          },
+          "readyToTrade": {
+            "type": "boolean"
+          },
+          "balance": {
+            "type": "object",
+            "properties": {
+              "minWithdrawableUsd": {
+                "type": "number"
+              },
+              "minUsd": {
+                "type": "number"
+              },
+              "minSpendableUsd": {
+                "type": "number"
+              }
+            },
+            "additionalProperties": false
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "matching",
+              "all"
+            ]
+          }
+        },
+        "additionalProperties": false
+      },
+      "examples": [
+        {
+          "action": "metamask.perps.start_state",
+          "profile": "clean_market_testnet",
+          "market": "BTC",
+          "positions": {
+            "state": "none"
+          },
+          "orders": {
+            "state": "none"
+          },
+          "intent": "Prepare the Perps start state for the proof",
+          "network": "testnet",
+          "next": "done"
+        },
+        {
+          "action": "metamask.perps.start_state",
+          "profile": "open_position_testnet",
+          "market": "ETH",
+          "side": "long",
+          "positions": {
+            "state": "open",
+            "notional": "10",
+            "leverage": 2
+          },
+          "intent": "Prepare the Perps start state for the proof",
+          "network": "testnet",
+          "next": "done"
+        }
+      ],
+      "execution_capabilities": [
+        "app-mutation",
+        "external-mutation"
+      ]
+    },
+    "metamask.perps.teardown_state": {
+      "description": "extension Recommended configurable Perps teardown state that restores the selected environment after proof.",
+      "schema": {
+        "type": "object",
+        "properties": {
+          "profile": {
+            "type": "string",
+            "description": "Optional profile such as clean_market_testnet, open_position_testnet, open_order_testnet, or provider_mainnet_readonly."
+          },
+          "account": {
+            "type": "string"
+          },
+          "provider": {
+            "type": "string",
+            "description": "Requested Perps provider, e.g. hyperliquid."
+          },
+          "network": {
+            "type": "string",
+            "enum": [
+              "testnet",
+              "mainnet"
+            ]
+          },
+          "market": {
+            "type": "string"
+          },
+          "symbol": {
+            "type": "string"
+          },
+          "markets": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "symbols": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "page": {
+            "description": "Final page target; false skips navigation for teardown.",
+            "type": [
+              "string",
+              "boolean"
+            ],
+            "enum": [
+              "home",
+              "perps",
+              "perps_home",
+              "market",
+              "market_details",
+              "trade",
+              "order",
+              false
+            ]
+          },
+          "positions": {
+            "type": [
+              "object",
+              "boolean"
+            ],
+            "properties": {
+              "mode": {
+                "type": "string",
+                "enum": [
+                  "matching",
+                  "all"
+                ]
+              },
+              "market": {
+                "type": "string"
+              },
+              "symbol": {
+                "type": "string"
+              },
+              "markets": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "symbols": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "side": {
+                "type": "string",
+                "enum": [
+                  "long",
+                  "short"
+                ]
+              },
+              "state": {
+                "type": "string",
+                "enum": [
+                  "none",
+                  "closed",
+                  "absent",
+                  "open",
+                  "present"
+                ]
+              },
+              "amount": {
+                "type": [
+                  "string",
+                  "number"
+                ]
+              },
+              "notional": {
+                "type": [
+                  "string",
+                  "number"
+                ]
+              },
+              "size": {
+                "type": [
+                  "string",
+                  "number"
+                ]
+              },
+              "leverage": {
+                "type": "number"
+              },
+              "order_type": {
+                "type": "string"
+              },
+              "orderType": {
+                "type": "string"
+              },
+              "limit_price": {
+                "type": "number"
+              },
+              "limitPrice": {
+                "type": "number"
+              },
+              "offset_pct": {
+                "type": "number"
+              },
+              "offsetPct": {
+                "type": "number"
+              },
+              "current_price": {
+                "type": "number"
+              },
+              "currentPrice": {
+                "type": "number"
+              },
+              "max_slippage_bps": {
+                "type": "number"
+              },
+              "maxSlippageBps": {
+                "type": "number"
+              },
+              "close_attempts": {
+                "type": "integer"
+              },
+              "close_retry_delay_ms": {
+                "type": "integer"
+              },
+              "timeout_ms": {
+                "type": "number"
+              }
+            },
+            "additionalProperties": false
+          },
+          "orders": {
+            "type": [
+              "object",
+              "boolean"
+            ],
+            "properties": {
+              "mode": {
+                "type": "string",
+                "enum": [
+                  "matching",
+                  "all"
+                ]
+              },
+              "market": {
+                "type": "string"
+              },
+              "symbol": {
+                "type": "string"
+              },
+              "markets": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "symbols": {
+                "type": "array",
+                "items": {
+                  "type": "string"
+                }
+              },
+              "side": {
+                "type": "string",
+                "enum": [
+                  "long",
+                  "short"
+                ]
+              },
+              "state": {
+                "type": "string",
+                "enum": [
+                  "none",
+                  "closed",
+                  "absent",
+                  "open",
+                  "present"
+                ]
+              },
+              "amount": {
+                "type": [
+                  "string",
+                  "number"
+                ]
+              },
+              "notional": {
+                "type": [
+                  "string",
+                  "number"
+                ]
+              },
+              "size": {
+                "type": [
+                  "string",
+                  "number"
+                ]
+              },
+              "leverage": {
+                "type": "number"
+              },
+              "order_type": {
+                "type": "string"
+              },
+              "orderType": {
+                "type": "string"
+              },
+              "limit_price": {
+                "type": "number"
+              },
+              "limitPrice": {
+                "type": "number"
+              },
+              "offset_pct": {
+                "type": "number"
+              },
+              "offsetPct": {
+                "type": "number"
+              },
+              "current_price": {
+                "type": "number"
+              },
+              "currentPrice": {
+                "type": "number"
+              },
+              "max_slippage_bps": {
+                "type": "number"
+              },
+              "maxSlippageBps": {
+                "type": "number"
+              },
+              "close_attempts": {
+                "type": "integer"
+              },
+              "close_retry_delay_ms": {
+                "type": "integer"
+              },
+              "timeout_ms": {
+                "type": "number"
+              }
+            },
+            "additionalProperties": false
+          },
+          "hud": {
+            "type": "object",
+            "properties": {},
+            "additionalProperties": false
+          },
+          "timeout_ms": {
+            "type": "number"
+          },
+          "side": {
+            "type": "string",
+            "enum": [
+              "long",
+              "short"
+            ]
+          },
+          "account_name": {
+            "type": "string"
+          },
+          "readyToTrade": {
+            "type": "boolean"
+          },
+          "balance": {
+            "type": "object",
+            "properties": {
+              "minWithdrawableUsd": {
+                "type": "number"
+              },
+              "minUsd": {
+                "type": "number"
+              },
+              "minSpendableUsd": {
+                "type": "number"
+              }
+            },
+            "additionalProperties": false
+          },
+          "mode": {
+            "type": "string",
+            "enum": [
+              "matching",
+              "all"
+            ]
+          }
+        },
+        "additionalProperties": false
+      },
+      "examples": [
+        {
+          "action": "metamask.perps.teardown_state",
+          "market": "BTC",
+          "positions": {
+            "state": "none"
+          },
+          "orders": {
+            "state": "none"
+          },
+          "page": "home",
+          "intent": "Restore Perps state after the proof",
+          "next": "done"
+        },
+        {
+          "action": "metamask.perps.teardown_state",
+          "market": "BTC",
+          "intent": "Restore Perps state after the proof",
+          "next": "done"
+        }
+      ],
+      "execution_capabilities": [
+        "app-mutation",
+        "external-mutation"
+      ]
+    },
+    "metamask.analytics.start_capture": {
+      "description": "extension Start capturing MetaMetrics events at the Segment transport and return a cursor to bracket later reads.",
+      "execution_capabilities": [
+        "arbitrary-code"
+      ],
+      "examples": [
+        {
+          "action": "metamask.analytics.start_capture",
+          "intent": "Begin capturing analytics before driving the flow",
+          "next": "done"
+        }
+      ],
+      "schema": {
+        "type": "object",
+        "properties": {
+          "port": {
+            "type": "integer",
+            "description": "Collector port. Defaults to cdp_port + 1000, else 9090. The client build must point its Segment host here (extension SEGMENT_HOST, mobile SEGMENT_PROXY_URL)."
+          },
+          "cdp_port": {
+            "type": "integer"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "metamask.analytics.read_events": {
+      "description": "extension Read MetaMetrics events captured since a cursor, as [{ event, properties, ts }].",
+      "execution_capabilities": [
+        "host-read-export"
+      ],
+      "examples": [
+        {
+          "action": "metamask.analytics.read_events",
+          "since": 0,
+          "intent": "Inspect which analytics events the flow emitted",
+          "next": "done"
+        }
+      ],
+      "schema": {
+        "type": "object",
+        "properties": {
+          "since": {
+            "type": "number",
+            "description": "Cursor (epoch ms) from start_capture. Omit to read everything captured."
+          },
+          "event": {
+            "type": "string",
+            "description": "Optional exact event-name filter."
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "metamask.analytics.assert_events": {
+      "description": "extension Assert MetaMetrics event names, property values and counts. Counts are the point: an exact count catches a double emit that a presence check cannot.",
+      "execution_capabilities": [
+        "host-read-export"
+      ],
+      "examples": [
+        {
+          "action": "metamask.analytics.assert_events",
+          "expect": [
+            {
+              "event": "Perp Order Cancel Transaction",
+              "count": 1
+            }
+          ],
+          "intent": "Assert the cancel event was emitted exactly once",
+          "next": "done"
+        }
+      ],
+      "schema": {
+        "type": "object",
+        "properties": {
+          "since": {
+            "type": "number",
+            "description": "Cursor from start_capture; brackets the assertion to this flow."
+          },
+          "exact": {
+            "type": "boolean",
+            "description": "When true, any captured event not named in expect is a failure."
+          },
+          "timeout_ms": {
+            "type": "number",
+            "description": "How long to wait for the lower bounds to be met. Default 15000."
+          },
+          "settle_ms": {
+            "type": "number",
+            "description": "Extra wait after the bounds are met, before judging. Default 1500. Required to catch a duplicate that arrives after the expected event."
+          },
+          "expect": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "event": {
+                  "type": "string",
+                  "description": "Exact event name."
+                },
+                "count": {
+                  "type": "integer",
+                  "description": "Exact number of matching events. Mutually exclusive with min/max."
+                },
+                "min": {
+                  "type": "integer",
+                  "description": "Lower bound on matching events. Default 1."
+                },
+                "max": {
+                  "type": "integer",
+                  "description": "Upper bound on matching events."
+                },
+                "properties": {
+                  "type": "object",
+                  "description": "Subset match on event properties; values may be exact or use $exists, $type, and $gt predicates."
+                }
+              },
+              "required": [
+                "event"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": [
+          "expect"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "metamask.analytics.set_consent": {
+      "description": "extension Set MetaMetrics consent flags so events actually reach the Segment transport. Wallet fixtures set neither, so capture yields nothing without this.",
+      "execution_capabilities": [
+        "app-mutation"
+      ],
+      "examples": [
+        {
+          "action": "metamask.analytics.set_consent",
+          "intent": "Opt in before capturing analytics",
+          "next": "done"
+        }
+      ],
+      "schema": {
+        "type": "object",
+        "properties": {
+          "participate": {
+            "type": "boolean",
+            "description": "MetaMetrics optedIn state. Default true."
+          },
+          "marketing": {
+            "type": "boolean",
+            "description": "dataCollectionForMarketing. Default true. Required for utm_* properties to survive."
+          },
+          "timeout_ms": {
+            "type": "number",
+            "description": "Maximum time to navigate to Settings and apply each consent toggle. Default 15000."
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "observers": [
+    {
+      "ref": "ui.screen",
+      "default_for": [
+        "ui.navigate",
+        "ui.press",
+        "ui.key_press",
+        "ui.set_input",
+        "ui.scroll",
+        "ui.wait_for",
+        "ui.screenshot"
+      ]
+    },
+    {
+      "ref": "ui.visible",
+      "default_for": [
+        "ui.navigate",
+        "ui.press",
+        "ui.key_press",
+        "ui.set_input",
+        "ui.scroll",
+        "ui.wait_for",
+        "ui.screenshot"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,58 @@
+{
+  "target": "/Users/deeeed/dev/metamask/metamask-extension-2",
+  "manifestPath": "/Users/deeeed/dev/metamask/metamask-extension-2/dist/chrome/manifest.json",
+  "manifestVersion": 3,
+  "defaultPage": "home.html",
+  "expectedFiles": [
+    "home.html",
+    "service-worker.js",
+    "popup-init.html",
+    "sidepanel.html"
+  ],
+  "checks": [
+    {
+      "name": "dist/chrome/home.html",
+      "status": "pass"
+    },
+    {
+      "name": "dist/chrome/service-worker.js",
+      "status": "pass"
+    },
+    {
+      "name": "dist/chrome/popup-init.html",
+      "status": "pass"
+    },
+    {
+      "name": "dist/chrome/sidepanel.html",
+      "status": "pass"
+    },
+    {
+      "name": "CDP 7666 extension targets",
+      "status": "pass"
+    }
+  ],
+  "cdp": {
+    "browser": "Chrome/147.0.7727.15",
+    "extensionIds": [
+      "hebhblbkkdabgoldnojllkipeoacjioc",
+      "nkeimhogjdpnpccoofpliimaahmaaome"
+    ],
+    "selectedExtensionId": "hebhblbkkdabgoldnojllkipeoacjioc",
+    "markerMatched": true,
+    "targetCount": 9,
+    "openedPage": false,
+    "openedPagePath": "home.html",
+    "pagePresent": true,
+    "pageInspected": true,
+    "ui": {
+      "title": "MetaMask",
+      "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/",
+      "textSample": "dev1\n\n0x8Dc62...69003\n\n0.00570 ETH\n\n+$0.00\n\n(+0.00%)\n\nDiscover\nBuy\nSwap\nSend\nMore\nTokens\nDeFi\nNFTs\n\nNetwork: Ethereum\n\nEthereum\n\nEarn\n\n$10.64\n\n+0.15%\n\n0.00569 ETH\n\nHome\n\nPerps\n\nSwap\n\nActivity",
+      "hasStartupError": false,
+      "hasErrorBoundary": false,
+      "errorBoundaryName": "",
+      "errorBoundaryMessage": ""
+    },
+    "markerRepaired": false
+  }
+}

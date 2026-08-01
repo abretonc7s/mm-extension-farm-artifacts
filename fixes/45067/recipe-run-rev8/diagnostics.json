@@ -1,0 +1,78 @@
+{
+  "schemaVersion": 1,
+  "scope": "recipe-run-application",
+  "status": "review",
+  "nonBlocking": true,
+  "note": "Observed 9 distinct application warning/error event(s) during the recipe run; relation to the task is not determined.",
+  "source": {
+    "label": "extension",
+    "path": "/Users/deeeed/dev/metamask/metamask-extension-2/temp/recipe/runtime/extension-console.log",
+    "startOffset": 1638595,
+    "endOffset": 1651153,
+    "bytesRead": 12558,
+    "truncated": false,
+    "inAppBuffer": "n/a"
+  },
+  "counts": {
+    "total": 9,
+    "warning": 4,
+    "error": 5,
+    "exception": 0
+  },
+  "findings": [
+    {
+      "level": "error",
+      "fingerprint": "f35f4f26d489",
+      "preview": "02:50:53 [extension:page:home.html] ERROR  WebSocket connection to 'ws://localhost:8080/ws' failed:",
+      "count": 5
+    },
+    {
+      "level": "error",
+      "fingerprint": "7679592a1189",
+      "preview": "02:50:54 [extension:sw] ERROR  WebSocket connection to 'ws://localhost:8080/ws' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED",
+      "count": 5
+    },
+    {
+      "level": "warning",
+      "fingerprint": "f8625fc7201f",
+      "preview": "02:50:56 [extension:page:home.html] WARNING  Warning: componentWillReceiveProps has been renamed, and is not recommended for use. See https://reactjs.org/link/unsafe-component-lifecycles for details.",
+      "count": 1
+    },
+    {
+      "level": "warning",
+      "fingerprint": "b84fd60e6736",
+      "preview": "02:50:58 [extension:sw] WARNING  Polling failed for chains 0x1 with interval 300000: Error: Invalid chain ID \"0x89\"",
+      "count": 2
+    },
+    {
+      "level": "warning",
+      "fingerprint": "c2d70ed8ed0b",
+      "preview": "02:50:59 [extension:sw] WARNING  Error updating balances after token change: Error: Invalid chain ID \"0x89\"",
+      "count": 1
+    },
+    {
+      "level": "error",
+      "fingerprint": "e0ddde3d7963",
+      "preview": "02:51:00 [extension:page:home.html] ERROR  Failed to load resource: the server responded with a status of 404 ()",
+      "count": 5
+    },
+    {
+      "level": "error",
+      "fingerprint": "797289543dd4",
+      "preview": "02:51:14 [extension:sw] ERROR  ApiRequestError: cancel 0: Order was never placed, already canceled, or filled. asset=4",
+      "count": 1
+    },
+    {
+      "level": "warning",
+      "fingerprint": "28b7f21bf134",
+      "preview": "02:51:14 [extension:sw] WARNING  Sentry not initialized",
+      "count": 2
+    },
+    {
+      "level": "error",
+      "fingerprint": "6c1bcfd514af",
+      "preview": "02:51:14 [extension:sw] ERROR  Error: cancel 0: Order was never placed, already canceled, or filled. asset=4",
+      "count": 1
+    }
+  ]
+}

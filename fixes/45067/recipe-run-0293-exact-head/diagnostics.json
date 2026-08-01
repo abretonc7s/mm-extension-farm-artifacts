@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "scope": "recipe-run-application",
+  "status": "review",
+  "nonBlocking": true,
+  "note": "Observed 2 distinct application warning/error event(s) during the recipe run; relation to the task is not determined.",
+  "source": {
+    "label": "extension",
+    "path": "/Users/deeeed/dev/metamask/metamask-extension-2/temp/recipe/runtime/extension-console.log",
+    "startOffset": 349533,
+    "endOffset": 354699,
+    "bytesRead": 5166,
+    "truncated": false,
+    "inAppBuffer": "n/a"
+  },
+  "counts": {
+    "total": 2,
+    "warning": 1,
+    "error": 1,
+    "exception": 0
+  },
+  "findings": [
+    {
+      "level": "error",
+      "fingerprint": "e9e5d5629243",
+      "preview": "00:32:34 [extension:sw] ERROR  Error: No metadata found for 'autoLockTimeLimit'",
+      "count": 1
+    },
+    {
+      "level": "warning",
+      "fingerprint": "17322ca252e9",
+      "preview": "00:32:34 [extension:sw] WARNING  Snap \"npm:@metamask/solana-wallet-snap\" has de-synced accounts, Snap has more accounts than MetaMask! (8 < 9)",
+      "count": 1
+    }
+  ]
+}
