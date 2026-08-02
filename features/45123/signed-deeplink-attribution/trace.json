@@ -1,0 +1,3699 @@
+{
+  "metadata": {
+    "runner": {
+      "source": "<mm-harness>",
+      "git_ref": "378a8806614b6a932473b6aaf7fe24c4bfca02ba",
+      "name": "@metamask/recipe-runner"
+    }
+  },
+  "entries": [
+    {
+      "nodeId": "unlock",
+      "action": "metamask.wallet.ensure_unlocked",
+      "intent": "Ensure the fixture-backed wallet can complete every deeplink interstitial",
+      "startedAt": "2026-08-02T09:17:09.616Z",
+      "endedAt": "2026-08-02T09:17:09.742Z",
+      "durationMs": 126,
+      "ok": true,
+      "next": "consent",
+      "output": {
+        "action": "metamask.wallet.ensure_unlocked",
+        "unlocked": true,
+        "alreadyUnlocked": true,
+        "proofPath": "extension-unlocked-state",
+        "cdpPort": 9333,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/BTC?source=deeplink",
+        "runtimeLaunch": null,
+        "liveAdapter": "<mm-harness>/library/actions/extension/wallet/ensure_unlocked.mjs"
+      }
+    },
+    {
+      "nodeId": "consent",
+      "action": "metamask.analytics.set_consent",
+      "intent": "Allow the real MetaMetrics client to emit marketing attribution",
+      "startedAt": "2026-08-02T09:17:09.750Z",
+      "endedAt": "2026-08-02T09:17:09.859Z",
+      "durationMs": 109,
+      "ok": true,
+      "next": "valid-capture",
+      "output": {
+        "action": "metamask.analytics.set_consent",
+        "consent": {
+          "optedIn": true,
+          "dataCollectionForMarketing": true,
+          "analyticsId": "set"
+        },
+        "proofPath": "extension-debug-page-store",
+        "cdpPort": 9333,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/BTC?source=deeplink",
+        "runtimeLaunch": null,
+        "liveAdapter": "<mm-harness>/library/actions/extension/analytics/set_consent.mjs"
+      }
+    },
+    {
+      "nodeId": "valid-capture",
+      "action": "metamask.analytics.start_capture",
+      "intent": "Bracket the valid signed deeplink",
+      "startedAt": "2026-08-02T09:17:09.867Z",
+      "endedAt": "2026-08-02T09:17:09.980Z",
+      "durationMs": 113,
+      "ok": true,
+      "next": "valid-label",
+      "output": {
+        "action": "metamask.analytics.start_capture",
+        "cursor": 1785662229957,
+        "port": 7668,
+        "pid": 15682,
+        "eventsFile": "<metamask-extension>/temp/recipe/runtime/analytics/events.jsonl",
+        "reused": true,
+        "androidDevice": null,
+        "note": "Client must be built with its Segment host pointed at http://localhost:7668 (extension SEGMENT_HOST, mobile SEGMENT_PROXY_URL) and a non-empty write key.",
+        "liveAdapter": "<mm-harness>/library/actions/shared/analytics/start_capture.mjs"
+      }
+    },
+    {
+      "nodeId": "valid-label",
+      "action": "app.hud",
+      "intent": "Show the accepted signed-attribution case in the recording",
+      "startedAt": "2026-08-02T09:17:09.988Z",
+      "endedAt": "2026-08-02T09:17:09.994Z",
+      "durationMs": 6,
+      "ok": true,
+      "next": "valid-open",
+      "output": {
+        "hud": true,
+        "status": "running",
+        "nodeId": "valid-label",
+        "flow": "",
+        "cdpPort": 9333,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/BTC?source=deeplink",
+        "runtimeLaunch": null
+      }
+    },
+    {
+      "nodeId": "valid-open",
+      "action": "metamask.deeplink.open",
+      "intent": "Open a valid signed Perps deeplink through external Chrome ingress",
+      "startedAt": "2026-08-02T09:17:09.994Z",
+      "endedAt": "2026-08-02T09:17:10.181Z",
+      "durationMs": 187,
+      "ok": true,
+      "next": "valid-signed",
+      "output": {
+        "action": "metamask.deeplink.open",
+        "url": "https://link.metamask.io/perps?screen=asset&sig_params=screen%2Csymbol%2Cutm_campaign%2Cutm_medium%2Cutm_source&symbol=BTC&utm_campaign=pr45123&utm_medium=proof&utm_source=recipe_signed&sig=gwBSYph3SrlfvKwKgy4xHDn4_uDsbAreSGB7D4g_JRf3XLQH6Yz392UD8108Ieq8TLad8sYkxxCD0DG_UxJbKg",
+        "navigation": {
+          "frameId": "D5C71BAD1D4F8F7D6C84AEE899B7E3C0",
+          "loaderId": "38AC366715951057FE09BAE4CA277215",
+          "errorText": "net::ERR_ABORTED",
+          "isDownload": false
+        },
+        "proofPath": "external-deeplink",
+        "cdpPort": 9333,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/BTC?source=deeplink",
+        "runtimeLaunch": null,
+        "liveAdapter": "<mm-harness>/library/actions/extension/deeplink/open.mjs"
+      },
+      "observationWarnings": [
+        {
+          "ref": "ui.screen",
+          "message": "No passive observer registered for metamask.deeplink.open."
+        },
+        {
+          "ref": "ui.visible",
+          "message": "No passive observer registered for metamask.deeplink.open."
+        }
+      ]
+    },
+    {
+      "nodeId": "valid-signed",
+      "action": "ui.wait_for",
+      "intent": "Prove signature verification marked the interstitial as signed",
+      "startedAt": "2026-08-02T09:17:10.186Z",
+      "endedAt": "2026-08-02T09:17:10.542Z",
+      "durationMs": 356,
+      "ok": true,
+      "next": "valid-continue",
+      "output": {
+        "matched": true,
+        "cdpPort": 9333,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#link?u=%2Fperps%3Fscreen%3Dasset%26sig_params%3Dscreen%252Csymbol%252Cutm_campaign%252Cutm_medium%252Cutm_source%26symbol%3DBTC%26utm_campaign%3Dpr45123%26utm_medium%3Dproof%26utm_source%3Drecipe_signed%26sig%3DgwBSYph3SrlfvKwKgy4xHDn4_uDsbAreSGB7D4g_JRf3XLQH6Yz392UD8108Ieq8TLad8sYkxxCD0DG_UxJbKg",
+        "runtimeLaunch": null
+      },
+      "observations": {
+        "ui.screen": {
+          "provider": "cdp-web",
+          "name": "MetaMask",
+          "title": "MetaMask",
+          "route": "#link",
+          "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
+        },
+        "ui.visible": {
+          "provider": "cdp-web",
+          "items": [
+            {
+              "label": "dont-remind-me-checkbox",
+              "selector": "[id=\"dont-remind-me-checkbox\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 414,
+                "y": 565,
+                "width": 20,
+                "height": 20
+              }
+            },
+            {
+              "role": "link",
+              "label": "Continue",
+              "test_id": "deep-link-continue-button",
+              "selector": "[data-testid=\"deep-link-continue-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 402,
+                "y": 622,
+                "width": 396,
+                "height": 48
+              }
+            }
+          ],
+          "hidden_or_offscreen": [],
+          "truncated": false,
+          "limits": {
+            "items": 20,
+            "hidden_or_offscreen": 10
+          }
+        }
+      }
+    },
+    {
+      "nodeId": "valid-continue",
+      "action": "ui.press",
+      "intent": "Continue through the real deeplink interstitial",
+      "startedAt": "2026-08-02T09:17:10.552Z",
+      "endedAt": "2026-08-02T09:17:10.976Z",
+      "durationMs": 424,
+      "ok": true,
+      "next": "valid-visible",
+      "output": {
+        "clicked": true,
+        "selector": "[data-testid=\"deep-link-continue-button\"], [data-test-id=\"deep-link-continue-button\"], [data-test=\"deep-link-continue-button\"]",
+        "tagName": "A",
+        "cdpPort": 9333,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#link?u=%2Fperps%3Fscreen%3Dasset%26sig_params%3Dscreen%252Csymbol%252Cutm_campaign%252Cutm_medium%252Cutm_source%26symbol%3DBTC%26utm_campaign%3Dpr45123%26utm_medium%3Dproof%26utm_source%3Drecipe_signed%26sig%3DgwBSYph3SrlfvKwKgy4xHDn4_uDsbAreSGB7D4g_JRf3XLQH6Yz392UD8108Ieq8TLad8sYkxxCD0DG_UxJbKg",
+        "runtimeLaunch": null
+      },
+      "observations": {
+        "ui.screen": {
+          "provider": "cdp-web",
+          "name": "MetaMask",
+          "title": "MetaMask",
+          "route": "#/perps/market/BTC",
+          "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
+        },
+        "ui.visible": {
+          "provider": "cdp-web",
+          "items": [
+            {
+              "role": "button",
+              "label": "1min",
+              "test_id": "perps-candle-period-1m",
+              "selector": "[data-testid=\"perps-candle-period-1m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 392,
+                "width": 61,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "3min",
+              "test_id": "perps-candle-period-3m",
+              "selector": "[data-testid=\"perps-candle-period-3m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 282,
+                "y": 392,
+                "width": 64,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "5min",
+              "test_id": "perps-candle-period-5m",
+              "selector": "[data-testid=\"perps-candle-period-5m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 351,
+                "y": 392,
+                "width": 65,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "15min",
+              "test_id": "perps-candle-period-15m",
+              "selector": "[data-testid=\"perps-candle-period-15m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 419,
+                "y": 392,
+                "width": 70,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "More",
+              "test_id": "perps-candle-period-more",
+              "selector": "[data-testid=\"perps-candle-period-more\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 493,
+                "y": 392,
+                "width": 81,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "Recent activity, See all",
+              "test_id": "perps-market-detail-view-all-activity",
+              "selector": "[data-testid=\"perps-market-detail-view-all-activity\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 201,
+                "y": 688,
+                "width": 798,
+                "height": 48
+              }
+            },
+            {
+              "role": "button",
+              "label": "Closed short 0.00019 BTC -$0.02",
+              "test_id": "transaction-card-57285079431-1785570345855-0",
+              "selector": "[data-testid=\"transaction-card-57285079431-1785570345855-0\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 748,
+                "width": 766,
+                "height": 74
+              }
+            },
+            {
+              "role": "button",
+              "label": "Flipped long > short 0.00005 BTC -$0.02",
+              "test_id": "transaction-card-57285077208-1785570339971-1",
+              "selector": "[data-testid=\"transaction-card-57285077208-1785570339971-1\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 822,
+                "width": 766,
+                "height": 75
+              }
+            },
+            {
+              "role": "button",
+              "label": "Opened short 0.00014 BTC -$0.01",
+              "test_id": "transaction-card-57285077208-1785570339971-2",
+              "selector": "[data-testid=\"transaction-card-57285077208-1785570339971-2\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 897,
+                "width": 766,
+                "height": 75
+              }
+            },
+            {
+              "role": "button",
+              "label": "Long",
+              "test_id": "perps-long-cta-button",
+              "selector": "[data-testid=\"perps-long-cta-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 1137,
+                "width": 377,
+                "height": 48
+              }
+            },
+            {
+              "role": "button",
+              "label": "Short",
+              "test_id": "perps-short-cta-button",
+              "selector": "[data-testid=\"perps-short-cta-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 606,
+                "y": 1137,
+                "width": 377,
+                "height": 48
+              }
+            }
+          ],
+          "hidden_or_offscreen": [],
+          "truncated": false,
+          "limits": {
+            "items": 20,
+            "hidden_or_offscreen": 10
+          }
+        }
+      }
+    },
+    {
+      "nodeId": "valid-visible",
+      "action": "ui.wait_for",
+      "intent": "Anchor the accepted deeplink to the rendered BTC market",
+      "startedAt": "2026-08-02T09:17:10.989Z",
+      "endedAt": "2026-08-02T09:17:11.347Z",
+      "durationMs": 358,
+      "ok": true,
+      "next": "valid-assert",
+      "output": {
+        "matched": true,
+        "cdpPort": 9333,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/BTC?source=deeplink&utm_source=recipe_signed&utm_medium=proof&utm_campaign=pr45123",
+        "runtimeLaunch": null
+      },
+      "observations": {
+        "ui.screen": {
+          "provider": "cdp-web",
+          "name": "MetaMask",
+          "title": "MetaMask",
+          "route": "#/perps/market/BTC",
+          "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
+        },
+        "ui.visible": {
+          "provider": "cdp-web",
+          "items": [
+            {
+              "role": "button",
+              "label": "1min",
+              "test_id": "perps-candle-period-1m",
+              "selector": "[data-testid=\"perps-candle-period-1m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 392,
+                "width": 61,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "3min",
+              "test_id": "perps-candle-period-3m",
+              "selector": "[data-testid=\"perps-candle-period-3m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 282,
+                "y": 392,
+                "width": 64,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "5min",
+              "test_id": "perps-candle-period-5m",
+              "selector": "[data-testid=\"perps-candle-period-5m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 351,
+                "y": 392,
+                "width": 65,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "15min",
+              "test_id": "perps-candle-period-15m",
+              "selector": "[data-testid=\"perps-candle-period-15m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 419,
+                "y": 392,
+                "width": 70,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "More",
+              "test_id": "perps-candle-period-more",
+              "selector": "[data-testid=\"perps-candle-period-more\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 493,
+                "y": 392,
+                "width": 81,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "Recent activity, See all",
+              "test_id": "perps-market-detail-view-all-activity",
+              "selector": "[data-testid=\"perps-market-detail-view-all-activity\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 201,
+                "y": 688,
+                "width": 798,
+                "height": 48
+              }
+            },
+            {
+              "role": "button",
+              "label": "Closed short 0.00019 BTC -$0.02",
+              "test_id": "transaction-card-57285079431-1785570345855-0",
+              "selector": "[data-testid=\"transaction-card-57285079431-1785570345855-0\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 748,
+                "width": 766,
+                "height": 74
+              }
+            },
+            {
+              "role": "button",
+              "label": "Flipped long > short 0.00005 BTC -$0.02",
+              "test_id": "transaction-card-57285077208-1785570339971-1",
+              "selector": "[data-testid=\"transaction-card-57285077208-1785570339971-1\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 822,
+                "width": 766,
+                "height": 75
+              }
+            },
+            {
+              "role": "button",
+              "label": "Opened short 0.00014 BTC -$0.01",
+              "test_id": "transaction-card-57285077208-1785570339971-2",
+              "selector": "[data-testid=\"transaction-card-57285077208-1785570339971-2\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 897,
+                "width": 766,
+                "height": 75
+              }
+            },
+            {
+              "role": "button",
+              "label": "Long",
+              "test_id": "perps-long-cta-button",
+              "selector": "[data-testid=\"perps-long-cta-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 1137,
+                "width": 377,
+                "height": 48
+              }
+            },
+            {
+              "role": "button",
+              "label": "Short",
+              "test_id": "perps-short-cta-button",
+              "selector": "[data-testid=\"perps-short-cta-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 606,
+                "y": 1137,
+                "width": 377,
+                "height": 48
+              }
+            }
+          ],
+          "hidden_or_offscreen": [],
+          "truncated": false,
+          "limits": {
+            "items": 20,
+            "hidden_or_offscreen": 10
+          }
+        }
+      }
+    },
+    {
+      "nodeId": "valid-assert",
+      "action": "metamask.analytics.assert_events",
+      "intent": "Prove exactly one fully attributed destination event",
+      "startedAt": "2026-08-02T09:17:11.352Z",
+      "endedAt": "2026-08-02T09:17:13.427Z",
+      "durationMs": 2075,
+      "ok": true,
+      "next": "unsigned-capture",
+      "output": {
+        "action": "metamask.analytics.assert_events",
+        "since": 1785662229957,
+        "exact": false,
+        "observed": [
+          {
+            "event": "Perp Screen Viewed",
+            "matched": 1
+          },
+          {
+            "event": "Perp Screen Viewed",
+            "matched": 1
+          }
+        ],
+        "capturedCount": 5,
+        "liveAdapter": "<mm-harness>/library/actions/shared/analytics/assert_events.mjs"
+      }
+    },
+    {
+      "nodeId": "unsigned-capture",
+      "action": "metamask.analytics.start_capture",
+      "intent": "Bracket the unsigned candidate",
+      "startedAt": "2026-08-02T09:17:13.433Z",
+      "endedAt": "2026-08-02T09:17:13.564Z",
+      "durationMs": 131,
+      "ok": true,
+      "next": "unsigned-label",
+      "output": {
+        "action": "metamask.analytics.start_capture",
+        "cursor": 1785662233534,
+        "port": 7668,
+        "pid": 15682,
+        "eventsFile": "<metamask-extension>/temp/recipe/runtime/analytics/events.jsonl",
+        "reused": true,
+        "androidDevice": null,
+        "note": "Client must be built with its Segment host pointed at http://localhost:7668 (extension SEGMENT_HOST, mobile SEGMENT_PROXY_URL) and a non-empty write key.",
+        "liveAdapter": "<mm-harness>/library/actions/shared/analytics/start_capture.mjs"
+      }
+    },
+    {
+      "nodeId": "unsigned-label",
+      "action": "app.hud",
+      "intent": "Show the unsigned rejection case in the recording",
+      "startedAt": "2026-08-02T09:17:13.573Z",
+      "endedAt": "2026-08-02T09:17:13.579Z",
+      "durationMs": 6,
+      "ok": true,
+      "next": "unsigned-open",
+      "output": {
+        "hud": true,
+        "status": "running",
+        "nodeId": "unsigned-label",
+        "flow": "",
+        "cdpPort": 9333,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/BTC?source=deeplink&utm_source=recipe_signed&utm_medium=proof&utm_campaign=pr45123",
+        "runtimeLaunch": null
+      }
+    },
+    {
+      "nodeId": "unsigned-open",
+      "action": "metamask.deeplink.open",
+      "intent": "Open an unsigned attribution candidate through external Chrome ingress",
+      "startedAt": "2026-08-02T09:17:13.579Z",
+      "endedAt": "2026-08-02T09:17:13.814Z",
+      "durationMs": 235,
+      "ok": true,
+      "next": "unsigned-not-signed",
+      "output": {
+        "action": "metamask.deeplink.open",
+        "url": "https://link.metamask.io/perps?screen=asset&symbol=BTC&utm_source=recipe_unsigned&utm_medium=proof&utm_campaign=pr45123",
+        "navigation": {
+          "frameId": "D5C71BAD1D4F8F7D6C84AEE899B7E3C0",
+          "loaderId": "9426921B274A2791BFD5B9C16B4C7CA4",
+          "errorText": "net::ERR_ABORTED",
+          "isDownload": false
+        },
+        "proofPath": "external-deeplink",
+        "cdpPort": 9333,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/BTC?source=deeplink&utm_source=recipe_signed&utm_medium=proof&utm_campaign=pr45123",
+        "runtimeLaunch": null,
+        "liveAdapter": "<mm-harness>/library/actions/extension/deeplink/open.mjs"
+      },
+      "observationWarnings": [
+        {
+          "ref": "ui.screen",
+          "message": "No passive observer registered for metamask.deeplink.open."
+        },
+        {
+          "ref": "ui.visible",
+          "message": "No passive observer registered for metamask.deeplink.open."
+        }
+      ]
+    },
+    {
+      "nodeId": "unsigned-not-signed",
+      "action": "ui.wait_for",
+      "intent": "Prove the unsigned link is not presented as verified",
+      "startedAt": "2026-08-02T09:17:13.820Z",
+      "endedAt": "2026-08-02T09:17:14.164Z",
+      "durationMs": 344,
+      "ok": true,
+      "next": "unsigned-continue",
+      "output": {
+        "matched": true,
+        "cdpPort": 9333,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#link?u=%2Fperps%3Fscreen%3Dasset%26symbol%3DBTC%26utm_source%3Drecipe_unsigned%26utm_medium%3Dproof%26utm_campaign%3Dpr45123",
+        "runtimeLaunch": null
+      },
+      "observations": {
+        "ui.screen": {
+          "provider": "cdp-web",
+          "name": "MetaMask",
+          "title": "MetaMask",
+          "route": "#link",
+          "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
+        },
+        "ui.visible": {
+          "provider": "cdp-web",
+          "items": [
+            {
+              "role": "link",
+              "label": "Continue",
+              "test_id": "deep-link-continue-button",
+              "selector": "[data-testid=\"deep-link-continue-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 402,
+                "y": 622,
+                "width": 396,
+                "height": 48
+              }
+            }
+          ],
+          "hidden_or_offscreen": [],
+          "truncated": false,
+          "limits": {
+            "items": 20,
+            "hidden_or_offscreen": 10
+          }
+        }
+      }
+    },
+    {
+      "nodeId": "unsigned-continue",
+      "action": "ui.press",
+      "intent": "Continue after the unsigned-link warning",
+      "startedAt": "2026-08-02T09:17:14.173Z",
+      "endedAt": "2026-08-02T09:17:14.579Z",
+      "durationMs": 406,
+      "ok": true,
+      "next": "unsigned-visible",
+      "output": {
+        "clicked": true,
+        "selector": "[data-testid=\"deep-link-continue-button\"], [data-test-id=\"deep-link-continue-button\"], [data-test=\"deep-link-continue-button\"]",
+        "tagName": "A",
+        "cdpPort": 9333,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#link?u=%2Fperps%3Fscreen%3Dasset%26symbol%3DBTC%26utm_source%3Drecipe_unsigned%26utm_medium%3Dproof%26utm_campaign%3Dpr45123",
+        "runtimeLaunch": null
+      },
+      "observations": {
+        "ui.screen": {
+          "provider": "cdp-web",
+          "name": "MetaMask",
+          "title": "MetaMask",
+          "route": "#/perps/market/BTC",
+          "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
+        },
+        "ui.visible": {
+          "provider": "cdp-web",
+          "items": [
+            {
+              "role": "button",
+              "label": "1min",
+              "test_id": "perps-candle-period-1m",
+              "selector": "[data-testid=\"perps-candle-period-1m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 392,
+                "width": 61,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "3min",
+              "test_id": "perps-candle-period-3m",
+              "selector": "[data-testid=\"perps-candle-period-3m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 282,
+                "y": 392,
+                "width": 64,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "5min",
+              "test_id": "perps-candle-period-5m",
+              "selector": "[data-testid=\"perps-candle-period-5m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 351,
+                "y": 392,
+                "width": 65,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "15min",
+              "test_id": "perps-candle-period-15m",
+              "selector": "[data-testid=\"perps-candle-period-15m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 419,
+                "y": 392,
+                "width": 70,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "More",
+              "test_id": "perps-candle-period-more",
+              "selector": "[data-testid=\"perps-candle-period-more\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 493,
+                "y": 392,
+                "width": 81,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "Recent activity, See all",
+              "test_id": "perps-market-detail-view-all-activity",
+              "selector": "[data-testid=\"perps-market-detail-view-all-activity\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 201,
+                "y": 688,
+                "width": 798,
+                "height": 48
+              }
+            },
+            {
+              "role": "button",
+              "label": "Closed short 0.00019 BTC -$0.02",
+              "test_id": "transaction-card-57285079431-1785570345855-0",
+              "selector": "[data-testid=\"transaction-card-57285079431-1785570345855-0\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 748,
+                "width": 766,
+                "height": 74
+              }
+            },
+            {
+              "role": "button",
+              "label": "Flipped long > short 0.00005 BTC -$0.02",
+              "test_id": "transaction-card-57285077208-1785570339971-1",
+              "selector": "[data-testid=\"transaction-card-57285077208-1785570339971-1\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 822,
+                "width": 766,
+                "height": 75
+              }
+            },
+            {
+              "role": "button",
+              "label": "Opened short 0.00014 BTC -$0.01",
+              "test_id": "transaction-card-57285077208-1785570339971-2",
+              "selector": "[data-testid=\"transaction-card-57285077208-1785570339971-2\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 897,
+                "width": 766,
+                "height": 75
+              }
+            },
+            {
+              "role": "button",
+              "label": "Long",
+              "test_id": "perps-long-cta-button",
+              "selector": "[data-testid=\"perps-long-cta-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 1137,
+                "width": 377,
+                "height": 48
+              }
+            },
+            {
+              "role": "button",
+              "label": "Short",
+              "test_id": "perps-short-cta-button",
+              "selector": "[data-testid=\"perps-short-cta-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 606,
+                "y": 1137,
+                "width": 377,
+                "height": 48
+              }
+            }
+          ],
+          "hidden_or_offscreen": [],
+          "truncated": false,
+          "limits": {
+            "items": 20,
+            "hidden_or_offscreen": 10
+          }
+        }
+      }
+    },
+    {
+      "nodeId": "unsigned-visible",
+      "action": "ui.wait_for",
+      "intent": "Prove safe route parameters still reach the BTC market",
+      "startedAt": "2026-08-02T09:17:14.585Z",
+      "endedAt": "2026-08-02T09:17:14.977Z",
+      "durationMs": 392,
+      "ok": true,
+      "next": "unsigned-assert",
+      "output": {
+        "matched": true,
+        "cdpPort": 9333,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/BTC?source=deeplink",
+        "runtimeLaunch": null
+      },
+      "observations": {
+        "ui.screen": {
+          "provider": "cdp-web",
+          "name": "MetaMask",
+          "title": "MetaMask",
+          "route": "#/perps/market/BTC",
+          "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
+        },
+        "ui.visible": {
+          "provider": "cdp-web",
+          "items": [
+            {
+              "role": "button",
+              "label": "1min",
+              "test_id": "perps-candle-period-1m",
+              "selector": "[data-testid=\"perps-candle-period-1m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 392,
+                "width": 61,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "3min",
+              "test_id": "perps-candle-period-3m",
+              "selector": "[data-testid=\"perps-candle-period-3m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 282,
+                "y": 392,
+                "width": 64,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "5min",
+              "test_id": "perps-candle-period-5m",
+              "selector": "[data-testid=\"perps-candle-period-5m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 351,
+                "y": 392,
+                "width": 65,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "15min",
+              "test_id": "perps-candle-period-15m",
+              "selector": "[data-testid=\"perps-candle-period-15m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 419,
+                "y": 392,
+                "width": 70,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "More",
+              "test_id": "perps-candle-period-more",
+              "selector": "[data-testid=\"perps-candle-period-more\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 493,
+                "y": 392,
+                "width": 81,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "Recent activity, See all",
+              "test_id": "perps-market-detail-view-all-activity",
+              "selector": "[data-testid=\"perps-market-detail-view-all-activity\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 201,
+                "y": 688,
+                "width": 798,
+                "height": 48
+              }
+            },
+            {
+              "role": "button",
+              "label": "Closed short 0.00019 BTC -$0.02",
+              "test_id": "transaction-card-57285079431-1785570345855-0",
+              "selector": "[data-testid=\"transaction-card-57285079431-1785570345855-0\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 748,
+                "width": 766,
+                "height": 74
+              }
+            },
+            {
+              "role": "button",
+              "label": "Flipped long > short 0.00005 BTC -$0.02",
+              "test_id": "transaction-card-57285077208-1785570339971-1",
+              "selector": "[data-testid=\"transaction-card-57285077208-1785570339971-1\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 822,
+                "width": 766,
+                "height": 75
+              }
+            },
+            {
+              "role": "button",
+              "label": "Opened short 0.00014 BTC -$0.01",
+              "test_id": "transaction-card-57285077208-1785570339971-2",
+              "selector": "[data-testid=\"transaction-card-57285077208-1785570339971-2\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 897,
+                "width": 766,
+                "height": 75
+              }
+            },
+            {
+              "role": "button",
+              "label": "Long",
+              "test_id": "perps-long-cta-button",
+              "selector": "[data-testid=\"perps-long-cta-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 1137,
+                "width": 377,
+                "height": 48
+              }
+            },
+            {
+              "role": "button",
+              "label": "Short",
+              "test_id": "perps-short-cta-button",
+              "selector": "[data-testid=\"perps-short-cta-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 606,
+                "y": 1137,
+                "width": 377,
+                "height": 48
+              }
+            }
+          ],
+          "hidden_or_offscreen": [],
+          "truncated": false,
+          "limits": {
+            "items": 20,
+            "hidden_or_offscreen": 10
+          }
+        }
+      }
+    },
+    {
+      "nodeId": "unsigned-assert",
+      "action": "metamask.analytics.assert_events",
+      "intent": "Prove unsigned attribution reached no emitted destination event",
+      "startedAt": "2026-08-02T09:17:15.014Z",
+      "endedAt": "2026-08-02T09:17:17.208Z",
+      "durationMs": 2194,
+      "ok": true,
+      "next": "tampered-capture",
+      "output": {
+        "action": "metamask.analytics.assert_events",
+        "since": 1785662233534,
+        "exact": false,
+        "observed": [
+          {
+            "event": "Perp Screen Viewed",
+            "matched": 1
+          },
+          {
+            "event": "Perp Screen Viewed",
+            "matched": 0
+          }
+        ],
+        "capturedCount": 5,
+        "liveAdapter": "<mm-harness>/library/actions/shared/analytics/assert_events.mjs"
+      }
+    },
+    {
+      "nodeId": "tampered-capture",
+      "action": "metamask.analytics.start_capture",
+      "intent": "Bracket the tampered candidate",
+      "startedAt": "2026-08-02T09:17:17.221Z",
+      "endedAt": "2026-08-02T09:17:17.427Z",
+      "durationMs": 206,
+      "ok": true,
+      "next": "tampered-label",
+      "output": {
+        "action": "metamask.analytics.start_capture",
+        "cursor": 1785662237371,
+        "port": 7668,
+        "pid": 15682,
+        "eventsFile": "<metamask-extension>/temp/recipe/runtime/analytics/events.jsonl",
+        "reused": true,
+        "androidDevice": null,
+        "note": "Client must be built with its Segment host pointed at http://localhost:7668 (extension SEGMENT_HOST, mobile SEGMENT_PROXY_URL) and a non-empty write key.",
+        "liveAdapter": "<mm-harness>/library/actions/shared/analytics/start_capture.mjs"
+      }
+    },
+    {
+      "nodeId": "tampered-label",
+      "action": "app.hud",
+      "intent": "Show the tampered-signature case in the recording",
+      "startedAt": "2026-08-02T09:17:17.434Z",
+      "endedAt": "2026-08-02T09:17:17.441Z",
+      "durationMs": 7,
+      "ok": true,
+      "next": "tampered-open",
+      "output": {
+        "hud": true,
+        "status": "running",
+        "nodeId": "tampered-label",
+        "flow": "",
+        "cdpPort": 9333,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/BTC?source=deeplink",
+        "runtimeLaunch": null
+      }
+    },
+    {
+      "nodeId": "tampered-open",
+      "action": "metamask.deeplink.open",
+      "intent": "Open a signed link whose UTM value changed after signing",
+      "startedAt": "2026-08-02T09:17:17.441Z",
+      "endedAt": "2026-08-02T09:17:17.657Z",
+      "durationMs": 216,
+      "ok": true,
+      "next": "tampered-not-signed",
+      "output": {
+        "action": "metamask.deeplink.open",
+        "url": "https://link.metamask.io/perps?screen=asset&sig_params=screen%2Csymbol%2Cutm_campaign%2Cutm_medium%2Cutm_source&symbol=BTC&utm_campaign=pr45123&utm_medium=proof&utm_source=recipe_tampered&sig=RAzmQrinSCXhBgnzSGUfskDvoq71032GCRxDcPp5JgfCW_K_cglv3nhb9V1Qg4BC4inqNsCzMQVspgs9LavCrA",
+        "navigation": {
+          "frameId": "D5C71BAD1D4F8F7D6C84AEE899B7E3C0",
+          "loaderId": "565C205E72AF3550E35701017FE76F11",
+          "errorText": "net::ERR_ABORTED",
+          "isDownload": false
+        },
+        "proofPath": "external-deeplink",
+        "cdpPort": 9333,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/BTC?source=deeplink",
+        "runtimeLaunch": null,
+        "liveAdapter": "<mm-harness>/library/actions/extension/deeplink/open.mjs"
+      },
+      "observationWarnings": [
+        {
+          "ref": "ui.screen",
+          "message": "No passive observer registered for metamask.deeplink.open."
+        },
+        {
+          "ref": "ui.visible",
+          "message": "No passive observer registered for metamask.deeplink.open."
+        }
+      ]
+    },
+    {
+      "nodeId": "tampered-not-signed",
+      "action": "ui.wait_for",
+      "intent": "Prove tampering demotes the link from verified",
+      "startedAt": "2026-08-02T09:17:17.663Z",
+      "endedAt": "2026-08-02T09:17:18.009Z",
+      "durationMs": 346,
+      "ok": true,
+      "next": "tampered-continue",
+      "output": {
+        "matched": true,
+        "cdpPort": 9333,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#link?u=%2Fperps%3Fscreen%3Dasset%26sig_params%3Dscreen%252Csymbol%252Cutm_campaign%252Cutm_medium%252Cutm_source%26symbol%3DBTC%26utm_campaign%3Dpr45123%26utm_medium%3Dproof%26utm_source%3Drecipe_tampered%26sig%3DRAzmQrinSCXhBgnzSGUfskDvoq71032GCRxDcPp5JgfCW_K_cglv3nhb9V1Qg4BC4inqNsCzMQVspgs9LavCrA",
+        "runtimeLaunch": null
+      },
+      "observations": {
+        "ui.screen": {
+          "provider": "cdp-web",
+          "name": "MetaMask",
+          "title": "MetaMask",
+          "route": "#link",
+          "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
+        },
+        "ui.visible": {
+          "provider": "cdp-web",
+          "items": [
+            {
+              "role": "link",
+              "label": "Continue",
+              "test_id": "deep-link-continue-button",
+              "selector": "[data-testid=\"deep-link-continue-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 402,
+                "y": 622,
+                "width": 396,
+                "height": 48
+              }
+            }
+          ],
+          "hidden_or_offscreen": [],
+          "truncated": false,
+          "limits": {
+            "items": 20,
+            "hidden_or_offscreen": 10
+          }
+        }
+      }
+    },
+    {
+      "nodeId": "tampered-continue",
+      "action": "ui.press",
+      "intent": "Continue after the tampered-link warning",
+      "startedAt": "2026-08-02T09:17:18.014Z",
+      "endedAt": "2026-08-02T09:17:18.529Z",
+      "durationMs": 515,
+      "ok": true,
+      "next": "tampered-visible",
+      "output": {
+        "clicked": true,
+        "selector": "[data-testid=\"deep-link-continue-button\"], [data-test-id=\"deep-link-continue-button\"], [data-test=\"deep-link-continue-button\"]",
+        "tagName": "A",
+        "cdpPort": 9333,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#link?u=%2Fperps%3Fscreen%3Dasset%26sig_params%3Dscreen%252Csymbol%252Cutm_campaign%252Cutm_medium%252Cutm_source%26symbol%3DBTC%26utm_campaign%3Dpr45123%26utm_medium%3Dproof%26utm_source%3Drecipe_tampered%26sig%3DRAzmQrinSCXhBgnzSGUfskDvoq71032GCRxDcPp5JgfCW_K_cglv3nhb9V1Qg4BC4inqNsCzMQVspgs9LavCrA",
+        "runtimeLaunch": null
+      },
+      "observations": {
+        "ui.screen": {
+          "provider": "cdp-web",
+          "name": "MetaMask",
+          "title": "MetaMask",
+          "route": "#/perps/market/BTC",
+          "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
+        },
+        "ui.visible": {
+          "provider": "cdp-web",
+          "items": [
+            {
+              "role": "button",
+              "label": "1min",
+              "test_id": "perps-candle-period-1m",
+              "selector": "[data-testid=\"perps-candle-period-1m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 392,
+                "width": 61,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "3min",
+              "test_id": "perps-candle-period-3m",
+              "selector": "[data-testid=\"perps-candle-period-3m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 282,
+                "y": 392,
+                "width": 64,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "5min",
+              "test_id": "perps-candle-period-5m",
+              "selector": "[data-testid=\"perps-candle-period-5m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 351,
+                "y": 392,
+                "width": 65,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "15min",
+              "test_id": "perps-candle-period-15m",
+              "selector": "[data-testid=\"perps-candle-period-15m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 419,
+                "y": 392,
+                "width": 70,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "More",
+              "test_id": "perps-candle-period-more",
+              "selector": "[data-testid=\"perps-candle-period-more\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 493,
+                "y": 392,
+                "width": 81,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "Recent activity, See all",
+              "test_id": "perps-market-detail-view-all-activity",
+              "selector": "[data-testid=\"perps-market-detail-view-all-activity\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 201,
+                "y": 688,
+                "width": 798,
+                "height": 48
+              }
+            },
+            {
+              "role": "button",
+              "label": "Closed short 0.00019 BTC -$0.02",
+              "test_id": "transaction-card-57285079431-1785570345855-0",
+              "selector": "[data-testid=\"transaction-card-57285079431-1785570345855-0\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 748,
+                "width": 766,
+                "height": 74
+              }
+            },
+            {
+              "role": "button",
+              "label": "Flipped long > short 0.00005 BTC -$0.02",
+              "test_id": "transaction-card-57285077208-1785570339971-1",
+              "selector": "[data-testid=\"transaction-card-57285077208-1785570339971-1\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 822,
+                "width": 766,
+                "height": 75
+              }
+            },
+            {
+              "role": "button",
+              "label": "Opened short 0.00014 BTC -$0.01",
+              "test_id": "transaction-card-57285077208-1785570339971-2",
+              "selector": "[data-testid=\"transaction-card-57285077208-1785570339971-2\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 897,
+                "width": 766,
+                "height": 75
+              }
+            },
+            {
+              "role": "button",
+              "label": "Long",
+              "test_id": "perps-long-cta-button",
+              "selector": "[data-testid=\"perps-long-cta-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 1137,
+                "width": 377,
+                "height": 48
+              }
+            },
+            {
+              "role": "button",
+              "label": "Short",
+              "test_id": "perps-short-cta-button",
+              "selector": "[data-testid=\"perps-short-cta-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 606,
+                "y": 1137,
+                "width": 377,
+                "height": 48
+              }
+            }
+          ],
+          "hidden_or_offscreen": [],
+          "truncated": false,
+          "limits": {
+            "items": 20,
+            "hidden_or_offscreen": 10
+          }
+        }
+      }
+    },
+    {
+      "nodeId": "tampered-visible",
+      "action": "ui.wait_for",
+      "intent": "Prove only safe route parameters survive tampering",
+      "startedAt": "2026-08-02T09:17:18.562Z",
+      "endedAt": "2026-08-02T09:17:18.929Z",
+      "durationMs": 367,
+      "ok": true,
+      "next": "tampered-assert",
+      "output": {
+        "matched": true,
+        "cdpPort": 9333,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/BTC?source=deeplink",
+        "runtimeLaunch": null
+      },
+      "observations": {
+        "ui.screen": {
+          "provider": "cdp-web",
+          "name": "MetaMask",
+          "title": "MetaMask",
+          "route": "#/perps/market/BTC",
+          "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
+        },
+        "ui.visible": {
+          "provider": "cdp-web",
+          "items": [
+            {
+              "role": "button",
+              "label": "1min",
+              "test_id": "perps-candle-period-1m",
+              "selector": "[data-testid=\"perps-candle-period-1m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 392,
+                "width": 61,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "3min",
+              "test_id": "perps-candle-period-3m",
+              "selector": "[data-testid=\"perps-candle-period-3m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 282,
+                "y": 392,
+                "width": 64,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "5min",
+              "test_id": "perps-candle-period-5m",
+              "selector": "[data-testid=\"perps-candle-period-5m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 351,
+                "y": 392,
+                "width": 65,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "15min",
+              "test_id": "perps-candle-period-15m",
+              "selector": "[data-testid=\"perps-candle-period-15m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 419,
+                "y": 392,
+                "width": 70,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "More",
+              "test_id": "perps-candle-period-more",
+              "selector": "[data-testid=\"perps-candle-period-more\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 493,
+                "y": 392,
+                "width": 81,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "Recent activity, See all",
+              "test_id": "perps-market-detail-view-all-activity",
+              "selector": "[data-testid=\"perps-market-detail-view-all-activity\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 201,
+                "y": 688,
+                "width": 798,
+                "height": 48
+              }
+            },
+            {
+              "role": "button",
+              "label": "Closed short 0.00019 BTC -$0.02",
+              "test_id": "transaction-card-57285079431-1785570345855-0",
+              "selector": "[data-testid=\"transaction-card-57285079431-1785570345855-0\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 748,
+                "width": 766,
+                "height": 74
+              }
+            },
+            {
+              "role": "button",
+              "label": "Flipped long > short 0.00005 BTC -$0.02",
+              "test_id": "transaction-card-57285077208-1785570339971-1",
+              "selector": "[data-testid=\"transaction-card-57285077208-1785570339971-1\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 822,
+                "width": 766,
+                "height": 75
+              }
+            },
+            {
+              "role": "button",
+              "label": "Opened short 0.00014 BTC -$0.01",
+              "test_id": "transaction-card-57285077208-1785570339971-2",
+              "selector": "[data-testid=\"transaction-card-57285077208-1785570339971-2\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 897,
+                "width": 766,
+                "height": 75
+              }
+            },
+            {
+              "role": "button",
+              "label": "Long",
+              "test_id": "perps-long-cta-button",
+              "selector": "[data-testid=\"perps-long-cta-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 1137,
+                "width": 377,
+                "height": 48
+              }
+            },
+            {
+              "role": "button",
+              "label": "Short",
+              "test_id": "perps-short-cta-button",
+              "selector": "[data-testid=\"perps-short-cta-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 606,
+                "y": 1137,
+                "width": 377,
+                "height": 48
+              }
+            }
+          ],
+          "hidden_or_offscreen": [],
+          "truncated": false,
+          "limits": {
+            "items": 20,
+            "hidden_or_offscreen": 10
+          }
+        }
+      }
+    },
+    {
+      "nodeId": "tampered-assert",
+      "action": "metamask.analytics.assert_events",
+      "intent": "Prove the tampered attribution reached no emitted destination event",
+      "startedAt": "2026-08-02T09:17:18.936Z",
+      "endedAt": "2026-08-02T09:17:21.033Z",
+      "durationMs": 2097,
+      "ok": true,
+      "next": "malformed-capture",
+      "output": {
+        "action": "metamask.analytics.assert_events",
+        "since": 1785662237371,
+        "exact": false,
+        "observed": [
+          {
+            "event": "Perp Screen Viewed",
+            "matched": 1
+          },
+          {
+            "event": "Perp Screen Viewed",
+            "matched": 0
+          }
+        ],
+        "capturedCount": 5,
+        "liveAdapter": "<mm-harness>/library/actions/shared/analytics/assert_events.mjs"
+      }
+    },
+    {
+      "nodeId": "malformed-capture",
+      "action": "metamask.analytics.start_capture",
+      "intent": "Bracket malformed sig_params",
+      "startedAt": "2026-08-02T09:17:21.042Z",
+      "endedAt": "2026-08-02T09:17:21.204Z",
+      "durationMs": 162,
+      "ok": true,
+      "next": "malformed-label",
+      "output": {
+        "action": "metamask.analytics.start_capture",
+        "cursor": 1785662241137,
+        "port": 7668,
+        "pid": 15682,
+        "eventsFile": "<metamask-extension>/temp/recipe/runtime/analytics/events.jsonl",
+        "reused": true,
+        "androidDevice": null,
+        "note": "Client must be built with its Segment host pointed at http://localhost:7668 (extension SEGMENT_HOST, mobile SEGMENT_PROXY_URL) and a non-empty write key.",
+        "liveAdapter": "<mm-harness>/library/actions/shared/analytics/start_capture.mjs"
+      }
+    },
+    {
+      "nodeId": "malformed-label",
+      "action": "app.hud",
+      "intent": "Show the malformed signed-parameter case in the recording",
+      "startedAt": "2026-08-02T09:17:21.211Z",
+      "endedAt": "2026-08-02T09:17:21.217Z",
+      "durationMs": 6,
+      "ok": true,
+      "next": "malformed-open",
+      "output": {
+        "hud": true,
+        "status": "running",
+        "nodeId": "malformed-label",
+        "flow": "",
+        "cdpPort": 9333,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/BTC?source=deeplink",
+        "runtimeLaunch": null
+      }
+    },
+    {
+      "nodeId": "malformed-open",
+      "action": "metamask.deeplink.open",
+      "intent": "Open a link whose sig_params changed after signing",
+      "startedAt": "2026-08-02T09:17:21.217Z",
+      "endedAt": "2026-08-02T09:17:21.553Z",
+      "durationMs": 336,
+      "ok": true,
+      "next": "malformed-not-signed",
+      "output": {
+        "action": "metamask.deeplink.open",
+        "url": "https://link.metamask.io/perps?screen=asset&sig_params=screen%2Csymbol%2Cutm_source%2Cutm_medium%2Cutm_campaign%2C&symbol=BTC&utm_campaign=pr45123&utm_medium=proof&utm_source=recipe_malformed&sig=QV-4O7rq1sKkIbsjct-BgyoRYLuP7bzuFi20qWHtMr0c-q8ZJmS-I1w9T5LFFUCFH93CQYJBJG4C1YH1ShKoXw",
+        "navigation": {
+          "frameId": "D5C71BAD1D4F8F7D6C84AEE899B7E3C0",
+          "loaderId": "9A7C2B1145E712D4FD64665059F823EF",
+          "errorText": "net::ERR_ABORTED",
+          "isDownload": false
+        },
+        "proofPath": "external-deeplink",
+        "cdpPort": 9333,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/BTC?source=deeplink",
+        "runtimeLaunch": null,
+        "liveAdapter": "<mm-harness>/library/actions/extension/deeplink/open.mjs"
+      },
+      "observationWarnings": [
+        {
+          "ref": "ui.screen",
+          "message": "No passive observer registered for metamask.deeplink.open."
+        },
+        {
+          "ref": "ui.visible",
+          "message": "No passive observer registered for metamask.deeplink.open."
+        }
+      ]
+    },
+    {
+      "nodeId": "malformed-not-signed",
+      "action": "ui.wait_for",
+      "intent": "Prove malformed sig_params demotes the link from verified",
+      "startedAt": "2026-08-02T09:17:21.562Z",
+      "endedAt": "2026-08-02T09:17:21.915Z",
+      "durationMs": 353,
+      "ok": true,
+      "next": "malformed-continue",
+      "output": {
+        "matched": true,
+        "cdpPort": 9333,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#link?u=%2Fperps%3Fscreen%3Dasset%26sig_params%3Dscreen%252Csymbol%252Cutm_source%252Cutm_medium%252Cutm_campaign%252C%26symbol%3DBTC%26utm_campaign%3Dpr45123%26utm_medium%3Dproof%26utm_source%3Drecipe_malformed%26sig%3DQV-4O7rq1sKkIbsjct-BgyoRYLuP7bzuFi20qWHtMr0c-q8ZJmS-I1w9T5LFFUCFH93CQYJBJG4C1YH1ShKoXw",
+        "runtimeLaunch": null
+      },
+      "observations": {
+        "ui.screen": {
+          "provider": "cdp-web",
+          "name": "MetaMask",
+          "title": "MetaMask",
+          "route": "#link",
+          "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
+        },
+        "ui.visible": {
+          "provider": "cdp-web",
+          "items": [
+            {
+              "role": "link",
+              "label": "Continue",
+              "test_id": "deep-link-continue-button",
+              "selector": "[data-testid=\"deep-link-continue-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 402,
+                "y": 622,
+                "width": 396,
+                "height": 48
+              }
+            }
+          ],
+          "hidden_or_offscreen": [],
+          "truncated": false,
+          "limits": {
+            "items": 20,
+            "hidden_or_offscreen": 10
+          }
+        }
+      }
+    },
+    {
+      "nodeId": "malformed-continue",
+      "action": "ui.press",
+      "intent": "Continue after the malformed-link warning",
+      "startedAt": "2026-08-02T09:17:21.922Z",
+      "endedAt": "2026-08-02T09:17:22.330Z",
+      "durationMs": 408,
+      "ok": true,
+      "next": "malformed-visible",
+      "output": {
+        "clicked": true,
+        "selector": "[data-testid=\"deep-link-continue-button\"], [data-test-id=\"deep-link-continue-button\"], [data-test=\"deep-link-continue-button\"]",
+        "tagName": "A",
+        "cdpPort": 9333,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#link?u=%2Fperps%3Fscreen%3Dasset%26sig_params%3Dscreen%252Csymbol%252Cutm_source%252Cutm_medium%252Cutm_campaign%252C%26symbol%3DBTC%26utm_campaign%3Dpr45123%26utm_medium%3Dproof%26utm_source%3Drecipe_malformed%26sig%3DQV-4O7rq1sKkIbsjct-BgyoRYLuP7bzuFi20qWHtMr0c-q8ZJmS-I1w9T5LFFUCFH93CQYJBJG4C1YH1ShKoXw",
+        "runtimeLaunch": null
+      },
+      "observations": {
+        "ui.screen": {
+          "provider": "cdp-web",
+          "name": "MetaMask",
+          "title": "MetaMask",
+          "route": "#/perps/market/BTC",
+          "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
+        },
+        "ui.visible": {
+          "provider": "cdp-web",
+          "items": [
+            {
+              "role": "button",
+              "label": "1min",
+              "test_id": "perps-candle-period-1m",
+              "selector": "[data-testid=\"perps-candle-period-1m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 392,
+                "width": 61,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "3min",
+              "test_id": "perps-candle-period-3m",
+              "selector": "[data-testid=\"perps-candle-period-3m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 282,
+                "y": 392,
+                "width": 64,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "5min",
+              "test_id": "perps-candle-period-5m",
+              "selector": "[data-testid=\"perps-candle-period-5m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 351,
+                "y": 392,
+                "width": 65,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "15min",
+              "test_id": "perps-candle-period-15m",
+              "selector": "[data-testid=\"perps-candle-period-15m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 419,
+                "y": 392,
+                "width": 70,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "More",
+              "test_id": "perps-candle-period-more",
+              "selector": "[data-testid=\"perps-candle-period-more\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 493,
+                "y": 392,
+                "width": 81,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "Recent activity, See all",
+              "test_id": "perps-market-detail-view-all-activity",
+              "selector": "[data-testid=\"perps-market-detail-view-all-activity\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 201,
+                "y": 688,
+                "width": 798,
+                "height": 48
+              }
+            },
+            {
+              "role": "button",
+              "label": "Closed short 0.00019 BTC -$0.02",
+              "test_id": "transaction-card-57285079431-1785570345855-0",
+              "selector": "[data-testid=\"transaction-card-57285079431-1785570345855-0\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 748,
+                "width": 766,
+                "height": 74
+              }
+            },
+            {
+              "role": "button",
+              "label": "Flipped long > short 0.00005 BTC -$0.02",
+              "test_id": "transaction-card-57285077208-1785570339971-1",
+              "selector": "[data-testid=\"transaction-card-57285077208-1785570339971-1\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 822,
+                "width": 766,
+                "height": 75
+              }
+            },
+            {
+              "role": "button",
+              "label": "Opened short 0.00014 BTC -$0.01",
+              "test_id": "transaction-card-57285077208-1785570339971-2",
+              "selector": "[data-testid=\"transaction-card-57285077208-1785570339971-2\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 897,
+                "width": 766,
+                "height": 75
+              }
+            },
+            {
+              "role": "button",
+              "label": "Long",
+              "test_id": "perps-long-cta-button",
+              "selector": "[data-testid=\"perps-long-cta-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 1137,
+                "width": 377,
+                "height": 48
+              }
+            },
+            {
+              "role": "button",
+              "label": "Short",
+              "test_id": "perps-short-cta-button",
+              "selector": "[data-testid=\"perps-short-cta-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 606,
+                "y": 1137,
+                "width": 377,
+                "height": 48
+              }
+            }
+          ],
+          "hidden_or_offscreen": [],
+          "truncated": false,
+          "limits": {
+            "items": 20,
+            "hidden_or_offscreen": 10
+          }
+        }
+      }
+    },
+    {
+      "nodeId": "malformed-visible",
+      "action": "ui.wait_for",
+      "intent": "Prove only safe route parameters survive malformed sig_params",
+      "startedAt": "2026-08-02T09:17:22.335Z",
+      "endedAt": "2026-08-02T09:17:22.717Z",
+      "durationMs": 382,
+      "ok": true,
+      "next": "malformed-assert",
+      "output": {
+        "matched": true,
+        "cdpPort": 9333,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/BTC?source=deeplink",
+        "runtimeLaunch": null
+      },
+      "observations": {
+        "ui.screen": {
+          "provider": "cdp-web",
+          "name": "MetaMask",
+          "title": "MetaMask",
+          "route": "#/perps/market/BTC",
+          "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
+        },
+        "ui.visible": {
+          "provider": "cdp-web",
+          "items": [
+            {
+              "role": "button",
+              "label": "1min",
+              "test_id": "perps-candle-period-1m",
+              "selector": "[data-testid=\"perps-candle-period-1m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 392,
+                "width": 61,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "3min",
+              "test_id": "perps-candle-period-3m",
+              "selector": "[data-testid=\"perps-candle-period-3m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 282,
+                "y": 392,
+                "width": 64,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "5min",
+              "test_id": "perps-candle-period-5m",
+              "selector": "[data-testid=\"perps-candle-period-5m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 351,
+                "y": 392,
+                "width": 65,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "15min",
+              "test_id": "perps-candle-period-15m",
+              "selector": "[data-testid=\"perps-candle-period-15m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 419,
+                "y": 392,
+                "width": 70,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "More",
+              "test_id": "perps-candle-period-more",
+              "selector": "[data-testid=\"perps-candle-period-more\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 493,
+                "y": 392,
+                "width": 81,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "Recent activity, See all",
+              "test_id": "perps-market-detail-view-all-activity",
+              "selector": "[data-testid=\"perps-market-detail-view-all-activity\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 201,
+                "y": 688,
+                "width": 798,
+                "height": 48
+              }
+            },
+            {
+              "role": "button",
+              "label": "Closed short 0.00019 BTC -$0.02",
+              "test_id": "transaction-card-57285079431-1785570345855-0",
+              "selector": "[data-testid=\"transaction-card-57285079431-1785570345855-0\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 748,
+                "width": 766,
+                "height": 74
+              }
+            },
+            {
+              "role": "button",
+              "label": "Flipped long > short 0.00005 BTC -$0.02",
+              "test_id": "transaction-card-57285077208-1785570339971-1",
+              "selector": "[data-testid=\"transaction-card-57285077208-1785570339971-1\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 822,
+                "width": 766,
+                "height": 75
+              }
+            },
+            {
+              "role": "button",
+              "label": "Opened short 0.00014 BTC -$0.01",
+              "test_id": "transaction-card-57285077208-1785570339971-2",
+              "selector": "[data-testid=\"transaction-card-57285077208-1785570339971-2\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 897,
+                "width": 766,
+                "height": 75
+              }
+            },
+            {
+              "role": "button",
+              "label": "Long",
+              "test_id": "perps-long-cta-button",
+              "selector": "[data-testid=\"perps-long-cta-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 1137,
+                "width": 377,
+                "height": 48
+              }
+            },
+            {
+              "role": "button",
+              "label": "Short",
+              "test_id": "perps-short-cta-button",
+              "selector": "[data-testid=\"perps-short-cta-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 606,
+                "y": 1137,
+                "width": 377,
+                "height": 48
+              }
+            }
+          ],
+          "hidden_or_offscreen": [],
+          "truncated": false,
+          "limits": {
+            "items": 20,
+            "hidden_or_offscreen": 10
+          }
+        }
+      }
+    },
+    {
+      "nodeId": "malformed-assert",
+      "action": "metamask.analytics.assert_events",
+      "intent": "Prove malformed signed parameters reached no emitted attribution",
+      "startedAt": "2026-08-02T09:17:22.725Z",
+      "endedAt": "2026-08-02T09:17:25.038Z",
+      "durationMs": 2313,
+      "ok": true,
+      "next": "invalid-signature-capture",
+      "output": {
+        "action": "metamask.analytics.assert_events",
+        "since": 1785662241137,
+        "exact": false,
+        "observed": [
+          {
+            "event": "Perp Screen Viewed",
+            "matched": 1
+          },
+          {
+            "event": "Perp Screen Viewed",
+            "matched": 0
+          }
+        ],
+        "capturedCount": 7,
+        "liveAdapter": "<mm-harness>/library/actions/shared/analytics/assert_events.mjs"
+      }
+    },
+    {
+      "nodeId": "invalid-signature-capture",
+      "action": "metamask.analytics.start_capture",
+      "intent": "Bracket the invalid signature",
+      "startedAt": "2026-08-02T09:17:25.095Z",
+      "endedAt": "2026-08-02T09:17:26.348Z",
+      "durationMs": 1253,
+      "ok": true,
+      "next": "invalid-signature-label",
+      "output": {
+        "action": "metamask.analytics.start_capture",
+        "cursor": 1785662246225,
+        "port": 7668,
+        "pid": 15682,
+        "eventsFile": "<metamask-extension>/temp/recipe/runtime/analytics/events.jsonl",
+        "reused": true,
+        "androidDevice": null,
+        "note": "Client must be built with its Segment host pointed at http://localhost:7668 (extension SEGMENT_HOST, mobile SEGMENT_PROXY_URL) and a non-empty write key.",
+        "liveAdapter": "<mm-harness>/library/actions/shared/analytics/start_capture.mjs"
+      }
+    },
+    {
+      "nodeId": "invalid-signature-label",
+      "action": "app.hud",
+      "intent": "Show the invalid-signature case in the recording",
+      "startedAt": "2026-08-02T09:17:26.364Z",
+      "endedAt": "2026-08-02T09:17:26.394Z",
+      "durationMs": 30,
+      "ok": true,
+      "next": "invalid-signature-open",
+      "output": {
+        "hud": true,
+        "status": "running",
+        "nodeId": "invalid-signature-label",
+        "flow": "",
+        "cdpPort": 9333,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/BTC?source=deeplink",
+        "runtimeLaunch": null
+      }
+    },
+    {
+      "nodeId": "invalid-signature-open",
+      "action": "metamask.deeplink.open",
+      "intent": "Open a link carrying a well-formed but invalid signature",
+      "startedAt": "2026-08-02T09:17:26.394Z",
+      "endedAt": "2026-08-02T09:17:26.954Z",
+      "durationMs": 560,
+      "ok": true,
+      "next": "invalid-signature-not-signed",
+      "output": {
+        "action": "metamask.deeplink.open",
+        "url": "https://link.metamask.io/perps?screen=asset&sig_params=screen%2Csymbol%2Cutm_campaign%2Cutm_medium%2Cutm_source&symbol=BTC&utm_campaign=pr45123&utm_medium=proof&utm_source=recipe_invalid_sig&sig=1yNOLZR4ojpPNft512dNormYdCx_xiHF_0wgMTKjDwRhsQKes-hHXKKckRNWBGIi5gqmbCY9aSlctW99b1louA",
+        "navigation": {
+          "frameId": "D5C71BAD1D4F8F7D6C84AEE899B7E3C0",
+          "loaderId": "11768641A75C82369BB8FD6DF9D44014",
+          "errorText": "net::ERR_ABORTED",
+          "isDownload": false
+        },
+        "proofPath": "external-deeplink",
+        "cdpPort": 9333,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/BTC?source=deeplink",
+        "runtimeLaunch": null,
+        "liveAdapter": "<mm-harness>/library/actions/extension/deeplink/open.mjs"
+      },
+      "observationWarnings": [
+        {
+          "ref": "ui.screen",
+          "message": "No passive observer registered for metamask.deeplink.open."
+        },
+        {
+          "ref": "ui.visible",
+          "message": "No passive observer registered for metamask.deeplink.open."
+        }
+      ]
+    },
+    {
+      "nodeId": "invalid-signature-not-signed",
+      "action": "ui.wait_for",
+      "intent": "Prove an invalid signature is not presented as verified",
+      "startedAt": "2026-08-02T09:17:26.970Z",
+      "endedAt": "2026-08-02T09:17:27.375Z",
+      "durationMs": 405,
+      "ok": true,
+      "next": "invalid-signature-continue",
+      "output": {
+        "matched": true,
+        "cdpPort": 9333,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#link?u=%2Fperps%3Fscreen%3Dasset%26sig_params%3Dscreen%252Csymbol%252Cutm_campaign%252Cutm_medium%252Cutm_source%26symbol%3DBTC%26utm_campaign%3Dpr45123%26utm_medium%3Dproof%26utm_source%3Drecipe_invalid_sig%26sig%3D1yNOLZR4ojpPNft512dNormYdCx_xiHF_0wgMTKjDwRhsQKes-hHXKKckRNWBGIi5gqmbCY9aSlctW99b1louA",
+        "runtimeLaunch": null
+      },
+      "observations": {
+        "ui.screen": {
+          "provider": "cdp-web",
+          "name": "MetaMask",
+          "title": "MetaMask",
+          "route": "#link",
+          "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
+        },
+        "ui.visible": {
+          "provider": "cdp-web",
+          "items": [
+            {
+              "role": "link",
+              "label": "Continue",
+              "test_id": "deep-link-continue-button",
+              "selector": "[data-testid=\"deep-link-continue-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 402,
+                "y": 622,
+                "width": 396,
+                "height": 48
+              }
+            }
+          ],
+          "hidden_or_offscreen": [],
+          "truncated": false,
+          "limits": {
+            "items": 20,
+            "hidden_or_offscreen": 10
+          }
+        }
+      }
+    },
+    {
+      "nodeId": "invalid-signature-continue",
+      "action": "ui.press",
+      "intent": "Continue after the invalid-signature warning",
+      "startedAt": "2026-08-02T09:17:27.383Z",
+      "endedAt": "2026-08-02T09:17:27.804Z",
+      "durationMs": 421,
+      "ok": true,
+      "next": "invalid-signature-visible",
+      "output": {
+        "clicked": true,
+        "selector": "[data-testid=\"deep-link-continue-button\"], [data-test-id=\"deep-link-continue-button\"], [data-test=\"deep-link-continue-button\"]",
+        "tagName": "A",
+        "cdpPort": 9333,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#link?u=%2Fperps%3Fscreen%3Dasset%26sig_params%3Dscreen%252Csymbol%252Cutm_campaign%252Cutm_medium%252Cutm_source%26symbol%3DBTC%26utm_campaign%3Dpr45123%26utm_medium%3Dproof%26utm_source%3Drecipe_invalid_sig%26sig%3D1yNOLZR4ojpPNft512dNormYdCx_xiHF_0wgMTKjDwRhsQKes-hHXKKckRNWBGIi5gqmbCY9aSlctW99b1louA",
+        "runtimeLaunch": null
+      },
+      "observations": {
+        "ui.screen": {
+          "provider": "cdp-web",
+          "name": "MetaMask",
+          "title": "MetaMask",
+          "route": "#/perps/market/BTC",
+          "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
+        },
+        "ui.visible": {
+          "provider": "cdp-web",
+          "items": [
+            {
+              "role": "button",
+              "label": "1min",
+              "test_id": "perps-candle-period-1m",
+              "selector": "[data-testid=\"perps-candle-period-1m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 392,
+                "width": 61,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "3min",
+              "test_id": "perps-candle-period-3m",
+              "selector": "[data-testid=\"perps-candle-period-3m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 282,
+                "y": 392,
+                "width": 64,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "5min",
+              "test_id": "perps-candle-period-5m",
+              "selector": "[data-testid=\"perps-candle-period-5m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 351,
+                "y": 392,
+                "width": 65,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "15min",
+              "test_id": "perps-candle-period-15m",
+              "selector": "[data-testid=\"perps-candle-period-15m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 419,
+                "y": 392,
+                "width": 70,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "More",
+              "test_id": "perps-candle-period-more",
+              "selector": "[data-testid=\"perps-candle-period-more\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 493,
+                "y": 392,
+                "width": 81,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "Recent activity, See all",
+              "test_id": "perps-market-detail-view-all-activity",
+              "selector": "[data-testid=\"perps-market-detail-view-all-activity\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 201,
+                "y": 688,
+                "width": 798,
+                "height": 48
+              }
+            },
+            {
+              "role": "button",
+              "label": "Closed short 0.00019 BTC -$0.02",
+              "test_id": "transaction-card-57285079431-1785570345855-0",
+              "selector": "[data-testid=\"transaction-card-57285079431-1785570345855-0\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 748,
+                "width": 766,
+                "height": 74
+              }
+            },
+            {
+              "role": "button",
+              "label": "Flipped long > short 0.00005 BTC -$0.02",
+              "test_id": "transaction-card-57285077208-1785570339971-1",
+              "selector": "[data-testid=\"transaction-card-57285077208-1785570339971-1\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 822,
+                "width": 766,
+                "height": 75
+              }
+            },
+            {
+              "role": "button",
+              "label": "Opened short 0.00014 BTC -$0.01",
+              "test_id": "transaction-card-57285077208-1785570339971-2",
+              "selector": "[data-testid=\"transaction-card-57285077208-1785570339971-2\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 897,
+                "width": 766,
+                "height": 75
+              }
+            },
+            {
+              "role": "button",
+              "label": "Long",
+              "test_id": "perps-long-cta-button",
+              "selector": "[data-testid=\"perps-long-cta-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 1137,
+                "width": 377,
+                "height": 48
+              }
+            },
+            {
+              "role": "button",
+              "label": "Short",
+              "test_id": "perps-short-cta-button",
+              "selector": "[data-testid=\"perps-short-cta-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 606,
+                "y": 1137,
+                "width": 377,
+                "height": 48
+              }
+            }
+          ],
+          "hidden_or_offscreen": [],
+          "truncated": false,
+          "limits": {
+            "items": 20,
+            "hidden_or_offscreen": 10
+          }
+        }
+      }
+    },
+    {
+      "nodeId": "invalid-signature-visible",
+      "action": "ui.wait_for",
+      "intent": "Prove only safe route parameters survive an invalid signature",
+      "startedAt": "2026-08-02T09:17:27.810Z",
+      "endedAt": "2026-08-02T09:17:28.162Z",
+      "durationMs": 352,
+      "ok": true,
+      "next": "invalid-signature-assert",
+      "output": {
+        "matched": true,
+        "cdpPort": 9333,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/BTC?source=deeplink",
+        "runtimeLaunch": null
+      },
+      "observations": {
+        "ui.screen": {
+          "provider": "cdp-web",
+          "name": "MetaMask",
+          "title": "MetaMask",
+          "route": "#/perps/market/BTC",
+          "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
+        },
+        "ui.visible": {
+          "provider": "cdp-web",
+          "items": [
+            {
+              "role": "button",
+              "label": "1min",
+              "test_id": "perps-candle-period-1m",
+              "selector": "[data-testid=\"perps-candle-period-1m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 392,
+                "width": 61,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "3min",
+              "test_id": "perps-candle-period-3m",
+              "selector": "[data-testid=\"perps-candle-period-3m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 282,
+                "y": 392,
+                "width": 64,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "5min",
+              "test_id": "perps-candle-period-5m",
+              "selector": "[data-testid=\"perps-candle-period-5m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 351,
+                "y": 392,
+                "width": 65,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "15min",
+              "test_id": "perps-candle-period-15m",
+              "selector": "[data-testid=\"perps-candle-period-15m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 419,
+                "y": 392,
+                "width": 70,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "More",
+              "test_id": "perps-candle-period-more",
+              "selector": "[data-testid=\"perps-candle-period-more\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 493,
+                "y": 392,
+                "width": 81,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "Recent activity, See all",
+              "test_id": "perps-market-detail-view-all-activity",
+              "selector": "[data-testid=\"perps-market-detail-view-all-activity\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 201,
+                "y": 688,
+                "width": 798,
+                "height": 48
+              }
+            },
+            {
+              "role": "button",
+              "label": "Closed short 0.00019 BTC -$0.02",
+              "test_id": "transaction-card-57285079431-1785570345855-0",
+              "selector": "[data-testid=\"transaction-card-57285079431-1785570345855-0\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 748,
+                "width": 766,
+                "height": 74
+              }
+            },
+            {
+              "role": "button",
+              "label": "Flipped long > short 0.00005 BTC -$0.02",
+              "test_id": "transaction-card-57285077208-1785570339971-1",
+              "selector": "[data-testid=\"transaction-card-57285077208-1785570339971-1\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 822,
+                "width": 766,
+                "height": 75
+              }
+            },
+            {
+              "role": "button",
+              "label": "Opened short 0.00014 BTC -$0.01",
+              "test_id": "transaction-card-57285077208-1785570339971-2",
+              "selector": "[data-testid=\"transaction-card-57285077208-1785570339971-2\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 897,
+                "width": 766,
+                "height": 75
+              }
+            },
+            {
+              "role": "button",
+              "label": "Long",
+              "test_id": "perps-long-cta-button",
+              "selector": "[data-testid=\"perps-long-cta-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 1137,
+                "width": 377,
+                "height": 48
+              }
+            },
+            {
+              "role": "button",
+              "label": "Short",
+              "test_id": "perps-short-cta-button",
+              "selector": "[data-testid=\"perps-short-cta-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 606,
+                "y": 1137,
+                "width": 377,
+                "height": 48
+              }
+            }
+          ],
+          "hidden_or_offscreen": [],
+          "truncated": false,
+          "limits": {
+            "items": 20,
+            "hidden_or_offscreen": 10
+          }
+        }
+      }
+    },
+    {
+      "nodeId": "invalid-signature-assert",
+      "action": "metamask.analytics.assert_events",
+      "intent": "Prove invalid-signature attribution reached no emitted destination event",
+      "startedAt": "2026-08-02T09:17:28.169Z",
+      "endedAt": "2026-08-02T09:17:30.316Z",
+      "durationMs": 2147,
+      "ok": true,
+      "next": "outside-capture",
+      "output": {
+        "action": "metamask.analytics.assert_events",
+        "since": 1785662246225,
+        "exact": false,
+        "observed": [
+          {
+            "event": "Perp Screen Viewed",
+            "matched": 1
+          },
+          {
+            "event": "Perp Screen Viewed",
+            "matched": 0
+          }
+        ],
+        "capturedCount": 5,
+        "liveAdapter": "<mm-harness>/library/actions/shared/analytics/assert_events.mjs"
+      }
+    },
+    {
+      "nodeId": "outside-capture",
+      "action": "metamask.analytics.start_capture",
+      "intent": "Bracket the signed key outside the allowlist",
+      "startedAt": "2026-08-02T09:17:30.335Z",
+      "endedAt": "2026-08-02T09:17:30.500Z",
+      "durationMs": 165,
+      "ok": true,
+      "next": "outside-label",
+      "output": {
+        "action": "metamask.analytics.start_capture",
+        "cursor": 1785662250461,
+        "port": 7668,
+        "pid": 15682,
+        "eventsFile": "<metamask-extension>/temp/recipe/runtime/analytics/events.jsonl",
+        "reused": true,
+        "androidDevice": null,
+        "note": "Client must be built with its Segment host pointed at http://localhost:7668 (extension SEGMENT_HOST, mobile SEGMENT_PROXY_URL) and a non-empty write key.",
+        "liveAdapter": "<mm-harness>/library/actions/shared/analytics/start_capture.mjs"
+      }
+    },
+    {
+      "nodeId": "outside-label",
+      "action": "app.hud",
+      "intent": "Show the allowlist case in the recording",
+      "startedAt": "2026-08-02T09:17:30.507Z",
+      "endedAt": "2026-08-02T09:17:30.513Z",
+      "durationMs": 6,
+      "ok": true,
+      "next": "outside-open",
+      "output": {
+        "hud": true,
+        "status": "running",
+        "nodeId": "outside-label",
+        "flow": "",
+        "cdpPort": 9333,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/BTC?source=deeplink",
+        "runtimeLaunch": null
+      }
+    },
+    {
+      "nodeId": "outside-open",
+      "action": "metamask.deeplink.open",
+      "intent": "Open a valid signed link containing an unallowlisted attribution key",
+      "startedAt": "2026-08-02T09:17:30.513Z",
+      "endedAt": "2026-08-02T09:17:30.708Z",
+      "durationMs": 195,
+      "ok": true,
+      "next": "outside-signed",
+      "output": {
+        "action": "metamask.deeplink.open",
+        "url": "https://link.metamask.io/perps?screen=asset&sig_params=screen%2Csymbol%2Cutm_content&symbol=BTC&utm_content=recipe_outside_allowlist&sig=2TjIfQRROxv5u4AXT2lefghMguFnhPGJd8UhRwp74o142U--E04yd60uO28GmbGRBc1wf77_jLdYCrs9qVKDug",
+        "navigation": {
+          "frameId": "D5C71BAD1D4F8F7D6C84AEE899B7E3C0",
+          "loaderId": "5A53AB4317933F7FB18C84C869C53672",
+          "errorText": "net::ERR_ABORTED",
+          "isDownload": false
+        },
+        "proofPath": "external-deeplink",
+        "cdpPort": 9333,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/BTC?source=deeplink",
+        "runtimeLaunch": null,
+        "liveAdapter": "<mm-harness>/library/actions/extension/deeplink/open.mjs"
+      },
+      "observationWarnings": [
+        {
+          "ref": "ui.screen",
+          "message": "No passive observer registered for metamask.deeplink.open."
+        },
+        {
+          "ref": "ui.visible",
+          "message": "No passive observer registered for metamask.deeplink.open."
+        }
+      ]
+    },
+    {
+      "nodeId": "outside-signed",
+      "action": "ui.wait_for",
+      "intent": "Prove the link signature remains valid",
+      "startedAt": "2026-08-02T09:17:30.713Z",
+      "endedAt": "2026-08-02T09:17:31.063Z",
+      "durationMs": 350,
+      "ok": true,
+      "next": "outside-continue",
+      "output": {
+        "matched": true,
+        "cdpPort": 9333,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#link?u=%2Fperps%3Fscreen%3Dasset%26sig_params%3Dscreen%252Csymbol%252Cutm_content%26symbol%3DBTC%26utm_content%3Drecipe_outside_allowlist%26sig%3D2TjIfQRROxv5u4AXT2lefghMguFnhPGJd8UhRwp74o142U--E04yd60uO28GmbGRBc1wf77_jLdYCrs9qVKDug",
+        "runtimeLaunch": null
+      },
+      "observations": {
+        "ui.screen": {
+          "provider": "cdp-web",
+          "name": "MetaMask",
+          "title": "MetaMask",
+          "route": "#link",
+          "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
+        },
+        "ui.visible": {
+          "provider": "cdp-web",
+          "items": [
+            {
+              "label": "dont-remind-me-checkbox",
+              "selector": "[id=\"dont-remind-me-checkbox\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 414,
+                "y": 565,
+                "width": 20,
+                "height": 20
+              }
+            },
+            {
+              "role": "link",
+              "label": "Continue",
+              "test_id": "deep-link-continue-button",
+              "selector": "[data-testid=\"deep-link-continue-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 402,
+                "y": 622,
+                "width": 396,
+                "height": 48
+              }
+            }
+          ],
+          "hidden_or_offscreen": [],
+          "truncated": false,
+          "limits": {
+            "items": 20,
+            "hidden_or_offscreen": 10
+          }
+        }
+      }
+    },
+    {
+      "nodeId": "outside-continue",
+      "action": "ui.press",
+      "intent": "Continue through the valid signed interstitial",
+      "startedAt": "2026-08-02T09:17:31.070Z",
+      "endedAt": "2026-08-02T09:17:31.486Z",
+      "durationMs": 416,
+      "ok": true,
+      "next": "outside-visible",
+      "output": {
+        "clicked": true,
+        "selector": "[data-testid=\"deep-link-continue-button\"], [data-test-id=\"deep-link-continue-button\"], [data-test=\"deep-link-continue-button\"]",
+        "tagName": "A",
+        "cdpPort": 9333,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#link?u=%2Fperps%3Fscreen%3Dasset%26sig_params%3Dscreen%252Csymbol%252Cutm_content%26symbol%3DBTC%26utm_content%3Drecipe_outside_allowlist%26sig%3D2TjIfQRROxv5u4AXT2lefghMguFnhPGJd8UhRwp74o142U--E04yd60uO28GmbGRBc1wf77_jLdYCrs9qVKDug",
+        "runtimeLaunch": null
+      },
+      "observations": {
+        "ui.screen": {
+          "provider": "cdp-web",
+          "name": "MetaMask",
+          "title": "MetaMask",
+          "route": "#/perps/market/BTC",
+          "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
+        },
+        "ui.visible": {
+          "provider": "cdp-web",
+          "items": [
+            {
+              "role": "button",
+              "label": "1min",
+              "test_id": "perps-candle-period-1m",
+              "selector": "[data-testid=\"perps-candle-period-1m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 392,
+                "width": 61,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "3min",
+              "test_id": "perps-candle-period-3m",
+              "selector": "[data-testid=\"perps-candle-period-3m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 282,
+                "y": 392,
+                "width": 64,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "5min",
+              "test_id": "perps-candle-period-5m",
+              "selector": "[data-testid=\"perps-candle-period-5m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 351,
+                "y": 392,
+                "width": 65,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "15min",
+              "test_id": "perps-candle-period-15m",
+              "selector": "[data-testid=\"perps-candle-period-15m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 419,
+                "y": 392,
+                "width": 70,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "More",
+              "test_id": "perps-candle-period-more",
+              "selector": "[data-testid=\"perps-candle-period-more\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 493,
+                "y": 392,
+                "width": 81,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "Recent activity, See all",
+              "test_id": "perps-market-detail-view-all-activity",
+              "selector": "[data-testid=\"perps-market-detail-view-all-activity\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 201,
+                "y": 688,
+                "width": 798,
+                "height": 48
+              }
+            },
+            {
+              "role": "button",
+              "label": "Closed short 0.00019 BTC -$0.02",
+              "test_id": "transaction-card-57285079431-1785570345855-0",
+              "selector": "[data-testid=\"transaction-card-57285079431-1785570345855-0\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 748,
+                "width": 766,
+                "height": 74
+              }
+            },
+            {
+              "role": "button",
+              "label": "Flipped long > short 0.00005 BTC -$0.02",
+              "test_id": "transaction-card-57285077208-1785570339971-1",
+              "selector": "[data-testid=\"transaction-card-57285077208-1785570339971-1\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 822,
+                "width": 766,
+                "height": 75
+              }
+            },
+            {
+              "role": "button",
+              "label": "Opened short 0.00014 BTC -$0.01",
+              "test_id": "transaction-card-57285077208-1785570339971-2",
+              "selector": "[data-testid=\"transaction-card-57285077208-1785570339971-2\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 897,
+                "width": 766,
+                "height": 75
+              }
+            },
+            {
+              "role": "button",
+              "label": "Long",
+              "test_id": "perps-long-cta-button",
+              "selector": "[data-testid=\"perps-long-cta-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 1137,
+                "width": 377,
+                "height": 48
+              }
+            },
+            {
+              "role": "button",
+              "label": "Short",
+              "test_id": "perps-short-cta-button",
+              "selector": "[data-testid=\"perps-short-cta-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 606,
+                "y": 1137,
+                "width": 377,
+                "height": 48
+              }
+            }
+          ],
+          "hidden_or_offscreen": [],
+          "truncated": false,
+          "limits": {
+            "items": 20,
+            "hidden_or_offscreen": 10
+          }
+        }
+      }
+    },
+    {
+      "nodeId": "outside-visible",
+      "action": "ui.wait_for",
+      "intent": "Anchor the allowlist case to the rendered BTC market",
+      "startedAt": "2026-08-02T09:17:31.495Z",
+      "endedAt": "2026-08-02T09:17:31.845Z",
+      "durationMs": 350,
+      "ok": true,
+      "next": "outside-assert",
+      "output": {
+        "matched": true,
+        "cdpPort": 9333,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/BTC?source=deeplink",
+        "runtimeLaunch": null
+      },
+      "observations": {
+        "ui.screen": {
+          "provider": "cdp-web",
+          "name": "MetaMask",
+          "title": "MetaMask",
+          "route": "#/perps/market/BTC",
+          "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
+        },
+        "ui.visible": {
+          "provider": "cdp-web",
+          "items": [
+            {
+              "role": "button",
+              "label": "1min",
+              "test_id": "perps-candle-period-1m",
+              "selector": "[data-testid=\"perps-candle-period-1m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 392,
+                "width": 61,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "3min",
+              "test_id": "perps-candle-period-3m",
+              "selector": "[data-testid=\"perps-candle-period-3m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 282,
+                "y": 392,
+                "width": 64,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "5min",
+              "test_id": "perps-candle-period-5m",
+              "selector": "[data-testid=\"perps-candle-period-5m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 351,
+                "y": 392,
+                "width": 65,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "15min",
+              "test_id": "perps-candle-period-15m",
+              "selector": "[data-testid=\"perps-candle-period-15m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 419,
+                "y": 392,
+                "width": 70,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "More",
+              "test_id": "perps-candle-period-more",
+              "selector": "[data-testid=\"perps-candle-period-more\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 493,
+                "y": 392,
+                "width": 81,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "Recent activity, See all",
+              "test_id": "perps-market-detail-view-all-activity",
+              "selector": "[data-testid=\"perps-market-detail-view-all-activity\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 201,
+                "y": 688,
+                "width": 798,
+                "height": 48
+              }
+            },
+            {
+              "role": "button",
+              "label": "Closed short 0.00019 BTC -$0.02",
+              "test_id": "transaction-card-57285079431-1785570345855-0",
+              "selector": "[data-testid=\"transaction-card-57285079431-1785570345855-0\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 748,
+                "width": 766,
+                "height": 74
+              }
+            },
+            {
+              "role": "button",
+              "label": "Flipped long > short 0.00005 BTC -$0.02",
+              "test_id": "transaction-card-57285077208-1785570339971-1",
+              "selector": "[data-testid=\"transaction-card-57285077208-1785570339971-1\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 822,
+                "width": 766,
+                "height": 75
+              }
+            },
+            {
+              "role": "button",
+              "label": "Opened short 0.00014 BTC -$0.01",
+              "test_id": "transaction-card-57285077208-1785570339971-2",
+              "selector": "[data-testid=\"transaction-card-57285077208-1785570339971-2\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 897,
+                "width": 766,
+                "height": 75
+              }
+            },
+            {
+              "role": "button",
+              "label": "Long",
+              "test_id": "perps-long-cta-button",
+              "selector": "[data-testid=\"perps-long-cta-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 1137,
+                "width": 377,
+                "height": 48
+              }
+            },
+            {
+              "role": "button",
+              "label": "Short",
+              "test_id": "perps-short-cta-button",
+              "selector": "[data-testid=\"perps-short-cta-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 606,
+                "y": 1137,
+                "width": 377,
+                "height": 48
+              }
+            }
+          ],
+          "hidden_or_offscreen": [],
+          "truncated": false,
+          "limits": {
+            "items": 20,
+            "hidden_or_offscreen": 10
+          }
+        }
+      }
+    },
+    {
+      "nodeId": "outside-assert",
+      "action": "metamask.analytics.assert_events",
+      "intent": "Prove a signed key outside the UTM allowlist is absent",
+      "startedAt": "2026-08-02T09:17:31.851Z",
+      "endedAt": "2026-08-02T09:17:33.940Z",
+      "durationMs": 2089,
+      "ok": true,
+      "next": "invalid-value-capture",
+      "output": {
+        "action": "metamask.analytics.assert_events",
+        "since": 1785662250461,
+        "exact": false,
+        "observed": [
+          {
+            "event": "Perp Screen Viewed",
+            "matched": 1
+          },
+          {
+            "event": "Perp Screen Viewed",
+            "matched": 1
+          }
+        ],
+        "capturedCount": 5,
+        "liveAdapter": "<mm-harness>/library/actions/shared/analytics/assert_events.mjs"
+      }
+    },
+    {
+      "nodeId": "invalid-value-capture",
+      "action": "metamask.analytics.start_capture",
+      "intent": "Bracket the signed overlong attribution value",
+      "startedAt": "2026-08-02T09:17:33.950Z",
+      "endedAt": "2026-08-02T09:17:34.105Z",
+      "durationMs": 155,
+      "ok": true,
+      "next": "invalid-value-label",
+      "output": {
+        "action": "metamask.analytics.start_capture",
+        "cursor": 1785662254081,
+        "port": 7668,
+        "pid": 15682,
+        "eventsFile": "<metamask-extension>/temp/recipe/runtime/analytics/events.jsonl",
+        "reused": true,
+        "androidDevice": null,
+        "note": "Client must be built with its Segment host pointed at http://localhost:7668 (extension SEGMENT_HOST, mobile SEGMENT_PROXY_URL) and a non-empty write key.",
+        "liveAdapter": "<mm-harness>/library/actions/shared/analytics/start_capture.mjs"
+      }
+    },
+    {
+      "nodeId": "invalid-value-label",
+      "action": "app.hud",
+      "intent": "Show the value-validation case in the recording",
+      "startedAt": "2026-08-02T09:17:34.111Z",
+      "endedAt": "2026-08-02T09:17:34.116Z",
+      "durationMs": 5,
+      "ok": true,
+      "next": "invalid-value-open",
+      "output": {
+        "hud": true,
+        "status": "running",
+        "nodeId": "invalid-value-label",
+        "flow": "",
+        "cdpPort": 9333,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/BTC?source=deeplink",
+        "runtimeLaunch": null
+      }
+    },
+    {
+      "nodeId": "invalid-value-open",
+      "action": "metamask.deeplink.open",
+      "intent": "Open a valid signed link containing an overlong UTM value",
+      "startedAt": "2026-08-02T09:17:34.116Z",
+      "endedAt": "2026-08-02T09:17:34.488Z",
+      "durationMs": 372,
+      "ok": true,
+      "next": "invalid-value-signed",
+      "output": {
+        "action": "metamask.deeplink.open",
+        "url": "https://link.metamask.io/perps?screen=asset&sig_params=screen%2Csymbol%2Cutm_source&symbol=BTC&utm_source=recipe_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx&sig=FX4rAGgQAkpIIgsaumV2GHWUvufS-PZ76i0PU2eTXSl1xMIWY28lznHAi9Ejn8yXkQqqG59OTNnGDL0aD3PeWg",
+        "navigation": {
+          "frameId": "D5C71BAD1D4F8F7D6C84AEE899B7E3C0",
+          "loaderId": "F4B57A956409A66B0372048B997BCED6",
+          "errorText": "net::ERR_ABORTED",
+          "isDownload": false
+        },
+        "proofPath": "external-deeplink",
+        "cdpPort": 9333,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/BTC?source=deeplink",
+        "runtimeLaunch": null,
+        "liveAdapter": "<mm-harness>/library/actions/extension/deeplink/open.mjs"
+      },
+      "observationWarnings": [
+        {
+          "ref": "ui.screen",
+          "message": "No passive observer registered for metamask.deeplink.open."
+        },
+        {
+          "ref": "ui.visible",
+          "message": "No passive observer registered for metamask.deeplink.open."
+        }
+      ]
+    },
+    {
+      "nodeId": "invalid-value-signed",
+      "action": "ui.wait_for",
+      "intent": "Prove the link signature remains valid despite a rejected value",
+      "startedAt": "2026-08-02T09:17:34.496Z",
+      "endedAt": "2026-08-02T09:17:34.882Z",
+      "durationMs": 386,
+      "ok": true,
+      "next": "invalid-value-continue",
+      "output": {
+        "matched": true,
+        "cdpPort": 9333,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#link?u=%2Fperps%3Fscreen%3Dasset%26sig_params%3Dscreen%252Csymbol%252Cutm_source%26symbol%3DBTC%26utm_source%3Drecipe_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx%26sig%3DFX4rAGgQAkpIIgsaumV2GHWUvufS-PZ76i0PU2eTXSl1xMIWY28lznHAi9Ejn8yXkQqqG59OTNnGDL0aD3PeWg",
+        "runtimeLaunch": null
+      },
+      "observations": {
+        "ui.screen": {
+          "provider": "cdp-web",
+          "name": "MetaMask",
+          "title": "MetaMask",
+          "route": "#link",
+          "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
+        },
+        "ui.visible": {
+          "provider": "cdp-web",
+          "items": [
+            {
+              "label": "dont-remind-me-checkbox",
+              "selector": "[id=\"dont-remind-me-checkbox\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 414,
+                "y": 565,
+                "width": 20,
+                "height": 20
+              }
+            },
+            {
+              "role": "link",
+              "label": "Continue",
+              "test_id": "deep-link-continue-button",
+              "selector": "[data-testid=\"deep-link-continue-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 402,
+                "y": 622,
+                "width": 396,
+                "height": 48
+              }
+            }
+          ],
+          "hidden_or_offscreen": [],
+          "truncated": false,
+          "limits": {
+            "items": 20,
+            "hidden_or_offscreen": 10
+          }
+        }
+      }
+    },
+    {
+      "nodeId": "invalid-value-continue",
+      "action": "ui.press",
+      "intent": "Continue through the valid signed interstitial",
+      "startedAt": "2026-08-02T09:17:34.887Z",
+      "endedAt": "2026-08-02T09:17:35.324Z",
+      "durationMs": 437,
+      "ok": true,
+      "next": "invalid-value-visible",
+      "output": {
+        "clicked": true,
+        "selector": "[data-testid=\"deep-link-continue-button\"], [data-test-id=\"deep-link-continue-button\"], [data-test=\"deep-link-continue-button\"]",
+        "tagName": "A",
+        "cdpPort": 9333,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#link?u=%2Fperps%3Fscreen%3Dasset%26sig_params%3Dscreen%252Csymbol%252Cutm_source%26symbol%3DBTC%26utm_source%3Drecipe_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx%26sig%3DFX4rAGgQAkpIIgsaumV2GHWUvufS-PZ76i0PU2eTXSl1xMIWY28lznHAi9Ejn8yXkQqqG59OTNnGDL0aD3PeWg",
+        "runtimeLaunch": null
+      },
+      "observations": {
+        "ui.screen": {
+          "provider": "cdp-web",
+          "name": "MetaMask",
+          "title": "MetaMask",
+          "route": "#/perps/market/BTC",
+          "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
+        },
+        "ui.visible": {
+          "provider": "cdp-web",
+          "items": [
+            {
+              "role": "button",
+              "label": "1min",
+              "test_id": "perps-candle-period-1m",
+              "selector": "[data-testid=\"perps-candle-period-1m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 392,
+                "width": 61,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "3min",
+              "test_id": "perps-candle-period-3m",
+              "selector": "[data-testid=\"perps-candle-period-3m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 282,
+                "y": 392,
+                "width": 64,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "5min",
+              "test_id": "perps-candle-period-5m",
+              "selector": "[data-testid=\"perps-candle-period-5m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 351,
+                "y": 392,
+                "width": 65,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "15min",
+              "test_id": "perps-candle-period-15m",
+              "selector": "[data-testid=\"perps-candle-period-15m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 419,
+                "y": 392,
+                "width": 70,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "More",
+              "test_id": "perps-candle-period-more",
+              "selector": "[data-testid=\"perps-candle-period-more\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 493,
+                "y": 392,
+                "width": 81,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "Recent activity, See all",
+              "test_id": "perps-market-detail-view-all-activity",
+              "selector": "[data-testid=\"perps-market-detail-view-all-activity\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 201,
+                "y": 688,
+                "width": 798,
+                "height": 48
+              }
+            },
+            {
+              "role": "button",
+              "label": "Closed short 0.00019 BTC -$0.02",
+              "test_id": "transaction-card-57285079431-1785570345855-0",
+              "selector": "[data-testid=\"transaction-card-57285079431-1785570345855-0\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 748,
+                "width": 766,
+                "height": 74
+              }
+            },
+            {
+              "role": "button",
+              "label": "Flipped long > short 0.00005 BTC -$0.02",
+              "test_id": "transaction-card-57285077208-1785570339971-1",
+              "selector": "[data-testid=\"transaction-card-57285077208-1785570339971-1\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 822,
+                "width": 766,
+                "height": 75
+              }
+            },
+            {
+              "role": "button",
+              "label": "Opened short 0.00014 BTC -$0.01",
+              "test_id": "transaction-card-57285077208-1785570339971-2",
+              "selector": "[data-testid=\"transaction-card-57285077208-1785570339971-2\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 897,
+                "width": 766,
+                "height": 75
+              }
+            },
+            {
+              "role": "button",
+              "label": "Long",
+              "test_id": "perps-long-cta-button",
+              "selector": "[data-testid=\"perps-long-cta-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 1137,
+                "width": 377,
+                "height": 48
+              }
+            },
+            {
+              "role": "button",
+              "label": "Short",
+              "test_id": "perps-short-cta-button",
+              "selector": "[data-testid=\"perps-short-cta-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 606,
+                "y": 1137,
+                "width": 377,
+                "height": 48
+              }
+            }
+          ],
+          "hidden_or_offscreen": [],
+          "truncated": false,
+          "limits": {
+            "items": 20,
+            "hidden_or_offscreen": 10
+          }
+        }
+      }
+    },
+    {
+      "nodeId": "invalid-value-visible",
+      "action": "ui.wait_for",
+      "intent": "Anchor value validation to the rendered BTC market",
+      "startedAt": "2026-08-02T09:17:35.331Z",
+      "endedAt": "2026-08-02T09:17:35.951Z",
+      "durationMs": 620,
+      "ok": true,
+      "next": "invalid-value-assert",
+      "output": {
+        "matched": true,
+        "cdpPort": 9333,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/BTC?source=deeplink",
+        "runtimeLaunch": null
+      },
+      "observations": {
+        "ui.screen": {
+          "provider": "cdp-web",
+          "name": "MetaMask",
+          "title": "MetaMask",
+          "route": "#/perps/market/BTC",
+          "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
+        },
+        "ui.visible": {
+          "provider": "cdp-web",
+          "items": [
+            {
+              "role": "button",
+              "label": "1min",
+              "test_id": "perps-candle-period-1m",
+              "selector": "[data-testid=\"perps-candle-period-1m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 392,
+                "width": 61,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "3min",
+              "test_id": "perps-candle-period-3m",
+              "selector": "[data-testid=\"perps-candle-period-3m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 282,
+                "y": 392,
+                "width": 64,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "5min",
+              "test_id": "perps-candle-period-5m",
+              "selector": "[data-testid=\"perps-candle-period-5m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 351,
+                "y": 392,
+                "width": 65,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "15min",
+              "test_id": "perps-candle-period-15m",
+              "selector": "[data-testid=\"perps-candle-period-15m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 419,
+                "y": 392,
+                "width": 70,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "More",
+              "test_id": "perps-candle-period-more",
+              "selector": "[data-testid=\"perps-candle-period-more\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 493,
+                "y": 392,
+                "width": 81,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "Recent activity, See all",
+              "test_id": "perps-market-detail-view-all-activity",
+              "selector": "[data-testid=\"perps-market-detail-view-all-activity\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 201,
+                "y": 688,
+                "width": 798,
+                "height": 48
+              }
+            },
+            {
+              "role": "button",
+              "label": "Closed short 0.00019 BTC -$0.02",
+              "test_id": "transaction-card-57285079431-1785570345855-0",
+              "selector": "[data-testid=\"transaction-card-57285079431-1785570345855-0\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 748,
+                "width": 766,
+                "height": 74
+              }
+            },
+            {
+              "role": "button",
+              "label": "Flipped long > short 0.00005 BTC -$0.02",
+              "test_id": "transaction-card-57285077208-1785570339971-1",
+              "selector": "[data-testid=\"transaction-card-57285077208-1785570339971-1\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 822,
+                "width": 766,
+                "height": 75
+              }
+            },
+            {
+              "role": "button",
+              "label": "Opened short 0.00014 BTC -$0.01",
+              "test_id": "transaction-card-57285077208-1785570339971-2",
+              "selector": "[data-testid=\"transaction-card-57285077208-1785570339971-2\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 897,
+                "width": 766,
+                "height": 75
+              }
+            },
+            {
+              "role": "button",
+              "label": "Long",
+              "test_id": "perps-long-cta-button",
+              "selector": "[data-testid=\"perps-long-cta-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 1137,
+                "width": 377,
+                "height": 48
+              }
+            },
+            {
+              "role": "button",
+              "label": "Short",
+              "test_id": "perps-short-cta-button",
+              "selector": "[data-testid=\"perps-short-cta-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 606,
+                "y": 1137,
+                "width": 377,
+                "height": 48
+              }
+            }
+          ],
+          "hidden_or_offscreen": [],
+          "truncated": false,
+          "limits": {
+            "items": 20,
+            "hidden_or_offscreen": 10
+          }
+        }
+      }
+    },
+    {
+      "nodeId": "invalid-value-assert",
+      "action": "metamask.analytics.assert_events",
+      "intent": "Prove the overlong signed value cannot replace the last valid session attribution",
+      "proves": [
+        "signed-attribution-boundary"
+      ],
+      "startedAt": "2026-08-02T09:17:35.958Z",
+      "endedAt": "2026-08-02T09:17:38.140Z",
+      "durationMs": 2182,
+      "ok": true,
+      "next": "passed",
+      "output": {
+        "action": "metamask.analytics.assert_events",
+        "since": 1785662254081,
+        "exact": false,
+        "observed": [
+          {
+            "event": "Perp Screen Viewed",
+            "matched": 1
+          },
+          {
+            "event": "Perp Screen Viewed",
+            "matched": 0
+          },
+          {
+            "event": "Perp Screen Viewed",
+            "matched": 1
+          }
+        ],
+        "capturedCount": 5,
+        "liveAdapter": "<mm-harness>/library/actions/shared/analytics/assert_events.mjs"
+      }
+    },
+    {
+      "nodeId": "passed",
+      "action": "app.hud",
+      "intent": "Show the completed proof in the recording",
+      "startedAt": "2026-08-02T09:17:38.145Z",
+      "endedAt": "2026-08-02T09:17:38.150Z",
+      "durationMs": 5,
+      "ok": true,
+      "next": "done",
+      "output": {
+        "hud": true,
+        "status": "pass",
+        "nodeId": "passed",
+        "flow": "",
+        "cdpPort": 9333,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/BTC?source=deeplink",
+        "runtimeLaunch": null
+      }
+    },
+    {
+      "nodeId": "done",
+      "action": "end",
+      "startedAt": "2026-08-02T09:17:38.150Z",
+      "endedAt": "2026-08-02T09:17:38.150Z",
+      "durationMs": 0,
+      "ok": true,
+      "status": "pass"
+    }
+  ]
+}

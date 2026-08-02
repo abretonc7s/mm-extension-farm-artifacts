@@ -1,0 +1,533 @@
+{
+  "$schema": "https://farmslot.io/schemas/recipe-v1.schema.json",
+  "title": "Prove signed Perps deeplink attribution boundary",
+  "description": "Open real external Perps deeplinks and prove only valid, explicitly signed, allowlisted, well-formed attribution reaches the destination analytics contract.",
+  "paramsSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+      "valid_url",
+      "unsigned_url",
+      "tampered_url",
+      "malformed_url",
+      "invalid_signature_url",
+      "outside_allowlist_url",
+      "invalid_value_url",
+      "overlong_source"
+    ],
+    "properties": {
+      "valid_url": {
+        "type": "string"
+      },
+      "unsigned_url": {
+        "type": "string"
+      },
+      "tampered_url": {
+        "type": "string"
+      },
+      "malformed_url": {
+        "type": "string"
+      },
+      "invalid_signature_url": {
+        "type": "string"
+      },
+      "outside_allowlist_url": {
+        "type": "string"
+      },
+      "invalid_value_url": {
+        "type": "string"
+      },
+      "overlong_source": {
+        "type": "string"
+      }
+    }
+  },
+  "proofTargets": [
+    {
+      "id": "signed-attribution-boundary",
+      "claim": "Only valid, explicitly signed, allowlisted, well-formed attribution reaches the Perps destination and its emitted analytics event."
+    }
+  ],
+  "workflow": {
+    "entry": "unlock",
+    "nodes": {
+      "unlock": {
+        "action": "metamask.wallet.ensure_unlocked",
+        "intent": "Ensure the fixture-backed wallet can complete every deeplink interstitial",
+        "next": "consent"
+      },
+      "consent": {
+        "action": "metamask.analytics.set_consent",
+        "participate": true,
+        "marketing": true,
+        "intent": "Allow the real MetaMetrics client to emit marketing attribution",
+        "next": "valid-capture"
+      },
+      "valid-capture": {
+        "action": "metamask.analytics.start_capture",
+        "port": 7668,
+        "intent": "Bracket the valid signed deeplink",
+        "next": "valid-label"
+      },
+      "valid-label": {
+        "action": "app.hud",
+        "title": "1/7 Valid signed attribution",
+        "status": "running",
+        "intent": "Show the accepted signed-attribution case in the recording",
+        "next": "valid-open"
+      },
+      "valid-open": {
+        "action": "metamask.deeplink.open",
+        "url": "{{params.valid_url}}",
+        "intent": "Open a valid signed Perps deeplink through external Chrome ingress",
+        "next": "valid-signed"
+      },
+      "valid-signed": {
+        "action": "ui.wait_for",
+        "test_id": "deep-link-checkbox",
+        "expected": "visible",
+        "timeout_ms": 15000,
+        "intent": "Prove signature verification marked the interstitial as signed",
+        "next": "valid-continue"
+      },
+      "valid-continue": {
+        "action": "ui.press",
+        "test_id": "deep-link-continue-button",
+        "intent": "Continue through the real deeplink interstitial",
+        "next": "valid-visible"
+      },
+      "valid-visible": {
+        "action": "ui.wait_for",
+        "text": "BTC-USDC perp",
+        "expected": "visible",
+        "timeout_ms": 20000,
+        "intent": "Anchor the accepted deeplink to the rendered BTC market",
+        "next": "valid-assert"
+      },
+      "valid-assert": {
+        "action": "metamask.analytics.assert_events",
+        "since": "{{outputs.valid-capture.cursor}}",
+        "timeout_ms": 15000,
+        "settle_ms": 2000,
+        "expect": [
+          {
+            "event": "Perp Screen Viewed",
+            "count": 1
+          },
+          {
+            "event": "Perp Screen Viewed",
+            "count": 1,
+            "properties": {
+              "screen_type": "asset_details",
+              "asset": "BTC",
+              "source": "deeplink",
+              "utm_source": "recipe_signed",
+              "utm_medium": "proof",
+              "utm_campaign": "pr45123",
+              "environment_type": "fullscreen"
+            }
+          }
+        ],
+        "intent": "Prove exactly one fully attributed destination event",
+        "next": "unsigned-capture"
+      },
+      "unsigned-capture": {
+        "action": "metamask.analytics.start_capture",
+        "port": 7668,
+        "intent": "Bracket the unsigned candidate",
+        "next": "unsigned-label"
+      },
+      "unsigned-label": {
+        "action": "app.hud",
+        "title": "2/7 Unsigned attribution rejected",
+        "status": "running",
+        "intent": "Show the unsigned rejection case in the recording",
+        "next": "unsigned-open"
+      },
+      "unsigned-open": {
+        "action": "metamask.deeplink.open",
+        "url": "{{params.unsigned_url}}",
+        "intent": "Open an unsigned attribution candidate through external Chrome ingress",
+        "next": "unsigned-not-signed"
+      },
+      "unsigned-not-signed": {
+        "action": "ui.wait_for",
+        "test_id": "deep-link-checkbox",
+        "expected": "absent",
+        "timeout_ms": 15000,
+        "intent": "Prove the unsigned link is not presented as verified",
+        "next": "unsigned-continue"
+      },
+      "unsigned-continue": {
+        "action": "ui.press",
+        "test_id": "deep-link-continue-button",
+        "intent": "Continue after the unsigned-link warning",
+        "next": "unsigned-visible"
+      },
+      "unsigned-visible": {
+        "action": "ui.wait_for",
+        "text": "BTC-USDC perp",
+        "expected": "visible",
+        "timeout_ms": 20000,
+        "intent": "Prove safe route parameters still reach the BTC market",
+        "next": "unsigned-assert"
+      },
+      "unsigned-assert": {
+        "action": "metamask.analytics.assert_events",
+        "since": "{{outputs.unsigned-capture.cursor}}",
+        "timeout_ms": 15000,
+        "settle_ms": 2000,
+        "expect": [
+          {
+            "event": "Perp Screen Viewed",
+            "count": 1
+          },
+          {
+            "event": "Perp Screen Viewed",
+            "count": 0,
+            "properties": {
+              "utm_source": "recipe_unsigned"
+            }
+          }
+        ],
+        "intent": "Prove unsigned attribution reached no emitted destination event",
+        "next": "tampered-capture"
+      },
+      "tampered-capture": {
+        "action": "metamask.analytics.start_capture",
+        "port": 7668,
+        "intent": "Bracket the tampered candidate",
+        "next": "tampered-label"
+      },
+      "tampered-label": {
+        "action": "app.hud",
+        "title": "3/7 Tampered attribution rejected",
+        "status": "running",
+        "intent": "Show the tampered-signature case in the recording",
+        "next": "tampered-open"
+      },
+      "tampered-open": {
+        "action": "metamask.deeplink.open",
+        "url": "{{params.tampered_url}}",
+        "intent": "Open a signed link whose UTM value changed after signing",
+        "next": "tampered-not-signed"
+      },
+      "tampered-not-signed": {
+        "action": "ui.wait_for",
+        "test_id": "deep-link-checkbox",
+        "expected": "absent",
+        "timeout_ms": 15000,
+        "intent": "Prove tampering demotes the link from verified",
+        "next": "tampered-continue"
+      },
+      "tampered-continue": {
+        "action": "ui.press",
+        "test_id": "deep-link-continue-button",
+        "intent": "Continue after the tampered-link warning",
+        "next": "tampered-visible"
+      },
+      "tampered-visible": {
+        "action": "ui.wait_for",
+        "text": "BTC-USDC perp",
+        "expected": "visible",
+        "timeout_ms": 20000,
+        "intent": "Prove only safe route parameters survive tampering",
+        "next": "tampered-assert"
+      },
+      "tampered-assert": {
+        "action": "metamask.analytics.assert_events",
+        "since": "{{outputs.tampered-capture.cursor}}",
+        "timeout_ms": 15000,
+        "settle_ms": 2000,
+        "expect": [
+          {
+            "event": "Perp Screen Viewed",
+            "count": 1
+          },
+          {
+            "event": "Perp Screen Viewed",
+            "count": 0,
+            "properties": {
+              "utm_source": "recipe_tampered"
+            }
+          }
+        ],
+        "intent": "Prove the tampered attribution reached no emitted destination event",
+        "next": "malformed-capture"
+      },
+      "malformed-capture": {
+        "action": "metamask.analytics.start_capture",
+        "port": 7668,
+        "intent": "Bracket malformed sig_params",
+        "next": "malformed-label"
+      },
+      "malformed-label": {
+        "action": "app.hud",
+        "title": "4/7 Malformed sig_params rejected",
+        "status": "running",
+        "intent": "Show the malformed signed-parameter case in the recording",
+        "next": "malformed-open"
+      },
+      "malformed-open": {
+        "action": "metamask.deeplink.open",
+        "url": "{{params.malformed_url}}",
+        "intent": "Open a link whose sig_params changed after signing",
+        "next": "malformed-not-signed"
+      },
+      "malformed-not-signed": {
+        "action": "ui.wait_for",
+        "test_id": "deep-link-checkbox",
+        "expected": "absent",
+        "timeout_ms": 15000,
+        "intent": "Prove malformed sig_params demotes the link from verified",
+        "next": "malformed-continue"
+      },
+      "malformed-continue": {
+        "action": "ui.press",
+        "test_id": "deep-link-continue-button",
+        "intent": "Continue after the malformed-link warning",
+        "next": "malformed-visible"
+      },
+      "malformed-visible": {
+        "action": "ui.wait_for",
+        "text": "BTC-USDC perp",
+        "expected": "visible",
+        "timeout_ms": 20000,
+        "intent": "Prove only safe route parameters survive malformed sig_params",
+        "next": "malformed-assert"
+      },
+      "malformed-assert": {
+        "action": "metamask.analytics.assert_events",
+        "since": "{{outputs.malformed-capture.cursor}}",
+        "timeout_ms": 15000,
+        "settle_ms": 2000,
+        "expect": [
+          {
+            "event": "Perp Screen Viewed",
+            "count": 1
+          },
+          {
+            "event": "Perp Screen Viewed",
+            "count": 0,
+            "properties": {
+              "utm_source": "recipe_malformed"
+            }
+          }
+        ],
+        "intent": "Prove malformed signed parameters reached no emitted attribution",
+        "next": "invalid-signature-capture"
+      },
+      "invalid-signature-capture": {
+        "action": "metamask.analytics.start_capture",
+        "port": 7668,
+        "intent": "Bracket the invalid signature",
+        "next": "invalid-signature-label"
+      },
+      "invalid-signature-label": {
+        "action": "app.hud",
+        "title": "5/7 Invalid signature rejected",
+        "status": "running",
+        "intent": "Show the invalid-signature case in the recording",
+        "next": "invalid-signature-open"
+      },
+      "invalid-signature-open": {
+        "action": "metamask.deeplink.open",
+        "url": "{{params.invalid_signature_url}}",
+        "intent": "Open a link carrying a well-formed but invalid signature",
+        "next": "invalid-signature-not-signed"
+      },
+      "invalid-signature-not-signed": {
+        "action": "ui.wait_for",
+        "test_id": "deep-link-checkbox",
+        "expected": "absent",
+        "timeout_ms": 15000,
+        "intent": "Prove an invalid signature is not presented as verified",
+        "next": "invalid-signature-continue"
+      },
+      "invalid-signature-continue": {
+        "action": "ui.press",
+        "test_id": "deep-link-continue-button",
+        "intent": "Continue after the invalid-signature warning",
+        "next": "invalid-signature-visible"
+      },
+      "invalid-signature-visible": {
+        "action": "ui.wait_for",
+        "text": "BTC-USDC perp",
+        "expected": "visible",
+        "timeout_ms": 20000,
+        "intent": "Prove only safe route parameters survive an invalid signature",
+        "next": "invalid-signature-assert"
+      },
+      "invalid-signature-assert": {
+        "action": "metamask.analytics.assert_events",
+        "since": "{{outputs.invalid-signature-capture.cursor}}",
+        "timeout_ms": 15000,
+        "settle_ms": 2000,
+        "expect": [
+          {
+            "event": "Perp Screen Viewed",
+            "count": 1
+          },
+          {
+            "event": "Perp Screen Viewed",
+            "count": 0,
+            "properties": {
+              "utm_source": "recipe_invalid_sig"
+            }
+          }
+        ],
+        "intent": "Prove invalid-signature attribution reached no emitted destination event",
+        "next": "outside-capture"
+      },
+      "outside-capture": {
+        "action": "metamask.analytics.start_capture",
+        "port": 7668,
+        "intent": "Bracket the signed key outside the allowlist",
+        "next": "outside-label"
+      },
+      "outside-label": {
+        "action": "app.hud",
+        "title": "6/7 Unallowlisted signed key dropped",
+        "status": "running",
+        "intent": "Show the allowlist case in the recording",
+        "next": "outside-open"
+      },
+      "outside-open": {
+        "action": "metamask.deeplink.open",
+        "url": "{{params.outside_allowlist_url}}",
+        "intent": "Open a valid signed link containing an unallowlisted attribution key",
+        "next": "outside-signed"
+      },
+      "outside-signed": {
+        "action": "ui.wait_for",
+        "test_id": "deep-link-checkbox",
+        "expected": "visible",
+        "timeout_ms": 15000,
+        "intent": "Prove the link signature remains valid",
+        "next": "outside-continue"
+      },
+      "outside-continue": {
+        "action": "ui.press",
+        "test_id": "deep-link-continue-button",
+        "intent": "Continue through the valid signed interstitial",
+        "next": "outside-visible"
+      },
+      "outside-visible": {
+        "action": "ui.wait_for",
+        "text": "BTC-USDC perp",
+        "expected": "visible",
+        "timeout_ms": 20000,
+        "intent": "Anchor the allowlist case to the rendered BTC market",
+        "next": "outside-assert"
+      },
+      "outside-assert": {
+        "action": "metamask.analytics.assert_events",
+        "since": "{{outputs.outside-capture.cursor}}",
+        "timeout_ms": 15000,
+        "settle_ms": 2000,
+        "expect": [
+          {
+            "event": "Perp Screen Viewed",
+            "count": 1
+          },
+          {
+            "event": "Perp Screen Viewed",
+            "count": 1,
+            "properties": {
+              "source": "deeplink",
+              "utm_content": {
+                "$exists": false
+              }
+            }
+          }
+        ],
+        "intent": "Prove a signed key outside the UTM allowlist is absent",
+        "next": "invalid-value-capture"
+      },
+      "invalid-value-capture": {
+        "action": "metamask.analytics.start_capture",
+        "port": 7668,
+        "intent": "Bracket the signed overlong attribution value",
+        "next": "invalid-value-label"
+      },
+      "invalid-value-label": {
+        "action": "app.hud",
+        "title": "7/7 Invalid signed value dropped",
+        "status": "running",
+        "intent": "Show the value-validation case in the recording",
+        "next": "invalid-value-open"
+      },
+      "invalid-value-open": {
+        "action": "metamask.deeplink.open",
+        "url": "{{params.invalid_value_url}}",
+        "intent": "Open a valid signed link containing an overlong UTM value",
+        "next": "invalid-value-signed"
+      },
+      "invalid-value-signed": {
+        "action": "ui.wait_for",
+        "test_id": "deep-link-checkbox",
+        "expected": "visible",
+        "timeout_ms": 15000,
+        "intent": "Prove the link signature remains valid despite a rejected value",
+        "next": "invalid-value-continue"
+      },
+      "invalid-value-continue": {
+        "action": "ui.press",
+        "test_id": "deep-link-continue-button",
+        "intent": "Continue through the valid signed interstitial",
+        "next": "invalid-value-visible"
+      },
+      "invalid-value-visible": {
+        "action": "ui.wait_for",
+        "text": "BTC-USDC perp",
+        "expected": "visible",
+        "timeout_ms": 20000,
+        "intent": "Anchor value validation to the rendered BTC market",
+        "next": "invalid-value-assert"
+      },
+      "invalid-value-assert": {
+        "action": "metamask.analytics.assert_events",
+        "since": "{{outputs.invalid-value-capture.cursor}}",
+        "timeout_ms": 15000,
+        "settle_ms": 2000,
+        "expect": [
+          {
+            "event": "Perp Screen Viewed",
+            "count": 1
+          },
+          {
+            "event": "Perp Screen Viewed",
+            "count": 0,
+            "properties": {
+              "utm_source": "{{params.overlong_source}}"
+            }
+          },
+          {
+            "event": "Perp Screen Viewed",
+            "count": 1,
+            "properties": {
+              "source": "deeplink",
+              "utm_source": "recipe_signed"
+            }
+          }
+        ],
+        "intent": "Prove the overlong signed value cannot replace the last valid session attribution",
+        "next": "passed",
+        "proves": [
+          "signed-attribution-boundary"
+        ]
+      },
+      "passed": {
+        "action": "app.hud",
+        "title": "Signed deeplink boundary proved",
+        "status": "pass",
+        "intent": "Show the completed proof in the recording",
+        "next": "done"
+      },
+      "done": {
+        "action": "end",
+        "status": "pass"
+      }
+    }
+  }
+}
