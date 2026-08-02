@@ -1,8 +1,8 @@
 {
   "metadata": {
     "runner": {
-      "source": "<mm-harness>",
-      "git_ref": "378a8806614b6a932473b6aaf7fe24c4bfca02ba",
+      "source": "<npm:@deeeed/metamask-harness@0.31.0>",
+      "git_ref": "unknown",
       "name": "@metamask/recipe-runner"
     }
   },
@@ -11,9 +11,9 @@
       "nodeId": "unlock",
       "action": "metamask.wallet.ensure_unlocked",
       "intent": "Ensure the fixture-backed wallet can complete every deeplink interstitial",
-      "startedAt": "2026-08-02T09:17:09.616Z",
-      "endedAt": "2026-08-02T09:17:09.742Z",
-      "durationMs": 126,
+      "startedAt": "2026-08-02T10:20:41.460Z",
+      "endedAt": "2026-08-02T10:20:41.934Z",
+      "durationMs": 474,
       "ok": true,
       "next": "consent",
       "output": {
@@ -24,16 +24,16 @@
         "cdpPort": 9333,
         "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/BTC?source=deeplink",
         "runtimeLaunch": null,
-        "liveAdapter": "<mm-harness>/library/actions/extension/wallet/ensure_unlocked.mjs"
+        "liveAdapter": "<npm:@deeeed/metamask-harness@0.31.0>/library/actions/extension/wallet/ensure_unlocked.mjs"
       }
     },
     {
       "nodeId": "consent",
       "action": "metamask.analytics.set_consent",
       "intent": "Allow the real MetaMetrics client to emit marketing attribution",
-      "startedAt": "2026-08-02T09:17:09.750Z",
-      "endedAt": "2026-08-02T09:17:09.859Z",
-      "durationMs": 109,
+      "startedAt": "2026-08-02T10:20:41.943Z",
+      "endedAt": "2026-08-02T10:20:42.255Z",
+      "durationMs": 312,
       "ok": true,
       "next": "valid-capture",
       "output": {
@@ -47,37 +47,37 @@
         "cdpPort": 9333,
         "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/BTC?source=deeplink",
         "runtimeLaunch": null,
-        "liveAdapter": "<mm-harness>/library/actions/extension/analytics/set_consent.mjs"
+        "liveAdapter": "<npm:@deeeed/metamask-harness@0.31.0>/library/actions/extension/analytics/set_consent.mjs"
       }
     },
     {
       "nodeId": "valid-capture",
       "action": "metamask.analytics.start_capture",
       "intent": "Bracket the valid signed deeplink",
-      "startedAt": "2026-08-02T09:17:09.867Z",
-      "endedAt": "2026-08-02T09:17:09.980Z",
-      "durationMs": 113,
+      "startedAt": "2026-08-02T10:20:42.278Z",
+      "endedAt": "2026-08-02T10:20:42.867Z",
+      "durationMs": 589,
       "ok": true,
       "next": "valid-label",
       "output": {
         "action": "metamask.analytics.start_capture",
-        "cursor": 1785662229957,
+        "cursor": 1785666042771,
         "port": 7668,
         "pid": 15682,
         "eventsFile": "<metamask-extension>/temp/recipe/runtime/analytics/events.jsonl",
         "reused": true,
         "androidDevice": null,
         "note": "Client must be built with its Segment host pointed at http://localhost:7668 (extension SEGMENT_HOST, mobile SEGMENT_PROXY_URL) and a non-empty write key.",
-        "liveAdapter": "<mm-harness>/library/actions/shared/analytics/start_capture.mjs"
+        "liveAdapter": "<npm:@deeeed/metamask-harness@0.31.0>/library/actions/shared/analytics/start_capture.mjs"
       }
     },
     {
       "nodeId": "valid-label",
       "action": "app.hud",
       "intent": "Show the accepted signed-attribution case in the recording",
-      "startedAt": "2026-08-02T09:17:09.988Z",
-      "endedAt": "2026-08-02T09:17:09.994Z",
-      "durationMs": 6,
+      "startedAt": "2026-08-02T10:20:42.876Z",
+      "endedAt": "2026-08-02T10:20:42.887Z",
+      "durationMs": 11,
       "ok": true,
       "next": "valid-open",
       "output": {
@@ -94,9 +94,9 @@
       "nodeId": "valid-open",
       "action": "metamask.deeplink.open",
       "intent": "Open a valid signed Perps deeplink through external Chrome ingress",
-      "startedAt": "2026-08-02T09:17:09.994Z",
-      "endedAt": "2026-08-02T09:17:10.181Z",
-      "durationMs": 187,
+      "startedAt": "2026-08-02T10:20:42.887Z",
+      "endedAt": "2026-08-02T10:20:43.521Z",
+      "durationMs": 634,
       "ok": true,
       "next": "valid-signed",
       "output": {
@@ -104,7 +104,7 @@
         "url": "https://link.metamask.io/perps?screen=asset&sig_params=screen%2Csymbol%2Cutm_campaign%2Cutm_medium%2Cutm_source&symbol=BTC&utm_campaign=pr45123&utm_medium=proof&utm_source=recipe_signed&sig=gwBSYph3SrlfvKwKgy4xHDn4_uDsbAreSGB7D4g_JRf3XLQH6Yz392UD8108Ieq8TLad8sYkxxCD0DG_UxJbKg",
         "navigation": {
           "frameId": "D5C71BAD1D4F8F7D6C84AEE899B7E3C0",
-          "loaderId": "38AC366715951057FE09BAE4CA277215",
+          "loaderId": "8161CC6057DB6407E2CCDF8E8B372717",
           "errorText": "net::ERR_ABORTED",
           "isDownload": false
         },
@@ -112,7 +112,7 @@
         "cdpPort": 9333,
         "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/BTC?source=deeplink",
         "runtimeLaunch": null,
-        "liveAdapter": "<mm-harness>/library/actions/extension/deeplink/open.mjs"
+        "liveAdapter": "<npm:@deeeed/metamask-harness@0.31.0>/library/actions/extension/deeplink/open.mjs"
       },
       "observationWarnings": [
         {
@@ -129,9 +129,9 @@
       "nodeId": "valid-signed",
       "action": "ui.wait_for",
       "intent": "Prove signature verification marked the interstitial as signed",
-      "startedAt": "2026-08-02T09:17:10.186Z",
-      "endedAt": "2026-08-02T09:17:10.542Z",
-      "durationMs": 356,
+      "startedAt": "2026-08-02T10:20:43.531Z",
+      "endedAt": "2026-08-02T10:20:44.091Z",
+      "durationMs": 560,
       "ok": true,
       "next": "valid-continue",
       "output": {
@@ -189,9 +189,9 @@
       "nodeId": "valid-continue",
       "action": "ui.press",
       "intent": "Continue through the real deeplink interstitial",
-      "startedAt": "2026-08-02T09:17:10.552Z",
-      "endedAt": "2026-08-02T09:17:10.976Z",
-      "durationMs": 424,
+      "startedAt": "2026-08-02T10:20:44.154Z",
+      "endedAt": "2026-08-02T10:20:44.640Z",
+      "durationMs": 486,
       "ok": true,
       "next": "valid-visible",
       "output": {
@@ -370,9 +370,9 @@
       "nodeId": "valid-visible",
       "action": "ui.wait_for",
       "intent": "Anchor the accepted deeplink to the rendered BTC market",
-      "startedAt": "2026-08-02T09:17:10.989Z",
-      "endedAt": "2026-08-02T09:17:11.347Z",
-      "durationMs": 358,
+      "startedAt": "2026-08-02T10:20:44.653Z",
+      "endedAt": "2026-08-02T10:20:45.665Z",
+      "durationMs": 1012,
       "ok": true,
       "next": "valid-assert",
       "output": {
@@ -549,14 +549,14 @@
       "nodeId": "valid-assert",
       "action": "metamask.analytics.assert_events",
       "intent": "Prove exactly one fully attributed destination event",
-      "startedAt": "2026-08-02T09:17:11.352Z",
-      "endedAt": "2026-08-02T09:17:13.427Z",
-      "durationMs": 2075,
+      "startedAt": "2026-08-02T10:20:45.675Z",
+      "endedAt": "2026-08-02T10:20:47.927Z",
+      "durationMs": 2252,
       "ok": true,
       "next": "unsigned-capture",
       "output": {
         "action": "metamask.analytics.assert_events",
-        "since": 1785662229957,
+        "since": 1785666042771,
         "exact": false,
         "observed": [
           {
@@ -569,37 +569,37 @@
           }
         ],
         "capturedCount": 5,
-        "liveAdapter": "<mm-harness>/library/actions/shared/analytics/assert_events.mjs"
+        "liveAdapter": "<npm:@deeeed/metamask-harness@0.31.0>/library/actions/shared/analytics/assert_events.mjs"
       }
     },
     {
       "nodeId": "unsigned-capture",
       "action": "metamask.analytics.start_capture",
       "intent": "Bracket the unsigned candidate",
-      "startedAt": "2026-08-02T09:17:13.433Z",
-      "endedAt": "2026-08-02T09:17:13.564Z",
-      "durationMs": 131,
+      "startedAt": "2026-08-02T10:20:47.935Z",
+      "endedAt": "2026-08-02T10:20:48.196Z",
+      "durationMs": 261,
       "ok": true,
       "next": "unsigned-label",
       "output": {
         "action": "metamask.analytics.start_capture",
-        "cursor": 1785662233534,
+        "cursor": 1785666048166,
         "port": 7668,
         "pid": 15682,
         "eventsFile": "<metamask-extension>/temp/recipe/runtime/analytics/events.jsonl",
         "reused": true,
         "androidDevice": null,
         "note": "Client must be built with its Segment host pointed at http://localhost:7668 (extension SEGMENT_HOST, mobile SEGMENT_PROXY_URL) and a non-empty write key.",
-        "liveAdapter": "<mm-harness>/library/actions/shared/analytics/start_capture.mjs"
+        "liveAdapter": "<npm:@deeeed/metamask-harness@0.31.0>/library/actions/shared/analytics/start_capture.mjs"
       }
     },
     {
       "nodeId": "unsigned-label",
       "action": "app.hud",
       "intent": "Show the unsigned rejection case in the recording",
-      "startedAt": "2026-08-02T09:17:13.573Z",
-      "endedAt": "2026-08-02T09:17:13.579Z",
-      "durationMs": 6,
+      "startedAt": "2026-08-02T10:20:48.204Z",
+      "endedAt": "2026-08-02T10:20:48.223Z",
+      "durationMs": 19,
       "ok": true,
       "next": "unsigned-open",
       "output": {
@@ -616,9 +616,9 @@
       "nodeId": "unsigned-open",
       "action": "metamask.deeplink.open",
       "intent": "Open an unsigned attribution candidate through external Chrome ingress",
-      "startedAt": "2026-08-02T09:17:13.579Z",
-      "endedAt": "2026-08-02T09:17:13.814Z",
-      "durationMs": 235,
+      "startedAt": "2026-08-02T10:20:48.223Z",
+      "endedAt": "2026-08-02T10:20:48.584Z",
+      "durationMs": 361,
       "ok": true,
       "next": "unsigned-not-signed",
       "output": {
@@ -626,7 +626,7 @@
         "url": "https://link.metamask.io/perps?screen=asset&symbol=BTC&utm_source=recipe_unsigned&utm_medium=proof&utm_campaign=pr45123",
         "navigation": {
           "frameId": "D5C71BAD1D4F8F7D6C84AEE899B7E3C0",
-          "loaderId": "9426921B274A2791BFD5B9C16B4C7CA4",
+          "loaderId": "2E326314BF2ADEE4D4A7630B6B62CC51",
           "errorText": "net::ERR_ABORTED",
           "isDownload": false
         },
@@ -634,7 +634,7 @@
         "cdpPort": 9333,
         "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/BTC?source=deeplink&utm_source=recipe_signed&utm_medium=proof&utm_campaign=pr45123",
         "runtimeLaunch": null,
-        "liveAdapter": "<mm-harness>/library/actions/extension/deeplink/open.mjs"
+        "liveAdapter": "<npm:@deeeed/metamask-harness@0.31.0>/library/actions/extension/deeplink/open.mjs"
       },
       "observationWarnings": [
         {
@@ -651,9 +651,9 @@
       "nodeId": "unsigned-not-signed",
       "action": "ui.wait_for",
       "intent": "Prove the unsigned link is not presented as verified",
-      "startedAt": "2026-08-02T09:17:13.820Z",
-      "endedAt": "2026-08-02T09:17:14.164Z",
-      "durationMs": 344,
+      "startedAt": "2026-08-02T10:20:48.598Z",
+      "endedAt": "2026-08-02T10:20:48.989Z",
+      "durationMs": 391,
       "ok": true,
       "next": "unsigned-continue",
       "output": {
@@ -700,9 +700,9 @@
       "nodeId": "unsigned-continue",
       "action": "ui.press",
       "intent": "Continue after the unsigned-link warning",
-      "startedAt": "2026-08-02T09:17:14.173Z",
-      "endedAt": "2026-08-02T09:17:14.579Z",
-      "durationMs": 406,
+      "startedAt": "2026-08-02T10:20:48.996Z",
+      "endedAt": "2026-08-02T10:20:49.505Z",
+      "durationMs": 509,
       "ok": true,
       "next": "unsigned-visible",
       "output": {
@@ -881,9 +881,9 @@
       "nodeId": "unsigned-visible",
       "action": "ui.wait_for",
       "intent": "Prove safe route parameters still reach the BTC market",
-      "startedAt": "2026-08-02T09:17:14.585Z",
-      "endedAt": "2026-08-02T09:17:14.977Z",
-      "durationMs": 392,
+      "startedAt": "2026-08-02T10:20:49.523Z",
+      "endedAt": "2026-08-02T10:20:50.099Z",
+      "durationMs": 576,
       "ok": true,
       "next": "unsigned-assert",
       "output": {
@@ -1060,14 +1060,14 @@
       "nodeId": "unsigned-assert",
       "action": "metamask.analytics.assert_events",
       "intent": "Prove unsigned attribution reached no emitted destination event",
-      "startedAt": "2026-08-02T09:17:15.014Z",
-      "endedAt": "2026-08-02T09:17:17.208Z",
-      "durationMs": 2194,
+      "startedAt": "2026-08-02T10:20:50.107Z",
+      "endedAt": "2026-08-02T10:20:52.388Z",
+      "durationMs": 2281,
       "ok": true,
       "next": "tampered-capture",
       "output": {
         "action": "metamask.analytics.assert_events",
-        "since": 1785662233534,
+        "since": 1785666048166,
         "exact": false,
         "observed": [
           {
@@ -1080,37 +1080,37 @@
           }
         ],
         "capturedCount": 5,
-        "liveAdapter": "<mm-harness>/library/actions/shared/analytics/assert_events.mjs"
+        "liveAdapter": "<npm:@deeeed/metamask-harness@0.31.0>/library/actions/shared/analytics/assert_events.mjs"
       }
     },
     {
       "nodeId": "tampered-capture",
       "action": "metamask.analytics.start_capture",
       "intent": "Bracket the tampered candidate",
-      "startedAt": "2026-08-02T09:17:17.221Z",
-      "endedAt": "2026-08-02T09:17:17.427Z",
-      "durationMs": 206,
+      "startedAt": "2026-08-02T10:20:52.472Z",
+      "endedAt": "2026-08-02T10:20:52.876Z",
+      "durationMs": 404,
       "ok": true,
       "next": "tampered-label",
       "output": {
         "action": "metamask.analytics.start_capture",
-        "cursor": 1785662237371,
+        "cursor": 1785666052745,
         "port": 7668,
         "pid": 15682,
         "eventsFile": "<metamask-extension>/temp/recipe/runtime/analytics/events.jsonl",
         "reused": true,
         "androidDevice": null,
         "note": "Client must be built with its Segment host pointed at http://localhost:7668 (extension SEGMENT_HOST, mobile SEGMENT_PROXY_URL) and a non-empty write key.",
-        "liveAdapter": "<mm-harness>/library/actions/shared/analytics/start_capture.mjs"
+        "liveAdapter": "<npm:@deeeed/metamask-harness@0.31.0>/library/actions/shared/analytics/start_capture.mjs"
       }
     },
     {
       "nodeId": "tampered-label",
       "action": "app.hud",
       "intent": "Show the tampered-signature case in the recording",
-      "startedAt": "2026-08-02T09:17:17.434Z",
-      "endedAt": "2026-08-02T09:17:17.441Z",
-      "durationMs": 7,
+      "startedAt": "2026-08-02T10:20:52.906Z",
+      "endedAt": "2026-08-02T10:20:52.917Z",
+      "durationMs": 11,
       "ok": true,
       "next": "tampered-open",
       "output": {
@@ -1127,9 +1127,9 @@
       "nodeId": "tampered-open",
       "action": "metamask.deeplink.open",
       "intent": "Open a signed link whose UTM value changed after signing",
-      "startedAt": "2026-08-02T09:17:17.441Z",
-      "endedAt": "2026-08-02T09:17:17.657Z",
-      "durationMs": 216,
+      "startedAt": "2026-08-02T10:20:52.917Z",
+      "endedAt": "2026-08-02T10:20:53.336Z",
+      "durationMs": 419,
       "ok": true,
       "next": "tampered-not-signed",
       "output": {
@@ -1137,7 +1137,7 @@
         "url": "https://link.metamask.io/perps?screen=asset&sig_params=screen%2Csymbol%2Cutm_campaign%2Cutm_medium%2Cutm_source&symbol=BTC&utm_campaign=pr45123&utm_medium=proof&utm_source=recipe_tampered&sig=RAzmQrinSCXhBgnzSGUfskDvoq71032GCRxDcPp5JgfCW_K_cglv3nhb9V1Qg4BC4inqNsCzMQVspgs9LavCrA",
         "navigation": {
           "frameId": "D5C71BAD1D4F8F7D6C84AEE899B7E3C0",
-          "loaderId": "565C205E72AF3550E35701017FE76F11",
+          "loaderId": "A89F0309C5F698E652CDBA3F7CD236D8",
           "errorText": "net::ERR_ABORTED",
           "isDownload": false
         },
@@ -1145,7 +1145,7 @@
         "cdpPort": 9333,
         "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/BTC?source=deeplink",
         "runtimeLaunch": null,
-        "liveAdapter": "<mm-harness>/library/actions/extension/deeplink/open.mjs"
+        "liveAdapter": "<npm:@deeeed/metamask-harness@0.31.0>/library/actions/extension/deeplink/open.mjs"
       },
       "observationWarnings": [
         {
@@ -1162,9 +1162,9 @@
       "nodeId": "tampered-not-signed",
       "action": "ui.wait_for",
       "intent": "Prove tampering demotes the link from verified",
-      "startedAt": "2026-08-02T09:17:17.663Z",
-      "endedAt": "2026-08-02T09:17:18.009Z",
-      "durationMs": 346,
+      "startedAt": "2026-08-02T10:20:53.374Z",
+      "endedAt": "2026-08-02T10:20:53.751Z",
+      "durationMs": 377,
       "ok": true,
       "next": "tampered-continue",
       "output": {
@@ -1211,9 +1211,9 @@
       "nodeId": "tampered-continue",
       "action": "ui.press",
       "intent": "Continue after the tampered-link warning",
-      "startedAt": "2026-08-02T09:17:18.014Z",
-      "endedAt": "2026-08-02T09:17:18.529Z",
-      "durationMs": 515,
+      "startedAt": "2026-08-02T10:20:53.760Z",
+      "endedAt": "2026-08-02T10:20:54.511Z",
+      "durationMs": 751,
       "ok": true,
       "next": "tampered-visible",
       "output": {
@@ -1392,9 +1392,9 @@
       "nodeId": "tampered-visible",
       "action": "ui.wait_for",
       "intent": "Prove only safe route parameters survive tampering",
-      "startedAt": "2026-08-02T09:17:18.562Z",
-      "endedAt": "2026-08-02T09:17:18.929Z",
-      "durationMs": 367,
+      "startedAt": "2026-08-02T10:20:54.524Z",
+      "endedAt": "2026-08-02T10:20:54.892Z",
+      "durationMs": 368,
       "ok": true,
       "next": "tampered-assert",
       "output": {
@@ -1571,14 +1571,14 @@
       "nodeId": "tampered-assert",
       "action": "metamask.analytics.assert_events",
       "intent": "Prove the tampered attribution reached no emitted destination event",
-      "startedAt": "2026-08-02T09:17:18.936Z",
-      "endedAt": "2026-08-02T09:17:21.033Z",
-      "durationMs": 2097,
+      "startedAt": "2026-08-02T10:20:54.904Z",
+      "endedAt": "2026-08-02T10:20:57.218Z",
+      "durationMs": 2314,
       "ok": true,
       "next": "malformed-capture",
       "output": {
         "action": "metamask.analytics.assert_events",
-        "since": 1785662237371,
+        "since": 1785666052745,
         "exact": false,
         "observed": [
           {
@@ -1591,37 +1591,37 @@
           }
         ],
         "capturedCount": 5,
-        "liveAdapter": "<mm-harness>/library/actions/shared/analytics/assert_events.mjs"
+        "liveAdapter": "<npm:@deeeed/metamask-harness@0.31.0>/library/actions/shared/analytics/assert_events.mjs"
       }
     },
     {
       "nodeId": "malformed-capture",
       "action": "metamask.analytics.start_capture",
       "intent": "Bracket malformed sig_params",
-      "startedAt": "2026-08-02T09:17:21.042Z",
-      "endedAt": "2026-08-02T09:17:21.204Z",
-      "durationMs": 162,
+      "startedAt": "2026-08-02T10:20:57.228Z",
+      "endedAt": "2026-08-02T10:20:57.606Z",
+      "durationMs": 378,
       "ok": true,
       "next": "malformed-label",
       "output": {
         "action": "metamask.analytics.start_capture",
-        "cursor": 1785662241137,
+        "cursor": 1785666057494,
         "port": 7668,
         "pid": 15682,
         "eventsFile": "<metamask-extension>/temp/recipe/runtime/analytics/events.jsonl",
         "reused": true,
         "androidDevice": null,
         "note": "Client must be built with its Segment host pointed at http://localhost:7668 (extension SEGMENT_HOST, mobile SEGMENT_PROXY_URL) and a non-empty write key.",
-        "liveAdapter": "<mm-harness>/library/actions/shared/analytics/start_capture.mjs"
+        "liveAdapter": "<npm:@deeeed/metamask-harness@0.31.0>/library/actions/shared/analytics/start_capture.mjs"
       }
     },
     {
       "nodeId": "malformed-label",
       "action": "app.hud",
       "intent": "Show the malformed signed-parameter case in the recording",
-      "startedAt": "2026-08-02T09:17:21.211Z",
-      "endedAt": "2026-08-02T09:17:21.217Z",
-      "durationMs": 6,
+      "startedAt": "2026-08-02T10:20:57.650Z",
+      "endedAt": "2026-08-02T10:20:57.659Z",
+      "durationMs": 9,
       "ok": true,
       "next": "malformed-open",
       "output": {
@@ -1638,9 +1638,9 @@
       "nodeId": "malformed-open",
       "action": "metamask.deeplink.open",
       "intent": "Open a link whose sig_params changed after signing",
-      "startedAt": "2026-08-02T09:17:21.217Z",
-      "endedAt": "2026-08-02T09:17:21.553Z",
-      "durationMs": 336,
+      "startedAt": "2026-08-02T10:20:57.659Z",
+      "endedAt": "2026-08-02T10:20:58.191Z",
+      "durationMs": 532,
       "ok": true,
       "next": "malformed-not-signed",
       "output": {
@@ -1648,7 +1648,7 @@
         "url": "https://link.metamask.io/perps?screen=asset&sig_params=screen%2Csymbol%2Cutm_source%2Cutm_medium%2Cutm_campaign%2C&symbol=BTC&utm_campaign=pr45123&utm_medium=proof&utm_source=recipe_malformed&sig=QV-4O7rq1sKkIbsjct-BgyoRYLuP7bzuFi20qWHtMr0c-q8ZJmS-I1w9T5LFFUCFH93CQYJBJG4C1YH1ShKoXw",
         "navigation": {
           "frameId": "D5C71BAD1D4F8F7D6C84AEE899B7E3C0",
-          "loaderId": "9A7C2B1145E712D4FD64665059F823EF",
+          "loaderId": "A8F87890BE06DF5F14A4918CE49D2FAD",
           "errorText": "net::ERR_ABORTED",
           "isDownload": false
         },
@@ -1656,7 +1656,7 @@
         "cdpPort": 9333,
         "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/BTC?source=deeplink",
         "runtimeLaunch": null,
-        "liveAdapter": "<mm-harness>/library/actions/extension/deeplink/open.mjs"
+        "liveAdapter": "<npm:@deeeed/metamask-harness@0.31.0>/library/actions/extension/deeplink/open.mjs"
       },
       "observationWarnings": [
         {
@@ -1673,9 +1673,9 @@
       "nodeId": "malformed-not-signed",
       "action": "ui.wait_for",
       "intent": "Prove malformed sig_params demotes the link from verified",
-      "startedAt": "2026-08-02T09:17:21.562Z",
-      "endedAt": "2026-08-02T09:17:21.915Z",
-      "durationMs": 353,
+      "startedAt": "2026-08-02T10:20:58.200Z",
+      "endedAt": "2026-08-02T10:20:58.558Z",
+      "durationMs": 358,
       "ok": true,
       "next": "malformed-continue",
       "output": {
@@ -1722,9 +1722,9 @@
       "nodeId": "malformed-continue",
       "action": "ui.press",
       "intent": "Continue after the malformed-link warning",
-      "startedAt": "2026-08-02T09:17:21.922Z",
-      "endedAt": "2026-08-02T09:17:22.330Z",
-      "durationMs": 408,
+      "startedAt": "2026-08-02T10:20:58.655Z",
+      "endedAt": "2026-08-02T10:20:59.197Z",
+      "durationMs": 542,
       "ok": true,
       "next": "malformed-visible",
       "output": {
@@ -1903,9 +1903,9 @@
       "nodeId": "malformed-visible",
       "action": "ui.wait_for",
       "intent": "Prove only safe route parameters survive malformed sig_params",
-      "startedAt": "2026-08-02T09:17:22.335Z",
-      "endedAt": "2026-08-02T09:17:22.717Z",
-      "durationMs": 382,
+      "startedAt": "2026-08-02T10:20:59.205Z",
+      "endedAt": "2026-08-02T10:20:59.634Z",
+      "durationMs": 429,
       "ok": true,
       "next": "malformed-assert",
       "output": {
@@ -2082,14 +2082,14 @@
       "nodeId": "malformed-assert",
       "action": "metamask.analytics.assert_events",
       "intent": "Prove malformed signed parameters reached no emitted attribution",
-      "startedAt": "2026-08-02T09:17:22.725Z",
-      "endedAt": "2026-08-02T09:17:25.038Z",
-      "durationMs": 2313,
+      "startedAt": "2026-08-02T10:20:59.642Z",
+      "endedAt": "2026-08-02T10:21:02.069Z",
+      "durationMs": 2427,
       "ok": true,
       "next": "invalid-signature-capture",
       "output": {
         "action": "metamask.analytics.assert_events",
-        "since": 1785662241137,
+        "since": 1785666057494,
         "exact": false,
         "observed": [
           {
@@ -2101,38 +2101,38 @@
             "matched": 0
           }
         ],
-        "capturedCount": 7,
-        "liveAdapter": "<mm-harness>/library/actions/shared/analytics/assert_events.mjs"
+        "capturedCount": 5,
+        "liveAdapter": "<npm:@deeeed/metamask-harness@0.31.0>/library/actions/shared/analytics/assert_events.mjs"
       }
     },
     {
       "nodeId": "invalid-signature-capture",
       "action": "metamask.analytics.start_capture",
       "intent": "Bracket the invalid signature",
-      "startedAt": "2026-08-02T09:17:25.095Z",
-      "endedAt": "2026-08-02T09:17:26.348Z",
-      "durationMs": 1253,
+      "startedAt": "2026-08-02T10:21:02.148Z",
+      "endedAt": "2026-08-02T10:21:02.730Z",
+      "durationMs": 582,
       "ok": true,
       "next": "invalid-signature-label",
       "output": {
         "action": "metamask.analytics.start_capture",
-        "cursor": 1785662246225,
+        "cursor": 1785666062572,
         "port": 7668,
         "pid": 15682,
         "eventsFile": "<metamask-extension>/temp/recipe/runtime/analytics/events.jsonl",
         "reused": true,
         "androidDevice": null,
         "note": "Client must be built with its Segment host pointed at http://localhost:7668 (extension SEGMENT_HOST, mobile SEGMENT_PROXY_URL) and a non-empty write key.",
-        "liveAdapter": "<mm-harness>/library/actions/shared/analytics/start_capture.mjs"
+        "liveAdapter": "<npm:@deeeed/metamask-harness@0.31.0>/library/actions/shared/analytics/start_capture.mjs"
       }
     },
     {
       "nodeId": "invalid-signature-label",
       "action": "app.hud",
       "intent": "Show the invalid-signature case in the recording",
-      "startedAt": "2026-08-02T09:17:26.364Z",
-      "endedAt": "2026-08-02T09:17:26.394Z",
-      "durationMs": 30,
+      "startedAt": "2026-08-02T10:21:02.744Z",
+      "endedAt": "2026-08-02T10:21:02.757Z",
+      "durationMs": 13,
       "ok": true,
       "next": "invalid-signature-open",
       "output": {
@@ -2149,9 +2149,9 @@
       "nodeId": "invalid-signature-open",
       "action": "metamask.deeplink.open",
       "intent": "Open a link carrying a well-formed but invalid signature",
-      "startedAt": "2026-08-02T09:17:26.394Z",
-      "endedAt": "2026-08-02T09:17:26.954Z",
-      "durationMs": 560,
+      "startedAt": "2026-08-02T10:21:02.757Z",
+      "endedAt": "2026-08-02T10:21:03.391Z",
+      "durationMs": 634,
       "ok": true,
       "next": "invalid-signature-not-signed",
       "output": {
@@ -2159,7 +2159,7 @@
         "url": "https://link.metamask.io/perps?screen=asset&sig_params=screen%2Csymbol%2Cutm_campaign%2Cutm_medium%2Cutm_source&symbol=BTC&utm_campaign=pr45123&utm_medium=proof&utm_source=recipe_invalid_sig&sig=1yNOLZR4ojpPNft512dNormYdCx_xiHF_0wgMTKjDwRhsQKes-hHXKKckRNWBGIi5gqmbCY9aSlctW99b1louA",
         "navigation": {
           "frameId": "D5C71BAD1D4F8F7D6C84AEE899B7E3C0",
-          "loaderId": "11768641A75C82369BB8FD6DF9D44014",
+          "loaderId": "B2BB7F5815C17703285B697B74604FB7",
           "errorText": "net::ERR_ABORTED",
           "isDownload": false
         },
@@ -2167,7 +2167,7 @@
         "cdpPort": 9333,
         "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/BTC?source=deeplink",
         "runtimeLaunch": null,
-        "liveAdapter": "<mm-harness>/library/actions/extension/deeplink/open.mjs"
+        "liveAdapter": "<npm:@deeeed/metamask-harness@0.31.0>/library/actions/extension/deeplink/open.mjs"
       },
       "observationWarnings": [
         {
@@ -2184,9 +2184,9 @@
       "nodeId": "invalid-signature-not-signed",
       "action": "ui.wait_for",
       "intent": "Prove an invalid signature is not presented as verified",
-      "startedAt": "2026-08-02T09:17:26.970Z",
-      "endedAt": "2026-08-02T09:17:27.375Z",
-      "durationMs": 405,
+      "startedAt": "2026-08-02T10:21:03.446Z",
+      "endedAt": "2026-08-02T10:21:03.897Z",
+      "durationMs": 451,
       "ok": true,
       "next": "invalid-signature-continue",
       "output": {
@@ -2233,9 +2233,9 @@
       "nodeId": "invalid-signature-continue",
       "action": "ui.press",
       "intent": "Continue after the invalid-signature warning",
-      "startedAt": "2026-08-02T09:17:27.383Z",
-      "endedAt": "2026-08-02T09:17:27.804Z",
-      "durationMs": 421,
+      "startedAt": "2026-08-02T10:21:03.914Z",
+      "endedAt": "2026-08-02T10:21:04.469Z",
+      "durationMs": 555,
       "ok": true,
       "next": "invalid-signature-visible",
       "output": {
@@ -2414,9 +2414,9 @@
       "nodeId": "invalid-signature-visible",
       "action": "ui.wait_for",
       "intent": "Prove only safe route parameters survive an invalid signature",
-      "startedAt": "2026-08-02T09:17:27.810Z",
-      "endedAt": "2026-08-02T09:17:28.162Z",
-      "durationMs": 352,
+      "startedAt": "2026-08-02T10:21:04.483Z",
+      "endedAt": "2026-08-02T10:21:05.433Z",
+      "durationMs": 950,
       "ok": true,
       "next": "invalid-signature-assert",
       "output": {
@@ -2593,14 +2593,14 @@
       "nodeId": "invalid-signature-assert",
       "action": "metamask.analytics.assert_events",
       "intent": "Prove invalid-signature attribution reached no emitted destination event",
-      "startedAt": "2026-08-02T09:17:28.169Z",
-      "endedAt": "2026-08-02T09:17:30.316Z",
-      "durationMs": 2147,
+      "startedAt": "2026-08-02T10:21:05.440Z",
+      "endedAt": "2026-08-02T10:21:07.725Z",
+      "durationMs": 2285,
       "ok": true,
       "next": "outside-capture",
       "output": {
         "action": "metamask.analytics.assert_events",
-        "since": 1785662246225,
+        "since": 1785666062572,
         "exact": false,
         "observed": [
           {
@@ -2613,37 +2613,37 @@
           }
         ],
         "capturedCount": 5,
-        "liveAdapter": "<mm-harness>/library/actions/shared/analytics/assert_events.mjs"
+        "liveAdapter": "<npm:@deeeed/metamask-harness@0.31.0>/library/actions/shared/analytics/assert_events.mjs"
       }
     },
     {
       "nodeId": "outside-capture",
       "action": "metamask.analytics.start_capture",
       "intent": "Bracket the signed key outside the allowlist",
-      "startedAt": "2026-08-02T09:17:30.335Z",
-      "endedAt": "2026-08-02T09:17:30.500Z",
-      "durationMs": 165,
+      "startedAt": "2026-08-02T10:21:07.804Z",
+      "endedAt": "2026-08-02T10:21:08.167Z",
+      "durationMs": 363,
       "ok": true,
       "next": "outside-label",
       "output": {
         "action": "metamask.analytics.start_capture",
-        "cursor": 1785662250461,
+        "cursor": 1785666068129,
         "port": 7668,
         "pid": 15682,
         "eventsFile": "<metamask-extension>/temp/recipe/runtime/analytics/events.jsonl",
         "reused": true,
         "androidDevice": null,
         "note": "Client must be built with its Segment host pointed at http://localhost:7668 (extension SEGMENT_HOST, mobile SEGMENT_PROXY_URL) and a non-empty write key.",
-        "liveAdapter": "<mm-harness>/library/actions/shared/analytics/start_capture.mjs"
+        "liveAdapter": "<npm:@deeeed/metamask-harness@0.31.0>/library/actions/shared/analytics/start_capture.mjs"
       }
     },
     {
       "nodeId": "outside-label",
       "action": "app.hud",
       "intent": "Show the allowlist case in the recording",
-      "startedAt": "2026-08-02T09:17:30.507Z",
-      "endedAt": "2026-08-02T09:17:30.513Z",
-      "durationMs": 6,
+      "startedAt": "2026-08-02T10:21:08.184Z",
+      "endedAt": "2026-08-02T10:21:08.340Z",
+      "durationMs": 156,
       "ok": true,
       "next": "outside-open",
       "output": {
@@ -2660,9 +2660,9 @@
       "nodeId": "outside-open",
       "action": "metamask.deeplink.open",
       "intent": "Open a valid signed link containing an unallowlisted attribution key",
-      "startedAt": "2026-08-02T09:17:30.513Z",
-      "endedAt": "2026-08-02T09:17:30.708Z",
-      "durationMs": 195,
+      "startedAt": "2026-08-02T10:21:08.340Z",
+      "endedAt": "2026-08-02T10:21:08.766Z",
+      "durationMs": 426,
       "ok": true,
       "next": "outside-signed",
       "output": {
@@ -2670,7 +2670,7 @@
         "url": "https://link.metamask.io/perps?screen=asset&sig_params=screen%2Csymbol%2Cutm_content&symbol=BTC&utm_content=recipe_outside_allowlist&sig=2TjIfQRROxv5u4AXT2lefghMguFnhPGJd8UhRwp74o142U--E04yd60uO28GmbGRBc1wf77_jLdYCrs9qVKDug",
         "navigation": {
           "frameId": "D5C71BAD1D4F8F7D6C84AEE899B7E3C0",
-          "loaderId": "5A53AB4317933F7FB18C84C869C53672",
+          "loaderId": "05AF35229EE7474F787AF823EA2901FF",
           "errorText": "net::ERR_ABORTED",
           "isDownload": false
         },
@@ -2678,7 +2678,7 @@
         "cdpPort": 9333,
         "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/BTC?source=deeplink",
         "runtimeLaunch": null,
-        "liveAdapter": "<mm-harness>/library/actions/extension/deeplink/open.mjs"
+        "liveAdapter": "<npm:@deeeed/metamask-harness@0.31.0>/library/actions/extension/deeplink/open.mjs"
       },
       "observationWarnings": [
         {
@@ -2695,9 +2695,9 @@
       "nodeId": "outside-signed",
       "action": "ui.wait_for",
       "intent": "Prove the link signature remains valid",
-      "startedAt": "2026-08-02T09:17:30.713Z",
-      "endedAt": "2026-08-02T09:17:31.063Z",
-      "durationMs": 350,
+      "startedAt": "2026-08-02T10:21:08.818Z",
+      "endedAt": "2026-08-02T10:21:09.254Z",
+      "durationMs": 436,
       "ok": true,
       "next": "outside-continue",
       "output": {
@@ -2755,9 +2755,9 @@
       "nodeId": "outside-continue",
       "action": "ui.press",
       "intent": "Continue through the valid signed interstitial",
-      "startedAt": "2026-08-02T09:17:31.070Z",
-      "endedAt": "2026-08-02T09:17:31.486Z",
-      "durationMs": 416,
+      "startedAt": "2026-08-02T10:21:09.262Z",
+      "endedAt": "2026-08-02T10:21:09.740Z",
+      "durationMs": 478,
       "ok": true,
       "next": "outside-visible",
       "output": {
@@ -2936,9 +2936,9 @@
       "nodeId": "outside-visible",
       "action": "ui.wait_for",
       "intent": "Anchor the allowlist case to the rendered BTC market",
-      "startedAt": "2026-08-02T09:17:31.495Z",
-      "endedAt": "2026-08-02T09:17:31.845Z",
-      "durationMs": 350,
+      "startedAt": "2026-08-02T10:21:09.749Z",
+      "endedAt": "2026-08-02T10:21:10.226Z",
+      "durationMs": 477,
       "ok": true,
       "next": "outside-assert",
       "output": {
@@ -3115,14 +3115,14 @@
       "nodeId": "outside-assert",
       "action": "metamask.analytics.assert_events",
       "intent": "Prove a signed key outside the UTM allowlist is absent",
-      "startedAt": "2026-08-02T09:17:31.851Z",
-      "endedAt": "2026-08-02T09:17:33.940Z",
-      "durationMs": 2089,
+      "startedAt": "2026-08-02T10:21:10.269Z",
+      "endedAt": "2026-08-02T10:21:12.410Z",
+      "durationMs": 2141,
       "ok": true,
       "next": "invalid-value-capture",
       "output": {
         "action": "metamask.analytics.assert_events",
-        "since": 1785662250461,
+        "since": 1785666068129,
         "exact": false,
         "observed": [
           {
@@ -3135,37 +3135,37 @@
           }
         ],
         "capturedCount": 5,
-        "liveAdapter": "<mm-harness>/library/actions/shared/analytics/assert_events.mjs"
+        "liveAdapter": "<npm:@deeeed/metamask-harness@0.31.0>/library/actions/shared/analytics/assert_events.mjs"
       }
     },
     {
       "nodeId": "invalid-value-capture",
       "action": "metamask.analytics.start_capture",
       "intent": "Bracket the signed overlong attribution value",
-      "startedAt": "2026-08-02T09:17:33.950Z",
-      "endedAt": "2026-08-02T09:17:34.105Z",
-      "durationMs": 155,
+      "startedAt": "2026-08-02T10:21:12.426Z",
+      "endedAt": "2026-08-02T10:21:12.926Z",
+      "durationMs": 500,
       "ok": true,
       "next": "invalid-value-label",
       "output": {
         "action": "metamask.analytics.start_capture",
-        "cursor": 1785662254081,
+        "cursor": 1785666072806,
         "port": 7668,
         "pid": 15682,
         "eventsFile": "<metamask-extension>/temp/recipe/runtime/analytics/events.jsonl",
         "reused": true,
         "androidDevice": null,
         "note": "Client must be built with its Segment host pointed at http://localhost:7668 (extension SEGMENT_HOST, mobile SEGMENT_PROXY_URL) and a non-empty write key.",
-        "liveAdapter": "<mm-harness>/library/actions/shared/analytics/start_capture.mjs"
+        "liveAdapter": "<npm:@deeeed/metamask-harness@0.31.0>/library/actions/shared/analytics/start_capture.mjs"
       }
     },
     {
       "nodeId": "invalid-value-label",
       "action": "app.hud",
       "intent": "Show the value-validation case in the recording",
-      "startedAt": "2026-08-02T09:17:34.111Z",
-      "endedAt": "2026-08-02T09:17:34.116Z",
-      "durationMs": 5,
+      "startedAt": "2026-08-02T10:21:12.935Z",
+      "endedAt": "2026-08-02T10:21:12.944Z",
+      "durationMs": 9,
       "ok": true,
       "next": "invalid-value-open",
       "output": {
@@ -3182,9 +3182,9 @@
       "nodeId": "invalid-value-open",
       "action": "metamask.deeplink.open",
       "intent": "Open a valid signed link containing an overlong UTM value",
-      "startedAt": "2026-08-02T09:17:34.116Z",
-      "endedAt": "2026-08-02T09:17:34.488Z",
-      "durationMs": 372,
+      "startedAt": "2026-08-02T10:21:12.944Z",
+      "endedAt": "2026-08-02T10:21:13.612Z",
+      "durationMs": 668,
       "ok": true,
       "next": "invalid-value-signed",
       "output": {
@@ -3192,7 +3192,7 @@
         "url": "https://link.metamask.io/perps?screen=asset&sig_params=screen%2Csymbol%2Cutm_source&symbol=BTC&utm_source=recipe_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx&sig=FX4rAGgQAkpIIgsaumV2GHWUvufS-PZ76i0PU2eTXSl1xMIWY28lznHAi9Ejn8yXkQqqG59OTNnGDL0aD3PeWg",
         "navigation": {
           "frameId": "D5C71BAD1D4F8F7D6C84AEE899B7E3C0",
-          "loaderId": "F4B57A956409A66B0372048B997BCED6",
+          "loaderId": "A9982D3CF6EFD976232C0722AD4ADE79",
           "errorText": "net::ERR_ABORTED",
           "isDownload": false
         },
@@ -3200,7 +3200,7 @@
         "cdpPort": 9333,
         "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/BTC?source=deeplink",
         "runtimeLaunch": null,
-        "liveAdapter": "<mm-harness>/library/actions/extension/deeplink/open.mjs"
+        "liveAdapter": "<npm:@deeeed/metamask-harness@0.31.0>/library/actions/extension/deeplink/open.mjs"
       },
       "observationWarnings": [
         {
@@ -3217,9 +3217,9 @@
       "nodeId": "invalid-value-signed",
       "action": "ui.wait_for",
       "intent": "Prove the link signature remains valid despite a rejected value",
-      "startedAt": "2026-08-02T09:17:34.496Z",
-      "endedAt": "2026-08-02T09:17:34.882Z",
-      "durationMs": 386,
+      "startedAt": "2026-08-02T10:21:13.619Z",
+      "endedAt": "2026-08-02T10:21:14.073Z",
+      "durationMs": 454,
       "ok": true,
       "next": "invalid-value-continue",
       "output": {
@@ -3277,9 +3277,9 @@
       "nodeId": "invalid-value-continue",
       "action": "ui.press",
       "intent": "Continue through the valid signed interstitial",
-      "startedAt": "2026-08-02T09:17:34.887Z",
-      "endedAt": "2026-08-02T09:17:35.324Z",
-      "durationMs": 437,
+      "startedAt": "2026-08-02T10:21:14.138Z",
+      "endedAt": "2026-08-02T10:21:14.721Z",
+      "durationMs": 583,
       "ok": true,
       "next": "invalid-value-visible",
       "output": {
@@ -3458,9 +3458,9 @@
       "nodeId": "invalid-value-visible",
       "action": "ui.wait_for",
       "intent": "Anchor value validation to the rendered BTC market",
-      "startedAt": "2026-08-02T09:17:35.331Z",
-      "endedAt": "2026-08-02T09:17:35.951Z",
-      "durationMs": 620,
+      "startedAt": "2026-08-02T10:21:14.730Z",
+      "endedAt": "2026-08-02T10:21:15.113Z",
+      "durationMs": 383,
       "ok": true,
       "next": "invalid-value-assert",
       "output": {
@@ -3640,14 +3640,14 @@
       "proves": [
         "signed-attribution-boundary"
       ],
-      "startedAt": "2026-08-02T09:17:35.958Z",
-      "endedAt": "2026-08-02T09:17:38.140Z",
-      "durationMs": 2182,
+      "startedAt": "2026-08-02T10:21:15.124Z",
+      "endedAt": "2026-08-02T10:21:17.526Z",
+      "durationMs": 2402,
       "ok": true,
       "next": "passed",
       "output": {
         "action": "metamask.analytics.assert_events",
-        "since": 1785662254081,
+        "since": 1785666072806,
         "exact": false,
         "observed": [
           {
@@ -3664,16 +3664,16 @@
           }
         ],
         "capturedCount": 5,
-        "liveAdapter": "<mm-harness>/library/actions/shared/analytics/assert_events.mjs"
+        "liveAdapter": "<npm:@deeeed/metamask-harness@0.31.0>/library/actions/shared/analytics/assert_events.mjs"
       }
     },
     {
       "nodeId": "passed",
       "action": "app.hud",
       "intent": "Show the completed proof in the recording",
-      "startedAt": "2026-08-02T09:17:38.145Z",
-      "endedAt": "2026-08-02T09:17:38.150Z",
-      "durationMs": 5,
+      "startedAt": "2026-08-02T10:21:17.535Z",
+      "endedAt": "2026-08-02T10:21:17.544Z",
+      "durationMs": 9,
       "ok": true,
       "next": "done",
       "output": {
@@ -3689,8 +3689,8 @@
     {
       "nodeId": "done",
       "action": "end",
-      "startedAt": "2026-08-02T09:17:38.150Z",
-      "endedAt": "2026-08-02T09:17:38.150Z",
+      "startedAt": "2026-08-02T10:21:17.544Z",
+      "endedAt": "2026-08-02T10:21:17.544Z",
       "durationMs": 0,
       "ok": true,
       "status": "pass"
