@@ -27,14 +27,4 @@ Earlier re-run against the rev2 fix commit `00df3a36d5`: PASS — 28/28 nodes, 0
 that commit (`dist-freshness: fresh — dist id matches HEAD`). The AC2 screenshot was refreshed from
 that run; the AC2 baseline capture is unchanged because it proves pre-fix behaviour.
 
-Re-run after the 2026-08-04 review-comment-fix + rebase round (commit `f367a66e54`, branch rebased 15
-commits onto `origin/main`): PASS — 28/28 nodes, 0 failed (`recipe-run/summary.json`,
-`2026-08-04T14:57:14.468Z` → `14:57:42.492Z`), run against the reloaded live slot
-(`reattach.sh` refreshed `runtime-dist` and reloaded the extension over CDP before the run; no
-rebuild needed — the webpack watcher already had the fix). 8 non-blocking side findings in
-`diagnostics.json`, all reviewed as benign (dev-env chain-ID `0x89` polling noise, a 404 resource
-load, "Sentry not initialized", an `ExtensionLazyListener` memory-leak warning, and the
-`cancel 0: already canceled, or filled` provider rejection that AC2 intentionally triggers). No
-regressions from the rebase's conflict resolution or this round's fix commit.
-
 Overall recipe coverage: 2/2 recipe-bound ACs PROVEN (untestable: AC3, AC4, AC5 — proven by unit tests with rationale above, weak: 0, missing: 0).

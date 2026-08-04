@@ -3,81 +3,69 @@
   "scope": "recipe-run-application",
   "status": "review",
   "nonBlocking": true,
-  "note": "Observed 10 distinct application warning/error event(s) during the recipe run; relation to the task is not determined.",
+  "note": "Observed 8 distinct application warning/error event(s) during the recipe run; relation to the task is not determined.",
   "source": {
     "label": "extension",
-    "path": "/Users/deeeed/dev/metamask/metamask-extension-2/temp/recipe/runtime/extension-console.log",
-    "startOffset": 1821577,
-    "endOffset": 1833101,
-    "bytesRead": 11524,
+    "path": "/Users/deeeed/dev/metamask/metamask-extension-4/temp/recipe/runtime/extension-console.log",
+    "startOffset": 2775543,
+    "endOffset": 2782096,
+    "bytesRead": 6553,
     "truncated": false,
     "inAppBuffer": "n/a"
   },
   "counts": {
-    "total": 10,
+    "total": 8,
     "warning": 5,
-    "error": 5,
+    "error": 3,
     "exception": 0
   },
   "findings": [
     {
-      "level": "error",
-      "fingerprint": "7679592a1189",
-      "preview": "03:17:30 [extension:sw] ERROR  WebSocket connection to 'ws://localhost:8080/ws' failed: Error in connection establishment: net::ERR_CONNECTION_REFUSED",
-      "count": 5
-    },
-    {
-      "level": "error",
-      "fingerprint": "f35f4f26d489",
-      "preview": "03:17:30 [extension:page:home.html] ERROR  WebSocket connection to 'ws://localhost:8080/ws' failed:",
-      "count": 5
-    },
-    {
       "level": "warning",
       "fingerprint": "241d41e115a1",
-      "preview": "03:17:31 [extension:sw] WARNING  ExtensionLazyListener: Possible memory leak detected. The event \"runtime.onInstalled\" has been listened to, but no application code has added a listener after 20000ms. There are currently 1 buffered calls. If you are a developer of this extension, please ensure that you have added a lis",
-      "count": 1
-    },
-    {
-      "level": "warning",
-      "fingerprint": "f8625fc7201f",
-      "preview": "03:17:32 [extension:page:home.html] WARNING  Warning: componentWillReceiveProps has been renamed, and is not recommended for use. See https://reactjs.org/link/unsafe-component-lifecycles for details.",
+      "preview": "22:57:18 [extension:sw] WARNING  ExtensionLazyListener: Possible memory leak detected. The event \"runtime.onInstalled\" has been listened to, but no application code has added a listener after 20000ms. There are currently 1 buffered calls. If you are a developer of this extension, please ensure that you have added a lis",
       "count": 1
     },
     {
       "level": "error",
       "fingerprint": "e0ddde3d7963",
-      "preview": "03:17:38 [extension:page:home.html] ERROR  Failed to load resource: the server responded with a status of 404 ()",
-      "count": 4
+      "preview": "22:57:27 [extension:page:home.html] ERROR  Failed to load resource: the server responded with a status of 404 ()",
+      "count": 5
     },
     {
       "level": "warning",
-      "fingerprint": "b84fd60e6736",
-      "preview": "03:17:41 [extension:sw] WARNING  Polling failed for chains 0x1 with interval 300000: Error: Invalid chain ID \"0x89\"",
+      "fingerprint": "1ff0b3168fae",
+      "preview": "22:57:33 [extension:sw] WARNING  Polling failed for chains 0x1 with interval 30000: Error: Invalid chain ID \"0x89\"",
       "count": 1
     },
     {
       "level": "warning",
+      "fingerprint": "b84fd60e6736",
+      "preview": "22:57:33 [extension:sw] WARNING  Polling failed for chains 0x1 with interval 300000: Error: Invalid chain ID \"0x89\"",
+      "count": 2
+    },
+    {
+      "level": "warning",
       "fingerprint": "c2d70ed8ed0b",
-      "preview": "03:17:42 [extension:sw] WARNING  Error updating balances after token change: Error: Invalid chain ID \"0x89\"",
+      "preview": "22:57:34 [extension:sw] WARNING  Error updating balances after token change: Error: Invalid chain ID \"0x89\"",
       "count": 1
     },
     {
       "level": "error",
       "fingerprint": "797289543dd4",
-      "preview": "03:17:51 [extension:sw] ERROR  ApiRequestError: cancel 0: Order was never placed, already canceled, or filled. asset=4",
+      "preview": "22:57:39 [extension:sw] ERROR  ApiRequestError: cancel 0: Order was never placed, already canceled, or filled. asset=4",
       "count": 1
     },
     {
       "level": "warning",
       "fingerprint": "28b7f21bf134",
-      "preview": "03:17:51 [extension:sw] WARNING  Sentry not initialized",
+      "preview": "22:57:39 [extension:sw] WARNING  Sentry not initialized",
       "count": 2
     },
     {
       "level": "error",
       "fingerprint": "6c1bcfd514af",
-      "preview": "03:17:51 [extension:sw] ERROR  Error: cancel 0: Order was never placed, already canceled, or filled. asset=4",
+      "preview": "22:57:39 [extension:sw] ERROR  Error: cancel 0: Order was never placed, already canceled, or filled. asset=4",
       "count": 1
     }
   ]

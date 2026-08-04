@@ -1,8 +1,8 @@
 {
   "metadata": {
     "runner": {
-      "source": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness",
-      "git_ref": "unknown",
+      "source": "/Users/deeeed/dev/metamask/metamask-harness",
+      "git_ref": "8670d869169608e7528336045da635b6bf46a4df",
       "name": "@metamask/recipe-runner"
     }
   },
@@ -11,14 +11,14 @@
       "nodeId": "gate-status",
       "action": "app.status",
       "intent": "Read runner compatibility status",
-      "startedAt": "2026-08-01T19:17:29.429Z",
-      "endedAt": "2026-08-01T19:17:29.444Z",
-      "durationMs": 15,
+      "startedAt": "2026-08-04T14:57:14.471Z",
+      "endedAt": "2026-08-04T14:57:14.480Z",
+      "durationMs": 9,
       "ok": true,
       "next": "gate-fixture",
       "output": {
         "platform": "extension",
-        "projectRoot": "/Users/deeeed/dev/metamask/metamask-extension-2",
+        "projectRoot": "/Users/deeeed/dev/metamask/metamask-extension-4",
         "compatibilityMode": "bridge present",
         "shape": {
           "packageName": "metamask-crx",
@@ -39,9 +39,9 @@
       "nodeId": "gate-fixture",
       "action": "metamask.wallet.fixture_status",
       "intent": "Verify wallet fixture availability",
-      "startedAt": "2026-08-01T19:17:29.457Z",
-      "endedAt": "2026-08-01T19:17:29.481Z",
-      "durationMs": 24,
+      "startedAt": "2026-08-04T14:57:14.490Z",
+      "endedAt": "2026-08-04T14:57:14.513Z",
+      "durationMs": 23,
       "ok": true,
       "next": "setup-unlock",
       "output": {
@@ -55,9 +55,9 @@
       "nodeId": "setup-unlock",
       "action": "metamask.wallet.ensure_unlocked",
       "intent": "Ensure the wallet is unlocked",
-      "startedAt": "2026-08-01T19:17:29.489Z",
-      "endedAt": "2026-08-01T19:17:29.565Z",
-      "durationMs": 76,
+      "startedAt": "2026-08-04T14:57:14.518Z",
+      "endedAt": "2026-08-04T14:57:14.593Z",
+      "durationMs": 75,
       "ok": true,
       "next": "setup-open-home",
       "output": {
@@ -65,19 +65,19 @@
         "unlocked": true,
         "alreadyUnlocked": true,
         "proofPath": "extension-unlocked-state",
-        "cdpPort": 7666,
+        "cdpPort": 6664,
         "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/",
         "runtimeLaunch": null,
-        "liveAdapter": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/actions/extension/wallet/ensure_unlocked.mjs"
+        "liveAdapter": "/Users/deeeed/dev/metamask/metamask-harness/library/actions/extension/wallet/ensure_unlocked.mjs"
       }
     },
     {
       "nodeId": "setup-open-home",
       "action": "ui.navigate",
       "intent": "The trader starts on the wallet home screen",
-      "startedAt": "2026-08-01T19:17:29.574Z",
-      "endedAt": "2026-08-01T19:17:29.649Z",
-      "durationMs": 75,
+      "startedAt": "2026-08-04T14:57:14.599Z",
+      "endedAt": "2026-08-04T14:57:14.693Z",
+      "durationMs": 94,
       "ok": true,
       "next": "setup-wait-app-ready",
       "output": {
@@ -89,16 +89,16 @@
           "sameDocument": true
         },
         "proofPath": "ui-navigation",
-        "cdpPort": 7666,
+        "cdpPort": 6664,
         "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/",
         "runtimeLaunch": null,
-        "liveAdapter": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/actions/extension/ui/navigate.mjs"
+        "liveAdapter": "/Users/deeeed/dev/metamask/metamask-harness/library/actions/extension/ui/navigate.mjs"
       },
       "observations": {
         "ui.screen": {
           "provider": "cdp-web",
-          "name": "MetaMask",
-          "title": "MetaMask",
+          "name": "local-extension-4 — MetaMask",
+          "title": "local-extension-4 — MetaMask",
           "route": "#/",
           "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
         },
@@ -111,7 +111,7 @@
               "selector": "[data-testid=\"app-header-logo\"]",
               "enabled": true,
               "bounds": {
-                "x": 514,
+                "x": 519,
                 "y": 31,
                 "width": 162,
                 "height": 30
@@ -124,7 +124,7 @@
               "selector": "[data-testid=\"account-menu-icon\"]",
               "enabled": true,
               "bounds": {
-                "x": 204,
+                "x": 209,
                 "y": 99,
                 "width": 74,
                 "height": 24
@@ -137,7 +137,7 @@
               "selector": "[data-testid=\"account-options-menu-button\"]",
               "enabled": true,
               "bounds": {
-                "x": 938,
+                "x": 943,
                 "y": 105,
                 "width": 40,
                 "height": 40
@@ -150,8 +150,8 @@
               "selector": "[data-testid=\"eth-overview-buy\"]",
               "enabled": true,
               "bounds": {
-                "x": 360,
-                "y": 260,
+                "x": 371,
+                "y": 371,
                 "width": 106,
                 "height": 69
               }
@@ -163,8 +163,8 @@
               "selector": "[data-testid=\"eth-overview-swap\"]",
               "enabled": true,
               "bounds": {
-                "x": 478,
-                "y": 260,
+                "x": 489,
+                "y": 371,
                 "width": 106,
                 "height": 69
               }
@@ -176,8 +176,8 @@
               "selector": "[data-testid=\"eth-overview-send\"]",
               "enabled": true,
               "bounds": {
-                "x": 595,
-                "y": 260,
+                "x": 606,
+                "y": 371,
                 "width": 106,
                 "height": 69
               }
@@ -189,8 +189,8 @@
               "selector": "[data-testid=\"eth-overview-more\"]",
               "enabled": true,
               "bounds": {
-                "x": 713,
-                "y": 260,
+                "x": 724,
+                "y": 371,
                 "width": 106,
                 "height": 69
               }
@@ -203,8 +203,8 @@
               "enabled": true,
               "selected": true,
               "bounds": {
-                "x": 212,
-                "y": 345,
+                "x": 217,
+                "y": 456,
                 "width": 53,
                 "height": 34
               }
@@ -216,8 +216,8 @@
               "selector": "[data-testid=\"account-overview__defi-tab\"]",
               "enabled": true,
               "bounds": {
-                "x": 280,
-                "y": 345,
+                "x": 286,
+                "y": 456,
                 "width": 34,
                 "height": 34
               }
@@ -229,8 +229,8 @@
               "selector": "[data-testid=\"account-overview__nfts-tab\"]",
               "enabled": true,
               "bounds": {
-                "x": 330,
-                "y": 345,
+                "x": 336,
+                "y": 456,
                 "width": 38,
                 "height": 34
               }
@@ -242,8 +242,8 @@
               "selector": "[data-testid=\"sort-by-networks\"]",
               "enabled": true,
               "bounds": {
-                "x": 212,
-                "y": 395,
+                "x": 217,
+                "y": 506,
                 "width": 173,
                 "height": 32
               }
@@ -255,8 +255,8 @@
               "selector": "[data-testid=\"sort-by-popover-toggle\"]",
               "enabled": true,
               "bounds": {
-                "x": 903,
-                "y": 399,
+                "x": 919,
+                "y": 510,
                 "width": 32,
                 "height": 24
               }
@@ -268,10 +268,22 @@
               "selector": "[data-testid=\"asset-list-control-bar-action-button\"]",
               "enabled": true,
               "bounds": {
-                "x": 935,
-                "y": 399,
+                "x": 951,
+                "y": 510,
                 "width": 32,
                 "height": 24
+              }
+            },
+            {
+              "role": "button",
+              "label": "Buy mUSD",
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > div > div > div > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(2) > button",
+              "enabled": true,
+              "bounds": {
+                "x": 889,
+                "y": 557,
+                "width": 94,
+                "height": 32
               }
             },
             {
@@ -281,8 +293,8 @@
               "selector": "[data-testid=\"staking-entrypoint-0x1\"]",
               "enabled": true,
               "bounds": {
-                "x": 340,
-                "y": 439,
+                "x": 345,
+                "y": 612,
                 "width": 62,
                 "height": 24
               }
@@ -294,8 +306,8 @@
               "selector": "[data-testid=\"bottom-nav-home\"]",
               "enabled": true,
               "bounds": {
-                "x": 204,
-                "y": 685,
+                "x": 209,
+                "y": 1854,
                 "width": 190,
                 "height": 50
               }
@@ -307,8 +319,8 @@
               "selector": "[data-testid=\"bottom-nav-perps\"]",
               "enabled": true,
               "bounds": {
-                "x": 401,
-                "y": 685,
+                "x": 407,
+                "y": 1854,
                 "width": 190,
                 "height": 50
               }
@@ -320,8 +332,8 @@
               "selector": "[data-testid=\"bottom-nav-swaps\"]",
               "enabled": true,
               "bounds": {
-                "x": 599,
-                "y": 685,
+                "x": 604,
+                "y": 1854,
                 "width": 190,
                 "height": 50
               }
@@ -333,8 +345,8 @@
               "selector": "[data-testid=\"bottom-nav-activity\"]",
               "enabled": true,
               "bounds": {
-                "x": 796,
-                "y": 685,
+                "x": 802,
+                "y": 1854,
                 "width": 190,
                 "height": 50
               }
@@ -353,22 +365,22 @@
       "nodeId": "setup-wait-app-ready",
       "action": "ui.wait_for",
       "intent": "The wallet home screen is ready for the trader to switch accounts",
-      "startedAt": "2026-08-01T19:17:29.654Z",
-      "endedAt": "2026-08-01T19:17:30.007Z",
-      "durationMs": 353,
+      "startedAt": "2026-08-04T14:57:14.698Z",
+      "endedAt": "2026-08-04T14:57:15.044Z",
+      "durationMs": 346,
       "ok": true,
       "next": "setup-select-account",
       "output": {
         "matched": true,
-        "cdpPort": 7666,
+        "cdpPort": 6664,
         "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/",
         "runtimeLaunch": null
       },
       "observations": {
         "ui.screen": {
           "provider": "cdp-web",
-          "name": "MetaMask",
-          "title": "MetaMask",
+          "name": "local-extension-4 — MetaMask",
+          "title": "local-extension-4 — MetaMask",
           "route": "#/",
           "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
         },
@@ -381,7 +393,7 @@
               "selector": "[data-testid=\"app-header-logo\"]",
               "enabled": true,
               "bounds": {
-                "x": 514,
+                "x": 519,
                 "y": 31,
                 "width": 162,
                 "height": 30
@@ -394,7 +406,7 @@
               "selector": "[data-testid=\"account-menu-icon\"]",
               "enabled": true,
               "bounds": {
-                "x": 204,
+                "x": 209,
                 "y": 99,
                 "width": 74,
                 "height": 24
@@ -407,7 +419,7 @@
               "selector": "[data-testid=\"account-options-menu-button\"]",
               "enabled": true,
               "bounds": {
-                "x": 938,
+                "x": 943,
                 "y": 105,
                 "width": 40,
                 "height": 40
@@ -420,8 +432,8 @@
               "selector": "[data-testid=\"eth-overview-buy\"]",
               "enabled": true,
               "bounds": {
-                "x": 360,
-                "y": 260,
+                "x": 371,
+                "y": 371,
                 "width": 106,
                 "height": 69
               }
@@ -433,8 +445,8 @@
               "selector": "[data-testid=\"eth-overview-swap\"]",
               "enabled": true,
               "bounds": {
-                "x": 478,
-                "y": 260,
+                "x": 489,
+                "y": 371,
                 "width": 106,
                 "height": 69
               }
@@ -446,8 +458,8 @@
               "selector": "[data-testid=\"eth-overview-send\"]",
               "enabled": true,
               "bounds": {
-                "x": 595,
-                "y": 260,
+                "x": 606,
+                "y": 371,
                 "width": 106,
                 "height": 69
               }
@@ -459,8 +471,8 @@
               "selector": "[data-testid=\"eth-overview-more\"]",
               "enabled": true,
               "bounds": {
-                "x": 713,
-                "y": 260,
+                "x": 724,
+                "y": 371,
                 "width": 106,
                 "height": 69
               }
@@ -473,8 +485,8 @@
               "enabled": true,
               "selected": true,
               "bounds": {
-                "x": 212,
-                "y": 345,
+                "x": 217,
+                "y": 456,
                 "width": 53,
                 "height": 34
               }
@@ -486,8 +498,8 @@
               "selector": "[data-testid=\"account-overview__defi-tab\"]",
               "enabled": true,
               "bounds": {
-                "x": 280,
-                "y": 345,
+                "x": 286,
+                "y": 456,
                 "width": 34,
                 "height": 34
               }
@@ -499,8 +511,8 @@
               "selector": "[data-testid=\"account-overview__nfts-tab\"]",
               "enabled": true,
               "bounds": {
-                "x": 330,
-                "y": 345,
+                "x": 336,
+                "y": 456,
                 "width": 38,
                 "height": 34
               }
@@ -512,8 +524,8 @@
               "selector": "[data-testid=\"sort-by-networks\"]",
               "enabled": true,
               "bounds": {
-                "x": 212,
-                "y": 395,
+                "x": 217,
+                "y": 506,
                 "width": 173,
                 "height": 32
               }
@@ -525,8 +537,8 @@
               "selector": "[data-testid=\"sort-by-popover-toggle\"]",
               "enabled": true,
               "bounds": {
-                "x": 903,
-                "y": 399,
+                "x": 919,
+                "y": 510,
                 "width": 32,
                 "height": 24
               }
@@ -538,10 +550,22 @@
               "selector": "[data-testid=\"asset-list-control-bar-action-button\"]",
               "enabled": true,
               "bounds": {
-                "x": 935,
-                "y": 399,
+                "x": 951,
+                "y": 510,
                 "width": 32,
                 "height": 24
+              }
+            },
+            {
+              "role": "button",
+              "label": "Buy mUSD",
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > div > div > div > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(2) > button",
+              "enabled": true,
+              "bounds": {
+                "x": 889,
+                "y": 557,
+                "width": 94,
+                "height": 32
               }
             },
             {
@@ -551,8 +575,8 @@
               "selector": "[data-testid=\"staking-entrypoint-0x1\"]",
               "enabled": true,
               "bounds": {
-                "x": 340,
-                "y": 439,
+                "x": 345,
+                "y": 612,
                 "width": 62,
                 "height": 24
               }
@@ -564,8 +588,8 @@
               "selector": "[data-testid=\"bottom-nav-home\"]",
               "enabled": true,
               "bounds": {
-                "x": 204,
-                "y": 685,
+                "x": 209,
+                "y": 1854,
                 "width": 190,
                 "height": 50
               }
@@ -577,8 +601,8 @@
               "selector": "[data-testid=\"bottom-nav-perps\"]",
               "enabled": true,
               "bounds": {
-                "x": 401,
-                "y": 685,
+                "x": 407,
+                "y": 1854,
                 "width": 190,
                 "height": 50
               }
@@ -590,8 +614,8 @@
               "selector": "[data-testid=\"bottom-nav-swaps\"]",
               "enabled": true,
               "bounds": {
-                "x": 599,
-                "y": 685,
+                "x": 604,
+                "y": 1854,
                 "width": 190,
                 "height": 50
               }
@@ -603,8 +627,8 @@
               "selector": "[data-testid=\"bottom-nav-activity\"]",
               "enabled": true,
               "bounds": {
-                "x": 796,
-                "y": 685,
+                "x": 802,
+                "y": 1854,
                 "width": 190,
                 "height": 50
               }
@@ -623,9 +647,9 @@
       "nodeId": "setup-select-account",
       "action": "metamask.wallet.select_account",
       "intent": "Select the funded Perps trading account",
-      "startedAt": "2026-08-01T19:17:30.018Z",
-      "endedAt": "2026-08-01T19:17:30.538Z",
-      "durationMs": 520,
+      "startedAt": "2026-08-04T14:57:15.049Z",
+      "endedAt": "2026-08-04T14:57:15.461Z",
+      "durationMs": 412,
       "ok": true,
       "next": "setup-start-state",
       "output": {
@@ -637,19 +661,19 @@
           "type": "eip155:eoa"
         },
         "proofPath": "extension-account-selection",
-        "cdpPort": 7666,
+        "cdpPort": 6664,
         "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/",
         "runtimeLaunch": null,
-        "liveAdapter": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/actions/extension/wallet/select_account.mjs"
+        "liveAdapter": "/Users/deeeed/dev/metamask/metamask-harness/library/actions/extension/wallet/select_account.mjs"
       }
     },
     {
       "nodeId": "setup-start-state",
       "action": "metamask.perps.start_state",
       "intent": "Start from a clean ETH testnet Perps state",
-      "startedAt": "2026-08-01T19:17:30.546Z",
-      "endedAt": "2026-08-01T19:17:31.016Z",
-      "durationMs": 470,
+      "startedAt": "2026-08-04T14:57:15.465Z",
+      "endedAt": "2026-08-04T14:57:16.511Z",
+      "durationMs": 1046,
       "ok": true,
       "next": "ac1-ensure-order-open",
       "output": {
@@ -660,7 +684,7 @@
           "requested": "hyperliquid",
           "activeProvider": "hyperliquid",
           "changed": false,
-          "cdpPort": 7666,
+          "cdpPort": 6664,
           "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/ETH",
           "runtimeLaunch": null
         },
@@ -668,7 +692,7 @@
           "requested": "testnet",
           "isTestnet": true,
           "changed": false,
-          "cdpPort": 7666,
+          "cdpPort": 6664,
           "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/ETH",
           "runtimeLaunch": null
         },
@@ -685,7 +709,7 @@
           "matchingCount": 0,
           "orders": [],
           "source": "background-perpsGetOpenOrders",
-          "cdpPort": 7666,
+          "cdpPort": 6664,
           "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/ETH",
           "runtimeLaunch": null,
           "close": {
@@ -694,7 +718,7 @@
             "matchingCount": 0,
             "symbols": [],
             "result": null,
-            "cdpPort": 7666,
+            "cdpPort": 6664,
             "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/ETH",
             "runtimeLaunch": null
           }
@@ -705,7 +729,7 @@
           "matchingCount": 0,
           "positions": [],
           "source": "background-perpsGetPositions",
-          "cdpPort": 7666,
+          "cdpPort": 6664,
           "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/ETH",
           "runtimeLaunch": null,
           "close": {
@@ -714,7 +738,7 @@
             "matchingCount": 0,
             "symbols": [],
             "reason": "no matching open positions",
-            "cdpPort": 7666,
+            "cdpPort": 6664,
             "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/ETH",
             "runtimeLaunch": null
           }
@@ -729,21 +753,21 @@
             "sameDocument": true
           },
           "proofPath": "ui-navigation",
-          "cdpPort": 7666,
+          "cdpPort": 6664,
           "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/",
           "runtimeLaunch": null
         },
         "proofPath": "metamask-perps-start-state",
-        "liveAdapter": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/actions/extension/perps/perps.mjs"
+        "liveAdapter": "/Users/deeeed/dev/metamask/metamask-harness/library/actions/extension/perps/perps.mjs"
       }
     },
     {
       "nodeId": "ac1-ensure-order-open",
       "action": "metamask.perps.ensure_orders",
       "intent": "AC1: create the resting ETH order that the UI will cancel",
-      "startedAt": "2026-08-01T19:17:31.022Z",
-      "endedAt": "2026-08-01T19:17:37.533Z",
-      "durationMs": 6511,
+      "startedAt": "2026-08-04T14:57:16.516Z",
+      "endedAt": "2026-08-04T14:57:26.541Z",
+      "durationMs": 10025,
       "ok": true,
       "next": "ac1-navigate-market",
       "output": {
@@ -754,13 +778,13 @@
           {
             "coin": "ETH",
             "side": "buy",
-            "size": "0.028",
-            "price": "1286.0",
+            "size": "0.0275",
+            "price": "1311.1",
             "type": "limit"
           }
         ],
         "source": "background-perpsGetOpenOrders",
-        "cdpPort": 7666,
+        "cdpPort": 6664,
         "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/ETH?direction=long&mode=new",
         "runtimeLaunch": null,
         "order": {
@@ -770,42 +794,42 @@
           "orderType": "limit",
           "amount": "12",
           "leverage": 3,
-          "limitPrice": 1286.04,
+          "limitPrice": 1311.1,
           "submitted": true,
           "order": {
             "result": {
               "success": true,
-              "orderId": "57305320752",
-              "submittedSize": "0.028"
+              "orderId": "57422892082",
+              "submittedSize": "0.0275"
             },
             "orderParams": {
               "symbol": "ETH",
               "isBuy": true,
-              "size": "0.027992908463189328",
+              "size": "0.027457859812371293",
               "orderType": "limit",
-              "price": "1286.04",
+              "price": "1311.1",
               "timeInForce": "GTC",
               "leverage": 3,
-              "currentPrice": 1837.2,
-              "priceAtCalculation": 1837.2,
+              "currentPrice": 1873,
+              "priceAtCalculation": 1873,
               "maxSlippageBps": 300
             }
           },
           "proofPath": "background-perpsPlaceOrder",
-          "cdpPort": 7666,
+          "cdpPort": 6664,
           "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/ETH",
           "runtimeLaunch": null
         },
-        "liveAdapter": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/actions/extension/perps/ensure_orders.mjs"
+        "liveAdapter": "/Users/deeeed/dev/metamask/metamask-harness/library/actions/extension/perps/ensure_orders.mjs"
       }
     },
     {
       "nodeId": "ac1-navigate-market",
       "action": "ui.navigate",
       "intent": "AC1: open the ETH market detail page that lists open orders",
-      "startedAt": "2026-08-01T19:17:37.541Z",
-      "endedAt": "2026-08-01T19:17:37.677Z",
-      "durationMs": 136,
+      "startedAt": "2026-08-04T14:57:26.557Z",
+      "endedAt": "2026-08-04T14:57:27.031Z",
+      "durationMs": 474,
       "ok": true,
       "next": "ac1-wait-order-card",
       "output": {
@@ -817,16 +841,16 @@
           "sameDocument": true
         },
         "proofPath": "ui-navigation",
-        "cdpPort": 7666,
+        "cdpPort": 6664,
         "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/ETH?direction=long&mode=new",
         "runtimeLaunch": null,
-        "liveAdapter": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/actions/extension/ui/navigate.mjs"
+        "liveAdapter": "/Users/deeeed/dev/metamask/metamask-harness/library/actions/extension/ui/navigate.mjs"
       },
       "observations": {
         "ui.screen": {
           "provider": "cdp-web",
-          "name": "MetaMask",
-          "title": "MetaMask",
+          "name": "local-extension-4 — MetaMask",
+          "title": "local-extension-4 — MetaMask",
           "route": "#/perps/market/ETH",
           "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
         },
@@ -840,7 +864,7 @@
               "selector": "[data-testid=\"perps-candle-period-1m\"]",
               "enabled": true,
               "bounds": {
-                "x": 212,
+                "x": 217,
                 "y": 392,
                 "width": 61,
                 "height": 34
@@ -853,7 +877,7 @@
               "selector": "[data-testid=\"perps-candle-period-3m\"]",
               "enabled": true,
               "bounds": {
-                "x": 277,
+                "x": 282,
                 "y": 392,
                 "width": 64,
                 "height": 34
@@ -866,7 +890,7 @@
               "selector": "[data-testid=\"perps-candle-period-5m\"]",
               "enabled": true,
               "bounds": {
-                "x": 345,
+                "x": 351,
                 "y": 392,
                 "width": 65,
                 "height": 34
@@ -879,7 +903,7 @@
               "selector": "[data-testid=\"perps-candle-period-15m\"]",
               "enabled": true,
               "bounds": {
-                "x": 414,
+                "x": 419,
                 "y": 392,
                 "width": 70,
                 "height": 34
@@ -892,7 +916,7 @@
               "selector": "[data-testid=\"perps-candle-period-more\"]",
               "enabled": true,
               "bounds": {
-                "x": 488,
+                "x": 493,
                 "y": 392,
                 "width": 81,
                 "height": 34
@@ -900,15 +924,67 @@
             },
             {
               "role": "button",
-              "label": "Ethereum Limit long 0.028 ETH $1,286",
-              "test_id": "order-card-57305320752",
-              "selector": "[data-testid=\"order-card-57305320752\"]",
+              "label": "Ethereum Limit long 0.0275 ETH $1,311.1",
+              "test_id": "order-card-57422892082",
+              "selector": "[data-testid=\"order-card-57422892082\"]",
               "enabled": true,
               "bounds": {
-                "x": 212,
+                "x": 217,
                 "y": 482,
-                "width": 755,
+                "width": 766,
                 "height": 62
+              }
+            },
+            {
+              "role": "button",
+              "label": "Recent activity, See all",
+              "test_id": "perps-market-detail-view-all-activity",
+              "selector": "[data-testid=\"perps-market-detail-view-all-activity\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 201,
+                "y": 798,
+                "width": 798,
+                "height": 48
+              }
+            },
+            {
+              "role": "button",
+              "label": "Closed long 0.0064 ETH -$0.02",
+              "test_id": "transaction-card-54934952450-1781362890468-0",
+              "selector": "[data-testid=\"transaction-card-54934952450-1781362890468-0\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 858,
+                "width": 766,
+                "height": 74
+              }
+            },
+            {
+              "role": "button",
+              "label": "Opened long 0.0064 ETH -$0.02",
+              "test_id": "transaction-card-54934915983-1781362833348-1",
+              "selector": "[data-testid=\"transaction-card-54934915983-1781362833348-1\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 932,
+                "width": 766,
+                "height": 75
+              }
+            },
+            {
+              "role": "button",
+              "label": "Closed long 0.0064 ETH -$0.02",
+              "test_id": "transaction-card-54934743284-1781362535174-2",
+              "selector": "[data-testid=\"transaction-card-54934743284-1781362535174-2\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 1007,
+                "width": 766,
+                "height": 75
               }
             },
             {
@@ -918,9 +994,9 @@
               "selector": "[data-testid=\"perps-long-cta-button\"]",
               "enabled": true,
               "bounds": {
-                "x": 212,
-                "y": 679,
-                "width": 372,
+                "x": 217,
+                "y": 1247,
+                "width": 377,
                 "height": 48
               }
             },
@@ -931,71 +1007,14 @@
               "selector": "[data-testid=\"perps-short-cta-button\"]",
               "enabled": true,
               "bounds": {
-                "x": 595,
-                "y": 679,
-                "width": 372,
+                "x": 606,
+                "y": 1247,
+                "width": 377,
                 "height": 48
               }
             }
           ],
-          "hidden_or_offscreen": [
-            {
-              "role": "button",
-              "label": "Recent activity, See all",
-              "test_id": "perps-market-detail-view-all-activity",
-              "selector": "[data-testid=\"perps-market-detail-view-all-activity\"]",
-              "enabled": true,
-              "bounds": {
-                "x": 196,
-                "y": 798,
-                "width": 787,
-                "height": 48
-              },
-              "reason": "offscreen"
-            },
-            {
-              "role": "button",
-              "label": "Closed long 0.0064 ETH -$0.02",
-              "test_id": "transaction-card-54934952450-1781362890468-0",
-              "selector": "[data-testid=\"transaction-card-54934952450-1781362890468-0\"]",
-              "enabled": true,
-              "bounds": {
-                "x": 212,
-                "y": 858,
-                "width": 755,
-                "height": 74
-              },
-              "reason": "offscreen"
-            },
-            {
-              "role": "button",
-              "label": "Opened long 0.0064 ETH -$0.02",
-              "test_id": "transaction-card-54934915983-1781362833348-1",
-              "selector": "[data-testid=\"transaction-card-54934915983-1781362833348-1\"]",
-              "enabled": true,
-              "bounds": {
-                "x": 212,
-                "y": 932,
-                "width": 755,
-                "height": 75
-              },
-              "reason": "offscreen"
-            },
-            {
-              "role": "button",
-              "label": "Closed long 0.0064 ETH -$0.02",
-              "test_id": "transaction-card-54934743284-1781362535174-2",
-              "selector": "[data-testid=\"transaction-card-54934743284-1781362535174-2\"]",
-              "enabled": true,
-              "bounds": {
-                "x": 212,
-                "y": 1007,
-                "width": 755,
-                "height": 75
-              },
-              "reason": "offscreen"
-            }
-          ],
+          "hidden_or_offscreen": [],
           "truncated": false,
           "limits": {
             "items": 20,
@@ -1008,22 +1027,22 @@
       "nodeId": "ac1-wait-order-card",
       "action": "ui.wait_for",
       "intent": "AC1: confirm the resting order is listed",
-      "startedAt": "2026-08-01T19:17:37.681Z",
-      "endedAt": "2026-08-01T19:17:38.030Z",
-      "durationMs": 349,
+      "startedAt": "2026-08-04T14:57:27.048Z",
+      "endedAt": "2026-08-04T14:57:27.488Z",
+      "durationMs": 440,
       "ok": true,
       "next": "ac1-open-cancel-modal",
       "output": {
         "matched": true,
-        "cdpPort": 7666,
+        "cdpPort": 6664,
         "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/ETH",
         "runtimeLaunch": null
       },
       "observations": {
         "ui.screen": {
           "provider": "cdp-web",
-          "name": "MetaMask",
-          "title": "MetaMask",
+          "name": "local-extension-4 — MetaMask",
+          "title": "local-extension-4 — MetaMask",
           "route": "#/perps/market/ETH",
           "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
         },
@@ -1037,7 +1056,7 @@
               "selector": "[data-testid=\"perps-candle-period-1m\"]",
               "enabled": true,
               "bounds": {
-                "x": 212,
+                "x": 217,
                 "y": 392,
                 "width": 61,
                 "height": 34
@@ -1050,7 +1069,7 @@
               "selector": "[data-testid=\"perps-candle-period-3m\"]",
               "enabled": true,
               "bounds": {
-                "x": 277,
+                "x": 282,
                 "y": 392,
                 "width": 64,
                 "height": 34
@@ -1063,7 +1082,7 @@
               "selector": "[data-testid=\"perps-candle-period-5m\"]",
               "enabled": true,
               "bounds": {
-                "x": 345,
+                "x": 351,
                 "y": 392,
                 "width": 65,
                 "height": 34
@@ -1076,7 +1095,7 @@
               "selector": "[data-testid=\"perps-candle-period-15m\"]",
               "enabled": true,
               "bounds": {
-                "x": 414,
+                "x": 419,
                 "y": 392,
                 "width": 70,
                 "height": 34
@@ -1089,7 +1108,7 @@
               "selector": "[data-testid=\"perps-candle-period-more\"]",
               "enabled": true,
               "bounds": {
-                "x": 488,
+                "x": 493,
                 "y": 392,
                 "width": 81,
                 "height": 34
@@ -1097,15 +1116,67 @@
             },
             {
               "role": "button",
-              "label": "Ethereum Limit long 0.028 ETH $1,286",
-              "test_id": "order-card-57305320752",
-              "selector": "[data-testid=\"order-card-57305320752\"]",
+              "label": "Ethereum Limit long 0.0275 ETH $1,311.1",
+              "test_id": "order-card-57422892082",
+              "selector": "[data-testid=\"order-card-57422892082\"]",
               "enabled": true,
               "bounds": {
-                "x": 212,
+                "x": 217,
                 "y": 482,
-                "width": 755,
+                "width": 766,
                 "height": 62
+              }
+            },
+            {
+              "role": "button",
+              "label": "Recent activity, See all",
+              "test_id": "perps-market-detail-view-all-activity",
+              "selector": "[data-testid=\"perps-market-detail-view-all-activity\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 201,
+                "y": 798,
+                "width": 798,
+                "height": 48
+              }
+            },
+            {
+              "role": "button",
+              "label": "Closed long 0.0064 ETH -$0.02",
+              "test_id": "transaction-card-54934952450-1781362890468-0",
+              "selector": "[data-testid=\"transaction-card-54934952450-1781362890468-0\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 858,
+                "width": 766,
+                "height": 74
+              }
+            },
+            {
+              "role": "button",
+              "label": "Opened long 0.0064 ETH -$0.02",
+              "test_id": "transaction-card-54934915983-1781362833348-1",
+              "selector": "[data-testid=\"transaction-card-54934915983-1781362833348-1\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 932,
+                "width": 766,
+                "height": 75
+              }
+            },
+            {
+              "role": "button",
+              "label": "Closed long 0.0064 ETH -$0.02",
+              "test_id": "transaction-card-54934743284-1781362535174-2",
+              "selector": "[data-testid=\"transaction-card-54934743284-1781362535174-2\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 1007,
+                "width": 766,
+                "height": 75
               }
             },
             {
@@ -1115,9 +1186,9 @@
               "selector": "[data-testid=\"perps-long-cta-button\"]",
               "enabled": true,
               "bounds": {
-                "x": 212,
-                "y": 679,
-                "width": 372,
+                "x": 217,
+                "y": 1247,
+                "width": 377,
                 "height": 48
               }
             },
@@ -1128,71 +1199,14 @@
               "selector": "[data-testid=\"perps-short-cta-button\"]",
               "enabled": true,
               "bounds": {
-                "x": 595,
-                "y": 679,
-                "width": 372,
+                "x": 606,
+                "y": 1247,
+                "width": 377,
                 "height": 48
               }
             }
           ],
-          "hidden_or_offscreen": [
-            {
-              "role": "button",
-              "label": "Recent activity, See all",
-              "test_id": "perps-market-detail-view-all-activity",
-              "selector": "[data-testid=\"perps-market-detail-view-all-activity\"]",
-              "enabled": true,
-              "bounds": {
-                "x": 196,
-                "y": 798,
-                "width": 787,
-                "height": 48
-              },
-              "reason": "offscreen"
-            },
-            {
-              "role": "button",
-              "label": "Closed long 0.0064 ETH -$0.02",
-              "test_id": "transaction-card-54934952450-1781362890468-0",
-              "selector": "[data-testid=\"transaction-card-54934952450-1781362890468-0\"]",
-              "enabled": true,
-              "bounds": {
-                "x": 212,
-                "y": 858,
-                "width": 755,
-                "height": 74
-              },
-              "reason": "offscreen"
-            },
-            {
-              "role": "button",
-              "label": "Opened long 0.0064 ETH -$0.02",
-              "test_id": "transaction-card-54934915983-1781362833348-1",
-              "selector": "[data-testid=\"transaction-card-54934915983-1781362833348-1\"]",
-              "enabled": true,
-              "bounds": {
-                "x": 212,
-                "y": 932,
-                "width": 755,
-                "height": 75
-              },
-              "reason": "offscreen"
-            },
-            {
-              "role": "button",
-              "label": "Closed long 0.0064 ETH -$0.02",
-              "test_id": "transaction-card-54934743284-1781362535174-2",
-              "selector": "[data-testid=\"transaction-card-54934743284-1781362535174-2\"]",
-              "enabled": true,
-              "bounds": {
-                "x": 212,
-                "y": 1007,
-                "width": 755,
-                "height": 75
-              },
-              "reason": "offscreen"
-            }
-          ],
+          "hidden_or_offscreen": [],
           "truncated": false,
           "limits": {
             "items": 20,
@@ -1205,24 +1219,24 @@
       "nodeId": "ac1-open-cancel-modal",
       "action": "ui.press",
       "intent": "AC1: open the cancel-order modal for the resting order",
-      "startedAt": "2026-08-01T19:17:38.036Z",
-      "endedAt": "2026-08-01T19:17:38.596Z",
-      "durationMs": 560,
+      "startedAt": "2026-08-04T14:57:27.548Z",
+      "endedAt": "2026-08-04T14:57:28.288Z",
+      "durationMs": 740,
       "ok": true,
       "next": "ac1-wait-modal",
       "output": {
         "clicked": true,
         "selector": "[data-testid^='order-card-']",
         "tagName": "BUTTON",
-        "cdpPort": 7666,
+        "cdpPort": 6664,
         "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/ETH",
         "runtimeLaunch": null
       },
       "observations": {
         "ui.screen": {
           "provider": "cdp-web",
-          "name": "MetaMask",
-          "title": "MetaMask",
+          "name": "local-extension-4 — MetaMask",
+          "title": "local-extension-4 — MetaMask",
           "route": "#/perps/market/ETH",
           "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
         },
@@ -1264,8 +1278,8 @@
               "selector": "[data-testid=\"perps-candle-period-1m\"]",
               "enabled": true,
               "bounds": {
-                "x": 212,
-                "y": 250,
+                "x": 217,
+                "y": 392,
                 "width": 61,
                 "height": 34
               },
@@ -1278,8 +1292,8 @@
               "selector": "[data-testid=\"perps-candle-period-3m\"]",
               "enabled": true,
               "bounds": {
-                "x": 277,
-                "y": 250,
+                "x": 282,
+                "y": 392,
                 "width": 64,
                 "height": 34
               },
@@ -1292,8 +1306,8 @@
               "selector": "[data-testid=\"perps-candle-period-5m\"]",
               "enabled": true,
               "bounds": {
-                "x": 345,
-                "y": 250,
+                "x": 351,
+                "y": 392,
                 "width": 65,
                 "height": 34
               },
@@ -1306,8 +1320,8 @@
               "selector": "[data-testid=\"perps-candle-period-15m\"]",
               "enabled": true,
               "bounds": {
-                "x": 414,
-                "y": 250,
+                "x": 419,
+                "y": 392,
                 "width": 70,
                 "height": 34
               },
@@ -1320,8 +1334,8 @@
               "selector": "[data-testid=\"perps-candle-period-more\"]",
               "enabled": true,
               "bounds": {
-                "x": 488,
-                "y": 250,
+                "x": 493,
+                "y": 392,
                 "width": 81,
                 "height": 34
               },
@@ -1329,14 +1343,14 @@
             },
             {
               "role": "button",
-              "label": "Ethereum Limit long 0.028 ETH $1,286",
-              "test_id": "order-card-57305320752",
-              "selector": "[data-testid=\"order-card-57305320752\"]",
+              "label": "Ethereum Limit long 0.0275 ETH $1,311.1",
+              "test_id": "order-card-57422892082",
+              "selector": "[data-testid=\"order-card-57422892082\"]",
               "enabled": true,
               "bounds": {
-                "x": 212,
-                "y": 340,
-                "width": 755,
+                "x": 217,
+                "y": 482,
+                "width": 766,
                 "height": 62
               },
               "reason": "covered"
@@ -1348,9 +1362,9 @@
               "selector": "[data-testid=\"perps-market-detail-view-all-activity\"]",
               "enabled": true,
               "bounds": {
-                "x": 196,
-                "y": 656,
-                "width": 787,
+                "x": 201,
+                "y": 798,
+                "width": 798,
                 "height": 48
               },
               "reason": "covered"
@@ -1362,9 +1376,9 @@
               "selector": "[data-testid=\"transaction-card-54934952450-1781362890468-0\"]",
               "enabled": true,
               "bounds": {
-                "x": 212,
-                "y": 716,
-                "width": 755,
+                "x": 217,
+                "y": 858,
+                "width": 766,
                 "height": 74
               },
               "reason": "covered"
@@ -1376,12 +1390,12 @@
               "selector": "[data-testid=\"transaction-card-54934915983-1781362833348-1\"]",
               "enabled": true,
               "bounds": {
-                "x": 212,
-                "y": 790,
-                "width": 755,
+                "x": 217,
+                "y": 932,
+                "width": 766,
                 "height": 75
               },
-              "reason": "offscreen"
+              "reason": "covered"
             },
             {
               "role": "button",
@@ -1390,12 +1404,12 @@
               "selector": "[data-testid=\"transaction-card-54934743284-1781362535174-2\"]",
               "enabled": true,
               "bounds": {
-                "x": 212,
-                "y": 865,
-                "width": 755,
+                "x": 217,
+                "y": 1007,
+                "width": 766,
                 "height": 75
               },
-              "reason": "offscreen"
+              "reason": "covered"
             }
           ],
           "truncated": true,
@@ -1410,22 +1424,22 @@
       "nodeId": "ac1-wait-modal",
       "action": "ui.wait_for",
       "intent": "AC1: the cancel-order dialog is on screen with its cancel action",
-      "startedAt": "2026-08-01T19:17:38.612Z",
-      "endedAt": "2026-08-01T19:17:38.984Z",
-      "durationMs": 372,
+      "startedAt": "2026-08-04T14:57:28.295Z",
+      "endedAt": "2026-08-04T14:57:28.663Z",
+      "durationMs": 368,
       "ok": true,
       "next": "ac1-press-cancel",
       "output": {
         "matched": true,
-        "cdpPort": 7666,
+        "cdpPort": 6664,
         "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/ETH",
         "runtimeLaunch": null
       },
       "observations": {
         "ui.screen": {
           "provider": "cdp-web",
-          "name": "MetaMask",
-          "title": "MetaMask",
+          "name": "local-extension-4 — MetaMask",
+          "title": "local-extension-4 — MetaMask",
           "route": "#/perps/market/ETH",
           "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
         },
@@ -1467,8 +1481,8 @@
               "selector": "[data-testid=\"perps-candle-period-1m\"]",
               "enabled": true,
               "bounds": {
-                "x": 212,
-                "y": 250,
+                "x": 217,
+                "y": 392,
                 "width": 61,
                 "height": 34
               },
@@ -1481,8 +1495,8 @@
               "selector": "[data-testid=\"perps-candle-period-3m\"]",
               "enabled": true,
               "bounds": {
-                "x": 277,
-                "y": 250,
+                "x": 282,
+                "y": 392,
                 "width": 64,
                 "height": 34
               },
@@ -1495,8 +1509,8 @@
               "selector": "[data-testid=\"perps-candle-period-5m\"]",
               "enabled": true,
               "bounds": {
-                "x": 345,
-                "y": 250,
+                "x": 351,
+                "y": 392,
                 "width": 65,
                 "height": 34
               },
@@ -1509,8 +1523,8 @@
               "selector": "[data-testid=\"perps-candle-period-15m\"]",
               "enabled": true,
               "bounds": {
-                "x": 414,
-                "y": 250,
+                "x": 419,
+                "y": 392,
                 "width": 70,
                 "height": 34
               },
@@ -1523,8 +1537,8 @@
               "selector": "[data-testid=\"perps-candle-period-more\"]",
               "enabled": true,
               "bounds": {
-                "x": 488,
-                "y": 250,
+                "x": 493,
+                "y": 392,
                 "width": 81,
                 "height": 34
               },
@@ -1532,14 +1546,14 @@
             },
             {
               "role": "button",
-              "label": "Ethereum Limit long 0.028 ETH $1,286",
-              "test_id": "order-card-57305320752",
-              "selector": "[data-testid=\"order-card-57305320752\"]",
+              "label": "Ethereum Limit long 0.0275 ETH $1,311.1",
+              "test_id": "order-card-57422892082",
+              "selector": "[data-testid=\"order-card-57422892082\"]",
               "enabled": true,
               "bounds": {
-                "x": 212,
-                "y": 340,
-                "width": 755,
+                "x": 217,
+                "y": 482,
+                "width": 766,
                 "height": 62
               },
               "reason": "covered"
@@ -1551,9 +1565,9 @@
               "selector": "[data-testid=\"perps-market-detail-view-all-activity\"]",
               "enabled": true,
               "bounds": {
-                "x": 196,
-                "y": 656,
-                "width": 787,
+                "x": 201,
+                "y": 798,
+                "width": 798,
                 "height": 48
               },
               "reason": "covered"
@@ -1565,9 +1579,9 @@
               "selector": "[data-testid=\"transaction-card-54934952450-1781362890468-0\"]",
               "enabled": true,
               "bounds": {
-                "x": 212,
-                "y": 716,
-                "width": 755,
+                "x": 217,
+                "y": 858,
+                "width": 766,
                 "height": 74
               },
               "reason": "covered"
@@ -1579,12 +1593,12 @@
               "selector": "[data-testid=\"transaction-card-54934915983-1781362833348-1\"]",
               "enabled": true,
               "bounds": {
-                "x": 212,
-                "y": 790,
-                "width": 755,
+                "x": 217,
+                "y": 932,
+                "width": 766,
                 "height": 75
               },
-              "reason": "offscreen"
+              "reason": "covered"
             },
             {
               "role": "button",
@@ -1593,12 +1607,12 @@
               "selector": "[data-testid=\"transaction-card-54934743284-1781362535174-2\"]",
               "enabled": true,
               "bounds": {
-                "x": 212,
-                "y": 865,
-                "width": 755,
+                "x": 217,
+                "y": 1007,
+                "width": 766,
                 "height": 75
               },
-              "reason": "offscreen"
+              "reason": "covered"
             }
           ],
           "truncated": true,
@@ -1613,24 +1627,24 @@
       "nodeId": "ac1-press-cancel",
       "action": "ui.press",
       "intent": "AC1: submit the cancel request",
-      "startedAt": "2026-08-01T19:17:38.992Z",
-      "endedAt": "2026-08-01T19:17:39.384Z",
-      "durationMs": 392,
+      "startedAt": "2026-08-04T14:57:28.673Z",
+      "endedAt": "2026-08-04T14:57:29.259Z",
+      "durationMs": 586,
       "ok": true,
       "next": "ac1-wait-modal-closed",
       "output": {
         "clicked": true,
         "selector": "[data-testid=\"perps-cancel-order-button\"], [data-test-id=\"perps-cancel-order-button\"], [data-test=\"perps-cancel-order-button\"]",
         "tagName": "BUTTON",
-        "cdpPort": 7666,
+        "cdpPort": 6664,
         "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/ETH",
         "runtimeLaunch": null
       },
       "observations": {
         "ui.screen": {
           "provider": "cdp-web",
-          "name": "MetaMask",
-          "title": "MetaMask",
+          "name": "local-extension-4 — MetaMask",
+          "title": "local-extension-4 — MetaMask",
           "route": "#/perps/market/ETH",
           "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
         },
@@ -1671,8 +1685,8 @@
               "selector": "[data-testid=\"perps-candle-period-1m\"]",
               "enabled": true,
               "bounds": {
-                "x": 212,
-                "y": 250,
+                "x": 217,
+                "y": 392,
                 "width": 61,
                 "height": 34
               },
@@ -1685,8 +1699,8 @@
               "selector": "[data-testid=\"perps-candle-period-3m\"]",
               "enabled": true,
               "bounds": {
-                "x": 277,
-                "y": 250,
+                "x": 282,
+                "y": 392,
                 "width": 64,
                 "height": 34
               },
@@ -1699,8 +1713,8 @@
               "selector": "[data-testid=\"perps-candle-period-5m\"]",
               "enabled": true,
               "bounds": {
-                "x": 345,
-                "y": 250,
+                "x": 351,
+                "y": 392,
                 "width": 65,
                 "height": 34
               },
@@ -1713,8 +1727,8 @@
               "selector": "[data-testid=\"perps-candle-period-15m\"]",
               "enabled": true,
               "bounds": {
-                "x": 414,
-                "y": 250,
+                "x": 419,
+                "y": 392,
                 "width": 70,
                 "height": 34
               },
@@ -1727,8 +1741,8 @@
               "selector": "[data-testid=\"perps-candle-period-more\"]",
               "enabled": true,
               "bounds": {
-                "x": 488,
-                "y": 250,
+                "x": 493,
+                "y": 392,
                 "width": 81,
                 "height": 34
               },
@@ -1736,14 +1750,14 @@
             },
             {
               "role": "button",
-              "label": "Ethereum Limit long 0.028 ETH $1,286",
-              "test_id": "order-card-57305320752",
-              "selector": "[data-testid=\"order-card-57305320752\"]",
+              "label": "Ethereum Limit long 0.0275 ETH $1,311.1",
+              "test_id": "order-card-57422892082",
+              "selector": "[data-testid=\"order-card-57422892082\"]",
               "enabled": true,
               "bounds": {
-                "x": 212,
-                "y": 340,
-                "width": 755,
+                "x": 217,
+                "y": 482,
+                "width": 766,
                 "height": 62
               },
               "reason": "covered"
@@ -1755,9 +1769,9 @@
               "selector": "[data-testid=\"perps-market-detail-view-all-activity\"]",
               "enabled": true,
               "bounds": {
-                "x": 196,
-                "y": 656,
-                "width": 787,
+                "x": 201,
+                "y": 798,
+                "width": 798,
                 "height": 48
               },
               "reason": "covered"
@@ -1769,9 +1783,9 @@
               "selector": "[data-testid=\"transaction-card-54934952450-1781362890468-0\"]",
               "enabled": true,
               "bounds": {
-                "x": 212,
-                "y": 716,
-                "width": 755,
+                "x": 217,
+                "y": 858,
+                "width": 766,
                 "height": 74
               },
               "reason": "covered"
@@ -1783,12 +1797,12 @@
               "selector": "[data-testid=\"transaction-card-54934915983-1781362833348-1\"]",
               "enabled": true,
               "bounds": {
-                "x": 212,
-                "y": 790,
-                "width": 755,
+                "x": 217,
+                "y": 932,
+                "width": 766,
                 "height": 75
               },
-              "reason": "offscreen"
+              "reason": "covered"
             },
             {
               "role": "button",
@@ -1797,12 +1811,12 @@
               "selector": "[data-testid=\"transaction-card-54934743284-1781362535174-2\"]",
               "enabled": true,
               "bounds": {
-                "x": 212,
-                "y": 865,
-                "width": 755,
+                "x": 217,
+                "y": 1007,
+                "width": 766,
                 "height": 75
               },
-              "reason": "offscreen"
+              "reason": "covered"
             }
           ],
           "truncated": true,
@@ -1817,22 +1831,22 @@
       "nodeId": "ac1-wait-modal-closed",
       "action": "ui.wait_for",
       "intent": "AC1: the dialog is gone once the order is cancelled",
-      "startedAt": "2026-08-01T19:17:39.397Z",
-      "endedAt": "2026-08-01T19:17:40.270Z",
-      "durationMs": 873,
+      "startedAt": "2026-08-04T14:57:29.266Z",
+      "endedAt": "2026-08-04T14:57:30.626Z",
+      "durationMs": 1360,
       "ok": true,
       "next": "ac1-assert-orders-absent",
       "output": {
         "matched": true,
-        "cdpPort": 7666,
+        "cdpPort": 6664,
         "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/ETH",
         "runtimeLaunch": null
       },
       "observations": {
         "ui.screen": {
           "provider": "cdp-web",
-          "name": "MetaMask",
-          "title": "MetaMask",
+          "name": "local-extension-4 — MetaMask",
+          "title": "local-extension-4 — MetaMask",
           "route": "#/perps/market/ETH",
           "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
         },
@@ -1846,8 +1860,8 @@
               "selector": "[data-testid=\"perps-candle-period-1m\"]",
               "enabled": true,
               "bounds": {
-                "x": 212,
-                "y": 250,
+                "x": 217,
+                "y": 392,
                 "width": 61,
                 "height": 34
               }
@@ -1859,8 +1873,8 @@
               "selector": "[data-testid=\"perps-candle-period-3m\"]",
               "enabled": true,
               "bounds": {
-                "x": 277,
-                "y": 250,
+                "x": 282,
+                "y": 392,
                 "width": 64,
                 "height": 34
               }
@@ -1872,8 +1886,8 @@
               "selector": "[data-testid=\"perps-candle-period-5m\"]",
               "enabled": true,
               "bounds": {
-                "x": 345,
-                "y": 250,
+                "x": 351,
+                "y": 392,
                 "width": 65,
                 "height": 34
               }
@@ -1885,8 +1899,8 @@
               "selector": "[data-testid=\"perps-candle-period-15m\"]",
               "enabled": true,
               "bounds": {
-                "x": 414,
-                "y": 250,
+                "x": 419,
+                "y": 392,
                 "width": 70,
                 "height": 34
               }
@@ -1898,8 +1912,8 @@
               "selector": "[data-testid=\"perps-candle-period-more\"]",
               "enabled": true,
               "bounds": {
-                "x": 488,
-                "y": 250,
+                "x": 493,
+                "y": 392,
                 "width": 81,
                 "height": 34
               }
@@ -1911,9 +1925,9 @@
               "selector": "[data-testid=\"perps-market-detail-view-all-activity\"]",
               "enabled": true,
               "bounds": {
-                "x": 196,
-                "y": 546,
-                "width": 787,
+                "x": 201,
+                "y": 688,
+                "width": 798,
                 "height": 48
               }
             },
@@ -1924,10 +1938,62 @@
               "selector": "[data-testid=\"transaction-card-54934952450-1781362890468-0\"]",
               "enabled": true,
               "bounds": {
-                "x": 212,
-                "y": 606,
-                "width": 755,
+                "x": 217,
+                "y": 748,
+                "width": 766,
                 "height": 74
+              }
+            },
+            {
+              "role": "button",
+              "label": "Opened long 0.0064 ETH -$0.02",
+              "test_id": "transaction-card-54934915983-1781362833348-1",
+              "selector": "[data-testid=\"transaction-card-54934915983-1781362833348-1\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 822,
+                "width": 766,
+                "height": 75
+              }
+            },
+            {
+              "role": "button",
+              "label": "Closed long 0.0064 ETH -$0.02",
+              "test_id": "transaction-card-54934743284-1781362535174-2",
+              "selector": "[data-testid=\"transaction-card-54934743284-1781362535174-2\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 897,
+                "width": 766,
+                "height": 75
+              }
+            },
+            {
+              "role": "button",
+              "label": "Long",
+              "test_id": "perps-long-cta-button",
+              "selector": "[data-testid=\"perps-long-cta-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 1137,
+                "width": 377,
+                "height": 48
+              }
+            },
+            {
+              "role": "button",
+              "label": "Short",
+              "test_id": "perps-short-cta-button",
+              "selector": "[data-testid=\"perps-short-cta-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 606,
+                "y": 1137,
+                "width": 377,
+                "height": 48
               }
             },
             {
@@ -1937,70 +2003,13 @@
               "enabled": true,
               "bounds": {
                 "x": 767,
-                "y": 716,
+                "y": 1885,
                 "width": 24,
                 "height": 24
               }
             }
           ],
-          "hidden_or_offscreen": [
-            {
-              "role": "button",
-              "label": "Opened long 0.0064 ETH -$0.02",
-              "test_id": "transaction-card-54934915983-1781362833348-1",
-              "selector": "[data-testid=\"transaction-card-54934915983-1781362833348-1\"]",
-              "enabled": true,
-              "bounds": {
-                "x": 212,
-                "y": 680,
-                "width": 755,
-                "height": 75
-              },
-              "reason": "covered"
-            },
-            {
-              "role": "button",
-              "label": "Closed long 0.0064 ETH -$0.02",
-              "test_id": "transaction-card-54934743284-1781362535174-2",
-              "selector": "[data-testid=\"transaction-card-54934743284-1781362535174-2\"]",
-              "enabled": true,
-              "bounds": {
-                "x": 212,
-                "y": 755,
-                "width": 755,
-                "height": 75
-              },
-              "reason": "offscreen"
-            },
-            {
-              "role": "button",
-              "label": "Long",
-              "test_id": "perps-long-cta-button",
-              "selector": "[data-testid=\"perps-long-cta-button\"]",
-              "enabled": true,
-              "bounds": {
-                "x": 212,
-                "y": 679,
-                "width": 372,
-                "height": 48
-              },
-              "reason": "covered"
-            },
-            {
-              "role": "button",
-              "label": "Short",
-              "test_id": "perps-short-cta-button",
-              "selector": "[data-testid=\"perps-short-cta-button\"]",
-              "enabled": true,
-              "bounds": {
-                "x": 595,
-                "y": 679,
-                "width": 372,
-                "height": 48
-              },
-              "reason": "covered"
-            }
-          ],
+          "hidden_or_offscreen": [],
           "truncated": false,
           "limits": {
             "items": 20,
@@ -2013,9 +2022,9 @@
       "nodeId": "ac1-assert-orders-absent",
       "action": "metamask.perps.assert_orders",
       "intent": "AC1: confirm the order is gone from the provider",
-      "startedAt": "2026-08-01T19:17:40.281Z",
-      "endedAt": "2026-08-01T19:17:40.374Z",
-      "durationMs": 93,
+      "startedAt": "2026-08-04T14:57:30.631Z",
+      "endedAt": "2026-08-04T14:57:30.751Z",
+      "durationMs": 120,
       "ok": true,
       "next": "ac2-ensure-order-open",
       "output": {
@@ -2024,19 +2033,19 @@
         "matchingCount": 0,
         "orders": [],
         "source": "background-perpsGetOpenOrders",
-        "cdpPort": 7666,
+        "cdpPort": 6664,
         "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/ETH",
         "runtimeLaunch": null,
-        "liveAdapter": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/actions/extension/perps/assert_orders.mjs"
+        "liveAdapter": "/Users/deeeed/dev/metamask/metamask-harness/library/actions/extension/perps/assert_orders.mjs"
       }
     },
     {
       "nodeId": "ac2-ensure-order-open",
       "action": "metamask.perps.ensure_orders",
       "intent": "AC2: create the resting ETH order used for the stale-cancel race",
-      "startedAt": "2026-08-01T19:17:40.382Z",
-      "endedAt": "2026-08-01T19:17:47.776Z",
-      "durationMs": 7394,
+      "startedAt": "2026-08-04T14:57:30.757Z",
+      "endedAt": "2026-08-04T14:57:34.556Z",
+      "durationMs": 3799,
       "ok": true,
       "next": "ac2-navigate-market",
       "output": {
@@ -2047,13 +2056,13 @@
           {
             "coin": "ETH",
             "side": "buy",
-            "size": "0.028",
-            "price": "1286.0",
+            "size": "0.0274",
+            "price": "1311.6",
             "type": "limit"
           }
         ],
         "source": "background-perpsGetOpenOrders",
-        "cdpPort": 7666,
+        "cdpPort": 6664,
         "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/ETH?direction=long&mode=new",
         "runtimeLaunch": null,
         "order": {
@@ -2063,42 +2072,42 @@
           "orderType": "limit",
           "amount": "12",
           "leverage": 3,
-          "limitPrice": 1286.04,
+          "limitPrice": 1311.59,
           "submitted": true,
           "order": {
             "result": {
               "success": true,
-              "orderId": "57305324195",
-              "submittedSize": "0.028"
+              "orderId": "57422897473",
+              "submittedSize": "0.0274"
             },
             "orderParams": {
               "symbol": "ETH",
               "isBuy": true,
-              "size": "0.027992908463189328",
+              "size": "0.027447601765795714",
               "orderType": "limit",
-              "price": "1286.04",
+              "price": "1311.59",
               "timeInForce": "GTC",
               "leverage": 3,
-              "currentPrice": 1837.2,
-              "priceAtCalculation": 1837.2,
+              "currentPrice": 1873.7,
+              "priceAtCalculation": 1873.7,
               "maxSlippageBps": 300
             }
           },
           "proofPath": "background-perpsPlaceOrder",
-          "cdpPort": 7666,
+          "cdpPort": 6664,
           "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/ETH",
           "runtimeLaunch": null
         },
-        "liveAdapter": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/actions/extension/perps/ensure_orders.mjs"
+        "liveAdapter": "/Users/deeeed/dev/metamask/metamask-harness/library/actions/extension/perps/ensure_orders.mjs"
       }
     },
     {
       "nodeId": "ac2-navigate-market",
       "action": "ui.navigate",
       "intent": "AC2: the trader is back on the ETH market page listing the new resting order",
-      "startedAt": "2026-08-01T19:17:47.784Z",
-      "endedAt": "2026-08-01T19:17:47.892Z",
-      "durationMs": 108,
+      "startedAt": "2026-08-04T14:57:34.560Z",
+      "endedAt": "2026-08-04T14:57:34.675Z",
+      "durationMs": 115,
       "ok": true,
       "next": "ac2-wait-order-card",
       "output": {
@@ -2110,16 +2119,16 @@
           "sameDocument": true
         },
         "proofPath": "ui-navigation",
-        "cdpPort": 7666,
+        "cdpPort": 6664,
         "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/ETH?direction=long&mode=new",
         "runtimeLaunch": null,
-        "liveAdapter": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/actions/extension/ui/navigate.mjs"
+        "liveAdapter": "/Users/deeeed/dev/metamask/metamask-harness/library/actions/extension/ui/navigate.mjs"
       },
       "observations": {
         "ui.screen": {
           "provider": "cdp-web",
-          "name": "MetaMask",
-          "title": "MetaMask",
+          "name": "local-extension-4 — MetaMask",
+          "title": "local-extension-4 — MetaMask",
           "route": "#/perps/market/ETH",
           "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
         },
@@ -2133,7 +2142,7 @@
               "selector": "[data-testid=\"perps-candle-period-1m\"]",
               "enabled": true,
               "bounds": {
-                "x": 212,
+                "x": 217,
                 "y": 392,
                 "width": 61,
                 "height": 34
@@ -2146,7 +2155,7 @@
               "selector": "[data-testid=\"perps-candle-period-3m\"]",
               "enabled": true,
               "bounds": {
-                "x": 277,
+                "x": 282,
                 "y": 392,
                 "width": 64,
                 "height": 34
@@ -2159,7 +2168,7 @@
               "selector": "[data-testid=\"perps-candle-period-5m\"]",
               "enabled": true,
               "bounds": {
-                "x": 345,
+                "x": 351,
                 "y": 392,
                 "width": 65,
                 "height": 34
@@ -2172,7 +2181,7 @@
               "selector": "[data-testid=\"perps-candle-period-15m\"]",
               "enabled": true,
               "bounds": {
-                "x": 414,
+                "x": 419,
                 "y": 392,
                 "width": 70,
                 "height": 34
@@ -2185,7 +2194,7 @@
               "selector": "[data-testid=\"perps-candle-period-more\"]",
               "enabled": true,
               "bounds": {
-                "x": 488,
+                "x": 493,
                 "y": 392,
                 "width": 81,
                 "height": 34
@@ -2193,15 +2202,67 @@
             },
             {
               "role": "button",
-              "label": "Ethereum Limit long 0.028 ETH $1,286",
-              "test_id": "order-card-57305324195",
-              "selector": "[data-testid=\"order-card-57305324195\"]",
+              "label": "Ethereum Limit long 0.0274 ETH $1,311.6",
+              "test_id": "order-card-57422897473",
+              "selector": "[data-testid=\"order-card-57422897473\"]",
               "enabled": true,
               "bounds": {
-                "x": 212,
+                "x": 217,
                 "y": 482,
-                "width": 755,
+                "width": 766,
                 "height": 62
+              }
+            },
+            {
+              "role": "button",
+              "label": "Recent activity, See all",
+              "test_id": "perps-market-detail-view-all-activity",
+              "selector": "[data-testid=\"perps-market-detail-view-all-activity\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 201,
+                "y": 798,
+                "width": 798,
+                "height": 48
+              }
+            },
+            {
+              "role": "button",
+              "label": "Closed long 0.0064 ETH -$0.02",
+              "test_id": "transaction-card-54934952450-1781362890468-0",
+              "selector": "[data-testid=\"transaction-card-54934952450-1781362890468-0\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 858,
+                "width": 766,
+                "height": 74
+              }
+            },
+            {
+              "role": "button",
+              "label": "Opened long 0.0064 ETH -$0.02",
+              "test_id": "transaction-card-54934915983-1781362833348-1",
+              "selector": "[data-testid=\"transaction-card-54934915983-1781362833348-1\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 932,
+                "width": 766,
+                "height": 75
+              }
+            },
+            {
+              "role": "button",
+              "label": "Closed long 0.0064 ETH -$0.02",
+              "test_id": "transaction-card-54934743284-1781362535174-2",
+              "selector": "[data-testid=\"transaction-card-54934743284-1781362535174-2\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 1007,
+                "width": 766,
+                "height": 75
               }
             },
             {
@@ -2211,9 +2272,9 @@
               "selector": "[data-testid=\"perps-long-cta-button\"]",
               "enabled": true,
               "bounds": {
-                "x": 212,
-                "y": 679,
-                "width": 372,
+                "x": 217,
+                "y": 1247,
+                "width": 377,
                 "height": 48
               }
             },
@@ -2224,71 +2285,14 @@
               "selector": "[data-testid=\"perps-short-cta-button\"]",
               "enabled": true,
               "bounds": {
-                "x": 595,
-                "y": 679,
-                "width": 372,
+                "x": 606,
+                "y": 1247,
+                "width": 377,
                 "height": 48
               }
             }
           ],
-          "hidden_or_offscreen": [
-            {
-              "role": "button",
-              "label": "Recent activity, See all",
-              "test_id": "perps-market-detail-view-all-activity",
-              "selector": "[data-testid=\"perps-market-detail-view-all-activity\"]",
-              "enabled": true,
-              "bounds": {
-                "x": 196,
-                "y": 798,
-                "width": 787,
-                "height": 48
-              },
-              "reason": "offscreen"
-            },
-            {
-              "role": "button",
-              "label": "Closed long 0.0064 ETH -$0.02",
-              "test_id": "transaction-card-54934952450-1781362890468-0",
-              "selector": "[data-testid=\"transaction-card-54934952450-1781362890468-0\"]",
-              "enabled": true,
-              "bounds": {
-                "x": 212,
-                "y": 858,
-                "width": 755,
-                "height": 74
-              },
-              "reason": "offscreen"
-            },
-            {
-              "role": "button",
-              "label": "Opened long 0.0064 ETH -$0.02",
-              "test_id": "transaction-card-54934915983-1781362833348-1",
-              "selector": "[data-testid=\"transaction-card-54934915983-1781362833348-1\"]",
-              "enabled": true,
-              "bounds": {
-                "x": 212,
-                "y": 932,
-                "width": 755,
-                "height": 75
-              },
-              "reason": "offscreen"
-            },
-            {
-              "role": "button",
-              "label": "Closed long 0.0064 ETH -$0.02",
-              "test_id": "transaction-card-54934743284-1781362535174-2",
-              "selector": "[data-testid=\"transaction-card-54934743284-1781362535174-2\"]",
-              "enabled": true,
-              "bounds": {
-                "x": 212,
-                "y": 1007,
-                "width": 755,
-                "height": 75
-              },
-              "reason": "offscreen"
-            }
-          ],
+          "hidden_or_offscreen": [],
           "truncated": false,
           "limits": {
             "items": 20,
@@ -2301,22 +2305,22 @@
       "nodeId": "ac2-wait-order-card",
       "action": "ui.wait_for",
       "intent": "AC2: confirm the resting order is listed again",
-      "startedAt": "2026-08-01T19:17:47.896Z",
-      "endedAt": "2026-08-01T19:17:48.246Z",
-      "durationMs": 350,
+      "startedAt": "2026-08-04T14:57:34.679Z",
+      "endedAt": "2026-08-04T14:57:35.026Z",
+      "durationMs": 347,
       "ok": true,
       "next": "ac2-open-cancel-modal",
       "output": {
         "matched": true,
-        "cdpPort": 7666,
+        "cdpPort": 6664,
         "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/ETH",
         "runtimeLaunch": null
       },
       "observations": {
         "ui.screen": {
           "provider": "cdp-web",
-          "name": "MetaMask",
-          "title": "MetaMask",
+          "name": "local-extension-4 — MetaMask",
+          "title": "local-extension-4 — MetaMask",
           "route": "#/perps/market/ETH",
           "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
         },
@@ -2330,7 +2334,7 @@
               "selector": "[data-testid=\"perps-candle-period-1m\"]",
               "enabled": true,
               "bounds": {
-                "x": 212,
+                "x": 217,
                 "y": 392,
                 "width": 61,
                 "height": 34
@@ -2343,7 +2347,7 @@
               "selector": "[data-testid=\"perps-candle-period-3m\"]",
               "enabled": true,
               "bounds": {
-                "x": 277,
+                "x": 282,
                 "y": 392,
                 "width": 64,
                 "height": 34
@@ -2356,7 +2360,7 @@
               "selector": "[data-testid=\"perps-candle-period-5m\"]",
               "enabled": true,
               "bounds": {
-                "x": 345,
+                "x": 351,
                 "y": 392,
                 "width": 65,
                 "height": 34
@@ -2369,7 +2373,7 @@
               "selector": "[data-testid=\"perps-candle-period-15m\"]",
               "enabled": true,
               "bounds": {
-                "x": 414,
+                "x": 419,
                 "y": 392,
                 "width": 70,
                 "height": 34
@@ -2382,7 +2386,7 @@
               "selector": "[data-testid=\"perps-candle-period-more\"]",
               "enabled": true,
               "bounds": {
-                "x": 488,
+                "x": 493,
                 "y": 392,
                 "width": 81,
                 "height": 34
@@ -2390,15 +2394,67 @@
             },
             {
               "role": "button",
-              "label": "Ethereum Limit long 0.028 ETH $1,286",
-              "test_id": "order-card-57305324195",
-              "selector": "[data-testid=\"order-card-57305324195\"]",
+              "label": "Ethereum Limit long 0.0274 ETH $1,311.6",
+              "test_id": "order-card-57422897473",
+              "selector": "[data-testid=\"order-card-57422897473\"]",
               "enabled": true,
               "bounds": {
-                "x": 212,
+                "x": 217,
                 "y": 482,
-                "width": 755,
+                "width": 766,
                 "height": 62
+              }
+            },
+            {
+              "role": "button",
+              "label": "Recent activity, See all",
+              "test_id": "perps-market-detail-view-all-activity",
+              "selector": "[data-testid=\"perps-market-detail-view-all-activity\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 201,
+                "y": 798,
+                "width": 798,
+                "height": 48
+              }
+            },
+            {
+              "role": "button",
+              "label": "Closed long 0.0064 ETH -$0.02",
+              "test_id": "transaction-card-54934952450-1781362890468-0",
+              "selector": "[data-testid=\"transaction-card-54934952450-1781362890468-0\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 858,
+                "width": 766,
+                "height": 74
+              }
+            },
+            {
+              "role": "button",
+              "label": "Opened long 0.0064 ETH -$0.02",
+              "test_id": "transaction-card-54934915983-1781362833348-1",
+              "selector": "[data-testid=\"transaction-card-54934915983-1781362833348-1\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 932,
+                "width": 766,
+                "height": 75
+              }
+            },
+            {
+              "role": "button",
+              "label": "Closed long 0.0064 ETH -$0.02",
+              "test_id": "transaction-card-54934743284-1781362535174-2",
+              "selector": "[data-testid=\"transaction-card-54934743284-1781362535174-2\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 1007,
+                "width": 766,
+                "height": 75
               }
             },
             {
@@ -2408,9 +2464,9 @@
               "selector": "[data-testid=\"perps-long-cta-button\"]",
               "enabled": true,
               "bounds": {
-                "x": 212,
-                "y": 679,
-                "width": 372,
+                "x": 217,
+                "y": 1247,
+                "width": 377,
                 "height": 48
               }
             },
@@ -2421,71 +2477,14 @@
               "selector": "[data-testid=\"perps-short-cta-button\"]",
               "enabled": true,
               "bounds": {
-                "x": 595,
-                "y": 679,
-                "width": 372,
+                "x": 606,
+                "y": 1247,
+                "width": 377,
                 "height": 48
               }
             }
           ],
-          "hidden_or_offscreen": [
-            {
-              "role": "button",
-              "label": "Recent activity, See all",
-              "test_id": "perps-market-detail-view-all-activity",
-              "selector": "[data-testid=\"perps-market-detail-view-all-activity\"]",
-              "enabled": true,
-              "bounds": {
-                "x": 196,
-                "y": 798,
-                "width": 787,
-                "height": 48
-              },
-              "reason": "offscreen"
-            },
-            {
-              "role": "button",
-              "label": "Closed long 0.0064 ETH -$0.02",
-              "test_id": "transaction-card-54934952450-1781362890468-0",
-              "selector": "[data-testid=\"transaction-card-54934952450-1781362890468-0\"]",
-              "enabled": true,
-              "bounds": {
-                "x": 212,
-                "y": 858,
-                "width": 755,
-                "height": 74
-              },
-              "reason": "offscreen"
-            },
-            {
-              "role": "button",
-              "label": "Opened long 0.0064 ETH -$0.02",
-              "test_id": "transaction-card-54934915983-1781362833348-1",
-              "selector": "[data-testid=\"transaction-card-54934915983-1781362833348-1\"]",
-              "enabled": true,
-              "bounds": {
-                "x": 212,
-                "y": 932,
-                "width": 755,
-                "height": 75
-              },
-              "reason": "offscreen"
-            },
-            {
-              "role": "button",
-              "label": "Closed long 0.0064 ETH -$0.02",
-              "test_id": "transaction-card-54934743284-1781362535174-2",
-              "selector": "[data-testid=\"transaction-card-54934743284-1781362535174-2\"]",
-              "enabled": true,
-              "bounds": {
-                "x": 212,
-                "y": 1007,
-                "width": 755,
-                "height": 75
-              },
-              "reason": "offscreen"
-            }
-          ],
+          "hidden_or_offscreen": [],
           "truncated": false,
           "limits": {
             "items": 20,
@@ -2498,24 +2497,24 @@
       "nodeId": "ac2-open-cancel-modal",
       "action": "ui.press",
       "intent": "AC2: open the cancel-order modal for the resting order",
-      "startedAt": "2026-08-01T19:17:48.253Z",
-      "endedAt": "2026-08-01T19:17:49.303Z",
-      "durationMs": 1050,
+      "startedAt": "2026-08-04T14:57:35.029Z",
+      "endedAt": "2026-08-04T14:57:35.972Z",
+      "durationMs": 943,
       "ok": true,
       "next": "ac2-wait-modal",
       "output": {
         "clicked": true,
         "selector": "[data-testid^='order-card-']",
         "tagName": "BUTTON",
-        "cdpPort": 7666,
+        "cdpPort": 6664,
         "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/ETH",
         "runtimeLaunch": null
       },
       "observations": {
         "ui.screen": {
           "provider": "cdp-web",
-          "name": "MetaMask",
-          "title": "MetaMask",
+          "name": "local-extension-4 — MetaMask",
+          "title": "local-extension-4 — MetaMask",
           "route": "#/perps/market/ETH",
           "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
         },
@@ -2557,8 +2556,8 @@
               "selector": "[data-testid=\"perps-candle-period-1m\"]",
               "enabled": true,
               "bounds": {
-                "x": 212,
-                "y": 250,
+                "x": 217,
+                "y": 392,
                 "width": 61,
                 "height": 34
               },
@@ -2571,8 +2570,8 @@
               "selector": "[data-testid=\"perps-candle-period-3m\"]",
               "enabled": true,
               "bounds": {
-                "x": 277,
-                "y": 250,
+                "x": 282,
+                "y": 392,
                 "width": 64,
                 "height": 34
               },
@@ -2585,8 +2584,8 @@
               "selector": "[data-testid=\"perps-candle-period-5m\"]",
               "enabled": true,
               "bounds": {
-                "x": 345,
-                "y": 250,
+                "x": 351,
+                "y": 392,
                 "width": 65,
                 "height": 34
               },
@@ -2599,8 +2598,8 @@
               "selector": "[data-testid=\"perps-candle-period-15m\"]",
               "enabled": true,
               "bounds": {
-                "x": 414,
-                "y": 250,
+                "x": 419,
+                "y": 392,
                 "width": 70,
                 "height": 34
               },
@@ -2613,8 +2612,8 @@
               "selector": "[data-testid=\"perps-candle-period-more\"]",
               "enabled": true,
               "bounds": {
-                "x": 488,
-                "y": 250,
+                "x": 493,
+                "y": 392,
                 "width": 81,
                 "height": 34
               },
@@ -2622,14 +2621,14 @@
             },
             {
               "role": "button",
-              "label": "Ethereum Limit long 0.028 ETH $1,286",
-              "test_id": "order-card-57305324195",
-              "selector": "[data-testid=\"order-card-57305324195\"]",
+              "label": "Ethereum Limit long 0.0274 ETH $1,311.6",
+              "test_id": "order-card-57422897473",
+              "selector": "[data-testid=\"order-card-57422897473\"]",
               "enabled": true,
               "bounds": {
-                "x": 212,
-                "y": 340,
-                "width": 755,
+                "x": 217,
+                "y": 482,
+                "width": 766,
                 "height": 62
               },
               "reason": "covered"
@@ -2641,9 +2640,9 @@
               "selector": "[data-testid=\"perps-market-detail-view-all-activity\"]",
               "enabled": true,
               "bounds": {
-                "x": 196,
-                "y": 656,
-                "width": 787,
+                "x": 201,
+                "y": 798,
+                "width": 798,
                 "height": 48
               },
               "reason": "covered"
@@ -2655,9 +2654,9 @@
               "selector": "[data-testid=\"transaction-card-54934952450-1781362890468-0\"]",
               "enabled": true,
               "bounds": {
-                "x": 212,
-                "y": 716,
-                "width": 755,
+                "x": 217,
+                "y": 858,
+                "width": 766,
                 "height": 74
               },
               "reason": "covered"
@@ -2669,12 +2668,12 @@
               "selector": "[data-testid=\"transaction-card-54934915983-1781362833348-1\"]",
               "enabled": true,
               "bounds": {
-                "x": 212,
-                "y": 790,
-                "width": 755,
+                "x": 217,
+                "y": 932,
+                "width": 766,
                 "height": 75
               },
-              "reason": "offscreen"
+              "reason": "covered"
             },
             {
               "role": "button",
@@ -2683,12 +2682,12 @@
               "selector": "[data-testid=\"transaction-card-54934743284-1781362535174-2\"]",
               "enabled": true,
               "bounds": {
-                "x": 212,
-                "y": 865,
-                "width": 755,
+                "x": 217,
+                "y": 1007,
+                "width": 766,
                 "height": 75
               },
-              "reason": "offscreen"
+              "reason": "covered"
             }
           ],
           "truncated": true,
@@ -2703,22 +2702,22 @@
       "nodeId": "ac2-wait-modal",
       "action": "ui.wait_for",
       "intent": "AC2: the cancel-order dialog is on screen with its cancel action",
-      "startedAt": "2026-08-01T19:17:49.311Z",
-      "endedAt": "2026-08-01T19:17:49.665Z",
-      "durationMs": 354,
+      "startedAt": "2026-08-04T14:57:35.976Z",
+      "endedAt": "2026-08-04T14:57:36.320Z",
+      "durationMs": 344,
       "ok": true,
       "next": "ac2-cancel-out-of-band",
       "output": {
         "matched": true,
-        "cdpPort": 7666,
+        "cdpPort": 6664,
         "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/ETH",
         "runtimeLaunch": null
       },
       "observations": {
         "ui.screen": {
           "provider": "cdp-web",
-          "name": "MetaMask",
-          "title": "MetaMask",
+          "name": "local-extension-4 — MetaMask",
+          "title": "local-extension-4 — MetaMask",
           "route": "#/perps/market/ETH",
           "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
         },
@@ -2760,8 +2759,8 @@
               "selector": "[data-testid=\"perps-candle-period-1m\"]",
               "enabled": true,
               "bounds": {
-                "x": 212,
-                "y": 250,
+                "x": 217,
+                "y": 392,
                 "width": 61,
                 "height": 34
               },
@@ -2774,8 +2773,8 @@
               "selector": "[data-testid=\"perps-candle-period-3m\"]",
               "enabled": true,
               "bounds": {
-                "x": 277,
-                "y": 250,
+                "x": 282,
+                "y": 392,
                 "width": 64,
                 "height": 34
               },
@@ -2788,8 +2787,8 @@
               "selector": "[data-testid=\"perps-candle-period-5m\"]",
               "enabled": true,
               "bounds": {
-                "x": 345,
-                "y": 250,
+                "x": 351,
+                "y": 392,
                 "width": 65,
                 "height": 34
               },
@@ -2802,8 +2801,8 @@
               "selector": "[data-testid=\"perps-candle-period-15m\"]",
               "enabled": true,
               "bounds": {
-                "x": 414,
-                "y": 250,
+                "x": 419,
+                "y": 392,
                 "width": 70,
                 "height": 34
               },
@@ -2816,8 +2815,8 @@
               "selector": "[data-testid=\"perps-candle-period-more\"]",
               "enabled": true,
               "bounds": {
-                "x": 488,
-                "y": 250,
+                "x": 493,
+                "y": 392,
                 "width": 81,
                 "height": 34
               },
@@ -2825,14 +2824,14 @@
             },
             {
               "role": "button",
-              "label": "Ethereum Limit long 0.028 ETH $1,286",
-              "test_id": "order-card-57305324195",
-              "selector": "[data-testid=\"order-card-57305324195\"]",
+              "label": "Ethereum Limit long 0.0274 ETH $1,311.6",
+              "test_id": "order-card-57422897473",
+              "selector": "[data-testid=\"order-card-57422897473\"]",
               "enabled": true,
               "bounds": {
-                "x": 212,
-                "y": 340,
-                "width": 755,
+                "x": 217,
+                "y": 482,
+                "width": 766,
                 "height": 62
               },
               "reason": "covered"
@@ -2844,9 +2843,9 @@
               "selector": "[data-testid=\"perps-market-detail-view-all-activity\"]",
               "enabled": true,
               "bounds": {
-                "x": 196,
-                "y": 656,
-                "width": 787,
+                "x": 201,
+                "y": 798,
+                "width": 798,
                 "height": 48
               },
               "reason": "covered"
@@ -2858,9 +2857,9 @@
               "selector": "[data-testid=\"transaction-card-54934952450-1781362890468-0\"]",
               "enabled": true,
               "bounds": {
-                "x": 212,
-                "y": 716,
-                "width": 755,
+                "x": 217,
+                "y": 858,
+                "width": 766,
                 "height": 74
               },
               "reason": "covered"
@@ -2872,12 +2871,12 @@
               "selector": "[data-testid=\"transaction-card-54934915983-1781362833348-1\"]",
               "enabled": true,
               "bounds": {
-                "x": 212,
-                "y": 790,
-                "width": 755,
+                "x": 217,
+                "y": 932,
+                "width": 766,
                 "height": 75
               },
-              "reason": "offscreen"
+              "reason": "covered"
             },
             {
               "role": "button",
@@ -2886,12 +2885,12 @@
               "selector": "[data-testid=\"transaction-card-54934743284-1781362535174-2\"]",
               "enabled": true,
               "bounds": {
-                "x": 212,
-                "y": 865,
-                "width": 755,
+                "x": 217,
+                "y": 1007,
+                "width": 766,
                 "height": 75
               },
-              "reason": "offscreen"
+              "reason": "covered"
             }
           ],
           "truncated": true,
@@ -2906,9 +2905,9 @@
       "nodeId": "ac2-cancel-out-of-band",
       "action": "metamask.perps.close_orders",
       "intent": "AC2: cancel the order outside the modal so the modal now holds a stale order",
-      "startedAt": "2026-08-01T19:17:49.673Z",
-      "endedAt": "2026-08-01T19:17:50.607Z",
-      "durationMs": 934,
+      "startedAt": "2026-08-04T14:57:36.326Z",
+      "endedAt": "2026-08-04T14:57:38.160Z",
+      "durationMs": 1834,
       "ok": true,
       "next": "ac2-press-cancel",
       "output": {
@@ -2917,7 +2916,7 @@
         "matchingCount": 0,
         "orders": [],
         "source": "background-perpsGetOpenOrders",
-        "cdpPort": 7666,
+        "cdpPort": 6664,
         "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/ETH",
         "runtimeLaunch": null,
         "close": {
@@ -2933,46 +2932,46 @@
             "failureCount": 0,
             "results": [
               {
-                "orderId": "57305324195",
+                "orderId": "57422897473",
                 "symbol": "ETH",
                 "success": true,
                 "result": {
                   "success": true,
-                  "orderId": "57305324195"
+                  "orderId": "57422897473"
                 }
               }
             ]
           },
           "proofPath": "background-perpsCancelOrder",
-          "cdpPort": 7666,
+          "cdpPort": 6664,
           "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/ETH",
           "runtimeLaunch": null
         },
-        "liveAdapter": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/actions/extension/perps/close_orders.mjs"
+        "liveAdapter": "/Users/deeeed/dev/metamask/metamask-harness/library/actions/extension/perps/close_orders.mjs"
       }
     },
     {
       "nodeId": "ac2-press-cancel",
       "action": "ui.press",
       "intent": "AC2: submit a cancel for an order the provider no longer holds open",
-      "startedAt": "2026-08-01T19:17:50.616Z",
-      "endedAt": "2026-08-01T19:17:51.190Z",
-      "durationMs": 574,
+      "startedAt": "2026-08-04T14:57:38.167Z",
+      "endedAt": "2026-08-04T14:57:38.545Z",
+      "durationMs": 378,
       "ok": true,
       "next": "ac2-wait-toast",
       "output": {
         "clicked": true,
         "selector": "[data-testid=\"perps-cancel-order-button\"], [data-test-id=\"perps-cancel-order-button\"], [data-test=\"perps-cancel-order-button\"]",
         "tagName": "BUTTON",
-        "cdpPort": 7666,
+        "cdpPort": 6664,
         "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/ETH",
         "runtimeLaunch": null
       },
       "observations": {
         "ui.screen": {
           "provider": "cdp-web",
-          "name": "MetaMask",
-          "title": "MetaMask",
+          "name": "local-extension-4 — MetaMask",
+          "title": "local-extension-4 — MetaMask",
           "route": "#/perps/market/ETH",
           "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
         },
@@ -3013,8 +3012,8 @@
               "selector": "[data-testid=\"perps-candle-period-1m\"]",
               "enabled": true,
               "bounds": {
-                "x": 212,
-                "y": 250,
+                "x": 217,
+                "y": 392,
                 "width": 61,
                 "height": 34
               },
@@ -3027,8 +3026,8 @@
               "selector": "[data-testid=\"perps-candle-period-3m\"]",
               "enabled": true,
               "bounds": {
-                "x": 277,
-                "y": 250,
+                "x": 282,
+                "y": 392,
                 "width": 64,
                 "height": 34
               },
@@ -3041,8 +3040,8 @@
               "selector": "[data-testid=\"perps-candle-period-5m\"]",
               "enabled": true,
               "bounds": {
-                "x": 345,
-                "y": 250,
+                "x": 351,
+                "y": 392,
                 "width": 65,
                 "height": 34
               },
@@ -3055,8 +3054,8 @@
               "selector": "[data-testid=\"perps-candle-period-15m\"]",
               "enabled": true,
               "bounds": {
-                "x": 414,
-                "y": 250,
+                "x": 419,
+                "y": 392,
                 "width": 70,
                 "height": 34
               },
@@ -3069,8 +3068,8 @@
               "selector": "[data-testid=\"perps-candle-period-more\"]",
               "enabled": true,
               "bounds": {
-                "x": 488,
-                "y": 250,
+                "x": 493,
+                "y": 392,
                 "width": 81,
                 "height": 34
               },
@@ -3083,9 +3082,9 @@
               "selector": "[data-testid=\"perps-market-detail-view-all-activity\"]",
               "enabled": true,
               "bounds": {
-                "x": 196,
-                "y": 546,
-                "width": 787,
+                "x": 201,
+                "y": 688,
+                "width": 798,
                 "height": 48
               },
               "reason": "covered"
@@ -3097,9 +3096,9 @@
               "selector": "[data-testid=\"transaction-card-54934952450-1781362890468-0\"]",
               "enabled": true,
               "bounds": {
-                "x": 212,
-                "y": 606,
-                "width": 755,
+                "x": 217,
+                "y": 748,
+                "width": 766,
                 "height": 74
               },
               "reason": "covered"
@@ -3111,9 +3110,9 @@
               "selector": "[data-testid=\"transaction-card-54934915983-1781362833348-1\"]",
               "enabled": true,
               "bounds": {
-                "x": 212,
-                "y": 680,
-                "width": 755,
+                "x": 217,
+                "y": 822,
+                "width": 766,
                 "height": 75
               },
               "reason": "covered"
@@ -3125,12 +3124,12 @@
               "selector": "[data-testid=\"transaction-card-54934743284-1781362535174-2\"]",
               "enabled": true,
               "bounds": {
-                "x": 212,
-                "y": 755,
-                "width": 755,
+                "x": 217,
+                "y": 897,
+                "width": 766,
                 "height": 75
               },
-              "reason": "offscreen"
+              "reason": "covered"
             },
             {
               "role": "button",
@@ -3139,9 +3138,9 @@
               "selector": "[data-testid=\"perps-long-cta-button\"]",
               "enabled": true,
               "bounds": {
-                "x": 212,
-                "y": 679,
-                "width": 372,
+                "x": 217,
+                "y": 1137,
+                "width": 377,
                 "height": 48
               },
               "reason": "covered"
@@ -3159,22 +3158,22 @@
       "nodeId": "ac2-wait-toast",
       "action": "ui.wait_for",
       "intent": "AC2: confirm the neutral 'no longer open' toast is shown instead of a failure",
-      "startedAt": "2026-08-01T19:17:51.197Z",
-      "endedAt": "2026-08-01T19:17:51.858Z",
-      "durationMs": 661,
+      "startedAt": "2026-08-04T14:57:38.550Z",
+      "endedAt": "2026-08-04T14:57:40.212Z",
+      "durationMs": 1662,
       "ok": true,
       "next": "ac2-screenshot",
       "output": {
         "matched": true,
-        "cdpPort": 7666,
+        "cdpPort": 6664,
         "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/ETH",
         "runtimeLaunch": null
       },
       "observations": {
         "ui.screen": {
           "provider": "cdp-web",
-          "name": "MetaMask",
-          "title": "MetaMask",
+          "name": "local-extension-4 — MetaMask",
+          "title": "local-extension-4 — MetaMask",
           "route": "#/perps/market/ETH",
           "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
         },
@@ -3188,8 +3187,8 @@
               "selector": "[data-testid=\"perps-candle-period-1m\"]",
               "enabled": true,
               "bounds": {
-                "x": 212,
-                "y": 250,
+                "x": 217,
+                "y": 392,
                 "width": 61,
                 "height": 34
               }
@@ -3201,8 +3200,8 @@
               "selector": "[data-testid=\"perps-candle-period-3m\"]",
               "enabled": true,
               "bounds": {
-                "x": 277,
-                "y": 250,
+                "x": 282,
+                "y": 392,
                 "width": 64,
                 "height": 34
               }
@@ -3214,8 +3213,8 @@
               "selector": "[data-testid=\"perps-candle-period-5m\"]",
               "enabled": true,
               "bounds": {
-                "x": 345,
-                "y": 250,
+                "x": 351,
+                "y": 392,
                 "width": 65,
                 "height": 34
               }
@@ -3227,8 +3226,8 @@
               "selector": "[data-testid=\"perps-candle-period-15m\"]",
               "enabled": true,
               "bounds": {
-                "x": 414,
-                "y": 250,
+                "x": 419,
+                "y": 392,
                 "width": 70,
                 "height": 34
               }
@@ -3240,8 +3239,8 @@
               "selector": "[data-testid=\"perps-candle-period-more\"]",
               "enabled": true,
               "bounds": {
-                "x": 488,
-                "y": 250,
+                "x": 493,
+                "y": 392,
                 "width": 81,
                 "height": 34
               }
@@ -3253,9 +3252,9 @@
               "selector": "[data-testid=\"perps-market-detail-view-all-activity\"]",
               "enabled": true,
               "bounds": {
-                "x": 196,
-                "y": 546,
-                "width": 787,
+                "x": 201,
+                "y": 688,
+                "width": 798,
                 "height": 48
               }
             },
@@ -3266,10 +3265,62 @@
               "selector": "[data-testid=\"transaction-card-54934952450-1781362890468-0\"]",
               "enabled": true,
               "bounds": {
-                "x": 212,
-                "y": 606,
-                "width": 755,
+                "x": 217,
+                "y": 748,
+                "width": 766,
                 "height": 74
+              }
+            },
+            {
+              "role": "button",
+              "label": "Opened long 0.0064 ETH -$0.02",
+              "test_id": "transaction-card-54934915983-1781362833348-1",
+              "selector": "[data-testid=\"transaction-card-54934915983-1781362833348-1\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 822,
+                "width": 766,
+                "height": 75
+              }
+            },
+            {
+              "role": "button",
+              "label": "Closed long 0.0064 ETH -$0.02",
+              "test_id": "transaction-card-54934743284-1781362535174-2",
+              "selector": "[data-testid=\"transaction-card-54934743284-1781362535174-2\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 897,
+                "width": 766,
+                "height": 75
+              }
+            },
+            {
+              "role": "button",
+              "label": "Long",
+              "test_id": "perps-long-cta-button",
+              "selector": "[data-testid=\"perps-long-cta-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 1137,
+                "width": 377,
+                "height": 48
+              }
+            },
+            {
+              "role": "button",
+              "label": "Short",
+              "test_id": "perps-short-cta-button",
+              "selector": "[data-testid=\"perps-short-cta-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 606,
+                "y": 1137,
+                "width": 377,
+                "height": 48
               }
             },
             {
@@ -3279,70 +3330,13 @@
               "enabled": true,
               "bounds": {
                 "x": 767,
-                "y": 716,
+                "y": 1885,
                 "width": 24,
                 "height": 24
               }
             }
           ],
-          "hidden_or_offscreen": [
-            {
-              "role": "button",
-              "label": "Opened long 0.0064 ETH -$0.02",
-              "test_id": "transaction-card-54934915983-1781362833348-1",
-              "selector": "[data-testid=\"transaction-card-54934915983-1781362833348-1\"]",
-              "enabled": true,
-              "bounds": {
-                "x": 212,
-                "y": 680,
-                "width": 755,
-                "height": 75
-              },
-              "reason": "covered"
-            },
-            {
-              "role": "button",
-              "label": "Closed long 0.0064 ETH -$0.02",
-              "test_id": "transaction-card-54934743284-1781362535174-2",
-              "selector": "[data-testid=\"transaction-card-54934743284-1781362535174-2\"]",
-              "enabled": true,
-              "bounds": {
-                "x": 212,
-                "y": 755,
-                "width": 755,
-                "height": 75
-              },
-              "reason": "offscreen"
-            },
-            {
-              "role": "button",
-              "label": "Long",
-              "test_id": "perps-long-cta-button",
-              "selector": "[data-testid=\"perps-long-cta-button\"]",
-              "enabled": true,
-              "bounds": {
-                "x": 212,
-                "y": 679,
-                "width": 372,
-                "height": 48
-              },
-              "reason": "covered"
-            },
-            {
-              "role": "button",
-              "label": "Short",
-              "test_id": "perps-short-cta-button",
-              "selector": "[data-testid=\"perps-short-cta-button\"]",
-              "enabled": true,
-              "bounds": {
-                "x": 595,
-                "y": 679,
-                "width": 372,
-                "height": 48
-              },
-              "reason": "covered"
-            }
-          ],
+          "hidden_or_offscreen": [],
           "truncated": false,
           "limits": {
             "items": 20,
@@ -3366,21 +3360,21 @@
           "metadata": {
             "provider": "capture-helper",
             "mode": "snapshot",
-            "pid": 86498,
+            "pid": 53768,
             "captureHelper": {
-              "bytes": 189475,
-              "output": "/Users/deeeed/dev/metamask/metamask-extension-2/temp/tasks/fix/45067-0801-230839/artifacts/recipe-run/screenshots/.mm-harness-extension-evidence-ekVgOz/captured.png",
+              "bytes": 391215,
+              "output": "/Users/deeeed/dev/metamask/metamask-extension-4/temp/tasks/fix/45067-0804-222128/artifacts/recipe-run/screenshots/.mm-harness-extension-evidence-Y8k5li/captured.png",
               "selected": {
                 "app": "Google Chrome for Testing",
-                "height": 916,
-                "id": 2153,
+                "height": 2085,
+                "id": 37321,
                 "layer": 0,
                 "onScreen": true,
-                "pid": 86498,
-                "title": "MetaMask",
+                "pid": 53768,
+                "title": "local-extension-4 — MetaMask",
                 "width": 1200,
                 "x": 22,
-                "y": 52
+                "y": 53
               },
               "selector": "pid",
               "type": "snapshot"
@@ -3388,9 +3382,9 @@
           }
         }
       ],
-      "startedAt": "2026-08-01T19:17:51.870Z",
-      "endedAt": "2026-08-01T19:17:52.124Z",
-      "durationMs": 254,
+      "startedAt": "2026-08-04T14:57:40.219Z",
+      "endedAt": "2026-08-04T14:57:41.273Z",
+      "durationMs": 1054,
       "ok": true,
       "next": "ac2-wait-modal-closed",
       "output": {
@@ -3406,21 +3400,21 @@
           "metadata": {
             "provider": "capture-helper",
             "mode": "snapshot",
-            "pid": 86498,
+            "pid": 53768,
             "captureHelper": {
-              "bytes": 189475,
-              "output": "/Users/deeeed/dev/metamask/metamask-extension-2/temp/tasks/fix/45067-0801-230839/artifacts/recipe-run/screenshots/.mm-harness-extension-evidence-ekVgOz/captured.png",
+              "bytes": 391215,
+              "output": "/Users/deeeed/dev/metamask/metamask-extension-4/temp/tasks/fix/45067-0804-222128/artifacts/recipe-run/screenshots/.mm-harness-extension-evidence-Y8k5li/captured.png",
               "selected": {
                 "app": "Google Chrome for Testing",
-                "height": 916,
-                "id": 2153,
+                "height": 2085,
+                "id": 37321,
                 "layer": 0,
                 "onScreen": true,
-                "pid": 86498,
-                "title": "MetaMask",
+                "pid": 53768,
+                "title": "local-extension-4 — MetaMask",
                 "width": 1200,
                 "x": 22,
-                "y": 52
+                "y": 53
               },
               "selector": "pid",
               "type": "snapshot"
@@ -3431,8 +3425,8 @@
       "observations": {
         "ui.screen": {
           "provider": "cdp-web",
-          "name": "MetaMask",
-          "title": "MetaMask",
+          "name": "local-extension-4 — MetaMask",
+          "title": "local-extension-4 — MetaMask",
           "route": "#/perps/market/ETH",
           "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
         },
@@ -3446,8 +3440,8 @@
               "selector": "[data-testid=\"perps-candle-period-1m\"]",
               "enabled": true,
               "bounds": {
-                "x": 212,
-                "y": 250,
+                "x": 217,
+                "y": 392,
                 "width": 61,
                 "height": 34
               }
@@ -3459,8 +3453,8 @@
               "selector": "[data-testid=\"perps-candle-period-3m\"]",
               "enabled": true,
               "bounds": {
-                "x": 277,
-                "y": 250,
+                "x": 282,
+                "y": 392,
                 "width": 64,
                 "height": 34
               }
@@ -3472,8 +3466,8 @@
               "selector": "[data-testid=\"perps-candle-period-5m\"]",
               "enabled": true,
               "bounds": {
-                "x": 345,
-                "y": 250,
+                "x": 351,
+                "y": 392,
                 "width": 65,
                 "height": 34
               }
@@ -3485,8 +3479,8 @@
               "selector": "[data-testid=\"perps-candle-period-15m\"]",
               "enabled": true,
               "bounds": {
-                "x": 414,
-                "y": 250,
+                "x": 419,
+                "y": 392,
                 "width": 70,
                 "height": 34
               }
@@ -3498,8 +3492,8 @@
               "selector": "[data-testid=\"perps-candle-period-more\"]",
               "enabled": true,
               "bounds": {
-                "x": 488,
-                "y": 250,
+                "x": 493,
+                "y": 392,
                 "width": 81,
                 "height": 34
               }
@@ -3511,9 +3505,9 @@
               "selector": "[data-testid=\"perps-market-detail-view-all-activity\"]",
               "enabled": true,
               "bounds": {
-                "x": 196,
-                "y": 546,
-                "width": 787,
+                "x": 201,
+                "y": 688,
+                "width": 798,
                 "height": 48
               }
             },
@@ -3524,10 +3518,62 @@
               "selector": "[data-testid=\"transaction-card-54934952450-1781362890468-0\"]",
               "enabled": true,
               "bounds": {
-                "x": 212,
-                "y": 606,
-                "width": 755,
+                "x": 217,
+                "y": 748,
+                "width": 766,
                 "height": 74
+              }
+            },
+            {
+              "role": "button",
+              "label": "Opened long 0.0064 ETH -$0.02",
+              "test_id": "transaction-card-54934915983-1781362833348-1",
+              "selector": "[data-testid=\"transaction-card-54934915983-1781362833348-1\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 822,
+                "width": 766,
+                "height": 75
+              }
+            },
+            {
+              "role": "button",
+              "label": "Closed long 0.0064 ETH -$0.02",
+              "test_id": "transaction-card-54934743284-1781362535174-2",
+              "selector": "[data-testid=\"transaction-card-54934743284-1781362535174-2\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 897,
+                "width": 766,
+                "height": 75
+              }
+            },
+            {
+              "role": "button",
+              "label": "Long",
+              "test_id": "perps-long-cta-button",
+              "selector": "[data-testid=\"perps-long-cta-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 1137,
+                "width": 377,
+                "height": 48
+              }
+            },
+            {
+              "role": "button",
+              "label": "Short",
+              "test_id": "perps-short-cta-button",
+              "selector": "[data-testid=\"perps-short-cta-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 606,
+                "y": 1137,
+                "width": 377,
+                "height": 48
               }
             },
             {
@@ -3537,70 +3583,13 @@
               "enabled": true,
               "bounds": {
                 "x": 767,
-                "y": 716,
+                "y": 1885,
                 "width": 24,
                 "height": 24
               }
             }
           ],
-          "hidden_or_offscreen": [
-            {
-              "role": "button",
-              "label": "Opened long 0.0064 ETH -$0.02",
-              "test_id": "transaction-card-54934915983-1781362833348-1",
-              "selector": "[data-testid=\"transaction-card-54934915983-1781362833348-1\"]",
-              "enabled": true,
-              "bounds": {
-                "x": 212,
-                "y": 680,
-                "width": 755,
-                "height": 75
-              },
-              "reason": "covered"
-            },
-            {
-              "role": "button",
-              "label": "Closed long 0.0064 ETH -$0.02",
-              "test_id": "transaction-card-54934743284-1781362535174-2",
-              "selector": "[data-testid=\"transaction-card-54934743284-1781362535174-2\"]",
-              "enabled": true,
-              "bounds": {
-                "x": 212,
-                "y": 755,
-                "width": 755,
-                "height": 75
-              },
-              "reason": "offscreen"
-            },
-            {
-              "role": "button",
-              "label": "Long",
-              "test_id": "perps-long-cta-button",
-              "selector": "[data-testid=\"perps-long-cta-button\"]",
-              "enabled": true,
-              "bounds": {
-                "x": 212,
-                "y": 679,
-                "width": 372,
-                "height": 48
-              },
-              "reason": "covered"
-            },
-            {
-              "role": "button",
-              "label": "Short",
-              "test_id": "perps-short-cta-button",
-              "selector": "[data-testid=\"perps-short-cta-button\"]",
-              "enabled": true,
-              "bounds": {
-                "x": 595,
-                "y": 679,
-                "width": 372,
-                "height": 48
-              },
-              "reason": "covered"
-            }
-          ],
+          "hidden_or_offscreen": [],
           "truncated": false,
           "limits": {
             "items": 20,
@@ -3613,22 +3602,22 @@
       "nodeId": "ac2-wait-modal-closed",
       "action": "ui.wait_for",
       "intent": "AC2: the dialog is gone instead of holding the trader on an error they cannot act on",
-      "startedAt": "2026-08-01T19:17:52.132Z",
-      "endedAt": "2026-08-01T19:17:52.500Z",
-      "durationMs": 368,
+      "startedAt": "2026-08-04T14:57:41.277Z",
+      "endedAt": "2026-08-04T14:57:41.989Z",
+      "durationMs": 712,
       "ok": true,
       "next": "ac2-assert-orders-absent",
       "output": {
         "matched": true,
-        "cdpPort": 7666,
+        "cdpPort": 6664,
         "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/ETH",
         "runtimeLaunch": null
       },
       "observations": {
         "ui.screen": {
           "provider": "cdp-web",
-          "name": "MetaMask",
-          "title": "MetaMask",
+          "name": "local-extension-4 — MetaMask",
+          "title": "local-extension-4 — MetaMask",
           "route": "#/perps/market/ETH",
           "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
         },
@@ -3642,8 +3631,8 @@
               "selector": "[data-testid=\"perps-candle-period-1m\"]",
               "enabled": true,
               "bounds": {
-                "x": 212,
-                "y": 250,
+                "x": 217,
+                "y": 392,
                 "width": 61,
                 "height": 34
               }
@@ -3655,8 +3644,8 @@
               "selector": "[data-testid=\"perps-candle-period-3m\"]",
               "enabled": true,
               "bounds": {
-                "x": 277,
-                "y": 250,
+                "x": 282,
+                "y": 392,
                 "width": 64,
                 "height": 34
               }
@@ -3668,8 +3657,8 @@
               "selector": "[data-testid=\"perps-candle-period-5m\"]",
               "enabled": true,
               "bounds": {
-                "x": 345,
-                "y": 250,
+                "x": 351,
+                "y": 392,
                 "width": 65,
                 "height": 34
               }
@@ -3681,8 +3670,8 @@
               "selector": "[data-testid=\"perps-candle-period-15m\"]",
               "enabled": true,
               "bounds": {
-                "x": 414,
-                "y": 250,
+                "x": 419,
+                "y": 392,
                 "width": 70,
                 "height": 34
               }
@@ -3694,8 +3683,8 @@
               "selector": "[data-testid=\"perps-candle-period-more\"]",
               "enabled": true,
               "bounds": {
-                "x": 488,
-                "y": 250,
+                "x": 493,
+                "y": 392,
                 "width": 81,
                 "height": 34
               }
@@ -3707,9 +3696,9 @@
               "selector": "[data-testid=\"perps-market-detail-view-all-activity\"]",
               "enabled": true,
               "bounds": {
-                "x": 196,
-                "y": 546,
-                "width": 787,
+                "x": 201,
+                "y": 688,
+                "width": 798,
                 "height": 48
               }
             },
@@ -3720,10 +3709,62 @@
               "selector": "[data-testid=\"transaction-card-54934952450-1781362890468-0\"]",
               "enabled": true,
               "bounds": {
-                "x": 212,
-                "y": 606,
-                "width": 755,
+                "x": 217,
+                "y": 748,
+                "width": 766,
                 "height": 74
+              }
+            },
+            {
+              "role": "button",
+              "label": "Opened long 0.0064 ETH -$0.02",
+              "test_id": "transaction-card-54934915983-1781362833348-1",
+              "selector": "[data-testid=\"transaction-card-54934915983-1781362833348-1\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 822,
+                "width": 766,
+                "height": 75
+              }
+            },
+            {
+              "role": "button",
+              "label": "Closed long 0.0064 ETH -$0.02",
+              "test_id": "transaction-card-54934743284-1781362535174-2",
+              "selector": "[data-testid=\"transaction-card-54934743284-1781362535174-2\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 897,
+                "width": 766,
+                "height": 75
+              }
+            },
+            {
+              "role": "button",
+              "label": "Long",
+              "test_id": "perps-long-cta-button",
+              "selector": "[data-testid=\"perps-long-cta-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 1137,
+                "width": 377,
+                "height": 48
+              }
+            },
+            {
+              "role": "button",
+              "label": "Short",
+              "test_id": "perps-short-cta-button",
+              "selector": "[data-testid=\"perps-short-cta-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 606,
+                "y": 1137,
+                "width": 377,
+                "height": 48
               }
             },
             {
@@ -3733,70 +3774,13 @@
               "enabled": true,
               "bounds": {
                 "x": 767,
-                "y": 716,
+                "y": 1885,
                 "width": 24,
                 "height": 24
               }
             }
           ],
-          "hidden_or_offscreen": [
-            {
-              "role": "button",
-              "label": "Opened long 0.0064 ETH -$0.02",
-              "test_id": "transaction-card-54934915983-1781362833348-1",
-              "selector": "[data-testid=\"transaction-card-54934915983-1781362833348-1\"]",
-              "enabled": true,
-              "bounds": {
-                "x": 212,
-                "y": 680,
-                "width": 755,
-                "height": 75
-              },
-              "reason": "covered"
-            },
-            {
-              "role": "button",
-              "label": "Closed long 0.0064 ETH -$0.02",
-              "test_id": "transaction-card-54934743284-1781362535174-2",
-              "selector": "[data-testid=\"transaction-card-54934743284-1781362535174-2\"]",
-              "enabled": true,
-              "bounds": {
-                "x": 212,
-                "y": 755,
-                "width": 755,
-                "height": 75
-              },
-              "reason": "offscreen"
-            },
-            {
-              "role": "button",
-              "label": "Long",
-              "test_id": "perps-long-cta-button",
-              "selector": "[data-testid=\"perps-long-cta-button\"]",
-              "enabled": true,
-              "bounds": {
-                "x": 212,
-                "y": 679,
-                "width": 372,
-                "height": 48
-              },
-              "reason": "covered"
-            },
-            {
-              "role": "button",
-              "label": "Short",
-              "test_id": "perps-short-cta-button",
-              "selector": "[data-testid=\"perps-short-cta-button\"]",
-              "enabled": true,
-              "bounds": {
-                "x": 595,
-                "y": 679,
-                "width": 372,
-                "height": 48
-              },
-              "reason": "covered"
-            }
-          ],
+          "hidden_or_offscreen": [],
           "truncated": false,
           "limits": {
             "items": 20,
@@ -3809,9 +3793,9 @@
       "nodeId": "ac2-assert-orders-absent",
       "action": "metamask.perps.assert_orders",
       "intent": "AC2: confirm no ETH order is left open",
-      "startedAt": "2026-08-01T19:17:52.507Z",
-      "endedAt": "2026-08-01T19:17:52.576Z",
-      "durationMs": 69,
+      "startedAt": "2026-08-04T14:57:41.994Z",
+      "endedAt": "2026-08-04T14:57:42.149Z",
+      "durationMs": 155,
       "ok": true,
       "next": "teardown-state",
       "output": {
@@ -3820,19 +3804,19 @@
         "matchingCount": 0,
         "orders": [],
         "source": "background-perpsGetOpenOrders",
-        "cdpPort": 7666,
+        "cdpPort": 6664,
         "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/ETH",
         "runtimeLaunch": null,
-        "liveAdapter": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/actions/extension/perps/assert_orders.mjs"
+        "liveAdapter": "/Users/deeeed/dev/metamask/metamask-harness/library/actions/extension/perps/assert_orders.mjs"
       }
     },
     {
       "nodeId": "teardown-state",
       "action": "metamask.perps.teardown_state",
       "intent": "Restore a clean Perps state after the proof",
-      "startedAt": "2026-08-01T19:17:52.584Z",
-      "endedAt": "2026-08-01T19:17:52.685Z",
-      "durationMs": 101,
+      "startedAt": "2026-08-04T14:57:42.153Z",
+      "endedAt": "2026-08-04T14:57:42.481Z",
+      "durationMs": 328,
       "ok": true,
       "next": "done",
       "output": {
@@ -3845,7 +3829,7 @@
           "matchingCount": 0,
           "orders": [],
           "source": "background-perpsGetOpenOrders",
-          "cdpPort": 7666,
+          "cdpPort": 6664,
           "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/ETH",
           "runtimeLaunch": null,
           "close": {
@@ -3854,7 +3838,7 @@
             "matchingCount": 0,
             "symbols": [],
             "result": null,
-            "cdpPort": 7666,
+            "cdpPort": 6664,
             "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/ETH",
             "runtimeLaunch": null
           }
@@ -3865,7 +3849,7 @@
           "matchingCount": 0,
           "positions": [],
           "source": "background-perpsGetPositions",
-          "cdpPort": 7666,
+          "cdpPort": 6664,
           "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/ETH",
           "runtimeLaunch": null,
           "close": {
@@ -3874,7 +3858,7 @@
             "matchingCount": 0,
             "symbols": [],
             "reason": "no matching open positions",
-            "cdpPort": 7666,
+            "cdpPort": 6664,
             "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/ETH",
             "runtimeLaunch": null
           }
@@ -3888,19 +3872,19 @@
             "sameDocument": true
           },
           "proofPath": "ui-navigation",
-          "cdpPort": 7666,
+          "cdpPort": 6664,
           "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market/ETH",
           "runtimeLaunch": null
         },
         "proofPath": "metamask-perps-teardown-state",
-        "liveAdapter": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/actions/extension/perps/perps.mjs"
+        "liveAdapter": "/Users/deeeed/dev/metamask/metamask-harness/library/actions/extension/perps/perps.mjs"
       }
     },
     {
       "nodeId": "done",
       "action": "end",
-      "startedAt": "2026-08-01T19:17:52.694Z",
-      "endedAt": "2026-08-01T19:17:52.694Z",
+      "startedAt": "2026-08-04T14:57:42.487Z",
+      "endedAt": "2026-08-04T14:57:42.487Z",
       "durationMs": 0,
       "ok": true,
       "status": "pass"

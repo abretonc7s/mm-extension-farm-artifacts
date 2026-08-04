@@ -1,11 +1,11 @@
-$ /Users/deeeed/dev/metamask/metamask-extension-2/node_modules/.bin/eslint --config ./.eslintrc.js --cache --cache-location /Users/deeeed/dev/metamask/metamask-extension-2/temp/tasks/fix/45067-0801-230839/artifacts/check-diff/eslintcache app/scripts/messenger-client-init/perps-controller-init.test.ts app/scripts/messenger-client-init/perps-controller-init.ts shared/constants/perps-events.ts ui/components/app/perps/cancel-order/cancel-order-modal.test.tsx ui/components/app/perps/cancel-order/cancel-order-modal.tsx ui/components/app/perps/perps-toast/perps-toast.constants.ts ui/components/app/perps/perps-toast/perps-toast.presentation.tsx ui/components/app/perps/utils/orderUtils.test.ts ui/components/app/perps/utils/orderUtils.ts ui/components/app/perps/utils/translate-perps-error.test.ts ui/components/app/perps/utils/translate-perps-error.ts ui/pages/perps/perps-withdraw-page.test.tsx ui/pages/perps/perps-withdraw-page.tsx
+$ /Users/deeeed/dev/metamask/metamask-extension-4/node_modules/.bin/eslint --config ./.eslintrc.js --cache --cache-location /Users/deeeed/dev/metamask/metamask-extension-4/temp/tasks/fix/45067-0804-222128/artifacts/check-diff/eslintcache app/scripts/messenger-client-init/perps-controller-init.test.ts app/scripts/messenger-client-init/perps-controller-init.ts shared/constants/perps-events.ts ui/components/app/perps/cancel-order/cancel-order-modal.test.tsx ui/components/app/perps/cancel-order/cancel-order-modal.tsx ui/components/app/perps/perps-toast/perps-toast.constants.ts ui/components/app/perps/perps-toast/perps-toast.presentation.tsx ui/components/app/perps/utils/orderUtils.test.ts ui/components/app/perps/utils/orderUtils.ts ui/components/app/perps/utils/translate-perps-error.test.ts ui/components/app/perps/utils/translate-perps-error.ts ui/pages/perps/perps-withdraw-page.test.tsx ui/pages/perps/perps-withdraw-page.tsx
 exit: 0
-duration_ms: 15238
+duration_ms: 103494
 
 --- stdout ---
 
-/Users/deeeed/dev/metamask/metamask-extension-2/ui/components/app/perps/cancel-order/cancel-order-modal.tsx
-  88:7  warning  Error: Calling setState synchronously within an effect can trigger cascading renders
+/Users/deeeed/dev/metamask/metamask-extension-4/ui/components/app/perps/cancel-order/cancel-order-modal.tsx
+  91:7  warning  Error: Calling setState synchronously within an effect can trigger cascading renders
 
 Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
 * Update external systems with the latest state from React.
@@ -13,16 +13,16 @@ Effects are intended to synchronize state between React and external systems suc
 
 Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
 
-/Users/deeeed/dev/metamask/metamask-extension-2/ui/components/app/perps/cancel-order/cancel-order-modal.tsx:88:7
-  86 |   useEffect(() => {
-  87 |     if (isOpen) {
-> 88 |       setIsSubmitting(false);
+/Users/deeeed/dev/metamask/metamask-extension-4/ui/components/app/perps/cancel-order/cancel-order-modal.tsx:91:7
+  89 |   useEffect(() => {
+  90 |     if (isOpen) {
+> 91 |       setIsSubmitting(false);
      |       ^^^^^^^^^^^^^^^ Avoid calling setState() directly within an effect
-  89 |       setError(null);
-  90 |       setIsGeoBlockModalOpen(false);
-  91 |     }  react-hooks/set-state-in-effect
+  92 |       setError(null);
+  93 |       setIsGeoBlockModalOpen(false);
+  94 |     }  react-hooks/set-state-in-effect
 
-/Users/deeeed/dev/metamask/metamask-extension-2/ui/pages/perps/perps-withdraw-page.tsx
+/Users/deeeed/dev/metamask/metamask-extension-4/ui/pages/perps/perps-withdraw-page.tsx
   202:5  warning  Error: Calling setState synchronously within an effect can trigger cascading renders
 
 Effects are intended to synchronize state between React and external systems such as manually updating the DOM, state management libraries, or other platform APIs. In general, the body of an effect should do one or both of the following:
@@ -31,7 +31,7 @@ Effects are intended to synchronize state between React and external systems suc
 
 Calling setState synchronously within an effect body causes cascading renders that can hurt performance, and is not recommended. (https://react.dev/learn/you-might-not-need-an-effect).
 
-/Users/deeeed/dev/metamask/metamask-extension-2/ui/pages/perps/perps-withdraw-page.tsx:202:5
+/Users/deeeed/dev/metamask/metamask-extension-4/ui/pages/perps/perps-withdraw-page.tsx:202:5
   200 |   useEffect(() => {
   201 |     let cancelled = false;
 > 202 |     setRoutesError(null);

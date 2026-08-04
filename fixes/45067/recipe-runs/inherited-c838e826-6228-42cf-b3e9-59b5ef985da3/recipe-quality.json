@@ -4,11 +4,10 @@
   "compact": {
     "verdict": "PASS",
     "reasons": [
-      "AC1 and AC2 bind to ac1-*/ac2-* nodes; this round's re-run (commit f367a66e54, post-rebase) shows 28/28 nodes ok.",
+      "AC1 and AC2 bind to ac1-*/ac2-* nodes; trace shows 28/28 nodes ok on the recorded run.",
       "AC2 stages the real race (order cancelled out of band while the dialog is open), so HyperLiquid returns the ticket's rejection rather than a mock.",
       "The baseline recipe run on unmodified sources asserts the opposite outcome and passes, so reverting the change flips AC2 to FAIL.",
-      "AC3-AC5 are proven by unit tests with a concrete reason why no manifest action can stage them.",
-      "This round's fix commit (f367a66e54) only touched lint/test-parity issues introduced by this round's own rebase resolution — no behavioral change to the recipe's claims."
+      "AC3-AC5 are proven by unit tests with a concrete reason why no manifest action can stage them."
     ],
     "better_version_guidance": []
   },
@@ -32,8 +31,8 @@
       "status": "pass",
       "reason": "The visual claim is captured after a ui.wait_for on the claimed toast; the screenshot shows the dismissed dialog and the neutral notice, paired with a matching baseline capture. Provider is capture-helper.",
       "evidence": [
-        "recipe-run/screenshots/evidence-ac2-cancel-order-already-closed.png",
-        "recipe-runs/inherited-c838e826-6228-42cf-b3e9-59b5ef985da3/before-ac2-cancel-order-error.png",
+        "evidence-ac2-cancel-order-already-closed.png",
+        "before-ac2-cancel-order-error.png",
         "recipe-run/artifact-manifest.json"
       ]
     },
@@ -58,15 +57,14 @@
   "training_fields": {
     "farm": "metamask-extension",
     "project": "metamask-extension-farm",
-    "flow_type": "pr-complete",
-    "task_type": "pr-complete",
+    "flow_type": "fix-bug",
+    "task_type": "fix-bug",
     "claim_is_visual": true,
     "proof_mode": "mixed",
     "anti_patterns": [],
     "good_patterns": [
       "baseline run on stashed sources proves the recipe fails without the change",
-      "race staged with a real out-of-band provider mutation instead of a mock",
-      "re-validated the inherited recipe against a fresh rebase + review-fix commit before pushing"
+      "race staged with a real out-of-band provider mutation instead of a mock"
     ]
   },
   "meta": {
@@ -79,7 +77,7 @@
       "recipe-coverage.md",
       "recipe-run/trace.json",
       "recipe-run/artifact-manifest.json",
-      "recipe-run/summary.json"
+      "baseline-run/trace.json"
     ]
   }
 }

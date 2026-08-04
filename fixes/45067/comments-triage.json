@@ -1,0 +1,47 @@
+[
+  {
+    "comment_id": 3688020898,
+    "review_id": null,
+    "author_login": "cursor[bot]",
+    "author_type": "Bot",
+    "reviewer_login": "cursor[bot]",
+    "review_state": "COMMENTED",
+    "source_kind": "bugbot",
+    "path": "app/scripts/messenger-client-init/perps-controller-init.ts",
+    "line": 353,
+    "body": "### Retry catch masks cancel errors\n\n**Medium Severity**\n\nThe `ORDER_UNKNOWN_COIN` retry wraps both `controller.init()` and the second `cancelOrder` call in one `try/catch`, then returns the original failure on any throw. The comment only covers a throwing `init()`; when re-init succeeds and the retry cancel throws (network or disconnect), that real error is discarded and the caller still sees `ORDER_UNKNOWN_COIN`.",
+    "triage": "REAL",
+    "action": "Already fixed in an earlier round (commit c1ab9d8811): the retried cancelOrder call now sits outside the try/catch around init() so a throw from it propagates to the caller. Replied confirming and citing the fix commit.",
+    "fixed_in_commit": "c1ab9d8811"
+  },
+  {
+    "comment_id": 3695960545,
+    "review_id": null,
+    "author_login": "cursor[bot]",
+    "author_type": "Bot",
+    "reviewer_login": "cursor[bot]",
+    "review_state": "COMMENTED",
+    "source_kind": "bugbot",
+    "path": "ui/pages/perps/perps-withdraw-page.tsx",
+    "line": 169,
+    "body": "### Stale balance can re-pin UI\n\n**Medium Severity**\n\n`freshBalance` is never cleared when the stream moves on — release only ignores it while `streamedAvailableNum` differs. If the stream later returns to the same numeric snapshot stored in `freshBalance.streamed`, the old adopted `available` is applied again, so available balance, Max, validation, and the submit guard can show a stale lower figure after a real recovery.",
+    "triage": "REAL",
+    "action": "Already fixed in an earlier round (commit 919963bf61): freshBalance adoption is keyed off a monotonic streamRevision counter instead of raw value equality, so revisiting an earlier numeric snapshot no longer re-pins the stale balance. Replied confirming and citing the fix commit.",
+    "fixed_in_commit": "919963bf61"
+  },
+  {
+    "comment_id": 3693453356,
+    "review_id": "4832307458",
+    "author_login": "geositta",
+    "author_type": "User",
+    "reviewer_login": "geositta",
+    "review_state": "CHANGES_REQUESTED",
+    "source_kind": "human",
+    "path": "app/scripts/messenger-client-init/perps-controller-init.ts",
+    "line": 353,
+    "body": "@abretonc7s Thanks for fixing the retry throw masking; I think there's one remaining issue on the analytics side of the same recovery path. This retry calls the public controller `cancelOrder` method a second time after the first call has already resolved `{ success: false, error: ORDER_UNKNOWN_COIN }`. In the current controller package, `TradingService.cancelOrder` emits `Perp Order Cancel Transaction` as `submitted` before the provider call, then emits a terminal `failed` event for any unsuccessful result before returning it. That means one user cancel can be tracked as `submitted -> failed(ORDER_UNKNOWN_COIN) -> submitted -> executed` when the retry succeeds. Could we move this recovery below the controller analytics boundary, or otherwise suppress the first terminal failure so the transient unhydrated symbol map does not show up as a real cancel failure?",
+    "triage": "OUT_OF_SCOPE",
+    "action": "Documented, deliberate follow-up already called out in the PR description's Known follow-ups section (cancel success-rate metric re-baselining). Fixing it in-extension would need an upstream @metamask/perps-controller change. geositta's own later review (id 4848921159) on this PR is APPROVED, submitted after this comment, consistent with accepting it as a follow-up. Replied noting this; no code change.",
+    "fixed_in_commit": null
+  }
+]

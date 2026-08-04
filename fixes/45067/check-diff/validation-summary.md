@@ -8,10 +8,10 @@ Changed files: 15
 
 ## Checks
 
-- PASS policy-suppressions (/Users/deeeed/dev/metamask/metamask-extension-2/temp/tasks/fix/45067-0801-230839/artifacts/check-diff/policy-suppressions.log)
-- PASS eslint (/Users/deeeed/dev/metamask/metamask-extension-2/temp/tasks/fix/45067-0801-230839/artifacts/check-diff/eslint.log)
-- PASS oxfmt (/Users/deeeed/dev/metamask/metamask-extension-2/temp/tasks/fix/45067-0801-230839/artifacts/check-diff/oxfmt.log)
-- PASS jest (/Users/deeeed/dev/metamask/metamask-extension-2/temp/tasks/fix/45067-0801-230839/artifacts/check-diff/jest.log)
+- PASS policy-suppressions (/Users/deeeed/dev/metamask/metamask-extension-4/temp/tasks/fix/45067-0804-222128/artifacts/check-diff/policy-suppressions.log)
+- PASS eslint (/Users/deeeed/dev/metamask/metamask-extension-4/temp/tasks/fix/45067-0804-222128/artifacts/check-diff/eslint.log)
+- PASS oxfmt (/Users/deeeed/dev/metamask/metamask-extension-4/temp/tasks/fix/45067-0804-222128/artifacts/check-diff/oxfmt.log)
+- PASS jest (/Users/deeeed/dev/metamask/metamask-extension-4/temp/tasks/fix/45067-0804-222128/artifacts/check-diff/jest.log)
 - SKIP typecheck — profile=fast; run with --profile full for repo-wide typecheck
 
 ## Changed Files
