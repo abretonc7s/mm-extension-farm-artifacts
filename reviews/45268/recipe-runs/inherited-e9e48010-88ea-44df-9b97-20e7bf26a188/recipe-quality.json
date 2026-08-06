@@ -1,0 +1,117 @@
+{
+  "version": 1,
+  "verdict": "pass",
+  "compact": {
+    "verdict": "PASS",
+    "reasons": [
+      "C1-C3 bind to ac<N>-* nodes; the run exits 0 with all three screenshots captured through capture-helper.",
+      "C3 asserts the toggle in both directions by observable effect (limit-price-input visible after Limit, hidden after Market), not by DOM presence alone.",
+      "Screenshots were read back and show real controller-backed state: live balance, live ETH price with candles, and the Limit pill selected with the limit price field on-screen.",
+      "C4 is deliberately proven off-recipe by yarn lint:tsc plus translate-perps-error.test.ts (41 passed); no extension UI path can emit the 15 new PerpsErrorCode values, so a recipe assertion would have to fake the error."
+    ],
+    "better_version_guidance": []
+  },
+  "dimensions": {
+    "graph_integrity": {
+      "status": "pass",
+      "reason": "Recipe v1 graph validates; every node is reachable from gate-unlock and terminates at done. No switch/default, no manual action, no wait-as-substitute-for-wait_for.",
+      "evidence": [
+        "recipe.json",
+        "recipe-run/summary.json"
+      ]
+    },
+    "action_contract": {
+      "status": "pass",
+      "reason": "Only manifest-declared actions are used (metamask.wallet.ensure_unlocked, ui.navigate, ui.wait_for, ui.press, ui.screenshot, metamask.wallet.read_state, end), each with fields the action manifest declares. Navigation uses the high-level page aliases perps and perps-market rather than raw hashes.",
+      "evidence": [
+        "recipe.json",
+        "recipe-run/artifact-manifest.json"
+      ]
+    },
+    "ac_coverage": {
+      "status": "pass",
+      "reason": "Three proofTargets, each bound to ac<N>-* nodes via proves. C4 is recorded as proven off-recipe with a concrete rationale rather than silently skipped.",
+      "evidence": [
+        "recipe-coverage.md",
+        "recipe-run/trace.json"
+      ]
+    },
+    "evidence_contract_basics": {
+      "status": "pass",
+      "reason": "Every screenshot follows a ui.wait_for on the claimed target. All three PNGs were read back and show the claimed state on the right screen, fully visible. Artifact manifest records provider capture-helper — no extension-dom-raster, macos-screencapture, or Page.captureScreenshot fallback.",
+      "evidence": [
+        "evidence-ac1-perps-home.png",
+        "evidence-ac2-market-detail.png",
+        "evidence-ac3-limit-order-type.png",
+        "recipe-run/artifact-manifest.json"
+      ]
+    },
+    "revert_sensitivity": {
+      "status": "warn",
+      "reason": "The change is a dependency bump plus two compile-only fixes, so reverting it breaks the build rather than flipping a recipe assertion. The recipe proves no regression on the perps surfaces; the compile and unit gates prove the fix. This is stated plainly in recipe-coverage.md instead of being papered over.",
+      "evidence": [
+        "recipe-coverage.md",
+        "report.md"
+      ]
+    },
+    "perps_state_setup": {
+      "status": "pass",
+      "reason": "The slot account already carries a funded HyperLiquid balance ($762.37 at capture time) and trade history, so the recipe exercises populated surfaces rather than empty states. No AC was marked untestable for missing state.",
+      "evidence": [
+        "evidence-ac1-perps-home.png",
+        "evidence-ac2-market-detail.png"
+      ]
+    }
+  },
+  "structural_findings": [],
+  "contextual_findings": [
+    {
+      "code": "proof.compile_time_claim",
+      "message": "C4 (exhaustive PerpsErrorCode translation) cannot be exercised from the extension UI; it is proven by the `as const satisfies Record<PerpsErrorCode, string>` compile gate and the runtime exhaustiveness test rather than by a recipe node.",
+      "dimension": "ac_coverage",
+      "evidence": [
+        "ui/components/app/perps/utils/translate-perps-error.ts",
+        "ui/components/app/perps/utils/translate-perps-error.test.ts"
+      ]
+    },
+    {
+      "code": "diagnostics.preexisting_noise",
+      "message": "The run reports 3 console error fingerprints (`Unknown action`, resource 404s, ExtensionLazyListener runtime.onInstalled). All three appear in extension-console.log at 09:42 against the pre-change build, so they are pre-existing slot noise rather than regressions.",
+      "dimension": "evidence_contract_basics",
+      "evidence": [
+        "recipe-run/diagnostics.json",
+        "temp/recipe/runtime/extension-console.log"
+      ]
+    }
+  ],
+  "suggested_recipe_delta": [
+    "If the extension later exposes trigger orders or partial TP/SL, add ac4-* nodes that drive a rejected placement and assert the translated copy for the new ORDER_TPSL_* / ORDER_TRIGGER_* codes."
+  ],
+  "training_fields": {
+    "farm": "metamask-extension",
+    "project": "metamask-extension-farm",
+    "flow_type": "dev",
+    "task_type": "dev",
+    "claim_is_visual": true,
+    "proof_mode": "mixed",
+    "anti_patterns": [],
+    "good_patterns": [
+      "toggle asserted in both directions by observable effect rather than by pressed-state DOM attribute",
+      "compile-time claim reported as off-recipe proof instead of being padded with a screenshot"
+    ]
+  },
+  "meta": {
+    "producer": "worker",
+    "fallback_used": false,
+    "legacy_task": false,
+    "artifact_required": true,
+    "source_signals": [
+      "recipe.json",
+      "recipe-coverage.md",
+      "recipe-run/summary.json",
+      "recipe-run/trace.json",
+      "recipe-run/diagnostics.json",
+      "report.md"
+    ]
+  }
+}

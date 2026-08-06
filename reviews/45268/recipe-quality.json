@@ -1,0 +1,74 @@
+{
+  "version": 1,
+  "verdict": "warn",
+  "compact": {
+    "verdict": "WARN",
+    "reasons": [
+      "The recipe was inherited with the task and was not run or image-audited by this light-tier review.",
+      "All nine review claims are explicitly UNTESTABLE by recipe under the light-tier policy; claims 1-5 were validated through code, TypeScript, and focused Jest tests."
+    ],
+    "better_version_guidance": [
+      "On a standard or full review, run the inherited recipe against the active PR build, audit trace counts and screenshots directly, and replace the light-tier UNTESTABLE matrix with trace-backed verdicts."
+    ]
+  },
+  "dimensions": {
+    "graph_integrity": {
+      "status": "pass",
+      "reason": "The inherited workflow is connected from gate-unlock through the terminal node and uses AC-prefixed nodes for its three proof targets.",
+      "evidence": ["recipe.json", "recipe-run/recipe.json"]
+    },
+    "action_contract": {
+      "status": "not_applicable",
+      "reason": "Runner manifest checks are skipped at light tier, so action compatibility was not independently revalidated.",
+      "evidence": ["TASK.md"]
+    },
+    "ac_coverage": {
+      "status": "warn",
+      "reason": "The inherited recipe covers three product-regression claims, while this light-tier review records all nine review claims as UNTESTABLE by recipe with concrete rationale.",
+      "evidence": ["recipe-coverage.md", "review.md"]
+    },
+    "evidence_contract_basics": {
+      "status": "not_applicable",
+      "reason": "No screenshots or trace were captured or audited during this light-tier review.",
+      "evidence": ["evidence-manifest.json"]
+    }
+  },
+  "structural_findings": [],
+  "contextual_findings": [
+    {
+      "code": "tier.light.no_live_run",
+      "message": "The task carried an inherited recipe package, but the active review tier explicitly skipped recipe execution and image review.",
+      "dimension": "ac_coverage",
+      "evidence": ["latest-valid-recipe-run.json", "TASK.md"]
+    }
+  ],
+  "suggested_recipe_delta": [
+    "Reuse the inherited recipe in a standard/full run and bind any additional ticket acceptance criteria if the ticket later provides them."
+  ],
+  "training_fields": {
+    "farm": "metamask-extension",
+    "project": "metamask-extension-farm",
+    "flow_type": "review-pr",
+    "task_type": "review-pr",
+    "claim_is_visual": true,
+    "proof_mode": "unknown",
+    "anti_patterns": [],
+    "good_patterns": [
+      "light-tier limitations stated explicitly instead of treating inherited evidence as a new live validation"
+    ]
+  },
+  "meta": {
+    "producer": "worker",
+    "fallback_used": false,
+    "legacy_task": false,
+    "artifact_required": true,
+    "source_signals": [
+      "recipe.json",
+      "recipe-run/recipe.json",
+      "recipe-coverage.md",
+      "evidence-manifest.json",
+      "latest-valid-recipe-run.json",
+      "review.md"
+    ]
+  }
+}

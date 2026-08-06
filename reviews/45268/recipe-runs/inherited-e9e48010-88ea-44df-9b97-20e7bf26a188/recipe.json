@@ -1,0 +1,166 @@
+{
+  "$schema": "https://farmslot.io/schemas/recipe-v1.schema.json",
+  "title": "TAT-3686 — perps-controller v11 regression proof",
+  "description": "Drives the perps surfaces that consume @metamask/perps-controller after the ^10.0.0 -> ^11.0.0 bump: perps home, market detail, and the order-entry order-type toggle whose handler signature was widened to the new OrderType union.",
+  "proofTargets": [
+    {
+      "id": "c1-perps-home",
+      "claim": "Perps home renders controller-backed content under perps-controller v11."
+    },
+    {
+      "id": "c2-market-detail",
+      "claim": "Market detail streams live market data under perps-controller v11."
+    },
+    {
+      "id": "c3-order-type-toggle",
+      "claim": "The order-entry order-type toggle still switches between market and limit after handleOrderTypeClick was widened to the v11 OrderType union."
+    }
+  ],
+  "workflow": {
+    "entry": "gate-unlock",
+    "nodes": {
+      "gate-unlock": {
+        "action": "metamask.wallet.ensure_unlocked",
+        "intent": "Unlock the wallet so perps surfaces can render",
+        "next": "setup-navigate-perps"
+      },
+      "setup-navigate-perps": {
+        "action": "ui.navigate",
+        "page": "perps",
+        "intent": "Open the perps home surface",
+        "next": "ac1-wait-perps-view"
+      },
+      "ac1-wait-perps-view": {
+        "action": "ui.wait_for",
+        "test_id": "perps-view",
+        "expected": "visible",
+        "timeout_ms": 30000,
+        "intent": "C1: perps home renders under perps-controller v11 rather than staying on the loading skeleton",
+        "proves": [
+          "c1-perps-home"
+        ],
+        "next": "ac1-read-state"
+      },
+      "ac1-read-state": {
+        "action": "metamask.wallet.read_state",
+        "intent": "C1: read wallet state to confirm the v11 controller is wired into the background",
+        "proves": [
+          "c1-perps-home"
+        ],
+        "next": "ac1-screenshot-perps-home"
+      },
+      "ac1-screenshot-perps-home": {
+        "action": "ui.screenshot",
+        "path": "screenshots/evidence-ac1-perps-home.png",
+        "label": "C1: perps home renders with controller-backed content on v11",
+        "intent": "The perps home screen is on-screen with its markets and activity content, not a loading skeleton",
+        "proves": [
+          "c1-perps-home"
+        ],
+        "next": "ac2-navigate-market"
+      },
+      "ac2-navigate-market": {
+        "action": "ui.navigate",
+        "page": "perps-market",
+        "market": "ETH",
+        "intent": "C2: open the ETH market detail surface",
+        "next": "ac2-wait-market-detail"
+      },
+      "ac2-wait-market-detail": {
+        "action": "ui.wait_for",
+        "test_id": "perps-market-detail-price",
+        "expected": "visible",
+        "timeout_ms": 30000,
+        "intent": "C2: the market price streamed through the v11 controller is visible",
+        "proves": [
+          "c2-market-detail"
+        ],
+        "next": "ac2-screenshot-market-detail"
+      },
+      "ac2-screenshot-market-detail": {
+        "action": "ui.screenshot",
+        "path": "screenshots/evidence-ac2-market-detail.png",
+        "label": "C2: ETH market detail shows a live price and chart on v11",
+        "intent": "The ETH market screen shows a live price and chart to the user",
+        "proves": [
+          "c2-market-detail"
+        ],
+        "next": "ac3-open-order-entry"
+      },
+      "ac3-open-order-entry": {
+        "action": "ui.press",
+        "test_id": "perps-long-cta-button",
+        "timeout_ms": 20000,
+        "intent": "C3: open order entry from the market detail long CTA",
+        "next": "ac3-wait-order-type-toggle"
+      },
+      "ac3-wait-order-type-toggle": {
+        "action": "ui.wait_for",
+        "test_id": "order-type-toggle",
+        "expected": "visible",
+        "timeout_ms": 30000,
+        "intent": "C3: the order-type toggle renders in order entry",
+        "proves": [
+          "c3-order-type-toggle"
+        ],
+        "next": "ac3-press-limit"
+      },
+      "ac3-press-limit": {
+        "action": "ui.press",
+        "test_id": "order-type-limit",
+        "timeout_ms": 20000,
+        "intent": "C3: switch the order type to limit through the widened OrderType handler",
+        "proves": [
+          "c3-order-type-toggle"
+        ],
+        "next": "ac3-wait-limit-price-input"
+      },
+      "ac3-wait-limit-price-input": {
+        "action": "ui.wait_for",
+        "test_id": "limit-price-input",
+        "expected": "visible",
+        "timeout_ms": 20000,
+        "intent": "C3: selecting limit reaches usePerpsOrderForm and reveals the limit price input",
+        "proves": [
+          "c3-order-type-toggle"
+        ],
+        "next": "ac3-screenshot-limit-selected"
+      },
+      "ac3-screenshot-limit-selected": {
+        "action": "ui.screenshot",
+        "path": "screenshots/evidence-ac3-limit-order-type.png",
+        "label": "C3: limit order type selected, limit price input visible",
+        "intent": "The limit pill reads as selected and the limit price field is on-screen for the user",
+        "proves": [
+          "c3-order-type-toggle"
+        ],
+        "next": "ac3-press-market"
+      },
+      "ac3-press-market": {
+        "action": "ui.press",
+        "test_id": "order-type-market",
+        "timeout_ms": 20000,
+        "intent": "C3: switch back to market to prove the handler round-trips both values",
+        "proves": [
+          "c3-order-type-toggle"
+        ],
+        "next": "ac3-wait-limit-price-hidden"
+      },
+      "ac3-wait-limit-price-hidden": {
+        "action": "ui.wait_for",
+        "test_id": "limit-price-input",
+        "expected": "hidden",
+        "timeout_ms": 20000,
+        "intent": "C3: switching back to market hides the limit price input",
+        "proves": [
+          "c3-order-type-toggle"
+        ],
+        "next": "done"
+      },
+      "done": {
+        "action": "end",
+        "status": "pass"
+      }
+    }
+  }
+}
