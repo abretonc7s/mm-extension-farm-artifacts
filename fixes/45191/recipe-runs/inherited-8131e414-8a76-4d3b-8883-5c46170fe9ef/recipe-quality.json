@@ -1,0 +1,115 @@
+{
+  "version": 1,
+  "verdict": "pass",
+  "compact": {
+    "verdict": "PASS",
+    "reasons": [
+      "AC1-AC3 bound to ac<N>-* nodes; trace.json records 22/22 nodes true (5 setup-, 16 ac<N>-, 1 teardown-) and summary.json reports failed: 0.",
+      "AC3 divergence proven live and read-only: streamedAccountPresent=false ('0') vs fresh perpsGetAccountState '763.276429', decisions disagree on a $381 withdrawal.",
+      "AC1/AC2 asserted by strict eq on jest JSON (4 and 5 passing cases, 0 failures), not by screenshots; the Perps cases seed the streamed cache with the opposite-decision value and assert the singleton is never consulted.",
+      "Reverting the hook to its pre-fix form fails 18 of 20 cases; every branch flagged as mutation-surviving in review (missing account, per-scope guard, request coalescing, distinct alert key, short button label, hide-results and metrics entries) now fails at least one case.",
+      "Screenshot evidence captured via capture-helper snapshot (no fallback); before.mp4 and after.mp4 both recorded.",
+      "Confirmation-screen screenshot is UNTESTABLE for infrastructure reasons only (all EVM RPC in the slot fails with an unbound-fetch 'Illegal invocation'), and no AC depends on it."
+    ],
+    "better_version_guidance": []
+  },
+  "dimensions": {
+    "graph_integrity": {
+      "status": "pass",
+      "reason": "Single linear workflow, every node reachable from setup-status, terminal teardown-done reached with status pass; no switch, no wait, no manual action.",
+      "evidence": [
+        "recipe.json",
+        "recipe-run/trace.json"
+      ]
+    },
+    "action_contract": {
+      "status": "pass",
+      "reason": "Only manifest-declared actions used (app.status, cdp.target, metamask.wallet.ensure_unlocked, ui.navigate, ui.wait_for, ui.screenshot, command, assert_json, assert_file, end); runner v1 validation passed on both recipes.",
+      "evidence": [
+        "recipe.json",
+        "recipe-baseline.json",
+        "recipe-run/summary.json"
+      ]
+    },
+    "ac_coverage": {
+      "status": "pass",
+      "reason": "Every AC maps to ac<N>-* nodes with at least one strict assertion, and each test-backed AC also asserts the matched-case count (4 for AC1, 5 for AC2, 1 for AC3) so an empty jest filter cannot pass silently.",
+      "evidence": [
+        "recipe-coverage.md",
+        "recipe-run/trace.json",
+        "ac1-jest.json",
+        "ac2-jest.json",
+        "ac3-jest.json"
+      ]
+    },
+    "evidence_contract_basics": {
+      "status": "pass",
+      "reason": "Hidden hook/controller claims are proven by test and live state artifacts; the single screenshot is preceded by ui.wait_for on its claimed target and is used for orientation only, not as proof of hidden behaviour. The final run's artifact-manifest records provider capture-helper / mode snapshot with fallbackFrom null — an earlier run had fallen back to Page.captureScreenshot after a wedged capture-helper session, which was cleared and the evidence recaptured.",
+      "evidence": [
+        "live-perps-balance-divergence.json",
+        "before-evidence-ac3-live-fresh-perps-balance.png",
+        "after-evidence-ac3-live-fresh-perps-balance.png",
+        "recipe-run/artifact-manifest.json"
+      ]
+    },
+    "perps_state_setup": {
+      "status": "pass",
+      "reason": "Required Perps state (funded testnet account, then an empty streamed cache) is built by the recipe itself: setup-warm-streamed-cache opens Perps, setup-leave-perps returns to a non-Perps screen, and the probe restarts the UI realm so the cache is deterministically empty while the fresh balance stays 763.276429.",
+      "evidence": [
+        "recipe.json",
+        "live-perps-balance-divergence.json"
+      ]
+    },
+    "mobile_alignment": {
+      "status": "pass",
+      "reason": "Mobile's useWithdrawValidation validates against usePerpsLiveAccount (a live subscription); the Extension alert runs for every confirmation type, so the fix uses a perpsWithdraw-gated fresh perpsGetAccountState read as the equivalent, keeping non-Perps confirmations free of Perps traffic.",
+      "evidence": [
+        "ui/pages/confirmations/hooks/alerts/transactions/usePerpsWithdrawInsufficientBalanceAlert.ts"
+      ]
+    }
+  },
+  "structural_findings": [],
+  "contextual_findings": [
+    {
+      "code": "confirmation_screen_unreachable",
+      "message": "The MM Pay Perps withdraw confirmation cannot be opened in this slot: createPerpsWithdrawTransaction needs Arbitrum gas estimation and every EVM RPC call fails with \"Failed to execute 'fetch' on 'WorkerGlobalScope': Illegal invocation\". Verified environmental (direct fetch of the same RPC URL in the service worker returns 200; an unbound fetch there throws the identical error; reproduces on LavaMoat and non-LavaMoat builds with an unmodified tree). AC3 is therefore proven by live state probe plus hook test, which the AC explicitly allows.",
+      "dimension": "evidence_contract_basics",
+      "evidence": [
+        "recipe-coverage.md",
+        "temp/recipe/runtime/extension-console.log"
+      ]
+    }
+  ],
+  "suggested_recipe_delta": [
+    "Once EVM RPC works in the slot, extend the recipe with ac3-open-withdraw-confirmation / ac3-set-amount / ac3-assert-blocking-alert nodes to capture the confirmation screen itself, replacing the orientation screenshot with a real before/after of the blocking alert."
+  ],
+  "training_fields": {
+    "farm": "metamask-extension",
+    "project": "metamask-extension-farm",
+    "flow_type": "fix-bug",
+    "task_type": "fix-bug",
+    "claim_is_visual": false,
+    "proof_mode": "mixed",
+    "anti_patterns": [],
+    "good_patterns": [
+      "assert-matched-test-count-so-an-empty-jest-filter-cannot-pass",
+      "read-only-live-probe-writes-json-artifact-for-strict-eq-assertions",
+      "baseline-recipe-asserts-the-buggy-source-shape-and-the-missing-case-count"
+    ]
+  },
+  "meta": {
+    "producer": "worker",
+    "fallback_used": false,
+    "legacy_task": false,
+    "artifact_required": true,
+    "source_signals": [
+      "recipe.json",
+      "recipe-baseline.json",
+      "recipe-coverage.md",
+      "recipe-run/trace.json",
+      "recipe-run/summary.json",
+      "live-perps-balance-divergence.json",
+      "recipe-run/artifact-manifest.json"
+    ]
+  }
+}

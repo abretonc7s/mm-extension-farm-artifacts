@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "preferred_mode": "screenshots",
+  "summary": "The decision this fix changes is hidden (which balance source the alert reads), so the proof is the live state probe and the hook suite; the screenshot shows the real Perps balance the fresh read resolves to.",
+  "before_after_pairs": [],
+  "standalone": [
+    {
+      "label": "Live Perps balance the fresh account-state read resolves to ($763.28)",
+      "covers": [
+        "ac3"
+      ],
+      "file": "after-evidence-ac3-live-fresh-perps-balance.png",
+      "note": "Orientation for the live probe: with the streamed cache empty after a UI restart, the alert now decides against this balance instead of $0. The divergence itself is in live-perps-balance-divergence.json; the blocking decision is asserted by ac3-jest.json."
+    }
+  ],
+  "omit": [
+    "before-evidence-ac3-live-fresh-perps-balance.png"
+  ],
+  "videos": {
+    "before": "before.mp4",
+    "after": "after.mp4",
+    "preferred": false,
+    "note": "Baseline and post-fix recipe runs. after.mp4 was recorded during the final passing run; the shared screen-capture session ends a few seconds before the runner writes its summary, so the very end of the run is not in frame. Neither video is load-bearing: the proof is the state artifacts and the jest results."
+  }
+}

@@ -1,0 +1,123 @@
+{
+  "version": 1,
+  "verdict": "pass",
+  "compact": {
+    "verdict": "PASS",
+    "reasons": [
+      "The defect is now demonstrated in the product, not described: with the pre-fix hook the real MM Pay Perps withdraw confirmation blocks a valid $378 withdrawal against a $756.39 balance (button 'Insufficient funds', disabled); with the fix the identical flow is allowed (button 'Withdraw', fee $0.72, receive $377.28). Only the hook differs between the two runs.",
+      "Both captures are real Page.captureScreenshot images of the live extension, taken on state detection rather than after a fixed delay, so they land inside the transient the ticket describes.",
+      "Sampled DOM timelines quantify the failure: pre-fix insufficient=TRUE at 970 ms (avail $0.00) and still TRUE at 4266 ms while the screen already showed $756.39, clearing at ~9 s; post-fix insufficient is never true.",
+      "ALERTS_HIDE_RESULTS corroborates the before capture independently: the fee and \"You'll receive\" rows are suppressed there and present after, which only happens while a blocking alert is active.",
+      "recipe-ab.json (24/24 nodes) adds a deterministic hook-level A/B on live-captured account state through one byte-identical driver asserting only the user-facing invariant (blocked === false), so it fails pre-fix and passes post-fix.",
+      "recipe.json (22/22 nodes) retains AC1/AC2 state coverage by strict eq on jest JSON; the final merged tree passes 36 tests across the three affected suites with verify-locales clean."
+    ],
+    "better_version_guidance": [
+      "Arbitrum (0xa4b1) is absent from the default fixture, so createPerpsWithdrawTransaction cannot resolve a network client and the withdraw confirmation is unreachable out of the box; it had to be added at runtime via addNetwork. Seeding it in the perps fixture would make this self-contained.",
+      "The reproduction runs from a standalone driver rather than recipe nodes because it needs sub-second DOM sampling and capture-on-detection; folding that into the recipe layer would let it run as a single graph."
+    ]
+  },
+  "dimensions": {
+    "graph_integrity": {
+      "status": "pass",
+      "reason": "recipe-ab.json is a single linear workflow, every node reachable from setup-status, terminal teardown-done reached with status pass; no switch, no wait, no manual action. It refuses to start unless the hook file is unmodified and asserts the tree came back clean after the pre-fix swap.",
+      "evidence": [
+        "recipe-ab-run/summary.json",
+        "recipe-ab-run/trace.json"
+      ]
+    },
+    "action_contract": {
+      "status": "pass",
+      "reason": "Only official actions used (app.status, cdp.target, metamask.wallet.ensure_unlocked, ui.navigate, ui.wait_for, ui.screenshot, command, assert_json, end); the intentionally failing pre-fix leg uses allow_failure rather than swallowing a non-zero exit, and its outcome is asserted from the jest JSON.",
+      "evidence": [
+        "recipe-ab.json",
+        "recipe-ab-run/trace.json"
+      ]
+    },
+    "ac_coverage": {
+      "status": "pass",
+      "reason": "AC1 and AC2 keep their state-level jest coverage; AC3's 'recipe or state-level proof' requirement is exceeded by a real-UI before/after. The screen-level visual previously recorded UNTESTABLE is now PROVEN.",
+      "evidence": [
+        "recipe-coverage.md",
+        "repro/before-broken-ALERT-with-real-balance-4266ms.png",
+        "repro/after-fixed.png"
+      ]
+    },
+    "evidence_contract_basics": {
+      "status": "pass",
+      "reason": "Every claim is carried by an artifact of the matching kind: behavioural claims by live captures plus sampled timelines, source-selection claims by recorded mock call counts, wiring claims by jest assertions. No screenshot proves hidden state and no state artifact stands in for a visual claim. A synthesized card produced earlier was fabricated evidence and has been withdrawn from the PR, the artifacts repo (commit dedb61d3b4) and disk.",
+      "evidence": [
+        "evidence-manifest.json",
+        "ab/prefix-observed.json",
+        "ab/postfix-observed.json",
+        "learnings.md"
+      ]
+    },
+    "perps_state_setup": {
+      "status": "pass",
+      "reason": "Live Hyperliquid account with a real non-zero withdrawable balance ($756.392549) on the fixture account; the empty-streamed-cache condition is produced by a UI reload, which is the observable equivalent of the MV3 restart in the ticket, rather than by mutating controller state. Arbitrum had to be added at runtime because the default fixture omits it.",
+      "evidence": [
+        "ab/live-input.json",
+        "repro/before-broken-timeline.json"
+      ]
+    },
+    "mobile_alignment": {
+      "status": "pass",
+      "reason": "Unchanged from the original assessment: mobile's useWithdrawValidation can use a live subscription because its withdraw view is a dedicated Perps screen, whereas this hook runs for every confirmation type and must stay gated on isPerpsWithdrawTransaction. The fix keeps that property.",
+      "evidence": [
+        "recipe-coverage.md"
+      ]
+    }
+  },
+  "structural_findings": [],
+  "contextual_findings": [
+    {
+      "code": "arbitrum_absent_from_default_fixture",
+      "message": "The withdraw confirmation is unreachable in a default slot because chain 0xa4b1 is not in the fixture: createPerpsWithdrawTransaction begins with findNetworkClientIdByChainId(CHAIN_IDS.ARBITRUM), which throws 'Invalid chain ID \"0xa4b1\"'. Added at runtime via addNetwork for this run. Separately, EVM RPC only became usable after merging latest main and relaunching the dev build (mm-harness launch --watch --verify); before that the harness gate reported EVM_RPC_UNREACHABLE. A stale page-to-background stream also made Perps appear to hang until the UI was reloaded.",
+      "dimension": "perps_state_setup",
+      "evidence": [
+        "repro/before-broken-timeline.json",
+        "recipe-coverage.md",
+        "learnings.md"
+      ]
+    }
+  ],
+  "suggested_recipe_delta": [
+    "Seed Arbitrum (0xa4b1) in the perps fixture so the withdraw confirmation is reachable without a runtime addNetwork call.",
+    "Promote the reproduction driver into recipe nodes (open confirmation, restart UI, set amount, sample until the blocking alert appears, capture) so the before/after runs as one graph instead of a standalone script."
+  ],
+  "training_fields": {
+    "farm": "metamask-extension",
+    "project": "metamask-extension-farm",
+    "flow_type": "fix-bug",
+    "task_type": "fix-bug",
+    "claim_is_visual": true,
+    "proof_mode": "visual",
+    "anti_patterns": [
+      "synthesized-image-presented-as-observed-evidence-withdrawn"
+    ],
+    "good_patterns": [
+      "same-driver-two-code-versions-opposite-outcomes",
+      "capture-on-state-detection-not-after-fixed-delay",
+      "assert-only-the-user-facing-invariant-so-the-test-cannot-be-written-to-the-fix",
+      "hide-results-side-effect-corroborates-the-blocking-alert-in-the-screenshot",
+      "assert-matched-test-count-so-an-empty-jest-filter-cannot-pass"
+    ]
+  },
+  "meta": {
+    "producer": "worker",
+    "fallback_used": false,
+    "legacy_task": false,
+    "artifact_required": true,
+    "source_signals": [
+      "recipe.json",
+      "recipe-ab.json",
+      "recipe-coverage.md",
+      "recipe-ab-run/trace.json",
+      "recipe-ab-run/summary.json",
+      "recipe-run/summary.json",
+      "repro/before-broken-timeline.json",
+      "repro/after-fixed-timeline.json",
+      "evidence-manifest.json"
+    ]
+  }
+}
