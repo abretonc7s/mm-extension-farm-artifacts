@@ -1,63 +1,16 @@
 {
   "version": 1,
   "preferred_mode": "screenshots",
-  "summary": "Live before/after in the real MM Pay Perps withdraw confirmation. Same screen, same $378 withdrawal, same $756.39 available balance, captured after a UI restart (the MV3-restart condition from the ticket). Before the fix the confirm button reads 'Insufficient funds' and is disabled while the screen simultaneously shows 'Available balance: $756.39'; after the fix the same flow is allowed. Only the hook differs between the two runs. A synthesized before/after card produced earlier in the session was fabricated evidence and has been deleted locally, removed from the artifacts repo (commit dedb61d3b4) and from the PR body; every artifact listed here is a real capture or a recorded run output.",
-  "before_after_pairs": [
-    {
-      "label": "MM Pay Perps withdraw confirmation: $378 against a $756.39 balance",
-      "covers": [
-        "ac1",
-        "ac3"
-      ],
-      "before": "repro/before-broken-ALERT-with-real-balance-4266ms.png",
-      "after": "repro/after-fixed.png",
-      "note": "Pre-fix hook (git show bc55c67781) vs post-fix, same $378 against $756.39 after a UI restart. Pre-fix hook (git show bc55c67781). Confirm button reads 'Insufficient funds' and is disabled; the fee and \"You'll receive\" rows are suppressed by ALERTS_HIDE_RESULTS, corroborating that a blocking alert is active. Captured at 4266 ms, when the display had already resolved to $756.39 and the alert was still blocking. Post-fix hook. Same amount and balance; confirm button reads 'Withdraw' and is enabled, with Transaction fee $0.72 and You'll receive $377.28 rendered. Published as fixes/45191/before-insufficient-funds.png and fixes/45191/after-withdraw-allowed.png."
-    }
-  ],
+  "summary": "PR-complete re-validation of TAT-3632 after rebasing onto origin/main. No code changed, so there is no new before-state to capture; the proof is the live divergence probe plus the hook suite, and the one screenshot shows the real Perps balance the fresh read resolves to on the merged tree.",
+  "before_after_pairs": [],
   "standalone": [
     {
-      "label": "Blocking alert at the empty-cache moment (970 ms after UI restart)",
+      "label": "Live Perps balance the fresh account-state read resolves to on the rebased build ($761.21 total = $756.36 withdrawable + $10.10 open BTC position)",
       "covers": [
-        "ac1"
-      ],
-      "file": "repro/before-broken-ALERT-at-970ms.png",
-      "note": "Pre-fix hook, captured while the displayed available balance was still $0.00 \u2014 the streamed cache emptied by the restart. Shows the alert firing at the moment the ticket describes, before the live subscription resolves."
-    },
-    {
-      "label": "Sampled DOM timelines for both runs",
-      "covers": [
-        "ac1",
         "ac3"
       ],
-      "file": "repro/before-broken-timeline.json",
-      "note": "DOM sampled every 400 ms. before: insufficient=TRUE at 970 ms (avail $0.00) and still TRUE at 4266 ms (avail $756.39), clearing at ~9 s. after: insufficient never true; Withdraw enabled at 4988 ms. Related files: repro/after-fixed-timeline.json"
-    },
-    {
-      "label": "Reproduction driver",
-      "covers": [
-        "ac1",
-        "ac3"
-      ],
-      "file": "repro/repro-withdraw-confirmation.mjs",
-      "note": "Reloads the confirmation (UI restart), sets the amount to 378, samples the DOM and captures on state detection. Identical for both runs."
-    },
-    {
-      "label": "Hook-level A/B on live-captured account state",
-      "covers": [
-        "ac1",
-        "ac3"
-      ],
-      "file": "ab/live-input.json",
-      "note": "recipe-ab.json, 24/24 nodes passed. Records which balance source each hook version touched: pre-fix streamedCacheConsulted=true/freshReadCalled=false; post-fix the inverse. Related files: ab/prefix-observed.json, ab/postfix-observed.json, recipe-ab-run/summary.json"
+      "file": "recipe-run/screenshots/evidence-ac3-live-fresh-perps-balance.png",
+      "note": "Orientation for the live probe: with the streamed cache empty after a UI restart, the alert decides against this balance instead of $0. The divergence itself is in the ac3-probe-live-balance-divergence node output (streamedBalance 0 vs freshBalance 756.36175, decisionsDisagree true); the blocking decision is asserted by ac3-verify-blocking-under-divergence. Captured by capture-helper (artifact-manifest.json: provider capture-helper, mode snapshot, no fallback)."
     }
-  ],
-  "omit": [
-    "repro/before-broken.png",
-    "recipe-ab-run/screenshots/live-perps-balance.png",
-    "recipe-run/screenshots/evidence-ac3-live-fresh-perps-balance.png"
-  ],
-  "videos": {
-    "preferred": false,
-    "note": "No recording made for this reproduction; the transient is short and the sampled timelines plus the two captures at the decisive moments are the stronger artifact."
-  }
+  ]
 }

@@ -11,9 +11,9 @@
       "nodeId": "setup-status",
       "action": "app.status",
       "intent": "Resolve the Extension checkout and adapter status before the proof",
-      "startedAt": "2026-08-12T03:08:02.112Z",
-      "endedAt": "2026-08-12T03:08:02.127Z",
-      "durationMs": 15,
+      "startedAt": "2026-08-15T02:20:02.793Z",
+      "endedAt": "2026-08-15T02:20:02.803Z",
+      "durationMs": 10,
       "ok": true,
       "next": "setup-cdp",
       "output": {
@@ -39,9 +39,9 @@
       "nodeId": "setup-cdp",
       "action": "cdp.target",
       "intent": "Confirm the Extension CDP runtime is reachable",
-      "startedAt": "2026-08-12T03:08:02.137Z",
-      "endedAt": "2026-08-12T03:08:02.148Z",
-      "durationMs": 12,
+      "startedAt": "2026-08-15T02:20:02.810Z",
+      "endedAt": "2026-08-15T02:20:02.832Z",
+      "durationMs": 22,
       "ok": true,
       "next": "setup-unlock",
       "output": {
@@ -59,7 +59,7 @@
           "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
           "V8-Version": "14.7.173.6",
           "WebKit-Version": "537.36 (@6b5a1b80ccc1e8a4967901d8e58fc2e162cdf050)",
-          "webSocketDebuggerUrl": "ws://127.0.0.1:7667/devtools/browser/3fd76fb4-e499-458c-bd15-5ee3d66a128f"
+          "webSocketDebuggerUrl": "ws://127.0.0.1:7667/devtools/browser/94ac9420-08b5-4f3f-9a18-97563f575dd6"
         }
       }
     },
@@ -67,9 +67,9 @@
       "nodeId": "setup-unlock",
       "action": "metamask.wallet.ensure_unlocked",
       "intent": "Ensure the fixture-backed wallet is unlocked",
-      "startedAt": "2026-08-12T03:08:02.154Z",
-      "endedAt": "2026-08-12T03:08:02.239Z",
-      "durationMs": 85,
+      "startedAt": "2026-08-15T02:20:02.837Z",
+      "endedAt": "2026-08-15T02:20:02.959Z",
+      "durationMs": 122,
       "ok": true,
       "next": "setup-warm-streamed-cache",
       "output": {
@@ -87,9 +87,9 @@
       "nodeId": "setup-warm-streamed-cache",
       "action": "ui.navigate",
       "intent": "Open Perps so the streamed account channel populates its cache, matching a user who has already browsed Perps",
-      "startedAt": "2026-08-12T03:08:02.247Z",
-      "endedAt": "2026-08-12T03:08:02.558Z",
-      "durationMs": 311,
+      "startedAt": "2026-08-15T02:20:02.966Z",
+      "endedAt": "2026-08-15T02:20:03.325Z",
+      "durationMs": 359,
       "ok": true,
       "next": "setup-leave-perps",
       "output": {
@@ -147,6 +147,7 @@
               "test_id": "bottom-nav-perps",
               "selector": "[data-testid=\"bottom-nav-perps\"]",
               "enabled": true,
+              "focused": true,
               "bounds": {
                 "x": 401,
                 "y": 655,
@@ -196,9 +197,9 @@
       "nodeId": "setup-leave-perps",
       "action": "ui.navigate",
       "intent": "Return to a non-Perps screen, where nothing re-subscribes the streamed account channel",
-      "startedAt": "2026-08-12T03:08:02.564Z",
-      "endedAt": "2026-08-12T03:08:02.884Z",
-      "durationMs": 320,
+      "startedAt": "2026-08-15T02:20:03.329Z",
+      "endedAt": "2026-08-15T02:20:03.675Z",
+      "durationMs": 346,
       "ok": true,
       "next": "ac3-probe-live-balance-divergence",
       "output": {
@@ -261,10 +262,10 @@
               "selector": "[data-testid=\"discover-search-button\"]",
               "enabled": true,
               "bounds": {
-                "x": 898,
-                "y": 75,
-                "width": 40,
-                "height": 40
+                "x": 906,
+                "y": 79,
+                "width": 32,
+                "height": 32
               },
               "reason": "covered"
             },
@@ -275,97 +276,54 @@
               "selector": "[data-testid=\"account-options-menu-button\"]",
               "enabled": true,
               "bounds": {
-                "x": 938,
-                "y": 75,
-                "width": 40,
-                "height": 40
+                "x": 946,
+                "y": 79,
+                "width": 32,
+                "height": 32
               },
               "reason": "covered"
             },
             {
               "role": "button",
-              "label": "Buy",
-              "test_id": "eth-overview-buy",
-              "selector": "[data-testid=\"eth-overview-buy\"]",
+              "test_id": "drawer-close-button",
+              "selector": "[data-testid=\"drawer-close-button\"]",
               "enabled": true,
-              "bounds": {
-                "x": 360,
-                "y": 294,
-                "width": 106,
-                "height": 69
-              },
-              "reason": "covered"
+              "reason": "hidden_or_no_box"
             },
             {
               "role": "button",
-              "label": "Swap",
-              "test_id": "eth-overview-swap",
-              "selector": "[data-testid=\"eth-overview-swap\"]",
+              "test_id": "notifications-menu-item",
+              "selector": "[data-testid=\"notifications-menu-item\"]",
               "enabled": true,
-              "bounds": {
-                "x": 478,
-                "y": 294,
-                "width": 106,
-                "height": 69
-              },
-              "reason": "covered"
+              "reason": "hidden_or_no_box"
             },
             {
               "role": "button",
-              "label": "Send",
-              "test_id": "eth-overview-send",
-              "selector": "[data-testid=\"eth-overview-send\"]",
+              "test_id": "discover",
+              "selector": "[data-testid=\"discover\"]",
               "enabled": true,
-              "bounds": {
-                "x": 595,
-                "y": 294,
-                "width": 106,
-                "height": 69
-              },
-              "reason": "covered"
+              "reason": "hidden_or_no_box"
             },
             {
-              "role": "button",
-              "label": "More",
-              "test_id": "eth-overview-more",
-              "selector": "[data-testid=\"eth-overview-more\"]",
+              "role": "link",
+              "test_id": "global-menu-contacts",
+              "selector": "[data-testid=\"global-menu-contacts\"]",
               "enabled": true,
-              "bounds": {
-                "x": 713,
-                "y": 294,
-                "width": 106,
-                "height": 69
-              },
-              "reason": "covered"
+              "reason": "hidden_or_no_box"
             },
             {
-              "role": "tab",
-              "label": "Tokens",
-              "test_id": "account-overview__asset-tab",
-              "selector": "[data-testid=\"account-overview__asset-tab\"]",
+              "role": "link",
+              "test_id": "global-menu-connected-sites",
+              "selector": "[data-testid=\"global-menu-connected-sites\"]",
               "enabled": true,
-              "selected": true,
-              "bounds": {
-                "x": 212,
-                "y": 379,
-                "width": 53,
-                "height": 34
-              },
-              "reason": "covered"
+              "reason": "hidden_or_no_box"
             },
             {
-              "role": "tab",
-              "label": "DeFi",
-              "test_id": "account-overview__defi-tab",
-              "selector": "[data-testid=\"account-overview__defi-tab\"]",
+              "role": "link",
+              "test_id": "global-menu-networks",
+              "selector": "[data-testid=\"global-menu-networks\"]",
               "enabled": true,
-              "bounds": {
-                "x": 280,
-                "y": 379,
-                "width": 34,
-                "height": 34
-              },
-              "reason": "covered"
+              "reason": "hidden_or_no_box"
             }
           ],
           "truncated": true,
@@ -380,14 +338,14 @@
       "nodeId": "ac3-probe-live-balance-divergence",
       "action": "command",
       "intent": "AC3: restart the UI realm (MV3-restart equivalent) and read the streamed cache and the fresh account state side by side, read-only",
-      "startedAt": "2026-08-12T03:08:02.891Z",
-      "endedAt": "2026-08-12T03:08:03.660Z",
-      "durationMs": 769,
+      "startedAt": "2026-08-15T02:20:03.683Z",
+      "endedAt": "2026-08-15T02:20:06.095Z",
+      "durationMs": 2412,
       "ok": true,
       "next": "ac3-assert-streamed-cache-empty",
       "output": {
         "exitCode": 0,
-        "stdout": "{\"href\":\"chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/\",\"streamedAccountPresent\":false,\"streamedBalance\":\"0\",\"freshBalance\":\"756.392549\",\"diverges\":true,\"validWithdrawal\":\"378\",\"decisionFromStreamed\":\"blocked\",\"decisionFromFresh\":\"allowed\",\"decisionsDisagree\":true}\n",
+        "stdout": "{\"href\":\"chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/\",\"streamedAccountPresent\":false,\"streamedBalance\":\"0\",\"freshBalance\":\"756.36175\",\"diverges\":true,\"validWithdrawal\":\"378\",\"decisionFromStreamed\":\"blocked\",\"decisionFromFresh\":\"allowed\",\"decisionsDisagree\":true}\n",
         "stderr": ""
       }
     },
@@ -395,8 +353,8 @@
       "nodeId": "ac3-assert-streamed-cache-empty",
       "action": "assert_json",
       "intent": "AC3: the streamed account cache the old hook read is empty after the UI restart",
-      "startedAt": "2026-08-12T03:08:03.666Z",
-      "endedAt": "2026-08-12T03:08:03.674Z",
+      "startedAt": "2026-08-15T02:20:06.108Z",
+      "endedAt": "2026-08-15T02:20:06.116Z",
       "durationMs": 8,
       "ok": true,
       "next": "ac3-assert-balances-diverge",
@@ -413,9 +371,9 @@
       "nodeId": "ac3-assert-balances-diverge",
       "action": "assert_json",
       "intent": "AC3: the streamed balance and the fresh account-state balance disagree in the live runtime",
-      "startedAt": "2026-08-12T03:08:03.679Z",
-      "endedAt": "2026-08-12T03:08:03.683Z",
-      "durationMs": 4,
+      "startedAt": "2026-08-15T02:20:06.125Z",
+      "endedAt": "2026-08-15T02:20:06.130Z",
+      "durationMs": 5,
       "ok": true,
       "next": "ac3-assert-decisions-disagree",
       "output": {
@@ -431,9 +389,9 @@
       "nodeId": "ac3-assert-decisions-disagree",
       "action": "assert_json",
       "intent": "AC3: that divergence flips the withdrawal decision, so the source the hook reads changes the outcome",
-      "startedAt": "2026-08-12T03:08:03.686Z",
-      "endedAt": "2026-08-12T03:08:03.689Z",
-      "durationMs": 3,
+      "startedAt": "2026-08-15T02:20:06.136Z",
+      "endedAt": "2026-08-15T02:20:06.144Z",
+      "durationMs": 8,
       "ok": true,
       "next": "ac3-verify-blocking-under-divergence",
       "output": {
@@ -449,23 +407,23 @@
       "nodeId": "ac3-verify-blocking-under-divergence",
       "action": "command",
       "intent": "AC3: exercise the confirmation alert with a stale-high streamed balance and a lower fresh balance",
-      "startedAt": "2026-08-12T03:08:03.692Z",
-      "endedAt": "2026-08-12T03:08:06.766Z",
-      "durationMs": 3074,
+      "startedAt": "2026-08-15T02:20:06.149Z",
+      "endedAt": "2026-08-15T02:20:12.097Z",
+      "durationMs": 5948,
       "ok": true,
       "next": "ac3-assert-blocking-no-failures",
       "output": {
         "exitCode": 0,
         "stdout": "\n✅ No console baseline violations.\n\n",
-        "stderr": "PASS ui/pages/confirmations/hooks/alerts/transactions/usePerpsWithdrawInsufficientBalanceAlert.test.ts\n\nTest Suites: 1 passed, 1 total\nTests:       19 skipped, 1 passed, 20 total\nSnapshots:   0 total\nTime:        2.119 s, estimated 9 s\nRan all test suites matching /ui\\/pages\\/confirmations\\/hooks\\/alerts\\/transactions\\/usePerpsWithdrawInsufficientBalanceAlert.test.ts/i with tests matching \"fresh balance source blocks a withdrawal the stale streamed cache would have allowed\".\nTest results written to: temp/tasks/fix/tat-3632-0803-221700/artifacts/ac3-jest.json\n"
+        "stderr": "PASS ui/pages/confirmations/hooks/alerts/transactions/usePerpsWithdrawInsufficientBalanceAlert.test.ts\n\nTest Suites: 1 passed, 1 total\nTests:       19 skipped, 1 passed, 20 total\nSnapshots:   0 total\nTime:        4.433 s, estimated 6 s\nRan all test suites matching /ui\\/pages\\/confirmations\\/hooks\\/alerts\\/transactions\\/usePerpsWithdrawInsufficientBalanceAlert.test.ts/i with tests matching \"fresh balance source blocks a withdrawal the stale streamed cache would have allowed\".\nTest results written to: temp/tasks/fix/tat-3632-0803-221700/artifacts/ac3-jest.json\n"
       }
     },
     {
       "nodeId": "ac3-assert-blocking-no-failures",
       "action": "assert_json",
       "intent": "AC3: the invalid withdrawal is blocked when the streamed cache would have allowed it",
-      "startedAt": "2026-08-12T03:08:06.776Z",
-      "endedAt": "2026-08-12T03:08:06.782Z",
+      "startedAt": "2026-08-15T02:20:12.105Z",
+      "endedAt": "2026-08-15T02:20:12.111Z",
       "durationMs": 6,
       "ok": true,
       "next": "ac3-assert-blocking-test-ran",
@@ -482,8 +440,8 @@
       "nodeId": "ac3-assert-blocking-test-ran",
       "action": "assert_json",
       "intent": "AC3: exactly the stale-high blocking case ran, so the pass is not an empty filter",
-      "startedAt": "2026-08-12T03:08:06.787Z",
-      "endedAt": "2026-08-12T03:08:06.794Z",
+      "startedAt": "2026-08-15T02:20:12.116Z",
+      "endedAt": "2026-08-15T02:20:12.123Z",
       "durationMs": 7,
       "ok": true,
       "next": "ac3-open-perps-balance",
@@ -500,9 +458,9 @@
       "nodeId": "ac3-open-perps-balance",
       "action": "ui.navigate",
       "intent": "AC3: return to Perps to show the live balance the fresh read resolved to",
-      "startedAt": "2026-08-12T03:08:06.798Z",
-      "endedAt": "2026-08-12T03:08:07.097Z",
-      "durationMs": 299,
+      "startedAt": "2026-08-15T02:20:12.130Z",
+      "endedAt": "2026-08-15T02:20:12.441Z",
+      "durationMs": 311,
       "ok": true,
       "next": "ac3-wait-for-fresh-balance",
       "output": {
@@ -560,6 +518,7 @@
               "test_id": "bottom-nav-perps",
               "selector": "[data-testid=\"bottom-nav-perps\"]",
               "enabled": true,
+              "focused": true,
               "bounds": {
                 "x": 401,
                 "y": 655,
@@ -609,9 +568,9 @@
       "nodeId": "ac3-wait-for-fresh-balance",
       "action": "ui.wait_for",
       "intent": "AC3: wait for the live Perps balance readout before capturing it",
-      "startedAt": "2026-08-12T03:08:07.100Z",
-      "endedAt": "2026-08-12T03:08:11.517Z",
-      "durationMs": 4417,
+      "startedAt": "2026-08-15T02:20:12.447Z",
+      "endedAt": "2026-08-15T02:20:16.245Z",
+      "durationMs": 3798,
       "ok": true,
       "next": "ac3-screenshot-live-fresh-balance",
       "output": {
@@ -633,7 +592,7 @@
           "items": [
             {
               "role": "button",
-              "label": "Total balance $761.33",
+              "label": "Total balance $761.21",
               "test_id": "perps-balance-dropdown-balance",
               "selector": "[data-testid=\"perps-balance-dropdown-balance\"]",
               "enabled": true,
@@ -659,7 +618,7 @@
             },
             {
               "role": "button",
-              "label": "Bitcoin 2x long 0.00016 BTC $10.20 -$0.26 (-4.98%)",
+              "label": "Bitcoin 2x long 0.00016 BTC $10.10 -$0.36 (-6.81%)",
               "test_id": "position-card-BTC",
               "selector": "[data-testid=\"position-card-BTC\"]",
               "enabled": true,
@@ -672,7 +631,7 @@
             },
             {
               "role": "button",
-              "label": "Ethereum 25x ETH · $1.57M Vol $1,885.5 +0.29%",
+              "label": "Ethereum 25x ETH · $1.53M Vol $1,885.5 -0.15%",
               "test_id": "perps-watchlist-ETH",
               "selector": "[data-testid=\"perps-watchlist-ETH\"]",
               "enabled": true,
@@ -680,20 +639,20 @@
                 "x": 196,
                 "y": 357,
                 "width": 787,
-                "height": 74
+                "height": 72
               }
             },
             {
               "role": "button",
-              "label": "Bitcoin 40x BTC · $1.89M Vol $63,739 -0.78%",
+              "label": "Bitcoin 40x BTC · $1.82M Vol $63,143 -0.52%",
               "test_id": "perps-watchlist-BTC",
               "selector": "[data-testid=\"perps-watchlist-BTC\"]",
               "enabled": true,
               "bounds": {
                 "x": 196,
-                "y": 431,
+                "y": 429,
                 "width": 787,
-                "height": 74
+                "height": 72
               }
             },
             {
@@ -704,22 +663,22 @@
               "enabled": true,
               "bounds": {
                 "x": 196,
-                "y": 521,
+                "y": 517,
                 "width": 787,
                 "height": 48
               }
             },
             {
               "role": "button",
-              "label": "Bitcoin 40x BTC · $1.89M Vol $63,739 -0.78%",
+              "label": "Bitcoin 40x BTC · $1.82M Vol $63,143 -0.52%",
               "test_id": "explore-markets-BTC",
               "selector": "[data-testid=\"explore-markets-BTC\"]",
               "enabled": true,
               "bounds": {
                 "x": 196,
-                "y": 577,
+                "y": 573,
                 "width": 787,
-                "height": 74
+                "height": 72
               }
             },
             {
@@ -741,6 +700,7 @@
               "test_id": "bottom-nav-perps",
               "selector": "[data-testid=\"bottom-nav-perps\"]",
               "enabled": true,
+              "focused": true,
               "bounds": {
                 "x": 401,
                 "y": 655,
@@ -778,99 +738,99 @@
           "hidden_or_offscreen": [
             {
               "role": "button",
-              "label": "Ethereum 25x ETH · $1.57M Vol $1,885.5 +0.29%",
+              "label": "Ethereum 25x ETH · $1.53M Vol $1,885.5 -0.15%",
               "test_id": "explore-markets-ETH",
               "selector": "[data-testid=\"explore-markets-ETH\"]",
               "enabled": true,
               "bounds": {
                 "x": 196,
-                "y": 651,
+                "y": 645,
                 "width": 787,
-                "height": 74
+                "height": 72
               },
-              "reason": "offscreen"
+              "reason": "covered"
             },
             {
               "role": "button",
-              "label": "Solana 10x SOL · $272K Vol $76.335 +0.47%",
+              "label": "Solana 10x SOL · $344K Vol $75.447 -0.53%",
               "test_id": "explore-markets-SOL",
               "selector": "[data-testid=\"explore-markets-SOL\"]",
               "enabled": true,
               "bounds": {
                 "x": 196,
-                "y": 725,
+                "y": 717,
                 "width": 787,
-                "height": 74
+                "height": 72
               },
               "reason": "offscreen"
             },
             {
               "role": "button",
-              "label": "Sui 10x SUI · $113K Vol $0.6949 +0.98%",
-              "test_id": "explore-markets-SUI",
-              "selector": "[data-testid=\"explore-markets-SUI\"]",
-              "enabled": true,
-              "bounds": {
-                "x": 196,
-                "y": 799,
-                "width": 787,
-                "height": 74
-              },
-              "reason": "offscreen"
-            },
-            {
-              "role": "button",
-              "label": "BNB Chain 10x BNB · $103K Vol $614.57 +2.44%",
-              "test_id": "explore-markets-BNB",
-              "selector": "[data-testid=\"explore-markets-BNB\"]",
-              "enabled": true,
-              "bounds": {
-                "x": 196,
-                "y": 873,
-                "width": 787,
-                "height": 74
-              },
-              "reason": "offscreen"
-            },
-            {
-              "role": "button",
-              "label": "Dogecoin 10x DOGE · $73K Vol $0.071924 +2.73%",
-              "test_id": "explore-markets-DOGE",
-              "selector": "[data-testid=\"explore-markets-DOGE\"]",
-              "enabled": true,
-              "bounds": {
-                "x": 196,
-                "y": 947,
-                "width": 787,
-                "height": 74
-              },
-              "reason": "offscreen"
-            },
-            {
-              "role": "button",
-              "label": "PAX Gold 10x PAXG · $67K Vol $4,414.8 -0.04%",
-              "test_id": "explore-markets-PAXG",
-              "selector": "[data-testid=\"explore-markets-PAXG\"]",
-              "enabled": true,
-              "bounds": {
-                "x": 196,
-                "y": 1021,
-                "width": 787,
-                "height": 74
-              },
-              "reason": "offscreen"
-            },
-            {
-              "role": "button",
-              "label": "Avalanche 10x AVAX · $59K Vol $6.3021 -3.64%",
+              "label": "Avalanche 10x AVAX · $125K Vol $6.5778 +1.84%",
               "test_id": "explore-markets-AVAX",
               "selector": "[data-testid=\"explore-markets-AVAX\"]",
               "enabled": true,
               "bounds": {
                 "x": 196,
-                "y": 1095,
+                "y": 789,
                 "width": 787,
-                "height": 74
+                "height": 72
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "Dogecoin 10x DOGE · $84K Vol $0.070192 +0.15%",
+              "test_id": "explore-markets-DOGE",
+              "selector": "[data-testid=\"explore-markets-DOGE\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 196,
+                "y": 861,
+                "width": 787,
+                "height": 72
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "Cardano 10x ADA · $65K Vol $0.18049 -1.16%",
+              "test_id": "explore-markets-ADA",
+              "selector": "[data-testid=\"explore-markets-ADA\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 196,
+                "y": 933,
+                "width": 787,
+                "height": 72
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "Arbitrum 10x ARB · $61K Vol $0.0749 -0.36%",
+              "test_id": "explore-markets-ARB",
+              "selector": "[data-testid=\"explore-markets-ARB\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 196,
+                "y": 1005,
+                "width": 787,
+                "height": 72
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "BNB Chain 10x BNB · $51K Vol $607.73 -0.49%",
+              "test_id": "explore-markets-BNB",
+              "selector": "[data-testid=\"explore-markets-BNB\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 196,
+                "y": 1077,
+                "width": 787,
+                "height": 72
               },
               "reason": "offscreen"
             },
@@ -882,7 +842,7 @@
               "enabled": true,
               "bounds": {
                 "x": 196,
-                "y": 1185,
+                "y": 1165,
                 "width": 787,
                 "height": 48
               },
@@ -890,13 +850,13 @@
             },
             {
               "role": "button",
-              "label": "Opened long 0.00016 BTC -$0.01",
-              "test_id": "transaction-card-57662389690-1786347868051-0",
-              "selector": "[data-testid=\"transaction-card-57662389690-1786347868051-0\"]",
+              "label": "Closed long 0.0053 ETH -$0.02",
+              "test_id": "transaction-card-57824924671-1786670840758-0",
+              "selector": "[data-testid=\"transaction-card-57824924671-1786670840758-0\"]",
               "enabled": true,
               "bounds": {
                 "x": 196,
-                "y": 1241,
+                "y": 1221,
                 "width": 787,
                 "height": 74
               },
@@ -904,13 +864,13 @@
             },
             {
               "role": "button",
-              "label": "Closed long 0.0052 ETH -$0.02",
-              "test_id": "transaction-card-57589900832-1786196645756-1",
-              "selector": "[data-testid=\"transaction-card-57589900832-1786196645756-1\"]",
+              "label": "Opened long 0.0053 ETH -$0.01",
+              "test_id": "transaction-card-57824922066-1786670834617-1",
+              "selector": "[data-testid=\"transaction-card-57824922066-1786670834617-1\"]",
               "enabled": true,
               "bounds": {
                 "x": 196,
-                "y": 1315,
+                "y": 1295,
                 "width": 787,
                 "height": 74
               },
@@ -940,17 +900,17 @@
           "metadata": {
             "provider": "capture-helper",
             "mode": "snapshot",
-            "pid": 29638,
+            "pid": 47480,
             "captureHelper": {
-              "bytes": 188158,
-              "output": "/Volumes/FD/dev/metamask/metamask-extension-3/temp/tasks/fix/45191-0812-105020/artifacts/recipe-run/screenshots/.mm-harness-extension-evidence-RqvIYU/captured.png",
+              "bytes": 188133,
+              "output": "/Volumes/FD/dev/metamask/metamask-extension-3/temp/tasks/fix/45191-0815-091925/artifacts/recipe-run/screenshots/.mm-harness-extension-evidence-wBnFi7/captured.png",
               "selected": {
                 "app": "Google Chrome for Testing",
                 "height": 916,
-                "id": 4473,
+                "id": 4909,
                 "layer": 0,
                 "onScreen": true,
-                "pid": 29638,
+                "pid": 47480,
                 "title": "mini-mme-3 — MetaMask",
                 "width": 1200,
                 "x": 22,
@@ -962,9 +922,9 @@
           }
         }
       ],
-      "startedAt": "2026-08-12T03:08:11.531Z",
-      "endedAt": "2026-08-12T03:08:11.793Z",
-      "durationMs": 262,
+      "startedAt": "2026-08-15T02:20:16.250Z",
+      "endedAt": "2026-08-15T02:20:16.572Z",
+      "durationMs": 322,
       "ok": true,
       "next": "ac1-run-fresh-balance-tests",
       "output": {
@@ -980,17 +940,17 @@
           "metadata": {
             "provider": "capture-helper",
             "mode": "snapshot",
-            "pid": 29638,
+            "pid": 47480,
             "captureHelper": {
-              "bytes": 188158,
-              "output": "/Volumes/FD/dev/metamask/metamask-extension-3/temp/tasks/fix/45191-0812-105020/artifacts/recipe-run/screenshots/.mm-harness-extension-evidence-RqvIYU/captured.png",
+              "bytes": 188133,
+              "output": "/Volumes/FD/dev/metamask/metamask-extension-3/temp/tasks/fix/45191-0815-091925/artifacts/recipe-run/screenshots/.mm-harness-extension-evidence-wBnFi7/captured.png",
               "selected": {
                 "app": "Google Chrome for Testing",
                 "height": 916,
-                "id": 4473,
+                "id": 4909,
                 "layer": 0,
                 "onScreen": true,
-                "pid": 29638,
+                "pid": 47480,
                 "title": "mini-mme-3 — MetaMask",
                 "width": 1200,
                 "x": 22,
@@ -1015,7 +975,7 @@
           "items": [
             {
               "role": "button",
-              "label": "Total balance $761.33",
+              "label": "Total balance $761.21",
               "test_id": "perps-balance-dropdown-balance",
               "selector": "[data-testid=\"perps-balance-dropdown-balance\"]",
               "enabled": true,
@@ -1041,7 +1001,7 @@
             },
             {
               "role": "button",
-              "label": "Bitcoin 2x long 0.00016 BTC $10.20 -$0.26 (-4.98%)",
+              "label": "Bitcoin 2x long 0.00016 BTC $10.10 -$0.36 (-6.81%)",
               "test_id": "position-card-BTC",
               "selector": "[data-testid=\"position-card-BTC\"]",
               "enabled": true,
@@ -1054,7 +1014,7 @@
             },
             {
               "role": "button",
-              "label": "Ethereum 25x ETH · $1.57M Vol $1,885.5 +0.29%",
+              "label": "Ethereum 25x ETH · $1.53M Vol $1,885.5 -0.15%",
               "test_id": "perps-watchlist-ETH",
               "selector": "[data-testid=\"perps-watchlist-ETH\"]",
               "enabled": true,
@@ -1062,20 +1022,20 @@
                 "x": 196,
                 "y": 357,
                 "width": 787,
-                "height": 74
+                "height": 72
               }
             },
             {
               "role": "button",
-              "label": "Bitcoin 40x BTC · $1.89M Vol $63,739 -0.78%",
+              "label": "Bitcoin 40x BTC · $1.82M Vol $63,143 -0.52%",
               "test_id": "perps-watchlist-BTC",
               "selector": "[data-testid=\"perps-watchlist-BTC\"]",
               "enabled": true,
               "bounds": {
                 "x": 196,
-                "y": 431,
+                "y": 429,
                 "width": 787,
-                "height": 74
+                "height": 72
               }
             },
             {
@@ -1086,22 +1046,22 @@
               "enabled": true,
               "bounds": {
                 "x": 196,
-                "y": 521,
+                "y": 517,
                 "width": 787,
                 "height": 48
               }
             },
             {
               "role": "button",
-              "label": "Bitcoin 40x BTC · $1.89M Vol $63,739 -0.78%",
+              "label": "Bitcoin 40x BTC · $1.82M Vol $63,143 -0.52%",
               "test_id": "explore-markets-BTC",
               "selector": "[data-testid=\"explore-markets-BTC\"]",
               "enabled": true,
               "bounds": {
                 "x": 196,
-                "y": 577,
+                "y": 573,
                 "width": 787,
-                "height": 74
+                "height": 72
               }
             },
             {
@@ -1123,6 +1083,7 @@
               "test_id": "bottom-nav-perps",
               "selector": "[data-testid=\"bottom-nav-perps\"]",
               "enabled": true,
+              "focused": true,
               "bounds": {
                 "x": 401,
                 "y": 655,
@@ -1160,99 +1121,99 @@
           "hidden_or_offscreen": [
             {
               "role": "button",
-              "label": "Ethereum 25x ETH · $1.57M Vol $1,885.5 +0.29%",
+              "label": "Ethereum 25x ETH · $1.53M Vol $1,885.5 -0.15%",
               "test_id": "explore-markets-ETH",
               "selector": "[data-testid=\"explore-markets-ETH\"]",
               "enabled": true,
               "bounds": {
                 "x": 196,
-                "y": 651,
+                "y": 645,
                 "width": 787,
-                "height": 74
+                "height": 72
               },
-              "reason": "offscreen"
+              "reason": "covered"
             },
             {
               "role": "button",
-              "label": "Solana 10x SOL · $272K Vol $76.335 +0.47%",
+              "label": "Solana 10x SOL · $344K Vol $75.447 -0.53%",
               "test_id": "explore-markets-SOL",
               "selector": "[data-testid=\"explore-markets-SOL\"]",
               "enabled": true,
               "bounds": {
                 "x": 196,
-                "y": 725,
+                "y": 717,
                 "width": 787,
-                "height": 74
+                "height": 72
               },
               "reason": "offscreen"
             },
             {
               "role": "button",
-              "label": "Sui 10x SUI · $113K Vol $0.6949 +0.98%",
-              "test_id": "explore-markets-SUI",
-              "selector": "[data-testid=\"explore-markets-SUI\"]",
-              "enabled": true,
-              "bounds": {
-                "x": 196,
-                "y": 799,
-                "width": 787,
-                "height": 74
-              },
-              "reason": "offscreen"
-            },
-            {
-              "role": "button",
-              "label": "BNB Chain 10x BNB · $103K Vol $614.57 +2.44%",
-              "test_id": "explore-markets-BNB",
-              "selector": "[data-testid=\"explore-markets-BNB\"]",
-              "enabled": true,
-              "bounds": {
-                "x": 196,
-                "y": 873,
-                "width": 787,
-                "height": 74
-              },
-              "reason": "offscreen"
-            },
-            {
-              "role": "button",
-              "label": "Dogecoin 10x DOGE · $73K Vol $0.071924 +2.73%",
-              "test_id": "explore-markets-DOGE",
-              "selector": "[data-testid=\"explore-markets-DOGE\"]",
-              "enabled": true,
-              "bounds": {
-                "x": 196,
-                "y": 947,
-                "width": 787,
-                "height": 74
-              },
-              "reason": "offscreen"
-            },
-            {
-              "role": "button",
-              "label": "PAX Gold 10x PAXG · $67K Vol $4,414.8 -0.04%",
-              "test_id": "explore-markets-PAXG",
-              "selector": "[data-testid=\"explore-markets-PAXG\"]",
-              "enabled": true,
-              "bounds": {
-                "x": 196,
-                "y": 1021,
-                "width": 787,
-                "height": 74
-              },
-              "reason": "offscreen"
-            },
-            {
-              "role": "button",
-              "label": "Avalanche 10x AVAX · $59K Vol $6.3021 -3.64%",
+              "label": "Avalanche 10x AVAX · $125K Vol $6.5778 +1.84%",
               "test_id": "explore-markets-AVAX",
               "selector": "[data-testid=\"explore-markets-AVAX\"]",
               "enabled": true,
               "bounds": {
                 "x": 196,
-                "y": 1095,
+                "y": 789,
                 "width": 787,
-                "height": 74
+                "height": 72
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "Dogecoin 10x DOGE · $84K Vol $0.070192 +0.15%",
+              "test_id": "explore-markets-DOGE",
+              "selector": "[data-testid=\"explore-markets-DOGE\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 196,
+                "y": 861,
+                "width": 787,
+                "height": 72
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "Cardano 10x ADA · $65K Vol $0.18049 -1.16%",
+              "test_id": "explore-markets-ADA",
+              "selector": "[data-testid=\"explore-markets-ADA\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 196,
+                "y": 933,
+                "width": 787,
+                "height": 72
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "Arbitrum 10x ARB · $61K Vol $0.0749 -0.36%",
+              "test_id": "explore-markets-ARB",
+              "selector": "[data-testid=\"explore-markets-ARB\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 196,
+                "y": 1005,
+                "width": 787,
+                "height": 72
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "BNB Chain 10x BNB · $51K Vol $607.73 -0.49%",
+              "test_id": "explore-markets-BNB",
+              "selector": "[data-testid=\"explore-markets-BNB\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 196,
+                "y": 1077,
+                "width": 787,
+                "height": 72
               },
               "reason": "offscreen"
             },
@@ -1264,7 +1225,7 @@
               "enabled": true,
               "bounds": {
                 "x": 196,
-                "y": 1185,
+                "y": 1165,
                 "width": 787,
                 "height": 48
               },
@@ -1272,13 +1233,13 @@
             },
             {
               "role": "button",
-              "label": "Opened long 0.00016 BTC -$0.01",
-              "test_id": "transaction-card-57662389690-1786347868051-0",
-              "selector": "[data-testid=\"transaction-card-57662389690-1786347868051-0\"]",
+              "label": "Closed long 0.0053 ETH -$0.02",
+              "test_id": "transaction-card-57824924671-1786670840758-0",
+              "selector": "[data-testid=\"transaction-card-57824924671-1786670840758-0\"]",
               "enabled": true,
               "bounds": {
                 "x": 196,
-                "y": 1241,
+                "y": 1221,
                 "width": 787,
                 "height": 74
               },
@@ -1286,13 +1247,13 @@
             },
             {
               "role": "button",
-              "label": "Closed long 0.0052 ETH -$0.02",
-              "test_id": "transaction-card-57589900832-1786196645756-1",
-              "selector": "[data-testid=\"transaction-card-57589900832-1786196645756-1\"]",
+              "label": "Opened long 0.0053 ETH -$0.01",
+              "test_id": "transaction-card-57824922066-1786670834617-1",
+              "selector": "[data-testid=\"transaction-card-57824922066-1786670834617-1\"]",
               "enabled": true,
               "bounds": {
                 "x": 196,
-                "y": 1315,
+                "y": 1295,
                 "width": 787,
                 "height": 74
               },
@@ -1311,24 +1272,24 @@
       "nodeId": "ac1-run-fresh-balance-tests",
       "action": "command",
       "intent": "AC1: run the stale-high, stale-low, fresh-equal and loading cases for the fresh account-state decision",
-      "startedAt": "2026-08-12T03:08:11.798Z",
-      "endedAt": "2026-08-12T03:08:14.719Z",
-      "durationMs": 2921,
+      "startedAt": "2026-08-15T02:20:16.577Z",
+      "endedAt": "2026-08-15T02:20:21.141Z",
+      "durationMs": 4564,
       "ok": true,
       "next": "ac1-assert-no-failures",
       "output": {
         "exitCode": 0,
         "stdout": "\n✅ No console baseline violations.\n\n",
-        "stderr": "PASS ui/pages/confirmations/hooks/alerts/transactions/usePerpsWithdrawInsufficientBalanceAlert.test.ts\n\nTest Suites: 1 passed, 1 total\nTests:       16 skipped, 4 passed, 20 total\nSnapshots:   0 total\nTime:        2.179 s\nRan all test suites matching /ui\\/pages\\/confirmations\\/hooks\\/alerts\\/transactions\\/usePerpsWithdrawInsufficientBalanceAlert.test.ts/i with tests matching \"fresh balance source\".\nTest results written to: temp/tasks/fix/tat-3632-0803-221700/artifacts/ac1-jest.json\n"
+        "stderr": "PASS ui/pages/confirmations/hooks/alerts/transactions/usePerpsWithdrawInsufficientBalanceAlert.test.ts\n\nTest Suites: 1 passed, 1 total\nTests:       16 skipped, 4 passed, 20 total\nSnapshots:   0 total\nTime:        3.685 s, estimated 4 s\nRan all test suites matching /ui\\/pages\\/confirmations\\/hooks\\/alerts\\/transactions\\/usePerpsWithdrawInsufficientBalanceAlert.test.ts/i with tests matching \"fresh balance source\".\nTest results written to: temp/tasks/fix/tat-3632-0803-221700/artifacts/ac1-jest.json\n"
       }
     },
     {
       "nodeId": "ac1-assert-no-failures",
       "action": "assert_json",
       "intent": "AC1: the blocking decision follows the fresh account-state result in every case",
-      "startedAt": "2026-08-12T03:08:14.729Z",
-      "endedAt": "2026-08-12T03:08:14.736Z",
-      "durationMs": 7,
+      "startedAt": "2026-08-15T02:20:21.149Z",
+      "endedAt": "2026-08-15T02:20:21.158Z",
+      "durationMs": 9,
       "ok": true,
       "next": "ac1-assert-cases-ran",
       "output": {
@@ -1344,9 +1305,9 @@
       "nodeId": "ac1-assert-cases-ran",
       "action": "assert_json",
       "intent": "AC1: all four fresh-balance cases ran, so the pass is not an empty filter",
-      "startedAt": "2026-08-12T03:08:14.750Z",
-      "endedAt": "2026-08-12T03:08:14.760Z",
-      "durationMs": 10,
+      "startedAt": "2026-08-15T02:20:21.164Z",
+      "endedAt": "2026-08-15T02:20:21.172Z",
+      "durationMs": 8,
       "ok": true,
       "next": "ac2-run-perps-scope-tests",
       "output": {
@@ -1362,24 +1323,24 @@
       "nodeId": "ac2-run-perps-scope-tests",
       "action": "command",
       "intent": "AC2: run the non-Perps isolation, scope-change and request-coalescing cases plus both degraded-read cases",
-      "startedAt": "2026-08-12T03:08:14.766Z",
-      "endedAt": "2026-08-12T03:08:17.720Z",
-      "durationMs": 2954,
+      "startedAt": "2026-08-15T02:20:21.179Z",
+      "endedAt": "2026-08-15T02:20:25.165Z",
+      "durationMs": 3986,
       "ok": true,
       "next": "ac2-assert-no-failures",
       "output": {
         "exitCode": 0,
         "stdout": "\n✅ No console baseline violations.\n\n",
-        "stderr": "PASS ui/pages/confirmations/hooks/alerts/transactions/usePerpsWithdrawInsufficientBalanceAlert.test.ts\n\nTest Suites: 1 passed, 1 total\nTests:       15 skipped, 5 passed, 20 total\nSnapshots:   0 total\nTime:        2.162 s\nRan all test suites matching /ui\\/pages\\/confirmations\\/hooks\\/alerts\\/transactions\\/usePerpsWithdrawInsufficientBalanceAlert.test.ts/i with tests matching \"perps scope|degraded read\".\nTest results written to: temp/tasks/fix/tat-3632-0803-221700/artifacts/ac2-jest.json\n"
+        "stderr": "PASS ui/pages/confirmations/hooks/alerts/transactions/usePerpsWithdrawInsufficientBalanceAlert.test.ts\n\nTest Suites: 1 passed, 1 total\nTests:       15 skipped, 5 passed, 20 total\nSnapshots:   0 total\nTime:        3.096 s, estimated 4 s\nRan all test suites matching /ui\\/pages\\/confirmations\\/hooks\\/alerts\\/transactions\\/usePerpsWithdrawInsufficientBalanceAlert.test.ts/i with tests matching \"perps scope|degraded read\".\nTest results written to: temp/tasks/fix/tat-3632-0803-221700/artifacts/ac2-jest.json\n"
       }
     },
     {
       "nodeId": "ac2-assert-no-failures",
       "action": "assert_json",
       "intent": "AC2: non-Perps confirmations never query Perps, and a degraded read fails safe without inventing a balance",
-      "startedAt": "2026-08-12T03:08:17.730Z",
-      "endedAt": "2026-08-12T03:08:17.734Z",
-      "durationMs": 4,
+      "startedAt": "2026-08-15T02:20:25.170Z",
+      "endedAt": "2026-08-15T02:20:25.176Z",
+      "durationMs": 6,
       "ok": true,
       "next": "ac2-assert-cases-ran",
       "output": {
@@ -1395,9 +1356,9 @@
       "nodeId": "ac2-assert-cases-ran",
       "action": "assert_json",
       "intent": "AC2: all five scoping and degraded-read cases ran, so the pass is not an empty filter",
-      "startedAt": "2026-08-12T03:08:17.737Z",
-      "endedAt": "2026-08-12T03:08:17.743Z",
-      "durationMs": 6,
+      "startedAt": "2026-08-15T02:20:25.180Z",
+      "endedAt": "2026-08-15T02:20:25.184Z",
+      "durationMs": 4,
       "ok": true,
       "next": "teardown-done",
       "output": {
@@ -1412,8 +1373,8 @@
     {
       "nodeId": "teardown-done",
       "action": "end",
-      "startedAt": "2026-08-12T03:08:17.748Z",
-      "endedAt": "2026-08-12T03:08:17.748Z",
+      "startedAt": "2026-08-15T02:20:25.188Z",
+      "endedAt": "2026-08-15T02:20:25.188Z",
       "durationMs": 0,
       "ok": true,
       "status": "pass"

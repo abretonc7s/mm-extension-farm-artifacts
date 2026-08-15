@@ -1,0 +1,130 @@
+→ refreshed extension harness overlay (runner changed)
+→ extension quick launch — yarn start development build · CDP :7667 (output streams below)
+Extension live validation command:
+  mm-harness runtime-launch --adapter extension --target /Volumes/FD/dev/metamask/metamask-extension-3 --cdp-port 7667 --start-watch 
+Launch artifacts: /Volumes/FD/dev/metamask/metamask-extension-3/temp/recipe/harness/extension/live/20260815T020831Z/launch
+Verify artifacts: /Volumes/FD/dev/metamask/metamask-extension-3/temp/recipe/harness/extension/live/20260815T020831Z/verify
+[recipe-harness] phase 1/2: launch (prepare + CDP readiness)
+[recipe-harness] running prepare pipeline (watch/build, dist snapshot, browser, fixture seed)...
+mm-harness | extension prepare
+mm-harness | full log: /Volumes/FD/dev/metamask/metamask-extension-3/temp/recipe/harness/extension/live/20260815T020831Z/launch/logs/launch.log
+mm-harness | full stream: mm-harness logs --full
+
+  * running prepare pipeline (watch/build, dist snapshot, browser, fixture seed)...
+[env] node v24.13.0 from .tool-versions/.nvmrc via asdf (24.13.0)
+[recipe-harness] clean build: clearing webpack cache + harness watcher
+[recipe-harness] Stopping stale target-scoped watcher(s): 36775
+[recipe-harness] Starting yarn start (watcher-port=9013)
+[recipe-harness] compact build view - full log: temp/recipe/runtime/recipe-harness-webpack.log (mm-harness logs --full)
+mm-harness | webpack build
+mm-harness | full log: temp/recipe/runtime/recipe-harness-webpack.log
+mm-harness | full stream: mm-harness logs --full
+
+  * (waiting for first build event...)
+mm-harness | webpack build
+mm-harness | full log: temp/recipe/runtime/recipe-harness-webpack.log
+mm-harness | full stream: mm-harness logs --full
+
+  * webpack 90% sealing record hash
+  * webpack 91% sealing module assets processing
+  * webpack 91% sealing chunk assets processing
+  * webpack 92% sealing asset processing
+  * webpack 92% sealing asset processing CopyPlugin
+  * webpack 92% sealing asset processing HotModuleReplacementPlugin
+  * webpack 92% sealing asset processing html-bundler-webpack-plugin
+  * webpack 92% sealing asset processing SourceMapDevToolPlugin
+  * webpack 92% sealing asset processing SourceMapDevToolPlugin scripts/contentscript.js generate SourceMap
+mm-harness | webpack build
+mm-harness | full log: temp/recipe/runtime/recipe-harness-webpack.log
+mm-harness | full stream: mm-harness logs --full
+
+  * webpack 92% sealing asset processing SourceMapDevToolPlugin js-ui_ducks_a.js generated SourceMap
+  * webpack 92% sealing asset processing SourceMapDevToolPlugin js-ui_d.js generate SourceMap
+  * webpack 92% sealing asset processing SourceMapDevToolPlugin js-ui_d.js generated SourceMap
+  * webpack 92% sealing asset processing SourceMapDevToolPlugin js-ui_index_js-3adab6c0.js generate SourceMap
+  * webpack 92% sealing asset processing SourceMapDevToolPlugin js-ui_index_js-3adab6c0.js generated SourceMap
+  * webpack 92% sealing asset processing SourceMapDevToolPlugin vendor-node_modules_a.js generate SourceMap
+  * webpack 92% sealing asset processing SourceMapDevToolPlugin vendor-node_modules_a.js generated SourceMap
+  * webpack 92% sealing asset processing SourceMapDevToolPlugin vendor-node_modules_c.js generate SourceMap
+  * webpack 92% sealing asset processing SourceMapDevToolPlugin vendor-node_modules_c.js generated SourceMap
+  * webpack 92% sealing asset processing SourceMapDevToolPlugin vendor-node_modules_e.js generate SourceMap
+mm-harness | webpack build
+mm-harness | full log: temp/recipe/runtime/recipe-harness-webpack.log
+mm-harness | full stream: mm-harness logs --full
+
+  * webpack 92% sealing asset processing SourceMapDevToolPlugin vendor-node_modules_mic.js generated SourceMap
+  * webpack 92% sealing asset processing SourceMapDevToolPlugin vendor-node_modules_ms_index_js-7d47fba5.js generate SourceMap
+  * webpack 92% sealing asset processing SourceMapDevToolPlugin vendor-node_modules_ms_index_js-7d47fba5.js generated SourceMap
+  * webpack 92% sealing asset processing SourceMapDevToolPlugin vendor-node_modules_m.js generate SourceMap
+  * webpack 92% sealing asset processing SourceMapDevToolPlugin vendor-node_modules_m.js generated SourceMap
+  * webpack 92% sealing asset processing SourceMapDevToolPlugin vendor-node_modules_o.js generate SourceMap
+  * webpack 92% sealing asset processing SourceMapDevToolPlugin vendor-node_modules_o.js generated SourceMap
+  * webpack 92% sealing asset processing SourceMapDevToolPlugin vendor-node_modules_psl_dist_psl_mjs-0319ddab.js generate SourceMap
+  * webpack 92% sealing asset processing SourceMapDevToolPlugin vendor-node_modules_psl_dist_psl_mjs-0319ddab.js generated SourceMap
+  * webpack 92% sealing asset processing SourceMapDevToolPlugin vendor-node_modules_p.js generate SourceMap
+mm-harness | webpack build
+mm-harness | full log: temp/recipe/runtime/recipe-harness-webpack.log
+mm-harness | full stream: mm-harness logs --full
+
+  * webpack 92% sealing asset processing SourceMapDevToolPlugin 3806.js generate SourceMap
+  * webpack 92% sealing asset processing SourceMapDevToolPlugin 3806.js generated SourceMap
+  * webpack 92% sealing asset processing SourceMapDevToolPlugin 7727.js generate SourceMap
+  * webpack 92% sealing asset processing SourceMapDevToolPlugin 7727.js generated SourceMap
+  * webpack 92% sealing asset processing SourceMapDevToolPlugin 5502.js generate SourceMap
+  * webpack 92% sealing asset processing SourceMapDevToolPlugin 5502.js generated SourceMap
+  * webpack 92% sealing asset processing SourceMapDevToolPlugin snaps/bundle.js generate SourceMap
+  * webpack 92% sealing asset processing SourceMapDevToolPlugin snaps/bundle.js generated SourceMap
+  * webpack 92% sealing asset processing SourceMapDevToolPlugin resolve sources
+  * webpack 92% sealing asset processing SourceMapDevToolPlugin scripts/contentscript.js attach SourceMap
+mm-harness | webpack build
+mm-harness | full log: temp/recipe/runtime/recipe-harness-webpack.log
+mm-harness | full stream: mm-harness logs --full
+
+  * webpack 92% sealing asset processing
+  * webpack 93% sealing after asset optimization
+  * webpack 93% sealing recording
+  * webpack 93% sealing recording HotModuleReplacementPlugin
+  * webpack 93% sealing recording
+  * webpack 94% sealing after seal
+  * webpack 95% emitting emit
+  * webpack 95% emitting emit DevMiddleware
+  * webpack 95% emitting emit CleanPlugin
+  * webpack 95% emitting emit
+mm-harness | webpack build
+mm-harness | full log: temp/recipe/runtime/recipe-harness-webpack.log
+mm-harness | full stream: mm-harness logs --full
+
+  * webpack 99% done plugins webpack-dev-middleware
+  * webpack 99% done plugins
+  * webpack 99%
+  * webpack 99% cache store build dependencies
+  * webpack 99% cache store build dependencies IdleFileCachePlugin
+  * webpack 99% cache store build dependencies
+  * webpack 99% cache begin idle
+  * webpack 99% cache begin idle IdleFileCachePlugin
+  * webpack 99% cache begin idle
+  * webpack 100%
+mm-harness | webpack build complete (60s)
+[recipe-harness] yarn start compiled successfully
+[recipe-harness] recorded webpack cache baseline (runtime-decision --record-baseline)
+Infura readiness preflight passed for Ethereum and Linea.
+[recipe-harness] snapshotting dist -> runtime-dist: /Volumes/FD/dev/metamask/metamask-extension-3/temp/recipe/runtime/runtime-dist
+[recipe-harness] runtime-dist snapshot complete
+Configured runtime Infura credentials through manifest flags.
+slot title mini-mme-3: home.html, sidepanel.html
+[fixture] Generated Extension fixture state: accounts=10 selected=dev1
+[fixture] Prefilled Extension profile storage for hebhblbkkdabgoldnojllkipeoacjioc (2 keys)
+[fixture] CDP validated Extension wallet fixture: accounts=10 selected=Account 1
+/Volumes/FD/dev/metamask/metamask-extension-3/temp/recipe/harness/extension/scripts/launch.sh: line 103: 36775 Terminated: 15          node "$LIB_DIR/log-tui.mjs" watch --log "$launch_log" --events "${RECIPE_LOG_EVENTS:-10}" --mode "${RECIPE_LOG_UI:-compact}" --label "extension prepare" --success-pattern 'yarn start compiled|runtime-dist snapshot complete|Extension harness launch pass|phase 2/2' --poll-ms 1000
+Extension harness launch pass: /Volumes/FD/dev/metamask/metamask-extension-3/temp/recipe/harness/extension/live/20260815T020831Z/launch/summary.json
+[recipe-harness] phase 2/2: live verify (readiness + smoke recipe)
+dist-freshness: fresh — dist id matches HEAD; no uncommitted source.
+build-health: ok — webpack compiled.
+Fixture status: READY (temp/recipe/runtime/wallet-fixture.json).
+Extension harness verify pass: /Volumes/FD/dev/metamask/metamask-extension-3/temp/recipe/harness/extension/live/20260815T020831Z/verify/summary.json
+Extension live validation summary: /Volumes/FD/dev/metamask/metamask-extension-3/temp/recipe/harness/extension/live/20260815T020831Z/summary.json
+dist-freshness: fresh — dist id matches HEAD; no uncommitted source.
+build-health: ok — webpack compiled.
+Fixture status: READY (temp/recipe/runtime/wallet-fixture.json).
+Extension harness verify pass: /Volumes/FD/dev/metamask/metamask-extension-3/temp/recipe/harness/extension/verify/20260815T021017Z/summary.json
+{"schemaVersion":1,"command":"harness","action":"verify","adapter":"extension","target":"/Volumes/FD/dev/metamask/metamask-extension-3","autoDetected":false,"status":"pass","exitCode":0,"next":"mm-harness status --target /Volumes/FD/dev/metamask/metamask-extension-3 --json"}

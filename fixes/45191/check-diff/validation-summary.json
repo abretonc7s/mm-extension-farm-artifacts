@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 1,
+  "command": "check",
+  "action": "diff",
+  "status": "pass",
+  "exitCode": 0,
+  "adapter": "extension",
+  "target": "/Volumes/FD/dev/metamask/metamask-extension-3",
+  "profile": "fast",
+  "fix": false,
+  "baseRef": "origin/main",
+  "baseSource": "github-pr",
+  "baseLabel": "main",
+  "mergeBase": "9e713efc260a47a2450a8b0975f23a18983e29e9",
+  "changedFiles": [
+    "app/_locales/en/messages.json",
+    "app/_locales/en_GB/messages.json",
+    "ui/hooks/perps/coalesceBackgroundRequest.ts",
+    "ui/pages/confirmations/hooks/alerts/constants.ts",
+    "ui/pages/confirmations/hooks/alerts/transactions/usePerpsWithdrawInsufficientBalanceAlert.test.ts",
+    "ui/pages/confirmations/hooks/alerts/transactions/usePerpsWithdrawInsufficientBalanceAlert.ts",
+    "ui/pages/confirmations/hooks/transactions/useTransactionCustomAmountAlerts.test.ts",
+    "ui/pages/confirmations/hooks/transactions/useTransactionCustomAmountAlerts.ts",
+    "ui/pages/confirmations/hooks/useConfirmationAlertMetrics.test.ts",
+    "ui/pages/confirmations/hooks/useConfirmationAlertMetrics.ts"
+  ],
+  "fixes": [],
+  "checks": [
+    {
+      "id": "policy-suppressions",
+      "label": "New ESLint suppression policy",
+      "status": "pass",
+      "logPath": "/Volumes/FD/dev/metamask/metamask-extension-3/temp/tasks/fix/45191-0815-091925/artifacts/check-diff/policy-suppressions.log"
+    },
+    {
+      "id": "eslint",
+      "label": "Changed-file ESLint",
+      "status": "pass",
+      "command": "/Volumes/FD/dev/metamask/metamask-extension-3/node_modules/.bin/eslint --config ./.eslintrc.js --cache --cache-location /Volumes/FD/dev/metamask/metamask-extension-3/temp/tasks/fix/45191-0815-091925/artifacts/check-diff/eslintcache ui/hooks/perps/coalesceBackgroundRequest.ts ui/pages/confirmations/hooks/alerts/constants.ts ui/pages/confirmations/hooks/alerts/transactions/usePerpsWithdrawInsufficientBalanceAlert.test.ts ui/pages/confirmations/hooks/alerts/transactions/usePerpsWithdrawInsufficientBalanceAlert.ts ui/pages/confirmations/hooks/transactions/useTransactionCustomAmountAlerts.test.ts ui/pages/confirmations/hooks/transactions/useTransactionCustomAmountAlerts.ts ui/pages/confirmations/hooks/useConfirmationAlertMetrics.test.ts ui/pages/confirmations/hooks/useConfirmationAlertMetrics.ts",
+      "exitCode": 0,
+      "logPath": "/Volumes/FD/dev/metamask/metamask-extension-3/temp/tasks/fix/45191-0815-091925/artifacts/check-diff/eslint.log",
+      "durationMs": 24468
+    },
+    {
+      "id": "oxfmt",
+      "label": "Changed-file oxfmt",
+      "status": "pass",
+      "command": "/Volumes/FD/dev/metamask/metamask-extension-3/node_modules/.bin/oxfmt --config oxfmt.config.mts --check app/_locales/en/messages.json app/_locales/en_GB/messages.json ui/hooks/perps/coalesceBackgroundRequest.ts ui/pages/confirmations/hooks/alerts/constants.ts ui/pages/confirmations/hooks/alerts/transactions/usePerpsWithdrawInsufficientBalanceAlert.test.ts ui/pages/confirmations/hooks/alerts/transactions/usePerpsWithdrawInsufficientBalanceAlert.ts ui/pages/confirmations/hooks/transactions/useTransactionCustomAmountAlerts.test.ts ui/pages/confirmations/hooks/transactions/useTransactionCustomAmountAlerts.ts ui/pages/confirmations/hooks/useConfirmationAlertMetrics.test.ts ui/pages/confirmations/hooks/useConfirmationAlertMetrics.ts",
+      "exitCode": 0,
+      "logPath": "/Volumes/FD/dev/metamask/metamask-extension-3/temp/tasks/fix/45191-0815-091925/artifacts/check-diff/oxfmt.log",
+      "durationMs": 248
+    },
+    {
+      "id": "jest",
+      "label": "Changed test files",
+      "status": "pass",
+      "command": "/Volumes/FD/dev/metamask/metamask-extension-3/node_modules/.bin/jest --no-coverage ui/pages/confirmations/hooks/alerts/transactions/usePerpsWithdrawInsufficientBalanceAlert.test.ts ui/pages/confirmations/hooks/transactions/useTransactionCustomAmountAlerts.test.ts ui/pages/confirmations/hooks/useConfirmationAlertMetrics.test.ts",
+      "exitCode": 0,
+      "logPath": "/Volumes/FD/dev/metamask/metamask-extension-3/temp/tasks/fix/45191-0815-091925/artifacts/check-diff/jest.log",
+      "durationMs": 8690
+    },
+    {
+      "id": "typecheck",
+      "label": "TypeScript project check",
+      "status": "skip",
+      "reason": "profile=fast; run with --profile full for repo-wide typecheck"
+    }
+  ],
+  "guidance": [],
+  "artifacts": {
+    "dir": "/Volumes/FD/dev/metamask/metamask-extension-3/temp/tasks/fix/45191-0815-091925/artifacts/check-diff",
+    "summaryJson": "/Volumes/FD/dev/metamask/metamask-extension-3/temp/tasks/fix/45191-0815-091925/artifacts/check-diff/validation-summary.json",
+    "summaryMarkdown": "/Volumes/FD/dev/metamask/metamask-extension-3/temp/tasks/fix/45191-0815-091925/artifacts/check-diff/validation-summary.md"
+  }
+}
