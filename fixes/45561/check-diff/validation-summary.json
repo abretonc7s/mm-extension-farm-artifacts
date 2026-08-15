@@ -1,0 +1,67 @@
+{
+  "schemaVersion": 1,
+  "command": "check",
+  "action": "diff",
+  "status": "pass",
+  "exitCode": 0,
+  "adapter": "extension",
+  "target": "/Users/deeeed/dev/metamask/metamask-extension-1",
+  "profile": "fast",
+  "fix": false,
+  "baseRef": "origin/main",
+  "baseSource": "github-pr",
+  "baseLabel": "main",
+  "mergeBase": "9e713efc260a47a2450a8b0975f23a18983e29e9",
+  "changedFiles": [
+    "ui/hooks/perps/usePerpsOrderForm.test.ts",
+    "ui/hooks/perps/usePerpsOrderForm.ts"
+  ],
+  "fixes": [],
+  "checks": [
+    {
+      "id": "policy-suppressions",
+      "label": "New ESLint suppression policy",
+      "status": "pass",
+      "logPath": "/Users/deeeed/dev/metamask/metamask-extension-1/temp/tasks/fix/45561-0815-094257/artifacts/check-diff/policy-suppressions.log"
+    },
+    {
+      "id": "eslint",
+      "label": "Changed-file ESLint",
+      "status": "pass",
+      "command": "/Users/deeeed/dev/metamask/metamask-extension-1/node_modules/.bin/eslint --config ./.eslintrc.js --cache --cache-location /Users/deeeed/dev/metamask/metamask-extension-1/temp/tasks/fix/45561-0815-094257/artifacts/check-diff/eslintcache ui/hooks/perps/usePerpsOrderForm.test.ts ui/hooks/perps/usePerpsOrderForm.ts",
+      "exitCode": 0,
+      "logPath": "/Users/deeeed/dev/metamask/metamask-extension-1/temp/tasks/fix/45561-0815-094257/artifacts/check-diff/eslint.log",
+      "durationMs": 23722
+    },
+    {
+      "id": "oxfmt",
+      "label": "Changed-file oxfmt",
+      "status": "pass",
+      "command": "/Users/deeeed/dev/metamask/metamask-extension-1/node_modules/.bin/oxfmt --config oxfmt.config.mts --check ui/hooks/perps/usePerpsOrderForm.test.ts ui/hooks/perps/usePerpsOrderForm.ts",
+      "exitCode": 0,
+      "logPath": "/Users/deeeed/dev/metamask/metamask-extension-1/temp/tasks/fix/45561-0815-094257/artifacts/check-diff/oxfmt.log",
+      "durationMs": 264
+    },
+    {
+      "id": "jest",
+      "label": "Changed test files",
+      "status": "pass",
+      "command": "/Users/deeeed/dev/metamask/metamask-extension-1/node_modules/.bin/jest --no-coverage ui/hooks/perps/usePerpsOrderForm.test.ts",
+      "exitCode": 0,
+      "logPath": "/Users/deeeed/dev/metamask/metamask-extension-1/temp/tasks/fix/45561-0815-094257/artifacts/check-diff/jest.log",
+      "durationMs": 4132
+    },
+    {
+      "id": "typecheck",
+      "label": "TypeScript project check",
+      "status": "skip",
+      "reason": "profile=fast; run with --profile full for repo-wide typecheck"
+    }
+  ],
+  "guidance": [],
+  "artifacts": {
+    "dir": "/Users/deeeed/dev/metamask/metamask-extension-1/temp/tasks/fix/45561-0815-094257/artifacts/check-diff",
+    "summaryJson": "/Users/deeeed/dev/metamask/metamask-extension-1/temp/tasks/fix/45561-0815-094257/artifacts/check-diff/validation-summary.json",
+    "summaryMarkdown": "/Users/deeeed/dev/metamask/metamask-extension-1/temp/tasks/fix/45561-0815-094257/artifacts/check-diff/validation-summary.md"
+  }
+}

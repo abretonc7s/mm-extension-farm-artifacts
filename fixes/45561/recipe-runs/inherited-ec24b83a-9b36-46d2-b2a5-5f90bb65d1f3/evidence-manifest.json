@@ -1,0 +1,25 @@
+{
+  "version": 1,
+  "preferred_mode": "screenshots",
+  "summary": "Perps order form on initial load: the available-to-trade percentage pill no longer renders a clipped decimal.",
+  "before_after_pairs": [
+    {
+      "label": "Perps order form, initial load — available-to-trade percentage pill",
+      "covers": ["ac1"],
+      "before": "before-evidence-ac1-initial-load-percent.png",
+      "after": "after-ac1-initial-load-percent.png",
+      "note": "Before: the pill is clipped to \"0...\" because the seeded value was 0.44 and its text overflows the 4.5rem field (scrollWidth 50 > clientWidth 45). After: a clean whole \"0 %\" that fits."
+    }
+  ],
+  "standalone": [],
+  "omit": [
+    "before-evidence-ac2-after-slider-interaction.png",
+    "after-ac2-after-slider-interaction.png"
+  ],
+  "videos": {
+    "before": "before.mp4",
+    "after": "after.mp4",
+    "preferred": false,
+    "note": "Full recipe replays. The before/after screenshot pair already shows the change; the videos are supporting context only."
+  }
+}

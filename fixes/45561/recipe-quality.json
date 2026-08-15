@@ -1,0 +1,81 @@
+{
+  "version": 1,
+  "verdict": "pass",
+  "compact": {
+    "verdict": "PASS",
+    "reasons": [
+      "Re-validation pass: inherited recipe re-run against branch + origin/main merged and rebuilt; trace shows 24/24 nodes ok=true.",
+      "AC1-2 covered by ac1-*/ac2-* nodes; probes record percentValue '0' (integer, unclipped) on initial load and '3' after trusted slider input.",
+      "Still revert-sensitive: the parent baseline recipe asserting the buggy values ('0.44', clipped, slider off step grid) passes only on the unfixed tree.",
+      "Recipe was ported, not weakened — 10 stale parent-task-dir paths repointed so the run could not overwrite the parent run's evidence; graph and asserted values unchanged.",
+      "Both screenshots record provider=capture-helper; no raster or Page.captureScreenshot fallback."
+    ],
+    "better_version_guidance": []
+  },
+  "dimensions": {
+    "graph_integrity": {
+      "status": "pass",
+      "reason": "Recipe validates under Recipe Protocol v1 and every node is reachable from the entry node through to the terminal end node; all 24 executed.",
+      "evidence": ["recipe.json", "recipe-run/trace.json"]
+    },
+    "action_contract": {
+      "status": "pass",
+      "reason": "Every action is manifest-declared for the extension adapter; the run completed with exit code 0 under --heal off.",
+      "evidence": ["recipe.json", "recipe-run/summary.json"]
+    },
+    "ac_coverage": {
+      "status": "pass",
+      "reason": "Both ACs bind to ac<N>-* nodes with at least one assertion each; AC1 additionally carries a screenshot. No AC skipped or marked UNTESTABLE.",
+      "evidence": ["recipe-coverage.md", "recipe-run/trace.json"]
+    },
+    "evidence_contract_basics": {
+      "status": "pass",
+      "reason": "AC1's visible-copy claim carries a capture-helper screenshot showing a clean 0% pill; AC2 is a state claim proven by assert_json plus unit tests, with its image demoted to orientation and omitted from PR evidence as redundant.",
+      "evidence": ["revalidation-ac1-initial-load-percent.png", "probe-initial-load.json", "probe-after-interaction.json"]
+    },
+    "perps_state_setup": {
+      "status": "pass",
+      "reason": "The only precondition is a non-zero Perps tradeable balance, already satisfied by the live fixture account (756.36 USDC); no synthetic or injected state.",
+      "evidence": ["probe-initial-load.json"]
+    },
+    "post_merge_revalidation": {
+      "status": "pass",
+      "reason": "Run against the rebased branch after yarn install --immutable and a webpack refresh, with dist git id edba2504fc matching HEAD, so the proof reflects branch + origin/main merged rather than the pre-rebase build.",
+      "evidence": ["integration-status.txt", "recipe-run/trace.json"]
+    }
+  },
+  "structural_findings": [],
+  "contextual_findings": [],
+  "suggested_recipe_delta": [
+    "Parameterize the probe script/output paths so an inherited recipe does not need manual repointing when it is re-run from a new task dir."
+  ],
+  "training_fields": {
+    "farm": "metamask-extension",
+    "project": "metamask-extension-farm",
+    "flow_type": "pr-complete",
+    "task_type": "pr-complete",
+    "claim_is_visual": true,
+    "proof_mode": "mixed",
+    "anti_patterns": [],
+    "good_patterns": [
+      "re-running the inherited recipe against the rebased + rebuilt tree so the proof covers the post-merge state",
+      "repointing inherited task-dir paths so a re-run cannot overwrite the parent run's evidence",
+      "geometry read (scrollWidth vs clientWidth) to prove text clipping instead of asserting DOM presence",
+      "trusted ui.press + ui.key_press to drive a MUI slider instead of writing values into the DOM"
+    ]
+  },
+  "meta": {
+    "producer": "worker",
+    "fallback_used": false,
+    "legacy_task": false,
+    "artifact_required": true,
+    "source_signals": [
+      "recipe.json",
+      "recipe-coverage.md",
+      "recipe-run/trace.json",
+      "probe-initial-load.json",
+      "probe-after-interaction.json",
+      "comments-report.md"
+    ]
+  }
+}

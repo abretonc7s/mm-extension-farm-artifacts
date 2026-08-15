@@ -1,0 +1,152 @@
+$ /Users/deeeed/dev/metamask/metamask-extension-1/node_modules/.bin/eslint --config ./.eslintrc.js --cache --cache-location /Users/deeeed/dev/metamask/metamask-extension-1/temp/tasks/fix/45561-0815-094257/artifacts/check-diff/eslintcache ui/hooks/perps/usePerpsOrderForm.test.ts ui/hooks/perps/usePerpsOrderForm.ts
+exit: 0
+duration_ms: 23722
+
+--- stdout ---
+
+/Users/deeeed/dev/metamask/metamask-extension-1/ui/hooks/perps/usePerpsOrderForm.ts
+  370:5  warning  Error: Cannot access refs during render
+
+React refs are values that are not needed for rendering. Refs should only be accessed outside of render, such as in event handlers or effects. Accessing a ref value (the `current` property) during render can cause your component not to update as expected (https://react.dev/reference/react/useRef).
+
+/Users/deeeed/dev/metamask/metamask-extension-1/ui/hooks/perps/usePerpsOrderForm.ts:370:5
+  368 |         : {};
+  369 |
+> 370 |     hasUserEditedAmount.current = false;
+      |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^ Cannot update ref during render
+  371 |     if (mode === 'modify' && existingPosition) {
+  372 |       setFormState({
+  373 |         ...mockOrderFormDefaults,                                                                                                                                                                                                                                                                                                                       react-hooks/refs
+  420:5  warning  Error: Cannot access refs during render
+
+React refs are values that are not needed for rendering. Refs should only be accessed outside of render, such as in event handlers or effects. Accessing a ref value (the `current` property) during render can cause your component not to update as expected (https://react.dev/reference/react/useRef).
+
+/Users/deeeed/dev/metamask/metamask-extension-1/ui/hooks/perps/usePerpsOrderForm.ts:420:5
+  418 |
+  419 |   if (
+> 420 |     defaultAmountKey !== prevDefaultAmountKey &&
+      |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 421 |     mode === 'new' &&
+      | ^^^^^^^^^^^^^^^^^^^^^
+> 422 |     !hasUserEditedAmount.current &&
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Cannot access ref value during render
+  423 |     defaultAmountFieldsForBalance.amount &&
+  424 |     (formState.amount !== defaultAmountFieldsForBalance.amount ||
+  425 |       formState.balancePercent !== defaultAmountFieldsForBalance.balancePercent)                                                      react-hooks/refs
+  420:5  warning  Error: Cannot access refs during render
+
+React refs are values that are not needed for rendering. Refs should only be accessed outside of render, such as in event handlers or effects. Accessing a ref value (the `current` property) during render can cause your component not to update as expected (https://react.dev/reference/react/useRef).
+
+/Users/deeeed/dev/metamask/metamask-extension-1/ui/hooks/perps/usePerpsOrderForm.ts:420:5
+  418 |
+  419 |   if (
+> 420 |     defaultAmountKey !== prevDefaultAmountKey &&
+      |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 421 |     mode === 'new' &&
+      | ^^^^^^^^^^^^^^^^^^^^^
+> 422 |     !hasUserEditedAmount.current &&
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Cannot access ref value during render
+  423 |     defaultAmountFieldsForBalance.amount &&
+  424 |     (formState.amount !== defaultAmountFieldsForBalance.amount ||
+  425 |       formState.balancePercent !== defaultAmountFieldsForBalance.balancePercent)                                                      react-hooks/refs
+  420:5  warning  Error: Cannot access refs during render
+
+React refs are values that are not needed for rendering. Refs should only be accessed outside of render, such as in event handlers or effects. Accessing a ref value (the `current` property) during render can cause your component not to update as expected (https://react.dev/reference/react/useRef).
+
+/Users/deeeed/dev/metamask/metamask-extension-1/ui/hooks/perps/usePerpsOrderForm.ts:420:5
+  418 |
+  419 |   if (
+> 420 |     defaultAmountKey !== prevDefaultAmountKey &&
+      |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 421 |     mode === 'new' &&
+      | ^^^^^^^^^^^^^^^^^^^^^
+> 422 |     !hasUserEditedAmount.current &&
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Cannot access ref value during render
+  423 |     defaultAmountFieldsForBalance.amount &&
+  424 |     (formState.amount !== defaultAmountFieldsForBalance.amount ||
+  425 |       formState.balancePercent !== defaultAmountFieldsForBalance.balancePercent)                                                      react-hooks/refs
+  420:5  warning  Error: Cannot access refs during render
+
+React refs are values that are not needed for rendering. Refs should only be accessed outside of render, such as in event handlers or effects. Accessing a ref value (the `current` property) during render can cause your component not to update as expected (https://react.dev/reference/react/useRef).
+
+/Users/deeeed/dev/metamask/metamask-extension-1/ui/hooks/perps/usePerpsOrderForm.ts:420:5
+  418 |
+  419 |   if (
+> 420 |     defaultAmountKey !== prevDefaultAmountKey &&
+      |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 421 |     mode === 'new' &&
+      | ^^^^^^^^^^^^^^^^^^^^^
+> 422 |     !hasUserEditedAmount.current &&
+      | ^^^^^^^^^^^^^^^^^^^^^
+> 423 |     defaultAmountFieldsForBalance.amount &&
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Cannot access ref value during render
+  424 |     (formState.amount !== defaultAmountFieldsForBalance.amount ||
+  425 |       formState.balancePercent !== defaultAmountFieldsForBalance.balancePercent)
+  426 |   ) {  react-hooks/refs
+  420:5  warning  Error: Cannot access refs during render
+
+React refs are values that are not needed for rendering. Refs should only be accessed outside of render, such as in event handlers or effects. Accessing a ref value (the `current` property) during render can cause your component not to update as expected (https://react.dev/reference/react/useRef).
+
+/Users/deeeed/dev/metamask/metamask-extension-1/ui/hooks/perps/usePerpsOrderForm.ts:420:5
+  418 |
+  419 |   if (
+> 420 |     defaultAmountKey !== prevDefaultAmountKey &&
+      |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 421 |     mode === 'new' &&
+      | ^^^^^^^^^^^^^^^^^^^^^
+> 422 |     !hasUserEditedAmount.current &&
+      | ^^^^^^^^^^^^^^^^^^^^^
+> 423 |     defaultAmountFieldsForBalance.amount &&
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Cannot access ref value during render
+  424 |     (formState.amount !== defaultAmountFieldsForBalance.amount ||
+  425 |       formState.balancePercent !== defaultAmountFieldsForBalance.balancePercent)
+  426 |   ) {  react-hooks/refs
+  420:5  warning  Error: Cannot access refs during render
+
+React refs are values that are not needed for rendering. Refs should only be accessed outside of render, such as in event handlers or effects. Accessing a ref value (the `current` property) during render can cause your component not to update as expected (https://react.dev/reference/react/useRef).
+
+/Users/deeeed/dev/metamask/metamask-extension-1/ui/hooks/perps/usePerpsOrderForm.ts:420:5
+  418 |
+  419 |   if (
+> 420 |     defaultAmountKey !== prevDefaultAmountKey &&
+      |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+> 421 |     mode === 'new' &&
+      | ^^^^^^^^^^^^^^^^^^^^^
+> 422 |     !hasUserEditedAmount.current &&
+      | ^^^^^^^^^^^^^^^^^^^^^
+> 423 |     defaultAmountFieldsForBalance.amount &&
+      | ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Cannot access ref value during render
+  424 |     (formState.amount !== defaultAmountFieldsForBalance.amount ||
+  425 |       formState.balancePercent !== defaultAmountFieldsForBalance.balancePercent)
+  426 |   ) {  react-hooks/refs
+  422:5  warning  Error: Cannot access refs during render
+
+React refs are values that are not needed for rendering. Refs should only be accessed outside of render, such as in event handlers or effects. Accessing a ref value (the `current` property) during render can cause your component not to update as expected (https://react.dev/reference/react/useRef).
+
+/Users/deeeed/dev/metamask/metamask-extension-1/ui/hooks/perps/usePerpsOrderForm.ts:422:5
+  420 |     defaultAmountKey !== prevDefaultAmountKey &&
+  421 |     mode === 'new' &&
+> 422 |     !hasUserEditedAmount.current &&
+      |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^ Cannot access ref value during render
+  423 |     defaultAmountFieldsForBalance.amount &&
+  424 |     (formState.amount !== defaultAmountFieldsForBalance.amount ||
+  425 |       formState.balancePercent !== defaultAmountFieldsForBalance.balancePercent)                                                                                                                                                                     react-hooks/refs
+  422:6  warning  Error: Cannot access refs during render
+
+React refs are values that are not needed for rendering. Refs should only be accessed outside of render, such as in event handlers or effects. Accessing a ref value (the `current` property) during render can cause your component not to update as expected (https://react.dev/reference/react/useRef).
+
+/Users/deeeed/dev/metamask/metamask-extension-1/ui/hooks/perps/usePerpsOrderForm.ts:422:6
+  420 |     defaultAmountKey !== prevDefaultAmountKey &&
+  421 |     mode === 'new' &&
+> 422 |     !hasUserEditedAmount.current &&
+      |      ^^^^^^^^^^^^^^^^^^^^^^^^^^^ Cannot access ref value during render
+  423 |     defaultAmountFieldsForBalance.amount &&
+  424 |     (formState.amount !== defaultAmountFieldsForBalance.amount ||
+  425 |       formState.balancePercent !== defaultAmountFieldsForBalance.balancePercent)
+
+To initialize a ref only once, check that the ref is null with the pattern `if (ref.current == null) { ref.current = ... }`                                        react-hooks/refs
+
+✖ 9 problems (0 errors, 9 warnings)
+
+--- stderr ---
+

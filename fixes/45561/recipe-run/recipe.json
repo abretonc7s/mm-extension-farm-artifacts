@@ -1,0 +1,200 @@
+{
+  "$schema": "https://farmslot.io/schemas/recipe-v1.schema.json",
+  "title": "TAT-3763 — Perps available-to-trade percentage is a clean rounded number on initial load",
+  "description": "Opens the live Perps order-entry form and proves the balance-percent pill renders a whole, unclipped percentage on initial load (AC1), then drives the slider through trusted UI input to prove the already-working interaction path still renders a whole, unclipped percentage (AC2). Data prerequisites, enforced by the gate-cdp and setup-unlock nodes: the Extension runtime must be reachable over CDP on the configured port, and the fixture wallet's active account must have a non-zero Perps tradeable balance — a zero balance makes the default balancePercent 0 and leaves AC1 unobservable.",
+  "workflow": {
+    "entry": "setup-status",
+    "nodes": {
+      "setup-status": {
+        "action": "app.status",
+        "next": "gate-cdp",
+        "intent": "Resolve the Extension checkout and adapter status before proving the fix"
+      },
+      "gate-cdp": {
+        "action": "cdp.target",
+        "required": true,
+        "timeout_ms": 15000,
+        "next": "setup-unlock",
+        "intent": "Fail fast unless the Extension CDP runtime is reachable"
+      },
+      "setup-unlock": {
+        "action": "metamask.wallet.ensure_unlocked",
+        "timeout_ms": 45000,
+        "next": "setup-open-home",
+        "intent": "Ensure the wallet is unlocked before opening the Perps order form"
+      },
+      "setup-open-home": {
+        "action": "ui.navigate",
+        "page": "home",
+        "timeout_ms": 30000,
+        "next": "setup-open-order-entry",
+        "intent": "Leave any previous Perps route so the order form mounts fresh and the initial-load state is genuine"
+      },
+      "setup-open-order-entry": {
+        "action": "ui.navigate",
+        "hash": "#/perps/trade/ETH",
+        "timeout_ms": 30000,
+        "next": "ac1-wait-percent-pill",
+        "intent": "Open the ETH Perps order-entry form where the available-to-trade percentage pill renders"
+      },
+      "ac1-wait-percent-pill": {
+        "action": "ui.wait_for",
+        "selector": "[data-testid=\"balance-percent-input\"] input",
+        "visible": true,
+        "timeout_ms": 30000,
+        "next": "ac1-probe-initial-load",
+        "intent": "AC1: confirm the balance-percent pill is visible on initial load before asserting and capturing it"
+      },
+      "ac1-probe-initial-load": {
+        "action": "command",
+        "cmd": "node temp/tasks/fix/45561-0815-094257/artifacts/probe-percent-input.js temp/tasks/fix/45561-0815-094257/artifacts/probe-initial-load.json",
+        "timeout_ms": 30000,
+        "next": "ac1-assert-percent-is-whole-number",
+        "intent": "AC1: read the initial-load percentage value and its clipping geometry without mutating any state"
+      },
+      "ac1-assert-percent-is-whole-number": {
+        "action": "assert_json",
+        "path": "temp/tasks/fix/45561-0815-094257/artifacts/probe-initial-load.json",
+        "assert": {
+          "path": "$.percentIsInteger",
+          "operator": "eq",
+          "value": true
+        },
+        "next": "ac1-assert-percent-not-clipped",
+        "intent": "AC1: the initial-load percentage is a clean rounded whole number, not a long decimal"
+      },
+      "ac1-assert-percent-not-clipped": {
+        "action": "assert_json",
+        "path": "temp/tasks/fix/45561-0815-094257/artifacts/probe-initial-load.json",
+        "assert": {
+          "path": "$.percentIsClipped",
+          "operator": "eq",
+          "value": false
+        },
+        "next": "ac1-assert-slider-on-step-grid",
+        "intent": "AC1: the pill's text fits its field, so the user never sees the reported truncated value"
+      },
+      "ac1-assert-slider-on-step-grid": {
+        "action": "assert_json",
+        "path": "temp/tasks/fix/45561-0815-094257/artifacts/probe-initial-load.json",
+        "assert": {
+          "path": "$.sliderIsOnStepGrid",
+          "operator": "eq",
+          "value": true
+        },
+        "next": "ac1-clear-capture-orphans",
+        "intent": "AC1: the slider's aria-valuenow sits on its declared step=1 grid instead of an off-step decimal"
+      },
+      "ac1-clear-capture-orphans": {
+        "action": "command",
+        "cmd": "pkill -9 -f capture-helper || true",
+        "allow_failure": true,
+        "next": "ac1-screenshot-initial-load-percent",
+        "intent": "AC1: clear wedged capture-helper sessions so the screenshot comes from capture-helper, not the raster fallback"
+      },
+      "ac1-screenshot-initial-load-percent": {
+        "action": "ui.screenshot",
+        "path": "screenshots/evidence-ac1-initial-load-percent.png",
+        "label": "AC1: initial load shows a clean rounded percentage in the pill, not a truncated decimal",
+        "timeout_ms": 60000,
+        "next": "ac2-press-slider",
+        "intent": "AC1: capture the visible pill on initial load, the exact surface the ticket reports as truncated"
+      },
+      "ac2-press-slider": {
+        "action": "ui.press",
+        "selector": "[data-testid=\"amount-slider\"] input[type=\"range\"]",
+        "timeout_ms": 20000,
+        "next": "ac2-key-increment-1",
+        "intent": "AC2: move the slider through a real click, as the ticket's reproduction step 5 describes"
+      },
+      "ac2-key-increment-1": {
+        "action": "ui.key_press",
+        "key": "ArrowRight",
+        "timeout_ms": 10000,
+        "next": "ac2-key-increment-2",
+        "intent": "AC2: nudge the focused slider with trusted keyboard input to a non-zero percentage"
+      },
+      "ac2-key-increment-2": {
+        "action": "ui.key_press",
+        "key": "ArrowRight",
+        "timeout_ms": 10000,
+        "next": "ac2-key-increment-3",
+        "intent": "AC2: continue moving the slider through trusted keyboard input"
+      },
+      "ac2-key-increment-3": {
+        "action": "ui.key_press",
+        "key": "ArrowRight",
+        "timeout_ms": 10000,
+        "next": "ac2-wait-percent-pill",
+        "intent": "AC2: settle the slider on a non-zero percentage so the assertion is not trivially satisfied by 0"
+      },
+      "ac2-wait-percent-pill": {
+        "action": "ui.wait_for",
+        "selector": "[data-testid=\"amount-slider\"] input[type=\"range\"][aria-valuenow=\"3\"]",
+        "visible": true,
+        "timeout_ms": 20000,
+        "next": "ac2-probe-after-interaction",
+        "intent": "AC2: confirm the three trusted key presses actually moved the slider to 3 before asserting"
+      },
+      "ac2-probe-after-interaction": {
+        "action": "command",
+        "cmd": "node temp/tasks/fix/45561-0815-094257/artifacts/probe-percent-input.js temp/tasks/fix/45561-0815-094257/artifacts/probe-after-interaction.json",
+        "timeout_ms": 30000,
+        "next": "ac2-assert-percent-value",
+        "intent": "AC2: read the post-interaction percentage value and its clipping geometry"
+      },
+      "ac2-assert-percent-value": {
+        "action": "assert_json",
+        "path": "temp/tasks/fix/45561-0815-094257/artifacts/probe-after-interaction.json",
+        "assert": {
+          "path": "$.percentValue",
+          "operator": "eq",
+          "value": "3"
+        },
+        "next": "ac2-assert-percent-is-whole-number",
+        "intent": "AC2: the pill reflects the exact percentage the user's slider interaction produced"
+      },
+      "ac2-assert-percent-is-whole-number": {
+        "action": "assert_json",
+        "path": "temp/tasks/fix/45561-0815-094257/artifacts/probe-after-interaction.json",
+        "assert": {
+          "path": "$.percentIsInteger",
+          "operator": "eq",
+          "value": true
+        },
+        "next": "ac2-assert-percent-not-clipped",
+        "intent": "AC2: the already-working interaction path still renders a whole number after the fix"
+      },
+      "ac2-assert-percent-not-clipped": {
+        "action": "assert_json",
+        "path": "temp/tasks/fix/45561-0815-094257/artifacts/probe-after-interaction.json",
+        "assert": {
+          "path": "$.percentIsClipped",
+          "operator": "eq",
+          "value": false
+        },
+        "next": "ac2-clear-capture-orphans",
+        "intent": "AC2: the post-interaction pill still fits its field, confirming no regression"
+      },
+      "ac2-clear-capture-orphans": {
+        "action": "command",
+        "cmd": "pkill -9 -f capture-helper || true",
+        "allow_failure": true,
+        "next": "ac2-screenshot-after-interaction",
+        "intent": "AC2: clear wedged capture-helper sessions before the second capture"
+      },
+      "ac2-screenshot-after-interaction": {
+        "action": "ui.screenshot",
+        "path": "screenshots/evidence-ac2-after-slider-interaction.png",
+        "label": "AC2: after moving the slider the pill shows 3, a whole unclipped percentage",
+        "timeout_ms": 60000,
+        "next": "done",
+        "intent": "AC2: capture the moved-slider state so reviewers can see the interaction path is unchanged"
+      },
+      "done": {
+        "action": "end",
+        "status": "pass"
+      }
+    }
+  }
+}

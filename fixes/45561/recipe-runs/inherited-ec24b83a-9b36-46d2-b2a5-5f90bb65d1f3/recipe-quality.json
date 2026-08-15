@@ -1,0 +1,84 @@
+{
+  "version": 1,
+  "verdict": "pass",
+  "compact": {
+    "verdict": "PASS",
+    "reasons": [
+      "AC1-2 covered by ac1-*/ac2-* nodes; verify trace shows 24/24 nodes ok=true.",
+      "Dual-recipe proof: recipe-baseline.json asserts the buggy values (percentValue 0.44, percentIsClipped true, sliderIsOnStepGrid false) and passes on the unfixed tree, so before-evidence is honest.",
+      "Revert-sensitive at both layers: reverting the one-line fix flips three AC1 assertions, and the two new unit tests fail with 22.22 vs 22.",
+      "AC1's clipping claim is proven by a real geometry read (scrollWidth 50 > clientWidth 45) plus a capture-helper screenshot, not by DOM presence alone.",
+      "All slider input is trusted UI input (ui.press + ui.key_press); the CDP probe is strictly read-only, so no UI value injection."
+    ],
+    "better_version_guidance": []
+  },
+  "dimensions": {
+    "graph_integrity": {
+      "status": "pass",
+      "reason": "Recipe validates under Recipe Protocol v1 (mm-harness run --plan reports pass) and every node is reachable from the entry node through to the terminal end node.",
+      "evidence": ["recipe.json", "recipe-run/trace.json"]
+    },
+    "action_contract": {
+      "status": "pass",
+      "reason": "Every action is manifest-declared for the extension adapter; the initial pre_conditions top-level field was rejected by --plan and removed rather than guessed at.",
+      "evidence": ["recipe.json", "/tmp/metamask-recipe-action-manifest.json"]
+    },
+    "ac_coverage": {
+      "status": "pass",
+      "reason": "Both ACs bind to ac<N>-* nodes with at least one assertion each; AC1 additionally carries a screenshot. No AC is silently skipped or marked UNTESTABLE.",
+      "evidence": ["recipe-coverage.md", "recipe-run/trace.json"]
+    },
+    "evidence_contract_basics": {
+      "status": "pass",
+      "reason": "AC1 is a visible-copy claim and carries a capture-helper before/after screenshot pair; AC2 is a state claim proven by assert_json plus unit tests, with its image demoted to orientation and omitted from the PR body as redundant.",
+      "evidence": [
+        "before-evidence-ac1-initial-load-percent.png",
+        "after-ac1-initial-load-percent.png",
+        "probe-baseline-initial-load.json",
+        "probe-initial-load.json"
+      ]
+    },
+    "perps_state_setup": {
+      "status": "pass",
+      "reason": "The only precondition is a non-zero Perps tradeable balance, which the live fixture account already satisfies (756.36 USDC), so no synthetic state seeding was needed or faked.",
+      "evidence": ["probe-initial-load.json", "recipe.json"]
+    },
+    "mobile_alignment": {
+      "status": "pass",
+      "reason": "Mobile's usePerpsOrderForm.ts:194 carries the identical 2-decimal expression but never renders balancePercent, so the fix targets an Extension-only visible pill without diverging from mobile's internal contract. No toFixed or fiat formatter was introduced for what is a percentage.",
+      "evidence": ["temp/recipe/runtime/perps-mobile-extension-map.md", "temp/recipe/runtime/perps-rules-decimals.md"]
+    }
+  },
+  "structural_findings": [],
+  "contextual_findings": [],
+  "suggested_recipe_delta": [],
+  "training_fields": {
+    "farm": "metamask-extension",
+    "project": "metamask-extension-farm",
+    "flow_type": "fix-bug",
+    "task_type": "fix-bug",
+    "claim_is_visual": true,
+    "proof_mode": "mixed",
+    "anti_patterns": [],
+    "good_patterns": [
+      "dual-recipe baseline asserting buggy values so before-evidence screenshots actually execute",
+      "geometry read (scrollWidth vs clientWidth) to prove text clipping instead of asserting DOM presence",
+      "revert-check run on the unit tests to confirm they fail without the fix",
+      "trusted ui.press + ui.key_press to drive a MUI slider instead of writing values into the DOM"
+    ]
+  },
+  "meta": {
+    "producer": "worker",
+    "fallback_used": false,
+    "legacy_task": false,
+    "artifact_required": true,
+    "source_signals": [
+      "recipe.json",
+      "recipe-baseline.json",
+      "recipe-coverage.md",
+      "recipe-run/trace.json",
+      "baseline-run/trace.json",
+      "report.md"
+    ]
+  }
+}
