@@ -1,0 +1,301 @@
+{
+  "$schema": "https://farmslot.io/schemas/recipe-v1.schema.json",
+  "title": "TAT-3851 Perps Top movers section",
+  "description": "Proves the Perps tab renders a Top movers section with a working Gainers/Losers toggle and a header that opens the market list pre-sorted by 24h price change.",
+  "proofTargets": [
+    {
+      "id": "ac1",
+      "claim": "The Perps tab shows a Top movers section with a Gainers/Losers toggle, Gainers selected by default."
+    },
+    {
+      "id": "ac2",
+      "claim": "Selecting Losers re-sorts the visible pills in place; the section stays mounted and no skeleton reappears."
+    },
+    {
+      "id": "ac3",
+      "claim": "Clicking the Top movers header opens the market list pre-sorted by 24h price change in the selected direction."
+    },
+    {
+      "id": "ac4",
+      "claim": "The section renders a skeleton while live market data is still loading."
+    }
+  ],
+  "workflow": {
+    "entry": "gate-unlock-wallet",
+    "nodes": {
+      "gate-unlock-wallet": {
+        "action": "metamask.wallet.ensure_unlocked",
+        "timeout_ms": 30000,
+        "intent": "The wallet is open, so the Perps tab is reachable rather than sitting behind the lock screen.",
+        "next": "gate-open-perps"
+      },
+      "gate-open-perps": {
+        "action": "ui.navigate",
+        "page": "perps",
+        "intent": "Reach the Perps tab, where the Top movers section lives.",
+        "next": "gate-perps-loaded"
+      },
+      "gate-perps-loaded": {
+        "action": "ui.wait_for",
+        "test_id": "parent-selector-perps-tab",
+        "visible": true,
+        "timeout_ms": 30000,
+        "intent": "The Perps tab has finished loading, so the movers ranking reflects real market data rather than an empty state.",
+        "next": "gate-scroll-to-section"
+      },
+      "gate-scroll-to-section": {
+        "action": "ui.scroll",
+        "test_id": "perps-top-movers",
+        "scroll_into_view": true,
+        "settle": true,
+        "timeout_ms": 15000,
+        "intent": "Bring the Top movers section into the viewport, the way a user scrolling the Perps tab would.",
+        "next": "ac1-wait-section"
+      },
+      "ac1-wait-section": {
+        "action": "ui.wait_for",
+        "test_id": "perps-top-movers",
+        "visible": true,
+        "timeout_ms": 30000,
+        "intent": "A user browsing the Perps tab can see the Top movers section.",
+        "proves": [
+          "ac1"
+        ],
+        "next": "ac1-wait-gainers-active"
+      },
+      "ac1-wait-gainers-active": {
+        "action": "ui.wait_for",
+        "selector": "[data-testid=\"perps-top-movers-gainers\"][aria-pressed=\"true\"]",
+        "visible": true,
+        "timeout_ms": 10000,
+        "intent": "Gainers is the direction the section opens on, so the first thing a user sees is the biggest risers.",
+        "proves": [
+          "ac1"
+        ],
+        "next": "ac1-wait-losers-inactive"
+      },
+      "ac1-wait-losers-inactive": {
+        "action": "ui.wait_for",
+        "selector": "[data-testid=\"perps-top-movers-losers\"][aria-pressed=\"false\"]",
+        "visible": true,
+        "timeout_ms": 10000,
+        "intent": "The Losers half of the toggle is offered but not selected, so the toggle reads as a two-way choice.",
+        "proves": [
+          "ac1"
+        ],
+        "next": "ac1-wait-pill-grid"
+      },
+      "ac1-wait-pill-grid": {
+        "action": "ui.wait_for",
+        "test_id": "perps-top-movers-list",
+        "visible": true,
+        "timeout_ms": 15000,
+        "intent": "The ranked markets are on screen rather than an empty or errored section.",
+        "proves": [
+          "ac1"
+        ],
+        "next": "ac1-read-gainers-order"
+      },
+      "ac1-read-gainers-order": {
+        "action": "metamask.perps.read_visible_state",
+        "intent": "Record which markets the Gainers view is showing, so the Losers view can be compared against it.",
+        "proves": [
+          "ac1"
+        ],
+        "next": "ac1-clear-capture-orphans"
+      },
+      "ac1-clear-capture-orphans": {
+        "action": "command",
+        "cmd": "pkill -9 -f 'capture-helper' || true",
+        "intent": "Clear orphan capture-helper processes so the image comes from capture-helper rather than the silent fallback.",
+        "next": "ac1-screenshot-section"
+      },
+      "ac1-screenshot-section": {
+        "action": "ui.screenshot",
+        "path": "screenshots/evidence-ac1-top-movers-section.png",
+        "label": "AC1: Top movers section on the Perps tab with Gainers selected and eight ranked pills",
+        "intent": "Show a reviewer the Top movers section as a user sees it, with Gainers selected.",
+        "proves": [
+          "ac1"
+        ],
+        "next": "ac2-press-losers"
+      },
+      "ac2-press-losers": {
+        "action": "ui.press",
+        "test_id": "perps-top-movers-losers",
+        "timeout_ms": 10000,
+        "intent": "A user switches the section to the biggest fallers.",
+        "proves": [
+          "ac2"
+        ],
+        "next": "ac2-scroll-to-section"
+      },
+      "ac2-scroll-to-section": {
+        "action": "ui.scroll",
+        "test_id": "perps-top-movers",
+        "scroll_into_view": true,
+        "settle": true,
+        "timeout_ms": 15000,
+        "intent": "Keep the Top movers section in the viewport after the direction switch.",
+        "next": "ac2-wait-losers-active"
+      },
+      "ac2-wait-losers-active": {
+        "action": "ui.wait_for",
+        "selector": "[data-testid=\"perps-top-movers-losers\"][aria-pressed=\"true\"]",
+        "visible": true,
+        "timeout_ms": 10000,
+        "intent": "The Losers half of the toggle now reads as the selected one.",
+        "proves": [
+          "ac2"
+        ],
+        "next": "ac2-wait-gainers-inactive"
+      },
+      "ac2-wait-gainers-inactive": {
+        "action": "ui.wait_for",
+        "selector": "[data-testid=\"perps-top-movers-gainers\"][aria-pressed=\"false\"]",
+        "visible": true,
+        "timeout_ms": 10000,
+        "intent": "Only one direction is selected at a time, so the toggle is not showing both as active.",
+        "proves": [
+          "ac2"
+        ],
+        "next": "ac2-wait-no-skeleton"
+      },
+      "ac2-wait-no-skeleton": {
+        "action": "ui.wait_for",
+        "test_id": "perps-top-movers-skeleton",
+        "visible": false,
+        "timeout_ms": 5000,
+        "intent": "Switching direction re-sorts what is already loaded instead of dropping back to a loading state.",
+        "proves": [
+          "ac2"
+        ],
+        "next": "ac2-wait-section-still-mounted"
+      },
+      "ac2-wait-section-still-mounted": {
+        "action": "ui.wait_for",
+        "test_id": "perps-top-movers-list",
+        "visible": true,
+        "timeout_ms": 5000,
+        "intent": "The list of markets stays on screen through the switch, so nothing flashes away and back.",
+        "proves": [
+          "ac2"
+        ],
+        "next": "ac2-read-losers-order"
+      },
+      "ac2-read-losers-order": {
+        "action": "metamask.perps.read_visible_state",
+        "intent": "Record the markets the Losers view is showing, so the change from the Gainers view is on record.",
+        "proves": [
+          "ac2"
+        ],
+        "next": "ac2-clear-capture-orphans"
+      },
+      "ac2-clear-capture-orphans": {
+        "action": "command",
+        "cmd": "pkill -9 -f 'capture-helper' || true",
+        "intent": "Clear orphan capture-helper processes so the image comes from capture-helper rather than the silent fallback.",
+        "next": "ac2-screenshot-losers"
+      },
+      "ac2-screenshot-losers": {
+        "action": "ui.screenshot",
+        "path": "screenshots/evidence-ac2-losers-selected.png",
+        "label": "AC2: Losers selected; the same section now lists falling markets with negative changes",
+        "intent": "Show a reviewer that the same section, still on screen, now ranks the biggest fallers.",
+        "proves": [
+          "ac2"
+        ],
+        "next": "ac3-scroll-to-header"
+      },
+      "ac3-scroll-to-header": {
+        "action": "ui.scroll",
+        "test_id": "perps-top-movers-header",
+        "scroll_into_view": true,
+        "settle": true,
+        "timeout_ms": 15000,
+        "intent": "Bring the Top movers heading into reach so it can be tapped like a user would.",
+        "next": "ac3-press-header"
+      },
+      "ac3-press-header": {
+        "action": "ui.press",
+        "test_id": "perps-top-movers-header",
+        "timeout_ms": 10000,
+        "intent": "A user taps the Top movers heading to see the full ranked market list.",
+        "proves": [
+          "ac3"
+        ],
+        "next": "ac3-wait-market-list"
+      },
+      "ac3-wait-market-list": {
+        "action": "ui.wait_for",
+        "test_id": "parent-selector-perps-market-list",
+        "visible": true,
+        "timeout_ms": 20000,
+        "intent": "The tap lands the user on the full market list.",
+        "proves": [
+          "ac3"
+        ],
+        "next": "ac3-wait-sort-preset"
+      },
+      "ac3-wait-sort-preset": {
+        "action": "ui.wait_for",
+        "selector": "[data-testid=\"sort-dropdown-button\"]",
+        "text_match": "Price change",
+        "visible": true,
+        "timeout_ms": 15000,
+        "intent": "The market list arrives already sorted by 24h price change rather than the default volume sort.",
+        "proves": [
+          "ac3"
+        ],
+        "next": "ac3-clear-capture-orphans"
+      },
+      "ac3-clear-capture-orphans": {
+        "action": "command",
+        "cmd": "pkill -9 -f 'capture-helper' || true",
+        "intent": "Clear orphan capture-helper processes so the image comes from capture-helper rather than the silent fallback.",
+        "next": "ac3-screenshot-market-list"
+      },
+      "ac3-screenshot-market-list": {
+        "action": "ui.screenshot",
+        "path": "screenshots/evidence-ac3-market-list-presorted.png",
+        "label": "AC3: market list opened from the Top movers header, sorted by price change ascending (Losers)",
+        "intent": "Show a reviewer the market list carrying the direction the user had selected in the section.",
+        "proves": [
+          "ac3"
+        ],
+        "next": "ac4-skeleton-unit-test"
+      },
+      "ac4-skeleton-unit-test": {
+        "action": "command",
+        "cmd": "yarn jest ui/components/app/perps/perps-top-movers/perps-top-movers.test.tsx --no-coverage -t 'renders the loading skeleton while market data is loading'",
+        "timeout_ms": 300000,
+        "intent": "The section shows a skeleton, not an empty gap, while live market data is still arriving.",
+        "proves": [
+          "ac4"
+        ],
+        "next": "ac4-assert-test-ran"
+      },
+      "ac4-assert-test-ran": {
+        "action": "assert_output",
+        "contains": "1 passed",
+        "intent": "Confirm the skeleton case actually executed instead of silently matching no test.",
+        "proves": [
+          "ac4"
+        ],
+        "next": "teardown-return-to-perps",
+        "source": "ac4-skeleton-unit-test",
+        "stream": "stderr"
+      },
+      "teardown-return-to-perps": {
+        "action": "ui.navigate",
+        "page": "perps",
+        "intent": "Leave the wallet back on the Perps tab for the next run.",
+        "next": "done"
+      },
+      "done": {
+        "action": "end",
+        "status": "pass"
+      }
+    }
+  }
+}

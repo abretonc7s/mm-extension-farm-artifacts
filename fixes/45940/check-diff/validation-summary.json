@@ -1,0 +1,82 @@
+{
+  "schemaVersion": 1,
+  "command": "check",
+  "action": "diff",
+  "status": "pass",
+  "exitCode": 0,
+  "adapter": "extension",
+  "target": "/Users/deeeed/dev/metamask/metamask-extension-3",
+  "profile": "fast",
+  "fix": false,
+  "baseRef": "origin/main",
+  "baseSource": "github-pr",
+  "baseLabel": "main",
+  "mergeBase": "87cc94a6734bdc0f2a1f94370428a8843abf25e1",
+  "changedFiles": [
+    "app/_locales/en/messages.json",
+    "app/_locales/en_GB/messages.json",
+    "test/mocks/metamask-perps-controller.js",
+    "ui/components/app/perps/constants.ts",
+    "ui/components/app/perps/hooks/usePerpsTabExploreData.test.ts",
+    "ui/components/app/perps/hooks/usePerpsTabExploreData.ts",
+    "ui/components/app/perps/hooks/usePerpsTopMovers.test.ts",
+    "ui/components/app/perps/hooks/usePerpsTopMovers.ts",
+    "ui/components/app/perps/perps-top-movers/index.ts",
+    "ui/components/app/perps/perps-top-movers/perps-top-mover-pill.test.tsx",
+    "ui/components/app/perps/perps-top-movers/perps-top-mover-pill.tsx",
+    "ui/components/app/perps/perps-top-movers/perps-top-movers.test.tsx",
+    "ui/components/app/perps/perps-top-movers/perps-top-movers.tsx",
+    "ui/components/app/perps/perps-view.test.tsx",
+    "ui/components/app/perps/perps-view.tsx",
+    "ui/pages/perps/market-list/index.test.tsx",
+    "ui/pages/perps/market-list/index.tsx"
+  ],
+  "fixes": [],
+  "checks": [
+    {
+      "id": "policy-suppressions",
+      "label": "New ESLint suppression policy",
+      "status": "pass",
+      "logPath": "/Users/deeeed/dev/metamask/metamask-extension-3/temp/tasks/fix/45940-0902-082320/artifacts/check-diff/policy-suppressions.log"
+    },
+    {
+      "id": "eslint",
+      "label": "Changed-file ESLint",
+      "status": "pass",
+      "command": "/Users/deeeed/dev/metamask/metamask-extension-3/node_modules/.bin/eslint --config ./.eslintrc.js --cache --cache-location /Users/deeeed/dev/metamask/metamask-extension-3/temp/tasks/fix/45940-0902-082320/artifacts/check-diff/eslintcache test/mocks/metamask-perps-controller.js ui/components/app/perps/constants.ts ui/components/app/perps/hooks/usePerpsTabExploreData.test.ts ui/components/app/perps/hooks/usePerpsTabExploreData.ts ui/components/app/perps/hooks/usePerpsTopMovers.test.ts ui/components/app/perps/hooks/usePerpsTopMovers.ts ui/components/app/perps/perps-top-movers/index.ts ui/components/app/perps/perps-top-movers/perps-top-mover-pill.test.tsx ui/components/app/perps/perps-top-movers/perps-top-mover-pill.tsx ui/components/app/perps/perps-top-movers/perps-top-movers.test.tsx ui/components/app/perps/perps-top-movers/perps-top-movers.tsx ui/components/app/perps/perps-view.test.tsx ui/components/app/perps/perps-view.tsx ui/pages/perps/market-list/index.test.tsx ui/pages/perps/market-list/index.tsx",
+      "exitCode": 0,
+      "logPath": "/Users/deeeed/dev/metamask/metamask-extension-3/temp/tasks/fix/45940-0902-082320/artifacts/check-diff/eslint.log",
+      "durationMs": 14696
+    },
+    {
+      "id": "oxfmt",
+      "label": "Changed-file oxfmt",
+      "status": "pass",
+      "command": "/Users/deeeed/dev/metamask/metamask-extension-3/node_modules/.bin/oxfmt --config oxfmt.config.mts --check app/_locales/en/messages.json app/_locales/en_GB/messages.json test/mocks/metamask-perps-controller.js ui/components/app/perps/constants.ts ui/components/app/perps/hooks/usePerpsTabExploreData.test.ts ui/components/app/perps/hooks/usePerpsTabExploreData.ts ui/components/app/perps/hooks/usePerpsTopMovers.test.ts ui/components/app/perps/hooks/usePerpsTopMovers.ts ui/components/app/perps/perps-top-movers/index.ts ui/components/app/perps/perps-top-movers/perps-top-mover-pill.test.tsx ui/components/app/perps/perps-top-movers/perps-top-mover-pill.tsx ui/components/app/perps/perps-top-movers/perps-top-movers.test.tsx ui/components/app/perps/perps-top-movers/perps-top-movers.tsx ui/components/app/perps/perps-view.test.tsx ui/components/app/perps/perps-view.tsx ui/pages/perps/market-list/index.test.tsx ui/pages/perps/market-list/index.tsx",
+      "exitCode": 0,
+      "logPath": "/Users/deeeed/dev/metamask/metamask-extension-3/temp/tasks/fix/45940-0902-082320/artifacts/check-diff/oxfmt.log",
+      "durationMs": 147
+    },
+    {
+      "id": "jest",
+      "label": "Changed test files",
+      "status": "pass",
+      "command": "/Users/deeeed/dev/metamask/metamask-extension-3/node_modules/.bin/jest --no-coverage ui/components/app/perps/hooks/usePerpsTabExploreData.test.ts ui/components/app/perps/hooks/usePerpsTopMovers.test.ts ui/components/app/perps/perps-top-movers/perps-top-mover-pill.test.tsx ui/components/app/perps/perps-top-movers/perps-top-movers.test.tsx ui/components/app/perps/perps-view.test.tsx ui/pages/perps/market-list/index.test.tsx",
+      "exitCode": 0,
+      "logPath": "/Users/deeeed/dev/metamask/metamask-extension-3/temp/tasks/fix/45940-0902-082320/artifacts/check-diff/jest.log",
+      "durationMs": 7115
+    },
+    {
+      "id": "typecheck",
+      "label": "TypeScript project check",
+      "status": "skip",
+      "reason": "profile=fast; run with --profile full for repo-wide typecheck"
+    }
+  ],
+  "guidance": [],
+  "artifacts": {
+    "dir": "/Users/deeeed/dev/metamask/metamask-extension-3/temp/tasks/fix/45940-0902-082320/artifacts/check-diff",
+    "summaryJson": "/Users/deeeed/dev/metamask/metamask-extension-3/temp/tasks/fix/45940-0902-082320/artifacts/check-diff/validation-summary.json",
+    "summaryMarkdown": "/Users/deeeed/dev/metamask/metamask-extension-3/temp/tasks/fix/45940-0902-082320/artifacts/check-diff/validation-summary.md"
+  }
+}

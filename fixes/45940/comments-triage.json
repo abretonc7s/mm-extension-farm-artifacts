@@ -1,0 +1,62 @@
+[
+  {
+    "comment_id": 3906037184,
+    "review_id": "5080355967",
+    "author_login": "cursor[bot]",
+    "author_type": "Bot",
+    "reviewer_login": "cursor[bot]",
+    "review_state": "COMMENTED",
+    "source_kind": "bugbot",
+    "path": "ui/components/app/perps/hooks/usePerpsTopMovers.ts",
+    "line": null,
+    "body": "### Unsafe concurrent price stream owner\n\n`usePerpsTopMovers` calls `usePerpsLiveMarketListData` even though the Perps tab already owns that stream via `usePerpsTabExploreData`. That hook activates `usePerpsLivePrices` with a global, non-ref-counted `perpsDeactivatePriceStream` cleanup that assumes a single owner, so one instance tearing down can stop live price updates for the whole tab and adds a second 30s `refresh` interval.",
+    "triage": "REAL",
+    "action": "Already fixed on this branch by making usePerpsTopMovers a pure ranking function over markets passed in from the tab owner.",
+    "fixed_in_commit": "11168f6638"
+  },
+  {
+    "comment_id": 3907094848,
+    "review_id": "5081568155",
+    "author_login": "cursor[bot]",
+    "author_type": "Bot",
+    "reviewer_login": "cursor[bot]",
+    "review_state": "COMMENTED",
+    "source_kind": "bugbot",
+    "path": "ui/components/app/perps/perps-top-movers/perps-top-movers.tsx",
+    "line": 194,
+    "body": "### Toggle track loses screen inset\n\nThe Gainers/Losers track and its screen inset now share one `Box`. `className` `p-1` is twMerged last and overrides `paddingLeft`/`paddingRight`, so the bordered control goes edge-to-edge while the header and pill list stay on the `px-4` inset.",
+    "triage": "REAL",
+    "action": "Split px-4 onto a wrapper Box and kept p-1 on the bordered track.",
+    "fixed_in_commit": "a7f09b5e65"
+  },
+  {
+    "comment_id": 3907094861,
+    "review_id": "5081568155",
+    "author_login": "cursor[bot]",
+    "author_type": "Bot",
+    "reviewer_login": "cursor[bot]",
+    "review_state": "COMMENTED",
+    "source_kind": "bugbot",
+    "path": "ui/components/app/perps/perps-top-movers/perps-top-mover-pill.tsx",
+    "line": 30,
+    "body": "### Pills clip labels in popup\n\nPills switched from content-width (`w-auto shrink-0`) to `flex-1` / `min-w-0` in rows of four. In the 400px popup each pill is too narrow for the logo, ticker, and 24h change, and `ButtonBase`'s `overflow-hidden` clips those labels instead of wrapping to two columns.",
+    "triage": "REAL",
+    "action": "Restored w-auto shrink-0 so pills size to their labels and wrap.",
+    "fixed_in_commit": "a7f09b5e65"
+  },
+  {
+    "comment_id": 3908975730,
+    "review_id": "5083682865",
+    "author_login": "Bigshmow",
+    "author_type": "User",
+    "reviewer_login": "Bigshmow",
+    "review_state": "COMMENTED",
+    "source_kind": "human",
+    "path": "ui/components/app/perps/perps-top-movers/perps-top-movers.tsx",
+    "line": 193,
+    "body": "`p-1` here overrides the `paddingLeft={4}` / `paddingRight={4}` above it - Box does `twMerge(...paddingProps, className)` with `className` last, so `p-1` wins and the bordered track loses the `px-4` inset the header and pills keep.\nSplitting them fixes it: inset on a wrapper Box, p-1 on the bordered track.",
+    "triage": "REAL",
+    "action": "Applied the suggested wrapper split so inset and track padding are on different Boxes.",
+    "fixed_in_commit": "a7f09b5e65"
+  }
+]

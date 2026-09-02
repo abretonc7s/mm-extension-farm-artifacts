@@ -1,0 +1,62 @@
+{
+  "version": 1,
+  "verdict": "pass",
+  "compact": {
+    "verdict": "PASS",
+    "reasons": [
+      "AC1-AC4 bind to ac<N>-* nodes; trace shows 30/30 nodes passed with exit 0.",
+      "Screenshots prove the visible claims directly: the section with Gainers selected, the same section re-ranked to Losers, and the market list opening on Price change ascending.",
+      "AC2's no-flash claim rests on an absent-skeleton plus present-list assertion pair, not on the screenshot alone.",
+      "AC4 is proven by a targeted jest case gated on '1 passed' rather than a screenshot, because the warm stream cache makes the loading frame unreproducible on screen."
+    ],
+    "better_version_guidance": [
+      "If a slot ever ships with a cold perps stream, AC4 could be upgraded from state proof to a mixed proof with a real skeleton screenshot."
+    ]
+  },
+  "dimensions": {
+    "graph_integrity": {
+      "status": "pass",
+      "reason": "Workflow graph is structurally valid; all 30 nodes reachable and executed, no switch/default routing around an AC assertion.",
+      "evidence": ["recipe.json", "recipe-run/trace.json"]
+    },
+    "ac_coverage": {
+      "status": "pass",
+      "reason": "All four acceptance criteria bind to ac<N>-* nodes; reverting any part of the change fails a named node.",
+      "evidence": ["recipe-coverage.md", "recipe-run/trace.json"]
+    },
+    "evidence_contract_basics": {
+      "status": "pass",
+      "reason": "Each visual AC screenshot follows a ui.wait_for on the claimed target plus a declared ui.scroll; all three captures record provider=capture-helper, no Page.captureScreenshot or DOM-raster fallback. The non-visual AC4 claim uses a test assertion instead of a screenshot.",
+      "evidence": [
+        "recipe-run/artifact-manifest.json",
+        "evidence-ac1-top-movers-section.png",
+        "evidence-ac2-losers-selected.png",
+        "evidence-ac3-market-list-presorted.png"
+      ]
+    }
+  },
+  "structural_findings": [],
+  "contextual_findings": [],
+  "suggested_recipe_delta": [],
+  "training_fields": {
+    "farm": "metamask-extension",
+    "project": "metamask-extension-farm",
+    "flow_type": "dev",
+    "task_type": "dev",
+    "claim_is_visual": true,
+    "proof_mode": "mixed",
+    "anti_patterns": [],
+    "good_patterns": [
+      "aria-pressed assertions prove toggle selection from the accessibility tree rather than from Tailwind classes",
+      "absent-skeleton plus present-list assertion pair proves in-place re-sort instead of inferring it from a screenshot",
+      "assert_output contains '1 passed' guards against jest -t matching zero tests"
+    ]
+  },
+  "meta": {
+    "producer": "worker",
+    "fallback_used": false,
+    "legacy_task": false,
+    "artifact_required": true,
+    "source_signals": ["recipe.json", "recipe-coverage.md", "recipe-run/trace.json", "recipe-run/artifact-manifest.json"]
+  }
+}

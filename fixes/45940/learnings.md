@@ -1,0 +1,4 @@
+- Box padding vs className: `className` is twMerged last, so `p-1` on the same node as `paddingLeft`/`paddingRight` drops the inset. Put screen inset on a wrapper and inner padding on the bordered child.
+- Popup pill width: `flex-1 min-w-0` plus ButtonBase `overflow-hidden` clips ticker+change in the 400px popup. Content-width `w-auto shrink-0` with row `flex-wrap` matches mobile ExplorePill and lets labels wrap instead of shrink.
+- Class comments must match the class string. The pill comment still described `w-auto shrink-0` after a later commit switched to `flex-1`; that drift hid the clip.
+- Human confirmation of a bot finding (Bigshmow on the same `p-1` merge) is the same fix, not a second layout. Apply the split once and reply on both threads.
