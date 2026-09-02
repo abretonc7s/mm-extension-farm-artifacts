@@ -1,0 +1,235 @@
+{
+  "$schema": "https://farmslot.io/schemas/recipe-v1.schema.json",
+  "title": "TAT-3845 perps-controller 15.1.0 bump",
+  "description": "Proves the extension declares, resolves, bundles, and runs @metamask/perps-controller 15.1.0: the manifest range and resolved package are 15.1.0, the built extension bundle carries a symbol that only exists from 13.0.0 onward, the repo typechecks against the new PerpsErrorCode union, and the live Perps surfaces still render market data through the upgraded controller. Note on C3 routing: the perps home is reached with the semantic `page: perps` navigator, but the market list and market detail are reached by hash. The library's `page: perps-market-list` / `page: perps-market` navigators wait on `market-list-view` and `perps-market-detail-page` test ids that this build's UI does not render, so they time out regardless of this PR. That is a pre-existing harness/product test-id gap, not a regression from the controller bump; the surfaces themselves render and are asserted here.",
+  "paramsSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "market": {
+        "type": "string",
+        "default": "ETH",
+        "description": "Perps market opened to prove the upgraded controller still serves live market data."
+      },
+      "timeout_ms": {
+        "type": "integer",
+        "minimum": 1000,
+        "default": 120000,
+        "description": "Per-navigation budget. Live Hyperliquid market data can take well over the 45s library default to populate the market list on a cold cache."
+      }
+    }
+  },
+  "workflow": {
+    "entry": "gate-doctor",
+    "nodes": {
+      "gate-doctor": {
+        "action": "app.status",
+        "intent": "Prove the extension adapter is attached before any claim is measured",
+        "next": "ac1-read-manifest-range"
+      },
+      "ac1-read-manifest-range": {
+        "action": "assert_file",
+        "path": "package.json",
+        "contains": "\"@metamask/perps-controller\": \"^15.1.0\"",
+        "intent": "C1: the extension declares the 15.1.0 range, not the previous ^12.0.0",
+        "next": "ac1-assert-resolved-version"
+      },
+      "ac1-assert-resolved-version": {
+        "action": "assert_json",
+        "path": "node_modules/@metamask/perps-controller/package.json",
+        "assert": {
+          "path": "$.version",
+          "operator": "eq",
+          "value": "15.1.0"
+        },
+        "intent": "C1: the range actually resolves to 15.1.0 in the installed tree",
+        "next": "ac1-assert-lockfile-resolution"
+      },
+      "ac1-assert-lockfile-resolution": {
+        "action": "assert_file",
+        "path": "yarn.lock",
+        "contains": "\"@metamask/perps-controller@npm:15.1.0\"",
+        "intent": "C1: the lockfile pins 15.1.0 so CI and every other checkout resolve the same version",
+        "next": "ac1-grep-bundled-symbol"
+      },
+      "ac1-grep-bundled-symbol": {
+        "action": "command",
+        "cmd": "grep -rl 'ORDER_CHASE_MAX_DISTANCE_INVALID' dist/chrome --include='*.js' | head -1",
+        "timeout_ms": 120000,
+        "intent": "C1: locate a PerpsErrorCode that exists only from controller 13.0.0 onward inside the built extension bundle",
+        "next": "ac1-assert-bundled-symbol-exit"
+      },
+      "ac1-assert-bundled-symbol-exit": {
+        "action": "assert_exit_code",
+        "node": "ac1-grep-bundled-symbol",
+        "expected": 0,
+        "intent": "C1: the grep found the post-12.x symbol, so the running bundle is not the old controller",
+        "next": "ac1-assert-bundled-symbol-file"
+      },
+      "ac1-assert-bundled-symbol-file": {
+        "action": "assert_output",
+        "node": "ac1-grep-bundled-symbol",
+        "stream": "stdout",
+        "contains": "dist/chrome/",
+        "intent": "C1: name the bundle file carrying the new controller code, so the match is not an empty pass",
+        "next": "ac2-run-error-code-tests"
+      },
+      "ac2-run-error-code-tests": {
+        "action": "command",
+        "cmd": "yarn jest ui/components/app/perps/utils/translate-perps-error.test.ts --no-coverage 2>&1",
+        "timeout_ms": 300000,
+        "intent": "C2: exercise the PerpsErrorCode -> i18n exhaustiveness suite against the 15.1.0 union",
+        "next": "ac2-assert-tests-exit"
+      },
+      "ac2-assert-tests-exit": {
+        "action": "assert_exit_code",
+        "node": "ac2-run-error-code-tests",
+        "expected": 0,
+        "intent": "C2: the suite passed",
+        "next": "ac2-assert-tests-count"
+      },
+      "ac2-assert-tests-count": {
+        "action": "assert_output",
+        "node": "ac2-run-error-code-tests",
+        "stream": "stdout",
+        "contains": "45 passed, 45 total",
+        "intent": "C2: a non-vacuous run \u2014 every test in the suite, including the new-code coverage case, actually executed",
+        "next": "ac2-assert-new-codes-mapped"
+      },
+      "ac2-assert-new-codes-mapped": {
+        "action": "command",
+        "cmd": "yarn jest ui/components/app/perps/utils/translate-perps-error.test.ts --no-coverage -t 'translates every error code introduced after v12' 2>&1",
+        "timeout_ms": 300000,
+        "intent": "C2: run only the case that names the five codes added in controller 13.0.0-15.1.0",
+        "next": "ac2-assert-new-codes-exit"
+      },
+      "ac2-assert-new-codes-exit": {
+        "action": "assert_exit_code",
+        "node": "ac2-assert-new-codes-mapped",
+        "expected": 0,
+        "intent": "C2: the targeted case passed",
+        "next": "ac2-assert-new-codes-selected"
+      },
+      "ac2-assert-new-codes-selected": {
+        "action": "assert_output",
+        "node": "ac2-assert-new-codes-mapped",
+        "stream": "stdout",
+        "contains": "44 skipped, 1 passed, 45 total",
+        "intent": "C2: exactly one test matched the title filter and passed, so the run is not the vacuous zero-match pass that `jest -t` otherwise reports as success",
+        "next": "ac2-run-typecheck"
+      },
+      "ac2-run-typecheck": {
+        "action": "command",
+        "cmd": "NODE_OPTIONS='--max-old-space-size=8192' npx tsc --noEmit",
+        "timeout_ms": 900000,
+        "intent": "C2: the repo typechecks against the widened PerpsErrorCode union and the rest of the 15.1.0 type surface",
+        "next": "ac2-assert-typecheck-exit"
+      },
+      "ac2-assert-typecheck-exit": {
+        "action": "assert_exit_code",
+        "node": "ac2-run-typecheck",
+        "expected": 0,
+        "intent": "C2: zero type errors \u2014 the `satisfies Record<PerpsErrorCode, string>` constraint is met",
+        "next": "ac3-open-perps"
+      },
+      "ac3-open-perps": {
+        "action": "ui.navigate",
+        "page": "perps",
+        "timeout_ms": "{{params.timeout_ms}}",
+        "intent": "C3: open the Perps home surface served by the upgraded controller",
+        "next": "ac3-assert-perps-home"
+      },
+      "ac3-assert-perps-home": {
+        "action": "metamask.perps.read_visible_state",
+        "surface": "home",
+        "intent": "C3: prove the Perps home surface renders live controller-backed state rather than an error or empty shell",
+        "next": "ac3-open-market-list"
+      },
+      "ac3-open-market-list": {
+        "action": "ui.navigate",
+        "hash": "#/perps/market-list",
+        "timeout_ms": "{{params.timeout_ms}}",
+        "intent": "C3: show the user the full live Perps market selection served by the upgraded controller",
+        "next": "ac3-wait-market-list"
+      },
+      "ac3-wait-market-list": {
+        "action": "ui.wait_for",
+        "selector": "[data-testid^=\"market-row-\"]:not([data-testid^=\"market-row-ticker-\"]):not([data-testid=\"market-row-skeleton\"]) ~ [data-testid^=\"market-row-\"]:not([data-testid^=\"market-row-ticker-\"]):not([data-testid=\"market-row-skeleton\"])",
+        "expected": "visible",
+        "visible": true,
+        "timeout_ms": 30000,
+        "intent": "C3: wait until two real markets are actually on screen, so the count assertion cannot pass against the eight loading placeholders the list shows before live data arrives",
+        "next": "ac3-assert-market-list"
+      },
+      "ac3-assert-market-list": {
+        "action": "metamask.perps.read_visible_state",
+        "surface": "auto",
+        "market": "{{params.market}}",
+        "minimum_market_count": 2,
+        "require_features": [
+          "market-list"
+        ],
+        "max_items": 100,
+        "intent": "C3: prove the upgraded controller populates a live multi-market list containing the requested market. Surface is read as `auto` because this build's market list carries no `market-list-view` test id, so the detector labels it `unknown`; the market-list feature flag, the market rows and the requested symbol are asserted directly instead.",
+        "next": "ac3-open-market"
+      },
+      "ac3-open-market": {
+        "action": "ui.navigate",
+        "hash": "#/perps/market/{{params.market}}",
+        "timeout_ms": "{{params.timeout_ms}}",
+        "intent": "C3: show the user the requested market's detail screen with its live pricing and statistics",
+        "next": "ac3-wait-market-detail"
+      },
+      "ac3-wait-market-detail": {
+        "action": "ui.wait_for",
+        "test_id": "perps-market-detail-price",
+        "expected": "visible",
+        "visible": true,
+        "timeout_ms": 30000,
+        "intent": "C3: let the live market price resolve before the detail surface is read",
+        "next": "ac3-assert-market-details"
+      },
+      "ac3-assert-market-details": {
+        "action": "metamask.perps.read_visible_state",
+        "surface": "market-details",
+        "market": "{{params.market}}",
+        "require_features": [
+          "price",
+          "price-change",
+          "stats",
+          "chart"
+        ],
+        "max_items": 100,
+        "intent": "C3: prove live price, 24h change, market statistics and the candlestick chart all resolve through the 15.1.0 controller",
+        "next": "ac3-clear-capture-orphans"
+      },
+      "ac3-clear-capture-orphans": {
+        "action": "command",
+        "cmd": "pkill -9 -f 'capture-helper' || true",
+        "timeout_ms": 30000,
+        "intent": "C3: clear orphaned capture-helper processes so the next capture cannot silently fall back to Page.captureScreenshot",
+        "next": "ac3-wait-market-price"
+      },
+      "ac3-wait-market-price": {
+        "action": "ui.wait_for",
+        "test_id": "perps-market-detail-price",
+        "expected": "visible",
+        "visible": true,
+        "timeout_ms": 20000,
+        "intent": "C3: confirm the live market price element is on screen before the capture claims it is",
+        "next": "ac3-capture-market"
+      },
+      "ac3-capture-market": {
+        "action": "ui.screenshot",
+        "path": "screenshots/evidence-ac3-perps-market-live.png",
+        "label": "C3: ETH market detail renders live price, change and stats on perps-controller 15.1.0",
+        "intent": "C3: reviewer-visible proof that the Perps market surface still renders after the bump",
+        "next": "done"
+      },
+      "done": {
+        "action": "end",
+        "status": "pass"
+      }
+    }
+  }
+}

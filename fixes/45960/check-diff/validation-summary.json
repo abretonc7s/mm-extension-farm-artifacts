@@ -1,0 +1,77 @@
+{
+  "schemaVersion": 1,
+  "command": "check",
+  "action": "diff",
+  "status": "pass",
+  "exitCode": 0,
+  "adapter": "extension",
+  "target": "/Volumes/FD/dev/metamask/metamask-extension-3",
+  "profile": "fast",
+  "fix": false,
+  "baseRef": "origin/main",
+  "baseSource": "github-pr",
+  "baseLabel": "main",
+  "mergeBase": "246cf9893861cb7e5fc0b8a53b83b208cb83a296",
+  "changedFiles": [
+    "package.json",
+    "test/e2e/mock-e2e.js",
+    "test/e2e/tests/metrics/state-snapshots/errors-after-init-opt-in-ui-state.json",
+    "test/e2e/tests/perps/mocks/websocketPositionMocks.ts",
+    "test/e2e/tests/perps/perps-fixture-config.ts",
+    "test/e2e/tests/perps/perps-tpsl.spec.ts",
+    "test/e2e/tests/settings/state-logs.json",
+    "test/mocks/metamask-perps-controller.js",
+    "ui/components/app/perps/utils/translate-perps-error.test.ts",
+    "ui/components/app/perps/utils/translate-perps-error.ts",
+    "ui/selectors/perps-controller.test.ts",
+    "yarn.lock"
+  ],
+  "fixes": [],
+  "checks": [
+    {
+      "id": "policy-suppressions",
+      "label": "New ESLint suppression policy",
+      "status": "pass",
+      "logPath": "/Volumes/FD/dev/metamask/metamask-extension-3/temp/tasks/fix/45960-0902-195803/artifacts/check-diff/policy-suppressions.log"
+    },
+    {
+      "id": "eslint",
+      "label": "Changed-file ESLint",
+      "status": "pass",
+      "command": "/Volumes/FD/dev/metamask/metamask-extension-3/node_modules/.bin/eslint --config ./.eslintrc.js --cache --cache-location /Volumes/FD/dev/metamask/metamask-extension-3/temp/tasks/fix/45960-0902-195803/artifacts/check-diff/eslintcache test/e2e/mock-e2e.js test/e2e/tests/perps/mocks/websocketPositionMocks.ts test/e2e/tests/perps/perps-fixture-config.ts test/e2e/tests/perps/perps-tpsl.spec.ts test/mocks/metamask-perps-controller.js ui/components/app/perps/utils/translate-perps-error.test.ts ui/components/app/perps/utils/translate-perps-error.ts ui/selectors/perps-controller.test.ts",
+      "exitCode": 0,
+      "logPath": "/Volumes/FD/dev/metamask/metamask-extension-3/temp/tasks/fix/45960-0902-195803/artifacts/check-diff/eslint.log",
+      "durationMs": 21344
+    },
+    {
+      "id": "oxfmt",
+      "label": "Changed-file oxfmt",
+      "status": "pass",
+      "command": "/Volumes/FD/dev/metamask/metamask-extension-3/node_modules/.bin/oxfmt --config oxfmt.config.mts --check package.json test/e2e/mock-e2e.js test/e2e/tests/metrics/state-snapshots/errors-after-init-opt-in-ui-state.json test/e2e/tests/perps/mocks/websocketPositionMocks.ts test/e2e/tests/perps/perps-fixture-config.ts test/e2e/tests/perps/perps-tpsl.spec.ts test/e2e/tests/settings/state-logs.json test/mocks/metamask-perps-controller.js ui/components/app/perps/utils/translate-perps-error.test.ts ui/components/app/perps/utils/translate-perps-error.ts ui/selectors/perps-controller.test.ts",
+      "exitCode": 0,
+      "logPath": "/Volumes/FD/dev/metamask/metamask-extension-3/temp/tasks/fix/45960-0902-195803/artifacts/check-diff/oxfmt.log",
+      "durationMs": 191
+    },
+    {
+      "id": "jest",
+      "label": "Changed test files",
+      "status": "pass",
+      "command": "/Volumes/FD/dev/metamask/metamask-extension-3/node_modules/.bin/jest --no-coverage test/e2e/tests/perps/perps-tpsl.spec.ts ui/components/app/perps/utils/translate-perps-error.test.ts ui/selectors/perps-controller.test.ts",
+      "exitCode": 0,
+      "logPath": "/Volumes/FD/dev/metamask/metamask-extension-3/temp/tasks/fix/45960-0902-195803/artifacts/check-diff/jest.log",
+      "durationMs": 2638
+    },
+    {
+      "id": "typecheck",
+      "label": "TypeScript project check",
+      "status": "skip",
+      "reason": "profile=fast; run with --profile full for repo-wide typecheck"
+    }
+  ],
+  "guidance": [],
+  "artifacts": {
+    "dir": "/Volumes/FD/dev/metamask/metamask-extension-3/temp/tasks/fix/45960-0902-195803/artifacts/check-diff",
+    "summaryJson": "/Volumes/FD/dev/metamask/metamask-extension-3/temp/tasks/fix/45960-0902-195803/artifacts/check-diff/validation-summary.json",
+    "summaryMarkdown": "/Volumes/FD/dev/metamask/metamask-extension-3/temp/tasks/fix/45960-0902-195803/artifacts/check-diff/validation-summary.md"
+  }
+}

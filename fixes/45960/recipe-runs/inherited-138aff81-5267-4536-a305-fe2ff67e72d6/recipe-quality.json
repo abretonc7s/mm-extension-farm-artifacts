@@ -1,0 +1,116 @@
+{
+  "version": 1,
+  "verdict": "pass",
+  "compact": {
+    "verdict": "PASS",
+    "reasons": [
+      "C1-C3 all bind to ac<N>-* nodes; trace shows 27/27 passed.",
+      "C1 is proved against the built bundle, not just package.json: a grep for ORDER_CHASE_MAX_DISTANCE_INVALID (first shipped in controller 13.0.0) in dist/chrome. Reverting to ^12.0.0 fails it.",
+      "C2 defeats the jest -t vacuous-pass trap by asserting '44 skipped, 1 passed, 45 total' on the title-filtered run, and pairs it with a tsc --noEmit exit-0 gate on the satisfies Record<PerpsErrorCode, string> constraint.",
+      "C3 screenshot is capture-helper provenance and shows live ETH data (price, 24h change, candles, open position), preceded by a ui.wait_for on perps-market-detail-price.",
+      "ac3-wait-market-list gates the minimum_market_count: 2 read on a sibling-combinator selector that excludes both the per-row ticker and the eight market-row-skeleton placeholders, so it only matches once two hydrated row roots exist. Verified on a cold browser: the gate blocked 4767ms and the run passed 27/27, against 371ms for the earlier skeleton-matching selector that let the count read a half-hydrated list."
+    ],
+    "better_version_guidance": []
+  },
+  "dimensions": {
+    "graph_integrity": {
+      "status": "pass",
+      "reason": "27 nodes, single entry, every node reachable, terminal end node; runner --plan reports zero findings.",
+      "evidence": [
+        "recipe.json",
+        "recipe-run/trace.json"
+      ]
+    },
+    "action_contract": {
+      "status": "pass",
+      "reason": "Every node uses a manifest-declared extension action with only declared fields; verified with `mm-harness actions --adapter extension --json` and a passing --plan dry run.",
+      "evidence": [
+        "recipe.json",
+        "recipe-run/execution-provenance.json"
+      ]
+    },
+    "ac_coverage": {
+      "status": "pass",
+      "reason": "All three task claims map to ac<N>-* nodes; no claim is skipped or marked untestable.",
+      "evidence": [
+        "recipe-coverage.md",
+        "recipe-run/trace.json"
+      ]
+    },
+    "evidence_contract_basics": {
+      "status": "pass",
+      "reason": "Dependency and typecheck claims rest on state/test/trace, not screenshots. The single screenshot backs the one claim with a visible component, and follows a ui.wait_for on the element it claims.",
+      "evidence": [
+        "recipe-run/screenshots/evidence-ac3-perps-market-live.png",
+        "recipe-run/artifact-manifest.json"
+      ]
+    },
+    "revert_sensitivity": {
+      "status": "pass",
+      "reason": "Reverting package.json to ^12.0.0 fails ac1-read-manifest-range, ac1-assert-resolved-version, ac1-assert-lockfile-resolution and ac1-grep-bundled-symbol; reverting the five i18n mappings fails ac2-assert-typecheck-exit and ac2-assert-new-codes-selected.",
+      "evidence": [
+        "recipe.json",
+        "recipe-coverage.md"
+      ]
+    }
+  },
+  "structural_findings": [],
+  "contextual_findings": [
+    {
+      "code": "harness.navigator_testid_gap",
+      "message": "The library navigators `page: perps-market-list` and `page: perps-market` wait on `market-list-view` / `perps-market-detail-page` test ids this build does not render, and the perps surface detector labels the market list `unknown` for the same reason. Both fail on main, independent of this PR, so C3 routes by hash and asserts rendered contents directly.",
+      "dimension": "action_contract",
+      "evidence": [
+        "recipe.json",
+        "recipe-coverage.md"
+      ]
+    },
+    {
+      "code": "app.image_404_noise",
+      "message": "173 resource 404s were logged on the market-list surface (market-row token art). Non-blocking, unrelated to the controller bump, and reported by the runner as `Relation to the task is not determined`.",
+      "dimension": "evidence_contract_basics",
+      "evidence": [
+        "recipe-run/diagnostics.json"
+      ]
+    },
+    {
+      "code": "harness.recorder_killed_by_capture_orphan_sweep",
+      "message": "after.mp4 is no longer referenced by evidence-manifest.json. record-window.sh attaches to the shared screen-capture owner, and the recipe's ac3-clear-capture-orphans node (pkill -9 -f 'capture-helper') terminates that owner mid-run, so the video always finalises ~3s before the run ends and can never pass the after.mp4 -nt summary.json freshness check. The pkill node is load-bearing \u2014 it is what keeps ui.screenshot on capture-helper instead of the Page.captureScreenshot fallback \u2014 so the video was dropped rather than the node weakened. The PR claims no visual change, so the screenshot alone carries C3.",
+      "dimension": "evidence_contract_basics",
+      "evidence": [
+        "evidence-manifest.json",
+        "recipe-run/trace.json"
+      ]
+    }
+  ],
+  "suggested_recipe_delta": [
+    "Once the product adds `market-list-view` and `perps-market-detail-page` test ids, swap the two hash navigations back to `page: perps-market-list` / `page: perps-market` so C3 exercises semantic navigation rather than direct routing."
+  ],
+  "training_fields": {
+    "farm": "metamask-extension",
+    "project": "metamask-extension-farm",
+    "flow_type": "dev",
+    "task_type": "dev",
+    "claim_is_visual": false,
+    "proof_mode": "mixed",
+    "anti_patterns": [],
+    "good_patterns": [
+      "bundle-symbol grep proves the dependency actually shipped, not just that package.json was edited",
+      "jest -t paired with an exact skipped/passed count defeats the zero-match vacuous pass"
+    ]
+  },
+  "meta": {
+    "producer": "worker",
+    "fallback_used": false,
+    "legacy_task": false,
+    "artifact_required": true,
+    "source_signals": [
+      "recipe.json",
+      "recipe-coverage.md",
+      "recipe-run/trace.json",
+      "recipe-run/summary.json",
+      "recipe-run/artifact-manifest.json",
+      "recipe-run/diagnostics.json"
+    ]
+  }
+}
