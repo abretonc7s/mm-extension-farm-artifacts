@@ -9,7 +9,8 @@
       "C2 defeats the jest -t vacuous-pass trap by asserting '44 skipped, 1 passed, 45 total' on the title-filtered run, and pairs it with a tsc --noEmit exit-0 gate on the satisfies Record<PerpsErrorCode, string> constraint.",
       "C3 screenshot is capture-helper provenance and shows live ETH data (price, 24h change, candles, open position), preceded by a ui.wait_for on perps-market-detail-price.",
       "ac3-wait-market-list gates the minimum_market_count: 2 read on a sibling-combinator selector that excludes both the per-row ticker and the eight market-row-skeleton placeholders, so it only matches once two hydrated row roots exist. Verified on a cold browser: the gate blocked 4767ms and the run passed 27/27, against 371ms for the earlier skeleton-matching selector that let the count read a half-hydrated list.",
-      "Re-validated for the make-merge-ready round: same recipe, unchanged nodes, run against the post-rebase tree (branch replayed onto origin/main 246cf98938) \u2014 pass 27/27, screenshot provenance capture-helper."
+      "Re-validated for the make-merge-ready round: same recipe, unchanged nodes, run against the post-rebase tree (branch replayed onto origin/main 246cf98938) — pass 27/27, screenshot provenance capture-helper.",
+      "Re-validated for the second make-merge-ready round (task 45960-0902-210741): same recipe, unchanged nodes, zero product-code changes this round; run against the post-rebase tree (branch replayed onto origin/main e6b1571e9e, dist rebuilt and reported fresh vs HEAD) — pass 27/27, screenshot provenance capture-helper."
     ],
     "better_version_guidance": []
   },
@@ -76,7 +77,7 @@
     },
     {
       "code": "harness.recorder_killed_by_capture_orphan_sweep",
-      "message": "after.mp4 is no longer referenced by evidence-manifest.json. record-window.sh attaches to the shared screen-capture owner, and the recipe's ac3-clear-capture-orphans node (pkill -9 -f 'capture-helper') terminates that owner mid-run, so the video always finalises ~3s before the run ends and can never pass the after.mp4 -nt summary.json freshness check. The pkill node is load-bearing \u2014 it is what keeps ui.screenshot on capture-helper instead of the Page.captureScreenshot fallback \u2014 so the video was dropped rather than the node weakened. The PR claims no visual change, so the screenshot alone carries C3.",
+      "message": "after.mp4 is no longer referenced by evidence-manifest.json. record-window.sh attaches to the shared screen-capture owner, and the recipe's ac3-clear-capture-orphans node (pkill -9 -f 'capture-helper') terminates that owner mid-run, so the video always finalises ~3s before the run ends and can never pass the after.mp4 -nt summary.json freshness check. The pkill node is load-bearing — it is what keeps ui.screenshot on capture-helper instead of the Page.captureScreenshot fallback — so the video was dropped rather than the node weakened. The PR claims no visual change, so the screenshot alone carries C3.",
       "dimension": "evidence_contract_basics",
       "evidence": [
         "evidence-manifest.json",
@@ -85,11 +86,29 @@
     },
     {
       "code": "scope.e2e_specs_outside_recipe",
-      "message": "The two perps-tpsl.spec.ts tests fixed in 20bc12bc01 are Mocha/Selenium e2e and sit outside this recipe's scope \u2014 it drives the built extension over CDP and cannot observe e2e mock fixtures. That fix rests on the code-level diagnosis in comments-report.md and is verified by CI, which had not finished at completion time.",
+      "message": "The two perps-tpsl.spec.ts tests fixed in 20bc12bc01 are Mocha/Selenium e2e and sit outside this recipe's scope — it drives the built extension over CDP and cannot observe e2e mock fixtures. That fix rests on the code-level diagnosis in comments-report.md and is verified by CI, which had not finished at completion time.",
       "dimension": "ac_coverage",
       "evidence": [
         "comments-report.md",
         "recipe-coverage.md"
+      ]
+    },
+    {
+      "code": "scope.no_actionable_review_comments",
+      "message": "This make-merge-ready round changed nothing: 0 inline review comments, 0 CHANGES_REQUESTED reviews, and all 8 PR-conversation comments are status-only automation (CLA, CODEOWNERS, Socket scan with zero alerts, three Builds-ready posts, SonarCloud gate passed). The recipe was re-run purely to re-prove the claims on the integrated tree, not to validate a fix.",
+      "dimension": "ac_coverage",
+      "evidence": [
+        "comments-report.md",
+        "comments-triage.json",
+        "recipe-run/summary.json"
+      ]
+    },
+    {
+      "code": "tooling.coverage_analyze_stale_local_main",
+      "message": "coverage-analyze.js diffs against the LOCAL main ref, but step 3 only fetches origin/main. With local main stale at b1e7ba396f it reported 44 changed files and a false VERDICT: FAIL on ui/pages/confirmations/utils/transaction-pay.ts — a file owned by upstream commit e6b1571e9e, not by this PR. Fast-forwarding local main to origin/main dropped the set to 5 files and flipped the verdict to PASS. Worth fixing in the script (use origin/main or the merge base) so the gate cannot fail a PR for another team code.",
+      "dimension": "evidence_contract_basics",
+      "evidence": [
+        "comments-report.md"
       ]
     }
   ],
@@ -99,14 +118,15 @@
   "training_fields": {
     "farm": "metamask-extension",
     "project": "metamask-extension-farm",
-    "flow_type": "dev",
-    "task_type": "dev",
+    "flow_type": "pr-complete",
+    "task_type": "pr-complete",
     "claim_is_visual": false,
     "proof_mode": "mixed",
     "anti_patterns": [],
     "good_patterns": [
       "bundle-symbol grep proves the dependency actually shipped, not just that package.json was edited",
-      "jest -t paired with an exact skipped/passed count defeats the zero-match vacuous pass"
+      "jest -t paired with an exact skipped/passed count defeats the zero-match vacuous pass",
+      "verify the coverage gate base ref before acting on a FAIL — a stale local main attributes upstream files to the PR"
     ]
   },
   "meta": {
@@ -121,7 +141,8 @@
       "recipe-run/summary.json",
       "recipe-run/artifact-manifest.json",
       "recipe-run/diagnostics.json",
-      "recipe-run/summary.json (post-rebase re-run)"
+      "recipe-run/summary.json (post-rebase re-run)",
+      "recipe-run/summary.json (second make-merge-ready re-run)"
     ]
   }
 }

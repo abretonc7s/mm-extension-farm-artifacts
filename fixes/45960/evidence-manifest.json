@@ -1,11 +1,13 @@
 {
   "version": 1,
   "preferred_mode": "screenshots",
-  "summary": "No visual change is claimed. The single screenshot is orientation only: it shows the Perps market surface still rendering live data after the controller bump, re-captured from the post-rebase recipe run (27/27) that this make-merge-ready round performed.",
+  "summary": "No visual change is claimed and none was made this round — zero review comments were actionable. The single screenshot is orientation plus liveness proof: the Perps market surface still renders live data on perps-controller 15.1.0, re-captured from this round's 27/27 recipe run against the post-rebase tree.",
   "standalone": [
     {
-      "label": "ETH market detail on perps-controller 15.1.0 \u2014 live price, 24h change, a hydrated candle chart and an open position all resolve through the upgraded controller",
-      "file": "after-ac3-perps-market-live.png"
+      "label": "ETH market detail on perps-controller 15.1.0 — live price, 24h change, a hydrated candle chart and an open position all resolve through the upgraded controller",
+      "covers": ["C3"],
+      "file": "after-ac3-perps-market-live.png",
+      "note": "Captured by capture-helper (artifact-manifest.json records provider: capture-helper), not the Page.captureScreenshot fallback."
     }
   ]
 }

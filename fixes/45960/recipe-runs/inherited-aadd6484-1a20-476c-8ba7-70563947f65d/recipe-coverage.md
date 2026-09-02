@@ -34,3 +34,27 @@ claims the PR makes. Trace: `recipe-run/trace.json`, 27/27 nodes `ok=true`.
   layout delta, so a before shot would be the same screen.
 
 Overall recipe coverage: 3/3 ACs PROVEN (untestable: none, weak: 0, missing: 0)
+
+---
+
+## Re-validation for the make-merge-ready run (PR #45960)
+
+The matrix above is inherited unchanged from the authoring run — this run altered no product
+code and no recipe node, so every claim, proof mode and node binding still stands as written.
+
+Re-ran the same recipe against the **post-rebase** tree (branch replayed onto `origin/main`
+`246cf98938`, `yarn install --immutable` re-run), which is what the merge will actually produce:
+
+- `mm-harness run` — **pass, 27/27 nodes**, zero failed nodes
+- `artifact-manifest.json` — screenshot `provider: capture-helper` (not the
+  `Page.captureScreenshot` fallback)
+
+Overall recipe coverage: 3/3 ACs PROVEN (untestable: none, weak: 0, missing: 0) — unchanged,
+re-confirmed post-rebase.
+
+### Not covered by this recipe
+
+The two `perps-tpsl.spec.ts` e2e tests fixed in commit `20bc12bc01` are Mocha/Selenium and sit
+outside this recipe's scope; the recipe exercises the live extension over CDP and cannot observe
+e2e mock fixtures. Their fix rests on the code-level diagnosis in `comments-report.md` and is
+verified by CI, which had not finished at completion time.

@@ -8,7 +8,8 @@
       "C1 is proved against the built bundle, not just package.json: a grep for ORDER_CHASE_MAX_DISTANCE_INVALID (first shipped in controller 13.0.0) in dist/chrome. Reverting to ^12.0.0 fails it.",
       "C2 defeats the jest -t vacuous-pass trap by asserting '44 skipped, 1 passed, 45 total' on the title-filtered run, and pairs it with a tsc --noEmit exit-0 gate on the satisfies Record<PerpsErrorCode, string> constraint.",
       "C3 screenshot is capture-helper provenance and shows live ETH data (price, 24h change, candles, open position), preceded by a ui.wait_for on perps-market-detail-price.",
-      "ac3-wait-market-list gates the minimum_market_count: 2 read on a sibling-combinator selector that excludes both the per-row ticker and the eight market-row-skeleton placeholders, so it only matches once two hydrated row roots exist. Verified on a cold browser: the gate blocked 4767ms and the run passed 27/27, against 371ms for the earlier skeleton-matching selector that let the count read a half-hydrated list."
+      "ac3-wait-market-list gates the minimum_market_count: 2 read on a sibling-combinator selector that excludes both the per-row ticker and the eight market-row-skeleton placeholders, so it only matches once two hydrated row roots exist. Verified on a cold browser: the gate blocked 4767ms and the run passed 27/27, against 371ms for the earlier skeleton-matching selector that let the count read a half-hydrated list.",
+      "Re-validated for the make-merge-ready round: same recipe, unchanged nodes, run against the post-rebase tree (branch replayed onto origin/main 246cf98938) \u2014 pass 27/27, screenshot provenance capture-helper."
     ],
     "better_version_guidance": []
   },
@@ -81,6 +82,15 @@
         "evidence-manifest.json",
         "recipe-run/trace.json"
       ]
+    },
+    {
+      "code": "scope.e2e_specs_outside_recipe",
+      "message": "The two perps-tpsl.spec.ts tests fixed in 20bc12bc01 are Mocha/Selenium e2e and sit outside this recipe's scope \u2014 it drives the built extension over CDP and cannot observe e2e mock fixtures. That fix rests on the code-level diagnosis in comments-report.md and is verified by CI, which had not finished at completion time.",
+      "dimension": "ac_coverage",
+      "evidence": [
+        "comments-report.md",
+        "recipe-coverage.md"
+      ]
     }
   ],
   "suggested_recipe_delta": [
@@ -110,7 +120,8 @@
       "recipe-run/trace.json",
       "recipe-run/summary.json",
       "recipe-run/artifact-manifest.json",
-      "recipe-run/diagnostics.json"
+      "recipe-run/diagnostics.json",
+      "recipe-run/summary.json (post-rebase re-run)"
     ]
   }
 }

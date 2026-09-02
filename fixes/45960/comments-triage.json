@@ -11,7 +11,7 @@
     "line": null,
     "body": "**CLA Signature Action:** All authors have signed the CLA. You may need to manually re-run the blocking PR check if it doesn't pass in a few minutes.",
     "triage": "OUT_OF_SCOPE",
-    "action": "Status-only CLA automation; no reply per checklist.",
+    "action": "Status-only CLA automation with no code content; skipped without reply per checklist.",
     "fixed_in_commit": null
   },
   {
@@ -22,11 +22,11 @@
     "reviewer_login": "metamask-ci[bot]",
     "review_state": null,
     "source_kind": "ci",
-    "path": "test/e2e/tests/settings/state-logs.json",
+    "path": null,
     "line": null,
-    "body": "Files requiring CODEOWNER review: @MetaMask/extension-privacy-reviewers (state-logs.json), @MetaMask/perps (2 files).",
+    "body": "Files requiring CODEOWNER review: @MetaMask/extension-privacy-reviewers (1 file), @MetaMask/perps (5 files), @MetaMask/qa (2 files).",
     "triage": "OUT_OF_SCOPE",
-    "action": "Reviewer-routing notice, not a code finding; the state-log keys are the intended change and need human privacy sign-off.",
+    "action": "CODEOWNERS routing listing, not a review finding; skipped without reply.",
     "fixed_in_commit": null
   },
   {
@@ -39,9 +39,9 @@
     "source_kind": "bot",
     "path": "package.json",
     "line": null,
-    "body": "Review the following changes in direct dependencies: @metamask/perps-controller 12.0.0 -> 15.1.0.",
+    "body": "Review the following changes in direct dependencies: @metamask/perps-controller 12.0.0 -> 15.1.0. Supply Chain Security 99 (+1), Vulnerability 100, Quality 91 (+8), Maintenance 99 (+1), License 100.",
     "triage": "FALSE_POSITIVE",
-    "action": "Informational scan with no alert; every score held or improved (supply chain 99 +1, vulnerability 100, quality 91 +8, maintenance 99 +1, license 100).",
+    "action": "Zero alerts raised; every score is 91-100 and each one improved over 12.0.0, so there is nothing to action on the controller bump.",
     "fixed_in_commit": null
   },
   {
@@ -54,9 +54,9 @@
     "source_kind": "ci",
     "path": null,
     "line": null,
-    "body": "Builds ready [4465fce]",
+    "body": "Builds ready [4465fce] - webpack build artifact links for chrome/firefox, beta, flask, test, bundle size and analyzer.",
     "triage": "OUT_OF_SCOPE",
-    "action": "Build-status automation; no reply per checklist.",
+    "action": "Build-artifact links only; skipped without reply.",
     "fixed_in_commit": null
   },
   {
@@ -69,24 +69,9 @@
     "source_kind": "ci",
     "path": null,
     "line": null,
-    "body": "Builds ready [4465fce]",
+    "body": "Builds ready [4465fce] - duplicate build-artifact link post for the same commit.",
     "triage": "OUT_OF_SCOPE",
-    "action": "Duplicate build-status automation; no reply per checklist.",
-    "fixed_in_commit": null
-  },
-  {
-    "comment_id": 5508863693,
-    "review_id": null,
-    "author_login": "sonarqubecloud[bot]",
-    "author_type": "Bot",
-    "reviewer_login": "sonarqubecloud[bot]",
-    "review_state": null,
-    "source_kind": "bot",
-    "path": null,
-    "line": null,
-    "body": "Quality Gate passed. 0 New issues, 0 Accepted issues.",
-    "triage": "FALSE_POSITIVE",
-    "action": "Passing quality gate with zero findings; nothing to act on.",
+    "action": "Duplicate build-artifact links; skipped without reply.",
     "fixed_in_commit": null
   },
   {
@@ -99,9 +84,39 @@
     "source_kind": "ci",
     "path": null,
     "line": null,
-    "body": "Builds ready [0905ed7]",
+    "body": "Builds ready [0905ed7] - webpack build artifact links.",
     "triage": "OUT_OF_SCOPE",
-    "action": "Build-status automation; no reply per checklist.",
+    "action": "Build-artifact links only; skipped without reply.",
+    "fixed_in_commit": null
+  },
+  {
+    "comment_id": 5509471283,
+    "review_id": null,
+    "author_login": "sonarqubecloud[bot]",
+    "author_type": "Bot",
+    "reviewer_login": "sonarqubecloud[bot]",
+    "review_state": null,
+    "source_kind": "bot",
+    "path": null,
+    "line": null,
+    "body": "Quality Gate passed. 0 New issues, 0 Accepted issues, 0 Security Hotspots, 0.0% Coverage on New Code, 0.0% Duplication on New Code.",
+    "triage": "OUT_OF_SCOPE",
+    "action": "Passing quality gate with zero issues; nothing to fix. The 0.0% new-code coverage figure reflects SonarCloud exclusions on the changed files, and local coverage-analyze reports translate-perps-error.ts at 100%.",
+    "fixed_in_commit": null
+  },
+  {
+    "comment_id": 5509581914,
+    "review_id": null,
+    "author_login": "metamask-ci[bot]",
+    "author_type": "Bot",
+    "reviewer_login": "metamask-ci[bot]",
+    "review_state": null,
+    "source_kind": "ci",
+    "path": null,
+    "line": null,
+    "body": "Builds ready [20bc12b] - webpack build artifact links.",
+    "triage": "OUT_OF_SCOPE",
+    "action": "Build-artifact links only; skipped without reply.",
     "fixed_in_commit": null
   }
 ]

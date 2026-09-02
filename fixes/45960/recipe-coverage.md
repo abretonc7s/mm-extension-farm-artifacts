@@ -58,3 +58,39 @@ The two `perps-tpsl.spec.ts` e2e tests fixed in commit `20bc12bc01` are Mocha/Se
 outside this recipe's scope; the recipe exercises the live extension over CDP and cannot observe
 e2e mock fixtures. Their fix rests on the code-level diagnosis in `comments-report.md` and is
 verified by CI, which had not finished at completion time.
+
+---
+
+## Re-validation for the second make-merge-ready round (PR #45960, task `45960-0902-210741`)
+
+Inherited matrix unchanged again. This round altered **no product code, no test, and no recipe
+node** — zero comments triaged REAL — so every claim, proof mode and node binding above still
+stands exactly as written.
+
+Re-ran the same recipe against the tree the merge will actually produce. The branch was rebased
+onto `origin/main` `e6b1571e9e` and `yarn install --immutable` re-run; `mm-harness launch --verify`
+then rebuilt `dist/chrome` and reported `dist-freshness: fresh — dist id matches HEAD`, so the
+C1 bundle grep ran against a bundle built from the post-merge source, not a stale one.
+
+- `mm-harness run` — **pass, 27/27 nodes**, 72s, zero failed nodes
+- `artifact-manifest.json` — screenshot `provider: capture-helper` (not the
+  `Page.captureScreenshot` fallback), so C3's visual half is valid review evidence
+- `mm-harness check diff --profile fast` — pass on all 12 changed files
+  (policy-suppressions, eslint, oxfmt, jest)
+- `coverage-analyze.js` — **PASS**, `translate-perps-error.ts` at 100% (20/20)
+
+Overall recipe coverage: 3/3 ACs PROVEN (untestable: none, weak: 0, missing: 0) — unchanged,
+re-confirmed against `branch + origin/main e6b1571e9e`.
+
+### Non-blocking side findings from this run
+
+The runner flagged two distinct application errors, neither related to the controller bump:
+a `MoneyAccountBalanceService:getMoneyAccountBalance` revert (that service arrived with upstream
+`e6b1571e9e`, pulled in by this round's integration) and repeated `home.html` 404s. Both are
+environmental to the slot; no perps code path is involved.
+
+### Still not covered by this recipe
+
+Unchanged from the previous round: the two `perps-tpsl.spec.ts` e2e tests are Mocha/Selenium and
+sit outside this recipe's CDP scope. They rest on CI, which showed 70 pass / 57 pending / 0 fail
+at the time of this run.
