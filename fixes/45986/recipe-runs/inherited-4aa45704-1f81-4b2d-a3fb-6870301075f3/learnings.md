@@ -1,0 +1,3 @@
+- Loading vs empty: Bugbot caught that `getTradeableBalance(null)` is `'0'`, so dropping `isInitialLoading` turns a loading wallet into an unfunded CTA. Keep the load flag in any zero-balance branch that enables a deposit action.
+- Tests can lock in the bug: the suite already asserted Add funds while `isInitialLoading: true`. When you add a loading-sensitive guard, flip those tests in the same change.
+- Row CTA vs footer CTA: covering only `submit-order-button` left `handleAddFunds` tracking uncovered. Exercise both entry points when the same deposit helper is wired in two places.

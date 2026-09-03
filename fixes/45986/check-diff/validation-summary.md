@@ -4,14 +4,14 @@ Verdict: pass
 Profile: fast
 Fix: no
 Base: origin/main (github-pr: main)
-Changed files: 15
+Changed files: 17
 
 ## Checks
 
-- PASS policy-suppressions (/Users/deeeed/dev/metamask/metamask-extension-4/temp/tasks/fix/45986-0903-091432/artifacts/check-diff/policy-suppressions.log)
-- PASS eslint (/Users/deeeed/dev/metamask/metamask-extension-4/temp/tasks/fix/45986-0903-091432/artifacts/check-diff/eslint.log)
-- PASS oxfmt (/Users/deeeed/dev/metamask/metamask-extension-4/temp/tasks/fix/45986-0903-091432/artifacts/check-diff/oxfmt.log)
-- PASS jest (/Users/deeeed/dev/metamask/metamask-extension-4/temp/tasks/fix/45986-0903-091432/artifacts/check-diff/jest.log)
+- PASS policy-suppressions (/Users/deeeed/dev/metamask/metamask-extension-4/temp/tasks/fix/45986-0903-100638/artifacts/check-diff/policy-suppressions.log)
+- PASS eslint (/Users/deeeed/dev/metamask/metamask-extension-4/temp/tasks/fix/45986-0903-100638/artifacts/check-diff/eslint.log)
+- PASS oxfmt (/Users/deeeed/dev/metamask/metamask-extension-4/temp/tasks/fix/45986-0903-100638/artifacts/check-diff/oxfmt.log)
+- PASS jest (/Users/deeeed/dev/metamask/metamask-extension-4/temp/tasks/fix/45986-0903-100638/artifacts/check-diff/jest.log)
 - SKIP typecheck — profile=fast; run with --profile full for repo-wide typecheck
 
 ## Changed Files
@@ -25,6 +25,8 @@ Changed files: 15
 - ui/components/app/perps/hooks/usePerpsDepositConfirmation.ts
 - ui/components/app/perps/order-entry/components/amount-input/amount-input.test.tsx
 - ui/components/app/perps/order-entry/components/amount-input/amount-input.tsx
+- ui/components/app/perps/order-entry/order-entry.tsx
+- ui/components/app/perps/order-entry/order-entry.types.ts
 - ui/components/app/perps/perps-deposit-toast.test.tsx
 - ui/components/app/perps/perps-deposit-toast.tsx
 - ui/components/app/perps/utils/unfunded-deposit-funnel.test.ts

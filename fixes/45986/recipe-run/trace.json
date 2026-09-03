@@ -11,9 +11,9 @@
       "nodeId": "setup-unlock",
       "action": "metamask.wallet.ensure_unlocked",
       "intent": "Make the wallet usable so Perps can load",
-      "startedAt": "2026-09-03T01:39:09.292Z",
-      "endedAt": "2026-09-03T01:39:09.353Z",
-      "durationMs": 61,
+      "startedAt": "2026-09-03T02:13:44.741Z",
+      "endedAt": "2026-09-03T02:13:45.039Z",
+      "durationMs": 298,
       "ok": true,
       "next": "setup-select-unfunded",
       "output": {
@@ -22,10 +22,10 @@
         "alreadyUnlocked": true,
         "proofPath": "extension-unlocked-state",
         "cdpPort": 7664,
-        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/",
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/BTC?direction=long&mode=new",
         "runtimeLaunch": null,
-        "cdpTargetId": "ACFD4FB9EFF92B98546333F9703EBADA",
-        "runtimeSessionId": "7422acf1-cb65-4eb5-8ae5-acaf0c57f53a",
+        "cdpTargetId": "055056AA3346CF632A2FDF809788F641",
+        "runtimeSessionId": "385558dd-478f-4f8e-875b-40288a6af71d",
         "liveAdapter": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/actions/extension/wallet/ensure_unlocked.mjs"
       }
     },
@@ -33,9 +33,9 @@
       "nodeId": "setup-select-unfunded",
       "action": "metamask.wallet.select_account",
       "intent": "Select the fixture unfunded Perps wallet (dev6) instead of assuming Account 2 has a zero balance",
-      "startedAt": "2026-09-03T01:39:09.357Z",
-      "endedAt": "2026-09-03T01:39:09.986Z",
-      "durationMs": 629,
+      "startedAt": "2026-09-03T02:13:45.102Z",
+      "endedAt": "2026-09-03T02:13:45.891Z",
+      "durationMs": 789,
       "ok": true,
       "next": "setup-open-trade",
       "output": {
@@ -48,10 +48,10 @@
         },
         "proofPath": "extension-background-account-selection",
         "cdpPort": 7664,
-        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/",
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/BTC?direction=long&mode=new",
         "runtimeLaunch": null,
-        "cdpTargetId": "ACFD4FB9EFF92B98546333F9703EBADA",
-        "runtimeSessionId": "7422acf1-cb65-4eb5-8ae5-acaf0c57f53a",
+        "cdpTargetId": "055056AA3346CF632A2FDF809788F641",
+        "runtimeSessionId": "385558dd-478f-4f8e-875b-40288a6af71d",
         "liveAdapter": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/actions/extension/wallet/select_account.mjs"
       }
     },
@@ -59,25 +59,25 @@
       "nodeId": "setup-open-trade",
       "action": "ui.navigate",
       "intent": "Land on the BTC long order form",
-      "startedAt": "2026-09-03T01:39:09.994Z",
-      "endedAt": "2026-09-03T01:39:10.113Z",
-      "durationMs": 119,
+      "startedAt": "2026-09-03T02:13:45.902Z",
+      "endedAt": "2026-09-03T02:13:46.107Z",
+      "durationMs": 205,
       "ok": true,
       "next": "setup-wait-form",
       "output": {
         "action": "ui.navigate",
         "hash": "#/perps/trade/BTC?direction=long&mode=new",
         "navigation": {
-          "before": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/",
+          "before": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/BTC?direction=long&mode=new",
           "href": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/BTC?direction=long&mode=new",
           "sameDocument": true
         },
         "proofPath": "ui-navigation",
         "cdpPort": 7664,
-        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/",
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/BTC?direction=long&mode=new",
         "runtimeLaunch": null,
-        "cdpTargetId": "ACFD4FB9EFF92B98546333F9703EBADA",
-        "runtimeSessionId": "7422acf1-cb65-4eb5-8ae5-acaf0c57f53a",
+        "cdpTargetId": "055056AA3346CF632A2FDF809788F641",
+        "runtimeSessionId": "385558dd-478f-4f8e-875b-40288a6af71d",
         "liveAdapter": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/actions/extension/ui/navigate.mjs"
       },
       "observations": {
@@ -104,9 +104,9 @@
       "nodeId": "setup-wait-form",
       "action": "ui.wait_for",
       "intent": "The sticky footer submit control is visible",
-      "startedAt": "2026-09-03T01:39:10.125Z",
-      "endedAt": "2026-09-03T01:39:12.984Z",
-      "durationMs": 2859,
+      "startedAt": "2026-09-03T02:13:46.139Z",
+      "endedAt": "2026-09-03T02:13:46.800Z",
+      "durationMs": 661,
       "ok": true,
       "next": "setup-wait-zero-balance",
       "output": {
@@ -114,8 +114,8 @@
         "cdpPort": 7664,
         "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/BTC?direction=long&mode=new",
         "runtimeLaunch": null,
-        "cdpTargetId": "ACFD4FB9EFF92B98546333F9703EBADA",
-        "runtimeSessionId": "7422acf1-cb65-4eb5-8ae5-acaf0c57f53a"
+        "cdpTargetId": "055056AA3346CF632A2FDF809788F641",
+        "runtimeSessionId": "385558dd-478f-4f8e-875b-40288a6af71d"
       },
       "observations": {
         "ui.screen": {
@@ -198,12 +198,12 @@
               "label": "Add funds",
               "test_id": "amount-input-add-funds",
               "selector": "[data-testid=\"amount-input-add-funds\"]",
-              "enabled": true,
+              "enabled": false,
               "bounds": {
-                "x": 891,
-                "y": 180,
-                "width": 92,
-                "height": 32
+                "x": 963,
+                "y": 181,
+                "width": 20,
+                "height": 20
               }
             },
             {
@@ -213,7 +213,7 @@
               "focused": true,
               "bounds": {
                 "x": 264,
-                "y": 224,
+                "y": 214,
                 "width": 646,
                 "height": 40
               }
@@ -226,7 +226,7 @@
               "enabled": true,
               "bounds": {
                 "x": 947,
-                "y": 234,
+                "y": 224,
                 "width": 20,
                 "height": 20
               }
@@ -236,7 +236,7 @@
               "enabled": true,
               "bounds": {
                 "x": 911,
-                "y": 276,
+                "y": 266,
                 "width": 45,
                 "height": 32
               }
@@ -246,7 +246,7 @@
               "enabled": true,
               "bounds": {
                 "x": 911,
-                "y": 354,
+                "y": 344,
                 "width": 48,
                 "height": 32
               }
@@ -259,7 +259,7 @@
               "enabled": true,
               "bounds": {
                 "x": 326,
-                "y": 596,
+                "y": 634,
                 "width": 16,
                 "height": 16
               }
@@ -272,7 +272,7 @@
               "enabled": true,
               "bounds": {
                 "x": 217,
-                "y": 623,
+                "y": 661,
                 "width": 766,
                 "height": 22
               }
@@ -285,7 +285,7 @@
               "enabled": true,
               "bounds": {
                 "x": 265,
-                "y": 656,
+                "y": 694,
                 "width": 16,
                 "height": 16
               }
@@ -298,17 +298,17 @@
               "enabled": true,
               "bounds": {
                 "x": 252,
-                "y": 686,
+                "y": 724,
                 "width": 16,
                 "height": 16
               }
             },
             {
               "role": "button",
-              "label": "Add funds to trade",
+              "label": "Insufficient funds",
               "test_id": "submit-order-button",
               "selector": "[data-testid=\"submit-order-button\"]",
-              "enabled": true,
+              "enabled": false,
               "bounds": {
                 "x": 217,
                 "y": 759,
@@ -322,8 +322,8 @@
               "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > form > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(1) > div > span > span:nth-of-type(3) > input",
               "enabled": true,
               "bounds": {
-                "x": 223,
-                "y": 290,
+                "x": 230,
+                "y": 280,
                 "width": 12,
                 "height": 12
               },
@@ -334,7 +334,7 @@
               "enabled": true,
               "bounds": {
                 "x": 257,
-                "y": 368,
+                "y": 358,
                 "width": 12,
                 "height": 12
               },
@@ -346,7 +346,7 @@
               "enabled": true,
               "bounds": {
                 "x": 930,
-                "y": 444,
+                "y": 434,
                 "width": 1,
                 "height": 1
               },
@@ -365,9 +365,9 @@
       "nodeId": "setup-wait-zero-balance",
       "action": "ui.wait_for",
       "intent": "Available to trade is zero on this wallet",
-      "startedAt": "2026-09-03T01:39:12.991Z",
-      "endedAt": "2026-09-03T01:39:13.341Z",
-      "durationMs": 350,
+      "startedAt": "2026-09-03T02:13:46.820Z",
+      "endedAt": "2026-09-03T02:13:47.268Z",
+      "durationMs": 448,
       "ok": true,
       "next": "ac2-wait-hint",
       "output": {
@@ -375,8 +375,8 @@
         "cdpPort": 7664,
         "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/BTC?direction=long&mode=new",
         "runtimeLaunch": null,
-        "cdpTargetId": "ACFD4FB9EFF92B98546333F9703EBADA",
-        "runtimeSessionId": "7422acf1-cb65-4eb5-8ae5-acaf0c57f53a"
+        "cdpTargetId": "055056AA3346CF632A2FDF809788F641",
+        "runtimeSessionId": "385558dd-478f-4f8e-875b-40288a6af71d"
       },
       "observations": {
         "ui.screen": {
@@ -459,12 +459,12 @@
               "label": "Add funds",
               "test_id": "amount-input-add-funds",
               "selector": "[data-testid=\"amount-input-add-funds\"]",
-              "enabled": true,
+              "enabled": false,
               "bounds": {
-                "x": 891,
-                "y": 180,
-                "width": 92,
-                "height": 32
+                "x": 963,
+                "y": 181,
+                "width": 20,
+                "height": 20
               }
             },
             {
@@ -474,7 +474,7 @@
               "focused": true,
               "bounds": {
                 "x": 264,
-                "y": 224,
+                "y": 214,
                 "width": 646,
                 "height": 40
               }
@@ -487,7 +487,7 @@
               "enabled": true,
               "bounds": {
                 "x": 947,
-                "y": 234,
+                "y": 224,
                 "width": 20,
                 "height": 20
               }
@@ -497,7 +497,7 @@
               "enabled": true,
               "bounds": {
                 "x": 911,
-                "y": 276,
+                "y": 266,
                 "width": 45,
                 "height": 32
               }
@@ -507,7 +507,7 @@
               "enabled": true,
               "bounds": {
                 "x": 911,
-                "y": 354,
+                "y": 344,
                 "width": 48,
                 "height": 32
               }
@@ -520,7 +520,7 @@
               "enabled": true,
               "bounds": {
                 "x": 326,
-                "y": 596,
+                "y": 634,
                 "width": 16,
                 "height": 16
               }
@@ -533,7 +533,7 @@
               "enabled": true,
               "bounds": {
                 "x": 217,
-                "y": 623,
+                "y": 661,
                 "width": 766,
                 "height": 22
               }
@@ -546,7 +546,7 @@
               "enabled": true,
               "bounds": {
                 "x": 265,
-                "y": 656,
+                "y": 694,
                 "width": 16,
                 "height": 16
               }
@@ -559,17 +559,17 @@
               "enabled": true,
               "bounds": {
                 "x": 252,
-                "y": 686,
+                "y": 724,
                 "width": 16,
                 "height": 16
               }
             },
             {
               "role": "button",
-              "label": "Add funds to trade",
+              "label": "Insufficient funds",
               "test_id": "submit-order-button",
               "selector": "[data-testid=\"submit-order-button\"]",
-              "enabled": true,
+              "enabled": false,
               "bounds": {
                 "x": 217,
                 "y": 759,
@@ -583,8 +583,8 @@
               "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > form > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(1) > div > span > span:nth-of-type(3) > input",
               "enabled": true,
               "bounds": {
-                "x": 223,
-                "y": 290,
+                "x": 230,
+                "y": 280,
                 "width": 12,
                 "height": 12
               },
@@ -595,7 +595,7 @@
               "enabled": true,
               "bounds": {
                 "x": 257,
-                "y": 368,
+                "y": 358,
                 "width": 12,
                 "height": 12
               },
@@ -607,7 +607,7 @@
               "enabled": true,
               "bounds": {
                 "x": 930,
-                "y": 444,
+                "y": 434,
                 "width": 1,
                 "height": 1
               },
@@ -629,9 +629,9 @@
       "proves": [
         "ac2-enabled-add-funds-cta"
       ],
-      "startedAt": "2026-09-03T01:39:13.345Z",
-      "endedAt": "2026-09-03T01:39:13.683Z",
-      "durationMs": 338,
+      "startedAt": "2026-09-03T02:13:47.283Z",
+      "endedAt": "2026-09-03T02:13:48.772Z",
+      "durationMs": 1489,
       "ok": true,
       "next": "ac2-wait-cta",
       "output": {
@@ -639,8 +639,8 @@
         "cdpPort": 7664,
         "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/BTC?direction=long&mode=new",
         "runtimeLaunch": null,
-        "cdpTargetId": "ACFD4FB9EFF92B98546333F9703EBADA",
-        "runtimeSessionId": "7422acf1-cb65-4eb5-8ae5-acaf0c57f53a"
+        "cdpTargetId": "055056AA3346CF632A2FDF809788F641",
+        "runtimeSessionId": "385558dd-478f-4f8e-875b-40288a6af71d"
       },
       "observations": {
         "ui.screen": {
@@ -847,7 +847,7 @@
               "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > form > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(1) > div > span > span:nth-of-type(3) > input",
               "enabled": true,
               "bounds": {
-                "x": 223,
+                "x": 230,
                 "y": 290,
                 "width": 12,
                 "height": 12
@@ -893,9 +893,9 @@
       "proves": [
         "ac2-enabled-add-funds-cta"
       ],
-      "startedAt": "2026-09-03T01:39:13.689Z",
-      "endedAt": "2026-09-03T01:39:14.039Z",
-      "durationMs": 350,
+      "startedAt": "2026-09-03T02:13:48.778Z",
+      "endedAt": "2026-09-03T02:13:49.137Z",
+      "durationMs": 359,
       "ok": true,
       "next": "ac2-wait-enabled",
       "output": {
@@ -903,8 +903,8 @@
         "cdpPort": 7664,
         "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/BTC?direction=long&mode=new",
         "runtimeLaunch": null,
-        "cdpTargetId": "ACFD4FB9EFF92B98546333F9703EBADA",
-        "runtimeSessionId": "7422acf1-cb65-4eb5-8ae5-acaf0c57f53a"
+        "cdpTargetId": "055056AA3346CF632A2FDF809788F641",
+        "runtimeSessionId": "385558dd-478f-4f8e-875b-40288a6af71d"
       },
       "observations": {
         "ui.screen": {
@@ -1111,7 +1111,7 @@
               "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > form > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(1) > div > span > span:nth-of-type(3) > input",
               "enabled": true,
               "bounds": {
-                "x": 223,
+                "x": 230,
                 "y": 290,
                 "width": 12,
                 "height": 12
@@ -1157,9 +1157,9 @@
       "proves": [
         "ac2-enabled-add-funds-cta"
       ],
-      "startedAt": "2026-09-03T01:39:14.048Z",
-      "endedAt": "2026-09-03T01:39:14.398Z",
-      "durationMs": 350,
+      "startedAt": "2026-09-03T02:13:49.154Z",
+      "endedAt": "2026-09-03T02:13:49.508Z",
+      "durationMs": 354,
       "ok": true,
       "next": "ac2-kill-capture-helper",
       "output": {
@@ -1167,8 +1167,8 @@
         "cdpPort": 7664,
         "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/BTC?direction=long&mode=new",
         "runtimeLaunch": null,
-        "cdpTargetId": "ACFD4FB9EFF92B98546333F9703EBADA",
-        "runtimeSessionId": "7422acf1-cb65-4eb5-8ae5-acaf0c57f53a"
+        "cdpTargetId": "055056AA3346CF632A2FDF809788F641",
+        "runtimeSessionId": "385558dd-478f-4f8e-875b-40288a6af71d"
       },
       "observations": {
         "ui.screen": {
@@ -1375,7 +1375,7 @@
               "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > form > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(1) > div > span > span:nth-of-type(3) > input",
               "enabled": true,
               "bounds": {
-                "x": 223,
+                "x": 230,
                 "y": 290,
                 "width": 12,
                 "height": 12
@@ -1418,9 +1418,9 @@
       "nodeId": "ac2-kill-capture-helper",
       "action": "command",
       "intent": "Avoid a stale screenshot helper stealing the capture",
-      "startedAt": "2026-09-03T01:39:14.403Z",
-      "endedAt": "2026-09-03T01:39:14.454Z",
-      "durationMs": 51,
+      "startedAt": "2026-09-03T02:13:49.517Z",
+      "endedAt": "2026-09-03T02:13:49.610Z",
+      "durationMs": 93,
       "ok": true,
       "next": "ac2-screenshot-cta",
       "output": {
@@ -1447,17 +1447,17 @@
           "metadata": {
             "provider": "capture-helper",
             "mode": "snapshot",
-            "pid": 75762,
+            "pid": 92943,
             "captureHelper": {
-              "bytes": 603470,
-              "output": "/Users/deeeed/dev/metamask/metamask-extension-4/temp/tasks/fix/45986-0903-091432/artifacts/recipe-run/screenshots/.mm-harness-extension-evidence-UOF47v/captured.png",
+              "bytes": 610338,
+              "output": "/Users/deeeed/dev/metamask/metamask-extension-4/temp/tasks/fix/45986-0903-100638/artifacts/recipe-run/screenshots/.mm-harness-extension-evidence-4TDVeM/captured.png",
               "selected": {
                 "app": "Google Chrome for Testing",
                 "height": 996,
-                "id": 4598,
+                "id": 4605,
                 "layer": 0,
                 "onScreen": true,
-                "pid": 75762,
+                "pid": 92943,
                 "title": "macpro-mme-4 — MetaMask",
                 "width": 1200,
                 "x": 22,
@@ -1469,9 +1469,9 @@
           }
         }
       ],
-      "startedAt": "2026-09-03T01:39:14.458Z",
-      "endedAt": "2026-09-03T01:39:14.670Z",
-      "durationMs": 212,
+      "startedAt": "2026-09-03T02:13:49.619Z",
+      "endedAt": "2026-09-03T02:13:50.147Z",
+      "durationMs": 528,
       "ok": true,
       "next": "done",
       "output": {
@@ -1487,17 +1487,17 @@
           "metadata": {
             "provider": "capture-helper",
             "mode": "snapshot",
-            "pid": 75762,
+            "pid": 92943,
             "captureHelper": {
-              "bytes": 603470,
-              "output": "/Users/deeeed/dev/metamask/metamask-extension-4/temp/tasks/fix/45986-0903-091432/artifacts/recipe-run/screenshots/.mm-harness-extension-evidence-UOF47v/captured.png",
+              "bytes": 610338,
+              "output": "/Users/deeeed/dev/metamask/metamask-extension-4/temp/tasks/fix/45986-0903-100638/artifacts/recipe-run/screenshots/.mm-harness-extension-evidence-4TDVeM/captured.png",
               "selected": {
                 "app": "Google Chrome for Testing",
                 "height": 996,
-                "id": 4598,
+                "id": 4605,
                 "layer": 0,
                 "onScreen": true,
-                "pid": 75762,
+                "pid": 92943,
                 "title": "macpro-mme-4 — MetaMask",
                 "width": 1200,
                 "x": 22,
@@ -1714,7 +1714,7 @@
               "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > form > div:nth-of-type(2) > div:nth-of-type(2) > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(1) > div > span > span:nth-of-type(3) > input",
               "enabled": true,
               "bounds": {
-                "x": 223,
+                "x": 230,
                 "y": 290,
                 "width": 12,
                 "height": 12
@@ -1756,9 +1756,9 @@
     {
       "nodeId": "done",
       "action": "end",
-      "startedAt": "2026-09-03T01:39:14.675Z",
-      "endedAt": "2026-09-03T01:39:14.675Z",
-      "durationMs": 0,
+      "startedAt": "2026-09-03T02:13:50.168Z",
+      "endedAt": "2026-09-03T02:13:50.169Z",
+      "durationMs": 1,
       "ok": true,
       "status": "pass"
     },
@@ -1766,9 +1766,9 @@
       "nodeId": "teardown-restore-account",
       "action": "metamask.wallet.select_account",
       "intent": "Put the funded Perps wallet back so later runs keep their balance",
-      "startedAt": "2026-09-03T01:39:14.675Z",
-      "endedAt": "2026-09-03T01:39:15.250Z",
-      "durationMs": 575,
+      "startedAt": "2026-09-03T02:13:50.169Z",
+      "endedAt": "2026-09-03T02:13:50.737Z",
+      "durationMs": 568,
       "ok": true,
       "next": "teardown-done",
       "output": {
@@ -1783,16 +1783,16 @@
         "cdpPort": 7664,
         "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/BTC?direction=long&mode=new",
         "runtimeLaunch": null,
-        "cdpTargetId": "ACFD4FB9EFF92B98546333F9703EBADA",
-        "runtimeSessionId": "7422acf1-cb65-4eb5-8ae5-acaf0c57f53a",
+        "cdpTargetId": "055056AA3346CF632A2FDF809788F641",
+        "runtimeSessionId": "385558dd-478f-4f8e-875b-40288a6af71d",
         "liveAdapter": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/actions/extension/wallet/select_account.mjs"
       }
     },
     {
       "nodeId": "teardown-done",
       "action": "end",
-      "startedAt": "2026-09-03T01:39:15.257Z",
-      "endedAt": "2026-09-03T01:39:15.257Z",
+      "startedAt": "2026-09-03T02:13:50.745Z",
+      "endedAt": "2026-09-03T02:13:50.745Z",
       "durationMs": 0,
       "ok": true,
       "status": "pass"

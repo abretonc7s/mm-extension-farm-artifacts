@@ -5,7 +5,7 @@
     "verdict": "PASS",
     "reasons": [
       "AC2 is proven by ac2-wait-hint, ac2-wait-cta, ac2-wait-enabled and a capture-helper snapshot of the enabled Add funds to trade control.",
-      "AC1 funnel emits including trade_submitted_after_deposit page wiring are covered by unit tests; live Segment capture on this webpack-dev slot returned no events.",
+      "This run re-validated after the row-CTA loading-state fix.",
       "AC3 post-launch conversion is UNTESTABLE in-slot."
     ],
     "better_version_guidance": []
@@ -13,36 +13,29 @@
   "dimensions": {
     "graph_integrity": {
       "status": "pass",
-      "reason": "Workflow graph is valid; setup selects the fixture unfunded wallet (dev6) by address; teardown restores Account 1.",
-      "evidence": [
-        "recipe.json"
-      ]
+      "reason": "Workflow graph is valid; setup selects the fixture unfunded wallet; teardown restores Account 1.",
+      "evidence": ["recipe.json"]
     },
     "ac_coverage": {
       "status": "pass",
-      "reason": "AC2 bound to ac2-* nodes; AC1 proven by unit tests; AC3 UNTESTABLE with rationale.",
-      "evidence": [
-        "recipe-coverage.md",
-        "trace.json"
-      ]
+      "reason": "AC2 bound to ac2-* nodes.",
+      "evidence": ["recipe-coverage.md", "trace.json"]
     },
     "evidence_contract_basics": {
       "status": "pass",
-      "reason": "Visual AC has wait_for on the claimed target plus a capture-helper PNG.",
-      "evidence": [
-        "after-ac2-unfunded-cta.png"
-      ]
+      "reason": "Visual AC has wait_for plus a capture-helper PNG.",
+      "evidence": ["recipe-run/screenshots/after-ac2-unfunded-cta.png"]
     }
   },
   "structural_findings": [],
   "contextual_findings": [],
   "suggested_recipe_delta": [],
   "training_fields": {
-    "proof_mode": "unknown",
+    "proof_mode": "mixed",
     "farm": "metamask-extension",
     "project": "metamask-extension-farm",
-    "flowType": "dev",
-    "taskType": "dev",
+    "flowType": "fix",
+    "taskType": "pr-complete",
     "claimIsVisual": true,
     "proofMode": "mixed"
   },
@@ -51,8 +44,6 @@
     "fallback_used": false,
     "legacy_task": false,
     "artifact_required": true,
-    "source_signals": [
-      "recipe-quality.json"
-    ]
+    "source_signals": ["recipe-quality.json"]
   }
 }
