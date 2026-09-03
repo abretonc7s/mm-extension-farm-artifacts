@@ -1,0 +1,75 @@
+{
+  "version": 1,
+  "verdict": "pass",
+  "compact": {
+    "verdict": "PASS",
+    "reasons": [
+      "AC1-AC4 all bind to ac<N>-* nodes; trace.json shows 25/25 entries ok=true.",
+      "AC1 and AC2 are visual claims and carry capture-helper screenshots that show the rail on the Perps tab and the destination list already narrowed to Crypto.",
+      "AC2 asserts the destination's own filter-select-button reads Crypto, so navigation alone cannot pass the recipe.",
+      "AC3 and AC4 are non-visual claims proved by named jest assertions guarded with assert_output \"1 passed\" plus assert_exit_code 0, not by screenshots.",
+      "Reverting the PR fails the recipe: ac1-wait-category-rail timed out on the pre-move run, which is the empirical revert check."
+    ],
+    "better_version_guidance": []
+  },
+  "dimensions": {
+    "graph_integrity": {
+      "status": "pass",
+      "reason": "Single reachable chain from gate-cdp-reachable to done; no switch/default routing around an assertion, no manual action, no wait > 500ms standing in for wait_for.",
+      "evidence": ["recipe.json", "recipe-run/trace.json"]
+    },
+    "action_contract": {
+      "status": "pass",
+      "reason": "Every node uses a manifest-declared action and only manifest-declared fields; validated with mm-harness run --plan (status pass, zero findings) before the live run.",
+      "evidence": ["recipe.json"]
+    },
+    "ac_coverage": {
+      "status": "pass",
+      "reason": "Four ACs, four ac<N>-* node groups, no AC left to a generic setup node and none marked UNTESTABLE.",
+      "evidence": ["recipe-coverage.md", "recipe-run/trace.json"]
+    },
+    "evidence_contract_basics": {
+      "status": "pass",
+      "reason": "Both screenshots are preceded by a ui.wait_for on the claimed target and a ui.scroll into view; artifact-manifest.json records provider capture-helper for both, not extension-dom-raster or Page.captureScreenshot. Hidden claims (skeleton gating, keyboard activation) carry test evidence rather than padded screenshots.",
+      "evidence": [
+        "recipe-run/screenshots/evidence-ac1-category-pills-visible.png",
+        "recipe-run/screenshots/evidence-ac2-market-list-filtered-crypto.png",
+        "recipe-run/artifact-manifest.json"
+      ]
+    },
+    "perps_state_setup": {
+      "status": "pass",
+      "reason": "The rail is derived from the live market-list stream, so the only state needed is a loaded Perps tab; no position, order or balance state is required and none was faked. ui.navigate page=perps is the high-level action for this surface, so no raw setup steps were written.",
+      "evidence": ["recipe.json", "recipe-run/trace.json"]
+    }
+  },
+  "structural_findings": [],
+  "contextual_findings": [],
+  "suggested_recipe_delta": [],
+  "training_fields": {
+    "farm": "metamask-extension",
+    "project": "metamask-extension-farm",
+    "flow_type": "dev",
+    "task_type": "dev",
+    "claim_is_visual": true,
+    "proof_mode": "mixed",
+    "anti_patterns": [],
+    "good_patterns": [
+      "assert_output \"1 passed\" paired with assert_exit_code 0, because jest -t exits 0 when a title filter matches nothing",
+      "CSS-selector wait_for on button[...]:not([disabled]):not([tabindex=\"-1\"]) to prove focusability, which a screenshot cannot show",
+      "explicit ui.scroll into view before a visual assertion on a section below the fold"
+    ]
+  },
+  "meta": {
+    "producer": "worker",
+    "fallback_used": false,
+    "legacy_task": false,
+    "artifact_required": true,
+    "source_signals": [
+      "recipe.json",
+      "recipe-coverage.md",
+      "recipe-run/trace.json",
+      "recipe-run/artifact-manifest.json"
+    ]
+  }
+}

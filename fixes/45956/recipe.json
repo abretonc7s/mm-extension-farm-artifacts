@@ -1,0 +1,191 @@
+{
+  "$schema": "https://farmslot.io/schemas/recipe-v1.schema.json",
+  "title": "TAT-3848 \u2014 Perps tab market category pills",
+  "description": "Proves the Perps tab renders a horizontally scrollable rail of MMDS ButtonFilter category pills, that tapping one lands on the market list pre-filtered to that category, that the rail is skeleton-gated while market data loads, and that every pill is a focusable native button inside a labelled group.",
+  "workflow": {
+    "entry": "gate-cdp-reachable",
+    "nodes": {
+      "gate-cdp-reachable": {
+        "action": "cdp.target",
+        "cdp_port": 6663,
+        "require_reachable": true,
+        "intent": "Refuse to report proof unless the live extension is actually attached",
+        "next": "setup-open-perps-tab"
+      },
+      "setup-open-perps-tab": {
+        "action": "ui.navigate",
+        "page": "perps",
+        "intent": "Put the user on the Perps tab, the surface the category rail is added to",
+        "next": "setup-wait-perps-tab"
+      },
+      "setup-wait-perps-tab": {
+        "action": "ui.wait_for",
+        "test_id": "parent-selector-perps-tab",
+        "expected": "visible",
+        "timeout_ms": 30000,
+        "intent": "Hold until the Perps tab has finished its initial market load so the rail is judged on real data",
+        "next": "setup-scroll-rail-into-view"
+      },
+      "setup-scroll-rail-into-view": {
+        "action": "ui.scroll",
+        "test_id": "perps-market-categories",
+        "scroll_into_view": true,
+        "timeout_ms": 20000,
+        "intent": "Bring the category rail into the viewport so the proof is judged on what a user can actually see",
+        "next": "ac1-wait-category-rail"
+      },
+      "ac1-wait-category-rail": {
+        "action": "ui.wait_for",
+        "test_id": "perps-market-categories-list",
+        "expected": "visible",
+        "timeout_ms": 20000,
+        "intent": "The category rail is on screen for the user, not merely in the document",
+        "next": "ac1-assert-horizontal-scroller"
+      },
+      "ac1-assert-horizontal-scroller": {
+        "action": "ui.wait_for",
+        "selector": "[data-testid=\"perps-market-categories\"].overflow-x-auto",
+        "expected": "visible",
+        "timeout_ms": 20000,
+        "intent": "The rail scrolls horizontally rather than wrapping or clipping its pills",
+        "next": "ac1-wait-all-pill"
+      },
+      "ac1-wait-all-pill": {
+        "action": "ui.wait_for",
+        "test_id": "perps-market-categories-pill-all",
+        "text": "All",
+        "expected": "visible",
+        "timeout_ms": 20000,
+        "intent": "The rail offers the All shortcut back to the unfiltered market list",
+        "next": "ac1-wait-crypto-pill"
+      },
+      "ac1-wait-crypto-pill": {
+        "action": "ui.wait_for",
+        "test_id": "perps-market-categories-pill-crypto",
+        "text": "Crypto",
+        "expected": "visible",
+        "timeout_ms": 20000,
+        "intent": "The rail offers a real category derived from the live market data",
+        "next": "ac1-clear-capture-orphans"
+      },
+      "ac1-clear-capture-orphans": {
+        "action": "command",
+        "cmd": "pkill -9 -f 'capture-helper' || true",
+        "intent": "Keep the upcoming capture on the real screenshot provider instead of a silent fallback",
+        "next": "ac1-screenshot-category-rail"
+      },
+      "ac1-screenshot-category-rail": {
+        "action": "ui.screenshot",
+        "path": "screenshots/evidence-ac1-category-pills-visible.png",
+        "label": "AC1: Perps tab shows the category pill rail with All and Crypto",
+        "intent": "Show the reader the pill rail as it appears on the Perps tab",
+        "next": "ac4-assert-pill-is-focusable-button"
+      },
+      "ac4-assert-pill-is-focusable-button": {
+        "action": "ui.wait_for",
+        "selector": "button[data-testid=\"perps-market-categories-pill-crypto\"]:not([disabled]):not([tabindex=\"-1\"])",
+        "expected": "visible",
+        "timeout_ms": 20000,
+        "intent": "Each pill is a real enabled button, so Tab reaches it and Enter or Space activates it",
+        "next": "ac4-assert-rail-is-labelled-group"
+      },
+      "ac4-assert-rail-is-labelled-group": {
+        "action": "ui.wait_for",
+        "selector": "[data-testid=\"perps-market-categories\"][role=\"group\"][aria-label]",
+        "expected": "visible",
+        "timeout_ms": 20000,
+        "intent": "A screen reader announces the rail as one named group rather than loose buttons",
+        "next": "ac2-press-crypto-pill"
+      },
+      "ac2-press-crypto-pill": {
+        "action": "ui.press",
+        "test_id": "perps-market-categories-pill-crypto",
+        "timeout_ms": 20000,
+        "intent": "Take the route a user takes when they want to browse only crypto markets",
+        "next": "ac2-wait-market-list"
+      },
+      "ac2-wait-market-list": {
+        "action": "ui.wait_for",
+        "test_id": "parent-selector-perps-market-list",
+        "expected": "visible",
+        "timeout_ms": 20000,
+        "intent": "The pill landed the user on the full market list page",
+        "next": "ac2-assert-filter-preselected"
+      },
+      "ac2-assert-filter-preselected": {
+        "action": "ui.wait_for",
+        "test_id": "filter-select-button",
+        "text": "Crypto",
+        "expected": "visible",
+        "timeout_ms": 20000,
+        "intent": "The market list arrived already narrowed to Crypto instead of the default All",
+        "next": "ac2-clear-capture-orphans"
+      },
+      "ac2-clear-capture-orphans": {
+        "action": "command",
+        "cmd": "pkill -9 -f 'capture-helper' || true",
+        "intent": "Keep the upcoming capture on the real screenshot provider instead of a silent fallback",
+        "next": "ac2-screenshot-market-list-filtered"
+      },
+      "ac2-screenshot-market-list-filtered": {
+        "action": "ui.screenshot",
+        "path": "screenshots/evidence-ac2-market-list-filtered-crypto.png",
+        "label": "AC2: market list opened from the Crypto pill with the Crypto filter already applied",
+        "intent": "Show the reader that the destination page arrived pre-filtered",
+        "next": "ac3-run-skeleton-gating-test"
+      },
+      "ac3-run-skeleton-gating-test": {
+        "action": "command",
+        "cmd": "yarn jest ui/components/app/perps/perps-market-categories/perps-market-categories.test.tsx --no-coverage -t 'loading state' 2>&1",
+        "timeout_ms": 600000,
+        "intent": "Show that the loading pass reserves the rail's final height so nothing jumps when data arrives",
+        "next": "ac3-assert-skeleton-test-ran"
+      },
+      "ac3-assert-skeleton-test-ran": {
+        "action": "assert_output",
+        "node": "ac3-run-skeleton-gating-test",
+        "contains": "2 passed",
+        "intent": "Refuse to count a title filter that silently matched nothing as proof",
+        "next": "ac3-assert-skeleton-test-passed"
+      },
+      "ac3-assert-skeleton-test-passed": {
+        "action": "assert_exit_code",
+        "node": "ac3-run-skeleton-gating-test",
+        "expected": 0,
+        "intent": "The skeleton gating assertion actually passed",
+        "next": "ac4-run-keyboard-test"
+      },
+      "ac4-run-keyboard-test": {
+        "action": "command",
+        "cmd": "yarn jest ui/components/app/perps/perps-market-categories/perps-market-categories.test.tsx --no-coverage -t 'navigates to the filtered market list when a pill is activated from the keyboard' 2>&1",
+        "timeout_ms": 600000,
+        "intent": "Show that a keyboard-only user can reach and fire a pill, not just a mouse user",
+        "next": "ac4-assert-keyboard-test-ran"
+      },
+      "ac4-assert-keyboard-test-ran": {
+        "action": "assert_output",
+        "node": "ac4-run-keyboard-test",
+        "contains": "1 passed",
+        "intent": "Refuse to count a title filter that silently matched nothing as proof",
+        "next": "ac4-assert-keyboard-test-passed"
+      },
+      "ac4-assert-keyboard-test-passed": {
+        "action": "assert_exit_code",
+        "node": "ac4-run-keyboard-test",
+        "expected": 0,
+        "intent": "The keyboard activation assertion actually passed",
+        "next": "teardown-return-to-perps-tab"
+      },
+      "teardown-return-to-perps-tab": {
+        "action": "ui.navigate",
+        "page": "perps",
+        "intent": "Leave the wallet back on the Perps tab for the next run",
+        "next": "done"
+      },
+      "done": {
+        "action": "end",
+        "status": "pass"
+      }
+    }
+  }
+}
