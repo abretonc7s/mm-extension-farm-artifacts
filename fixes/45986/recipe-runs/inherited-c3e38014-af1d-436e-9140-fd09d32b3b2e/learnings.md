@@ -1,0 +1,5 @@
+- The trade-screen "Add funds" label was already there; `hasNoAvailableBalance` was also in `isSubmitDisabled`, and a default $10 size plus `isLoadingAccount` made live $0.00 accounts show a disabled Insufficient funds button instead.
+- Amount-input and the page disagreed during account load: the row saw $0 and showed Add funds while the footer still used the loading/insufficient-funds path.
+- `mm-harness launch --build` on this slot compiles LavaMoat and then fails EVM RPC with Worker `fetch` Illegal invocation. Webpack dev (`yarn webpack` / `yarn start`) is the runtime that can actually show Perps UI.
+- Live Segment capture returned no events on webpack-dev. Funnel proof is unit tests. Deposit confirmation cannot be opened while Ethereum is unreachable.
+- capture-helper can screenshot a funded tab a second after CDP wait_for saw the unfunded CTA. Keep the first capture-helper snapshot that actually shows the CTA.

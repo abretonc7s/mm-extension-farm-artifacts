@@ -1,0 +1,80 @@
+{
+  "schemaVersion": 1,
+  "command": "check",
+  "action": "diff",
+  "status": "pass",
+  "exitCode": 0,
+  "adapter": "extension",
+  "target": "/Users/deeeed/dev/metamask/metamask-extension-4",
+  "profile": "fast",
+  "fix": false,
+  "baseRef": "origin/main",
+  "baseSource": "github-pr",
+  "baseLabel": "main",
+  "mergeBase": "19d71034e6bb1adc7ecc16725ba4e5a5a882cfce",
+  "changedFiles": [
+    "app/_locales/en/messages.json",
+    "app/_locales/en_GB/messages.json",
+    "shared/constants/perps-events.ts",
+    "test/mocks/metamask-perps-controller.js",
+    "ui/components/app/perps/constants.ts",
+    "ui/components/app/perps/hooks/usePerpsDepositConfirmation.test.ts",
+    "ui/components/app/perps/hooks/usePerpsDepositConfirmation.ts",
+    "ui/components/app/perps/order-entry/components/amount-input/amount-input.test.tsx",
+    "ui/components/app/perps/order-entry/components/amount-input/amount-input.tsx",
+    "ui/components/app/perps/perps-deposit-toast.test.tsx",
+    "ui/components/app/perps/perps-deposit-toast.tsx",
+    "ui/components/app/perps/utils/unfunded-deposit-funnel.test.ts",
+    "ui/components/app/perps/utils/unfunded-deposit-funnel.ts",
+    "ui/pages/perps/perps-order-entry-page.test.tsx",
+    "ui/pages/perps/perps-order-entry-page.tsx"
+  ],
+  "fixes": [],
+  "checks": [
+    {
+      "id": "policy-suppressions",
+      "label": "New ESLint suppression policy",
+      "status": "pass",
+      "logPath": "/Users/deeeed/dev/metamask/metamask-extension-4/temp/tasks/fix/45986-0903-091432/artifacts/check-diff/policy-suppressions.log"
+    },
+    {
+      "id": "eslint",
+      "label": "Changed-file ESLint",
+      "status": "pass",
+      "command": "/Users/deeeed/dev/metamask/metamask-extension-4/node_modules/.bin/eslint --config ./.eslintrc.js --cache --cache-location /Users/deeeed/dev/metamask/metamask-extension-4/temp/tasks/fix/45986-0903-091432/artifacts/check-diff/eslintcache shared/constants/perps-events.ts test/mocks/metamask-perps-controller.js ui/components/app/perps/constants.ts ui/components/app/perps/hooks/usePerpsDepositConfirmation.test.ts ui/components/app/perps/hooks/usePerpsDepositConfirmation.ts ui/components/app/perps/order-entry/components/amount-input/amount-input.test.tsx ui/components/app/perps/order-entry/components/amount-input/amount-input.tsx ui/components/app/perps/perps-deposit-toast.test.tsx ui/components/app/perps/perps-deposit-toast.tsx ui/components/app/perps/utils/unfunded-deposit-funnel.test.ts ui/components/app/perps/utils/unfunded-deposit-funnel.ts ui/pages/perps/perps-order-entry-page.test.tsx ui/pages/perps/perps-order-entry-page.tsx",
+      "exitCode": 0,
+      "logPath": "/Users/deeeed/dev/metamask/metamask-extension-4/temp/tasks/fix/45986-0903-091432/artifacts/check-diff/eslint.log",
+      "durationMs": 24395
+    },
+    {
+      "id": "oxfmt",
+      "label": "Changed-file oxfmt",
+      "status": "pass",
+      "command": "/Users/deeeed/dev/metamask/metamask-extension-4/node_modules/.bin/oxfmt --config oxfmt.config.mts --check app/_locales/en/messages.json app/_locales/en_GB/messages.json shared/constants/perps-events.ts test/mocks/metamask-perps-controller.js ui/components/app/perps/constants.ts ui/components/app/perps/hooks/usePerpsDepositConfirmation.test.ts ui/components/app/perps/hooks/usePerpsDepositConfirmation.ts ui/components/app/perps/order-entry/components/amount-input/amount-input.test.tsx ui/components/app/perps/order-entry/components/amount-input/amount-input.tsx ui/components/app/perps/perps-deposit-toast.test.tsx ui/components/app/perps/perps-deposit-toast.tsx ui/components/app/perps/utils/unfunded-deposit-funnel.test.ts ui/components/app/perps/utils/unfunded-deposit-funnel.ts ui/pages/perps/perps-order-entry-page.test.tsx ui/pages/perps/perps-order-entry-page.tsx",
+      "exitCode": 0,
+      "logPath": "/Users/deeeed/dev/metamask/metamask-extension-4/temp/tasks/fix/45986-0903-091432/artifacts/check-diff/oxfmt.log",
+      "durationMs": 310
+    },
+    {
+      "id": "jest",
+      "label": "Changed test files",
+      "status": "pass",
+      "command": "/Users/deeeed/dev/metamask/metamask-extension-4/node_modules/.bin/jest --no-coverage ui/components/app/perps/hooks/usePerpsDepositConfirmation.test.ts ui/components/app/perps/order-entry/components/amount-input/amount-input.test.tsx ui/components/app/perps/perps-deposit-toast.test.tsx ui/components/app/perps/utils/unfunded-deposit-funnel.test.ts ui/pages/perps/perps-order-entry-page.test.tsx",
+      "exitCode": 0,
+      "logPath": "/Users/deeeed/dev/metamask/metamask-extension-4/temp/tasks/fix/45986-0903-091432/artifacts/check-diff/jest.log",
+      "durationMs": 15166
+    },
+    {
+      "id": "typecheck",
+      "label": "TypeScript project check",
+      "status": "skip",
+      "reason": "profile=fast; run with --profile full for repo-wide typecheck"
+    }
+  ],
+  "guidance": [],
+  "artifacts": {
+    "dir": "/Users/deeeed/dev/metamask/metamask-extension-4/temp/tasks/fix/45986-0903-091432/artifacts/check-diff",
+    "summaryJson": "/Users/deeeed/dev/metamask/metamask-extension-4/temp/tasks/fix/45986-0903-091432/artifacts/check-diff/validation-summary.json",
+    "summaryMarkdown": "/Users/deeeed/dev/metamask/metamask-extension-4/temp/tasks/fix/45986-0903-091432/artifacts/check-diff/validation-summary.md"
+  }
+}

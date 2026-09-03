@@ -1,0 +1,117 @@
+{
+  "$schema": "https://farmslot.io/schemas/recipe-v1.schema.json",
+  "title": "TAT-3853 unfunded trade-screen deposit funnel",
+  "description": "On a zero-balance Perps account, the order form's primary CTA is an enabled Add funds to trade control with a hint and a labeled available-balance Add funds control.",
+  "paramsSchema": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {
+      "market": {
+        "type": "string",
+        "default": "BTC",
+        "description": "Perps market symbol used by the live flow."
+      }
+    }
+  },
+  "proofTargets": [
+    {
+      "id": "ac2-enabled-add-funds-cta",
+      "claim": "The unfunded order form shows an enabled Add funds to trade primary CTA, a hint, and a labeled available-balance Add funds control."
+    }
+  ],
+  "workflow": {
+    "entry": "setup-unlock",
+    "teardown": "teardown-restore-account",
+    "nodes": {
+      "setup-unlock": {
+        "action": "metamask.wallet.ensure_unlocked",
+        "intent": "Make the wallet usable so Perps can load",
+        "next": "setup-select-unfunded"
+      },
+      "setup-select-unfunded": {
+        "action": "metamask.wallet.select_account",
+        "address": "0xb9b9e1c2d011c8edbef8f56b40c1901d1a0742c2",
+        "intent": "Select the fixture unfunded Perps wallet (dev6) instead of assuming Account 2 has a zero balance",
+        "next": "setup-open-trade"
+      },
+      "setup-open-trade": {
+        "action": "ui.navigate",
+        "hash": "#/perps/trade/{{params.market}}?direction=long&mode=new",
+        "intent": "Land on the BTC long order form",
+        "next": "setup-wait-form"
+      },
+      "setup-wait-form": {
+        "action": "ui.wait_for",
+        "test_id": "submit-order-button",
+        "expected": "visible",
+        "timeout_ms": 20000,
+        "intent": "The sticky footer submit control is visible",
+        "next": "setup-wait-zero-balance"
+      },
+      "setup-wait-zero-balance": {
+        "action": "ui.wait_for",
+        "text": "0.00 USDC",
+        "expected": "visible",
+        "timeout_ms": 15000,
+        "intent": "Available to trade is zero on this wallet",
+        "next": "ac2-wait-hint"
+      },
+      "ac2-wait-hint": {
+        "action": "ui.wait_for",
+        "test_id": "perps-unfunded-add-funds-hint",
+        "expected": "visible",
+        "timeout_ms": 15000,
+        "intent": "The unfunded hint tells the user they need funds to place this order",
+        "next": "ac2-wait-cta",
+        "proves": ["ac2-enabled-add-funds-cta"]
+      },
+      "ac2-wait-cta": {
+        "action": "ui.wait_for",
+        "test_id": "submit-order-button",
+        "text": "Add funds to trade",
+        "expected": "visible",
+        "timeout_ms": 10000,
+        "intent": "The primary button copy is Add funds to trade, not Insufficient funds",
+        "next": "ac2-wait-enabled",
+        "proves": ["ac2-enabled-add-funds-cta"]
+      },
+      "ac2-wait-enabled": {
+        "action": "ui.wait_for",
+        "selector": "[data-testid=\"submit-order-button\"]:not([disabled])",
+        "expected": "visible",
+        "timeout_ms": 5000,
+        "intent": "The Add funds to trade button can be pressed",
+        "next": "ac2-kill-capture-helper",
+        "proves": ["ac2-enabled-add-funds-cta"]
+      },
+      "ac2-kill-capture-helper": {
+        "action": "command",
+        "cmd": "pkill -9 -f 'capture-helper' || true",
+        "intent": "Avoid a stale screenshot helper stealing the capture",
+        "next": "ac2-screenshot-cta"
+      },
+      "ac2-screenshot-cta": {
+        "action": "ui.screenshot",
+        "path": "screenshots/after-ac2-unfunded-cta.png",
+        "label": "AC2: enabled Add funds to trade CTA on the unfunded order form",
+        "intent": "Reviewers can see the enabled Add funds to trade button, hint, and row control",
+        "next": "done",
+        "proves": ["ac2-enabled-add-funds-cta"]
+      },
+      "done": {
+        "action": "end",
+        "status": "pass"
+      },
+      "teardown-restore-account": {
+        "action": "metamask.wallet.select_account",
+        "name": "Account 1",
+        "intent": "Put the funded Perps wallet back so later runs keep their balance",
+        "next": "teardown-done"
+      },
+      "teardown-done": {
+        "action": "end",
+        "status": "pass"
+      }
+    }
+  }
+}
