@@ -1,71 +1,54 @@
 {
   "version": 1,
-  "verdict": "fail",
+  "verdict": "warn",
   "compact": {
-    "verdict": "FAIL",
+    "verdict": "WARN",
     "reasons": [
-      "AC2 (horizontal scroll) is MISSING on frozen HEAD — implementation uses overflow-x-clip and More menu.",
-      "Inherited recipe nodes ac1-assert-horizontal-scroller and ac2-assert-filter-preselected target removed selectors.",
-      "Parent-run 25/25 pass cannot be forwarded without re-run on commit 40ec3706."
+      "Recipe decision skip-static-code: review execution contract forbids live recipe, CDP, and screenshots.",
+      "All 7 review claims are UNTESTABLE this run, not silently skipped.",
+      "Frozen inherited recipe still asserts overflow-x-auto and filter-select-button, both removed at 73d7e956.",
+      "No this-run trace.json; inherited 25/25 proof is stale against HEAD overflow UX."
     ],
     "better_version_guidance": [
-      "Replace ac1-assert-horizontal-scroller with More-menu overflow assertions.",
-      "Replace ac2-assert-filter-preselected with market-list-categories-pill-crypto active state.",
-      "Update PR manual testing to match overflow-menu UX."
+      "When runtime is allowed, rewrite AC1/AC5 to assert overflow-x-clip plus a More trigger at a narrow width, not overflow-x-auto.",
+      "Replace ac2-assert filter-select-button with market-list-categories-pill-crypto isActive / aria-pressed.",
+      "Add an overflow keyboard node that opens More and ArrowDowns into the listbox once selectedId is null."
     ]
   },
   "dimensions": {
     "graph_integrity": {
-      "status": "warn",
-      "reason": "Seeded recipe graph is structurally valid but targets pre-redesign selectors.",
-      "evidence": ["artifacts/recipe.json"]
+      "status": "not_applicable",
+      "reason": "No recipe drafted this run (skip-static-code).",
+      "evidence": []
     },
     "action_contract": {
       "status": "not_applicable",
-      "reason": "Static-code review did not live-run the recipe.",
-      "evidence": ["inputs/inherited/recipe-quality.json"]
+      "reason": "No recipe drafted this run.",
+      "evidence": []
     },
     "ac_coverage": {
-      "status": "fail",
-      "reason": "2/4 review claims PROVEN; AC2 MISSING; AC3 WEAK due to filter-dropdown wording vs rail UI.",
-      "evidence": ["artifacts/recipe-coverage.md"]
+      "status": "warn",
+      "reason": "7/7 claims UNTESTABLE with skip-static-code rationale; zero WEAK or MISSING.",
+      "evidence": ["recipe-coverage.md"]
     },
     "evidence_contract_basics": {
       "status": "warn",
-      "reason": "Inherited capture-helper screenshots exist but were not re-validated against HEAD in this static run.",
+      "reason": "No new capture-helper screenshots. Inherited shots and recipes target the old horizontal-scroll and FilterSelect UX.",
       "evidence": ["inputs/inherited/evidence-manifest.json"]
-    },
-    "perps_state_setup": {
-      "status": "pass",
-      "reason": "Category rail requires only loaded Perps tab market data.",
-      "evidence": ["artifacts/recipe.json"]
     }
   },
-  "structural_findings": [
-    {
-      "code": "stale_selector",
-      "message": "ac1-assert-horizontal-scroller targets .overflow-x-auto removed from PerpsCategoryRail.",
-      "dimension": "graph_integrity",
-      "evidence": ["artifacts/recipe.json"]
-    },
-    {
-      "code": "stale_selector",
-      "message": "ac2-assert-filter-preselected targets deleted filter-select-button test id.",
-      "dimension": "graph_integrity",
-      "evidence": ["artifacts/recipe.json"]
-    }
-  ],
+  "structural_findings": [],
   "contextual_findings": [
     {
-      "code": "ac_drift",
-      "message": "Post-geositta overflow-menu redesign outpaced PR manual testing and validation recipe.",
+      "code": "stale-inherited-recipe",
+      "message": "PR-body and inherited recipe still assert overflow-x-auto and filter-select-button after the More-menu rail landed.",
       "dimension": "ac_coverage",
-      "evidence": ["artifacts/recipe-coverage.md", "perps-market-categories.test.tsx"]
+      "evidence": ["inputs/inherited/recipe.json"]
     }
   ],
   "suggested_recipe_delta": [
-    "Assert overflow-x-clip on perps-market-categories-row and More trigger when categories exceed width.",
-    "On market list, assert market-list-categories-pill-crypto active after tab pill navigation."
+    "Drop overflow-x-auto wait_for; wait for [data-testid=perps-market-categories-row].overflow-x-clip and optional *-more-button.",
+    "Assert market-list-categories-pill-crypto instead of filter-select-button."
   ],
   "training_fields": {
     "farm": "metamask-extension",
@@ -73,13 +56,9 @@
     "flow_type": "review-pr",
     "task_type": "review-pr",
     "claim_is_visual": true,
-    "proof_mode": "mixed",
-    "anti_patterns": [
-      "Forwarding parent-run recipe pass after UX-redesign commits without re-run"
-    ],
-    "good_patterns": [
-      "Unit test asserting overflow-x-clip documents intentional non-scroll web design"
-    ]
+    "proof_mode": "unknown",
+    "anti_patterns": [],
+    "good_patterns": []
   },
   "meta": {
     "producer": "worker",
@@ -87,10 +66,9 @@
     "legacy_task": false,
     "artifact_required": true,
     "source_signals": [
-      "artifacts/recipe-coverage.md",
-      "artifacts/recipe.json",
-      "inputs/inherited/evidence-manifest.json",
-      "perps-market-categories.test.tsx"
+      "recipe-coverage.md",
+      "inputs/previous-review.md",
+      "inputs/inherited/recipe.json"
     ]
   }
 }

@@ -1,101 +1,107 @@
 # PR Review: #45956 — feat(perps): add market category pills to the Perps tab
 
-**Tier:** standard (static-code execution contract)
+**Tier:** standard
 
 ## Summary
 
-The PR adds a shared `PerpsCategoryRail` on the Perps home tab so users can jump into the market list with `?filter=` set from live market data. Categories are derived via `usePerpsMarketCategories` and filtered with shared `marketMatchesCategory`, so empty categories are never offered. Skeleton loading reserves pill height to avoid layout shift.
+The Perps tab now has a category rail (`PerpsMarketCategories`) under Withdraw / Add funds. Pills come from live markets via `usePerpsMarketCategories` + shared `marketMatchesCategory`, then navigate to `#/perps/market-list?filter=`. After geositta's request, overflow is a measured More menu, not a horizontal scroller. The same rail replaced FilterSelect on the market list.
 
-Commit `40ec3706` substantially redesigns the approach after geositta's review: horizontal scroll is replaced by measured overflow into a **More** dropdown, and the market list drops `FilterSelect` in favor of the same rail (plus header search/watchlist toggles). The code, tests, and accessibility story are coherent for the new design. **PR body, manual testing steps, and the seeded validation recipe still describe the pre-redesign UX** (horizontal scroll + filter dropdown), so inherited live evidence cannot be forwarded unchanged.
+That product change is coherent. The PR body and the author's recipe still describe the old scroll + dropdown UX. Keyboard unit test that assumed two Tab stops was fixed in 73d7e956 (`pill.focus()` then Enter). More-menu keyboard focus when `selectedId` is null is still weak.
+
+Acceptance Criteria in the task file is `_Not specified_`. TAT-3848 is linked. This review uses verbatim PR-body claims, not invented ticket ACs.
 
 ## Recipe Coverage
 
-| # | Claim (verbatim) | Target env | Recipe nodes / evidence | Visual verdict | Justification |
-|---|------------------|------------|-------------------------|----------------|---------------|
-| 1 | Confirm a row of category pills renders under the Withdraw / Add funds buttons — `All` plus each category present in live market data (currently Crypto, Stocks, Commodities). | fullscreen | Inherited `after-ac1-category-pills-visible.png`; unit tests | **PROVEN** | `PerpsView` renders `PerpsMarketCategories`; tests assert pill set and labels. |
-| 2 | Narrow the window until the pills overflow and confirm the row scrolls horizontally instead of wrapping or clipping. | fullscreen | Inherited `ac1-assert-horizontal-scroller` | **MISSING** | HEAD uses `overflow-x-clip` + More menu; test explicitly forbids `overflow-x-auto`. |
-| 3 | Click `Crypto`. The market list opens at `#/perps/market-list?filter=crypto` with the filter dropdown already reading `Crypto`. | fullscreen | Inherited `after-ac2-market-list-filtered-crypto.png` | **WEAK** | Navigation + filter query proven in tests; filter dropdown removed — active rail pill replaces it. |
-| 4 | Go back, then Tab to a pill and press Enter — it navigates the same way a click does. | fullscreen | Inherited jest/trace; `perps-market-categories.test.tsx` | **PROVEN** | Keyboard activation test passes. |
+| # | AC (verbatim) | Target env | Recipe nodes (IDs) | Screenshot filename | Visual verdict | Justification |
+|---|---------------|------------|---------------------|---------------------|----------------|---------------|
+| 1 | "This adds a horizontally scrollable rail of category pills between the balance actions and the user's positions, mirroring mobile's Products rail." | fullscreen | none | none | UNTESTABLE | Recipe decision skip-static-code. Review execution contract forbids CDP, recipes, and screenshots. Code at perps-category-rail.tsx never uses overflow-x-auto; overflow goes to a More menu. Claim text is stale vs HEAD. |
+| 2 | "Tapping a pill opens the full market list already narrowed to that category." | fullscreen | none | none | UNTESTABLE | Static-code only. Source navigates to `${PERPS_MARKET_LIST_ROUTE}?filter=${category}`; market-list reads `filter` via normalizeMarketFilter. Not live-proven this run. |
+| 3 | "Only categories that live market data actually contains get a pill, so a pill can never open an empty list." | fullscreen | none | none | UNTESTABLE | Static-code only. usePerpsMarketCategories filters MARKET_CATEGORIES with marketMatchesCategory. Not live-proven this run. |
+| 4 | "Confirm a row of category pills renders under the Withdraw / Add funds buttons — `All` plus each category present in live market data (currently Crypto, Stocks, Commodities)." | fullscreen | none | none | UNTESTABLE | Static-code only. PerpsView places PerpsMarketCategories under PerpsMarketBalanceActions. Inherited Farmslot shots exist but this run did not recapture. |
+| 5 | "Narrow the window until the pills overflow and confirm the row scrolls horizontally instead of wrapping or clipping." | fullscreen | none | none | UNTESTABLE | Static-code only. Implementation clips and opens More; it does not scroll. PR manual step is wrong for HEAD. |
+| 6 | "Click `Crypto`. The market list opens at `#/perps/market-list?filter=crypto` with the filter dropdown already reading `Crypto`." | fullscreen | none | none | UNTESTABLE | Static-code only. FilterSelect is gone; destination is PerpsCategoryRail testId market-list-categories. PR testing step is stale. |
+| 7 | "Go back, then Tab to a pill and press Enter — it navigates the same way a click does." | fullscreen | none | none | UNTESTABLE | Static-code only. Unit test now focuses the pill then sends Enter. No live keyboard run this review. |
 
-Overall recipe coverage: 2/4 ACs PROVEN
-Untestable: none
-
-> ⚠ Coverage escalation: AC2 not proven; AC3 only partially proven on frozen HEAD.
->   Reason: Post-review overflow-menu redesign invalidates horizontal-scroll and filter-dropdown claims; inherited recipe selectors (`overflow-x-auto`, `filter-select-button`) no longer exist.
->   Human reviewer must re-run an updated recipe or manually validate narrow-window overflow + market-list filtered state on commit `40ec3706` before merging.
+Overall recipe coverage: 0/7 ACs PROVEN
+Untestable: 1-7, static-code validation depth (no CDP, no recipe run, no new screenshots)
 
 ## Prior Reviews
 
 | Reviewer | State | Date | Addressed? | Notes |
 |----------|-------|------|------------|-------|
-| geositta | CHANGES_REQUESTED | 2026-09-03 | addressed | Requested non-scroll web pattern. Commit `40ec3706` adds overflow menu + shared rail; horizontal scroll removed. |
-| cursor | COMMENTED | 2026-09-03 | n/a | Bugbot automated summary. |
+| geositta | CHANGES_REQUESTED | 2026-09-03T00:24:51Z | addressed | 2 commits after review (40ec3706, 73d7e956). Horizontal scroll replaced by More overflow. Do not re-request the scroll change. |
+| cursor[bot] | COMMENTED | 2026-09-03T15:23:54Z | unaddressed | More menu still skips initial option focus when selectedId is null. Re-checked on 73d7e956. |
 
-## Acceptance Criteria Validation
+Previous Farmslot review (head 40ec3706, COMMENT) leftover items:
+- Keyboard test Tab-count brittleness: **addressed** in 73d7e956 (`cryptoPill.focus()`).
+- PR docs still describe horizontal scroll: **still open**.
+- Manual step 4 still names FilterSelect / `filter-select-button`: **still open**.
+
+## Review claims validation
 
 | # | Criterion | Status | Evidence |
 |---|-----------|--------|----------|
-| 1 | Category pill rail under balance actions (`All` + live categories) | PASS | `perps-view.tsx`, `perps-market-categories.test.tsx` |
-| 2 | Horizontal scroll on overflow | FAIL | `perps-category-rail.tsx`, test `never turns the rail into a horizontal scroller` |
-| 3 | Crypto pill → `#/perps/market-list?filter=crypto` with Crypto filter visible | PASS (wording stale) | Navigation tests; market list uses rail not dropdown |
-| 4 | Keyboard Enter on pill navigates like click | PASS | Accessibility test with `user.tab()` + `{Enter}` |
+| 1 | Horizontally scrollable rail between balance actions and positions | FAIL vs HEAD / UNTESTABLE live | Code: PerpsCategoryRail `overflow-x-clip` + More. Placement in perps-view.tsx after balance actions. |
+| 2 | Tap opens market list narrowed to category | PASS (code) / UNTESTABLE live | `navigate(...?filter=${category})`; market-list `initialFilter` from URL. |
+| 3 | Only categories present in live data get a pill | PASS (code) / UNTESTABLE live | `usePerpsMarketCategories` + `marketMatchesCategory`. Empty rail hidden when `categories.length <= 1` after load. |
+| 4 | All plus live categories under Withdraw / Add funds | PASS (code) / UNTESTABLE live | Pill order All first; labels from MARKET_FILTER_LABEL_KEYS. |
+| 5 | Narrow window scrolls horizontally | FAIL vs HEAD / UNTESTABLE live | Tests assert no `overflow-x-auto`. |
+| 6 | Crypto click + filter dropdown reads Crypto | FAIL vs docs / PASS destination code | URL `?filter=crypto` still works. Dropdown is gone; rail pill is the control. |
+| 7 | Tab + Enter navigates like click | PASS (unit) / UNTESTABLE live | `perps-market-categories.test.tsx` keyboard case. |
 
 ## Code Quality
 
-- Pattern adherence: Strong — shared rail/pill/hook, centralized `MARKET_FILTER_LABEL_KEYS`, `marketMatchesCategory` shared with market list.
-- Complexity: Appropriate for web overflow constraints; `useCategoryRailOverflow` is well documented.
-- Type safety: `yarn lint:tsc` pass; casts removed in tests per self-review.
-- Error handling: Rail hidden when only `all` would show after load (`categories.length <= 1`).
-- Accessibility/fallbacks: `role="group"`, `aria-label`, `aria-pressed` only when clearable; skeleton reserves `h-8` footprint.
-- Anti-pattern findings: No import-boundary violations observed. `FilterSelect` removed but `test/e2e/page-objects/pages/perps/perps-market-list-page.ts` still references `filter-select-button` (pre-existing E2E drift, outside this diff).
+- Pattern adherence: matches perps UI (MMDS ButtonFilter, Box, colocated tests, data-testid prefixes). Shared Dropdown gained trigger/menu props for More.
+- Complexity: overflow hook is the heavy piece. Measuring all pills then caching widths is justified. `useLayoutEffect` with no deps runs every commit; measure bails when widths are unchanged, so it should settle.
+- Type safety: no `as any`. MarketFilter used consistently. lint:tsc not run (static-code contract).
+- Error handling: unknown URL filters fall back to `all` via `normalizeMarketFilter`.
+- Accessibility/fallbacks: rail is `role="group"` with aria-label. Nav pills omit `aria-pressed`. Filter pills on market list expose pressed + clear label. Skeleton uses `h-8` to match pills. More menu focus gap noted below.
+- Anti-pattern findings: no yarn.lock / LavaMoat delta. New controls have test ids. No controller persist shape change, no migration. No `chrome.runtime.getBackgroundPage()`.
 
 ## Fix Quality
 
-- **Best approach:** Overflow menu over horizontal scroll is the better web fix and matches reviewer intent. Ideal long-term: design-system `ButtonFilterGroup` when available.
-- **Would not ship:** Merging without updating PR manual testing / validation recipe — reviewers and QA will follow stale steps.
-- **Test quality:** Good — explicit skeleton count/height, overflow geometry mocked in rail tests, navigation and analytics covered. Keyboard test uses a fixed double-Tab focus path (brittle if tab order changes).
-- **Brittleness:** `useCategoryRailOverflow` depends on `ResizeObserver` and layout measurement; jsdom tests mock geometry explicitly (good).
+- **Best approach:** Sharing `marketMatchesCategory` with the list is the right lock. More instead of scroll matches geositta and web practice. Ticket TAT-3848 called market-list filter UI out of scope; this PR still rewrote that page. Fine if TAT-3854 is riding along, but the tickets should say so.
+- **Would not ship:** nothing correctness-blocking in the rail/nav path. Would not ship the PR description as-is for QA.
+- **Test quality:** categories, hide-empty, skeleton height, no-scroller, nav, analytics, overflow geometry stubs are pointed at real behavior. Keyboard test no longer depends on two Tab stops. Jest not executed this run.
+- **Brittleness:** `RAIL_GAP_PX` must stay aligned with Tailwind `gap-2`. jsdom overflow tests mock width getters; that is honest.
 
 ## Live Validation
 
-- Recipe: existed (inherited, seeded) — **not re-run** (static-code contract)
-- Result: SKIPPED live; inherited parent pass **not valid** for HEAD
-- Evidence: 0 new screenshots; inherited manifest lists 3 PNGs from parent run (pre-redesign)
-- Webpack errors: not checked (static review)
-- Log monitoring: skipped (static review)
+- Recipe: skipped (Recipe decision: skip-static-code)
+- Result: SKIPPED
+- Evidence: 0 screenshots this run (video skipped: static-code contract, no CDP). Inherited Farmslot captures still assume scroll + FilterSelect.
+- Webpack errors: skipped (static-code)
+- Log monitoring: skipped (static-code)
 
 ## Correctness
 
-- Diff vs stated goal: **Partially misaligned on wording** — functionally delivers category shortcuts; horizontal scroll claim in PR body is false on HEAD.
-- Edge cases: Empty markets hide rail; categories with no live markets omitted; active filter promoted to visible row on market list.
-- Race conditions: None identified in category derivation (memoized from markets prop).
-- Backward compatibility: Deeplinks `?filter=crypto` preserved; E2E selectors for old filter dropdown may break.
+- Diff vs stated goal: tab discovery works. Stated overflow/dropdown behavior does not match HEAD.
+- Edge cases: empty markets hide the rail; watchlist URL with empty watchlist falls back to all; active category promoted into the visible row on the list.
+- Race conditions: categories take markets from the tab stream owner, so they do not tear down the shared price stream.
+- Backward compatibility: `?filter=` deeplinks still work. FilterSelect removal is a test-id break; e2e page object was updated.
 
 ## Static Analysis
 
-- lint:tsc: PASS
-- Tests: 90/90 pass on affected suites
+- lint:tsc: skipped (static-code)
+- Tests: not executed (static-code). Coverage exists for rail, pill, hook, dropdown, market-list.
 
 ## Mobile Comparison
 
-- Status: ALIGNED (behavioral intent)
-- Details: Mobile Products rail uses horizontal scroll (gesture-native); Extension deliberately diverges with overflow menu per web a11y — documented in `PerpsCategoryRail`. Category derivation mirrors mobile's live-data gating.
+- Status: DIVERGES (intentional)
+- Details: Mobile PerpsProducts / category badges sit on home and typically scroll. Extension uses ButtonFilter + More because there is no web FilterButtonGroup and because horizontal scroll failed review. No new `.toFixed(2)` / `{min:2,max:2}` in this diff. Category membership is shared through `marketMatchesCategory`, which keeps crypto bucketing.
 
 ## Architecture & Domain
 
-- MV3: UI-only; no controller changes.
-- LavaMoat: no dependency changes.
-- Import boundaries: `Dropdown` promoted to shared perps component.
-- Scope note: Market list header rework ships in the same PR — broader than ticket text but consistent with shared rail pattern.
+UI-only. No MV3 background change, no LavaMoat, no persist migration. Import path stays inside `ui/components/app/perps` and `ui/pages/perps`.
 
 ## Risk Assessment
 
-- **MEDIUM** — Touches primary Perps discovery; documentation/recipe drift creates merge risk if QA follows stale manual steps. Code and unit tests look solid.
+- MEDIUM — labels already say risk:medium. UX rewrite of market-list plus docs/recipe drift can fail human QA. Overflow keyboard path is the remaining a11y hole.
 
 ## Recommended Action
 
-**COMMENT**
+COMMENT
 
-1. Update PR description and manual testing steps to describe **More-menu overflow** (not horizontal scroll) and **category rail on market list** (not filter dropdown).
-2. Refresh validation recipe selectors before citing 25/25 pass on this branch.
-3. Consider a follow-up to update E2E page object `filter-select-button` references.
+1. Rewrite PR description, manual steps, and validation recipe for More overflow and the market-list rail (not scroll, not FilterSelect).
+2. Focus the first More-menu option when `selectedId` is null.
+3. Confirm TAT-3848 vs TAT-3854 scope if market-list filter replacement was meant to stay a sibling ticket.

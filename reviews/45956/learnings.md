@@ -1,12 +1,10 @@
-# Review learnings — PR #45956 / TAT-3848
-
-- **Static review contract:** When `Validation depth: static-code` is set, skip CDP/recipe live runs and audit inherited parent artifacts against frozen HEAD instead of manufacturing new browser proof.
-- **Post-review drift:** Commit `40ec3706` replaced horizontal scroll with `useCategoryRailOverflow` + More dropdown and deleted `FilterSelect`. Inherited recipe nodes targeting `overflow-x-auto` and `filter-select-button` fail on HEAD even though parent run reported 25/25.
-- **Unit tests as design documentation:** `never turns the rail into a horizontal scroller` encodes the intentional web UX divergence from mobile and from original ticket wording — use tests to detect doc/recipe staleness.
-- **Shared rail pattern:** `PerpsCategoryRail` serves both Perps tab (navigate-only, no `onClear`) and market list (toggle/clear on active pill). `MARKET_FILTER_LABEL_KEYS` prevents label drift.
-- **Category predicate:** `marketMatchesCategory` keeps Extension crypto semantics (`isCryptoMarket` / `marketSource` rule) rather than controller `matchesCategory` — documented divergence from mobile/core.
-- **Skeleton gating:** Five `h-8` skeleton pills reserve rail height in both tab loading branch and rail `isLoading` path — pair of tests pins count and height.
-- **Keyboard proof:** Focusability is asserted via real `ButtonFilter` buttons; inherited recipe CSS selector approach still valid, but tab-count tests are fragile.
-- **E2E hygiene (out of diff):** `test/e2e/page-objects/pages/perps/perps-market-list-page.ts` still references `filter-select-button` after component removal — flag for follow-up.
-- **Prior review loop:** geositta CHANGES_REQUESTED on horizontal scroll was addressed in a subsequent commit; verify PR body/recipe updated in the same PR before merge.
-- **Affected test command:** Six suites (90 tests) cover the changed surface; sufficient static gate when live recipe is skipped.
+- This slot's review contract was static-code: no CDP, no webpack probe, no recipe run, no jest/tsc. Inherited Farmslot recipes still encode overflow-x-auto and filter-select-button and must not be treated as HEAD proof.
+- geositta CHANGES_REQUESTED (2026-09-03) is the reason the rail measures fit and opens More. Do not ask for horizontal scroll again.
+- Perps tab rail test ids: `perps-market-categories`, `-row`, `-pill-<category>`, `-skeleton`, `-more-button`. Market list uses `market-list-categories` with the same suffix pattern.
+- Tab pills navigate (`?filter=`) and pass no `onClear`. List pills filter in place and pass `onClear`, which is what turns on `aria-pressed` and the clear icon.
+- `usePerpsMarketCategories` must take markets from `usePerpsTabExploreData`. A second prices subscription is unsafe because `perpsDeactivatePriceStream` is not ref-counted.
+- Keyboard test at perps-market-categories.test.tsx now focuses the crypto pill then `{Enter}`. The old two-Tab assumption is gone as of 73d7e956.
+- Dropdown More path: `selectedId={null}` skips the focus-selected-option effect. Arrow keys on the trigger only `setIsOpen(true)`.
+- `RAIL_GAP_PX = 8` is hardcoded to match `gap-2`. Changing one without the other breaks overflow.
+- Ticket TAT-3848 listed market-list filter UI as out of scope. HEAD still replaced FilterSelect. Treat that as sibling TAT-3854 unless the PR says otherwise.
+- Author recipe in the PR body still waits for `.overflow-x-auto` and `filter-select-button`. A live rerun of that JSON would fail on current code.

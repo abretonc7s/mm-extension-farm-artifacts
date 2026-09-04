@@ -1,24 +1,24 @@
 {
   "pr_number": "45956",
   "recommendation": "COMMENT",
-  "summary": "Solid shared category rail with overflow-menu web UX and strong unit tests, but PR manual testing and inherited validation recipe are stale after the post-review redesign that removed horizontal scroll and FilterSelect.",
+  "summary": "Category rail on the Perps tab and shared filter predicate look sound. PR description and manual steps still describe horizontal scroll and FilterSelect, which HEAD replaced with a More menu and PerpsCategoryRail. More menu still does not move focus into the list when selectedId is null.",
   "comments": [
-    {
-      "path": "ui/components/app/perps/perps-market-categories/perps-market-categories.test.tsx",
-      "line": 206,
-      "body": "This keyboard test assumes exactly two Tab stops before the Crypto pill receives focus. If another focusable element is inserted above the rail (e.g. balance actions gain a new control), the test will fail even when keyboard navigation still works.\n\nConsider focusing the pill directly (`pill.focus()`) before `{Enter}`, or tabbing until `document.activeElement` matches the crypto pill test id.",
-      "severity": "suggestion"
-    },
     {
       "path": "ui/components/app/perps/perps-market-categories/perps-category-rail.tsx",
       "line": 51,
-      "body": "The implementation intentionally avoids horizontal scroll (overflow menu instead), which addresses geositta's feedback. The PR description and manual testing steps still tell reviewers to confirm horizontal scrolling — please update those docs so QA and future recipe runs target this behavior (narrow window → More menu) rather than `overflow-x-auto`.",
+      "body": "This rail never scrolls horizontally. Overflow goes to More. The PR description and manual testing step 3 still tell reviewers to narrow the window and confirm overflow-x-auto. Update those docs (and any leftover recipe) to the More-menu path so QA does not fail a correct build.",
       "severity": "suggestion"
     },
     {
       "path": "ui/pages/perps/market-list/index.tsx",
       "line": 804,
-      "body": "Manual testing step 4 still says the filter dropdown should read Crypto after navigation. This page now uses `PerpsCategoryRail` with `testId=\"market-list-categories\"` and no `FilterSelect`. Update the PR testing steps (and any validation recipe) to assert the active Crypto pill on the rail instead of `filter-select-button`.",
+      "body": "Manual testing step 4 still says the filter dropdown should read Crypto. FilterSelect is gone. This rail is the destination (`testId=\"market-list-categories\"`). Ask reviewers to check the Crypto pill is active here, not `filter-select-button`.",
+      "severity": "suggestion"
+    },
+    {
+      "path": "ui/components/app/perps/dropdown/dropdown.tsx",
+      "line": 117,
+      "body": "Opening the menu only focuses an option when `selectedIndex >= 0`. The category More menu always passes `selectedId={null}`, so Enter/Space/Arrow on the trigger open the listbox without moving focus into it. Arrow handling on options never runs until something in the menu is focused. Focus index 0 (or the first option) when the menu opens with no selection, so overflowed categories stay keyboard-reachable. Tab can still land on the option buttons, but that is not listbox behavior.",
       "severity": "suggestion"
     }
   ]
