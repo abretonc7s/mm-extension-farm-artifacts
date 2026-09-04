@@ -1,0 +1,25 @@
+{
+  "pr_number": "45956",
+  "recommendation": "COMMENT",
+  "summary": "Solid shared category rail with overflow-menu web UX and strong unit tests, but PR manual testing and inherited validation recipe are stale after the post-review redesign that removed horizontal scroll and FilterSelect.",
+  "comments": [
+    {
+      "path": "ui/components/app/perps/perps-market-categories/perps-market-categories.test.tsx",
+      "line": 206,
+      "body": "This keyboard test assumes exactly two Tab stops before the Crypto pill receives focus. If another focusable element is inserted above the rail (e.g. balance actions gain a new control), the test will fail even when keyboard navigation still works.\n\nConsider focusing the pill directly (`pill.focus()`) before `{Enter}`, or tabbing until `document.activeElement` matches the crypto pill test id.",
+      "severity": "suggestion"
+    },
+    {
+      "path": "ui/components/app/perps/perps-market-categories/perps-category-rail.tsx",
+      "line": 51,
+      "body": "The implementation intentionally avoids horizontal scroll (overflow menu instead), which addresses geositta's feedback. The PR description and manual testing steps still tell reviewers to confirm horizontal scrolling — please update those docs so QA and future recipe runs target this behavior (narrow window → More menu) rather than `overflow-x-auto`.",
+      "severity": "suggestion"
+    },
+    {
+      "path": "ui/pages/perps/market-list/index.tsx",
+      "line": 804,
+      "body": "Manual testing step 4 still says the filter dropdown should read Crypto after navigation. This page now uses `PerpsCategoryRail` with `testId=\"market-list-categories\"` and no `FilterSelect`. Update the PR testing steps (and any validation recipe) to assert the active Crypto pill on the rail instead of `filter-select-button`.",
+      "severity": "suggestion"
+    }
+  ]
+}
