@@ -1,10 +1,10 @@
-- This slot's review contract was static-code: no CDP, no webpack probe, no recipe run, no jest/tsc. Inherited Farmslot recipes still encode overflow-x-auto and filter-select-button and must not be treated as HEAD proof.
-- geositta CHANGES_REQUESTED (2026-09-03) is the reason the rail measures fit and opens More. Do not ask for horizontal scroll again.
-- Perps tab rail test ids: `perps-market-categories`, `-row`, `-pill-<category>`, `-skeleton`, `-more-button`. Market list uses `market-list-categories` with the same suffix pattern.
-- Tab pills navigate (`?filter=`) and pass no `onClear`. List pills filter in place and pass `onClear`, which is what turns on `aria-pressed` and the clear icon.
-- `usePerpsMarketCategories` must take markets from `usePerpsTabExploreData`. A second prices subscription is unsafe because `perpsDeactivatePriceStream` is not ref-counted.
-- Keyboard test at perps-market-categories.test.tsx now focuses the crypto pill then `{Enter}`. The old two-Tab assumption is gone as of 73d7e956.
-- Dropdown More path: `selectedId={null}` skips the focus-selected-option effect. Arrow keys on the trigger only `setIsOpen(true)`.
-- `RAIL_GAP_PX = 8` is hardcoded to match `gap-2`. Changing one without the other breaks overflow.
-- Ticket TAT-3848 listed market-list filter UI as out of scope. HEAD still replaced FilterSelect. Treat that as sibling TAT-3854 unless the PR says otherwise.
-- Author recipe in the PR body still waits for `.overflow-x-auto` and `filter-select-button`. A live rerun of that JSON would fail on current code.
+- The frozen review input ends at `73d7e956`, while the live branch is `03a60229`. The only later delta fixes initial focus when More has `selectedId={null}` and adds two tests, so that prior finding must not be repeated.
+- Runtime work was prohibited by the static-code contract. `yarn lint:tsc` and six focused Jest suites were still valid static gates and passed with 92/92 tests.
+- The inherited recipe is stale for the frozen diff: `.overflow-x-auto` and `filter-select-button` were replaced by `overflow-x-clip`, a More menu, and `market-list-categories-pill-*`.
+- Reusable selectors are `perps-market-categories-{row,pill-<id>,more-button}` on home and the same suffixes under `market-list-categories` on the destination page.
+- Measuring the pill row after More mounts creates a reduced, state-dependent budget. A shrink-then-grow test must verify More disappears again, and long active labels must never yield zero visible pills.
+- Selecting from More reorders the active category, resets the measurement pass, and temporarily unmounts the focused trigger. Keyboard tests need to assert the post-selection focus target, not only initial menu focus.
+- Width caches must be invalidated by rendered labels or locale, not category IDs alone. Hidden overflow pills cannot otherwise update their intrinsic width after a language change.
+- The More popup needs logical inline positioning for Arabic/RTL layouts and an accessible name linked to its trigger.
+- The market-list search input is now disclosure-controlled. E2E helpers must click `market-list-search-toggle` before filling, and category helpers must fall back to `market-list-categories-more-option-*` when a pill is overflowed.
+- The mobile comparison supports home category discovery but not a literal UI copy: Extension intentionally uses More instead of horizontal gestures and preserves its existing crypto classification rule.

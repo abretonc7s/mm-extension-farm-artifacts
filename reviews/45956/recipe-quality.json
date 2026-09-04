@@ -4,51 +4,57 @@
   "compact": {
     "verdict": "WARN",
     "reasons": [
-      "Recipe decision skip-static-code: review execution contract forbids live recipe, CDP, and screenshots.",
-      "All 7 review claims are UNTESTABLE this run, not silently skipped.",
-      "Frozen inherited recipe still asserts overflow-x-auto and filter-select-button, both removed at 73d7e956.",
-      "No this-run trace.json; inherited 25/25 proof is stale against HEAD overflow UX."
+      "The static-code execution contract prohibited a current recipe run, CDP checks, and screenshots.",
+      "All four PR-body review claims are explicitly UNTESTABLE rather than silently skipped.",
+      "The inherited recipe asserts horizontal scrolling and filter-select-button, both removed by frozen head 73d7e956."
     ],
     "better_version_guidance": [
-      "When runtime is allowed, rewrite AC1/AC5 to assert overflow-x-clip plus a More trigger at a narrow width, not overflow-x-auto.",
-      "Replace ac2-assert filter-select-button with market-list-categories-pill-crypto isActive / aria-pressed.",
-      "Add an overflow keyboard node that opens More and ArrowDowns into the listbox once selectedId is null."
+      "When runtime validation is allowed, replace the overflow-x-auto assertion with narrow-width More-menu and wide-width no-More assertions.",
+      "Assert market-list-categories-pill-crypto has aria-pressed=true instead of checking filter-select-button.",
+      "Add keyboard coverage for opening More, selecting an overflow option, and retaining focus after promotion."
     ]
   },
   "dimensions": {
     "graph_integrity": {
       "status": "not_applicable",
-      "reason": "No recipe drafted this run (skip-static-code).",
+      "reason": "No recipe was generated under the static-code contract.",
       "evidence": []
     },
     "action_contract": {
       "status": "not_applicable",
-      "reason": "No recipe drafted this run.",
+      "reason": "No recipe was generated under the static-code contract.",
       "evidence": []
     },
     "ac_coverage": {
       "status": "warn",
-      "reason": "7/7 claims UNTESTABLE with skip-static-code rationale; zero WEAK or MISSING.",
-      "evidence": ["recipe-coverage.md"]
+      "reason": "0/4 claims were runtime-proven; all four are explicitly UNTESTABLE with the static-only rationale.",
+      "evidence": [
+        "recipe-coverage.md"
+      ]
     },
     "evidence_contract_basics": {
       "status": "warn",
-      "reason": "No new capture-helper screenshots. Inherited shots and recipes target the old horizontal-scroll and FilterSelect UX.",
-      "evidence": ["inputs/inherited/evidence-manifest.json"]
+      "reason": "No current capture-helper evidence exists; inherited evidence targets the superseded scroll and FilterSelect UI.",
+      "evidence": [
+        "inputs/inherited/evidence-manifest.json"
+      ]
     }
   },
   "structural_findings": [],
   "contextual_findings": [
     {
       "code": "stale-inherited-recipe",
-      "message": "PR-body and inherited recipe still assert overflow-x-auto and filter-select-button after the More-menu rail landed.",
+      "message": "The inherited recipe still asserts overflow-x-auto and filter-select-button after the More-menu market-list rail landed.",
       "dimension": "ac_coverage",
-      "evidence": ["inputs/inherited/recipe.json"]
+      "evidence": [
+        "inputs/inherited/recipe.json"
+      ]
     }
   ],
   "suggested_recipe_delta": [
-    "Drop overflow-x-auto wait_for; wait for [data-testid=perps-market-categories-row].overflow-x-clip and optional *-more-button.",
-    "Assert market-list-categories-pill-crypto instead of filter-select-button."
+    "Exercise both sides of the overflow threshold, including shrink then grow.",
+    "Assert the active market-list category pill instead of the deleted dropdown.",
+    "Verify focus after choosing a category from More."
   ],
   "training_fields": {
     "farm": "metamask-extension",

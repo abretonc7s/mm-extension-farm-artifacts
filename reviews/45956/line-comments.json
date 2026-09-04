@@ -1,24 +1,60 @@
 {
   "pr_number": "45956",
   "recommendation": "COMMENT",
-  "summary": "Category rail on the Perps tab and shared filter predicate look sound. PR description and manual steps still describe horizontal scroll and FilterSelect, which HEAD replaced with a More menu and PerpsCategoryRail. More menu still does not move focus into the list when selectedId is null.",
+  "summary": "The shared category data path is sound, but the new overflow rail has layout and accessibility failures, and the market-list redesign introduces loading, analytics, and E2E regressions. The PR body and inherited recipe also target UI that this branch removed.",
   "comments": [
     {
+      "path": "ui/components/app/perps/perps-market-categories/use-category-rail-overflow.ts",
+      "line": 78,
+      "body": "`row.clientWidth` is the reduced flex width after More has mounted. That makes fitting history-dependent: after a shrink, growing back to a width that fits all pills can still retain More, and a long promoted active pill can fit the full row but produce `fitted = 0` once More consumes space, hiding the active filter and its clear action. Measure a stable outer-rail budget and the More trigger separately, guarantee the active item remains visible, and add shrink→grow plus long-label tests.",
+      "severity": "must_fix"
+    },
+    {
+      "path": "ui/components/app/perps/perps-market-categories/use-category-rail-overflow.ts",
+      "line": 47,
+      "body": "This signature contains category IDs only, so a locale change does not invalidate widths despite the comment above. Hidden overflow items are unmounted and keep their old cached width indefinitely; a shorter translation can therefore stay unnecessarily under More. Include rendered labels or an explicit locale/measurement version in the signature and remeasure all items when it changes.",
+      "severity": "suggestion"
+    },
+    {
+      "path": "ui/components/app/perps/perps-market-categories/use-category-rail-overflow.ts",
+      "line": 104,
+      "body": "Choosing an option from More changes the selected category's position in `keysSignature`. This render-time reset temporarily renders every item, empties `overflowCategories`, and unmounts the More trigger that Dropdown just focused; when More remounts, focus is left on the document body. Preserve the trigger during remeasurement or explicitly focus the promoted active pill after layout, with a keyboard test that selects an overflow option.",
+      "severity": "must_fix"
+    },
+    {
       "path": "ui/components/app/perps/perps-market-categories/perps-category-rail.tsx",
-      "line": 51,
-      "body": "This rail never scrolls horizontally. Overflow goes to More. The PR description and manual testing step 3 still tell reviewers to narrow the window and confirm overflow-x-auto. Update those docs (and any leftover recipe) to the More-menu path so QA does not fail a correct build.",
+      "line": 184,
+      "body": "This More Dropdown creates a nested `role=\"listbox\"` with neither `aria-label` nor `aria-labelledby`. The outer rail group's label does not provide an accessible name for the nested widget. Extend Dropdown to link the listbox to its trigger (or accept a menu label) and assert it with a named `getByRole('listbox')` query.",
+      "severity": "must_fix"
+    },
+    {
+      "path": "ui/components/app/perps/perps-market-categories/perps-category-rail.tsx",
+      "line": 193,
+      "body": "`right-0` assumes LTR. In an RTL locale the flex row places More at the left edge, so this minimum-120px menu extends beyond the viewport. Use logical inline-end positioning or explicit LTR/RTL variants so the menu opens inward in both directions.",
+      "severity": "must_fix"
+    },
+    {
+      "path": "ui/pages/perps/market-list/index.tsx",
+      "line": 824,
+      "body": "While market data is initially loading, `displayedMarkets` is empty and this renders `0 markets` beside loading skeletons, which is a false settled value. A one-result filter also renders `1 markets`. Hide or skeleton-gate the count until loading settles and use singular/plural messages.",
+      "severity": "must_fix"
+    },
+    {
+      "path": "ui/pages/perps/market-list/index.tsx",
+      "line": 743,
+      "body": "The normal search path now clicks this toggle and lands in an auto-focused input, so `SearchInput.onInputClick` does not fire and `SEARCH_CLICKED` is no longer recorded. Track the closed→open transition here and remove or deduplicate the input-click path.",
       "severity": "suggestion"
     },
     {
       "path": "ui/pages/perps/market-list/index.tsx",
-      "line": 804,
-      "body": "Manual testing step 4 still says the filter dropdown should read Crypto. FilterSelect is gone. This rail is the destination (`testId=\"market-list-categories\"`). Ask reviewers to check the Crypto pill is active here, not `filter-select-button`.",
+      "line": 778,
+      "body": "Making the search input conditional breaks `PerpsMarketListPage.fillSearch()`, which still waits for `search-input` without opening this toggle; its only caller is skipped, so CI does not expose the timeout. Update the page object to click `market-list-search-toggle` first and cover it with an active E2E test.",
       "severity": "suggestion"
     },
     {
-      "path": "ui/components/app/perps/dropdown/dropdown.tsx",
-      "line": 117,
-      "body": "Opening the menu only focuses an option when `selectedIndex >= 0`. The category More menu always passes `selectedId={null}`, so Enter/Space/Arrow on the trigger open the listbox without moving focus into it. Arrow handling on options never runs until something in the menu is focused. Focus index 0 (or the first option) when the menu opens with no selection, so overflowed categories stay keyboard-reachable. Tab can still land on the option buttons, but that is not listbox behavior.",
+      "path": "test/e2e/page-objects/pages/perps/perps-market-list-page.ts",
+      "line": 124,
+      "body": "This only searches for a directly rendered pill. At popup width later categories such as commodity and forex are unmounted under More, so `selectFilter()` waits forever despite documenting support for them. If the pill is absent, open `market-list-categories-more-button` and select its option; type `optionId` as `MarketFilter` and exercise the overflow path.",
       "severity": "suggestion"
     }
   ]
