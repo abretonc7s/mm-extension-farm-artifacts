@@ -1,0 +1,66 @@
+{
+  "schemaVersion": 1,
+  "command": "run",
+  "mode": "plan",
+  "status": "pass",
+  "adapter": "extension",
+  "recipe": "/Users/deeeed/dev/metamask/metamask-extension-1/temp/tasks/fix/46123-0909-123758/artifacts/recipe.json",
+  "params": {},
+  "findings": [],
+  "plan": [
+    {
+      "step": "resolve.recipe",
+      "confidence": "static",
+      "status": "ok",
+      "detail": "/Users/deeeed/dev/metamask/metamask-extension-1/temp/tasks/fix/46123-0909-123758/artifacts/recipe.json"
+    },
+    {
+      "step": "resolve.adapter",
+      "confidence": "static",
+      "status": "ok",
+      "detail": "extension"
+    },
+    {
+      "step": "resolve.artifactsDir",
+      "confidence": "static",
+      "status": "ok",
+      "detail": "(resolved to the slot artifacts dir at run time)"
+    },
+    {
+      "step": "validate.manifest",
+      "confidence": "static",
+      "status": "ok",
+      "detail": "action manifest is well-formed"
+    },
+    {
+      "step": "validate.schema",
+      "confidence": "static",
+      "status": "ok",
+      "detail": "recipe document schema + action existence/platform vs the adapter manifest"
+    },
+    {
+      "step": "fixture.file",
+      "confidence": "static",
+      "status": "ok",
+      "detail": "present: /Users/deeeed/dev/metamask/metamask-extension-1/temp/recipe/runtime/wallet-fixture.json"
+    },
+    {
+      "step": "overlay.ensure",
+      "confidence": "conditional",
+      "status": "planned",
+      "detail": "would auto-ensure the runtime overlay if missing (install phase)"
+    },
+    {
+      "step": "launch.app",
+      "confidence": "conditional",
+      "status": "planned",
+      "detail": "would launch/attach the app + heal transport (Metro/Chrome/CDP) before executing"
+    },
+    {
+      "step": "execute.nodes",
+      "confidence": "conditional",
+      "status": "planned",
+      "detail": "would execute 27 recipe node(s)"
+    }
+  ]
+}

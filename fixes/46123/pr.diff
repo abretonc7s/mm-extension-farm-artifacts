@@ -1,0 +1,3713 @@
+diff --git a/app/scripts/controllers/perps/infrastructure.test.ts b/app/scripts/controllers/perps/infrastructure.test.ts
+index 416918a207..bf8c2f1f30 100644
+--- a/app/scripts/controllers/perps/infrastructure.test.ts
++++ b/app/scripts/controllers/perps/infrastructure.test.ts
+@@ -1,3 +1,5 @@
++import { it } from '@jest/globals';
++import { trace, endTrace, TraceName } from '../../../../shared/lib/trace';
+ import {
+   PERPS_EVENT_PROPERTY,
+   PERPS_EVENT_VALUE,
+@@ -10,6 +12,12 @@ import {
+   type InfrastructureDeps,
+ } from './infrastructure';
+ 
++jest.mock('../../../../shared/lib/trace', () => ({
++  ...jest.requireActual('../../../../shared/lib/trace'),
++  trace: jest.fn(),
++  endTrace: jest.fn(),
++}));
++
+ const mockTrackEvent = jest.fn();
+ 
+ jest.mock('../analytics', () => {
+@@ -42,6 +50,7 @@ jest.mock('@metamask/perps-controller', () => {
+ const mockCaptureException = jest.fn();
+ jest.mock('../../../../shared/lib/sentry', () => ({
+   captureException: (...args: unknown[]) => mockCaptureException(...args),
++  sentryLogger: { extend: () => jest.fn() },
+ }));
+ 
+ function setupSentryScope() {
+@@ -564,245 +573,125 @@ describe('createPerpsInfrastructure', () => {
+   });
+ 
+   describe('tracer', () => {
+-    describe('when sentry is not available', () => {
+-      it('does not throw on trace', () => {
+-        const { tracer } = createPerpsInfrastructure(getDeps());
+-
+-        expect(() =>
+-          tracer.trace({
+-            name: 'Perps Place Order' as never,
+-            id: '1',
+-            op: 'perps.order',
+-          }),
+-        ).not.toThrow();
+-      });
+-
+-      it('does not throw on endTrace', () => {
+-        const { tracer } = createPerpsInfrastructure(getDeps());
+-
+-        expect(() =>
+-          tracer.endTrace({ name: 'Perps Place Order' as never, id: '1' }),
+-        ).not.toThrow();
+-      });
+-
+-      it('does not throw on setMeasurement', () => {
+-        const { tracer } = createPerpsInfrastructure(getDeps());
+-
+-        expect(() =>
+-          tracer.setMeasurement('test', 100, 'millisecond'),
+-        ).not.toThrow();
++    it.each([
++      TraceName.PerpsConnectionEstablishment,
++      TraceName.PerpsMarketDataPreload,
++      TraceName.PerpsUserDataPreload,
++      TraceName.PerpsPlaceOrder,
++    ] as const)('routes %s through shared tracing', (name) => {
++      const { tracer } = createPerpsInfrastructure(getDeps());
++      const request = {
++        name,
++        id: 'operation',
++        op: 'perps.operation',
++        tags: { source: 'test' },
++      };
++
++      tracer.trace(request);
++      tracer.endTrace({ name, id: 'operation', data: { success: true } });
++
++      expect(trace).toHaveBeenCalledWith(request);
++      expect(endTrace).toHaveBeenCalledWith({
++        name,
++        id: 'operation',
++        data: { success: true },
+       });
+     });
+ 
+-    describe('when sentry is available', () => {
+-      it('calls startSpanManual on trace', () => {
+-        const mockSpan = { setAttribute: jest.fn(), end: jest.fn() };
+-        const startSpanManual = jest.fn((_opts, cb) => cb(mockSpan));
+-        (globalThis as Record<string, unknown>).sentry = { startSpanManual };
+-
+-        const { tracer } = createPerpsInfrastructure(getDeps());
+-        tracer.trace({
+-          name: 'Perps Place Order' as never,
+-          id: 'abc',
+-          op: 'perps.order',
+-          data: { coin: 'ETH' },
+-        });
+-
+-        expect(startSpanManual).toHaveBeenCalledWith(
+-          {
+-            name: 'Perps Place Order',
+-            op: 'perps.order',
+-            attributes: { coin: 'ETH' },
+-          },
+-          expect.any(Function),
+-        );
+-      });
+-
+-      it('merges tags and data into span attributes', () => {
+-        const mockSpan = { setAttribute: jest.fn(), end: jest.fn() };
+-        const startSpanManual = jest.fn((_opts, cb) => cb(mockSpan));
+-        (globalThis as Record<string, unknown>).sentry = { startSpanManual };
+-
+-        const { tracer } = createPerpsInfrastructure(getDeps());
+-        tracer.trace({
+-          name: 'Perps Place Order' as never,
+-          id: 'abc',
+-          op: 'perps.order',
+-          tags: { network: 'arbitrum' },
+-          data: { coin: 'ETH' },
+-        });
+-
+-        expect(startSpanManual).toHaveBeenCalledWith(
+-          {
+-            name: 'Perps Place Order',
+-            op: 'perps.order',
+-            attributes: { network: 'arbitrum', coin: 'ETH' },
+-          },
+-          expect.any(Function),
+-        );
+-      });
+-
+-      it('ends the span on endTrace', () => {
+-        const mockSpan = { setAttribute: jest.fn(), end: jest.fn() };
+-        const startSpanManual = jest.fn((_opts, cb) => cb(mockSpan));
+-        (globalThis as Record<string, unknown>).sentry = { startSpanManual };
+-
+-        const { tracer } = createPerpsInfrastructure(getDeps());
+-        tracer.trace({
+-          name: 'Perps Place Order' as never,
+-          id: 'abc',
+-          op: 'perps.order',
+-        });
+-
+-        tracer.endTrace({ name: 'Perps Place Order' as never, id: 'abc' });
+-
+-        expect(mockSpan.end).toHaveBeenCalled();
+-      });
+-
+-      it('does nothing on endTrace for unknown span', () => {
+-        (globalThis as Record<string, unknown>).sentry = {
+-          startSpanManual: jest.fn(),
+-        };
+-        const { tracer } = createPerpsInfrastructure(getDeps());
+-
+-        expect(() =>
+-          tracer.endTrace({ name: 'Perps Place Order' as never, id: 'nope' }),
+-        ).not.toThrow();
+-      });
+-
+-      it('sets attributes from data before ending the span', () => {
+-        const mockSpan = { setAttribute: jest.fn(), end: jest.fn() };
+-        const startSpanManual = jest.fn((_opts, cb) => cb(mockSpan));
+-        (globalThis as Record<string, unknown>).sentry = { startSpanManual };
+-
+-        const { tracer } = createPerpsInfrastructure(getDeps());
+-        tracer.trace({
+-          name: 'Perps Place Order' as never,
+-          id: 'abc',
+-          op: 'perps.order',
+-        });
++    it('does not end an unknown or already completed operation', () => {
++      const { tracer } = createPerpsInfrastructure(getDeps());
++      const request = {
++        name: TraceName.PerpsMarketDataPreload as const,
++        id: 'operation',
++      };
++      tracer.endTrace(request);
++      expect(endTrace).not.toHaveBeenCalled();
+ 
+-        tracer.endTrace({
+-          name: 'Perps Place Order' as never,
+-          id: 'abc',
+-          data: { result: 'success', latency: 42 },
+-        });
++      tracer.trace({ ...request, op: 'perps.operation' });
++      tracer.endTrace(request);
++      tracer.endTrace(request);
+ 
+-        expect(mockSpan.setAttribute).toHaveBeenCalledWith('result', 'success');
+-        expect(mockSpan.setAttribute).toHaveBeenCalledWith('latency', 42);
+-        expect(mockSpan.end).toHaveBeenCalled();
+-      });
++      expect(endTrace).toHaveBeenCalledTimes(1);
++    });
+ 
+-      it('removes the span after endTrace', () => {
+-        const mockSpan = { setAttribute: jest.fn(), end: jest.fn() };
+-        const startSpanManual = jest.fn((_opts, cb) => cb(mockSpan));
+-        (globalThis as Record<string, unknown>).sentry = { startSpanManual };
++    it('ends a duplicate operation before replacing it', () => {
++      const { tracer } = createPerpsInfrastructure(getDeps());
++      const request = {
++        name: TraceName.PerpsMarketDataPreload as const,
++        id: 'operation',
++        op: 'perps.operation',
++      };
++      tracer.trace(request);
+ 
+-        const { tracer } = createPerpsInfrastructure(getDeps());
+-        tracer.trace({
+-          name: 'Perps Place Order' as never,
+-          id: 'abc',
+-          op: 'perps.order',
+-        });
+-        tracer.endTrace({ name: 'Perps Place Order' as never, id: 'abc' });
++      tracer.trace(request);
+ 
+-        // Second endTrace is a no-op — span.end not called again
+-        tracer.endTrace({ name: 'Perps Place Order' as never, id: 'abc' });
+-
+-        expect(mockSpan.end).toHaveBeenCalledTimes(1);
++      expect(endTrace).toHaveBeenCalledWith({
++        name: request.name,
++        id: request.id,
++        data: { success: false, reason: 'superseded' },
+       });
++      expect(trace).toHaveBeenCalledTimes(2);
++    });
+ 
+-      it('ends the previous span when trace is called with a duplicate key', () => {
+-        const firstSpan = { setAttribute: jest.fn(), end: jest.fn() };
+-        const secondSpan = { setAttribute: jest.fn(), end: jest.fn() };
+-        let callCount = 0;
+-        const startSpanManual = jest.fn((_opts, cb) => {
+-          cb(callCount === 0 ? firstSpan : secondSpan);
+-          callCount += 1;
+-        });
+-        (globalThis as Record<string, unknown>).sentry = { startSpanManual };
+-
+-        const { tracer } = createPerpsInfrastructure(getDeps());
+-        tracer.trace({
+-          name: 'Perps Place Order' as never,
+-          id: 'dup',
+-          op: 'perps.order',
+-        });
++    it('ends the oldest operation when the pending buffer is full', () => {
++      const { tracer } = createPerpsInfrastructure(getDeps());
++      for (let i = 0; i < 50; i += 1) {
+         tracer.trace({
+-          name: 'Perps Place Order' as never,
+-          id: 'dup',
+-          op: 'perps.order',
++          name: TraceName.PerpsMarketDataPreload,
++          id: String(i),
++          op: 'perps.operation',
+         });
++      }
++      expect(endTrace).not.toHaveBeenCalled();
+ 
+-        expect(firstSpan.end).toHaveBeenCalledTimes(1);
++      tracer.trace({
++        name: TraceName.PerpsMarketDataPreload as const,
++        id: '50',
++        op: 'perps.operation',
+       });
+ 
+-      it('evicts the oldest span when the pending map reaches capacity', () => {
+-        const spans: { setAttribute: jest.Mock; end: jest.Mock }[] = [];
+-        const startSpanManual = jest.fn((_opts, cb) => {
+-          const span = { setAttribute: jest.fn(), end: jest.fn() };
+-          spans.push(span);
+-          cb(span);
+-        });
+-        (globalThis as Record<string, unknown>).sentry = { startSpanManual };
+-
+-        const { tracer } = createPerpsInfrastructure(getDeps());
+-
+-        // Fill the map to capacity (MAX_PENDING_SPANS = 50)
+-        for (let i = 0; i < 50; i++) {
+-          tracer.trace({
+-            name: 'Perps Place Order' as never,
+-            id: String(i),
+-            op: 'perps.order',
+-          });
+-        }
+-
+-        // The first span should still be pending — map is exactly at capacity
+-        expect(spans[0].end).not.toHaveBeenCalled();
+-
+-        // One more trace pushes the map over capacity, evicting span[0]
+-        tracer.trace({
+-          name: 'Perps Place Order' as never,
+-          id: '50',
+-          op: 'perps.order',
+-        });
+-
+-        expect(spans[0].end).toHaveBeenCalledTimes(1);
++      expect(endTrace).toHaveBeenCalledWith({
++        name: TraceName.PerpsMarketDataPreload as const,
++        id: '0',
++        data: { success: false, reason: 'capacity' },
+       });
++    });
+ 
+-      it('calls setMeasurement on sentry', () => {
+-        const setMeasurement = jest.fn();
+-        (globalThis as Record<string, unknown>).sentry = { setMeasurement };
+-
+-        const { tracer } = createPerpsInfrastructure(getDeps());
+-        tracer.setMeasurement('perps.latency', 42, 'millisecond');
+-
+-        expect(setMeasurement).toHaveBeenCalledWith(
+-          'perps.latency',
+-          42,
+-          'millisecond',
+-        );
+-      });
++    it('keeps measurement and breadcrumb forwarding', () => {
++      const setMeasurement = jest.fn();
++      const addBreadcrumb = jest.fn();
++      globalThis.sentry = { setMeasurement, addBreadcrumb };
++      const { tracer } = createPerpsInfrastructure(getDeps());
++      const breadcrumb = {
++        category: 'perps',
++        message: 'connected',
++        level: 'info' as const,
++      };
++
++      tracer.setMeasurement('perps.latency', 42, 'millisecond');
++      tracer.addBreadcrumb(breadcrumb);
++
++      expect(setMeasurement).toHaveBeenCalledWith(
++        'perps.latency',
++        42,
++        'millisecond',
++      );
++      expect(addBreadcrumb).toHaveBeenCalledWith(breadcrumb);
++    });
+ 
+-      it('forwards breadcrumbs to sentry', () => {
+-        const addBreadcrumb = jest.fn();
+-        (globalThis as Record<string, unknown>).sentry = { addBreadcrumb };
++    it('tolerates missing optional Sentry measurement APIs', () => {
++      const { tracer } = createPerpsInfrastructure(getDeps());
+ 
+-        const { tracer } = createPerpsInfrastructure(getDeps());
++      expect(() =>
++        tracer.setMeasurement('perps.latency', 42, 'millisecond'),
++      ).not.toThrow();
++      expect(() =>
+         tracer.addBreadcrumb({
+-          category: 'perps.order',
+-          message: 'place order started',
+-          level: 'info',
+-          data: { symbol: 'ETH' },
+-        });
+-
+-        expect(addBreadcrumb).toHaveBeenCalledWith({
+-          category: 'perps.order',
+-          message: 'place order started',
++          category: 'perps',
++          message: 'connected',
+           level: 'info',
+-          data: { symbol: 'ETH' },
+-        });
+-      });
++        }),
++      ).not.toThrow();
+     });
+   });
+ 
+diff --git a/app/scripts/controllers/perps/infrastructure.ts b/app/scripts/controllers/perps/infrastructure.ts
+index 6f267807f1..08cddc5823 100644
+--- a/app/scripts/controllers/perps/infrastructure.ts
++++ b/app/scripts/controllers/perps/infrastructure.ts
+@@ -20,7 +20,6 @@ import type {
+   PerpsAnalyticsEvent,
+   PerpsAnalyticsProperties,
+   PerpsTraceName,
+-  PerpsTraceValue,
+   InvalidateCacheParams,
+   FiatRangeConfig,
+ } from '@metamask/perps-controller';
+@@ -37,6 +36,7 @@ import { captureException } from '../../../../shared/lib/sentry';
+ import { ENVIRONMENT } from '../../../../shared/constants/build';
+ import { isBeta } from '../../../../shared/lib/build-types';
+ import { validatedVersionGatedFeatureFlag } from '../../../../shared/lib/feature-flags/version-gating';
++import { trace, endTrace, TraceName } from '../../../../shared/lib/trace';
+ import { isBenignDisconnectError } from './perps-error-utils';
+ 
+ const TERMINAL_API_URLS = {
+@@ -225,77 +225,84 @@ function createPerformance(): PerpsPerformance {
+ 
+ const MAX_PENDING_SPANS = 50;
+ 
++const PERPS_TRACE_NAMES = {
++  'Perps Open Position': TraceName.PerpsOpenPosition,
++  'Perps Close Position': TraceName.PerpsClosePosition,
++  'Perps Deposit': TraceName.PerpsDeposit,
++  'Perps Withdraw': TraceName.PerpsWithdraw,
++  'Perps Place Order': TraceName.PerpsPlaceOrder,
++  'Perps Edit Order': TraceName.PerpsEditOrder,
++  'Perps Cancel Order': TraceName.PerpsCancelOrder,
++  'Perps Update TP/SL': TraceName.PerpsUpdateTPSL,
++  'Perps Update Margin': TraceName.PerpsUpdateMargin,
++  'Perps Flip Position': TraceName.PerpsFlipPosition,
++  'Perps Market Data Update': TraceName.PerpsMarketDataUpdate,
++  'Perps Order View': TraceName.PerpsOrderView,
++  'Perps Tab View': TraceName.PerpsTabView,
++  'Perps Market List View': TraceName.PerpsMarketListView,
++  'Perps Position Details View': TraceName.PerpsPositionDetailsView,
++  'Perps Adjust Margin View': TraceName.PerpsAdjustMarginView,
++  'Perps Order Details View': TraceName.PerpsOrderDetailsView,
++  'Perps Order Book View': TraceName.PerpsOrderBookView,
++  'Perps Flip Position Sheet': TraceName.PerpsFlipPositionSheet,
++  'Perps Transactions View': TraceName.PerpsTransactionsView,
++  'Perps Order Fills Fetch': TraceName.PerpsOrderFillsFetch,
++  'Perps Orders Fetch': TraceName.PerpsOrdersFetch,
++  'Perps Funding Fetch': TraceName.PerpsFundingFetch,
++  'Perps Get Positions': TraceName.PerpsGetPositions,
++  'Perps Get Account State': TraceName.PerpsGetAccountState,
++  'Perps Get Historical Portfolio': TraceName.PerpsGetHistoricalPortfolio,
++  'Perps Get Markets': TraceName.PerpsGetMarkets,
++  'Perps Get Market Data With Prices': TraceName.PerpsGetMarketDataWithPrices,
++  'Perps Fetch Historical Candles': TraceName.PerpsFetchHistoricalCandles,
++  'Perps WebSocket Connected': TraceName.PerpsWebSocketConnected,
++  'Perps WebSocket Disconnected': TraceName.PerpsWebSocketDisconnected,
++  'Perps WebSocket First Positions': TraceName.PerpsWebSocketFirstPositions,
++  'Perps WebSocket First Orders': TraceName.PerpsWebSocketFirstOrders,
++  'Perps WebSocket First Account': TraceName.PerpsWebSocketFirstAccount,
++  'Perps Data Lake Report': TraceName.PerpsDataLakeReport,
++  'Perps Rewards API Call': TraceName.PerpsRewardsAPICall,
++  'Perps Close Position View': TraceName.PerpsClosePositionView,
++  'Perps Withdraw View': TraceName.PerpsWithdrawView,
++  'Perps Connection Establishment': TraceName.PerpsConnectionEstablishment,
++  'Perps Account Switch Reconnection': TraceName.PerpsAccountSwitchReconnection,
++  'Perps Market Data Preload': TraceName.PerpsMarketDataPreload,
++  'Perps User Data Preload': TraceName.PerpsUserDataPreload,
++} satisfies Record<PerpsTraceName, TraceName>;
++
+ function createTracer(): PerpsTracer {
+-  const pendingSpans = new Map<
+-    string,
+-    {
+-      setAttribute: (key: string, value: PerpsTraceValue) => void;
+-      end: () => void;
+-    }
+-  >();
++  const pendingSpans = new Map<string, { name: TraceName; id: string }>();
+ 
+   return {
+-    trace: (params: {
+-      name: PerpsTraceName;
+-      id: string;
+-      op: string;
+-      tags?: Record<string, PerpsTraceValue>;
+-      data?: Record<string, PerpsTraceValue>;
+-    }) => {
+-      const startSpanManual = globalThis.sentry?.startSpanManual;
+-      if (!startSpanManual) {
+-        return;
+-      }
+-
++    trace: (params) => {
++      const request = { ...params, name: PERPS_TRACE_NAMES[params.name] };
+       const key = `${params.name}:${params.id}`;
+-
+-      // End any existing span with the same key before overwriting to avoid
+-      // leaking the old span reference when trace() is called twice with the
+-      // same name/id pair.
+       const existing = pendingSpans.get(key);
+       if (existing) {
+-        existing.end();
++        endTrace({
++          ...existing,
++          data: { success: false, reason: 'superseded' },
++        });
+         pendingSpans.delete(key);
+       }
+-
+-      // Evict the oldest pending span when the map is at capacity so the map
+-      // cannot grow unboundedly over long browser sessions.
+       if (pendingSpans.size >= MAX_PENDING_SPANS) {
+-        const oldestKey = pendingSpans.keys().next().value;
+-        if (oldestKey !== undefined) {
+-          pendingSpans.get(oldestKey)?.end();
+-          pendingSpans.delete(oldestKey);
++        const oldest = pendingSpans.entries().next().value;
++        if (oldest) {
++          endTrace({
++            ...oldest[1],
++            data: { success: false, reason: 'capacity' },
++          });
++          pendingSpans.delete(oldest[0]);
+         }
+       }
+-
+-      startSpanManual(
+-        {
+-          name: params.name,
+-          op: params.op,
+-          attributes: { ...params.tags, ...params.data },
+-        },
+-        (span: {
+-          setAttribute: (key: string, value: PerpsTraceValue) => void;
+-          end: () => void;
+-        }) => {
+-          pendingSpans.set(key, span);
+-        },
+-      );
++      trace(request);
++      pendingSpans.set(key, { name: request.name, id: request.id });
+     },
+-    endTrace: (params: {
+-      name: PerpsTraceName;
+-      id: string;
+-      data?: Record<string, PerpsTraceValue>;
+-    }) => {
++    endTrace: (params) => {
+       const key = `${params.name}:${params.id}`;
+       const pending = pendingSpans.get(key);
+       if (pending) {
+-        if (params.data) {
+-          for (const [attrKey, attrValue] of Object.entries(params.data)) {
+-            pending.setAttribute(attrKey, attrValue);
+-          }
+-        }
+-        pending.end();
++        endTrace({ ...pending, data: params.data });
+         pendingSpans.delete(key);
+       }
+     },
+diff --git a/app/scripts/controllers/perps/perps-stream-bridge.test.ts b/app/scripts/controllers/perps/perps-stream-bridge.test.ts
+index 8b5d3f00fb..7ec26af8e5 100644
+--- a/app/scripts/controllers/perps/perps-stream-bridge.test.ts
++++ b/app/scripts/controllers/perps/perps-stream-bridge.test.ts
+@@ -1,3 +1,4 @@
++import { it } from '@jest/globals';
+ import type { PerpsController } from '@metamask/perps-controller';
+ 
+ // Provide the runtime enum that the source file imports. Jest cannot parse
+@@ -73,6 +74,7 @@ type BridgeOverrides = {
+   onConnectivityChange?: jest.Mock;
+   isConnectionAlive?: () => boolean;
+   isTerminalBackendEnabled?: () => boolean;
++  isPreloadAllowed?: () => boolean;
+   subscribeAggregatedOrderBook?: jest.Mock;
+   emit?: jest.Mock;
+ };
+@@ -103,6 +105,7 @@ function createBridge(overrides: BridgeOverrides = {}) {
+     perpsToggleTestnet: controllerApi.perpsToggleTestnet,
+     isConnectionAlive,
+     isTerminalBackendEnabled,
++    isPreloadAllowed: overrides.isPreloadAllowed ?? (() => true),
+     subscribeAggregatedOrderBook,
+     emit,
+   });
+@@ -226,10 +229,22 @@ describe('PerpsStreamBridge', () => {
+       accountCallback({ stub: 'account' });
+       fillsCallback({ stub: 'fills' });
+ 
+-      expect(emit).toHaveBeenCalledWith('positions', { stub: 'positions' });
+-      expect(emit).toHaveBeenCalledWith('orders', { stub: 'orders' });
+-      expect(emit).toHaveBeenCalledWith('account', { stub: 'account' });
+-      expect(emit).toHaveBeenCalledWith('fills', { stub: 'fills' });
++      expect(emit).toHaveBeenCalledWith(
++        'positions',
++        { stub: 'positions' },
++        undefined,
++      );
++      expect(emit).toHaveBeenCalledWith(
++        'orders',
++        { stub: 'orders' },
++        undefined,
++      );
++      expect(emit).toHaveBeenCalledWith(
++        'account',
++        { stub: 'account' },
++        undefined,
++      );
++      expect(emit).toHaveBeenCalledWith('fills', { stub: 'fills' }, undefined);
+     });
+ 
+     it('skips activation when already activated', async () => {
+@@ -253,7 +268,9 @@ describe('PerpsStreamBridge', () => {
+       });
+       const api = bridge.bridgeApi();
+ 
+-      await api.perpsInit();
++      await expect(api.perpsInit()).rejects.toThrow(
++        'Perps connection was released',
++      );
+ 
+       expect(controller.subscribeToPositions).not.toHaveBeenCalled();
+       expect(bridge.isActive).toBe(false);
+@@ -1541,7 +1558,9 @@ describe('PerpsStreamBridge', () => {
+         [],
+       );
+ 
+-      expect(emit).toHaveBeenCalledWith('markets', mockMarkets);
++      expect(emit).toHaveBeenCalledWith('markets', mockMarkets, {
++        live: expect.any(Boolean),
++      });
+     });
+ 
+     it('does not emit the un-enriched preload snapshot when terminal backend is enabled', async () => {
+@@ -1576,7 +1595,9 @@ describe('PerpsStreamBridge', () => {
+         [],
+       );
+ 
+-      expect(emit).not.toHaveBeenCalledWith('markets', rawSnapshot);
++      expect(emit).not.toHaveBeenCalledWith('markets', rawSnapshot, {
++        live: expect.any(Boolean),
++      });
+     });
+ 
+     it('refetches enriched terminal market data and emits it when the preload cache updates', async () => {
+@@ -1622,7 +1643,9 @@ describe('PerpsStreamBridge', () => {
+       expect(controller.getMarketDataWithPrices).toHaveBeenCalledWith({
+         useTerminalApi: true,
+       });
+-      expect(emit).toHaveBeenCalledWith('markets', enrichedMarkets);
++      expect(emit).toHaveBeenCalledWith('markets', enrichedMarkets, {
++        live: expect.any(Boolean),
++      });
+     });
+ 
+     it('does not refetch terminal market data when the timestamp is unchanged', async () => {
+@@ -1710,7 +1733,9 @@ describe('PerpsStreamBridge', () => {
+       await new Promise((resolve) => setImmediate(resolve));
+ 
+       expect(controller.getMarketDataWithPrices).toHaveBeenCalledTimes(2);
+-      expect(emit).toHaveBeenCalledWith('markets', [{ symbol: 'FINAL' }]);
++      expect(emit).toHaveBeenCalledWith('markets', [{ symbol: 'FINAL' }], {
++        live: true,
++      });
+     });
+ 
+     it('does not emit a terminal refetch result after destroy', async () => {
+@@ -2003,7 +2028,9 @@ describe('PerpsStreamBridge', () => {
+       stateChangeCallback(state, []);
+       stateChangeCallback(state, []);
+ 
+-      expect(emit).toHaveBeenCalledWith('markets', [{ symbol: 'ETH' }]);
++      expect(emit).toHaveBeenCalledWith('markets', [{ symbol: 'ETH' }], {
++        live: false,
++      });
+       expect(emit).toHaveBeenCalledTimes(1);
+     });
+ 
+@@ -2050,11 +2077,15 @@ describe('PerpsStreamBridge', () => {
+       );
+ 
+       expect(emit).toHaveBeenCalledTimes(2);
+-      expect(emit).toHaveBeenNthCalledWith(1, 'markets', [{ symbol: 'ETH' }]);
+-      expect(emit).toHaveBeenNthCalledWith(2, 'markets', [
+-        { symbol: 'ETH' },
+-        { symbol: 'BTC' },
+-      ]);
++      expect(emit).toHaveBeenNthCalledWith(1, 'markets', [{ symbol: 'ETH' }], {
++        live: false,
++      });
++      expect(emit).toHaveBeenNthCalledWith(
++        2,
++        'markets',
++        [{ symbol: 'ETH' }, { symbol: 'BTC' }],
++        { live: false },
++      );
+     });
+ 
+     it('uses correct key for testnet', async () => {
+@@ -2084,7 +2115,9 @@ describe('PerpsStreamBridge', () => {
+         [],
+       );
+ 
+-      expect(emit).toHaveBeenCalledWith('markets', mockMarkets);
++      expect(emit).toHaveBeenCalledWith('markets', mockMarkets, {
++        live: expect.any(Boolean),
++      });
+     });
+ 
+     it('resets deduplication key on destroy', async () => {
+@@ -2275,7 +2308,9 @@ describe('PerpsStreamBridge', () => {
+       expect(controller.getOpenOrders).toHaveBeenCalledTimes(1);
+       expect(controller.getAccountState).toHaveBeenCalledTimes(1);
+ 
+-      expect(emit).toHaveBeenCalledWith('markets', mockMarkets);
++      expect(emit).toHaveBeenCalledWith('markets', mockMarkets, {
++        live: expect.any(Boolean),
++      });
+       expect(emit).toHaveBeenCalledWith('positions', mockPositions);
+       expect(emit).toHaveBeenCalledWith('orders', mockOrders);
+       expect(emit).toHaveBeenCalledWith('account', mockAccount);
+@@ -2433,3 +2468,231 @@ describe('PerpsStreamBridge', () => {
+     });
+   });
+ });
++
++describe('wallet-root Perps preload', () => {
++  function setup(overrides: BridgeOverrides = {}) {
++    const controller = {
++      ...createMockController(),
++      state: { activeProvider: 'hyperliquid', isTestnet: false },
++      getActiveProvider: jest.fn(),
++      stopMarketDataPreload: jest.fn(),
++    };
++    const ping = jest.fn().mockResolvedValue(undefined);
++    controller.getActiveProvider.mockReturnValue({ ping });
++    controller.getMarketDataWithPrices.mockResolvedValue([
++      { symbol: 'BTC' },
++      { symbol: 'ETH' },
++    ] as never);
++    const result = createBridge({
++      ...overrides,
++      controller: controller as unknown as PerpsController,
++    });
++    const api = result.bridge.bridgeApi() as unknown as {
++      perpsInit: () => Promise<void>;
++      perpsStartPreload: (id: string) => Promise<void>;
++      perpsStopPreload: (id: string) => void;
++      perpsViewActive: (active: boolean) => void;
++      perpsActivatePriceStream: (params: {
++        symbols: string[];
++      }) => Promise<void>;
++    };
++    return { ...result, controller, ping, api };
++  }
++
++  it('starts the controller preload before foreground initialization like Mobile', async () => {
++    const { api, controller, controllerApi } = setup();
++
++    await api.perpsInit();
++
++    expect(
++      controller.startMarketDataPreload.mock.invocationCallOrder[0],
++    ).toBeLessThan(controllerApi.perpsInit.mock.invocationCallOrder[0]);
++  });
++
++  it('prewarms broad prices after provider health succeeds without a visible Perps view', async () => {
++    const { api, bridge, controller, ping, emit } = setup();
++
++    await api.perpsStartPreload('home');
++
++    expect(bridge.isActive).toBe(false);
++    expect(bridge.canEmit('prices')).toBe(true);
++    expect(bridge.canEmit('account')).toBe(true);
++    expect(bridge.canEmit('candles')).toBe(false);
++    expect(ping.mock.invocationCallOrder[0]).toBeLessThan(
++      controller.subscribeToPrices.mock.invocationCallOrder[0],
++    );
++    expect(controller.subscribeToPrices).toHaveBeenCalledWith(
++      expect.objectContaining({
++        symbols: ['BTC', 'ETH'],
++        includeMarketData: false,
++      }),
++    );
++    expect(emit).toHaveBeenCalledWith(
++      'markets',
++      [{ symbol: 'BTC' }, { symbol: 'ETH' }],
++      { live: true },
++    );
++    bridge.destroy();
++  });
++
++  it('keeps broad prices independent of the foreground symbol subscription', async () => {
++    const { api, bridge, controller } = setup();
++    const broadCleanup = jest.fn();
++    controller.subscribeToPrices.mockReturnValueOnce(broadCleanup);
++    await api.perpsStartPreload('home');
++    api.perpsViewActive(true);
++
++    await api.perpsActivatePriceStream({ symbols: ['BTC'] });
++    api.perpsViewActive(false);
++
++    expect(broadCleanup).not.toHaveBeenCalled();
++    expect(bridge.canEmit('markets')).toBe(true);
++    api.perpsStopPreload('home');
++    expect(broadCleanup).toHaveBeenCalledTimes(1);
++    expect(bridge.canEmit('markets')).toBe(false);
++  });
++
++  it('ignores a stale release after a newer owner replaces it', async () => {
++    const { api, bridge, controller } = setup();
++    await api.perpsStartPreload('first');
++    await api.perpsStartPreload('second');
++    const subscriptions = controller.subscribeToPrices.mock.calls.length;
++
++    api.perpsStopPreload('first');
++    await api.perpsStartPreload('second');
++
++    expect(bridge.canEmit('prices')).toBe(true);
++    expect(controller.subscribeToPrices).toHaveBeenCalledTimes(subscriptions);
++    bridge.destroy();
++  });
++
++  it('rejects preload when global eligibility is disabled', async () => {
++    const { api, controllerApi } = setup({ isPreloadAllowed: () => false });
++
++    await expect(api.perpsStartPreload('home')).rejects.toThrow('unavailable');
++    await expect(api.perpsInit()).rejects.toThrow('unavailable');
++
++    expect(controllerApi.perpsInit).not.toHaveBeenCalled();
++  });
++
++  it('stops the controller preload when eligibility is revoked', async () => {
++    let allowed = true;
++    const { api, controller, bridge } = setup({
++      isPreloadAllowed: () => allowed,
++    });
++    await api.perpsStartPreload('home');
++
++    allowed = false;
++    api.perpsStopPreload('home');
++
++    expect(controller.stopMarketDataPreload).toHaveBeenCalled();
++    expect(bridge.canEmit('prices')).toBe(false);
++  });
++
++  it('releases subscriptions after a failed provider ping', async () => {
++    const { api, controller, ping, bridge } = setup();
++    const cleanup = jest.fn();
++    controller.subscribeToPositions.mockReturnValue(cleanup);
++    ping.mockRejectedValue(new Error('offline'));
++
++    await expect(api.perpsStartPreload('home')).rejects.toThrow('offline');
++
++    expect(controller.subscribeToPrices).not.toHaveBeenCalled();
++    expect(bridge.canEmit('markets')).toBe(false);
++    expect(cleanup).toHaveBeenCalled();
++  });
++
++  it('preserves foreground subscriptions when wallet preload fails', async () => {
++    const { api, controller, ping, bridge } = setup();
++    const cleanup = jest.fn();
++    controller.subscribeToPositions.mockReturnValue(cleanup);
++    await api.perpsInit();
++    api.perpsViewActive(true);
++    ping.mockRejectedValue(new Error('offline'));
++
++    await expect(api.perpsStartPreload('home')).rejects.toThrow('offline');
++
++    expect(cleanup).not.toHaveBeenCalled();
++    expect(bridge.isActive).toBe(true);
++    bridge.destroy();
++  });
++
++  it('continues initialization after best-effort cache preload throws', async () => {
++    const { api, controller, controllerApi, bridge } = setup();
++    controller.startMarketDataPreload.mockImplementation(() => {
++      throw new Error('cache unavailable');
++    });
++
++    await api.perpsInit();
++
++    expect(controllerApi.perpsInit).toHaveBeenCalledTimes(1);
++    bridge.destroy();
++  });
++
++  it('does not resurrect preload after release during initialization', async () => {
++    let resolveInit!: () => void;
++    const { api, controllerApi, ping, controller } = setup();
++    controllerApi.perpsInit.mockReturnValue(
++      new Promise<void>((resolve) => {
++        resolveInit = resolve;
++      }),
++    );
++    const preload = api.perpsStartPreload('home');
++
++    api.perpsStopPreload('home');
++    resolveInit();
++
++    await expect(preload).rejects.toThrow('released');
++    expect(ping).not.toHaveBeenCalled();
++    expect(controller.subscribeToPrices).not.toHaveBeenCalled();
++  });
++
++  it.each(['provider', 'network', 'terminal'] as const)(
++    'rejects stale markets after a %s change',
++    async (change) => {
++      let terminal = false;
++      let resolveMarkets!: (markets: never) => void;
++      const { api, controller, emit } = setup({
++        isTerminalBackendEnabled: () => terminal,
++      });
++      controller.getMarketDataWithPrices.mockImplementation(
++        () =>
++          new Promise((resolve) => {
++            resolveMarkets = resolve;
++          }),
++      );
++      const preload = api.perpsStartPreload('home');
++      // Advance the init and ping continuations to the controlled market response.
++      await Promise.resolve();
++      await Promise.resolve();
++      await Promise.resolve();
++      if (change === 'provider') {
++        controller.state.activeProvider = 'aggregated';
++      }
++      if (change === 'network') {
++        controller.state.isTestnet = true;
++      }
++      if (change === 'terminal') {
++        terminal = true;
++      }
++      resolveMarkets([{ symbol: 'BTC' }] as never);
++
++      await expect(preload).rejects.toThrow();
++
++      expect(emit).not.toHaveBeenCalledWith('markets', expect.anything(), {
++        live: true,
++      });
++      expect(controller.subscribeToPrices).not.toHaveBeenCalled();
++    },
++  );
++
++  it('rejects an empty market response without reporting a ready preload', async () => {
++    const { api, controller, bridge } = setup();
++    controller.getMarketDataWithPrices.mockResolvedValue([]);
++
++    await expect(api.perpsStartPreload('home')).rejects.toThrow('no markets');
++
++    expect(bridge.canEmit('markets')).toBe(false);
++    expect(controller.subscribeToPrices).not.toHaveBeenCalled();
++  });
++});
+diff --git a/app/scripts/controllers/perps/perps-stream-bridge.ts b/app/scripts/controllers/perps/perps-stream-bridge.ts
+index 56d53e6661..83084f5802 100644
+--- a/app/scripts/controllers/perps/perps-stream-bridge.ts
++++ b/app/scripts/controllers/perps/perps-stream-bridge.ts
+@@ -3,6 +3,7 @@ import type {
+   PerpsControllerState,
+   CandlePeriod,
+   TimeDuration,
++  PerpsMarketData,
+ } from '@metamask/perps-controller';
+ import type { Patch } from 'immer';
+ 
+@@ -62,6 +63,7 @@ type PerpsStreamBridgeOptions = {
+   perpsToggleTestnet: (...args: unknown[]) => Promise<unknown>;
+   isConnectionAlive: () => boolean;
+   isTerminalBackendEnabled: () => boolean;
++  isPreloadAllowed: () => boolean;
+   subscribeAggregatedOrderBook: SubscribeAggregatedOrderBook;
+   emit: EmitFn;
+ };
+@@ -88,17 +90,25 @@ const CANDLE_TEARDOWN_DEFER_MS = 150;
+  * Candles: multiplexed by symbol+interval so multiple chart keys can stream
+  * concurrently; each deactivate tears down only that key.
+  *
+- * Emission is gated by isActive, which requires both #activate() to have been
+- * called and perpsViewActive(true) to be set. The UI calls perpsViewActive(true)
+- * when PerpsLayout mounts and perpsViewActive(false) when it unmounts, ensuring
+- * the background only pushes data while a Perps view is open.
+- *
+- * The only public members are the constructor, bridgeApi(), isActive, and
+- * destroy(). All subscription management is internal.
++ * Foreground emission is gated by isActive. An independent wallet-root
++ * preload owner keeps market/account/price channels warm without opening a
++ * Perps view or replacing the foreground price subscription.
+  */
+ export class PerpsStreamBridge {
+   #viewActive = false;
+ 
++  #preloadId: string | null = null;
++
++  #preloadPriceUnsubscribe: (() => void) | null = null;
++
++  #preloadSymbols = '';
++
++  #preloadReady = false;
++
++  #activatedAt = 0;
++
++  readonly #isPreloadAllowed: () => boolean;
++
+   readonly #controller: PerpsController;
+ 
+   readonly #onControllerStateChange: StateChangeListener;
+@@ -198,6 +208,7 @@ export class PerpsStreamBridge {
+     this.#perpsToggleTestnet = options.perpsToggleTestnet;
+     this.#isConnectionAlive = options.isConnectionAlive;
+     this.#isTerminalBackendEnabled = options.isTerminalBackendEnabled;
++    this.#isPreloadAllowed = options.isPreloadAllowed;
+     this.#subscribeAggregatedOrderBook = options.subscribeAggregatedOrderBook;
+     this.#emit = options.emit;
+   }
+@@ -213,27 +224,46 @@ export class PerpsStreamBridge {
+   bridgeApi(): Record<string, (...args: never[]) => unknown> {
+     return {
+       perpsInit: async (...args: unknown[]) => {
+-        const result = await this.#perpsInit(...args);
+-        if (!this.#activated && this.#isConnectionAlive()) {
+-          this.#activate();
++        if (!this.#isPreloadAllowed()) {
++          throw new Error('Perps connection is unavailable');
+         }
+-        // Prime the controller's per-provider market/user caches so a
+-        // subsequent popup cold-mount can hydrate the UI synchronously from
+-        // `state.metamask.cachedMarketDataByProvider`/`cachedUserDataByProvider`
+-        // and skip the loading skeleton. The controller throttles repeat
+-        // calls (preloadGuardMs), so this is cheap to invoke on every init.
+-        // Wrap in `Promise.resolve` so a sync throw, an async rejection,
+-        // or a sync return all funnel into the same `.catch` — the
+-        // controller method may be sync or async, and either failure mode
+-        // would otherwise escape as an unhandled rejection in MV3.
+-        Promise.resolve()
+-          .then(() => this.#controller.startMarketDataPreload())
++        const generation = this.#destroyGeneration;
++        // Mobile starts controller cache preload before connecting the
++        // foreground provider, allowing independent user/market REST warming.
++        await Promise.resolve()
++          .then(() => {
++            if (
++              generation === this.#destroyGeneration &&
++              this.#isConnectionAlive() &&
++              this.#isPreloadAllowed()
++            ) {
++              return this.#controller.startMarketDataPreload();
++            }
++          })
+           .catch((error) => {
+             console.debug(
+               '[PerpsStreamBridge] startMarketDataPreload failed',
+               error,
+             );
+           });
++        if (
++          generation !== this.#destroyGeneration ||
++          !this.#isConnectionAlive() ||
++          !this.#isPreloadAllowed()
++        ) {
++          throw new Error('Perps connection was released');
++        }
++        const result = await this.#perpsInit(...args);
++        if (
++          generation !== this.#destroyGeneration ||
++          !this.#isConnectionAlive() ||
++          !this.#isPreloadAllowed()
++        ) {
++          throw new Error('Perps connection was released');
++        }
++        if (!this.#activated) {
++          this.#activate();
++        }
+         return result;
+       },
+       perpsDisconnect: async (...args: unknown[]) => {
+@@ -246,6 +276,18 @@ export class PerpsStreamBridge {
+       },
+       perpsViewActive: (active: boolean) => {
+         this.#viewActive = active;
++        if (!active && !this.#preloadId) {
++          this.destroy();
++        }
++      },
++      perpsStartPreload: (id: string) => this.#startPreload(id),
++      perpsStopPreload: (id: string) => {
++        if (this.#preloadId === id) {
++          this.#releasePreload();
++          if (!this.#viewActive) {
++            this.destroy();
++          }
++        }
+       },
+       perpsActivateStreaming: async (params: ActivateStreamingParams) => {
+         await this.#initAndActivate();
+@@ -415,8 +457,34 @@ export class PerpsStreamBridge {
+     return this.#activated && this.#viewActive;
+   }
+ 
++  /**
++   * Keep wallet-level data flowing independently of foreground detail streams.
++   *
++   * @param channel - Notification channel.
++   * @returns Whether this UI connection owns the channel.
++   */
++  canEmit(channel: string): boolean {
++    return (
++      this.isActive ||
++      Boolean(
++        this.#activated &&
++        this.#preloadId &&
++        this.#isPreloadAllowed() &&
++        [
++          'positions',
++          'orders',
++          'account',
++          'markets',
++          'prices',
++          'connectionState',
++        ].includes(channel),
++      )
++    );
++  }
++
+   destroy(): void {
+     this.#destroyGeneration += 1;
++    this.#releasePreload();
+ 
+     for (const unsub of this.#staticUnsubs) {
+       this.#callAndClearUnsub(unsub);
+@@ -437,12 +505,117 @@ export class PerpsStreamBridge {
+   }
+ 
+   async #initAndActivate(): Promise<void> {
++    if (!this.#isPreloadAllowed()) {
++      throw new Error('Perps connection is unavailable');
++    }
++    const generation = this.#destroyGeneration;
+     await this.#perpsInit();
+-    if (!this.#activated && this.#isConnectionAlive()) {
++    if (
++      generation === this.#destroyGeneration &&
++      !this.#activated &&
++      this.#isConnectionAlive() &&
++      this.#isPreloadAllowed()
++    ) {
+       this.#activate();
+     }
+   }
+ 
++  async #startPreload(id: string): Promise<void> {
++    if (!this.#isPreloadAllowed() || !this.#isConnectionAlive()) {
++      throw new Error('Perps preload is unavailable');
++    }
++    if (this.#preloadId === id) {
++      return;
++    }
++    this.#releasePreload();
++    this.#preloadId = id;
++    const generation = this.#destroyGeneration;
++    const { activeProvider, isTestnet } = this.#controller.state;
++    const isCurrent = () =>
++      this.#preloadId === id &&
++      generation === this.#destroyGeneration &&
++      this.#isConnectionAlive() &&
++      this.#isPreloadAllowed() &&
++      this.#controller.state.activeProvider === activeProvider &&
++      this.#controller.state.isTestnet === isTestnet;
++    try {
++      await this.#initAndActivate();
++      if (!isCurrent()) {
++        throw new Error('Perps preload was released');
++      }
++      // Match Mobile's connection readiness check before prewarming prices.
++      await this.#controller.getActiveProvider().ping();
++      if (!isCurrent()) {
++        throw new Error('Perps preload was released');
++      }
++      this.#preloadReady = true;
++      this.#controller.startMarketDataPreload();
++      const useTerminalApi = this.#isTerminalBackendEnabled();
++      const markets = await this.#controller.getMarketDataWithPrices({
++        useTerminalApi,
++      });
++      if (!isCurrent() || useTerminalApi !== this.#isTerminalBackendEnabled()) {
++        throw new Error('Perps preload configuration changed');
++      }
++      if (markets.length === 0) {
++        throw new Error('Perps preload returned no markets');
++      }
++      this.#emit('markets', markets, { live: true });
++      this.#prewarmPrices(markets);
++    } catch (error) {
++      if (this.#preloadId === id) {
++        this.#releasePreload();
++        if (!this.#viewActive) {
++          this.destroy();
++        }
++      }
++      throw error;
++    }
++  }
++
++  #releasePreload(): void {
++    this.#preloadId = null;
++    if (this.#preloadPriceUnsubscribe) {
++      this.#callAndClearUnsub(this.#preloadPriceUnsubscribe);
++      this.#preloadPriceUnsubscribe = null;
++    }
++    this.#preloadSymbols = '';
++    this.#preloadReady = false;
++    // A global eligibility change applies to every UI. Otherwise the shared
++    // controller retains its existing last-UI disconnect grace period.
++    if (!this.#isPreloadAllowed()) {
++      this.#controller.stopMarketDataPreload();
++    }
++  }
++
++  #prewarmPrices(markets: PerpsMarketData[]): void {
++    if (!this.#preloadId || !this.#preloadReady || !this.#isPreloadAllowed()) {
++      return;
++    }
++    const symbols = Array.from(
++      new Set(markets.map((market) => market.symbol)),
++    ).sort();
++    const key = symbols.join('|');
++    if (!key || key === this.#preloadSymbols) {
++      return;
++    }
++    if (this.#preloadPriceUnsubscribe) {
++      this.#callAndClearUnsub(this.#preloadPriceUnsubscribe);
++      this.#preloadPriceUnsubscribe = null;
++    }
++    const id = this.#preloadId;
++    this.#preloadPriceUnsubscribe = this.#controller.subscribeToPrices({
++      symbols,
++      includeMarketData: false,
++      callback: (data) => {
++        if (id === this.#preloadId) {
++          this.#emit('prices', data);
++        }
++      },
++    });
++    this.#preloadSymbols = key;
++  }
++
+   /**
+    * Runs a deferred dynamic-channel activation behind a per-channel generation
+    * guard. If a `perpsDeactivate*Stream` for the same channel — or a full
+@@ -499,26 +672,33 @@ export class PerpsStreamBridge {
+     this.#staticUnsubs.length = 0;
+ 
+     this.#activated = true;
++    this.#activatedAt = Date.now();
++    const generation = this.#destroyGeneration;
++    const emit: EmitFn = (channel, data, extra) => {
++      if (generation === this.#destroyGeneration && this.#activated) {
++        this.#emit(channel, data, extra);
++      }
++    };
+ 
+     try {
+       this.#staticUnsubs.push(
+         this.#controller.subscribeToPositions({
+-          callback: (data: unknown) => this.#emit('positions', data),
++          callback: (data: unknown) => emit('positions', data),
+         }),
+       );
+       this.#staticUnsubs.push(
+         this.#controller.subscribeToOrders({
+-          callback: (data: unknown) => this.#emit('orders', data),
++          callback: (data: unknown) => emit('orders', data),
+         }),
+       );
+       this.#staticUnsubs.push(
+         this.#controller.subscribeToAccount({
+-          callback: (data: unknown) => this.#emit('account', data),
++          callback: (data: unknown) => emit('account', data),
+         }),
+       );
+       this.#staticUnsubs.push(
+         this.#controller.subscribeToOrderFills({
+-          callback: (data: unknown) => this.#emit('fills', data),
++          callback: (data: unknown) => emit('fills', data),
+         }),
+       );
+ 
+@@ -629,7 +809,10 @@ export class PerpsStreamBridge {
+       return;
+     }
+ 
+-    this.#emit('markets', entry.data);
++    this.#emit('markets', entry.data, {
++      live: entry.timestamp >= this.#activatedAt,
++    });
++    this.#prewarmPrices(entry.data);
+   }
+ 
+   /**
+@@ -674,7 +857,8 @@ export class PerpsStreamBridge {
+           Array.isArray(markets) &&
+           markets.length > 0
+         ) {
+-          this.#emit('markets', markets);
++          this.#emit('markets', markets, { live: true });
++          this.#prewarmPrices(markets);
+         }
+       })
+       .catch((error) => {
+@@ -724,14 +908,23 @@ export class PerpsStreamBridge {
+         })
+         .catch(() => null);
+ 
++      if (hydrationToken !== this.#hydrationSeq || !this.#isConnectionAlive()) {
++        return;
++      }
++
+       if (marketsResult) {
+-        this.#emit('markets', marketsResult);
++        this.#emit('markets', marketsResult, { live: true });
++        this.#prewarmPrices(marketsResult);
+       }
+ 
+       await new Promise((resolve) =>
+         setTimeout(resolve, REST_HYDRATION_STAGGER_MS),
+       );
+ 
++      if (hydrationToken !== this.#hydrationSeq || !this.#isConnectionAlive()) {
++        return;
++      }
++
+       const [positionsResult, ordersResult, accountResult] =
+         await Promise.allSettled([
+           this.#controller.getPositions({ skipCache: true }),
+@@ -739,6 +932,10 @@ export class PerpsStreamBridge {
+           this.#controller.getAccountState(),
+         ]);
+ 
++      if (hydrationToken !== this.#hydrationSeq || !this.#isConnectionAlive()) {
++        return;
++      }
++
+       if (positionsResult.status === 'fulfilled' && positionsResult.value) {
+         this.#emit('positions', positionsResult.value);
+       }
+@@ -804,11 +1001,16 @@ export class PerpsStreamBridge {
+     symbols: string[],
+     includeMarketData?: boolean,
+   ): void {
++    const generation = this.#destroyGeneration;
+     this.#addDynamicSubscription('prices', () =>
+       this.#controller.subscribeToPrices({
+         symbols,
+         includeMarketData,
+-        callback: (data: unknown) => this.#emit('prices', data),
++        callback: (data: unknown) => {
++          if (generation === this.#destroyGeneration) {
++            this.#emit('prices', data);
++          }
++        },
+       }),
+     );
+   }
+diff --git a/app/scripts/metamask-controller.js b/app/scripts/metamask-controller.js
+index 9db6123328..d5d1961fe1 100644
+--- a/app/scripts/metamask-controller.js
++++ b/app/scripts/metamask-controller.js
+@@ -1845,6 +1845,9 @@ export default class MetamaskController extends EventEmitter {
+       previousValueComparator((prevState, currState) => {
+         const { useExternalServices: prev } = prevState;
+         const { useExternalServices: curr } = currState;
++        if (prev !== curr && !curr) {
++          this.#disconnectPerpsIfActive();
++        }
+         if (
+           getIsPerpsIncludedInBuild() &&
+           prev !== curr &&
+@@ -4852,6 +4855,21 @@ export default class MetamaskController extends EventEmitter {
+           perpsDisconnect: this.messengerClientApi.perpsDisconnect,
+           perpsToggleTestnet: this.messengerClientApi.perpsToggleTestnet,
+           isConnectionAlive: () => !outStream.mmFinished,
++          isPreloadAllowed: () => {
++            const { remoteFeatureFlags } = this.controllerMessenger.call(
++              'RemoteFeatureFlagController:getState',
++            );
++            const flags = getRemoteFeatureFlags({
++              metamask: { remoteFeatureFlags },
++            });
++            return (
++              this.keyringController.state.isUnlocked &&
++              this.onboardingController.state.completedOnboarding &&
++              this.preferencesController.state.useExternalServices &&
++              getIsPerpsIncludedInBuild() &&
++              isPerpsRemoteConfigSatisfied(flags.perpsEnabledVersion)
++            );
++          },
+           subscribeAggregatedOrderBook: (params) =>
+             aggregatedOrderBookConnection.subscribe(params),
+           isTerminalBackendEnabled: () => {
+@@ -4871,7 +4889,7 @@ export default class MetamaskController extends EventEmitter {
+             );
+           },
+           emit: (channel, data, extra) => {
+-            if (!perpsStream.isActive || !isStreamWritable(outStream)) {
++            if (!perpsStream.canEmit(channel) || !isStreamWritable(outStream)) {
+               return;
+             }
+             outStream.write({
+diff --git a/app/scripts/metamask-controller.test.js b/app/scripts/metamask-controller.test.js
+index e31da273db..15419a9254 100644
+--- a/app/scripts/metamask-controller.test.js
++++ b/app/scripts/metamask-controller.test.js
+@@ -105,6 +105,7 @@ jest.mock('./messenger-client-init/perps-controller-init', () => ({
+     messengerClient: {
+       state: {},
+       name: 'PerpsController',
++      stopMarketDataPreload: jest.fn(),
+     },
+     api: {
+       perpsDisconnect: jest.fn().mockResolvedValue(undefined),
+@@ -299,6 +300,7 @@ jest.mock('./lib/rpc-method-middleware', () => ({
+ 
+ jest.mock('../../shared/lib/trace', () => ({
+   ...jest.requireActual('../../shared/lib/trace'),
++  getPerformanceTimestamp: jest.fn(() => 1_000),
+   trace: jest.fn(),
+   endTrace: jest.fn(),
+ }));
+@@ -1041,6 +1043,35 @@ describe('MetaMaskController', () => {
+       });
+     });
+ 
++    it('disconnects active Perps when Basic Functionality is disabled', async () => {
++      jest
++        .spyOn(environment, 'getIsPerpsIncludedInBuild')
++        .mockReturnValue(true);
++      jest
++        .spyOn(metamaskController.messengerClientApi, 'perpsGetConnectionState')
++        .mockReturnValue('connected');
++      const disconnect = jest.spyOn(
++        metamaskController.messengerClientApi,
++        'perpsDisconnect',
++      );
++      const publishPreferences = (useExternalServices) =>
++        metamaskController.controllerMessenger.publish(
++          'PreferencesController:stateChange',
++          {
++            ...metamaskController.preferencesController.state,
++            useExternalServices,
++          },
++          getMockPatches(),
++        );
++      publishPreferences(true);
++      expect(disconnect).not.toHaveBeenCalled();
++
++      publishPreferences(false);
++      await waitForAllPromises();
++
++      expect(disconnect).toHaveBeenCalledTimes(1);
++    });
++
+     describe('_onLock', () => {
+       it('disconnects an active perps websocket', async () => {
+         jest
+@@ -1048,7 +1079,9 @@ describe('MetaMaskController', () => {
+           .mockReturnValue(true);
+         const perpsDisconnect = jest.fn().mockResolvedValue(undefined);
+ 
+-        metamaskController.messengerClientsByName.PerpsController = {};
++        metamaskController.messengerClientsByName.PerpsController = {
++          stopMarketDataPreload: jest.fn(),
++        };
+         jest
+           .spyOn(metamaskController.messengerClientApi, 'perpsDisconnect')
+           .mockImplementation(perpsDisconnect);
+@@ -1094,7 +1127,9 @@ describe('MetaMaskController', () => {
+           .mockReturnValue(true);
+         const perpsDisconnect = jest.fn().mockResolvedValue(undefined);
+ 
+-        metamaskController.messengerClientsByName.PerpsController = {};
++        metamaskController.messengerClientsByName.PerpsController = {
++          stopMarketDataPreload: jest.fn(),
++        };
+         jest
+           .spyOn(metamaskController.messengerClientApi, 'perpsDisconnect')
+           .mockImplementation(perpsDisconnect);
+@@ -3151,7 +3186,9 @@ describe('MetaMaskController', () => {
+           .mockReturnValue(true);
+         const perpsDisconnect = jest.fn().mockResolvedValue(undefined);
+ 
+-        metamaskController.messengerClientsByName.PerpsController = {};
++        metamaskController.messengerClientsByName.PerpsController = {
++          stopMarketDataPreload: jest.fn(),
++        };
+         jest
+           .spyOn(metamaskController.messengerClientApi, 'perpsDisconnect')
+           .mockImplementation(perpsDisconnect);
+@@ -3208,7 +3245,9 @@ describe('MetaMaskController', () => {
+           .mockReturnValue(true);
+         const perpsDisconnect = jest.fn().mockResolvedValue(undefined);
+ 
+-        metamaskController.messengerClientsByName.PerpsController = {};
++        metamaskController.messengerClientsByName.PerpsController = {
++          stopMarketDataPreload: jest.fn(),
++        };
+         jest
+           .spyOn(metamaskController.messengerClientApi, 'perpsDisconnect')
+           .mockImplementation(perpsDisconnect);
+@@ -3265,7 +3304,9 @@ describe('MetaMaskController', () => {
+           .mockReturnValue(true);
+         const perpsDisconnect = jest.fn().mockResolvedValue(undefined);
+ 
+-        metamaskController.messengerClientsByName.PerpsController = {};
++        metamaskController.messengerClientsByName.PerpsController = {
++          stopMarketDataPreload: jest.fn(),
++        };
+         jest
+           .spyOn(metamaskController.messengerClientApi, 'perpsDisconnect')
+           .mockImplementation(perpsDisconnect);
+diff --git a/lavamoat/webpack/mv2/beta/policy-override.json b/lavamoat/webpack/mv2/beta/policy-override.json
+index 44b82ab2cd..c3109ee996 100644
+--- a/lavamoat/webpack/mv2/beta/policy-override.json
++++ b/lavamoat/webpack/mv2/beta/policy-override.json
+@@ -140,6 +140,12 @@
+       }
+     },
+     "@metamask/network-controller": {
++      "globals": {
++        "btoa": true,
++        "btoa.bind": false,
++        "fetch": true,
++        "fetch.bind": false
++      },
+       "packages": {
+         "cockatiel": true
+       }
+diff --git a/lavamoat/webpack/mv2/experimental/policy-override.json b/lavamoat/webpack/mv2/experimental/policy-override.json
+index f012a21a65..4fbbe31ab0 100644
+--- a/lavamoat/webpack/mv2/experimental/policy-override.json
++++ b/lavamoat/webpack/mv2/experimental/policy-override.json
+@@ -140,6 +140,12 @@
+       }
+     },
+     "@metamask/network-controller": {
++      "globals": {
++        "btoa": true,
++        "btoa.bind": false,
++        "fetch": true,
++        "fetch.bind": false
++      },
+       "packages": {
+         "cockatiel": true
+       }
+diff --git a/lavamoat/webpack/mv2/flask/policy-override.json b/lavamoat/webpack/mv2/flask/policy-override.json
+index 4a302d4358..b9f56cfdb2 100644
+--- a/lavamoat/webpack/mv2/flask/policy-override.json
++++ b/lavamoat/webpack/mv2/flask/policy-override.json
+@@ -147,6 +147,12 @@
+       }
+     },
+     "@metamask/network-controller": {
++      "globals": {
++        "btoa": true,
++        "btoa.bind": false,
++        "fetch": true,
++        "fetch.bind": false
++      },
+       "packages": {
+         "cockatiel": true
+       }
+diff --git a/lavamoat/webpack/mv2/main/policy-override.json b/lavamoat/webpack/mv2/main/policy-override.json
+index 44b82ab2cd..c3109ee996 100644
+--- a/lavamoat/webpack/mv2/main/policy-override.json
++++ b/lavamoat/webpack/mv2/main/policy-override.json
+@@ -140,6 +140,12 @@
+       }
+     },
+     "@metamask/network-controller": {
++      "globals": {
++        "btoa": true,
++        "btoa.bind": false,
++        "fetch": true,
++        "fetch.bind": false
++      },
+       "packages": {
+         "cockatiel": true
+       }
+diff --git a/lavamoat/webpack/mv3/beta/policy-override.json b/lavamoat/webpack/mv3/beta/policy-override.json
+index 6498088244..3b2c49fc81 100644
+--- a/lavamoat/webpack/mv3/beta/policy-override.json
++++ b/lavamoat/webpack/mv3/beta/policy-override.json
+@@ -171,6 +171,12 @@
+       }
+     },
+     "@metamask/network-controller": {
++      "globals": {
++        "btoa": true,
++        "btoa.bind": false,
++        "fetch": true,
++        "fetch.bind": false
++      },
+       "packages": {
+         "cockatiel": true
+       }
+diff --git a/lavamoat/webpack/mv3/experimental/policy-override.json b/lavamoat/webpack/mv3/experimental/policy-override.json
+index 6498088244..3b2c49fc81 100644
+--- a/lavamoat/webpack/mv3/experimental/policy-override.json
++++ b/lavamoat/webpack/mv3/experimental/policy-override.json
+@@ -171,6 +171,12 @@
+       }
+     },
+     "@metamask/network-controller": {
++      "globals": {
++        "btoa": true,
++        "btoa.bind": false,
++        "fetch": true,
++        "fetch.bind": false
++      },
+       "packages": {
+         "cockatiel": true
+       }
+diff --git a/lavamoat/webpack/mv3/flask/policy-override.json b/lavamoat/webpack/mv3/flask/policy-override.json
+index 6498088244..3b2c49fc81 100644
+--- a/lavamoat/webpack/mv3/flask/policy-override.json
++++ b/lavamoat/webpack/mv3/flask/policy-override.json
+@@ -171,6 +171,12 @@
+       }
+     },
+     "@metamask/network-controller": {
++      "globals": {
++        "btoa": true,
++        "btoa.bind": false,
++        "fetch": true,
++        "fetch.bind": false
++      },
+       "packages": {
+         "cockatiel": true
+       }
+diff --git a/lavamoat/webpack/mv3/main/policy-override.json b/lavamoat/webpack/mv3/main/policy-override.json
+index 6498088244..3b2c49fc81 100644
+--- a/lavamoat/webpack/mv3/main/policy-override.json
++++ b/lavamoat/webpack/mv3/main/policy-override.json
+@@ -171,6 +171,12 @@
+       }
+     },
+     "@metamask/network-controller": {
++      "globals": {
++        "btoa": true,
++        "btoa.bind": false,
++        "fetch": true,
++        "fetch.bind": false
++      },
+       "packages": {
+         "cockatiel": true
+       }
+diff --git a/shared/lib/trace.ts b/shared/lib/trace.ts
+index d264ffbe0b..b17042d3da 100644
+--- a/shared/lib/trace.ts
++++ b/shared/lib/trace.ts
+@@ -12,6 +12,50 @@ import { sentryLogger } from './sentry';
+  * The supported trace names.
+  */
+ export enum TraceName {
++  PerpsOpenPosition = 'Perps Open Position',
++  PerpsClosePosition = 'Perps Close Position',
++  PerpsDeposit = 'Perps Deposit',
++  PerpsWithdraw = 'Perps Withdraw',
++  PerpsPlaceOrder = 'Perps Place Order',
++  PerpsEditOrder = 'Perps Edit Order',
++  PerpsCancelOrder = 'Perps Cancel Order',
++  PerpsUpdateTPSL = 'Perps Update TP/SL',
++  PerpsUpdateMargin = 'Perps Update Margin',
++  PerpsFlipPosition = 'Perps Flip Position',
++  PerpsMarketDataUpdate = 'Perps Market Data Update',
++  PerpsOrderView = 'Perps Order View',
++  PerpsTabView = 'Perps Tab View',
++  PerpsMarketListView = 'Perps Market List View',
++  PerpsPositionDetailsView = 'Perps Position Details View',
++  PerpsAdjustMarginView = 'Perps Adjust Margin View',
++  PerpsOrderDetailsView = 'Perps Order Details View',
++  PerpsOrderBookView = 'Perps Order Book View',
++  PerpsFlipPositionSheet = 'Perps Flip Position Sheet',
++  PerpsTransactionsView = 'Perps Transactions View',
++  PerpsOrderFillsFetch = 'Perps Order Fills Fetch',
++  PerpsOrdersFetch = 'Perps Orders Fetch',
++  PerpsFundingFetch = 'Perps Funding Fetch',
++  PerpsGetPositions = 'Perps Get Positions',
++  PerpsGetAccountState = 'Perps Get Account State',
++  PerpsGetHistoricalPortfolio = 'Perps Get Historical Portfolio',
++  PerpsGetMarkets = 'Perps Get Markets',
++  PerpsGetMarketDataWithPrices = 'Perps Get Market Data With Prices',
++  PerpsFetchHistoricalCandles = 'Perps Fetch Historical Candles',
++  PerpsWebSocketConnected = 'Perps WebSocket Connected',
++  PerpsWebSocketDisconnected = 'Perps WebSocket Disconnected',
++  PerpsWebSocketFirstPositions = 'Perps WebSocket First Positions',
++  PerpsWebSocketFirstOrders = 'Perps WebSocket First Orders',
++  PerpsWebSocketFirstAccount = 'Perps WebSocket First Account',
++  PerpsDataLakeReport = 'Perps Data Lake Report',
++  PerpsRewardsAPICall = 'Perps Rewards API Call',
++  PerpsClosePositionView = 'Perps Close Position View',
++  PerpsWithdrawView = 'Perps Withdraw View',
++  PerpsConnectionEstablishment = 'Perps Connection Establishment',
++  PerpsAccountSwitchReconnection = 'Perps Account Switch Reconnection',
++  PerpsMarketDataPreload = 'Perps Market Data Preload',
++  PerpsUserDataPreload = 'Perps User Data Preload',
++  PerpsEntryToLiveMarketList = 'Perps Entry To Live Market List',
++
+   AccountList = 'Account List',
+   AccountOverviewAssetListTab = 'Account Overview Asset List Tab',
+   AccountOverviewNftsTab = 'Account Overview Nfts Tab',
+@@ -101,6 +145,7 @@ export enum TraceName {
+  * The operation names to use for the trace.
+  */
+ export enum TraceOperation {
++  PerpsOperation = 'perps.operation',
+   AccountList = 'account.list',
+   OnboardingUserJourney = 'onboarding.user_journey',
+   OnboardingSecurityOp = 'onboarding.security_operation',
+diff --git a/ui/components/app/perps/hooks/usePerpsTabExploreData.test.ts b/ui/components/app/perps/hooks/usePerpsTabExploreData.test.ts
+index c9c53c2471..0d2fb66877 100644
+--- a/ui/components/app/perps/hooks/usePerpsTabExploreData.test.ts
++++ b/ui/components/app/perps/hooks/usePerpsTabExploreData.test.ts
+@@ -18,6 +18,7 @@ describe('usePerpsTabExploreData', () => {
+       cryptoMarkets: mockCryptoMarkets,
+       hip3Markets: mockHip3Markets,
+       isInitialLoading: false,
++      isLive: true,
+       error: null,
+       refresh: jest.fn(),
+     });
+@@ -74,6 +75,7 @@ describe('usePerpsTabExploreData', () => {
+       cryptoMarkets: mockCryptoMarkets,
+       hip3Markets: mockHip3Markets,
+       isInitialLoading: false,
++      isLive: true,
+       error: null,
+       refresh: jest.fn(),
+     });
+diff --git a/ui/components/app/perps/hooks/usePerpsTabExploreData.ts b/ui/components/app/perps/hooks/usePerpsTabExploreData.ts
+index 44661e6d12..c7d524f700 100644
+--- a/ui/components/app/perps/hooks/usePerpsTabExploreData.ts
++++ b/ui/components/app/perps/hooks/usePerpsTabExploreData.ts
+@@ -23,15 +23,18 @@ export type UsePerpsTabExploreDataReturn = {
+   exploreMarkets: PerpsMarketData[];
+   watchlistMarkets: PerpsMarketData[];
+   isInitialLoading: boolean;
++  isLive: boolean;
+ };
+ 
+ export function usePerpsTabExploreData(
+   options: UsePerpsTabExploreDataOptions = {},
+ ): UsePerpsTabExploreDataReturn {
+   const { refreshIntervalMs } = options;
+-  const { markets: liveMarkets, isInitialLoading } = usePerpsLiveMarketListData(
+-    { refreshIntervalMs },
+-  );
++  const {
++    markets: liveMarkets,
++    isInitialLoading,
++    isLive,
++  } = usePerpsLiveMarketListData({ refreshIntervalMs });
+   const watchlistMarketsState = useSelector(selectPerpsWatchlistMarkets);
+   const isTestnet = useSelector(selectPerpsIsTestnet);
+   const watchlistSymbols = isTestnet
+@@ -64,5 +67,6 @@ export function usePerpsTabExploreData(
+     exploreMarkets,
+     watchlistMarkets: filteredWatchlistMarkets,
+     isInitialLoading,
++    isLive,
+   };
+ }
+diff --git a/ui/components/app/perps/perps-view.test.tsx b/ui/components/app/perps/perps-view.test.tsx
+index 199c6c7364..d54550e4da 100644
+--- a/ui/components/app/perps/perps-view.test.tsx
++++ b/ui/components/app/perps/perps-view.test.tsx
+@@ -1,5 +1,6 @@
+ import React from 'react';
+ import { screen, fireEvent, waitFor } from '@testing-library/react';
++import { trace, endTrace } from '../../../../shared/lib/trace';
+ import { renderWithProvider } from '../../../../test/lib/render-helpers-navigate';
+ import configureStore from '../../../store/store';
+ import mockState from '../../../../test/data/mock-state.json';
+@@ -23,6 +24,12 @@ import { PerpsView } from './perps-view';
+ import { usePerpsTabExploreData } from './hooks/usePerpsTabExploreData';
+ import type { PerpsTransaction } from './types';
+ 
++jest.mock('../../../../shared/lib/trace', () => ({
++  ...jest.requireActual('../../../../shared/lib/trace'),
++  trace: jest.fn(),
++  endTrace: jest.fn(),
++}));
++
+ const mockNavigate = jest.fn();
+ 
+ jest.mock('react-router-dom', () => ({
+@@ -240,6 +247,10 @@ const mockStore = configureStore({
+ describe('PerpsView', () => {
+   beforeEach(() => {
+     jest.clearAllMocks();
++    Object.defineProperty(document, 'visibilityState', {
++      configurable: true,
++      value: 'visible',
++    });
+     mockExposeCancelAllOrders = false;
+     mockUsePerpsBottomNavSource.mockReturnValue(undefined);
+     mockUsePerpsEligibility.mockReturnValue({ isEligible: true });
+@@ -260,6 +271,7 @@ describe('PerpsView', () => {
+       isInitialLoading: false,
+     });
+     jest.mocked(usePerpsTabExploreData).mockReturnValue({
++      isLive: true,
+       allMarkets: [...mocks.mockCryptoMarkets, ...mocks.mockHip3Markets],
+       exploreMarkets: [...mocks.mockCryptoMarkets, ...mocks.mockHip3Markets],
+       watchlistMarkets: mocks.mockCryptoMarkets.filter((market) =>
+@@ -278,6 +290,38 @@ describe('PerpsView', () => {
+   });
+ 
+   describe('with default mock data (positions and orders)', () => {
++    it('waits for pending orders before completing the Mobile Home trace', () => {
++      jest
++        .mocked(streamHooks.usePerpsLiveOrders)
++        .mockReturnValue({ orders: [], isInitialLoading: true });
++      const store = configureStore(mockState);
++      const { rerender } = renderWithProvider(<PerpsView />, store);
++      expect(endTrace).not.toHaveBeenCalledWith(
++        expect.objectContaining({
++          name: 'Perps Entry To Live Market List',
++          data: expect.objectContaining({ success: true }),
++        }),
++      );
++
++      jest
++        .mocked(streamHooks.usePerpsLiveOrders)
++        .mockReturnValue({ orders: mocks.mockOrders, isInitialLoading: false });
++      rerender(<PerpsView />);
++
++      expect(trace).toHaveBeenCalledWith(
++        expect.objectContaining({
++          name: 'Perps Entry To Live Market List',
++          op: 'perps.operation',
++        }),
++      );
++      expect(endTrace).toHaveBeenCalledWith(
++        expect.objectContaining({
++          name: 'Perps Entry To Live Market List',
++          data: { success: true, variant: 'order' },
++        }),
++      );
++    });
++
+     it('renders the perps tab view', () => {
+       renderWithProvider(<PerpsView />, mockStore);
+ 
+@@ -982,6 +1026,7 @@ describe('PerpsView', () => {
+ 
+   it('passes tab explore and watchlist markets from the tab hook', () => {
+     jest.mocked(usePerpsTabExploreData).mockReturnValue({
++      isLive: true,
+       allMarkets: [...mocks.mockCryptoMarkets, ...mocks.mockHip3Markets],
+       exploreMarkets: [mocks.mockCryptoMarkets[0]],
+       watchlistMarkets: [mocks.mockCryptoMarkets[1]],
+diff --git a/ui/components/app/perps/perps-view.tsx b/ui/components/app/perps/perps-view.tsx
+index 281bf00ef7..4ee5a64569 100644
+--- a/ui/components/app/perps/perps-view.tsx
++++ b/ui/components/app/perps/perps-view.tsx
+@@ -10,6 +10,7 @@ import type { Order, Position } from '@metamask/perps-controller';
+ import React, { useCallback, useEffect, useMemo, useState } from 'react';
+ import { useSelector } from 'react-redux';
+ import { useNavigate } from 'react-router-dom';
++import { usePerpsEntryTrace } from '../../../hooks/perps/usePerpsEntryTrace';
+ import {
+   usePerpsLivePositions,
+   usePerpsLiveOrders,
+@@ -112,6 +113,7 @@ export const PerpsView = () => {
+     exploreMarkets,
+     watchlistMarkets,
+     isInitialLoading: marketsLoading,
++    isLive: marketsLive,
+   } = usePerpsTabExploreData();
+ 
+   const {
+@@ -389,6 +391,19 @@ export const PerpsView = () => {
+     account && Number.parseFloat(getTradeableBalance(account)) > 0,
+   );
+ 
++  let entryVariant: 'empty' | 'position' | 'order' = 'empty';
++  if (orders.length > 0) {
++    entryVariant = 'order';
++  } else if (positions.length > 0) {
++    entryVariant = 'position';
++  }
++  usePerpsEntryTrace(
++    'home',
++    exploreMarkets,
++    isLoading,
++    marketsLive,
++    entryVariant,
++  );
+   usePerpsMeasurement('PerpsTabLoaded', !isLoading);
+ 
+   usePerpsEventTracking({
+diff --git a/ui/helpers/perps/entry-trace.test.ts b/ui/helpers/perps/entry-trace.test.ts
+new file mode 100644
+index 0000000000..90761e3a01
+--- /dev/null
++++ b/ui/helpers/perps/entry-trace.test.ts
+@@ -0,0 +1,198 @@
++import { it } from '@jest/globals';
++import { trace, endTrace, TraceName } from '../../../shared/lib/trace';
++
++jest.mock('../../../shared/lib/trace', () => ({
++  ...jest.requireActual('../../../shared/lib/trace'),
++  trace: jest.fn(),
++  endTrace: jest.fn(),
++}));
++
++let entry: typeof import('./entry-trace');
++let sequence = 0;
++
++function setVisibility(value: DocumentVisibilityState) {
++  Object.defineProperty(document, 'visibilityState', {
++    configurable: true,
++    value,
++  });
++  document.dispatchEvent(new Event('visibilitychange'));
++}
++
++describe('Perps entry lifecycle', () => {
++  beforeEach(() => {
++    jest.useFakeTimers();
++    jest.clearAllMocks();
++    setVisibility('visible');
++    Object.defineProperty(crypto, 'randomUUID', {
++      configurable: true,
++      value: () => `entry-${(sequence += 1)}`,
++    });
++    jest.isolateModules(() => {
++      entry = jest.requireActual('./entry-trace');
++    });
++  });
++
++  afterEach(() => {
++    jest.runOnlyPendingTimers();
++    jest.useRealTimers();
++  });
++
++  it('reuses the span during the same mounted entry', () => {
++    const id = entry.startPerpsEntry('home');
++    const mountedId = entry.startPerpsEntry('home');
++
++    expect(mountedId).toBe(id);
++    expect(trace).toHaveBeenCalledTimes(1);
++    expect(trace).toHaveBeenCalledWith(
++      expect.objectContaining({
++        name: TraceName.PerpsEntryToLiveMarketList,
++        tags: expect.objectContaining({
++          [entry.PERPS_LIFECYCLE_TAG]: 'cold_process',
++        }),
++      }),
++    );
++  });
++
++  it('consumes cold context only after a successful entry', () => {
++    const abandoned = entry.startPerpsEntry('home');
++    entry.endPerpsEntry(abandoned, false, 'unmounted');
++    expect(entry.getPerpsLifecycleContext()).toBe('cold_process');
++
++    const completed = entry.startPerpsEntry('home');
++    entry.endPerpsEntry(completed, true, 'live_rows_committed');
++
++    expect(entry.getPerpsLifecycleContext()).toBe('warm');
++    expect(jest.getTimerCount()).toBe(0);
++  });
++
++  it('ends an abandoned destination without ending its replacement', () => {
++    const oldId = entry.startPerpsEntry('home');
++    const newId = entry.startPerpsEntry('market_list');
++    entry.endPerpsEntry(oldId, true, 'late_render');
++
++    expect(endTrace).toHaveBeenCalledTimes(1);
++    expect(endTrace).toHaveBeenCalledWith(
++      expect.objectContaining({
++        id: oldId,
++        data: { success: false, reason: 'generation_changed' },
++      }),
++    );
++    entry.endPerpsEntry(newId, true, 'live_rows_committed');
++    expect(endTrace).toHaveBeenCalledTimes(2);
++  });
++
++  it('times out an entry that never renders live rows', () => {
++    const id = entry.startPerpsEntry('home');
++
++    jest.advanceTimersByTime(30_000);
++
++    expect(endTrace).toHaveBeenCalledWith(
++      expect.objectContaining({
++        id,
++        data: { success: false, reason: 'timeout' },
++      }),
++    );
++    expect(entry.getPerpsLifecycleContext()).toBe('cold_process');
++  });
++
++  it('abandons hidden entries and tags the next entry as background resume', () => {
++    const cleanup = entry.observePerpsLifecycle();
++    const id = entry.startPerpsEntry('home');
++
++    setVisibility('hidden');
++    setVisibility('visible');
++    entry.startPerpsEntry('home');
++
++    expect(endTrace).toHaveBeenCalledWith(
++      expect.objectContaining({
++        id,
++        data: { success: false, reason: 'app_backgrounded' },
++      }),
++    );
++    expect(trace).toHaveBeenLastCalledWith(
++      expect.objectContaining({
++        tags: expect.objectContaining({
++          [entry.PERPS_LIFECYCLE_TAG]: 'background_resume',
++        }),
++      }),
++    );
++    cleanup();
++  });
++
++  it('classifies resume before a mounted child starts its next entry', () => {
++    const id = entry.startPerpsEntry('home');
++    entry.endPerpsEntry(id, true, 'live_rows_committed');
++    const childListener = () => {
++      if (document.visibilityState === 'visible') {
++        entry.startPerpsEntry('home');
++      }
++    };
++    // React child effects can subscribe before the wallet-root effect.
++    document.addEventListener('visibilitychange', childListener);
++    const cleanup = entry.observePerpsLifecycle();
++
++    setVisibility('hidden');
++    setVisibility('visible');
++
++    expect(trace).toHaveBeenLastCalledWith(
++      expect.objectContaining({
++        tags: expect.objectContaining({
++          [entry.PERPS_LIFECYCLE_TAG]: 'background_resume',
++        }),
++      }),
++    );
++    expect(endTrace).toHaveBeenCalledTimes(1);
++    expect(jest.getTimerCount()).toBe(1);
++    document.removeEventListener('visibilitychange', childListener);
++    cleanup();
++  });
++
++  it.each(['empty', 'position', 'order'] as const)(
++    'uses the documented Home name, operation and %s variant',
++    (variant) => {
++      const id = entry.startPerpsEntry('home');
++      entry.endPerpsEntry(id, true, 'live_rows_committed', variant);
++      entry.endPerpsEntry(id, true, 'late_render', variant);
++
++      expect(trace).toHaveBeenCalledWith(
++        expect.objectContaining({
++          name: 'Perps Entry To Live Market List',
++          op: 'perps.operation',
++        }),
++      );
++      expect(endTrace).toHaveBeenCalledTimes(1);
++      expect(endTrace).toHaveBeenCalledWith({
++        name: 'Perps Entry To Live Market List',
++        id,
++        data: { success: true, variant },
++      });
++    },
++  );
++
++  it('uses the separate documented market browser name', () => {
++    const id = entry.startPerpsEntry('market_list');
++    entry.endPerpsEntry(id, true, 'live_rows_committed');
++
++    expect(trace).toHaveBeenCalledWith(
++      expect.objectContaining({
++        name: 'Perps Market List View',
++        op: 'perps.operation',
++      }),
++    );
++    expect(endTrace).toHaveBeenCalledWith({
++      name: 'Perps Market List View',
++      id,
++      data: { success: true },
++    });
++  });
++
++  it('removes the document listener on cleanup', () => {
++    const cleanup = entry.observePerpsLifecycle();
++    cleanup();
++
++    setVisibility('hidden');
++    setVisibility('visible');
++
++    expect(entry.getPerpsLifecycleContext()).toBe('cold_process');
++  });
++});
+diff --git a/ui/helpers/perps/entry-trace.ts b/ui/helpers/perps/entry-trace.ts
+new file mode 100644
+index 0000000000..fb3b15e25c
+--- /dev/null
++++ b/ui/helpers/perps/entry-trace.ts
+@@ -0,0 +1,126 @@
++import {
++  trace,
++  endTrace,
++  TraceName,
++  TraceOperation,
++} from '../../../shared/lib/trace';
++
++type LifecycleContext = 'cold_process' | 'warm' | 'background_resume';
++export type PerpsEntrySurface = 'home' | 'market_list';
++export type PerpsEntryVariant = 'empty' | 'position' | 'order';
++
++const getEntryTraceName = (surface: PerpsEntrySurface): TraceName =>
++  surface === 'home'
++    ? TraceName.PerpsEntryToLiveMarketList
++    : TraceName.PerpsMarketListView;
++
++// Mobile's shared telemetry schema uses this tag across Perps operations.
++export const PERPS_LIFECYCLE_TAG = 'lifecycle_context';
++
++const ENTRY_TIMEOUT_MS = 30_000;
++let lifecycleContext: LifecycleContext = 'cold_process';
++let pendingEntry:
++  | {
++      id: string;
++      surface: PerpsEntrySurface;
++      timer: ReturnType<typeof setTimeout>;
++    }
++  | undefined;
++
++/** Return Mobile's lifecycle classification without consuming the cold entry. */
++export function getPerpsLifecycleContext(): LifecycleContext {
++  return lifecycleContext;
++}
++
++let wasHidden = false;
++
++function updatePerpsLifecycle(): void {
++  if (document.visibilityState === 'hidden') {
++    wasHidden = true;
++    if (pendingEntry) {
++      endPerpsEntry(pendingEntry.id, false, 'app_backgrounded');
++    }
++  } else if (wasHidden) {
++    wasHidden = false;
++    if (pendingEntry) {
++      endPerpsEntry(pendingEntry.id, false, 'app_backgrounded');
++    }
++    lifecycleContext = 'background_resume';
++  }
++}
++
++/** Observe visibility for this UI document, the Extension counterpart of AppState. */
++export function observePerpsLifecycle(): () => void {
++  wasHidden = document.visibilityState === 'hidden';
++  document.addEventListener('visibilitychange', updatePerpsLifecycle);
++  return () =>
++    document.removeEventListener('visibilitychange', updatePerpsLifecycle);
++}
++
++/**
++ * Start at view mount, matching the documented Mobile screen boundary.
++ *
++ * @param surface - Destination that will render the market rows.
++ * @returns The unique entry ID.
++ */
++export function startPerpsEntry(surface: PerpsEntrySurface): string {
++  // A child effect may receive visibilitychange before the wallet-root listener.
++  updatePerpsLifecycle();
++  if (pendingEntry?.surface === surface) {
++    return pendingEntry.id;
++  }
++  if (pendingEntry) {
++    endPerpsEntry(pendingEntry.id, false, 'generation_changed');
++  }
++  const id = crypto.randomUUID();
++  trace({
++    name: getEntryTraceName(surface),
++    id,
++    op: TraceOperation.PerpsOperation,
++    tags: {
++      feature: 'perps',
++      [PERPS_LIFECYCLE_TAG]: lifecycleContext,
++      surface,
++    },
++  });
++  pendingEntry = {
++    id,
++    surface,
++    timer: setTimeout(
++      () => endPerpsEntry(id, false, 'timeout'),
++      ENTRY_TIMEOUT_MS,
++    ),
++  };
++  return id;
++}
++
++/**
++ * Finish only the owning entry. Failed or abandoned entries never consume cold.
++ *
++ * @param id - Entry identity.
++ * @param success - Whether current-session market rows committed.
++ * @param reason - Abandonment reason.
++ * @param variant - Loaded Home content, using the Mobile dashboard values.
++ */
++export function endPerpsEntry(
++  id: string,
++  success: boolean,
++  reason: string,
++  variant?: PerpsEntryVariant,
++): void {
++  if (pendingEntry?.id !== id) {
++    return;
++  }
++  clearTimeout(pendingEntry.timer);
++  endTrace({
++    name: getEntryTraceName(pendingEntry.surface),
++    id,
++    data: success
++      ? { success, ...(variant ? { variant } : {}) }
++      : { success, reason },
++  });
++  pendingEntry = undefined;
++  if (success) {
++    lifecycleContext = 'warm';
++  }
++}
+diff --git a/ui/hooks/discover-search/useDiscoverPerpsSearch.test.tsx b/ui/hooks/discover-search/useDiscoverPerpsSearch.test.tsx
+index e887f30610..a90cf2d1ea 100644
+--- a/ui/hooks/discover-search/useDiscoverPerpsSearch.test.tsx
++++ b/ui/hooks/discover-search/useDiscoverPerpsSearch.test.tsx
+@@ -33,6 +33,7 @@ describe('useDiscoverPerpsSearch', () => {
+       cryptoMarkets: [],
+       hip3Markets: [],
+       isInitialLoading: false,
++      isLive: false,
+       error: null,
+       refresh: jest.fn(),
+     });
+@@ -48,6 +49,7 @@ describe('useDiscoverPerpsSearch', () => {
+       cryptoMarkets: [],
+       hip3Markets: [],
+       isInitialLoading: false,
++      isLive: false,
+       error: null,
+       refresh: jest.fn(),
+     });
+@@ -71,6 +73,7 @@ describe('useDiscoverPerpsSearch', () => {
+       cryptoMarkets: [],
+       hip3Markets: [],
+       isInitialLoading: false,
++      isLive: false,
+       error: null,
+       refresh: jest.fn(),
+     });
+@@ -96,6 +99,7 @@ describe('useDiscoverPerpsSearch', () => {
+       cryptoMarkets: [],
+       hip3Markets: [],
+       isInitialLoading: false,
++      isLive: false,
+       error: null,
+       refresh: jest.fn(),
+     });
+@@ -114,6 +118,7 @@ describe('useDiscoverPerpsSearch', () => {
+       cryptoMarkets: [],
+       hip3Markets: [],
+       isInitialLoading: false,
++      isLive: false,
+       error: null,
+       refresh: jest.fn(),
+     });
+diff --git a/ui/hooks/perps/stream/usePerpsLiveMarketListData.test.ts b/ui/hooks/perps/stream/usePerpsLiveMarketListData.test.ts
+index 4bac51be39..7cda0940fa 100644
+--- a/ui/hooks/perps/stream/usePerpsLiveMarketListData.test.ts
++++ b/ui/hooks/perps/stream/usePerpsLiveMarketListData.test.ts
+@@ -1,11 +1,19 @@
++import { it } from '@jest/globals';
+ import { renderHook } from '@testing-library/react';
+ import type { PerpsMarketData } from '@metamask/perps-controller';
+ import { usePerpsLiveMarketData } from './usePerpsLiveMarketData';
+ import { usePerpsLiveMarketListData } from './usePerpsLiveMarketListData';
+ import { usePerpsLivePrices } from './usePerpsLivePrices';
+ 
+-jest.mock('./usePerpsLiveMarketData');
+-jest.mock('./usePerpsLivePrices');
++const mockHasLiveMarketData = jest.fn();
++jest.mock('../../../providers/perps/PerpsStreamManager', () => ({
++  getPerpsStreamManager: () => ({ hasLiveMarketData: mockHasLiveMarketData }),
++}));
++
++jest.mock('./usePerpsLiveMarketData', () => ({
++  usePerpsLiveMarketData: jest.fn(),
++}));
++jest.mock('./usePerpsLivePrices', () => ({ usePerpsLivePrices: jest.fn() }));
+ 
+ const mockUsePerpsLiveMarketData =
+   usePerpsLiveMarketData as jest.MockedFunction<typeof usePerpsLiveMarketData>;
+@@ -41,6 +49,51 @@ describe('usePerpsLiveMarketListData', () => {
+     jest.useRealTimers();
+   });
+ 
++  it.each([false, true])(
++    'requires live metadata and live prices together when pricesLive=%s',
++    (pricesLive) => {
++      const markets = [createMockMarket()];
++      mockHasLiveMarketData.mockReturnValue(false);
++      mockUsePerpsLiveMarketData.mockReturnValue({
++        markets,
++        cryptoMarkets: markets,
++        hip3Markets: [],
++        isInitialLoading: false,
++        error: null,
++        refresh: jest.fn(),
++      });
++      mockUsePerpsLivePrices.mockReturnValue({
++        isLive: pricesLive,
++        prices: {
++          BTC: {
++            symbol: 'BTC',
++            price: '51000',
++            timestamp: 1,
++            isTradable: true,
++          },
++        },
++        isInitialLoading: false,
++      });
++      const { result, rerender } = renderHook(() =>
++        usePerpsLiveMarketListData(),
++      );
++      expect(result.current.isLive).toBe(false);
++
++      mockHasLiveMarketData.mockReturnValue(true);
++      // A live notification supplies a new immutable market snapshot.
++      mockUsePerpsLiveMarketData.mockReturnValue({
++        ...mockUsePerpsLiveMarketData.mock.results[0].value,
++        markets: [...markets],
++      });
++      rerender();
++
++      expect(result.current.isLive).toBe(pricesLive);
++      if (pricesLive) {
++        expect(mockHasLiveMarketData).toHaveBeenCalledWith(markets);
++      }
++    },
++  );
++
+   it('activates live prices for all current market symbols', () => {
+     const markets = [
+       createMockMarket({ symbol: 'BTC' }),
+@@ -56,6 +109,7 @@ describe('usePerpsLiveMarketListData', () => {
+       refresh: jest.fn(),
+     });
+     mockUsePerpsLivePrices.mockReturnValue({
++      isLive: false,
+       prices: {},
+       isInitialLoading: false,
+     });
+@@ -82,6 +136,7 @@ describe('usePerpsLiveMarketListData', () => {
+       refresh,
+     });
+     mockUsePerpsLivePrices.mockReturnValue({
++      isLive: false,
+       prices: {},
+       isInitialLoading: false,
+     });
+@@ -114,6 +169,7 @@ describe('usePerpsLiveMarketListData', () => {
+       refresh: jest.fn(),
+     });
+     mockUsePerpsLivePrices.mockReturnValue({
++      isLive: false,
+       prices: {
+         BTC: {
+           symbol: 'BTC',
+@@ -150,6 +206,7 @@ describe('usePerpsLiveMarketListData', () => {
+       refresh,
+     });
+     mockUsePerpsLivePrices.mockReturnValue({
++      isLive: false,
+       prices: {},
+       isInitialLoading: false,
+     });
+@@ -178,6 +235,7 @@ describe('usePerpsLiveMarketListData', () => {
+       refresh,
+     });
+     mockUsePerpsLivePrices.mockReturnValue({
++      isLive: false,
+       prices: {},
+       isInitialLoading: false,
+     });
+diff --git a/ui/hooks/perps/stream/usePerpsLiveMarketListData.ts b/ui/hooks/perps/stream/usePerpsLiveMarketListData.ts
+index fccbf8541e..86ac91c8b2 100644
+--- a/ui/hooks/perps/stream/usePerpsLiveMarketListData.ts
++++ b/ui/hooks/perps/stream/usePerpsLiveMarketListData.ts
+@@ -1,5 +1,6 @@
+ import { useEffect, useMemo } from 'react';
+ import type { PerpsMarketData } from '@metamask/perps-controller';
++import { getPerpsStreamManager } from '../../../providers/perps/PerpsStreamManager';
+ import { formatPerpsFiatUniversal } from '../../../components/app/perps/utils/formatPerpsDisplayPrice';
+ import {
+   usePerpsLiveMarketData,
+@@ -19,6 +20,8 @@ export type UsePerpsLiveMarketListDataReturn = Pick<
+   'cryptoMarkets' | 'hip3Markets' | 'isInitialLoading' | 'error' | 'refresh'
+ > & {
+   markets: PerpsMarketData[];
++  /** Both snapshots used during this render came from the live session. */
++  isLive: boolean;
+ };
+ 
+ export function usePerpsLiveMarketListData(
+@@ -50,7 +53,7 @@ export function usePerpsLiveMarketListData(
+     [marketSymbols],
+   );
+ 
+-  const { prices } = usePerpsLivePrices({
++  const { prices, isLive: pricesLive } = usePerpsLivePrices({
+     symbols: marketSymbols,
+     activateStream,
+     includeMarketData: false,
+@@ -107,6 +110,7 @@ export function usePerpsLiveMarketListData(
+ 
+   return {
+     markets: liveMarkets,
++    isLive: pricesLive && getPerpsStreamManager().hasLiveMarketData(markets),
+     cryptoMarkets: liveCryptoMarkets,
+     hip3Markets: liveHip3Markets,
+     isInitialLoading,
+diff --git a/ui/hooks/perps/stream/usePerpsLivePrices.test.ts b/ui/hooks/perps/stream/usePerpsLivePrices.test.ts
+index 66d5463885..5e3dc9d0ee 100644
+--- a/ui/hooks/perps/stream/usePerpsLivePrices.test.ts
++++ b/ui/hooks/perps/stream/usePerpsLivePrices.test.ts
+@@ -1,4 +1,5 @@
+ import { renderHook } from '@testing-library/react';
++import { getPerpsStreamManager } from '../../../providers/perps/PerpsStreamManager';
+ import { submitRequestToBackground } from '../../../store/background-connection';
+ import { usePerpsChannel } from './usePerpsChannel';
+ import { usePerpsLivePrices } from './usePerpsLivePrices';
+@@ -28,6 +29,36 @@ describe('usePerpsLivePrices', () => {
+     mockSubmitRequestToBackground.mockResolvedValue(undefined);
+   });
+ 
++  it('reports readiness only for a live price belonging to the requested symbols', () => {
++    const manager = getPerpsStreamManager();
++    manager.clearAllCaches();
++    manager.handleBackgroundUpdate({
++      channel: 'prices',
++      data: [{ symbol: 'ETH', price: '2000' }],
++    });
++    mockUsePerpsChannel.mockReturnValue({
++      data: manager.prices.getCachedData(),
++      isInitialLoading: false,
++    });
++    const { result, rerender } = renderHook(() =>
++      usePerpsLivePrices({ symbols: ['BTC'] }),
++    );
++    expect(result.current.isLive).toBe(false);
++
++    manager.handleBackgroundUpdate({
++      channel: 'prices',
++      data: [{ symbol: 'BTC', price: '50000' }],
++    });
++    mockUsePerpsChannel.mockReturnValue({
++      data: manager.prices.getCachedData(),
++      isInitialLoading: false,
++    });
++    rerender();
++
++    expect(result.current.isLive).toBe(true);
++    manager.clearAllCaches();
++  });
++
+   it('returns empty prices while initial loading is true', () => {
+     const priceUpdates: StreamPriceUpdate[] = [{ symbol: 'BTC', price: '100' }];
+     mockUsePerpsChannel.mockReturnValue({
+@@ -40,6 +71,7 @@ describe('usePerpsLivePrices', () => {
+     );
+ 
+     expect(result.current).toEqual({
++      isLive: false,
+       prices: {},
+       isInitialLoading: true,
+     });
+@@ -56,6 +88,7 @@ describe('usePerpsLivePrices', () => {
+     );
+ 
+     expect(result.current).toEqual({
++      isLive: false,
+       prices: {},
+       isInitialLoading: false,
+     });
+diff --git a/ui/hooks/perps/stream/usePerpsLivePrices.ts b/ui/hooks/perps/stream/usePerpsLivePrices.ts
+index 45278d2e17..72c1b5fe30 100644
+--- a/ui/hooks/perps/stream/usePerpsLivePrices.ts
++++ b/ui/hooks/perps/stream/usePerpsLivePrices.ts
+@@ -1,6 +1,9 @@
+ import { useEffect, useMemo } from 'react';
+ import type { PriceUpdate } from '@metamask/perps-controller';
+-import type { PerpsStreamManager } from '../../../providers/perps';
++import {
++  getPerpsStreamManager,
++  type PerpsStreamManager,
++} from '../../../providers/perps/PerpsStreamManager';
+ import { submitRequestToBackground } from '../../../store/background-connection';
+ import { usePerpsChannel } from './usePerpsChannel';
+ 
+@@ -24,6 +27,8 @@ export type UsePerpsLivePricesOptions = {
+ export type UsePerpsLivePricesReturn = {
+   /** Map of symbol to price update */
+   prices: Record<string, PriceUpdate>;
++  /** Whether the consumed snapshot came from this session's live stream. */
++  isLive: boolean;
+   /** Whether we're waiting for the first data */
+   isInitialLoading: boolean;
+ };
+@@ -121,5 +126,11 @@ export function usePerpsLivePrices(
+     return priceRecord;
+   }, [isInitialLoading, priceArray, requestedSymbols]);
+ 
+-  return { prices, isInitialLoading };
++  return {
++    prices,
++    isInitialLoading,
++    isLive:
++      getPerpsStreamManager().hasLivePrices(priceArray) &&
++      Object.values(prices).some((price) => Number(price.price) > 0),
++  };
+ }
+diff --git a/ui/hooks/perps/stream/usePerpsStreamManager.test.tsx b/ui/hooks/perps/stream/usePerpsStreamManager.test.tsx
+index 65a37ab2c8..bda687b57f 100644
+--- a/ui/hooks/perps/stream/usePerpsStreamManager.test.tsx
++++ b/ui/hooks/perps/stream/usePerpsStreamManager.test.tsx
+@@ -185,11 +185,10 @@ describe('usePerpsStreamManager', () => {
+       rerender();
+     });
+ 
+-    await waitFor(() => {
+-      expect(result.current.streamManager).not.toBeNull();
+-    });
+-
+-    expect(getPerpsStreamManager().getCurrentAddress()).toBe('0xB');
++    // B waits for A's RPC to settle before starting its own initialization.
++    expect(perpsInitCount).toBe(1);
++    expect(result.current.streamManager).toBeNull();
++    expect(result.current.selectedAddress).toBe('0xB');
+ 
+     expect(releaseFirstInit).toBeDefined();
+     if (releaseFirstInit === undefined) {
+@@ -202,7 +201,9 @@ describe('usePerpsStreamManager', () => {
+     });
+ 
+     await waitFor(() => {
+-      expect(getPerpsStreamManager().getCurrentAddress()).toBe('0xB');
++      expect(result.current.streamManager).not.toBeNull();
+     });
++    expect(perpsInitCount).toBe(2);
++    expect(getPerpsStreamManager().getCurrentAddress()).toBe('0xB');
+   });
+ });
+diff --git a/ui/hooks/perps/stream/usePerpsViewActive.ts b/ui/hooks/perps/stream/usePerpsViewActive.ts
+index 84dbadd171..63698dfd47 100644
+--- a/ui/hooks/perps/stream/usePerpsViewActive.ts
++++ b/ui/hooks/perps/stream/usePerpsViewActive.ts
+@@ -4,7 +4,7 @@ import { submitRequestToBackground } from '../../../store/background-connection'
+ /**
+  * Signals whether a Perps view is currently active for this UI connection.
+  *
+- * The background Perps stream bridge only emits while `perpsViewActive` is true.
++ * Owns foreground streams; wallet-level preload has independent ownership.
+  * Use this in Perps entry boundaries (route layout, tab boundary), not leaf views.
+  *
+  * @param source - Identifier used in debug logs
+diff --git a/ui/hooks/perps/usePerpsEntryTrace.test.ts b/ui/hooks/perps/usePerpsEntryTrace.test.ts
+new file mode 100644
+index 0000000000..c58785ef79
+--- /dev/null
++++ b/ui/hooks/perps/usePerpsEntryTrace.test.ts
+@@ -0,0 +1,89 @@
++import { act, renderHook } from '@testing-library/react';
++import type { PerpsMarketData } from '@metamask/perps-controller';
++import {
++  startPerpsEntry,
++  endPerpsEntry,
++} from '../../helpers/perps/entry-trace';
++import { usePerpsEntryTrace } from './usePerpsEntryTrace';
++
++jest.mock('../../helpers/perps/entry-trace', () => ({
++  startPerpsEntry: jest.fn().mockReturnValue('entry'),
++  endPerpsEntry: jest.fn(),
++}));
++
++const markets = [{ symbol: 'BTC' }] as PerpsMarketData[];
++
++describe('usePerpsEntryTrace', () => {
++  beforeEach(() => {
++    jest.clearAllMocks();
++    Object.defineProperty(document, 'visibilityState', {
++      configurable: true,
++      value: 'visible',
++    });
++  });
++
++  it('keeps one mount span across loading and cached-only renders', () => {
++    const { rerender } = renderHook(
++      ({ loading, live }) =>
++        usePerpsEntryTrace('home', markets, loading, live, 'empty'),
++      {
++        initialProps: { loading: true, live: false },
++      },
++    );
++    rerender({ loading: false, live: false });
++    expect(endPerpsEntry).not.toHaveBeenCalled();
++
++    rerender({ loading: false, live: true });
++
++    expect(startPerpsEntry).toHaveBeenCalledTimes(1);
++    expect(endPerpsEntry).toHaveBeenCalledWith(
++      'entry',
++      true,
++      'live_rows_committed',
++      'empty',
++    );
++  });
++
++  it('does not complete without rendered rows', () => {
++    renderHook(() => usePerpsEntryTrace('home', [], false, true));
++
++    expect(endPerpsEntry).not.toHaveBeenCalled();
++  });
++
++  it('abandons its pending entry on unmount', () => {
++    const { unmount } = renderHook(() =>
++      usePerpsEntryTrace('home', markets, true, false),
++    );
++
++    unmount();
++
++    expect(endPerpsEntry).toHaveBeenCalledWith('entry', false, 'unmounted');
++  });
++
++  it('waits for visibility and starts a new entry on resume', () => {
++    Object.defineProperty(document, 'visibilityState', {
++      configurable: true,
++      value: 'hidden',
++    });
++    renderHook(() =>
++      usePerpsEntryTrace('home', markets, false, true, 'position'),
++    );
++    expect(endPerpsEntry).not.toHaveBeenCalled();
++
++    act(() => {
++      Object.defineProperty(document, 'visibilityState', {
++        configurable: true,
++        value: 'visible',
++      });
++      document.dispatchEvent(new Event('visibilitychange'));
++    });
++
++    expect(startPerpsEntry).toHaveBeenCalledTimes(2);
++    expect(endPerpsEntry).toHaveBeenCalledWith(
++      'entry',
++      true,
++      'live_rows_committed',
++      'position',
++    );
++  });
++});
+diff --git a/ui/hooks/perps/usePerpsEntryTrace.ts b/ui/hooks/perps/usePerpsEntryTrace.ts
+new file mode 100644
+index 0000000000..10b359678c
+--- /dev/null
++++ b/ui/hooks/perps/usePerpsEntryTrace.ts
+@@ -0,0 +1,61 @@
++import { useEffect, useRef } from 'react';
++import type { PerpsMarketData } from '@metamask/perps-controller';
++import {
++  startPerpsEntry,
++  endPerpsEntry,
++  type PerpsEntrySurface,
++  type PerpsEntryVariant,
++} from '../../helpers/perps/entry-trace';
++
++/**
++ * End entry timing after React commits real market rows with fresh data.
++ * Loading flags and persisted cache seeds alone cannot complete this span.
++ *
++ * @param surface - View rendering the rows.
++ * @param markets - Actual rows rendered by that view.
++ * @param isLoading - Whether the view still renders its loading state.
++ * @param isLive - The snapshots consumed during render belong to the live session.
++ * @param variant - Loaded Home content for Mobile dashboard segmentation.
++ */
++export function usePerpsEntryTrace(
++  surface: PerpsEntrySurface,
++  markets: readonly PerpsMarketData[],
++  isLoading: boolean,
++  isLive: boolean,
++  variant?: PerpsEntryVariant,
++): void {
++  const entryId = useRef<string>();
++  useEffect(() => {
++    const id = startPerpsEntry(surface);
++    entryId.current = id;
++    return () => {
++      if (entryId.current) {
++        endPerpsEntry(entryId.current, false, 'unmounted');
++      }
++    };
++  }, [surface]);
++
++  useEffect(() => {
++    const complete = () => {
++      if (
++        entryId.current &&
++        document.visibilityState === 'visible' &&
++        !isLoading &&
++        isLive &&
++        markets.length > 0
++      ) {
++        endPerpsEntry(entryId.current, true, 'live_rows_committed', variant);
++      }
++    };
++    complete();
++    const onVisibilityChange = () => {
++      if (document.visibilityState === 'visible') {
++        entryId.current = startPerpsEntry(surface);
++        complete();
++      }
++    };
++    document.addEventListener('visibilitychange', onVisibilityChange);
++    return () =>
++      document.removeEventListener('visibilitychange', onVisibilityChange);
++  }, [surface, markets, isLoading, isLive, variant]);
++}
+diff --git a/ui/hooks/perps/usePerpsPreload.test.ts b/ui/hooks/perps/usePerpsPreload.test.ts
+new file mode 100644
+index 0000000000..c436f248e1
+--- /dev/null
++++ b/ui/hooks/perps/usePerpsPreload.test.ts
+@@ -0,0 +1,268 @@
++import { it } from '@jest/globals';
++import { act, renderHook } from '@testing-library/react';
++import { useSelector } from 'react-redux';
++import { trace, endTrace, TraceName } from '../../../shared/lib/trace';
++import { submitRequestToBackground } from '../../store/background-connection';
++import { usePerpsPreload } from './usePerpsPreload';
++
++jest.mock('react-redux', () => ({ useSelector: jest.fn() }));
++jest.mock('../../selectors', () => ({
++  getUseExternalServices: (state: { external: boolean }) => state.external,
++}));
++jest.mock('../../selectors/perps/feature-flags', () => ({
++  getIsPerpsExperienceAvailable: (state: { available: boolean }) =>
++    state.available,
++  getIsPerpsTerminalBackendEnabled: (state: { terminal: boolean }) =>
++    state.terminal,
++}));
++jest.mock('../../store/background-connection', () => ({
++  submitRequestToBackground: jest.fn(),
++}));
++jest.mock('../../../shared/lib/trace', () => ({
++  ...jest.requireActual('../../../shared/lib/trace'),
++  trace: jest.fn(),
++  endTrace: jest.fn(),
++}));
++jest.mock('../../helpers/perps/entry-trace', () => ({
++  getPerpsLifecycleContext: () => 'cold_process',
++  observePerpsLifecycle: () => jest.fn(),
++  PERPS_LIFECYCLE_TAG: 'lifecycle_context',
++}));
++const mockManager = {
++  initForAddress: jest.fn(),
++  reset: jest.fn(),
++  setUseTerminalApi: jest.fn(),
++  prewarm: jest.fn(),
++  cleanupPrewarm: jest.fn(),
++  clearAllCaches: jest.fn(),
++};
++jest.mock('../../providers/perps/PerpsStreamManager', () => ({
++  getPerpsStreamManager: () => mockManager,
++}));
++
++function deferred() {
++  let resolve!: () => void;
++  let reject!: (error: Error) => void;
++  const promise = new Promise<void>((onResolve, onReject) => {
++    resolve = onResolve;
++    reject = onReject;
++  });
++  return { promise, resolve, reject };
++}
++
++describe('usePerpsPreload', () => {
++  let state: ReturnType<typeof createState>;
++  let sequence = 0;
++  function createState() {
++    return {
++      available: true,
++      external: true,
++      terminal: false,
++      metamask: {
++        activeProvider: 'hyperliquid',
++        isTestnet: false,
++        internalAccounts: {
++          selectedAccount: 'selected',
++          accounts: { selected: { address: '0xfirst' } },
++        },
++      },
++    };
++  }
++
++  beforeEach(() => {
++    jest.useFakeTimers();
++    jest.clearAllMocks();
++    state = createState();
++    jest
++      .mocked(useSelector)
++      .mockImplementation((selector) => selector(state as never));
++    jest.mocked(submitRequestToBackground).mockResolvedValue(undefined);
++    mockManager.initForAddress.mockResolvedValue(undefined);
++    Object.defineProperty(crypto, 'randomUUID', {
++      configurable: true,
++      value: () => `preload-${(sequence += 1)}`,
++    });
++  });
++
++  afterEach(() => {
++    jest.useRealTimers();
++  });
++
++  it.each(['locked', 'rollout', 'external', 'account'] as const)(
++    'does not preload when gated by %s',
++    async (gate) => {
++      if (gate === 'rollout') {
++        state.available = false;
++      }
++      if (gate === 'external') {
++        state.external = false;
++      }
++      if (gate === 'account') {
++        state.metamask.internalAccounts.accounts.selected.address = '';
++      }
++
++      await act(async () => {
++        renderHook(() => usePerpsPreload(gate !== 'locked'));
++      });
++
++      expect(mockManager.reset).toHaveBeenCalled();
++      expect(mockManager.initForAddress).not.toHaveBeenCalled();
++      expect(trace).not.toHaveBeenCalled();
++    },
++  );
++
++  it('ends the connection span only after the background subscriptions are ready', async () => {
++    const ready = deferred();
++    jest
++      .mocked(submitRequestToBackground)
++      .mockImplementation((method) =>
++        method === 'perpsStartPreload'
++          ? ready.promise
++          : Promise.resolve(undefined),
++      );
++    let unmount!: () => void;
++    await act(async () => {
++      ({ unmount } = renderHook(() => usePerpsPreload(true)));
++    });
++    expect(endTrace).not.toHaveBeenCalled();
++    expect(mockManager.prewarm).toHaveBeenCalledTimes(1);
++
++    await act(async () => {
++      ready.resolve();
++    });
++
++    expect(endTrace).toHaveBeenCalledWith(
++      expect.objectContaining({
++        name: TraceName.PerpsConnectionEstablishment,
++        data: { success: true, reason: 'subscriptions_ready' },
++      }),
++    );
++    const { id } = jest.mocked(trace).mock.calls[0][0];
++    unmount();
++    expect(submitRequestToBackground).toHaveBeenCalledWith('perpsStopPreload', [
++      id,
++    ]);
++    expect(endTrace).toHaveBeenCalledTimes(1);
++    expect(mockManager.clearAllCaches).toHaveBeenCalled();
++    expect(jest.getTimerCount()).toBe(0);
++  });
++
++  it('does not start subscriptions after unmount during initialization', async () => {
++    const init = deferred();
++    mockManager.initForAddress.mockReturnValue(init.promise);
++    const { unmount } = renderHook(() => usePerpsPreload(true));
++
++    unmount();
++    await act(async () => {
++      init.resolve();
++    });
++
++    expect(mockManager.prewarm).not.toHaveBeenCalled();
++    expect(submitRequestToBackground).not.toHaveBeenCalledWith(
++      'perpsStartPreload',
++      expect.anything(),
++    );
++    expect(endTrace).toHaveBeenCalledTimes(1);
++    expect(endTrace).toHaveBeenCalledWith(
++      expect.objectContaining({ data: { success: false, reason: 'released' } }),
++    );
++  });
++
++  it('records a timeout once and ignores late connection completion', async () => {
++    const ready = deferred();
++    jest
++      .mocked(submitRequestToBackground)
++      .mockImplementation((method) =>
++        method === 'perpsStartPreload'
++          ? ready.promise
++          : Promise.resolve(undefined),
++      );
++    await act(async () => {
++      renderHook(() => usePerpsPreload(true));
++    });
++
++    await act(async () => {
++      jest.advanceTimersByTime(30_000);
++      ready.resolve();
++    });
++
++    expect(endTrace).toHaveBeenCalledTimes(1);
++    expect(endTrace).toHaveBeenCalledWith(
++      expect.objectContaining({ data: { success: false, reason: 'timeout' } }),
++    );
++    expect(mockManager.cleanupPrewarm).toHaveBeenCalled();
++  });
++
++  it('records initialization failure without claiming readiness', async () => {
++    mockManager.initForAddress.mockRejectedValue(new Error('offline'));
++    const debug = jest
++      .spyOn(console, 'debug')
++      .mockImplementation(() => undefined);
++
++    await act(async () => {
++      renderHook(() => usePerpsPreload(true));
++    });
++
++    expect(endTrace).toHaveBeenCalledWith(
++      expect.objectContaining({
++        data: { success: false, reason: 'connection_failed' },
++      }),
++    );
++    expect(mockManager.prewarm).not.toHaveBeenCalled();
++    expect(jest.getTimerCount()).toBe(0);
++    debug.mockRestore();
++  });
++
++  it.each(['account', 'provider', 'network', 'terminal'] as const)(
++    'releases the old owner when %s changes',
++    async (change) => {
++      let rerender!: () => void;
++      await act(async () => {
++        ({ rerender } = renderHook(() => usePerpsPreload(true)));
++      });
++      const firstId = jest.mocked(trace).mock.calls[0][0].id;
++      if (change === 'account') {
++        state.metamask.internalAccounts.accounts.selected.address = '0xsecond';
++      }
++      if (change === 'provider') {
++        state.metamask.activeProvider = 'aggregated';
++      }
++      if (change === 'network') {
++        state.metamask.isTestnet = true;
++      }
++      if (change === 'terminal') {
++        state.terminal = true;
++      }
++
++      await act(async () => {
++        rerender();
++      });
++
++      expect(submitRequestToBackground).toHaveBeenCalledWith(
++        'perpsStopPreload',
++        [firstId],
++      );
++      expect(trace).toHaveBeenCalledTimes(2);
++      expect(jest.mocked(trace).mock.calls[1][0].id).not.toBe(firstId);
++      expect(mockManager.clearAllCaches).toHaveBeenCalled();
++    },
++  );
++
++  it('resets the manager when the unlocked wallet becomes locked', async () => {
++    let rerender!: (props: { ready: boolean }) => void;
++    const initialProps: { ready: boolean } = { ready: true };
++    await act(async () => {
++      ({ rerender } = renderHook(
++        ({ ready }: { ready: boolean }) => usePerpsPreload(ready),
++        {
++          initialProps,
++        },
++      ));
++    });
++
++    rerender({ ready: false });
++
++    expect(mockManager.reset).toHaveBeenCalled();
++    expect(mockManager.cleanupPrewarm).toHaveBeenCalled();
++  });
++});
+diff --git a/ui/hooks/perps/usePerpsPreload.ts b/ui/hooks/perps/usePerpsPreload.ts
+new file mode 100644
+index 0000000000..f78f42df64
+--- /dev/null
++++ b/ui/hooks/perps/usePerpsPreload.ts
+@@ -0,0 +1,124 @@
++import { useEffect } from 'react';
++import { useSelector } from 'react-redux';
++import { getSelectedInternalAccount } from '../../../shared/lib/selectors/accounts';
++import {
++  trace,
++  endTrace,
++  TraceName,
++  TraceOperation,
++} from '../../../shared/lib/trace';
++import { getUseExternalServices } from '../../selectors';
++import {
++  getIsPerpsExperienceAvailable,
++  getIsPerpsTerminalBackendEnabled,
++} from '../../selectors/perps/feature-flags';
++import { getPerpsStreamManager } from '../../providers/perps/PerpsStreamManager';
++import { submitRequestToBackground } from '../../store/background-connection';
++import {
++  getPerpsLifecycleContext,
++  observePerpsLifecycle,
++  PERPS_LIFECYCLE_TAG,
++} from '../../helpers/perps/entry-trace';
++
++const CONNECTION_TIMEOUT_MS = 30_000;
++type PreloadState = {
++  metamask: { activeProvider?: string; isTestnet?: boolean };
++};
++
++/**
++ * Warm data when the unlocked wallet root is eligible, matching Mobile's
++ * always-on provider. Background owns the shared connection's disconnect grace.
++ *
++ * @param walletReady - Wallet is unlocked and onboarding is complete.
++ */
++export function usePerpsPreload(walletReady: boolean): void {
++  const available = useSelector(getIsPerpsExperienceAvailable);
++  const useExternalServices = useSelector(getUseExternalServices);
++  const address = useSelector(getSelectedInternalAccount)?.address;
++  const provider = useSelector(
++    (state: PreloadState) => state.metamask.activeProvider,
++  );
++  const isTestnet = useSelector(
++    (state: PreloadState) => state.metamask.isTestnet,
++  );
++  const useTerminalApi = useSelector(getIsPerpsTerminalBackendEnabled);
++  const enabled = walletReady && available && useExternalServices;
++
++  useEffect(observePerpsLifecycle, []);
++
++  useEffect(() => {
++    const manager = getPerpsStreamManager();
++    if (!enabled || !address) {
++      manager.reset();
++      return undefined;
++    }
++    manager.setUseTerminalApi(useTerminalApi);
++    const id = crypto.randomUUID();
++    let cancelled = false;
++    let ended = false;
++    const release = () => {
++      submitRequestToBackground('perpsStopPreload', [id]).catch(
++        (error: unknown) => {
++          console.debug('[usePerpsPreload] Release failed', error);
++        },
++      );
++    };
++    const finish = (success: boolean, reason: string) => {
++      if (ended) {
++        return;
++      }
++      ended = true;
++      endTrace({
++        name: TraceName.PerpsConnectionEstablishment,
++        id,
++        data: { success, reason },
++      });
++    };
++    trace({
++      name: TraceName.PerpsConnectionEstablishment,
++      id,
++      op: TraceOperation.PerpsOperation,
++      tags: {
++        feature: 'perps',
++        [PERPS_LIFECYCLE_TAG]: getPerpsLifecycleContext(),
++        source: 'wallet_root',
++      },
++    });
++    const timeout = setTimeout(() => {
++      cancelled = true;
++      finish(false, 'timeout');
++      release();
++      manager.cleanupPrewarm();
++    }, CONNECTION_TIMEOUT_MS);
++    manager
++      .initForAddress(address)
++      .then(async () => {
++        if (cancelled) {
++          return;
++        }
++        manager.prewarm();
++        await submitRequestToBackground('perpsStartPreload', [id]);
++        if (!cancelled) {
++          finish(true, 'subscriptions_ready');
++        }
++      })
++      .catch((error: unknown) => {
++        finish(false, 'connection_failed');
++        if (!cancelled) {
++          manager.cleanupPrewarm();
++          console.debug('[usePerpsPreload] Preload failed', error);
++        }
++      })
++      .finally(() => clearTimeout(timeout));
++
++    return () => {
++      cancelled = true;
++      clearTimeout(timeout);
++      finish(false, 'released');
++      // Release this UI's owner, never globally disconnect another open surface.
++      release();
++      manager.cleanupPrewarm();
++      manager.clearAllCaches();
++    };
++  }, [enabled, address, provider, isTestnet, useTerminalApi]);
++}
+diff --git a/ui/pages/perps/market-list/index.tsx b/ui/pages/perps/market-list/index.tsx
+index 2f6840a8dc..8a7db538fa 100644
+--- a/ui/pages/perps/market-list/index.tsx
++++ b/ui/pages/perps/market-list/index.tsx
+@@ -26,6 +26,7 @@ import {
+   getMarketTypeFilter,
+   type PerpsMarketData,
+ } from '@metamask/perps-controller';
++import { usePerpsEntryTrace } from '../../../hooks/perps/usePerpsEntryTrace';
+ import {
+   PERPS_EVENT_PROPERTY,
+   PERPS_EVENT_VALUE,
+@@ -211,8 +212,11 @@ export const MarketListView = () => {
+   const { setFlowAttribution } = usePerpsAttribution();
+ 
+   // Use stream hooks for real-time market data
+-  const { markets: allMarkets, isInitialLoading: marketsLoading } =
+-    usePerpsLiveMarketListData();
++  const {
++    markets: allMarkets,
++    isInitialLoading: marketsLoading,
++    isLive: marketsLive,
++  } = usePerpsLiveMarketListData();
+   const { account } = usePerpsLiveAccount();
+ 
+   // Upper-cased so lookups match `PerpsMarketData.symbol` casing.
+@@ -344,6 +348,8 @@ export const MarketListView = () => {
+   const trackRef = useRef(track);
+   trackRef.current = track;
+   // Latest settled result set, read by the tap handler for rank/count.
++  usePerpsEntryTrace('market_list', displayedMarkets, isLoading, marketsLive);
++
+   const displayedMarketsRef = useRef(displayedMarkets);
+   displayedMarketsRef.current = displayedMarkets;
+   // Last query actually emitted, so abandonment reports what was measured.
+diff --git a/ui/pages/perps/perps-layout.tsx b/ui/pages/perps/perps-layout.tsx
+index c6cdc269aa..2eb1e13761 100644
+--- a/ui/pages/perps/perps-layout.tsx
++++ b/ui/pages/perps/perps-layout.tsx
+@@ -23,13 +23,10 @@ const MIN_HIDDEN_DURATION_MS = 30_000;
+ /**
+  * Layout wrapper for all Perps pages.
+  *
+- * This component is lazy-loaded via mmLazy in routes so that
+- * the Perps dependency chain (PerpsStreamManager, etc.) is excluded from
+- * the common bundle and only loaded when a user first navigates to a Perps route.
+- *
+- * It is the single point that gates background stream emission: mounting
+- * signals the background to start forwarding WebSocket data to this connection,
+- * and unmounting signals it to stop.
++ * The route UI stays lazy-loaded via mmLazy. The data-only stream manager
++ * also serves the wallet-root preloader, independently of this layout.
++ * Mounting owns foreground detail streams; wallet-level market/account/price
++ * preload emissions continue when this layout unmounts.
+  */
+ type PerpsControllerCacheSnapshot = {
+   activeProvider?: string;
+diff --git a/ui/pages/routes/routes.component.tsx b/ui/pages/routes/routes.component.tsx
+index 3d88461f26..56508ca8f8 100644
+--- a/ui/pages/routes/routes.component.tsx
++++ b/ui/pages/routes/routes.component.tsx
+@@ -7,6 +7,7 @@ import { useIdleTimer } from 'react-idle-timer';
+ 
+ import type { ApprovalRequest } from '@metamask/approval-controller';
+ import type { Json } from '@metamask/utils';
++import { usePerpsPreload } from '../../hooks/perps/usePerpsPreload';
+ 
+ import { useAppSelector, useDispatch } from '../../store/hooks';
+ import Loading from '../../components/ui/loading-screen';
+@@ -708,6 +709,7 @@ export default function Routes() {
+ 
+   const textDirection = useAppSelector((state) => state.metamask.textDirection);
+   const isUnlocked = useAppSelector(getIsUnlocked);
++  usePerpsPreload(isUnlocked && completedOnboarding);
+   const currentCurrency = useAppSelector(
+     getCurrencyRateControllerCurrentCurrency,
+   );
+diff --git a/ui/providers/perps/PerpsStreamManager.test.ts b/ui/providers/perps/PerpsStreamManager.test.ts
+index 40a86c5b0d..b29f1f5edb 100644
+--- a/ui/providers/perps/PerpsStreamManager.test.ts
++++ b/ui/providers/perps/PerpsStreamManager.test.ts
+@@ -1,4 +1,9 @@
+-import type { Position } from '@metamask/perps-controller';
++import { it } from '@jest/globals';
++import type {
++  Position,
++  PerpsMarketData,
++  PriceUpdate,
++} from '@metamask/perps-controller';
+ import { PerpsStreamManager } from './PerpsStreamManager';
+ 
+ // Polyfill crypto.randomUUID for jsdom
+@@ -532,6 +537,85 @@ describe('PerpsStreamManager', () => {
+       expect(manager.isInitialized('0xsecond')).toBe(true);
+     });
+ 
++    it.each<['positions' | 'orders' | 'account', string]>([
++      ['positions', 'perpsGetPositions'],
++      ['orders', 'perpsGetOpenOrders'],
++      ['account', 'perpsGetAccountState'],
++    ])(
++      'cancels the previous account %s fallback on switch',
++      async (channel, method) => {
++        jest.useFakeTimers();
++        await manager.initForAddress('0xfirst');
++        let resolveFallback!: (value: unknown) => void;
++        const fallback = new Promise((resolve) => {
++          resolveFallback = resolve;
++        });
++        mockSubmitRequestToBackground.mockImplementation((request: string) =>
++          request === method ? fallback : Promise.resolve(undefined),
++        );
++        const onData = jest.fn();
++        manager[channel].subscribe(onData);
++        await jest.advanceTimersByTimeAsync(3_000);
++        expect(mockSubmitRequestToBackground).toHaveBeenCalledWith(method, []);
++
++        await manager.initForAddress('0xsecond');
++        const stale =
++          channel === 'account' ? { totalBalance: '99' } : [{ symbol: 'OLD' }];
++        resolveFallback(stale);
++        await fallback;
++        await Promise.resolve();
++
++        expect(manager[channel].hasCachedData()).toBe(false);
++        expect(onData).not.toHaveBeenCalled();
++      },
++    );
++
++    it('retains new-session snapshots emitted before initialization returns', async () => {
++      await manager.initForAddress('0xfirst');
++      const positions = [makePosition('NEW')];
++      mockSubmitRequestToBackground.mockImplementation(
++        async (method: string) => {
++          if (method === 'perpsDisconnect') {
++            manager.handleBackgroundUpdate({
++              channel: 'positions',
++              data: [makePosition('OLD')],
++            });
++            expect(manager.positions.hasCachedData()).toBe(false);
++          }
++          if (method === 'perpsInit') {
++            manager.handleBackgroundUpdate({
++              channel: 'positions',
++              data: positions,
++            });
++          }
++        },
++      );
++
++      await manager.initForAddress('0xsecond');
++
++      expect(manager.positions.getCachedData()).toEqual(positions);
++      const onData = jest.fn();
++      manager.positions.subscribe(onData);
++      expect(onData).toHaveBeenCalledWith(positions);
++    });
++
++    it('discards early snapshots when initialization fails', async () => {
++      mockSubmitRequestToBackground.mockImplementation(async () => {
++        manager.handleBackgroundUpdate({
++          channel: 'positions',
++          data: [makePosition('FAILED')],
++        });
++        throw new Error('init failed');
++      });
++
++      await expect(manager.initForAddress('0xfailed')).rejects.toThrow(
++        'init failed',
++      );
++
++      expect(manager.positions.hasCachedData()).toBe(false);
++      expect(manager.isInitialized()).toBe(false);
++    });
++
+     it('deduplicates concurrent calls for the same address', async () => {
+       mockSubmitRequestToBackground.mockResolvedValue(undefined);
+ 
+@@ -546,6 +630,62 @@ describe('PerpsStreamManager', () => {
+       expect(initCalls).toHaveLength(1);
+     });
+ 
++    it('serializes A to B to A and drops stream updates during the transition', async () => {
++      let release!: () => void;
++      let entered!: () => void;
++      const started = new Promise<void>((resolve) => {
++        entered = resolve;
++      });
++      const barrier = new Promise<void>((resolve) => {
++        release = resolve;
++      });
++      mockSubmitRequestToBackground.mockImplementationOnce(() => {
++        entered();
++        return barrier;
++      });
++      const first = manager.initForAddress('0xaaa');
++      await started;
++      const middle = manager.initForAddress('0xbbb');
++      const latest = manager.initForAddress('0xaaa');
++
++      manager.handleBackgroundUpdate({
++        channel: 'positions',
++        data: [makePosition('STALE')],
++      });
++      expect(manager.positions.getCachedData()).toEqual([]);
++      release();
++      await Promise.all([first, middle, latest]);
++
++      expect(manager.getCurrentAddress()).toBe('0xaaa');
++      expect(
++        mockSubmitRequestToBackground.mock.calls.map(([method]) => method),
++      ).toEqual(['perpsInit', 'perpsDisconnect', 'perpsInit']);
++    });
++
++    it('cannot restore initialization after reset while the RPC is pending', async () => {
++      let release!: () => void;
++      let entered!: () => void;
++      const started = new Promise<void>((resolve) => {
++        entered = resolve;
++      });
++      const barrier = new Promise<void>((resolve) => {
++        release = resolve;
++      });
++      mockSubmitRequestToBackground.mockImplementationOnce(() => {
++        entered();
++        return barrier;
++      });
++      const pending = manager.initForAddress('0xaaa');
++      await started;
++
++      manager.reset();
++      release();
++      await pending;
++
++      expect(manager.isInitialized()).toBe(false);
++      expect(manager.getCurrentAddress()).toBeNull();
++    });
++
+     it('throws when address is empty', async () => {
+       await expect(manager.initForAddress('')).rejects.toThrow(
+         'No account selected',
+@@ -580,7 +720,9 @@ describe('PerpsStreamManager', () => {
+       await Promise.resolve();
+ 
+       const pSecond = manager.initForAddress('0xsecond');
+-      await pSecond;
++      expect(manager.isInitialized()).toBe(false);
++      releaseFirstInit?.();
++      await Promise.all([pFirst, pSecond]);
+ 
+       const callOrder = mockSubmitRequestToBackground.mock.calls.map(
+         ([m]: [string]) => m,
+@@ -680,7 +822,10 @@ describe('PerpsStreamManager', () => {
+       await Promise.resolve();
+       await Promise.resolve();
+ 
+-      await manager.initForAddress('0xwins');
++      const pWinner = manager.initForAddress('0xwins');
++      expect(manager.isInitialized()).toBe(false);
++      releaseFirstInit?.();
++      await Promise.all([pSlow, pWinner]);
+ 
+       expect(manager.getCurrentAddress()).toBe('0xwins');
+ 
+@@ -695,6 +840,82 @@ describe('PerpsStreamManager', () => {
+     });
+   });
+ 
++  describe('live snapshot provenance', () => {
++    const markets = [{ symbol: 'BTC' }] as PerpsMarketData[];
++    const prices = [{ symbol: 'BTC', price: '50000' }] as PriceUpdate[];
++
++    it('distinguishes persisted market seeds from current-session responses', () => {
++      manager.handleBackgroundUpdate({
++        channel: 'markets',
++        data: markets,
++        live: false,
++      });
++      expect(manager.hasLiveMarketData(markets)).toBe(false);
++
++      manager.handleBackgroundUpdate({
++        channel: 'markets',
++        data: markets,
++        live: true,
++      });
++      expect(manager.hasLiveMarketData(markets)).toBe(true);
++      expect(manager.hasLiveMarketData([{ ...markets[0] }])).toBe(false);
++    });
++
++    it('merges detail prices without discarding the other preloaded symbols', () => {
++      manager.handleBackgroundUpdate({
++        channel: 'prices',
++        data: [...prices, { symbol: 'ETH', price: '2000' }],
++      });
++      const previous = manager.prices.getCachedData();
++      manager.handleBackgroundUpdate({
++        channel: 'prices',
++        data: [{ symbol: 'BTC', price: '51000' }],
++      });
++      const current = manager.prices.getCachedData();
++
++      expect(current).toEqual([
++        { symbol: 'BTC', price: '51000' },
++        { symbol: 'ETH', price: '2000' },
++      ]);
++      expect(manager.hasLivePrices(current)).toBe(true);
++      expect(manager.hasLivePrices(previous)).toBe(false);
++      expect(manager.hasLivePrices(prices)).toBe(false);
++    });
++
++    it.each(['0', '-1', 'invalid'])(
++      'does not accept a %s price as live readiness',
++      (price) => {
++        manager.handleBackgroundUpdate({
++          channel: 'prices',
++          data: [{ symbol: 'BTC', price }],
++        });
++        expect(manager.hasLivePrices(manager.prices.getCachedData())).toBe(
++          false,
++        );
++      },
++    );
++
++    it.each(['reset', 'clearAllCaches'] as const)(
++      'invalidates consumed snapshots after %s',
++      (method) => {
++        manager.pushLiveMarkets(markets);
++        manager.handleBackgroundUpdate({ channel: 'prices', data: prices });
++        const snapshot = manager.prices.getCachedData();
++
++        manager[method]();
++
++        expect(manager.hasLiveMarketData(markets)).toBe(false);
++        expect(manager.hasLivePrices(snapshot)).toBe(false);
++      },
++    );
++
++    it('invalidates live market metadata after a backend change', () => {
++      manager.pushLiveMarkets(markets);
++      manager.setUseTerminalApi(true);
++      expect(manager.hasLiveMarketData(markets)).toBe(false);
++    });
++  });
++
+   describe('handleBackgroundUpdate', () => {
+     it('routes positions channel to positions.pushData', () => {
+       const cb = jest.fn();
+diff --git a/ui/providers/perps/PerpsStreamManager.ts b/ui/providers/perps/PerpsStreamManager.ts
+index 5378699606..ec21b017f9 100644
+--- a/ui/providers/perps/PerpsStreamManager.ts
++++ b/ui/providers/perps/PerpsStreamManager.ts
+@@ -136,6 +136,14 @@ class PerpsStreamManager {
+   // Timestamp of the most recent background stream update (any channel).
+   private _lastStreamUpdateAt = 0;
+ 
++  private liveMarkets = new WeakSet<PerpsMarketData>();
++
++  private livePrices: readonly PriceUpdate[] | null = null;
++
++  private initializationQueue: Promise<void> = Promise.resolve();
++
++  private initializationGeneration = 0;
++
+   /**
+    * UI-owned identity for the active aggregated order-book subscription.
+    * Background emissions whose `subscriptionId` does not match are discarded so
+@@ -145,8 +153,11 @@ class PerpsStreamManager {
+   private activeOrderBookAggregatedSubscriptionId: string | null = null;
+ 
+   // Deduplicates concurrent initForAddress calls
+-  private pendingInit: { address: string; promise: Promise<void> } | null =
+-    null;
++  private pendingInit: {
++    address: string;
++    promise: Promise<void>;
++    acceptsUpdates: boolean;
++  } | null = null;
+ 
+   // Optimistic overrides for TP/SL - preserves user-set values until WebSocket catches up
+   private readonly optimisticTPSLOverrides: Map<
+@@ -269,7 +280,7 @@ class PerpsStreamManager {
+           )
+             .then((data) => {
+               if (!cancelled && !this.markets.hasCachedData()) {
+-                push(data ?? EMPTY_MARKETS);
++                this.pushLiveMarkets(data ?? EMPTY_MARKETS);
+               }
+             })
+             .catch((err) => {
+@@ -369,6 +380,7 @@ class PerpsStreamManager {
+     // stale-mode data — otherwise a false→true flip could leave un-enriched
+     // direct markets cached and suppress the Terminal REST fallback.
+     this.markets.clearCache();
++    this.liveMarkets = new WeakSet<PerpsMarketData>();
+   }
+ 
+   /**
+@@ -558,39 +570,49 @@ class PerpsStreamManager {
+       return;
+     }
+ 
+-    // New address requested — discard any stale pending init and start fresh.
+-    // Also treat an in-flight pendingInit as needing disconnect: during first
+-    // init, initializedAddress is still null but perpsInit was already sent.
+     const needsDisconnect =
+       this.initializedAddress !== null || this.pendingInit !== null;
+-    this.pendingInit = null;
+-    this.clearAllCaches();
+-
+-    const promise = (async () => {
+-      try {
+-        // PerpsController.init() is a no-op when already initialized.
+-        // Disconnect first so the controller tears down the old provider/WebSocket
+-        // and re-initializes with the new account from AccountTreeController.
+-        if (needsDisconnect) {
+-          await submitRequestToBackground('perpsDisconnect');
+-        }
+-        await submitRequestToBackground('perpsInit');
+-        // Only apply if this is still the latest requested address.
+-        if (this.pendingInit?.address === address) {
+-          this.init(address);
+-          this.pendingInit = null;
++    // Cancel old REST fallbacks before clearing their data or starting an RPC.
++    this.reset();
++    const generation = this.initializationGeneration;
++
++    // Serialize account transitions so A → B → A cannot finish an older init
++    // after the newest one and disconnect its provider.
++    const promise = this.initializationQueue
++      .catch(() => undefined)
++      .then(async () => {
++        if (generation !== this.initializationGeneration) {
++          return;
+         }
+-      } catch (err) {
+-        // Clear pendingInit on failure so subsequent retries start fresh
+-        // instead of piggybacking on this rejected promise.
+-        if (this.pendingInit?.address === address) {
+-          this.pendingInit = null;
++        try {
++          if (needsDisconnect) {
++            await submitRequestToBackground('perpsDisconnect');
++          }
++          if (generation !== this.initializationGeneration) {
++            return;
++          }
++          // The old bridge is disconnected. The new bridge emits its initial
++          // snapshots before perpsInit returns, so accept them during this RPC.
++          if (this.pendingInit) {
++            this.pendingInit.acceptsUpdates = true;
++          }
++          await submitRequestToBackground('perpsInit');
++          if (generation === this.initializationGeneration) {
++            this.init(address);
++          }
++        } catch (error) {
++          if (generation === this.initializationGeneration) {
++            this.reset();
++          }
++          throw error;
++        } finally {
++          if (generation === this.initializationGeneration) {
++            this.pendingInit = null;
++          }
+         }
+-        throw err;
+-      }
+-    })();
+-
+-    this.pendingInit = { address, promise };
++      });
++    this.pendingInit = { address, promise, acceptsUpdates: false };
++    this.initializationQueue = promise;
+     await promise;
+   }
+ 
+@@ -604,6 +626,7 @@ class PerpsStreamManager {
+    * @param payload.symbol - For candles: the asset symbol
+    * @param payload.interval - For candles: the candle period
+    * @param payload.subscriptionId - For aggregated order book: UI identity
++   * @param payload.live - Whether market metadata was fetched in this session.
+    */
+   handleBackgroundUpdate(payload: {
+     channel: string;
+@@ -611,7 +634,11 @@ class PerpsStreamManager {
+     symbol?: string;
+     interval?: CandlePeriod;
+     subscriptionId?: string;
++    live?: boolean;
+   }): void {
++    if (this.pendingInit && !this.pendingInit.acceptsUpdates) {
++      return;
++    }
+     this._lastStreamUpdateAt = Date.now();
+     const { channel, data } = payload;
+     switch (channel) {
+@@ -638,9 +665,20 @@ class PerpsStreamManager {
+       case 'fills':
+         this.fills.pushData(data as OrderFill[]);
+         break;
+-      case 'prices':
+-        this.prices.pushData(data as PriceUpdate[]);
++      case 'prices': {
++        // Wallet preload and the foreground symbol stream share this cache.
++        // A detail update must not discard the other preloaded market prices.
++        const prices = new Map(
++          this.prices.getCachedData().map((price) => [price.symbol, price]),
++        );
++        (data as PriceUpdate[]).forEach((price) =>
++          prices.set(price.symbol, price),
++        );
++        const snapshot = Array.from(prices.values());
++        this.livePrices = snapshot;
++        this.prices.pushData(snapshot);
+         break;
++      }
+       case 'orderBook':
+         this.orderBook.pushData(data as OrderBookData);
+         break;
+@@ -674,7 +712,11 @@ class PerpsStreamManager {
+         break;
+       }
+       case 'markets':
+-        this.markets.pushData(data as PerpsMarketData[]);
++        if (payload.live) {
++          this.pushLiveMarkets(data as PerpsMarketData[]);
++        } else {
++          this.markets.pushData(data as PerpsMarketData[]);
++        }
+         break;
+       case 'connectionState':
+         break;
+@@ -703,6 +745,39 @@ class PerpsStreamManager {
+     return subscriptionId === activeId;
+   }
+ 
++  /**
++   * Record fresh market metadata separately from persisted cache hydration.
++   *
++   * @param markets - Markets fetched for the current connection and backend.
++   */
++  pushLiveMarkets(markets: PerpsMarketData[]): void {
++    this.liveMarkets = new WeakSet(markets);
++    this.markets.pushData(markets);
++  }
++
++  /**
++   * Distinguish the market snapshot read during render from a persisted seed.
++   *
++   * @param markets - Snapshot consumed by the market hook.
++   * @returns Whether this is the current-session live snapshot.
++   */
++  hasLiveMarketData(markets: readonly PerpsMarketData[]): boolean {
++    return markets.some((market) => this.liveMarkets.has(market));
++  }
++
++  /**
++   * Check the actual price snapshot consumed during render.
++   *
++   * @param prices - Snapshot consumed by the price hook.
++   * @returns Whether it contains a live positive price.
++   */
++  hasLivePrices(prices: readonly PriceUpdate[]): boolean {
++    return (
++      prices === this.livePrices &&
++      prices.some((price) => Number(price.price) > 0)
++    );
++  }
++
+   /**
+    * Check if the stream manager has been initialized for a specific address.
+    *
+@@ -768,6 +843,8 @@ class PerpsStreamManager {
+    * Called on account/network change.
+    */
+   clearAllCaches(): void {
++    this.liveMarkets = new WeakSet<PerpsMarketData>();
++    this.livePrices = null;
+     this.positions.clearCache();
+     this.orders.clearCache();
+     this.account.clearCache();
+@@ -791,6 +868,10 @@ class PerpsStreamManager {
+    * Note: Does not reset address tracking (handled by this.initializedAddress).
+    */
+   reset(): void {
++    this.initializationGeneration += 1;
++    this.pendingInit = null;
++    this.liveMarkets = new WeakSet<PerpsMarketData>();
++    this.livePrices = null;
+     this.cleanupPrewarm();
+     this.positions.reset();
+     this.orders.reset();

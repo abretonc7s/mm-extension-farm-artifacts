@@ -1,6 +1,3 @@
-# Reviewer findings
-
-- Transition cleanup: clearing account caches left REST callbacks active. Begin transitions through channel reset and prove late responses cannot repopulate positions, orders or account state.
-- Initial snapshot ordering: blocking every pending-init payload dropped the new session's first snapshots. Test callbacks emitted inside the initialization RPC, before its promise resolves.
-- Failure cleanup: accepting early snapshots also requires clearing them when initialization rejects. Test the failed session after it emits data.
-- Race coverage: preserve rapid A to B to A and explicit-reset tests when adding cancellation. Serialized initialization and generation checks must continue to reject superseded work.
+- Stream lifetime: preload cancellation tore down subscriptions used by an initialized wallet manager. Model ownership by the connection lifetime before adding request deadlines.
+- Initial snapshot delivery: perpsInit could emit snapshots before any preload ID existed. Test the actual canEmit gate during synchronous subscription callbacks and late initialization.
+- Cancellation coverage: tests covered successful preload and foreground Perps, but missed Home/Discover after timeout and preload failure. Exercise before-start, pending and completed cancellation with existing dynamic price subscriptions, then verify final teardown separately.

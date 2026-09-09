@@ -1,17 +1,13 @@
-# Recipe coverage
+# Recipe coverage for this review-fix pass
 
-Final production run: recipe-run-final/summary.json, PASS 27/27 nodes. Non-test Chrome MV3 build with LavaMoat. Product source matches pushed fix 63ddfd4fd5; only test tuple typing changed after this run.
+Recipe execution failed at setup-unlock with WALLET_STATE_REQUIRED because the relaunched extension profile had no onboarded wallet. No product acceptance node ran. Prior family screenshots and successful runs are historical and are not evidence for this commit.
 
-| Requirement | Evidence | Result |
+| Requirement | Current evidence | Result |
 | --- | --- | --- |
-| Eligible unlock preloads before Perps entry | ac1-unlock, ac1-preload | Pass, local state and connection trace |
-| Route remains lazy | ac2-lazy | Pass |
-| Shared Core preload trace routing | ac3-shared | Pass, local shared trace calls |
-| Mobile cold, warm and background-resume naming | ac4-cold-trace, ac4-warm-trace, ac4-resume-trace | Pass, document lifecycle contexts |
-| Live rendered market rows | ac5-rows, ac5-state, ac5-screenshot | Pass, screenshot inspected |
-| Separate market-browser trace and existing trace callers | ac3-browser-trace, ac6-regression | Pass |
-| Late prior-account REST writes and early new-session snapshots | final-manager-tests.log, 105 tests; parent ci-account-red.log / ci-account-green.log | Unit regressions reproduce and pass |
+| Wallet streams survive preload cancellation before start, during ping, after start, and on failure | regression-before.log, regression-after.log; bridge public API and emission gate | Four regressions reproduced before the fix; passing after it |
+| Disconnect and revoked eligibility release streams | regression-after.log | Pass in unit tests |
+| Eligible unlock preloads live markets/account/prices | recipe-run.log | Unverified; blocked at wallet setup |
+| Route remains lazy and shared traces match Mobile lifecycle names | recipe-run.log | Unverified; blocked at wallet setup |
+| Live rendered rows and cold/warm/resume/browser traces | recipe-run.log | Unverified; blocked at wallet setup |
 
-Additional browser evidence partially covers offline entry, account switch on Home during offline preload, abandonment, offline lock/reset, reconnection and Basic Functionality disable/reset. See comments-report.md for attempt paths and causes. The full interruption recipe did not pass.
-
-Unproven: disabled-functionality lock/unlock/no-preload sequence, close/reopen grace, populated position/order variants, remote Sentry ingestion, and comparable fresh-backend loading gains. The recipe's cold_process context is a fresh UI document; this is not a controlled browser-process restart latency measurement. Original measurements were invalidated by unequal tabs, then unequal HTTP cache behavior. No numeric gain claimed.
+Actual proof for the review fix is state-only. The planned browser journey includes state and screenshot assertions, but it produced no current product screenshots. evidence-manifest.json therefore contains no media. Non-test LavaMoat compilation passed; runtime recovery used the development watcher. Remote telemetry, complete interruption behavior, populated variants and a fair fresh-backend loading comparison remain unproven.

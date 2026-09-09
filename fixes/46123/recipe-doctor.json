@@ -2,7 +2,7 @@
   "schemaVersion": 1,
   "protocolVersion": "v1",
   "runner_protocol_version": 1,
-  "status": "fail",
+  "status": "pass",
   "checks": [
     {
       "id": "manifest",
@@ -25,19 +25,17 @@
     },
     {
       "id": "runtime",
-      "status": "fail",
+      "status": "pass",
       "required": true,
-      "message": "Runtime is not ready (runtime-unhealthy)",
-      "detail": "Build is fresh but the live extension is unhealthy; relaunch the browser. | EVM RPC readiness probe failed: Ethereum provider is unavailable. Infura configured ≠ RPC reachable."
+      "message": "Runtime is ready.",
+      "detail": "Build is fresh and the extension runtime is healthy over CDP."
     }
   ],
   "requiredChecks": {
-    "status": "fail",
+    "status": "pass",
     "total": 3,
-    "passed": 2,
-    "failed": [
-      "runtime"
-    ]
+    "passed": 3,
+    "failed": []
   },
   "adapter": "extension",
   "target": "/Users/deeeed/dev/metamask/metamask-extension-1",
@@ -106,15 +104,13 @@
     "errors": 0,
     "warnings": 0
   },
-  "ready": false,
+  "ready": true,
   "runtime": {
-    "decision": "relaunch",
-    "reasonCode": "runtime-unhealthy",
+    "decision": "ready",
+    "reasonCode": "healthy",
     "reasons": [
-      "Build is fresh but the live extension is unhealthy; relaunch the browser.",
-      "EVM RPC readiness probe failed: Ethereum provider is unavailable. Infura configured ≠ RPC reachable."
+      "Build is fresh and the extension runtime is healthy over CDP."
     ],
-    "nextAction": "mm-harness launch --adapter extension --target '/Users/deeeed/dev/metamask/metamask-extension-1'",
     "deps": "current",
     "devServer": {
       "label": "webpack",
@@ -138,10 +134,5 @@
     }
   },
   "devices": [],
-  "additionalReachableDevices": [],
-  "error": {
-    "code": "RUNTIME_NOT_LIVE",
-    "message": "extension runtime is not live",
-    "userAction": "mm-harness launch --adapter extension --target '/Users/deeeed/dev/metamask/metamask-extension-1'"
-  }
+  "additionalReachableDevices": []
 }

@@ -1,0 +1,106 @@
+PASS app/scripts/controllers/perps/perps-stream-bridge.test.ts
+  ● Console
+
+    console.debug
+      [PerpsStreamBridge] startMarketDataPreload failed Error: preload blew up
+          at Object.<anonymous> (/Users/deeeed/dev/metamask/metamask-extension-1/app/scripts/controllers/perps/perps-stream-bridge.test.ts:199:15)
+          at /Users/deeeed/dev/metamask/metamask-extension-1/node_modules/jest-mock/build/index.js:397:39
+          at Object.<anonymous> (/Users/deeeed/dev/metamask/metamask-extension-1/node_modules/jest-mock/build/index.js:404:13)
+          at Object.mockConstructor [as startMarketDataPreload] (/Users/deeeed/dev/metamask/metamask-extension-1/node_modules/jest-mock/build/index.js:148:19)
+          at startMarketDataPreload (/Users/deeeed/dev/metamask/metamask-extension-1/app/scripts/controllers/perps/perps-stream-bridge.ts:243:39)
+          at processTicksAndRejections (node:internal/process/task_queues:104:5)
+          at Object.perpsInit (/Users/deeeed/dev/metamask/metamask-extension-1/app/scripts/controllers/perps/perps-stream-bridge.ts:236:9)
+          at Object.<anonymous> (/Users/deeeed/dev/metamask/metamask-extension-1/app/scripts/controllers/perps/perps-stream-bridge.test.ts:206:7)
+
+      at debug (app/scripts/controllers/perps/perps-stream-bridge.ts:247:21)
+
+    console.debug
+      [PerpsStreamBridge] cleanup error Error: static teardown failure
+          at /Users/deeeed/dev/metamask/metamask-extension-1/app/scripts/controllers/perps/perps-stream-bridge.test.ts:1397:15
+          at PerpsStreamBridge.unsub (/Users/deeeed/dev/metamask/metamask-extension-1/app/scripts/controllers/perps/perps-stream-bridge.ts:1131:7)
+          at PerpsStreamBridge.destroy (/Users/deeeed/dev/metamask/metamask-extension-1/app/scripts/controllers/perps/perps-stream-bridge.ts:497:30)
+          at destroy (/Users/deeeed/dev/metamask/metamask-extension-1/app/scripts/controllers/perps/perps-stream-bridge.test.ts:1416:27)
+          at Object.<anonymous> (/Users/deeeed/dev/metamask/metamask-extension-1/node_modules/expect/build/toThrowMatchers.js:74:11)
+          at Object.throwingMatcher [as toThrow] (/Users/deeeed/dev/metamask/metamask-extension-1/node_modules/expect/build/index.js:320:21)
+          at Object.toThrow (/Users/deeeed/dev/metamask/metamask-extension-1/app/scripts/controllers/perps/perps-stream-bridge.test.ts:1416:42)
+          at processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+      at PerpsStreamBridge.debug (app/scripts/controllers/perps/perps-stream-bridge.ts:1133:15)
+
+    console.debug
+      [PerpsStreamBridge] cleanup error Error: dynamic teardown failure
+          at /Users/deeeed/dev/metamask/metamask-extension-1/app/scripts/controllers/perps/perps-stream-bridge.test.ts:1400:15
+          at PerpsStreamBridge.unsub (/Users/deeeed/dev/metamask/metamask-extension-1/app/scripts/controllers/perps/perps-stream-bridge.ts:1131:7)
+          at PerpsStreamBridge.#tearDownAllDynamic (/Users/deeeed/dev/metamask/metamask-extension-1/app/scripts/controllers/perps/perps-stream-bridge.ts:1148:30)
+          at PerpsStreamBridge.destroy (/Users/deeeed/dev/metamask/metamask-extension-1/app/scripts/controllers/perps/perps-stream-bridge.ts:501:29)
+          at destroy (/Users/deeeed/dev/metamask/metamask-extension-1/app/scripts/controllers/perps/perps-stream-bridge.test.ts:1416:27)
+          at Object.<anonymous> (/Users/deeeed/dev/metamask/metamask-extension-1/node_modules/expect/build/toThrowMatchers.js:74:11)
+          at Object.throwingMatcher [as toThrow] (/Users/deeeed/dev/metamask/metamask-extension-1/node_modules/expect/build/index.js:320:21)
+          at Object.toThrow (/Users/deeeed/dev/metamask/metamask-extension-1/app/scripts/controllers/perps/perps-stream-bridge.test.ts:1416:42)
+          at processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+      at PerpsStreamBridge.debug (app/scripts/controllers/perps/perps-stream-bridge.ts:1133:15)
+
+    console.debug
+      [PerpsStreamBridge] health-check reconnect failed Error: reconnect failed
+          at Object.<anonymous> (/Users/deeeed/dev/metamask/metamask-extension-1/app/scripts/controllers/perps/perps-stream-bridge.test.ts:1522:46)
+          at Promise.then.completed (/Users/deeeed/dev/metamask/metamask-extension-1/node_modules/jest-circus/build/utils.js:298:28)
+          at new Promise (<anonymous>)
+          at callAsyncCircusFn (/Users/deeeed/dev/metamask/metamask-extension-1/node_modules/jest-circus/build/utils.js:231:10)
+          at _callCircusTest (/Users/deeeed/dev/metamask/metamask-extension-1/node_modules/jest-circus/build/run.js:316:40)
+          at processTicksAndRejections (node:internal/process/task_queues:104:5)
+          at _runTest (/Users/deeeed/dev/metamask/metamask-extension-1/node_modules/jest-circus/build/run.js:252:3)
+          at _runTestsForDescribeBlock (/Users/deeeed/dev/metamask/metamask-extension-1/node_modules/jest-circus/build/run.js:126:9)
+          at _runTestsForDescribeBlock (/Users/deeeed/dev/metamask/metamask-extension-1/node_modules/jest-circus/build/run.js:121:9)
+          at _runTestsForDescribeBlock (/Users/deeeed/dev/metamask/metamask-extension-1/node_modules/jest-circus/build/run.js:121:9)
+          at run (/Users/deeeed/dev/metamask/metamask-extension-1/node_modules/jest-circus/build/run.js:71:3)
+          at runAndTransformResultsToJestFormat (/Users/deeeed/dev/metamask/metamask-extension-1/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)
+          at jestAdapter (/Users/deeeed/dev/metamask/metamask-extension-1/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
+          at runTestInternal (/Users/deeeed/dev/metamask/metamask-extension-1/node_modules/jest-runner/build/runTest.js:367:16)
+          at runTest (/Users/deeeed/dev/metamask/metamask-extension-1/node_modules/jest-runner/build/runTest.js:444:34)
+          at Object.worker (/Users/deeeed/dev/metamask/metamask-extension-1/node_modules/jest-runner/build/testWorker.js:106:12)
+
+      at debug (app/scripts/controllers/perps/perps-stream-bridge.ts:453:21)
+
+    console.debug
+      [PerpsStreamBridge] connectivity-change reconnect failed Error: reconnect failed
+          at Object.<anonymous> (/Users/deeeed/dev/metamask/metamask-extension-1/app/scripts/controllers/perps/perps-stream-bridge.test.ts:2232:46)
+          at Promise.then.completed (/Users/deeeed/dev/metamask/metamask-extension-1/node_modules/jest-circus/build/utils.js:298:28)
+          at new Promise (<anonymous>)
+          at callAsyncCircusFn (/Users/deeeed/dev/metamask/metamask-extension-1/node_modules/jest-circus/build/utils.js:231:10)
+          at _callCircusTest (/Users/deeeed/dev/metamask/metamask-extension-1/node_modules/jest-circus/build/run.js:316:40)
+          at _runTest (/Users/deeeed/dev/metamask/metamask-extension-1/node_modules/jest-circus/build/run.js:252:3)
+          at _runTestsForDescribeBlock (/Users/deeeed/dev/metamask/metamask-extension-1/node_modules/jest-circus/build/run.js:126:9)
+          at _runTestsForDescribeBlock (/Users/deeeed/dev/metamask/metamask-extension-1/node_modules/jest-circus/build/run.js:121:9)
+          at _runTestsForDescribeBlock (/Users/deeeed/dev/metamask/metamask-extension-1/node_modules/jest-circus/build/run.js:121:9)
+          at run (/Users/deeeed/dev/metamask/metamask-extension-1/node_modules/jest-circus/build/run.js:71:3)
+          at runAndTransformResultsToJestFormat (/Users/deeeed/dev/metamask/metamask-extension-1/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)
+          at jestAdapter (/Users/deeeed/dev/metamask/metamask-extension-1/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
+          at runTestInternal (/Users/deeeed/dev/metamask/metamask-extension-1/node_modules/jest-runner/build/runTest.js:367:16)
+          at runTest (/Users/deeeed/dev/metamask/metamask-extension-1/node_modules/jest-runner/build/runTest.js:444:34)
+          at Object.worker (/Users/deeeed/dev/metamask/metamask-extension-1/node_modules/jest-runner/build/testWorker.js:106:12)
+
+      at debug (app/scripts/controllers/perps/perps-stream-bridge.ts:774:19)
+
+    console.debug
+      [PerpsStreamBridge] startMarketDataPreload failed Error: cache unavailable
+          at Object.<anonymous> (/Users/deeeed/dev/metamask/metamask-extension-1/app/scripts/controllers/perps/perps-stream-bridge.test.ts:2728:13)
+          at /Users/deeeed/dev/metamask/metamask-extension-1/node_modules/jest-mock/build/index.js:397:39
+          at Object.<anonymous> (/Users/deeeed/dev/metamask/metamask-extension-1/node_modules/jest-mock/build/index.js:404:13)
+          at Object.mockConstructor [as startMarketDataPreload] (/Users/deeeed/dev/metamask/metamask-extension-1/node_modules/jest-mock/build/index.js:148:19)
+          at startMarketDataPreload (/Users/deeeed/dev/metamask/metamask-extension-1/app/scripts/controllers/perps/perps-stream-bridge.ts:243:39)
+          at Object.perpsInit (/Users/deeeed/dev/metamask/metamask-extension-1/app/scripts/controllers/perps/perps-stream-bridge.ts:236:9)
+          at Object.<anonymous> (/Users/deeeed/dev/metamask/metamask-extension-1/app/scripts/controllers/perps/perps-stream-bridge.test.ts:2731:5)
+
+      at debug (app/scripts/controllers/perps/perps-stream-bridge.ts:247:21)
+
+PASS ui/providers/perps/PerpsStreamManager.test.ts
+
+Test Suites: 2 passed, 2 total
+Tests:       214 passed, 214 total
+Snapshots:   0 total
+Time:        1.079 s, estimated 2 s
+Ran all test suites matching /app\/scripts\/controllers\/perps\/perps-stream-bridge.test.ts|ui\/providers\/perps\/PerpsStreamManager.test.ts/i.
+
+✅ No console baseline violations.
+
