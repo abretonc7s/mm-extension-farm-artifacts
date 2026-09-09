@@ -1,0 +1,3596 @@
+{
+  "metadata": {
+    "runner": {
+      "source": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness",
+      "git_ref": "unknown",
+      "name": "@metamask/recipe-runner"
+    }
+  },
+  "entries": [
+    {
+      "nodeId": "setup-unlock",
+      "action": "metamask.wallet.ensure_unlocked",
+      "intent": "Open the preserved wallet for the preload journey",
+      "startedAt": "2026-09-09T03:48:18.197Z",
+      "endedAt": "2026-09-09T03:48:18.271Z",
+      "durationMs": 74,
+      "ok": true,
+      "next": "setup-home",
+      "output": {
+        "action": "metamask.wallet.ensure_unlocked",
+        "unlocked": true,
+        "alreadyUnlocked": true,
+        "proofPath": "extension-unlocked-state",
+        "cdpPort": 7661,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/",
+        "runtimeLaunch": null,
+        "cdpTargetId": "B815F8EF04E341D7C2283FD8DD7FA47E",
+        "runtimeSessionId": "e2ccfa28-f662-47c4-b3f1-0a4ac162b015",
+        "liveAdapter": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/actions/extension/wallet/ensure_unlocked.mjs"
+      }
+    },
+    {
+      "nodeId": "setup-home",
+      "action": "ui.navigate",
+      "intent": "Establish wallet home before a fresh unlock",
+      "startedAt": "2026-09-09T03:48:18.278Z",
+      "endedAt": "2026-09-09T03:48:18.365Z",
+      "durationMs": 87,
+      "ok": true,
+      "next": "setup-lock",
+      "output": {
+        "action": "ui.navigate",
+        "page": "home",
+        "method": "visible-ui",
+        "href": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/",
+        "steps": [],
+        "proofPath": "ui-navigation",
+        "cdpPort": 7661,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/",
+        "runtimeLaunch": null,
+        "cdpTargetId": "B815F8EF04E341D7C2283FD8DD7FA47E",
+        "runtimeSessionId": "e2ccfa28-f662-47c4-b3f1-0a4ac162b015",
+        "liveAdapter": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/actions/extension/ui/navigate.mjs"
+      },
+      "observations": {
+        "ui.screen": {
+          "provider": "cdp-web",
+          "name": "macpro-mme-1 — MetaMask",
+          "title": "macpro-mme-1 — MetaMask",
+          "route": "#/",
+          "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
+        },
+        "ui.visible": {
+          "provider": "cdp-web",
+          "items": [
+            {
+              "role": "button",
+              "label": "dev1",
+              "test_id": "account-menu-icon",
+              "selector": "[data-testid=\"account-menu-icon\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 8,
+                "y": 8,
+                "width": 74,
+                "height": 24
+              }
+            },
+            {
+              "role": "button",
+              "label": "Search tokens",
+              "test_id": "discover-search-button",
+              "selector": "[data-testid=\"discover-search-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 446,
+                "y": 18,
+                "width": 32,
+                "height": 32
+              }
+            },
+            {
+              "role": "button",
+              "label": "Account options",
+              "test_id": "account-options-menu-button",
+              "selector": "[data-testid=\"account-options-menu-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 486,
+                "y": 18,
+                "width": 32,
+                "height": 32
+              }
+            },
+            {
+              "role": "button",
+              "label": "Buy",
+              "test_id": "eth-overview-buy",
+              "selector": "[data-testid=\"eth-overview-buy\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 38,
+                "y": 169,
+                "width": 106,
+                "height": 69
+              }
+            },
+            {
+              "role": "button",
+              "label": "Swap",
+              "test_id": "eth-overview-swap",
+              "selector": "[data-testid=\"eth-overview-swap\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 156,
+                "y": 169,
+                "width": 106,
+                "height": 69
+              }
+            },
+            {
+              "role": "button",
+              "label": "Send",
+              "test_id": "eth-overview-send",
+              "selector": "[data-testid=\"eth-overview-send\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 273,
+                "y": 169,
+                "width": 106,
+                "height": 69
+              }
+            },
+            {
+              "role": "button",
+              "label": "More",
+              "test_id": "eth-overview-more",
+              "selector": "[data-testid=\"eth-overview-more\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 391,
+                "y": 169,
+                "width": 106,
+                "height": 69
+              }
+            },
+            {
+              "role": "button",
+              "label": "Money balance",
+              "test_id": "money-account-balance-info-button",
+              "selector": "[data-testid=\"money-account-balance-info-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 210,
+                "y": 272,
+                "width": 16,
+                "height": 16
+              }
+            },
+            {
+              "role": "button",
+              "label": "Add",
+              "test_id": "money-account-balance-add-button",
+              "selector": "[data-testid=\"money-account-balance-add-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 426,
+                "y": 278,
+                "width": 54,
+                "height": 40
+              }
+            },
+            {
+              "role": "tab",
+              "label": "Tokens",
+              "test_id": "account-overview__asset-tab",
+              "selector": "[data-testid=\"account-overview__asset-tab\"]",
+              "enabled": true,
+              "selected": true,
+              "bounds": {
+                "x": 16,
+                "y": 359,
+                "width": 53,
+                "height": 34
+              }
+            },
+            {
+              "role": "tab",
+              "label": "DeFi",
+              "test_id": "account-overview__defi-tab",
+              "selector": "[data-testid=\"account-overview__defi-tab\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 85,
+                "y": 359,
+                "width": 34,
+                "height": 34
+              }
+            },
+            {
+              "role": "tab",
+              "label": "NFTs",
+              "test_id": "account-overview__nfts-tab",
+              "selector": "[data-testid=\"account-overview__nfts-tab\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 135,
+                "y": 359,
+                "width": 38,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "Network: Ethereum",
+              "test_id": "sort-by-networks",
+              "selector": "[data-testid=\"sort-by-networks\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 16,
+                "y": 409,
+                "width": 173,
+                "height": 32
+              }
+            },
+            {
+              "role": "button",
+              "label": "Sort by",
+              "test_id": "sort-by-popover-toggle",
+              "selector": "[data-testid=\"sort-by-popover-toggle\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 454,
+                "y": 413,
+                "width": 32,
+                "height": 24
+              }
+            },
+            {
+              "role": "button",
+              "label": "Asset options",
+              "test_id": "asset-list-control-bar-action-button",
+              "selector": "[data-testid=\"asset-list-control-bar-action-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 486,
+                "y": 413,
+                "width": 32,
+                "height": 24
+              }
+            },
+            {
+              "role": "button",
+              "label": "Earn",
+              "test_id": "staking-entrypoint-0x1",
+              "selector": "[data-testid=\"staking-entrypoint-0x1\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 160,
+                "y": 516,
+                "width": 62,
+                "height": 22
+              }
+            },
+            {
+              "role": "button",
+              "label": "Home",
+              "test_id": "bottom-nav-home",
+              "selector": "[data-testid=\"bottom-nav-home\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 8,
+                "y": 569,
+                "width": 97,
+                "height": 50
+              }
+            },
+            {
+              "role": "button",
+              "label": "Perps",
+              "test_id": "bottom-nav-perps",
+              "selector": "[data-testid=\"bottom-nav-perps\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 113,
+                "y": 569,
+                "width": 97,
+                "height": 50
+              }
+            },
+            {
+              "role": "button",
+              "label": "Money",
+              "test_id": "bottom-nav-money",
+              "selector": "[data-testid=\"bottom-nav-money\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 218,
+                "y": 569,
+                "width": 97,
+                "height": 50
+              }
+            },
+            {
+              "role": "button",
+              "label": "Swap",
+              "test_id": "bottom-nav-swaps",
+              "selector": "[data-testid=\"bottom-nav-swaps\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 324,
+                "y": 569,
+                "width": 97,
+                "height": 50
+              }
+            }
+          ],
+          "hidden_or_offscreen": [
+            {
+              "role": "button",
+              "test_id": "app-header-logo",
+              "selector": "[data-testid=\"app-header-logo\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "button",
+              "test_id": "drawer-close-button",
+              "selector": "[data-testid=\"drawer-close-button\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "button",
+              "test_id": "notifications-menu-item",
+              "selector": "[data-testid=\"notifications-menu-item\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "button",
+              "test_id": "discover",
+              "selector": "[data-testid=\"discover\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "link",
+              "test_id": "global-menu-contacts",
+              "selector": "[data-testid=\"global-menu-contacts\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "link",
+              "test_id": "global-menu-connected-sites",
+              "selector": "[data-testid=\"global-menu-connected-sites\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "link",
+              "test_id": "global-menu-networks",
+              "selector": "[data-testid=\"global-menu-networks\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "link",
+              "test_id": "global-menu-snaps",
+              "selector": "[data-testid=\"global-menu-snaps\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "link",
+              "test_id": "global-menu-settings",
+              "selector": "[data-testid=\"global-menu-settings\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "button",
+              "test_id": "global-menu-support",
+              "selector": "[data-testid=\"global-menu-support\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            }
+          ],
+          "truncated": true,
+          "limits": {
+            "items": 20,
+            "hidden_or_offscreen": 10
+          }
+        }
+      }
+    },
+    {
+      "nodeId": "setup-lock",
+      "action": "metamask.wallet.lock",
+      "intent": "End the previous unlocked Perps connection through the wallet lock action",
+      "startedAt": "2026-09-09T03:48:18.372Z",
+      "endedAt": "2026-09-09T03:48:18.835Z",
+      "durationMs": 463,
+      "ok": true,
+      "next": "setup-cache-expiry",
+      "output": {
+        "action": "metamask.wallet.lock",
+        "locked": true,
+        "route": "#/unlock",
+        "proofPath": "trusted-pointer-visible-ui",
+        "cdpPort": 7661,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/",
+        "runtimeLaunch": null,
+        "cdpTargetId": "B815F8EF04E341D7C2283FD8DD7FA47E",
+        "runtimeSessionId": "e2ccfa28-f662-47c4-b3f1-0a4ac162b015",
+        "liveAdapter": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/actions/extension/wallet/lock.mjs"
+      }
+    },
+    {
+      "nodeId": "setup-cache-expiry",
+      "action": "command",
+      "intent": "Wait for the locked wallet caches to age past the Core 30-second preload guard without changing wallet state",
+      "startedAt": "2026-09-09T03:48:18.843Z",
+      "endedAt": "2026-09-09T03:48:18.952Z",
+      "durationMs": 109,
+      "ok": true,
+      "next": "setup-reload",
+      "output": {
+        "exitCode": 0,
+        "stdout": "",
+        "stderr": "(node:63627) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///Users/deeeed/dev/metamask/metamask-extension-1/temp/tasks/feat/tat-3857-0908-110457/artifacts/proof.ts is not specified and it doesn't parse as CommonJS.\nReparsing as ES module because module syntax was detected. This incurs a performance overhead.\nTo eliminate this warning, add \"type\": \"module\" to /Users/deeeed/dev/metamask/metamask-extension-1/package.json.\n(Use `node --trace-warnings ...` to show where the warning was created)\n"
+      }
+    },
+    {
+      "nodeId": "setup-reload",
+      "action": "command",
+      "intent": "Create a fresh UI document while retaining the locked wallet and tracing observer",
+      "startedAt": "2026-09-09T03:48:18.959Z",
+      "endedAt": "2026-09-09T03:48:19.877Z",
+      "durationMs": 918,
+      "ok": true,
+      "next": "setup-observer",
+      "output": {
+        "exitCode": 0,
+        "stdout": "",
+        "stderr": "(node:63628) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///Users/deeeed/dev/metamask/metamask-extension-1/temp/tasks/feat/tat-3857-0908-110457/artifacts/proof.ts is not specified and it doesn't parse as CommonJS.\nReparsing as ES module because module syntax was detected. This incurs a performance overhead.\nTo eliminate this warning, add \"type\": \"module\" to /Users/deeeed/dev/metamask/metamask-extension-1/package.json.\n(Use `node --trace-warnings ...` to show where the warning was created)\n"
+      }
+    },
+    {
+      "nodeId": "setup-observer",
+      "action": "command",
+      "intent": "Observe real shared trace calls and WebSocket subscriptions in this slot",
+      "startedAt": "2026-09-09T03:48:19.887Z",
+      "endedAt": "2026-09-09T03:48:21.992Z",
+      "durationMs": 2105,
+      "ok": true,
+      "next": "ac1-unlock",
+      "output": {
+        "exitCode": 0,
+        "stdout": "",
+        "stderr": "(node:63629) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///Users/deeeed/dev/metamask/metamask-extension-1/temp/tasks/feat/tat-3857-0908-110457/artifacts/proof.ts is not specified and it doesn't parse as CommonJS.\nReparsing as ES module because module syntax was detected. This incurs a performance overhead.\nTo eliminate this warning, add \"type\": \"module\" to /Users/deeeed/dev/metamask/metamask-extension-1/package.json.\n(Use `node --trace-warnings ...` to show where the warning was created)\n"
+      }
+    },
+    {
+      "nodeId": "ac1-unlock",
+      "action": "metamask.wallet.ensure_unlocked",
+      "intent": "Trigger proactive Perps preload from wallet unlock without entering Perps",
+      "startedAt": "2026-09-09T03:48:22.002Z",
+      "endedAt": "2026-09-09T03:48:22.340Z",
+      "durationMs": 338,
+      "ok": true,
+      "next": "ac1-preload",
+      "output": {
+        "action": "metamask.wallet.ensure_unlocked",
+        "unlocked": true,
+        "redacted": true,
+        "proofPath": "extension-password-unlock",
+        "cdpPort": 7661,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/unlock",
+        "runtimeLaunch": null,
+        "cdpTargetId": "B815F8EF04E341D7C2283FD8DD7FA47E",
+        "runtimeSessionId": "e2ccfa28-f662-47c4-b3f1-0a4ac162b015",
+        "liveAdapter": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/actions/extension/wallet/ensure_unlocked.mjs"
+      }
+    },
+    {
+      "nodeId": "ac1-preload",
+      "action": "command",
+      "intent": "Assert live markets account and prices are ready on wallet home with a successful connection trace",
+      "startedAt": "2026-09-09T03:48:22.350Z",
+      "endedAt": "2026-09-09T03:48:25.988Z",
+      "durationMs": 3638,
+      "ok": true,
+      "next": "ac2-lazy",
+      "output": {
+        "exitCode": 0,
+        "stdout": "",
+        "stderr": "(node:63638) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///Users/deeeed/dev/metamask/metamask-extension-1/temp/tasks/feat/tat-3857-0908-110457/artifacts/proof.ts is not specified and it doesn't parse as CommonJS.\nReparsing as ES module because module syntax was detected. This incurs a performance overhead.\nTo eliminate this warning, add \"type\": \"module\" to /Users/deeeed/dev/metamask/metamask-extension-1/package.json.\n(Use `node --trace-warnings ...` to show where the warning was created)\n"
+      }
+    },
+    {
+      "nodeId": "ac2-lazy",
+      "action": "command",
+      "intent": "Assert the Perps layout has not loaded before navigation and remains declared with mmLazy",
+      "startedAt": "2026-09-09T03:48:26.002Z",
+      "endedAt": "2026-09-09T03:48:26.671Z",
+      "durationMs": 669,
+      "ok": true,
+      "next": "ac3-shared",
+      "output": {
+        "exitCode": 0,
+        "stdout": "",
+        "stderr": "(node:63730) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///Users/deeeed/dev/metamask/metamask-extension-1/temp/tasks/feat/tat-3857-0908-110457/artifacts/proof.ts is not specified and it doesn't parse as CommonJS.\nReparsing as ES module because module syntax was detected. This incurs a performance overhead.\nTo eliminate this warning, add \"type\": \"module\" to /Users/deeeed/dev/metamask/metamask-extension-1/package.json.\n(Use `node --trace-warnings ...` to show where the warning was created)\n"
+      }
+    },
+    {
+      "nodeId": "ac3-shared",
+      "action": "command",
+      "intent": "Assert connection market and user preload spans reach both shared trace functions",
+      "startedAt": "2026-09-09T03:48:26.680Z",
+      "endedAt": "2026-09-09T03:48:26.765Z",
+      "durationMs": 85,
+      "ok": true,
+      "next": "ac4-cold-enter",
+      "output": {
+        "exitCode": 0,
+        "stdout": "",
+        "stderr": "(node:63743) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///Users/deeeed/dev/metamask/metamask-extension-1/temp/tasks/feat/tat-3857-0908-110457/artifacts/proof.ts is not specified and it doesn't parse as CommonJS.\nReparsing as ES module because module syntax was detected. This incurs a performance overhead.\nTo eliminate this warning, add \"type\": \"module\" to /Users/deeeed/dev/metamask/metamask-extension-1/package.json.\n(Use `node --trace-warnings ...` to show where the warning was created)\n"
+      }
+    },
+    {
+      "nodeId": "ac4-cold-enter",
+      "action": "ui.navigate",
+      "intent": "Enter Perps for the first time in the document lifecycle",
+      "startedAt": "2026-09-09T03:48:26.772Z",
+      "endedAt": "2026-09-09T03:48:27.947Z",
+      "durationMs": 1175,
+      "ok": true,
+      "next": "ac5-rows",
+      "output": {
+        "action": "ui.navigate",
+        "page": "perps",
+        "navigation": {
+          "activation": "trusted-pointer",
+          "interaction": {
+            "clicked": true,
+            "selector": "[data-testid=\"bottom-nav-perps\"]",
+            "tagName": "BUTTON"
+          }
+        },
+        "selector": "[data-testid=\"bottom-nav-perps\"]",
+        "method": "visible-ui",
+        "href": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps-home",
+        "steps": [
+          "[data-testid=\"bottom-nav-perps\"]"
+        ],
+        "proofPath": "ui-navigation",
+        "cdpPort": 7661,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/",
+        "runtimeLaunch": null,
+        "cdpTargetId": "B815F8EF04E341D7C2283FD8DD7FA47E",
+        "runtimeSessionId": "e2ccfa28-f662-47c4-b3f1-0a4ac162b015",
+        "liveAdapter": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/actions/extension/ui/navigate.mjs"
+      },
+      "observations": {
+        "ui.screen": {
+          "provider": "cdp-web",
+          "name": "macpro-mme-1 — MetaMask",
+          "title": "macpro-mme-1 — MetaMask",
+          "route": "#/perps-home",
+          "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
+        },
+        "ui.visible": {
+          "provider": "cdp-web",
+          "items": [
+            {
+              "role": "button",
+              "label": "Withdraw",
+              "test_id": "perps-balance-actions-withdraw",
+              "selector": "[data-testid=\"perps-balance-actions-withdraw\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 16,
+                "y": 118,
+                "width": 245,
+                "height": 48
+              }
+            },
+            {
+              "role": "button",
+              "label": "Add funds",
+              "test_id": "perps-balance-actions-add-funds",
+              "selector": "[data-testid=\"perps-balance-actions-add-funds\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 273,
+                "y": 118,
+                "width": 245,
+                "height": 48
+              }
+            },
+            {
+              "role": "button",
+              "label": "Watchlist",
+              "test_id": "perps-watchlist-header",
+              "selector": "[data-testid=\"perps-watchlist-header\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 0,
+                "y": 182,
+                "width": 534,
+                "height": 48
+              }
+            },
+            {
+              "role": "button",
+              "label": "Solana 10x SOL · $244K Vol $102.78 -0.05%",
+              "test_id": "perps-watchlist-SOL",
+              "selector": "[data-testid=\"perps-watchlist-SOL\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 0,
+                "y": 238,
+                "width": 534,
+                "height": 72
+              }
+            },
+            {
+              "role": "button",
+              "label": "Cardano 10x ADA · $149K Vol $0.21709 -0.69%",
+              "test_id": "perps-watchlist-ADA",
+              "selector": "[data-testid=\"perps-watchlist-ADA\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 0,
+                "y": 310,
+                "width": 534,
+                "height": 72
+              }
+            },
+            {
+              "role": "button",
+              "label": "Bitcoin 40x BTC · $1.55M Vol $78,581 -0.92%",
+              "test_id": "perps-watchlist-BTC",
+              "selector": "[data-testid=\"perps-watchlist-BTC\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 0,
+                "y": 382,
+                "width": 534,
+                "height": 72
+              }
+            },
+            {
+              "role": "button",
+              "label": "Ethereum 25x ETH · $1.19M Vol $2,489.7 +0.09%",
+              "test_id": "perps-watchlist-ETH",
+              "selector": "[data-testid=\"perps-watchlist-ETH\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 0,
+                "y": 454,
+                "width": 534,
+                "height": 72
+              }
+            },
+            {
+              "role": "button",
+              "label": "Home",
+              "test_id": "bottom-nav-home",
+              "selector": "[data-testid=\"bottom-nav-home\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 8,
+                "y": 539,
+                "width": 97,
+                "height": 50
+              }
+            },
+            {
+              "role": "button",
+              "label": "Perps",
+              "test_id": "bottom-nav-perps",
+              "selector": "[data-testid=\"bottom-nav-perps\"]",
+              "enabled": true,
+              "focused": true,
+              "bounds": {
+                "x": 113,
+                "y": 539,
+                "width": 97,
+                "height": 50
+              }
+            },
+            {
+              "role": "button",
+              "label": "Money",
+              "test_id": "bottom-nav-money",
+              "selector": "[data-testid=\"bottom-nav-money\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 218,
+                "y": 539,
+                "width": 97,
+                "height": 50
+              }
+            },
+            {
+              "role": "button",
+              "label": "Swap",
+              "test_id": "bottom-nav-swaps",
+              "selector": "[data-testid=\"bottom-nav-swaps\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 324,
+                "y": 539,
+                "width": 97,
+                "height": 50
+              }
+            },
+            {
+              "role": "button",
+              "label": "Activity",
+              "test_id": "bottom-nav-activity",
+              "selector": "[data-testid=\"bottom-nav-activity\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 429,
+                "y": 539,
+                "width": 97,
+                "height": 50
+              }
+            }
+          ],
+          "hidden_or_offscreen": [
+            {
+              "role": "button",
+              "label": "Top movers",
+              "test_id": "perps-top-movers-header",
+              "selector": "[data-testid=\"perps-top-movers-header\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 0,
+                "y": 542,
+                "width": 165,
+                "height": 40
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "Gainers",
+              "test_id": "perps-top-movers-gainers",
+              "selector": "[data-testid=\"perps-top-movers-gainers\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 21,
+                "y": 599,
+                "width": 244,
+                "height": 28
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "Losers",
+              "test_id": "perps-top-movers-losers",
+              "selector": "[data-testid=\"perps-top-movers-losers\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 269,
+                "y": 599,
+                "width": 244,
+                "height": 28
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "VVV +40.69%",
+              "test_id": "perps-top-movers-pill-VVV",
+              "selector": "[data-testid=\"perps-top-movers-pill-VVV\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 16,
+                "y": 644,
+                "width": 138,
+                "height": 36
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "ATOM +10.42%",
+              "test_id": "perps-top-movers-pill-ATOM",
+              "selector": "[data-testid=\"perps-top-movers-pill-ATOM\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 162,
+                "y": 644,
+                "width": 146,
+                "height": 36
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "PONS +9.12%",
+              "test_id": "perps-top-movers-pill-PONS",
+              "selector": "[data-testid=\"perps-top-movers-pill-PONS\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 315,
+                "y": 644,
+                "width": 135,
+                "height": 36
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "STABLE +8.83%",
+              "test_id": "perps-top-movers-pill-STABLE",
+              "selector": "[data-testid=\"perps-top-movers-pill-STABLE\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 458,
+                "y": 644,
+                "width": 151,
+                "height": 36
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "ETC +8.82%",
+              "test_id": "perps-top-movers-pill-ETC",
+              "selector": "[data-testid=\"perps-top-movers-pill-ETC\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 16,
+                "y": 692,
+                "width": 126,
+                "height": 36
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "XPL +7.42%",
+              "test_id": "perps-top-movers-pill-XPL",
+              "selector": "[data-testid=\"perps-top-movers-pill-XPL\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 150,
+                "y": 692,
+                "width": 124,
+                "height": 36
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "HYPE +6.07%",
+              "test_id": "perps-top-movers-pill-HYPE",
+              "selector": "[data-testid=\"perps-top-movers-pill-HYPE\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 282,
+                "y": 692,
+                "width": 134,
+                "height": 36
+              },
+              "reason": "offscreen"
+            }
+          ],
+          "truncated": true,
+          "limits": {
+            "items": 20,
+            "hidden_or_offscreen": 10
+          }
+        }
+      }
+    },
+    {
+      "nodeId": "ac5-rows",
+      "action": "ui.wait_for",
+      "intent": "Establish the rendered Bitcoin market row before reading live readiness",
+      "startedAt": "2026-09-09T03:48:27.957Z",
+      "endedAt": "2026-09-09T03:48:28.597Z",
+      "durationMs": 640,
+      "ok": true,
+      "next": "ac5-state",
+      "output": {
+        "matched": true,
+        "cdpPort": 7661,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps-home",
+        "runtimeLaunch": null,
+        "cdpTargetId": "B815F8EF04E341D7C2283FD8DD7FA47E",
+        "runtimeSessionId": "e2ccfa28-f662-47c4-b3f1-0a4ac162b015"
+      },
+      "observations": {
+        "ui.screen": {
+          "provider": "cdp-web",
+          "name": "macpro-mme-1 — MetaMask",
+          "title": "macpro-mme-1 — MetaMask",
+          "route": "#/perps-home",
+          "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
+        },
+        "ui.visible": {
+          "provider": "cdp-web",
+          "items": [
+            {
+              "role": "button",
+              "label": "Withdraw",
+              "test_id": "perps-balance-actions-withdraw",
+              "selector": "[data-testid=\"perps-balance-actions-withdraw\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 16,
+                "y": 118,
+                "width": 245,
+                "height": 48
+              }
+            },
+            {
+              "role": "button",
+              "label": "Add funds",
+              "test_id": "perps-balance-actions-add-funds",
+              "selector": "[data-testid=\"perps-balance-actions-add-funds\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 273,
+                "y": 118,
+                "width": 245,
+                "height": 48
+              }
+            },
+            {
+              "role": "button",
+              "label": "Watchlist",
+              "test_id": "perps-watchlist-header",
+              "selector": "[data-testid=\"perps-watchlist-header\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 0,
+                "y": 182,
+                "width": 534,
+                "height": 48
+              }
+            },
+            {
+              "role": "button",
+              "label": "Solana 10x SOL · $244K Vol $102.78 -0.05%",
+              "test_id": "perps-watchlist-SOL",
+              "selector": "[data-testid=\"perps-watchlist-SOL\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 0,
+                "y": 238,
+                "width": 534,
+                "height": 72
+              }
+            },
+            {
+              "role": "button",
+              "label": "Cardano 10x ADA · $149K Vol $0.21709 -0.69%",
+              "test_id": "perps-watchlist-ADA",
+              "selector": "[data-testid=\"perps-watchlist-ADA\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 0,
+                "y": 310,
+                "width": 534,
+                "height": 72
+              }
+            },
+            {
+              "role": "button",
+              "label": "Bitcoin 40x BTC · $1.55M Vol $78,581 -0.92%",
+              "test_id": "perps-watchlist-BTC",
+              "selector": "[data-testid=\"perps-watchlist-BTC\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 0,
+                "y": 382,
+                "width": 534,
+                "height": 72
+              }
+            },
+            {
+              "role": "button",
+              "label": "Ethereum 25x ETH · $1.19M Vol $2,489.7 +0.09%",
+              "test_id": "perps-watchlist-ETH",
+              "selector": "[data-testid=\"perps-watchlist-ETH\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 0,
+                "y": 454,
+                "width": 534,
+                "height": 72
+              }
+            },
+            {
+              "role": "button",
+              "label": "Home",
+              "test_id": "bottom-nav-home",
+              "selector": "[data-testid=\"bottom-nav-home\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 8,
+                "y": 539,
+                "width": 97,
+                "height": 50
+              }
+            },
+            {
+              "role": "button",
+              "label": "Perps",
+              "test_id": "bottom-nav-perps",
+              "selector": "[data-testid=\"bottom-nav-perps\"]",
+              "enabled": true,
+              "focused": true,
+              "bounds": {
+                "x": 113,
+                "y": 539,
+                "width": 97,
+                "height": 50
+              }
+            },
+            {
+              "role": "button",
+              "label": "Money",
+              "test_id": "bottom-nav-money",
+              "selector": "[data-testid=\"bottom-nav-money\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 218,
+                "y": 539,
+                "width": 97,
+                "height": 50
+              }
+            },
+            {
+              "role": "button",
+              "label": "Swap",
+              "test_id": "bottom-nav-swaps",
+              "selector": "[data-testid=\"bottom-nav-swaps\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 324,
+                "y": 539,
+                "width": 97,
+                "height": 50
+              }
+            },
+            {
+              "role": "button",
+              "label": "Activity",
+              "test_id": "bottom-nav-activity",
+              "selector": "[data-testid=\"bottom-nav-activity\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 429,
+                "y": 539,
+                "width": 97,
+                "height": 50
+              }
+            }
+          ],
+          "hidden_or_offscreen": [
+            {
+              "role": "button",
+              "label": "Top movers",
+              "test_id": "perps-top-movers-header",
+              "selector": "[data-testid=\"perps-top-movers-header\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 0,
+                "y": 542,
+                "width": 165,
+                "height": 40
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "Gainers",
+              "test_id": "perps-top-movers-gainers",
+              "selector": "[data-testid=\"perps-top-movers-gainers\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 21,
+                "y": 599,
+                "width": 244,
+                "height": 28
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "Losers",
+              "test_id": "perps-top-movers-losers",
+              "selector": "[data-testid=\"perps-top-movers-losers\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 269,
+                "y": 599,
+                "width": 244,
+                "height": 28
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "VVV +40.72%",
+              "test_id": "perps-top-movers-pill-VVV",
+              "selector": "[data-testid=\"perps-top-movers-pill-VVV\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 16,
+                "y": 644,
+                "width": 136,
+                "height": 36
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "ATOM +10.36%",
+              "test_id": "perps-top-movers-pill-ATOM",
+              "selector": "[data-testid=\"perps-top-movers-pill-ATOM\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 160,
+                "y": 644,
+                "width": 145,
+                "height": 36
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "ETC +8.83%",
+              "test_id": "perps-top-movers-pill-ETC",
+              "selector": "[data-testid=\"perps-top-movers-pill-ETC\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 313,
+                "y": 644,
+                "width": 126,
+                "height": 36
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "STABLE +8.83%",
+              "test_id": "perps-top-movers-pill-STABLE",
+              "selector": "[data-testid=\"perps-top-movers-pill-STABLE\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 448,
+                "y": 644,
+                "width": 151,
+                "height": 36
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "PONS +8.71%",
+              "test_id": "perps-top-movers-pill-PONS",
+              "selector": "[data-testid=\"perps-top-movers-pill-PONS\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 16,
+                "y": 692,
+                "width": 134,
+                "height": 36
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "XPL +7.46%",
+              "test_id": "perps-top-movers-pill-XPL",
+              "selector": "[data-testid=\"perps-top-movers-pill-XPL\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 158,
+                "y": 692,
+                "width": 123,
+                "height": 36
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "HYPE +6.07%",
+              "test_id": "perps-top-movers-pill-HYPE",
+              "selector": "[data-testid=\"perps-top-movers-pill-HYPE\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 290,
+                "y": 692,
+                "width": 134,
+                "height": 36
+              },
+              "reason": "offscreen"
+            }
+          ],
+          "truncated": true,
+          "limits": {
+            "items": 20,
+            "hidden_or_offscreen": 10
+          }
+        }
+      }
+    },
+    {
+      "nodeId": "ac5-state",
+      "action": "metamask.perps.read_visible_state",
+      "intent": "Assert market rows appear in the existing Perps view",
+      "startedAt": "2026-09-09T03:48:28.605Z",
+      "endedAt": "2026-09-09T03:48:28.716Z",
+      "durationMs": 111,
+      "ok": true,
+      "next": "ac4-cold-trace",
+      "output": {
+        "action": "metamask.perps.read_visible_state",
+        "source": "visible-ui",
+        "platform": "extension",
+        "surface": "home",
+        "favorite": null,
+        "route": "#/perps-home",
+        "title": "macpro-mme-1 — MetaMask",
+        "balance": {
+          "testId": "perps-balance-actions-available-value",
+          "label": "$629.38",
+          "enabled": true,
+          "visible": true
+        },
+        "markets": [
+          {
+            "market": "HEADER",
+            "testId": "perps-watchlist-header",
+            "label": "Watchlist",
+            "visible": true
+          },
+          {
+            "market": "SOL",
+            "testId": "perps-watchlist-SOL",
+            "label": "Solana 10x SOL · $244K Vol $102.78 -0.05%",
+            "visible": true
+          },
+          {
+            "market": "ADA",
+            "testId": "perps-watchlist-ADA",
+            "label": "Cardano 10x ADA · $149K Vol $0.21709 -0.69%",
+            "visible": true
+          },
+          {
+            "market": "BTC",
+            "testId": "perps-watchlist-BTC",
+            "label": "Bitcoin 40x BTC · $1.55M Vol $78,581 -0.92%",
+            "visible": true
+          },
+          {
+            "market": "ETH",
+            "testId": "perps-watchlist-ETH",
+            "label": "Ethereum 25x ETH · $1.19M Vol $2,489.7 +0.09%",
+            "visible": true
+          },
+          {
+            "market": "BTC",
+            "testId": "explore-markets-BTC",
+            "label": "Bitcoin 40x BTC · $1.55M Vol $78,581 -0.92%",
+            "visible": false
+          },
+          {
+            "market": "ETH",
+            "testId": "explore-markets-ETH",
+            "label": "Ethereum 25x ETH · $1.19M Vol $2,489.7 +0.09%",
+            "visible": false
+          },
+          {
+            "market": "SOL",
+            "testId": "explore-markets-SOL",
+            "label": "Solana 10x SOL · $244K Vol $102.78 -0.05%",
+            "visible": false
+          },
+          {
+            "market": "ADA",
+            "testId": "explore-markets-ADA",
+            "label": "Cardano 10x ADA · $149K Vol $0.21709 -0.69%",
+            "visible": false
+          },
+          {
+            "market": "ARB",
+            "testId": "explore-markets-ARB",
+            "label": "Arbitrum 10x ARB · $77K Vol $0.16599 -2.59%",
+            "visible": false
+          },
+          {
+            "market": "AVAX",
+            "testId": "explore-markets-AVAX",
+            "label": "Avalanche 10x AVAX · $73K Vol $7.9672 -1.41%",
+            "visible": false
+          },
+          {
+            "market": "DOGE",
+            "testId": "explore-markets-DOGE",
+            "label": "Dogecoin 10x DOGE · $35K Vol $0.089587 -0.38%",
+            "visible": false
+          },
+          {
+            "market": "WLD",
+            "testId": "explore-markets-WLD",
+            "label": "Worldcoin 10x WLD · $22K Vol $0.45373 -4.43%",
+            "visible": false
+          }
+        ],
+        "positions": [],
+        "orders": [],
+        "activity": [
+          {
+            "testId": "transaction-card-59606050637-1788854727598-0",
+            "label": "Closed long 0.0049 ETH -$0.02",
+            "enabled": true,
+            "visible": false
+          },
+          {
+            "testId": "transaction-card-59605965665-1788854643090-1",
+            "label": "Opened long 0.0049 ETH -$0.02",
+            "enabled": true,
+            "visible": false
+          },
+          {
+            "testId": "transaction-card-59602563956-1788850973813-2",
+            "label": "Closed short 0.0049 ETH -$0.03",
+            "enabled": true,
+            "visible": false
+          },
+          {
+            "testId": "transaction-card-59601637334-1788850023514-3",
+            "label": "Opened short 0.0049 ETH -$0.02",
+            "enabled": true,
+            "visible": false
+          },
+          {
+            "testId": "transaction-card-59601617300-1788850002077-4",
+            "label": "Closed long 0.0049 ETH -$0.01",
+            "enabled": true,
+            "visible": false
+          }
+        ],
+        "orderEntry": null,
+        "features": {
+          "activity": true,
+          "balance": true,
+          "chart": false,
+          "long-short": false,
+          "market-list": true,
+          "order-entry": false,
+          "price": false,
+          "price-change": false,
+          "stats": false
+        },
+        "controls": [
+          {
+            "testId": "perps-home-page",
+            "label": "Perps $629.38 $629.38 available Withdraw Add funds Watchlist Solana 10x SOL · $244K Vol $102.78 -0.05% Cardano 10x ADA · $149K Vol $0.21709 -0.69% Bitcoin 40x BTC · $1.55M Vol $78,581 -0.92% Ethereum 25x ETH · $1.19M Vol $2,489.7 +0.09% Top movers Gainers Losers VVV +40.72% ATOM +10.36% ETC +8.83% STABLE +8.83% PONS +8.71% XPL +7.46% HYPE +6.07% SKR +5.54% Explore markets Bitcoin 40x BTC · $1.55M Vol $78,581 -0.92% Ethereum 25x ETH · $1.19M Vol $2,489.7 +0.09% Solana 10x SOL · $244K Vol $102.78",
+            "enabled": true,
+            "visible": true
+          },
+          {
+            "testId": "perps-view-title",
+            "label": "Perps",
+            "enabled": true,
+            "visible": true
+          },
+          {
+            "testId": "perps-balance-actions",
+            "label": "$629.38 $629.38 available Withdraw Add funds",
+            "enabled": true,
+            "visible": true
+          },
+          {
+            "testId": "perps-balance-actions-total",
+            "label": "$629.38",
+            "enabled": true,
+            "visible": true
+          },
+          {
+            "testId": "perps-balance-actions-available",
+            "label": "$629.38 available",
+            "enabled": true,
+            "visible": true
+          },
+          {
+            "testId": "perps-balance-actions-available-value",
+            "label": "$629.38",
+            "enabled": true,
+            "visible": true
+          },
+          {
+            "testId": "perps-balance-actions-withdraw",
+            "label": "Withdraw",
+            "enabled": true,
+            "visible": true
+          },
+          {
+            "testId": "perps-balance-actions-add-funds",
+            "label": "Add funds",
+            "enabled": true,
+            "visible": true
+          },
+          {
+            "testId": "perps-watchlist",
+            "label": "Watchlist Solana 10x SOL · $244K Vol $102.78 -0.05% Cardano 10x ADA · $149K Vol $0.21709 -0.69% Bitcoin 40x BTC · $1.55M Vol $78,581 -0.92% Ethereum 25x ETH · $1.19M Vol $2,489.7 +0.09%",
+            "enabled": true,
+            "visible": true
+          },
+          {
+            "testId": "perps-token-logo-SOL",
+            "enabled": true,
+            "visible": false
+          },
+          {
+            "testId": "perps-token-logo-ADA",
+            "enabled": true,
+            "visible": false
+          },
+          {
+            "testId": "perps-token-logo-BTC",
+            "enabled": true,
+            "visible": false
+          },
+          {
+            "testId": "perps-token-logo-ETH",
+            "enabled": true,
+            "visible": false
+          },
+          {
+            "testId": "perps-top-movers",
+            "label": "Top movers Gainers Losers VVV +40.72% ATOM +10.36% ETC +8.83% STABLE +8.83% PONS +8.71% XPL +7.46% HYPE +6.07% SKR +5.54%",
+            "enabled": true,
+            "visible": true
+          },
+          {
+            "testId": "perps-top-movers-header",
+            "label": "Top movers",
+            "enabled": true,
+            "visible": true
+          },
+          {
+            "testId": "perps-top-movers-toggle",
+            "label": "Gainers Losers",
+            "enabled": true,
+            "visible": true
+          },
+          {
+            "testId": "perps-top-movers-gainers",
+            "label": "Gainers",
+            "enabled": true,
+            "visible": true
+          },
+          {
+            "testId": "perps-top-movers-losers",
+            "label": "Losers",
+            "enabled": true,
+            "visible": true
+          },
+          {
+            "testId": "perps-top-movers-list",
+            "label": "VVV +40.72% ATOM +10.36% ETC +8.83% STABLE +8.83% PONS +8.71% XPL +7.46% HYPE +6.07% SKR +5.54%",
+            "enabled": true,
+            "visible": true
+          },
+          {
+            "testId": "perps-top-movers-list-row-0",
+            "label": "VVV +40.72% ATOM +10.36% ETC +8.83% STABLE +8.83%",
+            "enabled": true,
+            "visible": true
+          },
+          {
+            "testId": "perps-top-movers-pill-VVV",
+            "label": "VVV +40.72%",
+            "enabled": true,
+            "visible": true
+          },
+          {
+            "testId": "perps-token-logo-VVV",
+            "enabled": true,
+            "visible": true
+          },
+          {
+            "testId": "perps-top-movers-pill-ATOM",
+            "label": "ATOM +10.36%",
+            "enabled": true,
+            "visible": true
+          },
+          {
+            "testId": "perps-token-logo-ATOM",
+            "enabled": true,
+            "visible": true
+          },
+          {
+            "testId": "perps-top-movers-pill-ETC",
+            "label": "ETC +8.83%",
+            "enabled": true,
+            "visible": true
+          },
+          {
+            "testId": "perps-token-logo-ETC",
+            "enabled": true,
+            "visible": true
+          },
+          {
+            "testId": "perps-top-movers-pill-STABLE",
+            "label": "STABLE +8.83%",
+            "enabled": true,
+            "visible": true
+          },
+          {
+            "testId": "perps-token-logo-STABLE",
+            "enabled": true,
+            "visible": true
+          },
+          {
+            "testId": "perps-top-movers-list-row-1",
+            "label": "PONS +8.71% XPL +7.46% HYPE +6.07% SKR +5.54%",
+            "enabled": true,
+            "visible": false
+          },
+          {
+            "testId": "perps-top-movers-pill-PONS",
+            "label": "PONS +8.71%",
+            "enabled": true,
+            "visible": false
+          },
+          {
+            "testId": "perps-token-logo-PONS",
+            "enabled": true,
+            "visible": false
+          },
+          {
+            "testId": "perps-top-movers-pill-XPL",
+            "label": "XPL +7.46%",
+            "enabled": true,
+            "visible": false
+          },
+          {
+            "testId": "perps-token-logo-XPL",
+            "enabled": true,
+            "visible": false
+          },
+          {
+            "testId": "perps-top-movers-pill-HYPE",
+            "label": "HYPE +6.07%",
+            "enabled": true,
+            "visible": false
+          },
+          {
+            "testId": "perps-token-logo-HYPE",
+            "enabled": true,
+            "visible": false
+          },
+          {
+            "testId": "perps-top-movers-pill-SKR",
+            "label": "SKR +5.54%",
+            "enabled": true,
+            "visible": false
+          },
+          {
+            "testId": "perps-token-logo-SKR",
+            "enabled": true,
+            "visible": false
+          },
+          {
+            "testId": "perps-explore-section",
+            "label": "Explore markets Bitcoin 40x BTC · $1.55M Vol $78,581 -0.92% Ethereum 25x ETH · $1.19M Vol $2,489.7 +0.09% Solana 10x SOL · $244K Vol $102.78 -0.05% Cardano 10x ADA · $149K Vol $0.21709 -0.69% Arbitrum 10x ARB · $77K Vol $0.16599 -2.59% Avalanche 10x AVAX · $73K Vol $7.9672 -1.41% Dogecoin 10x DOGE · $35K Vol $0.089587 -0.38% Worldcoin 10x WLD · $22K Vol $0.45373 -4.43%",
+            "enabled": true,
+            "visible": false
+          },
+          {
+            "testId": "perps-explore-markets-row",
+            "label": "Explore markets",
+            "enabled": true,
+            "visible": false
+          },
+          {
+            "testId": "perps-token-logo-ARB",
+            "enabled": true,
+            "visible": false
+          },
+          {
+            "testId": "perps-token-logo-AVAX",
+            "enabled": true,
+            "visible": false
+          },
+          {
+            "testId": "perps-token-logo-DOGE",
+            "enabled": true,
+            "visible": false
+          },
+          {
+            "testId": "perps-token-logo-WLD",
+            "enabled": true,
+            "visible": false
+          },
+          {
+            "testId": "perps-recent-activity",
+            "label": "Recent activity Closed long 0.0049 ETH -$0.02 Opened long 0.0049 ETH -$0.02 Closed short 0.0049 ETH -$0.03 Opened short 0.0049 ETH -$0.02 Closed long 0.0049 ETH -$0.01",
+            "enabled": true,
+            "visible": false
+          },
+          {
+            "testId": "perps-recent-activity-see-all",
+            "label": "Recent activity, See all",
+            "enabled": true,
+            "visible": false
+          },
+          {
+            "testId": "perps-contact-support",
+            "label": "Contact support",
+            "enabled": true,
+            "visible": false
+          },
+          {
+            "testId": "perps-give-feedback",
+            "label": "Give us feedback",
+            "enabled": true,
+            "visible": false
+          },
+          {
+            "testId": "perps-learn-basics",
+            "label": "Learn the basics of perps",
+            "enabled": true,
+            "visible": false
+          }
+        ],
+        "observedTestIds": [
+          "perps-home-page",
+          "perps-view-title",
+          "perps-balance-actions",
+          "perps-balance-actions-total",
+          "perps-balance-actions-available",
+          "perps-balance-actions-available-value",
+          "perps-balance-actions-withdraw",
+          "perps-balance-actions-add-funds",
+          "perps-watchlist",
+          "perps-watchlist-header",
+          "perps-watchlist-SOL",
+          "perps-token-logo-SOL",
+          "market-row-ticker-SOL",
+          "perps-watchlist-ADA",
+          "perps-token-logo-ADA",
+          "market-row-ticker-ADA",
+          "perps-watchlist-BTC",
+          "perps-token-logo-BTC",
+          "market-row-ticker-BTC",
+          "perps-watchlist-ETH",
+          "perps-token-logo-ETH",
+          "market-row-ticker-ETH",
+          "perps-top-movers",
+          "perps-top-movers-header",
+          "perps-top-movers-toggle",
+          "perps-top-movers-gainers",
+          "perps-top-movers-losers",
+          "perps-top-movers-list",
+          "perps-top-movers-list-row-0",
+          "perps-top-movers-pill-VVV",
+          "perps-token-logo-VVV",
+          "perps-top-movers-pill-ATOM",
+          "perps-token-logo-ATOM",
+          "perps-top-movers-pill-ETC",
+          "perps-token-logo-ETC",
+          "perps-top-movers-pill-STABLE",
+          "perps-token-logo-STABLE",
+          "bottom-nav-home",
+          "bottom-nav-perps",
+          "bottom-nav-money",
+          "bottom-nav-swaps",
+          "bottom-nav-activity",
+          "perps-top-movers-list-row-1",
+          "perps-top-movers-pill-PONS",
+          "perps-token-logo-PONS",
+          "perps-top-movers-pill-XPL",
+          "perps-token-logo-XPL",
+          "perps-top-movers-pill-HYPE",
+          "perps-token-logo-HYPE",
+          "perps-top-movers-pill-SKR",
+          "perps-token-logo-SKR",
+          "perps-explore-section",
+          "perps-explore-markets-row",
+          "explore-markets-BTC",
+          "explore-markets-ETH",
+          "explore-markets-SOL",
+          "explore-markets-ADA",
+          "explore-markets-ARB",
+          "perps-token-logo-ARB",
+          "market-row-ticker-ARB",
+          "explore-markets-AVAX",
+          "perps-token-logo-AVAX",
+          "market-row-ticker-AVAX",
+          "explore-markets-DOGE",
+          "perps-token-logo-DOGE",
+          "market-row-ticker-DOGE",
+          "explore-markets-WLD",
+          "perps-token-logo-WLD",
+          "market-row-ticker-WLD",
+          "perps-recent-activity",
+          "perps-recent-activity-see-all",
+          "transaction-card-59606050637-1788854727598-0",
+          "transaction-card-59605965665-1788854643090-1",
+          "transaction-card-59602563956-1788850973813-2",
+          "transaction-card-59601637334-1788850023514-3",
+          "transaction-card-59601617300-1788850002077-4",
+          "perps-contact-support",
+          "perps-give-feedback",
+          "perps-learn-basics"
+        ],
+        "truncated": false,
+        "layout": {
+          "viewportWidth": 534,
+          "viewportHeight": 657,
+          "contentWidth": 534,
+          "horizontalOverflow": false,
+          "clippedTestIds": [
+            "perps-top-movers-list-row-0",
+            "perps-top-movers-pill-STABLE"
+          ],
+          "obscuredControlTestIds": [
+            "perps-top-movers-header",
+            "perps-top-movers-gainers",
+            "perps-top-movers-losers",
+            "perps-top-movers-pill-VVV",
+            "perps-top-movers-pill-ATOM",
+            "perps-top-movers-pill-ETC",
+            "perps-top-movers-pill-STABLE"
+          ],
+          "overlappingControlPairs": []
+        },
+        "proofPath": "visible-dom-accessibility",
+        "cdpPort": 7661,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps-home",
+        "runtimeLaunch": null,
+        "cdpTargetId": "B815F8EF04E341D7C2283FD8DD7FA47E",
+        "runtimeSessionId": "e2ccfa28-f662-47c4-b3f1-0a4ac162b015",
+        "liveAdapter": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/actions/extension/perps/read_visible_state.mjs"
+      }
+    },
+    {
+      "nodeId": "ac4-cold-trace",
+      "action": "command",
+      "intent": "Assert the first successful live render ends the cold process entry span",
+      "startedAt": "2026-09-09T03:48:28.723Z",
+      "endedAt": "2026-09-09T03:48:28.792Z",
+      "durationMs": 69,
+      "ok": true,
+      "next": "ac5-screenshot",
+      "output": {
+        "exitCode": 0,
+        "stdout": "",
+        "stderr": "(node:63750) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///Users/deeeed/dev/metamask/metamask-extension-1/temp/tasks/feat/tat-3857-0908-110457/artifacts/proof.ts is not specified and it doesn't parse as CommonJS.\nReparsing as ES module because module syntax was detected. This incurs a performance overhead.\nTo eliminate this warning, add \"type\": \"module\" to /Users/deeeed/dev/metamask/metamask-extension-1/package.json.\n(Use `node --trace-warnings ...` to show where the warning was created)\n"
+      }
+    },
+    {
+      "nodeId": "ac5-screenshot",
+      "action": "ui.screenshot",
+      "intent": "Record the rendered market list after live readiness assertions",
+      "artifacts": [
+        {
+          "path": "screenshots/evidence-ac5-live-markets.png",
+          "type": "screenshot",
+          "nodeId": "ac5-screenshot",
+          "label": "UI screenshot",
+          "category": "evidence",
+          "mimeType": "image/png",
+          "metadata": {
+            "provider": "capture-helper",
+            "mode": "snapshot",
+            "pid": 60315,
+            "captureHelper": {
+              "bytes": 437345,
+              "output": "/Users/deeeed/dev/metamask/metamask-extension-1/temp/tasks/fix/46123-0909-112926/artifacts/recipe-run-final/screenshots/.mm-harness-extension-evidence-ktRHFi/captured.png",
+              "selected": {
+                "app": "Google Chrome for Testing",
+                "height": 800,
+                "id": 1817,
+                "layer": 0,
+                "onScreen": true,
+                "pid": 60315,
+                "title": "macpro-mme-1 — MetaMask",
+                "width": 534,
+                "x": 1266,
+                "y": 39
+              },
+              "selector": "pid",
+              "type": "snapshot"
+            }
+          }
+        }
+      ],
+      "startedAt": "2026-09-09T03:48:28.800Z",
+      "endedAt": "2026-09-09T03:48:29.018Z",
+      "durationMs": 218,
+      "ok": true,
+      "next": "ac4-home",
+      "output": {
+        "captured": true,
+        "path": "screenshots/evidence-ac5-live-markets.png",
+        "artifact": {
+          "path": "screenshots/evidence-ac5-live-markets.png",
+          "type": "screenshot",
+          "nodeId": "ac5-screenshot",
+          "label": "UI screenshot",
+          "category": "evidence",
+          "mimeType": "image/png",
+          "metadata": {
+            "provider": "capture-helper",
+            "mode": "snapshot",
+            "pid": 60315,
+            "captureHelper": {
+              "bytes": 437345,
+              "output": "/Users/deeeed/dev/metamask/metamask-extension-1/temp/tasks/fix/46123-0909-112926/artifacts/recipe-run-final/screenshots/.mm-harness-extension-evidence-ktRHFi/captured.png",
+              "selected": {
+                "app": "Google Chrome for Testing",
+                "height": 800,
+                "id": 1817,
+                "layer": 0,
+                "onScreen": true,
+                "pid": 60315,
+                "title": "macpro-mme-1 — MetaMask",
+                "width": 534,
+                "x": 1266,
+                "y": 39
+              },
+              "selector": "pid",
+              "type": "snapshot"
+            }
+          }
+        }
+      },
+      "observations": {
+        "ui.screen": {
+          "provider": "cdp-web",
+          "name": "macpro-mme-1 — MetaMask",
+          "title": "macpro-mme-1 — MetaMask",
+          "route": "#/perps-home",
+          "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
+        },
+        "ui.visible": {
+          "provider": "cdp-web",
+          "items": [
+            {
+              "role": "button",
+              "label": "Withdraw",
+              "test_id": "perps-balance-actions-withdraw",
+              "selector": "[data-testid=\"perps-balance-actions-withdraw\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 16,
+                "y": 118,
+                "width": 245,
+                "height": 48
+              }
+            },
+            {
+              "role": "button",
+              "label": "Add funds",
+              "test_id": "perps-balance-actions-add-funds",
+              "selector": "[data-testid=\"perps-balance-actions-add-funds\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 273,
+                "y": 118,
+                "width": 245,
+                "height": 48
+              }
+            },
+            {
+              "role": "button",
+              "label": "Watchlist",
+              "test_id": "perps-watchlist-header",
+              "selector": "[data-testid=\"perps-watchlist-header\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 0,
+                "y": 182,
+                "width": 534,
+                "height": 48
+              }
+            },
+            {
+              "role": "button",
+              "label": "Solana 10x SOL · $244K Vol $102.78 -0.05%",
+              "test_id": "perps-watchlist-SOL",
+              "selector": "[data-testid=\"perps-watchlist-SOL\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 0,
+                "y": 238,
+                "width": 534,
+                "height": 72
+              }
+            },
+            {
+              "role": "button",
+              "label": "Cardano 10x ADA · $149K Vol $0.21709 -0.69%",
+              "test_id": "perps-watchlist-ADA",
+              "selector": "[data-testid=\"perps-watchlist-ADA\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 0,
+                "y": 310,
+                "width": 534,
+                "height": 72
+              }
+            },
+            {
+              "role": "button",
+              "label": "Bitcoin 40x BTC · $1.55M Vol $78,581 -0.92%",
+              "test_id": "perps-watchlist-BTC",
+              "selector": "[data-testid=\"perps-watchlist-BTC\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 0,
+                "y": 382,
+                "width": 534,
+                "height": 72
+              }
+            },
+            {
+              "role": "button",
+              "label": "Ethereum 25x ETH · $1.19M Vol $2,489.7 +0.09%",
+              "test_id": "perps-watchlist-ETH",
+              "selector": "[data-testid=\"perps-watchlist-ETH\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 0,
+                "y": 454,
+                "width": 534,
+                "height": 72
+              }
+            },
+            {
+              "role": "button",
+              "label": "Home",
+              "test_id": "bottom-nav-home",
+              "selector": "[data-testid=\"bottom-nav-home\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 8,
+                "y": 539,
+                "width": 97,
+                "height": 50
+              }
+            },
+            {
+              "role": "button",
+              "label": "Perps",
+              "test_id": "bottom-nav-perps",
+              "selector": "[data-testid=\"bottom-nav-perps\"]",
+              "enabled": true,
+              "focused": true,
+              "bounds": {
+                "x": 113,
+                "y": 539,
+                "width": 97,
+                "height": 50
+              }
+            },
+            {
+              "role": "button",
+              "label": "Money",
+              "test_id": "bottom-nav-money",
+              "selector": "[data-testid=\"bottom-nav-money\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 218,
+                "y": 539,
+                "width": 97,
+                "height": 50
+              }
+            },
+            {
+              "role": "button",
+              "label": "Swap",
+              "test_id": "bottom-nav-swaps",
+              "selector": "[data-testid=\"bottom-nav-swaps\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 324,
+                "y": 539,
+                "width": 97,
+                "height": 50
+              }
+            },
+            {
+              "role": "button",
+              "label": "Activity",
+              "test_id": "bottom-nav-activity",
+              "selector": "[data-testid=\"bottom-nav-activity\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 429,
+                "y": 539,
+                "width": 97,
+                "height": 50
+              }
+            }
+          ],
+          "hidden_or_offscreen": [
+            {
+              "role": "button",
+              "label": "Top movers",
+              "test_id": "perps-top-movers-header",
+              "selector": "[data-testid=\"perps-top-movers-header\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 0,
+                "y": 542,
+                "width": 165,
+                "height": 40
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "Gainers",
+              "test_id": "perps-top-movers-gainers",
+              "selector": "[data-testid=\"perps-top-movers-gainers\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 21,
+                "y": 599,
+                "width": 244,
+                "height": 28
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "Losers",
+              "test_id": "perps-top-movers-losers",
+              "selector": "[data-testid=\"perps-top-movers-losers\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 269,
+                "y": 599,
+                "width": 244,
+                "height": 28
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "VVV +40.72%",
+              "test_id": "perps-top-movers-pill-VVV",
+              "selector": "[data-testid=\"perps-top-movers-pill-VVV\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 16,
+                "y": 644,
+                "width": 136,
+                "height": 36
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "ATOM +10.36%",
+              "test_id": "perps-top-movers-pill-ATOM",
+              "selector": "[data-testid=\"perps-top-movers-pill-ATOM\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 160,
+                "y": 644,
+                "width": 145,
+                "height": 36
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "ETC +8.83%",
+              "test_id": "perps-top-movers-pill-ETC",
+              "selector": "[data-testid=\"perps-top-movers-pill-ETC\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 313,
+                "y": 644,
+                "width": 126,
+                "height": 36
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "STABLE +8.83%",
+              "test_id": "perps-top-movers-pill-STABLE",
+              "selector": "[data-testid=\"perps-top-movers-pill-STABLE\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 448,
+                "y": 644,
+                "width": 151,
+                "height": 36
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "PONS +8.71%",
+              "test_id": "perps-top-movers-pill-PONS",
+              "selector": "[data-testid=\"perps-top-movers-pill-PONS\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 16,
+                "y": 692,
+                "width": 134,
+                "height": 36
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "XPL +7.46%",
+              "test_id": "perps-top-movers-pill-XPL",
+              "selector": "[data-testid=\"perps-top-movers-pill-XPL\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 158,
+                "y": 692,
+                "width": 123,
+                "height": 36
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "HYPE +6.07%",
+              "test_id": "perps-top-movers-pill-HYPE",
+              "selector": "[data-testid=\"perps-top-movers-pill-HYPE\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 290,
+                "y": 692,
+                "width": 134,
+                "height": 36
+              },
+              "reason": "offscreen"
+            }
+          ],
+          "truncated": true,
+          "limits": {
+            "items": 20,
+            "hidden_or_offscreen": 10
+          }
+        }
+      }
+    },
+    {
+      "nodeId": "ac4-home",
+      "action": "ui.navigate",
+      "intent": "Leave Perps before the warm revisit",
+      "startedAt": "2026-09-09T03:48:29.025Z",
+      "endedAt": "2026-09-09T03:48:29.390Z",
+      "durationMs": 365,
+      "ok": true,
+      "next": "ac4-warm-enter",
+      "output": {
+        "action": "ui.navigate",
+        "page": "home",
+        "method": "visible-ui",
+        "href": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/",
+        "steps": [
+          "[data-testid=\"bottom-nav-home\"]"
+        ],
+        "proofPath": "ui-navigation",
+        "cdpPort": 7661,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps-home",
+        "runtimeLaunch": null,
+        "cdpTargetId": "B815F8EF04E341D7C2283FD8DD7FA47E",
+        "runtimeSessionId": "e2ccfa28-f662-47c4-b3f1-0a4ac162b015",
+        "liveAdapter": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/actions/extension/ui/navigate.mjs"
+      },
+      "observations": {
+        "ui.screen": {
+          "provider": "cdp-web",
+          "name": "macpro-mme-1 — MetaMask",
+          "title": "macpro-mme-1 — MetaMask",
+          "route": "#/",
+          "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
+        },
+        "ui.visible": {
+          "provider": "cdp-web",
+          "items": [
+            {
+              "role": "button",
+              "label": "dev1",
+              "test_id": "account-menu-icon",
+              "selector": "[data-testid=\"account-menu-icon\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 8,
+                "y": -22,
+                "width": 74,
+                "height": 24
+              }
+            }
+          ],
+          "hidden_or_offscreen": [
+            {
+              "role": "button",
+              "test_id": "app-header-logo",
+              "selector": "[data-testid=\"app-header-logo\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "button",
+              "label": "Search tokens",
+              "test_id": "discover-search-button",
+              "selector": "[data-testid=\"discover-search-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 446,
+                "y": -12,
+                "width": 32,
+                "height": 32
+              },
+              "reason": "covered"
+            },
+            {
+              "role": "button",
+              "label": "Account options",
+              "test_id": "account-options-menu-button",
+              "selector": "[data-testid=\"account-options-menu-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 486,
+                "y": -12,
+                "width": 32,
+                "height": 32
+              },
+              "reason": "covered"
+            },
+            {
+              "role": "button",
+              "test_id": "drawer-close-button",
+              "selector": "[data-testid=\"drawer-close-button\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "button",
+              "test_id": "notifications-menu-item",
+              "selector": "[data-testid=\"notifications-menu-item\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "button",
+              "test_id": "discover",
+              "selector": "[data-testid=\"discover\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "link",
+              "test_id": "global-menu-contacts",
+              "selector": "[data-testid=\"global-menu-contacts\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "link",
+              "test_id": "global-menu-connected-sites",
+              "selector": "[data-testid=\"global-menu-connected-sites\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "link",
+              "test_id": "global-menu-networks",
+              "selector": "[data-testid=\"global-menu-networks\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "link",
+              "test_id": "global-menu-snaps",
+              "selector": "[data-testid=\"global-menu-snaps\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            }
+          ],
+          "truncated": true,
+          "limits": {
+            "items": 20,
+            "hidden_or_offscreen": 10
+          }
+        }
+      }
+    },
+    {
+      "nodeId": "ac4-warm-enter",
+      "action": "ui.navigate",
+      "intent": "Revisit Perps with the existing document and preloaded data",
+      "startedAt": "2026-09-09T03:48:29.400Z",
+      "endedAt": "2026-09-09T03:48:30.609Z",
+      "durationMs": 1209,
+      "ok": true,
+      "next": "ac4-warm-trace",
+      "output": {
+        "action": "ui.navigate",
+        "page": "perps",
+        "navigation": {
+          "activation": "trusted-pointer",
+          "interaction": {
+            "clicked": true,
+            "selector": "[data-testid=\"bottom-nav-perps\"]",
+            "tagName": "BUTTON"
+          }
+        },
+        "selector": "[data-testid=\"bottom-nav-perps\"]",
+        "method": "visible-ui",
+        "href": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps-home",
+        "steps": [
+          "[data-testid=\"bottom-nav-perps\"]"
+        ],
+        "proofPath": "ui-navigation",
+        "cdpPort": 7661,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/",
+        "runtimeLaunch": null,
+        "cdpTargetId": "B815F8EF04E341D7C2283FD8DD7FA47E",
+        "runtimeSessionId": "e2ccfa28-f662-47c4-b3f1-0a4ac162b015",
+        "liveAdapter": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/actions/extension/ui/navigate.mjs"
+      },
+      "observations": {
+        "ui.screen": {
+          "provider": "cdp-web",
+          "name": "macpro-mme-1 — MetaMask",
+          "title": "macpro-mme-1 — MetaMask",
+          "route": "#/perps-home",
+          "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
+        },
+        "ui.visible": {
+          "provider": "cdp-web",
+          "items": [
+            {
+              "role": "button",
+              "label": "Withdraw",
+              "test_id": "perps-balance-actions-withdraw",
+              "selector": "[data-testid=\"perps-balance-actions-withdraw\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 16,
+                "y": 118,
+                "width": 245,
+                "height": 48
+              }
+            },
+            {
+              "role": "button",
+              "label": "Add funds",
+              "test_id": "perps-balance-actions-add-funds",
+              "selector": "[data-testid=\"perps-balance-actions-add-funds\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 273,
+                "y": 118,
+                "width": 245,
+                "height": 48
+              }
+            },
+            {
+              "role": "button",
+              "label": "Watchlist",
+              "test_id": "perps-watchlist-header",
+              "selector": "[data-testid=\"perps-watchlist-header\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 0,
+                "y": 182,
+                "width": 534,
+                "height": 48
+              }
+            },
+            {
+              "role": "button",
+              "label": "Solana 10x SOL · $244K Vol $102.78 -0.05%",
+              "test_id": "perps-watchlist-SOL",
+              "selector": "[data-testid=\"perps-watchlist-SOL\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 0,
+                "y": 238,
+                "width": 534,
+                "height": 72
+              }
+            },
+            {
+              "role": "button",
+              "label": "Cardano 10x ADA · $149K Vol $0.21709 -0.69%",
+              "test_id": "perps-watchlist-ADA",
+              "selector": "[data-testid=\"perps-watchlist-ADA\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 0,
+                "y": 310,
+                "width": 534,
+                "height": 72
+              }
+            },
+            {
+              "role": "button",
+              "label": "Bitcoin 40x BTC · $1.55M Vol $78,581 -0.92%",
+              "test_id": "perps-watchlist-BTC",
+              "selector": "[data-testid=\"perps-watchlist-BTC\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 0,
+                "y": 382,
+                "width": 534,
+                "height": 72
+              }
+            },
+            {
+              "role": "button",
+              "label": "Ethereum 25x ETH · $1.19M Vol $2,489.7 +0.09%",
+              "test_id": "perps-watchlist-ETH",
+              "selector": "[data-testid=\"perps-watchlist-ETH\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 0,
+                "y": 454,
+                "width": 534,
+                "height": 72
+              }
+            },
+            {
+              "role": "button",
+              "label": "Home",
+              "test_id": "bottom-nav-home",
+              "selector": "[data-testid=\"bottom-nav-home\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 8,
+                "y": 539,
+                "width": 97,
+                "height": 50
+              }
+            },
+            {
+              "role": "button",
+              "label": "Perps",
+              "test_id": "bottom-nav-perps",
+              "selector": "[data-testid=\"bottom-nav-perps\"]",
+              "enabled": true,
+              "focused": true,
+              "bounds": {
+                "x": 113,
+                "y": 539,
+                "width": 97,
+                "height": 50
+              }
+            },
+            {
+              "role": "button",
+              "label": "Money",
+              "test_id": "bottom-nav-money",
+              "selector": "[data-testid=\"bottom-nav-money\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 218,
+                "y": 539,
+                "width": 97,
+                "height": 50
+              }
+            },
+            {
+              "role": "button",
+              "label": "Swap",
+              "test_id": "bottom-nav-swaps",
+              "selector": "[data-testid=\"bottom-nav-swaps\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 324,
+                "y": 539,
+                "width": 97,
+                "height": 50
+              }
+            },
+            {
+              "role": "button",
+              "label": "Activity",
+              "test_id": "bottom-nav-activity",
+              "selector": "[data-testid=\"bottom-nav-activity\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 429,
+                "y": 539,
+                "width": 97,
+                "height": 50
+              }
+            }
+          ],
+          "hidden_or_offscreen": [
+            {
+              "role": "button",
+              "label": "Top movers",
+              "test_id": "perps-top-movers-header",
+              "selector": "[data-testid=\"perps-top-movers-header\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 0,
+                "y": 542,
+                "width": 165,
+                "height": 40
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "Gainers",
+              "test_id": "perps-top-movers-gainers",
+              "selector": "[data-testid=\"perps-top-movers-gainers\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 21,
+                "y": 599,
+                "width": 244,
+                "height": 28
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "Losers",
+              "test_id": "perps-top-movers-losers",
+              "selector": "[data-testid=\"perps-top-movers-losers\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 269,
+                "y": 599,
+                "width": 244,
+                "height": 28
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "VVV +40.63%",
+              "test_id": "perps-top-movers-pill-VVV",
+              "selector": "[data-testid=\"perps-top-movers-pill-VVV\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 16,
+                "y": 644,
+                "width": 138,
+                "height": 36
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "ATOM +10.42%",
+              "test_id": "perps-top-movers-pill-ATOM",
+              "selector": "[data-testid=\"perps-top-movers-pill-ATOM\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 162,
+                "y": 644,
+                "width": 146,
+                "height": 36
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "PONS +9.13%",
+              "test_id": "perps-top-movers-pill-PONS",
+              "selector": "[data-testid=\"perps-top-movers-pill-PONS\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 316,
+                "y": 644,
+                "width": 135,
+                "height": 36
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "ETC +8.84%",
+              "test_id": "perps-top-movers-pill-ETC",
+              "selector": "[data-testid=\"perps-top-movers-pill-ETC\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 459,
+                "y": 644,
+                "width": 126,
+                "height": 36
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "STABLE +8.83%",
+              "test_id": "perps-top-movers-pill-STABLE",
+              "selector": "[data-testid=\"perps-top-movers-pill-STABLE\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 16,
+                "y": 692,
+                "width": 151,
+                "height": 36
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "XPL +7.42%",
+              "test_id": "perps-top-movers-pill-XPL",
+              "selector": "[data-testid=\"perps-top-movers-pill-XPL\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 175,
+                "y": 692,
+                "width": 124,
+                "height": 36
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "HYPE +6.07%",
+              "test_id": "perps-top-movers-pill-HYPE",
+              "selector": "[data-testid=\"perps-top-movers-pill-HYPE\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 306,
+                "y": 692,
+                "width": 134,
+                "height": 36
+              },
+              "reason": "offscreen"
+            }
+          ],
+          "truncated": true,
+          "limits": {
+            "items": 20,
+            "hidden_or_offscreen": 10
+          }
+        }
+      }
+    },
+    {
+      "nodeId": "ac4-warm-trace",
+      "action": "command",
+      "intent": "Assert a distinct warm entry span completes with live rows",
+      "startedAt": "2026-09-09T03:48:30.617Z",
+      "endedAt": "2026-09-09T03:48:30.710Z",
+      "durationMs": 93,
+      "ok": true,
+      "next": "ac4-resume-home",
+      "output": {
+        "exitCode": 0,
+        "stdout": "",
+        "stderr": "(node:63797) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///Users/deeeed/dev/metamask/metamask-extension-1/temp/tasks/feat/tat-3857-0908-110457/artifacts/proof.ts is not specified and it doesn't parse as CommonJS.\nReparsing as ES module because module syntax was detected. This incurs a performance overhead.\nTo eliminate this warning, add \"type\": \"module\" to /Users/deeeed/dev/metamask/metamask-extension-1/package.json.\n(Use `node --trace-warnings ...` to show where the warning was created)\n"
+      }
+    },
+    {
+      "nodeId": "ac4-resume-home",
+      "action": "ui.navigate",
+      "intent": "Return to wallet home before exercising background resume",
+      "startedAt": "2026-09-09T03:48:30.719Z",
+      "endedAt": "2026-09-09T03:48:31.088Z",
+      "durationMs": 369,
+      "ok": true,
+      "next": "ac4-resume",
+      "output": {
+        "action": "ui.navigate",
+        "page": "home",
+        "method": "visible-ui",
+        "href": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/",
+        "steps": [
+          "[data-testid=\"bottom-nav-home\"]"
+        ],
+        "proofPath": "ui-navigation",
+        "cdpPort": 7661,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps-home",
+        "runtimeLaunch": null,
+        "cdpTargetId": "B815F8EF04E341D7C2283FD8DD7FA47E",
+        "runtimeSessionId": "e2ccfa28-f662-47c4-b3f1-0a4ac162b015",
+        "liveAdapter": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/actions/extension/ui/navigate.mjs"
+      },
+      "observations": {
+        "ui.screen": {
+          "provider": "cdp-web",
+          "name": "macpro-mme-1 — MetaMask",
+          "title": "macpro-mme-1 — MetaMask",
+          "route": "#/",
+          "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
+        },
+        "ui.visible": {
+          "provider": "cdp-web",
+          "items": [
+            {
+              "role": "button",
+              "label": "dev1",
+              "test_id": "account-menu-icon",
+              "selector": "[data-testid=\"account-menu-icon\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 8,
+                "y": -22,
+                "width": 74,
+                "height": 24
+              }
+            }
+          ],
+          "hidden_or_offscreen": [
+            {
+              "role": "button",
+              "test_id": "app-header-logo",
+              "selector": "[data-testid=\"app-header-logo\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "button",
+              "label": "Search tokens",
+              "test_id": "discover-search-button",
+              "selector": "[data-testid=\"discover-search-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 446,
+                "y": -12,
+                "width": 32,
+                "height": 32
+              },
+              "reason": "covered"
+            },
+            {
+              "role": "button",
+              "label": "Account options",
+              "test_id": "account-options-menu-button",
+              "selector": "[data-testid=\"account-options-menu-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 486,
+                "y": -12,
+                "width": 32,
+                "height": 32
+              },
+              "reason": "covered"
+            },
+            {
+              "role": "button",
+              "test_id": "drawer-close-button",
+              "selector": "[data-testid=\"drawer-close-button\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "button",
+              "test_id": "notifications-menu-item",
+              "selector": "[data-testid=\"notifications-menu-item\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "button",
+              "test_id": "discover",
+              "selector": "[data-testid=\"discover\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "link",
+              "test_id": "global-menu-contacts",
+              "selector": "[data-testid=\"global-menu-contacts\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "link",
+              "test_id": "global-menu-connected-sites",
+              "selector": "[data-testid=\"global-menu-connected-sites\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "link",
+              "test_id": "global-menu-networks",
+              "selector": "[data-testid=\"global-menu-networks\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "link",
+              "test_id": "global-menu-snaps",
+              "selector": "[data-testid=\"global-menu-snaps\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            }
+          ],
+          "truncated": true,
+          "limits": {
+            "items": 20,
+            "hidden_or_offscreen": 10
+          }
+        }
+      }
+    },
+    {
+      "nodeId": "ac4-resume",
+      "action": "command",
+      "intent": "Hide and restore this extension page using a temporary browser tab",
+      "startedAt": "2026-09-09T03:48:31.098Z",
+      "endedAt": "2026-09-09T03:48:31.275Z",
+      "durationMs": 177,
+      "ok": true,
+      "next": "ac4-resume-enter",
+      "output": {
+        "exitCode": 0,
+        "stdout": "",
+        "stderr": "(node:63800) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///Users/deeeed/dev/metamask/metamask-extension-1/temp/tasks/feat/tat-3857-0908-110457/artifacts/proof.ts is not specified and it doesn't parse as CommonJS.\nReparsing as ES module because module syntax was detected. This incurs a performance overhead.\nTo eliminate this warning, add \"type\": \"module\" to /Users/deeeed/dev/metamask/metamask-extension-1/package.json.\n(Use `node --trace-warnings ...` to show where the warning was created)\n"
+      }
+    },
+    {
+      "nodeId": "ac4-resume-enter",
+      "action": "ui.navigate",
+      "intent": "Enter Perps after returning from a hidden document",
+      "startedAt": "2026-09-09T03:48:31.281Z",
+      "endedAt": "2026-09-09T03:48:32.477Z",
+      "durationMs": 1196,
+      "ok": true,
+      "next": "ac4-resume-trace",
+      "output": {
+        "action": "ui.navigate",
+        "page": "perps",
+        "navigation": {
+          "activation": "trusted-pointer",
+          "interaction": {
+            "clicked": true,
+            "selector": "[data-testid=\"bottom-nav-perps\"]",
+            "tagName": "BUTTON"
+          }
+        },
+        "selector": "[data-testid=\"bottom-nav-perps\"]",
+        "method": "visible-ui",
+        "href": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps-home",
+        "steps": [
+          "[data-testid=\"bottom-nav-perps\"]"
+        ],
+        "proofPath": "ui-navigation",
+        "cdpPort": 7661,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/",
+        "runtimeLaunch": null,
+        "cdpTargetId": "B815F8EF04E341D7C2283FD8DD7FA47E",
+        "runtimeSessionId": "e2ccfa28-f662-47c4-b3f1-0a4ac162b015",
+        "liveAdapter": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/actions/extension/ui/navigate.mjs"
+      },
+      "observations": {
+        "ui.screen": {
+          "provider": "cdp-web",
+          "name": "macpro-mme-1 — MetaMask",
+          "title": "macpro-mme-1 — MetaMask",
+          "route": "#/perps-home",
+          "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
+        },
+        "ui.visible": {
+          "provider": "cdp-web",
+          "items": [
+            {
+              "role": "button",
+              "label": "Withdraw",
+              "test_id": "perps-balance-actions-withdraw",
+              "selector": "[data-testid=\"perps-balance-actions-withdraw\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 16,
+                "y": 118,
+                "width": 245,
+                "height": 48
+              }
+            },
+            {
+              "role": "button",
+              "label": "Add funds",
+              "test_id": "perps-balance-actions-add-funds",
+              "selector": "[data-testid=\"perps-balance-actions-add-funds\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 273,
+                "y": 118,
+                "width": 245,
+                "height": 48
+              }
+            },
+            {
+              "role": "button",
+              "label": "Watchlist",
+              "test_id": "perps-watchlist-header",
+              "selector": "[data-testid=\"perps-watchlist-header\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 0,
+                "y": 182,
+                "width": 534,
+                "height": 48
+              }
+            },
+            {
+              "role": "button",
+              "label": "Solana 10x SOL · $244K Vol $102.78 -0.05%",
+              "test_id": "perps-watchlist-SOL",
+              "selector": "[data-testid=\"perps-watchlist-SOL\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 0,
+                "y": 238,
+                "width": 534,
+                "height": 72
+              }
+            },
+            {
+              "role": "button",
+              "label": "Cardano 10x ADA · $149K Vol $0.21709 -0.69%",
+              "test_id": "perps-watchlist-ADA",
+              "selector": "[data-testid=\"perps-watchlist-ADA\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 0,
+                "y": 310,
+                "width": 534,
+                "height": 72
+              }
+            },
+            {
+              "role": "button",
+              "label": "Bitcoin 40x BTC · $1.55M Vol $78,581 -0.92%",
+              "test_id": "perps-watchlist-BTC",
+              "selector": "[data-testid=\"perps-watchlist-BTC\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 0,
+                "y": 382,
+                "width": 534,
+                "height": 72
+              }
+            },
+            {
+              "role": "button",
+              "label": "Ethereum 25x ETH · $1.19M Vol $2,489.7 +0.09%",
+              "test_id": "perps-watchlist-ETH",
+              "selector": "[data-testid=\"perps-watchlist-ETH\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 0,
+                "y": 454,
+                "width": 534,
+                "height": 72
+              }
+            },
+            {
+              "role": "button",
+              "label": "Home",
+              "test_id": "bottom-nav-home",
+              "selector": "[data-testid=\"bottom-nav-home\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 8,
+                "y": 539,
+                "width": 97,
+                "height": 50
+              }
+            },
+            {
+              "role": "button",
+              "label": "Perps",
+              "test_id": "bottom-nav-perps",
+              "selector": "[data-testid=\"bottom-nav-perps\"]",
+              "enabled": true,
+              "focused": true,
+              "bounds": {
+                "x": 113,
+                "y": 539,
+                "width": 97,
+                "height": 50
+              }
+            },
+            {
+              "role": "button",
+              "label": "Money",
+              "test_id": "bottom-nav-money",
+              "selector": "[data-testid=\"bottom-nav-money\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 218,
+                "y": 539,
+                "width": 97,
+                "height": 50
+              }
+            },
+            {
+              "role": "button",
+              "label": "Swap",
+              "test_id": "bottom-nav-swaps",
+              "selector": "[data-testid=\"bottom-nav-swaps\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 324,
+                "y": 539,
+                "width": 97,
+                "height": 50
+              }
+            },
+            {
+              "role": "button",
+              "label": "Activity",
+              "test_id": "bottom-nav-activity",
+              "selector": "[data-testid=\"bottom-nav-activity\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 429,
+                "y": 539,
+                "width": 97,
+                "height": 50
+              }
+            }
+          ],
+          "hidden_or_offscreen": [
+            {
+              "role": "button",
+              "label": "Top movers",
+              "test_id": "perps-top-movers-header",
+              "selector": "[data-testid=\"perps-top-movers-header\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 0,
+                "y": 542,
+                "width": 165,
+                "height": 40
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "Gainers",
+              "test_id": "perps-top-movers-gainers",
+              "selector": "[data-testid=\"perps-top-movers-gainers\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 21,
+                "y": 599,
+                "width": 244,
+                "height": 28
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "Losers",
+              "test_id": "perps-top-movers-losers",
+              "selector": "[data-testid=\"perps-top-movers-losers\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 269,
+                "y": 599,
+                "width": 244,
+                "height": 28
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "VVV +40.67%",
+              "test_id": "perps-top-movers-pill-VVV",
+              "selector": "[data-testid=\"perps-top-movers-pill-VVV\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 16,
+                "y": 644,
+                "width": 136,
+                "height": 36
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "ATOM +10.42%",
+              "test_id": "perps-top-movers-pill-ATOM",
+              "selector": "[data-testid=\"perps-top-movers-pill-ATOM\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 160,
+                "y": 644,
+                "width": 146,
+                "height": 36
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "PONS +9.11%",
+              "test_id": "perps-top-movers-pill-PONS",
+              "selector": "[data-testid=\"perps-top-movers-pill-PONS\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 314,
+                "y": 644,
+                "width": 131,
+                "height": 36
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "ETC +8.84%",
+              "test_id": "perps-top-movers-pill-ETC",
+              "selector": "[data-testid=\"perps-top-movers-pill-ETC\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 454,
+                "y": 644,
+                "width": 126,
+                "height": 36
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "STABLE +8.83%",
+              "test_id": "perps-top-movers-pill-STABLE",
+              "selector": "[data-testid=\"perps-top-movers-pill-STABLE\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 16,
+                "y": 692,
+                "width": 151,
+                "height": 36
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "XPL +7.42%",
+              "test_id": "perps-top-movers-pill-XPL",
+              "selector": "[data-testid=\"perps-top-movers-pill-XPL\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 175,
+                "y": 692,
+                "width": 124,
+                "height": 36
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "HYPE +6.07%",
+              "test_id": "perps-top-movers-pill-HYPE",
+              "selector": "[data-testid=\"perps-top-movers-pill-HYPE\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 306,
+                "y": 692,
+                "width": 134,
+                "height": 36
+              },
+              "reason": "offscreen"
+            }
+          ],
+          "truncated": true,
+          "limits": {
+            "items": 20,
+            "hidden_or_offscreen": 10
+          }
+        }
+      }
+    },
+    {
+      "nodeId": "ac4-resume-trace",
+      "action": "command",
+      "intent": "Assert Mobile-compatible background resume context on live entry",
+      "startedAt": "2026-09-09T03:48:32.487Z",
+      "endedAt": "2026-09-09T03:48:32.574Z",
+      "durationMs": 87,
+      "ok": true,
+      "next": "ac3-browser-enter",
+      "output": {
+        "exitCode": 0,
+        "stdout": "",
+        "stderr": "(node:63815) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///Users/deeeed/dev/metamask/metamask-extension-1/temp/tasks/feat/tat-3857-0908-110457/artifacts/proof.ts is not specified and it doesn't parse as CommonJS.\nReparsing as ES module because module syntax was detected. This incurs a performance overhead.\nTo eliminate this warning, add \"type\": \"module\" to /Users/deeeed/dev/metamask/metamask-extension-1/package.json.\n(Use `node --trace-warnings ...` to show where the warning was created)\n"
+      }
+    },
+    {
+      "nodeId": "ac3-browser-enter",
+      "action": "ui.navigate",
+      "intent": "Open the market browser to verify its separate Mobile screen trace",
+      "startedAt": "2026-09-09T03:48:32.583Z",
+      "endedAt": "2026-09-09T03:48:33.803Z",
+      "durationMs": 1220,
+      "ok": true,
+      "next": "ac3-browser-trace",
+      "output": {
+        "action": "ui.navigate",
+        "page": "perps-market-list",
+        "navigation": {
+          "activation": "trusted-pointer",
+          "interaction": {
+            "clicked": true,
+            "selector": "[data-testid=\"perps-explore-markets-row\"]",
+            "tagName": "BUTTON"
+          }
+        },
+        "method": "visible-ui",
+        "href": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/market-list",
+        "selector": "[data-testid=\"perps-explore-markets-row\"]",
+        "steps": [
+          "[data-testid=\"perps-explore-markets-row\"]"
+        ],
+        "proofPath": "ui-navigation",
+        "cdpPort": 7661,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps-home",
+        "runtimeLaunch": null,
+        "cdpTargetId": "B815F8EF04E341D7C2283FD8DD7FA47E",
+        "runtimeSessionId": "e2ccfa28-f662-47c4-b3f1-0a4ac162b015",
+        "liveAdapter": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/actions/extension/ui/navigate.mjs"
+      },
+      "observations": {
+        "ui.screen": {
+          "provider": "cdp-web",
+          "name": "macpro-mme-1 — MetaMask",
+          "title": "macpro-mme-1 — MetaMask",
+          "route": "#/perps/market-list",
+          "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
+        },
+        "ui.visible": {
+          "provider": "cdp-web",
+          "items": [
+            {
+              "role": "button",
+              "label": "Back",
+              "test_id": "back-button",
+              "selector": "[data-testid=\"back-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 16,
+                "y": 12,
+                "width": 28,
+                "height": 28
+              }
+            },
+            {
+              "label": "Search markets",
+              "test_id": "search-input",
+              "selector": "[data-testid=\"search-input\"]",
+              "enabled": true,
+              "focused": true,
+              "bounds": {
+                "x": 53,
+                "y": 66,
+                "width": 464,
+                "height": 38
+              }
+            },
+            {
+              "role": "button",
+              "label": "All",
+              "test_id": "filter-select-button",
+              "selector": "[data-testid=\"filter-select-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 16,
+                "y": 130,
+                "width": 56,
+                "height": 32
+              }
+            },
+            {
+              "role": "button",
+              "label": "Volume",
+              "test_id": "sort-dropdown-button",
+              "selector": "[data-testid=\"sort-dropdown-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 84,
+                "y": 130,
+                "width": 88,
+                "height": 32
+              }
+            },
+            {
+              "role": "button",
+              "label": "Bitcoin 40x BTC · $1.55M Vol $78,581 -0.92%",
+              "test_id": "market-row-BTC",
+              "selector": "[data-testid=\"market-row-BTC\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 0,
+                "y": 175,
+                "width": 534,
+                "height": 72
+              }
+            },
+            {
+              "role": "button",
+              "label": "Ethereum 25x ETH · $1.19M Vol $2,489.7 +0.09%",
+              "test_id": "market-row-ETH",
+              "selector": "[data-testid=\"market-row-ETH\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 0,
+                "y": 247,
+                "width": 534,
+                "height": 72
+              }
+            },
+            {
+              "role": "button",
+              "label": "Solana 10x SOL · $244K Vol $102.78 -0.05%",
+              "test_id": "market-row-SOL",
+              "selector": "[data-testid=\"market-row-SOL\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 0,
+                "y": 319,
+                "width": 534,
+                "height": 72
+              }
+            },
+            {
+              "role": "button",
+              "label": "Cardano 10x ADA · $149K Vol $0.21709 -0.69%",
+              "test_id": "market-row-ADA",
+              "selector": "[data-testid=\"market-row-ADA\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 0,
+                "y": 391,
+                "width": 534,
+                "height": 72
+              }
+            },
+            {
+              "role": "button",
+              "label": "Arbitrum 10x ARB · $77K Vol $0.16599 -2.59%",
+              "test_id": "market-row-ARB",
+              "selector": "[data-testid=\"market-row-ARB\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 0,
+                "y": 463,
+                "width": 534,
+                "height": 72
+              }
+            },
+            {
+              "role": "button",
+              "label": "Avalanche 10x AVAX · $73K Vol $7.9668 -1.41%",
+              "test_id": "market-row-AVAX",
+              "selector": "[data-testid=\"market-row-AVAX\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 0,
+                "y": 535,
+                "width": 534,
+                "height": 72
+              }
+            }
+          ],
+          "hidden_or_offscreen": [
+            {
+              "role": "button",
+              "label": "Dogecoin 10x DOGE · $35K Vol $0.089579 -0.39%",
+              "test_id": "market-row-DOGE",
+              "selector": "[data-testid=\"market-row-DOGE\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 0,
+                "y": 607,
+                "width": 534,
+                "height": 72
+              },
+              "reason": "covered"
+            },
+            {
+              "role": "button",
+              "label": "Worldcoin 10x WLD · $22K Vol $0.45373 -4.43%",
+              "test_id": "market-row-WLD",
+              "selector": "[data-testid=\"market-row-WLD\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 0,
+                "y": 679,
+                "width": 534,
+                "height": 72
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "Sui 10x SUI · $22K Vol $0.80964 -1.88%",
+              "test_id": "market-row-SUI",
+              "selector": "[data-testid=\"market-row-SUI\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 0,
+                "y": 751,
+                "width": 534,
+                "height": 72
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "Injective 10x INJ · $20K Vol $6.3079 -2.91%",
+              "test_id": "market-row-INJ",
+              "selector": "[data-testid=\"market-row-INJ\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 0,
+                "y": 823,
+                "width": 534,
+                "height": 72
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "Venice Finance 3x VVV · $19K Vol $25.122 +40.73%",
+              "test_id": "market-row-VVV",
+              "selector": "[data-testid=\"market-row-VVV\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 0,
+                "y": 895,
+                "width": 534,
+                "height": 72
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "Aave 10x AAVE · $18K Vol $128.31 -2.05%",
+              "test_id": "market-row-AAVE",
+              "selector": "[data-testid=\"market-row-AAVE\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 0,
+                "y": 967,
+                "width": 534,
+                "height": 72
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "Ondo Finance 10x ONDO · $16K Vol $0.37045 -2.55%",
+              "test_id": "market-row-ONDO",
+              "selector": "[data-testid=\"market-row-ONDO\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 0,
+                "y": 1039,
+                "width": 534,
+                "height": 72
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "BNB Chain 10x BNB · $13K Vol $759.03 +0.33%",
+              "test_id": "market-row-BNB",
+              "selector": "[data-testid=\"market-row-BNB\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 0,
+                "y": 1111,
+                "width": 534,
+                "height": 72
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "Gold 25x GOLD · $12K Vol $4,369.4 -4.82%",
+              "test_id": "market-row-xyz-GOLD",
+              "selector": "[data-testid=\"market-row-xyz-GOLD\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 0,
+                "y": 1183,
+                "width": 534,
+                "height": 72
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "Bittensor 10x TAO · $11K Vol $255.09 -0.21%",
+              "test_id": "market-row-TAO",
+              "selector": "[data-testid=\"market-row-TAO\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 0,
+                "y": 1255,
+                "width": 534,
+                "height": 72
+              },
+              "reason": "offscreen"
+            }
+          ],
+          "truncated": true,
+          "limits": {
+            "items": 20,
+            "hidden_or_offscreen": 10
+          }
+        }
+      }
+    },
+    {
+      "nodeId": "ac3-browser-trace",
+      "action": "command",
+      "intent": "Assert Perps Market List View ends with live rendered markets without conflating the Home CUF",
+      "startedAt": "2026-09-09T03:48:33.814Z",
+      "endedAt": "2026-09-09T03:48:33.902Z",
+      "durationMs": 88,
+      "ok": true,
+      "next": "ac6-regression",
+      "output": {
+        "exitCode": 0,
+        "stdout": "",
+        "stderr": "(node:63850) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///Users/deeeed/dev/metamask/metamask-extension-1/temp/tasks/feat/tat-3857-0908-110457/artifacts/proof.ts is not specified and it doesn't parse as CommonJS.\nReparsing as ES module because module syntax was detected. This incurs a performance overhead.\nTo eliminate this warning, add \"type\": \"module\" to /Users/deeeed/dev/metamask/metamask-extension-1/package.json.\n(Use `node --trace-warnings ...` to show where the warning was created)\n"
+      }
+    },
+    {
+      "nodeId": "ac6-regression",
+      "action": "command",
+      "intent": "Verify the existing account overview Perps tab trace definition and callers are preserved",
+      "startedAt": "2026-09-09T03:48:33.908Z",
+      "endedAt": "2026-09-09T03:48:34.015Z",
+      "durationMs": 107,
+      "ok": true,
+      "next": "teardown-observer",
+      "output": {
+        "exitCode": 0,
+        "stdout": "",
+        "stderr": "(node:63851) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///Users/deeeed/dev/metamask/metamask-extension-1/temp/tasks/feat/tat-3857-0908-110457/artifacts/proof.ts is not specified and it doesn't parse as CommonJS.\nReparsing as ES module because module syntax was detected. This incurs a performance overhead.\nTo eliminate this warning, add \"type\": \"module\" to /Users/deeeed/dev/metamask/metamask-extension-1/package.json.\n(Use `node --trace-warnings ...` to show where the warning was created)\n"
+      }
+    },
+    {
+      "nodeId": "teardown-observer",
+      "action": "command",
+      "intent": "Release task-owned debugger and network observers",
+      "startedAt": "2026-09-09T03:48:34.025Z",
+      "endedAt": "2026-09-09T03:48:34.093Z",
+      "durationMs": 68,
+      "ok": true,
+      "next": "teardown-done",
+      "output": {
+        "exitCode": 0,
+        "stdout": "",
+        "stderr": "(node:63864) [MODULE_TYPELESS_PACKAGE_JSON] Warning: Module type of file:///Users/deeeed/dev/metamask/metamask-extension-1/temp/tasks/feat/tat-3857-0908-110457/artifacts/proof.ts is not specified and it doesn't parse as CommonJS.\nReparsing as ES module because module syntax was detected. This incurs a performance overhead.\nTo eliminate this warning, add \"type\": \"module\" to /Users/deeeed/dev/metamask/metamask-extension-1/package.json.\n(Use `node --trace-warnings ...` to show where the warning was created)\n"
+      }
+    },
+    {
+      "nodeId": "teardown-done",
+      "action": "end",
+      "startedAt": "2026-09-09T03:48:34.100Z",
+      "endedAt": "2026-09-09T03:48:34.100Z",
+      "durationMs": 0,
+      "ok": true,
+      "status": "pass"
+    }
+  ]
+}

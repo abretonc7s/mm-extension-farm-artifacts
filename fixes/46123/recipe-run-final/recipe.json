@@ -1,0 +1,173 @@
+{
+  "$schema": "https://farmslot.io/schemas/recipe-v1.schema.json",
+  "title": "TAT-3857 unlock preload and Mobile lifecycle tracing",
+  "workflow": {
+    "entry": "setup-unlock",
+    "nodes": {
+      "setup-unlock": {
+        "action": "metamask.wallet.ensure_unlocked",
+        "intent": "Open the preserved wallet for the preload journey",
+        "next": "setup-home"
+      },
+      "setup-home": {
+        "action": "ui.navigate",
+        "page": "home",
+        "intent": "Establish wallet home before a fresh unlock",
+        "next": "setup-lock"
+      },
+      "setup-lock": {
+        "action": "metamask.wallet.lock",
+        "intent": "End the previous unlocked Perps connection through the wallet lock action",
+        "next": "setup-cache-expiry"
+      },
+      "setup-observer": {
+        "action": "command",
+        "cmd": "node temp/tasks/feat/tat-3857-0908-110457/artifacts/proof.ts start",
+        "intent": "Observe real shared trace calls and WebSocket subscriptions in this slot",
+        "next": "ac1-unlock"
+      },
+      "setup-reload": {
+        "action": "command",
+        "cmd": "node temp/tasks/feat/tat-3857-0908-110457/artifacts/proof.ts reload",
+        "intent": "Create a fresh UI document while retaining the locked wallet and tracing observer",
+        "next": "setup-observer"
+      },
+      "ac1-unlock": {
+        "action": "metamask.wallet.ensure_unlocked",
+        "intent": "Trigger proactive Perps preload from wallet unlock without entering Perps",
+        "next": "ac1-preload"
+      },
+      "ac1-preload": {
+        "action": "command",
+        "cmd": "node temp/tasks/feat/tat-3857-0908-110457/artifacts/proof.ts preload",
+        "timeout_ms": 60000,
+        "intent": "Assert live markets account and prices are ready on wallet home with a successful connection trace",
+        "next": "ac2-lazy"
+      },
+      "ac2-lazy": {
+        "action": "command",
+        "cmd": "node temp/tasks/feat/tat-3857-0908-110457/artifacts/proof.ts lazy",
+        "intent": "Assert the Perps layout has not loaded before navigation and remains declared with mmLazy",
+        "next": "ac3-shared"
+      },
+      "ac3-shared": {
+        "action": "command",
+        "cmd": "node temp/tasks/feat/tat-3857-0908-110457/artifacts/proof.ts shared",
+        "intent": "Assert connection market and user preload spans reach both shared trace functions",
+        "next": "ac4-cold-enter"
+      },
+      "ac4-cold-enter": {
+        "action": "ui.navigate",
+        "page": "perps",
+        "intent": "Enter Perps for the first time in the document lifecycle",
+        "next": "ac5-rows"
+      },
+      "ac5-rows": {
+        "action": "ui.wait_for",
+        "test_id": "perps-watchlist-BTC",
+        "timeout_ms": 30000,
+        "intent": "Establish the rendered Bitcoin market row before reading live readiness",
+        "next": "ac5-state"
+      },
+      "ac5-state": {
+        "action": "metamask.perps.read_visible_state",
+        "surface": "home",
+        "minimum_market_count": 1,
+        "require_test_ids": [
+          "perps-watchlist-BTC"
+        ],
+        "intent": "Assert market rows appear in the existing Perps view",
+        "next": "ac4-cold-trace"
+      },
+      "ac4-cold-trace": {
+        "action": "command",
+        "cmd": "node temp/tasks/feat/tat-3857-0908-110457/artifacts/proof.ts entry cold_process",
+        "intent": "Assert the first successful live render ends the cold process entry span",
+        "next": "ac5-screenshot"
+      },
+      "ac5-screenshot": {
+        "action": "ui.screenshot",
+        "path": "screenshots/evidence-ac5-live-markets.png",
+        "intent": "Record the rendered market list after live readiness assertions",
+        "next": "ac4-home"
+      },
+      "ac4-home": {
+        "action": "ui.navigate",
+        "page": "home",
+        "intent": "Leave Perps before the warm revisit",
+        "next": "ac4-warm-enter"
+      },
+      "ac4-warm-enter": {
+        "action": "ui.navigate",
+        "page": "perps",
+        "intent": "Revisit Perps with the existing document and preloaded data",
+        "next": "ac4-warm-trace"
+      },
+      "ac4-warm-trace": {
+        "action": "command",
+        "cmd": "node temp/tasks/feat/tat-3857-0908-110457/artifacts/proof.ts entry warm",
+        "intent": "Assert a distinct warm entry span completes with live rows",
+        "next": "ac4-resume-home"
+      },
+      "ac4-resume-home": {
+        "action": "ui.navigate",
+        "page": "home",
+        "intent": "Return to wallet home before exercising background resume",
+        "next": "ac4-resume"
+      },
+      "ac4-resume": {
+        "action": "command",
+        "cmd": "node temp/tasks/feat/tat-3857-0908-110457/artifacts/proof.ts resume",
+        "intent": "Hide and restore this extension page using a temporary browser tab",
+        "next": "ac4-resume-enter"
+      },
+      "ac4-resume-enter": {
+        "action": "ui.navigate",
+        "page": "perps",
+        "intent": "Enter Perps after returning from a hidden document",
+        "next": "ac4-resume-trace"
+      },
+      "ac4-resume-trace": {
+        "action": "command",
+        "cmd": "node temp/tasks/feat/tat-3857-0908-110457/artifacts/proof.ts entry background_resume",
+        "intent": "Assert Mobile-compatible background resume context on live entry",
+        "next": "ac3-browser-enter"
+      },
+      "ac6-regression": {
+        "action": "command",
+        "cmd": "node temp/tasks/feat/tat-3857-0908-110457/artifacts/proof.ts regression",
+        "intent": "Verify the existing account overview Perps tab trace definition and callers are preserved",
+        "next": "teardown-observer"
+      },
+      "teardown-observer": {
+        "action": "command",
+        "cmd": "node temp/tasks/feat/tat-3857-0908-110457/artifacts/proof.ts stop",
+        "intent": "Release task-owned debugger and network observers",
+        "next": "teardown-done"
+      },
+      "teardown-done": {
+        "action": "end",
+        "status": "pass"
+      },
+      "setup-cache-expiry": {
+        "action": "command",
+        "cmd": "node temp/tasks/feat/tat-3857-0908-110457/artifacts/proof.ts cache-expiry",
+        "timeout_ms": 45000,
+        "intent": "Wait for the locked wallet caches to age past the Core 30-second preload guard without changing wallet state",
+        "next": "setup-reload"
+      },
+      "ac3-browser-enter": {
+        "action": "ui.navigate",
+        "page": "perps-market-list",
+        "intent": "Open the market browser to verify its separate Mobile screen trace",
+        "next": "ac3-browser-trace"
+      },
+      "ac3-browser-trace": {
+        "action": "command",
+        "cmd": "node temp/tasks/feat/tat-3857-0908-110457/artifacts/proof.ts entry warm market_list",
+        "intent": "Assert Perps Market List View ends with live rendered markets without conflating the Home CUF",
+        "next": "ac6-regression"
+      }
+    }
+  }
+}
