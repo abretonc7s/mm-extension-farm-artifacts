@@ -1,4 +1,4 @@
-- Loading vs zero-balance: a 0 fallback from getTradeableBalance is not an unfunded account. Gate every Add funds CTA and click handler on isLoadingAccount, not only the footer button.
-- Prop plumbing: a page-level loading flag does not protect a child control unless it is passed through OrderEntry into AmountInput.
-- Same-commit follow-up: fixing the footer in one review pass still leaves the row CTA on the old threshold-only check. Cover both surfaces in the first loading-state fix.
-- Tests: assert the labeled text is absent and the click does not open deposit while isInitialLoading is true at a 0 balance.
+- Loading vs zero: Bugbot caught that `getTradeableBalance(null)` is `0`, so dropping `isLoadingAccount` from `hasNoAvailableBalance` and `isSubmitDisabled` turns a funded wallet into an enabled Add funds to trade button until the stream arrives. The original worker should have kept the loading guard whenever the unfunded path keys off a parsed balance.
+- Row CTA vs footer: the labeled Add funds control used only `availableBalance < threshold`, so it flipped while the footer still waited on loading. The original worker should have passed `isLoadingAccount` into AmountInput and gated the labeled control the same way as the footer.
+- Click-through while hydrating: even a disabled-looking + icon can fire `onAddFunds`. The follow-up had to no-op `handleAddFunds` and disable the icon while loading. Treat loading as a third state, not a zero-balance state, in every deposit entry point.
+- Tests must fail if the loading guard is removed: cover `isInitialLoading: true` with a zero-looking account and assert the footer stays off Add funds to trade, the row stays unlabeled, and deposit is not triggered.

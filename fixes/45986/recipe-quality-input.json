@@ -1,0 +1,34 @@
+{
+  "verdict": "pass",
+  "reasons": [
+    "AC2 is proven by ac2-wait-hint, ac2-wait-cta, ac2-wait-enabled and a capture-helper snapshot of the enabled Add funds to trade control after rebase onto origin/main.",
+    "AC1 funnel emits including trade_submitted_after_deposit page wiring are covered by unit tests; live Segment capture on this webpack-dev slot is not collected.",
+    "AC3 post-launch conversion is UNTESTABLE in-slot."
+  ],
+  "betterVersionGuidance": [],
+  "dimensions": {
+    "graph_integrity": {
+      "status": "pass",
+      "reason": "Workflow graph is valid; setup selects the fixture unfunded wallet (dev6) by address; teardown restores Account 1.",
+      "evidence": ["recipe.json"]
+    },
+    "ac_coverage": {
+      "status": "pass",
+      "reason": "AC2 bound to ac2-* nodes; AC1 proven by unit tests; AC3 UNTESTABLE with rationale.",
+      "evidence": ["recipe-coverage.md", "recipe-run/trace.json"]
+    },
+    "evidence_contract_basics": {
+      "status": "pass",
+      "reason": "Visual AC has wait_for on the claimed target plus a capture-helper PNG.",
+      "evidence": ["recipe-run/screenshots/after-ac2-unfunded-cta.png"]
+    }
+  },
+  "trainingFields": {
+    "farm": "metamask-extension",
+    "project": "metamask-extension-farm",
+    "flow_type": "pr-complete",
+    "task_type": "pr-complete",
+    "claim_is_visual": true,
+    "proof_mode": "mixed"
+  }
+}

@@ -2,5 +2,5 @@
   "originalFamilyScopeSummary": "Audit and optimize deposit flow friction for unfunded Extension trade-screen users converting at 4.8% vs Mobile's 12.4%",
   "currentTriggerSummary": "pr-complete: feat(perps): investigate and improve deposit conversion for unfunded trade-screen users",
   "scopeVerdict": "full-scope-addressed",
-  "notes": "PR 45986 already ships the enabled Add funds to trade CTA, row Add funds label, and funnel events. This run only closed the remaining loading-state hole on the row CTA so a hydrating 0 balance does not look unfunded."
+  "notes": "The PR still ships the unfunded CTA (Add funds to trade + labeled row control + funnel events) from TAT-3853. Bugbot loading-state findings were already fixed on the branch. This run rebased onto origin/main, kept chart/PayWithOption from main, and re-validated the unfunded CTA recipe PASS on a zero-balance account. Conversion rate itself remains a post-launch metric (AC3 untestable locally)."
 }
