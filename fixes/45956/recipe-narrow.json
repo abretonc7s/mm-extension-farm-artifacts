@@ -1,0 +1,71 @@
+{
+  "$schema": "https://farmslot.io/schemas/recipe-v1.schema.json",
+  "title": "TAT-3848 — category pills wrap at popup width instead of hiding",
+  "description": "Proves the redesign at the width that motivated the review: on the narrow side-panel surface every category pill is still on screen, wrapped onto a second line, with no horizontal scroller and no More menu.",
+  "workflow": {
+    "entry": "gate-cdp-reachable",
+    "nodes": {
+      "gate-cdp-reachable": {
+        "action": "cdp.target",
+        "cdp_port": 6663,
+        "require_reachable": true,
+        "intent": "Refuse to report proof unless the live extension is actually attached",
+        "next": "setup-unlock-wallet"
+      },
+      "setup-unlock-wallet": {
+        "action": "metamask.wallet.ensure_unlocked",
+        "timeout_ms": 60000,
+        "intent": "Get past the lock screen so the proof is taken on the real wallet UI",
+        "next": "setup-open-market-list"
+      },
+      "setup-open-market-list": {
+        "action": "ui.navigate",
+        "page": "perps-market-list",
+        "intent": "Move to the market list at the narrow width a popup user actually sees",
+        "next": "setup-wait-market-list"
+      },
+      "setup-wait-market-list": {
+        "action": "ui.wait_for",
+        "test_id": "market-list-categories",
+        "expected": "visible",
+        "timeout_ms": 30000,
+        "intent": "Hold until the category rail is on screen with its live categories",
+        "next": "assert-forex-pill-visible"
+      },
+      "assert-forex-pill-visible": {
+        "action": "ui.wait_for",
+        "test_id": "market-list-categories-pill-forex",
+        "text": "Forex",
+        "expected": "visible",
+        "timeout_ms": 20000,
+        "intent": "The last category is on screen even at popup width, where the old build pushed it into the More menu",
+        "next": "assert-no-overflow-menu"
+      },
+      "assert-no-overflow-menu": {
+        "action": "ui.wait_for",
+        "selector": "[data-testid=\"market-list-categories-more-button\"]",
+        "visible": false,
+        "timeout_ms": 20000,
+        "intent": "Narrowing the window no longer produces a More control",
+        "next": "clear-capture-orphans"
+      },
+      "clear-capture-orphans": {
+        "action": "command",
+        "cmd": "pkill -9 -f 'capture-helper' || true",
+        "intent": "Keep the upcoming capture on the real screenshot provider instead of a silent fallback",
+        "next": "screenshot-narrow-rail"
+      },
+      "screenshot-narrow-rail": {
+        "action": "ui.screenshot",
+        "path": "screenshots/evidence-market-list-pills-wrap-at-popup-width.png",
+        "label": "Market list at popup width: the pills wrap onto a second line, all seven still visible",
+        "intent": "Show the reader that a narrow window wraps the rail instead of hiding categories",
+        "next": "done"
+      },
+      "done": {
+        "action": "end",
+        "status": "pass"
+      }
+    }
+  }
+}

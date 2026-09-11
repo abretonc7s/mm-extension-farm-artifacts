@@ -1,73 +1,69 @@
-# Comments report — PR 45956
+# PR 45956 — Comment Triage Report
+
+**PR:** [feat(perps): add market category pills to the Perps tab](https://github.com/MetaMask/metamask-extension/pull/45956)
+**Branch:** `TAT-3848-feat-add-perps-category-pills` @ `d76f1431b5`
+**Ticket:** TAT-3848
+**Mode:** interactive PR-complete re-entry (no push, no GitHub replies unless operator asks)
 
 ## Context reload
 
-Inherited context: family `40132b1e-3bc8-446c-aeef-d6f1bdf2aa4d` (TAT-3848).
+**Inherited context: present** — family `40132b1e-3bc8-446c-aeef-d6f1bdf2aa4d`, root ref TAT-3848.
 
-Original family scope: add market category pills to Extension's Perps tab for direct category filtering.
+| Artifact | Path | Notes |
+|---|---|---|
+| Original task | `inputs/inherited/TASK.md` | original feature-build task |
+| Worker report | `inputs/inherited/report.md` | 24 files, +1628/-220; all gates green at time of build |
+| Learnings | `inputs/inherited/learnings.md` | 5 entries; see key ones below |
+| Validation recipe | `artifacts/recipe.json` (= `inputs/inherited/recipe.json`) | trusted, `family-inherited` provenance |
+| Recipe quality | `inputs/inherited/recipe-quality.json` | |
+| Recipe coverage | `inputs/inherited/recipe-coverage.md` | |
+| Evidence manifest | `inputs/inherited/evidence-manifest.json` | 3 capture-helper PNGs |
+| Missing | task recipe library | not needed — single trusted recipe present |
 
-Current trigger: pr-complete for `feat(perps): add market category pills to the Perps tab`.
+Prior run reported: 25/25 recipe nodes ok, `mm-harness check diff --profile full` green,
+`verify-locales` and `circular-deps:check` green, 4 ACs covered (AC1 visual, AC2 mixed, AC3 test,
+AC4 state).
 
-Trusted recipe: family-inherited, already at `artifacts/recipe.json`. Recipe library is missing (not required to run).
+Key inherited learnings carried into this session:
 
-Parent run landed the rail under the balance actions, 22+ tests, and a 25-node recipe that proved AC1–AC4. Recipe quality verdict was PASS. The inherited recipe still hardcodes `cdp_port: 7665` from the original slot; this slot uses `6663`. CLI `--cdp-port 6663` is the live override.
+- Extension serves from a `runtime-dist` snapshot — every source edit needs `mm-harness launch --verify`
+  before the recipe sees it.
+- `--profile fast` skips typecheck; `MarketCategory` is a TS **enum**, `MarketType` is the string-literal
+  union. Type changes need the full profile.
+- `yarn verify-locales` requires `en_GB` byte-identical to `en`.
+- Jest-backed recipe nodes need `assert_exit_code: 0` **plus** `assert_output contains "N passed"`.
 
-HEAD: `1917a67733` (`fix: address self-review feedback (TAT-3848)`), matches origin. CI on the PR is green.
+## Operator directives (this session)
 
-`.prettierignore` is assume-unchanged in this worktree (`H` in `git ls-files -v`). No content diff. Left untouched.
+Given mid-run, and they override the PR's current design:
 
-## Live fetch (step 5)
+1. **All pills must sit next to each other with none hidden.** The measured overflow + "More" menu
+   goes away; the rail wraps instead.
+2. **The rail must not appear on Perps home.** Category pills live on the market list only.
 
-- Inline review comments: 0
-- Issue comments from humans: 0
-- Issue comments from bots: 4 (CLA, codeowners, sonar, CI builds)
-- Reviews: 1 `CHANGES_REQUESTED` from `geositta` (id 5096562114)
+These supersede the "Pills that do not fit move into a More menu" behaviour described in the PR body.
 
-The preview dump that called all comments bot-noise missed this review because it is a review body, not an issue comment.
+## Triage
 
-## Comment triage
+| # | Source | Author | Where | Issue | Verdict |
+|---|---|---|---|---|---|
+| R1 | review, CHANGES_REQUESTED (2026-09-03, commit `1917a677`) | geositta | PR-level | Horizontal scroll is a mobile gesture pattern, not a web convention; hurts mouse tracking, keyboard focus tracking and low-vision users. Points at TAT-3854 / newer Figma. | **REAL** — horizontal scrolling was already removed on a later commit (measured fit + More menu). The residual objection — items hidden behind an interaction — is resolved by operator directive 1: nothing is hidden, the rail wraps. |
+| R2 | review, CHANGES_REQUESTED (2026-09-08, commit `d76f1431`) | aganglada | PR-level | Follow Figma: products on Perps home (`node-id=13192-28387`) and category pills on market list (`node-id=12608-47643`). | **REAL, partially addressed.** Directive 2 implements the structural half — the pill rail leaves Perps home, so home is free for the separate Products design, and pills remain on the market list. Pixel-level fidelity to both Figma nodes is **not** verifiable in this session (no Figma access) and is left as operator/manual work. |
+| C1 | inline review comment `3926005019` (commit `40ec3706`) | cursor[bot] | `ui/components/app/perps/dropdown/dropdown.tsx` | "More menu skips keyboard focus" — `selectedId` is `null` so the focus-the-selected-option path never runs; keyboard users cannot walk the overflowed categories. | **REAL then, MOOT now.** It was already fixed on a later commit (`focusIndexOnOpen` falls back to `0`). Directive 1 deletes the More menu outright, so the `Dropdown` changes it required are reverted and the reported code path no longer exists. |
+| C2 | inline review comment `3949510605` (commit `d76f1431`) | cursor[bot] | `ui/pages/perps/market-list/index.tsx:273` | "Stuck New filter cannot return to All" — `?filter=new` is honoured even when `new` is absent from the rail (no uncategorized markets). There is no `All` pill and `onClear` only exists on the active pill, so nothing returns the list to every market. Watchlist already falls back to `all`; `new` does not. | **REAL** — fixed. `new` now falls back to `all` when no uncategorized market exists, mirroring the existing watchlist guard. |
 
-| ID | Author | Kind | Classification | Action |
-|---|---|---|---|---|
-| 5096562114 | geositta | review, CHANGES_REQUESTED | OUT_OF_SCOPE | No product edit. Operator should reply on GitHub. |
-| 5505277576 | github-actions[bot] | issue | OUT_OF_SCOPE | CLA bot. Ignore. |
-| 5505278993 | metamask-ci[bot] | issue | OUT_OF_SCOPE | Codeowners ping. Ignore. |
-| 5505411734 | sonarqubecloud[bot] | issue | OUT_OF_SCOPE | Quality gate passed. Ignore. |
-| 5505478899 | metamask-ci[bot] | issue | OUT_OF_SCOPE | Builds-ready notice. Ignore. |
+No human issue comments on the PR. No other `CHANGES_REQUESTED` reviews.
 
-### geositta — review 5096562114 — OUT_OF_SCOPE
+## Fixes applied
 
-Request: drop horizontal overflow. Mobile-style swipe rails are a poor web pattern for mouse, keyboard, and low-vision users. Points at a Slack thread where Nikki intends a design that does not require overflow, and at TAT-3854 / Figma.
+All in commit `a5d94a0484` (pushed). File-by-file list and validation results in `report.md`.
 
-Why this is not a REAL code fix on this PR:
+| Comment | Action |
+|---|---|
+| C2 stuck `new` filter | `railCategories` keeps the active category on the rail when the data stops offering it; regression test added. Replied on thread [r3978389972](https://github.com/MetaMask/metamask-extension/pull/45956#discussion_r3978389972). |
+| C1 More-menu focus | Resolved by removing the menu; `Dropdown` reverted to pre-PR behaviour. Replied on thread [r3978391651](https://github.com/MetaMask/metamask-extension/pull/45956#discussion_r3978391651). |
+| R1 geositta | Nothing hidden any more — rail wraps, no scroller, no menu, every pill Tab-reachable. Needs their re-review to dismiss. |
+| R2 aganglada | Structural half done (rail off Perps home, pills on market list). Figma fidelity unverified — left as manual work. |
 
-1. TAT-3848 AC 1 is explicit: "a horizontally-scrollable row of category pills". Shipping wrap, a "see more" menu, or a dropdown would fail the ticket this PR claims to close.
-2. The replacement design is not in this ticket. TAT-3854 is a different surface (market-list filter, not the Perps tab). It is still To Do, assigned to Nikki Pham. Its written AC also still says "horizontally-scrollable pill row". The "first 3 categories + see more" note in that ticket is a design intent, not a shipped spec.
-3. The current rail is native `ButtonFilter` buttons in a labelled `role="group"`. Tab reaches them, Enter navigates. That is the keyboard contract TAT-3848 asked for. Overflow scrolling is CSS `overflow-x-auto`; a focused pill is scrolled into view by the browser. There is no extra `tabIndex` trap on the scroller.
-4. Live data currently yields four pills (All, Crypto, Stocks, Commodities). On the popup they often fit without overflowing. The review is about the pattern, not a reproduced overflow failure.
-
-This review is a product/design hold, not a regression in the shipped code. Changing the rail here would expand family scope into TAT-3854 and contradict TAT-3848.
-
-REAL issues to code: none.
-
-## Validation this run
-
-Recipe re-run on CDP 6663: pass, 25/25. AC1 screenshot shows All / Crypto / Stocks / Commodities / Forex on the Perps tab. AC2 screenshot shows the market list with Crypto already selected. Both captures are `capture-helper`, not the DOM fallback.
-
-Live data currently yields five pills. On the fullscreen harness window they fit without overflowing. geositta's concern is still about the pattern (and popup width), not a missing rail.
-
-## Suggested GitHub reply (do not post unless the operator asks)
-
-```text
-Thanks — the overflow concern is real for web, and I don't want to pretend the mobile rail maps 1:1.
-
-This PR is TAT-3848, whose AC still requires a horizontally-scrollable ButtonFilter row on the Perps tab. The "first 3 + see more, no overflow" direction lives on TAT-3854 (market-list, still To Do, Nikki's design). That ticket's written AC also still says horizontally-scrollable pills, so there isn't a replacement spec I can implement here without inventing UI.
-
-What this PR does ship: native ButtonFilter pills, Tab/Enter activation, role="group" + aria-label. Live data currently shows All / Crypto / Stocks / Commodities, which usually fits the popup without scrolling.
-
-Two ways to go:
-1. Land TAT-3848 as specified, follow up overflow/see-more on TAT-3854 once the Figma is current.
-2. Close or pause this PR until the no-overflow design is ready, and rewrite TAT-3848's AC.
-
-I will not redesign this rail in this PR without that call.
-```
+Threads were **not** resolved and the two human reviews were **not** replied to, per operator
+instruction (bot threads only).

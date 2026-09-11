@@ -1,7 +1,7 @@
 {
   "$schema": "https://farmslot.io/schemas/recipe-v1.schema.json",
-  "title": "TAT-3848 \u2014 Perps tab market category pills",
-  "description": "Proves the Perps tab renders a horizontally scrollable rail of MMDS ButtonFilter category pills, that tapping one lands on the market list pre-filtered to that category, that the rail is skeleton-gated while market data loads, and that every pill is a focusable native button inside a labelled group.",
+  "title": "TAT-3848 / TAT-3854 \u2014 Perps category pills and sort modal follow the design",
+  "description": "Proves the design as drawn: the Perps tab carries a wrapping Products chip section with leading glyphs (Figma 13192:28387); the market list keeps one filter row with a measured More menu and 8px-radius pills (12602:45702, 12608:46888); a chip opens the market list pre-filtered and the active pill clears it; and the Sort by modal is one list whose selected field carries its direction inline rather than a separate RANK section (12602:46701). Also photographs the measured overflow at both widths: a popup-width window where the leftovers move into More and a selection made there marks the trigger, and a full-width window where every category fits and no trigger renders.",
   "workflow": {
     "entry": "gate-cdp-reachable",
     "nodes": {
@@ -10,12 +10,18 @@
         "cdp_port": 6663,
         "require_reachable": true,
         "intent": "Refuse to report proof unless the live extension is actually attached",
+        "next": "setup-unlock-wallet"
+      },
+      "setup-unlock-wallet": {
+        "action": "metamask.wallet.ensure_unlocked",
+        "timeout_ms": 60000,
+        "intent": "Get past the lock screen so the proof is taken on the real wallet UI",
         "next": "setup-open-perps-tab"
       },
       "setup-open-perps-tab": {
         "action": "ui.navigate",
         "page": "perps",
-        "intent": "Put the user on the Perps tab, the surface the category rail is added to",
+        "intent": "Put the user on the Perps tab, the surface the Products section lives on",
         "next": "setup-wait-perps-tab"
       },
       "setup-wait-perps-tab": {
@@ -23,168 +29,545 @@
         "test_id": "parent-selector-perps-tab",
         "expected": "visible",
         "timeout_ms": 30000,
-        "intent": "Hold until the Perps tab has finished its initial market load so the rail is judged on real data",
-        "next": "setup-scroll-rail-into-view"
+        "intent": "Hold until the Perps tab has finished its initial market load, so its content is judged on real data",
+        "next": "ac-products-wait-section"
       },
-      "setup-scroll-rail-into-view": {
-        "action": "ui.scroll",
-        "test_id": "perps-market-categories",
-        "scroll_into_view": true,
-        "timeout_ms": 20000,
-        "intent": "Bring the category rail into the viewport so the proof is judged on what a user can actually see",
-        "next": "ac1-wait-category-rail"
-      },
-      "ac1-wait-category-rail": {
-        "action": "ui.wait_for",
-        "test_id": "perps-market-categories-list",
-        "expected": "visible",
-        "timeout_ms": 20000,
-        "intent": "The category rail is on screen for the user, not merely in the document",
-        "next": "ac1-assert-horizontal-scroller"
-      },
-      "ac1-assert-horizontal-scroller": {
-        "action": "ui.wait_for",
-        "selector": "[data-testid=\"perps-market-categories\"].overflow-x-auto",
-        "expected": "visible",
-        "timeout_ms": 20000,
-        "intent": "The rail scrolls horizontally rather than wrapping or clipping its pills",
-        "next": "ac1-wait-all-pill"
-      },
-      "ac1-wait-all-pill": {
-        "action": "ui.wait_for",
-        "test_id": "perps-market-categories-pill-all",
-        "text": "All",
-        "expected": "visible",
-        "timeout_ms": 20000,
-        "intent": "The rail offers the All shortcut back to the unfiltered market list",
-        "next": "ac1-wait-crypto-pill"
-      },
-      "ac1-wait-crypto-pill": {
-        "action": "ui.wait_for",
-        "test_id": "perps-market-categories-pill-crypto",
-        "text": "Crypto",
-        "expected": "visible",
-        "timeout_ms": 20000,
-        "intent": "The rail offers a real category derived from the live market data",
-        "next": "ac1-clear-capture-orphans"
-      },
-      "ac1-clear-capture-orphans": {
+      "ac-home-clear-capture-orphans": {
         "action": "command",
         "cmd": "pkill -9 -f 'capture-helper' || true",
         "intent": "Keep the upcoming capture on the real screenshot provider instead of a silent fallback",
-        "next": "ac1-screenshot-category-rail"
+        "next": "ac-home-screenshot"
       },
-      "ac1-screenshot-category-rail": {
+      "ac-home-screenshot": {
         "action": "ui.screenshot",
-        "path": "screenshots/evidence-ac1-category-pills-visible.png",
-        "label": "AC1: Perps tab shows the category pill rail with All and Crypto",
-        "intent": "Show the reader the pill rail as it appears on the Perps tab",
-        "next": "ac4-assert-pill-is-focusable-button"
+        "path": "screenshots/evidence-perps-home-products-chips.png",
+        "label": "Perps tab: the Products section, chips wrapped with every category visible",
+        "intent": "Show the reader the Products section as the design specifies it",
+        "next": "ac-nav-press-crypto"
       },
-      "ac4-assert-pill-is-focusable-button": {
-        "action": "ui.wait_for",
-        "selector": "button[data-testid=\"perps-market-categories-pill-crypto\"]:not([disabled]):not([tabindex=\"-1\"])",
-        "expected": "visible",
-        "timeout_ms": 20000,
-        "intent": "Each pill is a real enabled button, so Tab reaches it and Enter or Space activates it",
-        "next": "ac4-assert-rail-is-labelled-group"
-      },
-      "ac4-assert-rail-is-labelled-group": {
-        "action": "ui.wait_for",
-        "selector": "[data-testid=\"perps-market-categories\"][role=\"group\"][aria-label]",
-        "expected": "visible",
-        "timeout_ms": 20000,
-        "intent": "A screen reader announces the rail as one named group rather than loose buttons",
-        "next": "ac2-press-crypto-pill"
-      },
-      "ac2-press-crypto-pill": {
-        "action": "ui.press",
-        "test_id": "perps-market-categories-pill-crypto",
-        "timeout_ms": 20000,
-        "intent": "Take the route a user takes when they want to browse only crypto markets",
-        "next": "ac2-wait-market-list"
-      },
-      "ac2-wait-market-list": {
+      "setup-wait-market-list": {
         "action": "ui.wait_for",
         "test_id": "parent-selector-perps-market-list",
         "expected": "visible",
-        "timeout_ms": 20000,
-        "intent": "The pill landed the user on the full market list page",
-        "next": "ac2-assert-filter-preselected"
+        "timeout_ms": 30000,
+        "intent": "Hold until the market list is on screen with its live markets loaded",
+        "next": "ac-pills-wait-rail"
       },
-      "ac2-assert-filter-preselected": {
+      "ac-pills-wait-rail": {
         "action": "ui.wait_for",
-        "test_id": "filter-select-button",
+        "test_id": "market-list-categories",
+        "expected": "visible",
+        "timeout_ms": 20000,
+        "intent": "The category rail is on screen for the user, not merely in the document",
+        "next": "ac-pills-assert-wraps"
+      },
+      "ac-pills-assert-wraps": {
+        "action": "ui.wait_for",
+        "selector": "[data-testid=\"market-list-categories\"].flex-wrap",
+        "visible": false,
+        "timeout_ms": 20000,
+        "intent": "The market list keeps its filters on one row rather than wrapping, which is the layout the design gives that surface",
+        "next": "ac-pills-assert-single-row"
+      },
+      "ac-pills-assert-no-horizontal-scroller": {
+        "action": "ui.wait_for",
+        "selector": "[data-testid=\"market-list-categories-row\"].overflow-x-auto",
+        "visible": false,
+        "timeout_ms": 20000,
+        "intent": "No horizontal scroller hides pills behind a gesture web users cannot see coming",
+        "next": "ac-pills-assert-filter-radius"
+      },
+      "ac-pills-wait-crypto": {
+        "action": "ui.wait_for",
+        "test_id": "market-list-categories-pill-crypto",
         "text": "Crypto",
         "expected": "visible",
         "timeout_ms": 20000,
-        "intent": "The market list arrived already narrowed to Crypto instead of the default All",
-        "next": "ac2-clear-capture-orphans"
+        "intent": "The first category the live market data carries has its own pill",
+        "next": "ac-pills-wait-stock"
       },
-      "ac2-clear-capture-orphans": {
+      "ac-pills-wait-stock": {
+        "action": "ui.wait_for",
+        "test_id": "market-list-categories-pill-stock",
+        "text": "Stocks",
+        "expected": "visible",
+        "timeout_ms": 20000,
+        "intent": "A category that used to be reachable only through the overflow menu is now on the rail itself",
+        "next": "ac-pills-wait-commodity"
+      },
+      "ac-pills-wait-commodity": {
+        "action": "ui.wait_for",
+        "test_id": "market-list-categories-pill-commodity",
+        "text": "Commodities",
+        "expected": "visible",
+        "timeout_ms": 20000,
+        "intent": "The last of the rail's categories is visible too, so nothing was dropped to make room",
+        "next": "ac-a11y-assert-pill-is-focusable-button"
+      },
+      "ac-a11y-assert-pill-is-focusable-button": {
+        "action": "ui.wait_for",
+        "selector": "button[data-testid=\"market-list-categories-pill-forex\"]:not([disabled]):not([tabindex=\"-1\"])",
+        "expected": "visible",
+        "timeout_ms": 20000,
+        "intent": "The pill a narrow window used to hide is a real enabled button, so Tab reaches it and Enter or Space activates it",
+        "next": "ac-a11y-assert-rail-is-labelled-group"
+      },
+      "ac-a11y-assert-rail-is-labelled-group": {
+        "action": "ui.wait_for",
+        "selector": "[data-testid=\"market-list-categories\"][role=\"group\"][aria-label]",
+        "expected": "visible",
+        "timeout_ms": 20000,
+        "intent": "A screen reader announces the rail as one named group rather than loose buttons",
+        "next": "ac-nav-assert-crypto-active"
+      },
+      "ac-filter-clear-capture-orphans": {
         "action": "command",
         "cmd": "pkill -9 -f 'capture-helper' || true",
         "intent": "Keep the upcoming capture on the real screenshot provider instead of a silent fallback",
-        "next": "ac2-screenshot-market-list-filtered"
+        "next": "ac-filter-screenshot"
       },
-      "ac2-screenshot-market-list-filtered": {
+      "ac-filter-screenshot": {
         "action": "ui.screenshot",
-        "path": "screenshots/evidence-ac2-market-list-filtered-crypto.png",
-        "label": "AC2: market list opened from the Crypto pill with the Crypto filter already applied",
-        "intent": "Show the reader that the destination page arrived pre-filtered",
-        "next": "ac3-run-skeleton-gating-test"
+        "path": "screenshots/evidence-market-list-all-pills-crypto-active.png",
+        "label": "Market list opened from the Crypto chip, already narrowed to Crypto and clearable",
+        "intent": "Show the reader the full set of pills with no More control and the active one marked",
+        "next": "ac-clear-press-crypto"
       },
-      "ac3-run-skeleton-gating-test": {
+      "ac-stuck-filter-run-test": {
         "action": "command",
-        "cmd": "yarn jest ui/components/app/perps/perps-market-categories/perps-market-categories.test.tsx --no-coverage -t 'loading state' 2>&1",
-        "timeout_ms": 600000,
-        "intent": "Show that the loading pass reserves the rail's final height so nothing jumps when data arrives",
-        "next": "ac3-assert-skeleton-test-ran"
+        "cmd": "yarn jest ui/pages/perps/market-list/index.test.tsx --no-coverage -t 'keeps a pill for an active category the data no longer offers' 2>&1",
+        "timeout_ms": 900000,
+        "intent": "Show that a stale ?filter=new link cannot leave the list narrowed with no way back to every market",
+        "next": "ac-stuck-filter-assert-test-ran"
       },
-      "ac3-assert-skeleton-test-ran": {
+      "ac-stuck-filter-assert-test-ran": {
         "action": "assert_output",
-        "node": "ac3-run-skeleton-gating-test",
-        "contains": "2 passed",
-        "intent": "Refuse to count a title filter that silently matched nothing as proof",
-        "next": "ac3-assert-skeleton-test-passed"
-      },
-      "ac3-assert-skeleton-test-passed": {
-        "action": "assert_exit_code",
-        "node": "ac3-run-skeleton-gating-test",
-        "expected": 0,
-        "intent": "The skeleton gating assertion actually passed",
-        "next": "ac4-run-keyboard-test"
-      },
-      "ac4-run-keyboard-test": {
-        "action": "command",
-        "cmd": "yarn jest ui/components/app/perps/perps-market-categories/perps-market-categories.test.tsx --no-coverage -t 'navigates to the filtered market list when a pill is activated from the keyboard' 2>&1",
-        "timeout_ms": 600000,
-        "intent": "Show that a keyboard-only user can reach and fire a pill, not just a mouse user",
-        "next": "ac4-assert-keyboard-test-ran"
-      },
-      "ac4-assert-keyboard-test-ran": {
-        "action": "assert_output",
-        "node": "ac4-run-keyboard-test",
+        "node": "ac-stuck-filter-run-test",
         "contains": "1 passed",
         "intent": "Refuse to count a title filter that silently matched nothing as proof",
-        "next": "ac4-assert-keyboard-test-passed"
+        "next": "ac-stuck-filter-assert-test-passed"
       },
-      "ac4-assert-keyboard-test-passed": {
+      "ac-stuck-filter-assert-test-passed": {
         "action": "assert_exit_code",
-        "node": "ac4-run-keyboard-test",
+        "node": "ac-stuck-filter-run-test",
         "expected": 0,
-        "intent": "The keyboard activation assertion actually passed",
+        "intent": "The stale-filter escape hatch assertion actually passed",
+        "next": "ac-layout-run-test"
+      },
+      "ac-layout-run-test": {
+        "action": "command",
+        "cmd": "yarn jest ui/components/app/perps/perps-products/perps-products.test.tsx --no-coverage -t 'rendering' 2>&1",
+        "timeout_ms": 900000,
+        "intent": "Show that the Products section renders the design order, wraps, and hides nothing, at the component\u2019s own boundary",
+        "next": "ac-layout-assert-test-ran"
+      },
+      "ac-layout-assert-test-ran": {
+        "action": "assert_output",
+        "node": "ac-layout-run-test",
+        "contains": "6 passed",
+        "intent": "Refuse to count a title filter that silently matched nothing, and catch any of the six Products rendering guards being dropped",
+        "next": "ac-layout-assert-test-passed"
+      },
+      "ac-layout-assert-test-passed": {
+        "action": "assert_exit_code",
+        "node": "ac-layout-run-test",
+        "expected": 0,
+        "intent": "The layout guards actually passed",
+        "next": "ac-keyboard-run-test"
+      },
+      "ac-keyboard-run-test": {
+        "action": "command",
+        "cmd": "yarn jest ui/components/app/perps/perps-market-categories/perps-category-rail.test.tsx --no-coverage -t 'reaches every pill from the keyboard' 2>&1",
+        "timeout_ms": 900000,
+        "intent": "Show that one Tab per pill walks the whole rail, which the removed overflow menu made impossible",
+        "next": "ac-keyboard-assert-test-ran"
+      },
+      "ac-keyboard-assert-test-ran": {
+        "action": "assert_output",
+        "node": "ac-keyboard-run-test",
+        "contains": "1 passed",
+        "intent": "Refuse to count a title filter that silently matched nothing as proof",
+        "next": "ac-keyboard-assert-test-passed"
+      },
+      "ac-keyboard-assert-test-passed": {
+        "action": "assert_exit_code",
+        "node": "ac-keyboard-run-test",
+        "expected": 0,
+        "intent": "The keyboard reachability assertion actually passed",
+        "next": "ac-sort-run-test"
+      },
+      "done": {
+        "action": "end",
+        "status": "pass"
+      },
+      "ac-products-wait-section": {
+        "action": "ui.wait_for",
+        "test_id": "perps-products",
+        "expected": "visible",
+        "timeout_ms": 20000,
+        "intent": "The Perps tab carries the Products section the design puts there",
+        "next": "ac-products-scroll-into-view"
+      },
+      "ac-products-scroll-into-view": {
+        "action": "ui.scroll",
+        "test_id": "perps-products-categories",
+        "scroll_into_view": true,
+        "timeout_ms": 20000,
+        "intent": "Bring the Products section, which now sits below the user\u2019s own watchlist, into the viewport so the proof is judged on what a user can actually see",
+        "next": "ac-products-settle"
+      },
+      "ac-products-assert-heading": {
+        "action": "ui.wait_for",
+        "test_id": "perps-products",
+        "text": "Products",
+        "expected": "visible",
+        "timeout_ms": 20000,
+        "intent": "The section is titled Products, as the design names it",
+        "next": "ac-products-assert-wraps"
+      },
+      "ac-products-assert-wraps": {
+        "action": "ui.wait_for",
+        "selector": "[data-testid=\"perps-products-categories\"].flex-wrap",
+        "expected": "visible",
+        "timeout_ms": 20000,
+        "intent": "The chips wrap onto further lines, which is how every category stays on screen at once",
+        "next": "ac-products-assert-no-scroller"
+      },
+      "ac-products-assert-no-scroller": {
+        "action": "ui.wait_for",
+        "selector": "[data-testid=\"perps-products-categories\"].overflow-x-auto",
+        "visible": false,
+        "timeout_ms": 20000,
+        "intent": "No horizontal scroller hides chips behind a gesture web users cannot see coming",
+        "next": "ac-products-assert-no-more"
+      },
+      "ac-products-assert-no-more": {
+        "action": "ui.wait_for",
+        "selector": "[data-testid=\"perps-products-categories-more-button\"]",
+        "visible": false,
+        "timeout_ms": 20000,
+        "intent": "No More menu hides chips behind a second click",
+        "next": "ac-products-assert-chip-radius"
+      },
+      "ac-products-wait-crypto": {
+        "action": "ui.wait_for",
+        "test_id": "perps-products-categories-pill-crypto",
+        "text": "Crypto",
+        "expected": "visible",
+        "timeout_ms": 20000,
+        "intent": "The first product chip the design lists is present",
+        "next": "ac-products-wait-forex"
+      },
+      "ac-products-wait-forex": {
+        "action": "ui.wait_for",
+        "test_id": "perps-products-categories-pill-forex",
+        "text": "Forex",
+        "expected": "visible",
+        "timeout_ms": 20000,
+        "intent": "A chip from the design's last wrapped line is on screen too, so nothing was dropped to make room",
+        "next": "ac-products-assert-focusable"
+      },
+      "ac-products-assert-chip-has-glyph": {
+        "action": "ui.wait_for",
+        "selector": "[data-testid=\"perps-products-categories-pill-crypto\"] svg",
+        "expected": "visible",
+        "timeout_ms": 20000,
+        "intent": "Each chip carries the leading glyph the design gives it, not a bare label",
+        "next": "ac-products-wait-crypto"
+      },
+      "ac-products-assert-focusable": {
+        "action": "ui.wait_for",
+        "selector": "button[data-testid=\"perps-products-categories-pill-forex\"]:not([disabled]):not([tabindex=\"-1\"])",
+        "expected": "visible",
+        "timeout_ms": 20000,
+        "intent": "The chip a narrow window used to hide is a real enabled button, so Tab reaches it and Enter activates it",
+        "next": "ac-products-assert-labelled-group"
+      },
+      "ac-products-assert-labelled-group": {
+        "action": "ui.wait_for",
+        "selector": "[data-testid=\"perps-products-categories\"][role=\"group\"][aria-label]",
+        "expected": "visible",
+        "timeout_ms": 20000,
+        "intent": "A screen reader announces the chips as one named group rather than loose buttons",
+        "next": "ac-home-clear-capture-orphans"
+      },
+      "ac-nav-press-crypto": {
+        "action": "ui.press",
+        "test_id": "perps-products-categories-pill-crypto",
+        "timeout_ms": 20000,
+        "intent": "Take the route a user takes when they want to browse only crypto markets",
+        "next": "setup-wait-market-list"
+      },
+      "ac-nav-assert-crypto-active": {
+        "action": "ui.wait_for",
+        "selector": "[data-testid=\"market-list-categories-pill-crypto\"][aria-pressed=\"true\"]",
+        "expected": "visible",
+        "timeout_ms": 20000,
+        "intent": "The Products chip landed the user on the market list already narrowed to Crypto, with that pill reporting itself as the filter in force",
+        "next": "ac-filter-clear-capture-orphans"
+      },
+      "ac-clear-press-crypto": {
+        "action": "ui.press",
+        "test_id": "market-list-categories-pill-crypto",
+        "timeout_ms": 20000,
+        "intent": "A user who wants every market back reaches for the pill already in force",
+        "next": "ac-clear-assert-filter-released"
+      },
+      "ac-clear-assert-filter-released": {
+        "action": "ui.wait_for",
+        "selector": "[data-testid=\"market-list-categories-pill-crypto\"][aria-pressed=\"false\"]",
+        "expected": "visible",
+        "timeout_ms": 20000,
+        "intent": "The filter clears from the active pill, so no category can leave the list stuck",
+        "next": "ac-width-narrow"
+      },
+      "ac-pills-assert-single-row": {
+        "action": "ui.wait_for",
+        "test_id": "market-list-categories-row",
+        "expected": "visible",
+        "timeout_ms": 20000,
+        "intent": "The filters sit in the measured row the More menu is computed against",
+        "next": "ac-pills-assert-no-horizontal-scroller"
+      },
+      "ac-pills-assert-filter-radius": {
+        "action": "ui.wait_for",
+        "selector": "[data-testid=\"market-list-categories-pill-crypto\"].rounded-lg",
+        "expected": "visible",
+        "timeout_ms": 20000,
+        "intent": "The market list filter is the 8px-radius button the design draws, not the tab\u2019s full lozenge",
+        "next": "ac-pills-wait-crypto"
+      },
+      "ac-products-assert-chip-radius": {
+        "action": "ui.wait_for",
+        "selector": "[data-testid=\"perps-products-categories-pill-crypto\"].rounded-full",
+        "expected": "visible",
+        "timeout_ms": 20000,
+        "intent": "The Products chip is the fully rounded lozenge the design draws for the tab",
+        "next": "ac-products-assert-chip-has-glyph"
+      },
+      "ac-sort-open-modal": {
+        "action": "ui.press",
+        "test_id": "sort-dropdown-button",
+        "timeout_ms": 20000,
+        "intent": "A user reaching for how the list is ranked opens the sort modal",
+        "next": "ac-sort-wait-modal"
+      },
+      "ac-sort-wait-modal": {
+        "action": "ui.wait_for",
+        "test_id": "sort-field-option-volume",
+        "expected": "visible",
+        "timeout_ms": 20000,
+        "intent": "The sort choice is offered as a list of fields in a modal, as the design specifies",
+        "next": "ac-sort-assert-direction-inline"
+      },
+      "ac-sort-assert-direction-inline": {
+        "action": "ui.wait_for",
+        "selector": "[data-testid=\"sort-field-option-volume\"] [data-testid=\"sort-field-direction\"]",
+        "expected": "visible",
+        "timeout_ms": 20000,
+        "intent": "The rank travels with the field in force instead of sitting in its own section",
+        "next": "ac-sort-assert-no-rank-section"
+      },
+      "ac-sort-assert-no-rank-section": {
+        "action": "ui.wait_for",
+        "selector": "[data-testid=\"sort-direction-desc\"]",
+        "visible": false,
+        "timeout_ms": 20000,
+        "intent": "No separate rank list survives, which is what the shipped modal had and the design does not",
+        "next": "ac-sort-clear-capture-orphans"
+      },
+      "ac-sort-clear-capture-orphans": {
+        "action": "command",
+        "cmd": "pkill -9 -f 'capture-helper' || true",
+        "intent": "Keep the upcoming capture on the real screenshot provider instead of a silent fallback",
+        "next": "ac-sort-screenshot"
+      },
+      "ac-sort-screenshot": {
+        "action": "ui.screenshot",
+        "path": "screenshots/evidence-sort-modal-direction-inline.png",
+        "label": "Sort by modal: one list, with the selected field carrying High to low inline",
+        "intent": "Show the reader the sort modal as the design specifies it",
+        "next": "ac-stuck-filter-run-test"
+      },
+      "ac-sort-run-test": {
+        "action": "command",
+        "cmd": "yarn jest ui/pages/perps/market-list/components/sort-dropdown --no-coverage -t 'direction' 2>&1",
+        "timeout_ms": 900000,
+        "intent": "Show that the rank is bound to the selected field at the component\u2019s own boundary",
+        "next": "ac-sort-assert-test-ran"
+      },
+      "ac-sort-assert-test-ran": {
+        "action": "assert_output",
+        "node": "ac-sort-run-test",
+        "contains": "3 passed",
+        "intent": "Refuse to count a title filter that silently matched nothing, and catch any of the three inline-direction guards being dropped",
+        "next": "ac-sort-assert-test-passed"
+      },
+      "ac-sort-assert-test-passed": {
+        "action": "assert_exit_code",
+        "node": "ac-sort-run-test",
+        "expected": 0,
+        "intent": "The inline-direction assertions actually passed",
+        "next": "ac-more-run-test"
+      },
+      "ac-more-run-test": {
+        "action": "command",
+        "cmd": "yarn jest ui/components/app/perps/perps-market-categories/perps-category-rail.test.tsx --no-coverage -t 'More trigger' 2>&1",
+        "timeout_ms": 900000,
+        "intent": "Show that an overflowed filter still reads as in force on the rail rather than disappearing into the menu",
+        "next": "ac-more-assert-test-ran"
+      },
+      "ac-more-assert-test-ran": {
+        "action": "assert_output",
+        "node": "ac-more-run-test",
+        "contains": "2 passed",
+        "intent": "Refuse to count a title filter that silently matched nothing as proof",
+        "next": "ac-more-assert-test-passed"
+      },
+      "ac-more-assert-test-passed": {
+        "action": "assert_exit_code",
+        "node": "ac-more-run-test",
+        "expected": 0,
+        "intent": "The overflowed-selection assertions actually passed",
+        "next": "teardown-close-sort-modal"
+      },
+      "ac-products-settle": {
+        "action": "wait",
+        "duration_ms": 3000,
+        "intent": "Let the live market stream settle so the chips are judged after their last re-render",
+        "next": "ac-products-assert-heading"
+      },
+      "ac-width-narrow": {
+        "action": "command",
+        "cmd": "node temp/tasks/fix/45956-0910-180515/scripts/resize-window.js 430 1100",
+        "intent": "Put the window at the popup width where the rail cannot fit every category",
+        "next": "ac-width-narrow-settle"
+      },
+      "ac-width-narrow-settle": {
+        "action": "wait",
+        "duration_ms": 2500,
+        "intent": "Let the rail re-measure against the new width before it is judged",
+        "next": "ac-narrow-assert-more"
+      },
+      "ac-narrow-assert-more": {
+        "action": "ui.wait_for",
+        "test_id": "market-list-categories-more-button",
+        "expected": "visible",
+        "timeout_ms": 20000,
+        "intent": "At popup width the categories that do not fit are reachable through a More menu",
+        "next": "ac-narrow-clear-orphans"
+      },
+      "ac-narrow-clear-orphans": {
+        "action": "command",
+        "cmd": "pkill -9 -f 'capture-helper' || true",
+        "intent": "Keep the upcoming capture on the real screenshot provider instead of a silent fallback",
+        "next": "ac-narrow-screenshot"
+      },
+      "ac-narrow-screenshot": {
+        "action": "ui.screenshot",
+        "path": "screenshots/evidence-market-list-narrow-more.png",
+        "label": "Popup width: the categories that do not fit move into a More menu",
+        "intent": "Show the reader the overflow the design specifies for a narrow window",
+        "next": "ac-more-open"
+      },
+      "ac-more-open": {
+        "action": "ui.press",
+        "test_id": "market-list-categories-more-button",
+        "timeout_ms": 20000,
+        "intent": "A user looking for a category that is not on the rail opens the menu",
+        "next": "ac-more-pick-forex"
+      },
+      "ac-more-pick-forex": {
+        "action": "ui.press",
+        "test_id": "market-list-categories-more-option-forex",
+        "timeout_ms": 20000,
+        "intent": "Choose a category that only exists inside the menu",
+        "next": "ac-more-selected-settle"
+      },
+      "ac-more-selected-settle": {
+        "action": "wait",
+        "duration_ms": 1500,
+        "intent": "Let the list settle on the newly chosen category",
+        "next": "ac-more-assert-trigger-marked"
+      },
+      "ac-more-assert-trigger-marked": {
+        "action": "ui.wait_for",
+        "selector": "[data-testid=\"market-list-categories-more-button\"].bg-icon-default",
+        "expected": "visible",
+        "timeout_ms": 20000,
+        "intent": "The trigger marks itself so the filter in force is visible even though its pill lives in the menu",
+        "next": "ac-more-selected-clear-orphans"
+      },
+      "ac-more-selected-clear-orphans": {
+        "action": "command",
+        "cmd": "pkill -9 -f 'capture-helper' || true",
+        "intent": "Keep the upcoming capture on the real screenshot provider instead of a silent fallback",
+        "next": "ac-more-selected-screenshot"
+      },
+      "ac-more-selected-screenshot": {
+        "action": "ui.screenshot",
+        "path": "screenshots/evidence-market-list-more-selected.png",
+        "label": "A category chosen from More: the trigger is highlighted to show it holds the filter",
+        "intent": "Show the reader that an overflowed selection is still visible on the rail",
+        "next": "ac-width-wide"
+      },
+      "ac-width-wide": {
+        "action": "command",
+        "cmd": "node temp/tasks/fix/45956-0910-180515/scripts/resize-window.js 1280 1100",
+        "intent": "Widen the window to the size where every category fits",
+        "next": "ac-width-wide-remount"
+      },
+      "ac-width-wide-remount": {
+        "action": "ui.navigate",
+        "page": "perps-market-list",
+        "intent": "Return to an unfiltered list so the wide layout is judged on its own",
+        "next": "ac-width-wide-settle"
+      },
+      "ac-width-wide-settle": {
+        "action": "wait",
+        "duration_ms": 3000,
+        "intent": "Let the rail re-measure against the wider window",
+        "next": "ac-wide-assert-no-more"
+      },
+      "ac-wide-assert-no-more": {
+        "action": "ui.wait_for",
+        "selector": "[data-testid=\"market-list-categories-more-button\"]",
+        "visible": false,
+        "timeout_ms": 20000,
+        "intent": "At a wider window every category fits and no overflow trigger is rendered at all",
+        "next": "ac-wide-clear-orphans"
+      },
+      "ac-wide-clear-orphans": {
+        "action": "command",
+        "cmd": "pkill -9 -f 'capture-helper' || true",
+        "intent": "Keep the upcoming capture on the real screenshot provider instead of a silent fallback",
+        "next": "ac-wide-screenshot"
+      },
+      "ac-wide-screenshot": {
+        "action": "ui.screenshot",
+        "path": "screenshots/evidence-market-list-wide-no-more.png",
+        "label": "Full width: every category fits on the row and no More trigger is rendered",
+        "intent": "Show the reader the same rail with nothing hidden when there is room",
+        "next": "ac-sort-open-modal"
+      },
+      "teardown-close-sort-modal": {
+        "action": "ui.press",
+        "test_id": "sort-modal-cancel",
+        "timeout_ms": 20000,
+        "intent": "Leave the list as the user found it rather than behind an open modal",
+        "next": "teardown-restore-width"
+      },
+      "teardown-restore-width": {
+        "action": "command",
+        "cmd": "node temp/tasks/fix/45956-0910-180515/scripts/resize-window.js 1280 1100",
+        "intent": "Return the window to its normal width for whatever runs next",
         "next": "teardown-return-to-perps-tab"
       },
       "teardown-return-to-perps-tab": {
         "action": "ui.navigate",
         "page": "perps",
-        "intent": "Leave the wallet back on the Perps tab for the next run",
+        "intent": "Leave the wallet on the Perps tab for the next run",
         "next": "done"
-      },
-      "done": {
-        "action": "end",
-        "status": "pass"
       }
     }
   }
