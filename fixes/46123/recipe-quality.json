@@ -4,18 +4,15 @@
   "compact": {
     "verdict": "WARN",
     "reasons": [
-      "The inherited 27-node recipe could not be executed: all 13 of its command nodes invoke temp/tasks/feat/tat-3857-0908-110457/artifacts/proof.ts, and that parent task directory was never synced into this slot. TASK.md itself lists 'Task recipe library' under Missing inherited artifacts.",
-      "A 13-node substitute smoke recipe (artifacts/smoke-recipe.json) was authored from the live action manifest and passed 13/13 against a clean rebuild of the rebased head (exit 0).",
-      "The substitute proves the user-visible outcome of AC1 and AC5: lock, unlock, dwell 4s on Home without visiting any Perps route, then enter Perps and observe live positively-priced market rows, plus a populated market browser.",
-      "Both screenshots carry metadata.provider=capture-helper in artifact-manifest.json, so they are genuine captures rather than the silent Page.captureScreenshot fallback.",
-      "Coverage is narrower than the inherited recipe's: AC2 (lazy layout), AC3 (shared trace routing), AC4 (cold/warm/background-resume context) and AC6 (AccountOverviewPerpsTab unchanged) are NOT re-proven this round and remain on the inherited recorded-run evidence.",
-      "The substitute is not a latency benchmark and does not re-measure the medians in the PR description; it establishes functional readiness only.",
-      "mm-harness run --plan passes on the inherited recipe despite it being unrunnable, because plan validation does not resolve command-node script paths — a green plan was not sufficient evidence here."
+      "The inherited family recipe could not be executed: all 13 of its command nodes invoke node temp/tasks/feat/tat-3857-0908-110457/artifacts/proof.ts, which does not exist on disk, was never committed (git log --all --diff-filter=A finds no such path), and is not among the staged inherited artifacts.",
+      "No fallback smoke recipe was available either; this checkout has no recipes/ directory, so recipes/perps-lifecycle.recipe.json could not be run.",
+      "Feature-level AC1-AC6 retain inherited PROVEN status from the original family run under artifacts/recipe-runs/inherited-ccbfa41b-3c1c-404d-9205-9a2eb5cce54c/; this run re-proved none of them and makes no new claim about them.",
+      "The two files changed in this run (shared/lib/trace.ts enum ordering, app/scripts/lib/sentry-traces-sampler.ts sample rates) do not touch the preload or trace-emission code paths those ACs cover, so the inherited evidence is not invalidated by these changes.",
+      "This run's own changes are proven by state evidence rather than runtime capture: 38 passing sampler unit and integration tests including a new case asserting the Perps preload names sample strictly below the default rate and cannot be bypassed by a sampled parent; an enum-member-set comparison showing the reorder is a no-op (124 identical members); and mm-harness check diff --profile fast passing eslint, oxfmt, jest and policy-suppressions.",
+      "The sampler change is not runtime-observable in this slot: no Sentry DSN is configured, so Sentry is inert in the dev build (globalThis.sentry is undefined) and the sampler module is not bundled into runtime-dist. This is recorded as a reasoned N/A rather than an untested claim.",
+      "Non-regression after the rebase onto origin/main was confirmed live: webpack compiled successfully, mm-harness doctor --expect-live returned ready/healthy, and a CDP probe reached the extension home route with the wallet fixture validated at 42 accounts."
     ],
-    "better_version_guidance": [
-      "Sync the family's task recipe library (or inline proof.ts into this task's artifacts) so the 27-node recipe with its trace-level assertions can run in a follow-up round and re-prove AC2, AC3, AC4 and AC6 on the rebased head.",
-      "Add a trace-span assertion to the substitute recipe so entry-readiness can be proven from observed spans rather than only from rendered DOM."
-    ]
+    "better_version_guidance": []
   },
   "dimensions": {},
   "structural_findings": [],

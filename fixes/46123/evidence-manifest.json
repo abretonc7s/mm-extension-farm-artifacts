@@ -1,20 +1,17 @@
 {
   "version": 1,
   "preferred_mode": "screenshots",
-  "summary": "On the rebased head, Perps renders live positively-priced market rows on first entry after an unlock during which no Perps route was visited. Trace-level acceptance criteria are not re-proven this round because the inherited recipe's proof.ts driver was not synced into this slot.",
+  "summary": "Review-fix run. Its own two changes (Perps trace-enum ordering, Perps preload sample-rate throttle) are proved by state evidence: 38 passing sampler unit/integration tests, an enum-member-set equality check, and a passing bounded diff gate. The inherited feature-level screenshot is carried forward unchanged as context for AC5; it was captured by the original family run and was NOT re-captured here, because the inherited recipe's proof.ts harness no longer exists on disk.",
   "standalone": [
     {
-      "label": "Perps home on first entry after unlock-triggered preload",
-      "file": "recipe-run/artifacts/perps-home-after-preload.png"
-    },
-    {
-      "label": "Perps market browser with populated live rows",
-      "file": "recipe-run/artifacts/perps-market-list.png"
+      "label": "Perps Home with populated market rows (inherited from the original family run; not re-captured in this run)",
+      "file": "recipe-runs/inherited-ccbfa41b-3c1c-404d-9205-9a2eb5cce54c/recorded-recipe-run/screenshots/evidence-ac5-live-markets.png"
     }
   ],
   "videos": {
+    "after": "recipe-runs/inherited-ccbfa41b-3c1c-404d-9205-9a2eb5cce54c/after.mp4",
     "preferred": false,
-    "note": "No recording captured this round; the two capture-helper screenshots are the visual evidence."
+    "note": "Inherited capture-helper recording of the original 27-node journey. Carried forward as context only; this review-fix run performed no new recording."
   },
   "omit": []
 }

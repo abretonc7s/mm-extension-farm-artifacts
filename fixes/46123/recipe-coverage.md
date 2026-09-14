@@ -1,38 +1,39 @@
-# Acceptance evidence — PR-complete round (rebased head)
+# Recipe coverage — pr-complete run 52d79fc1 (PR #46123)
 
-The inherited 27-node recipe could **not** be executed this round: all 13 of its
-`command` nodes invoke `temp/tasks/feat/tat-3857-0908-110457/artifacts/proof.ts`,
-and that parent task directory was never synced into this slot. TASK.md lists
-"Task recipe library" under **Missing inherited artifacts**, and the module is
-confirmed absent. `--plan` passes on that recipe because plan validation does not
-resolve command-node script paths.
+This is a **review-fix run**, not a feature run. Its proof targets are the two code changes
+made here, plus a non-regression check on the branch after rebasing onto `origin/main`.
+The inherited feature-level recipe was **not re-executed** — see "Why the recipe did not
+run" below.
 
-A substitute smoke recipe (`artifacts/smoke-recipe.json`, 13 nodes) was authored
-from the live action manifest and run against a clean rebuild of the rebased
-head. Its coverage is **narrower than the inherited recipe's** and is stated as
-such below — it re-proves the user-visible outcome, not the trace-level ACs.
+## Proof targets for this run's changes
 
-| AC | Claim | Mode | Nodes | Primary evidence | Result |
-| --- | --- | --- | --- | --- | --- |
-| AC1 | Unlock starts market/price loading before any Perps navigation | mixed | lock, unlock, settle-on-home, dwell-on-home, enter-perps, perps-home-state | recipe-run/summary.json, recipe-run/artifacts/perps-home-after-preload.png | PROVEN (behaviourally) |
-| AC5 | Perps entry completes with live, positively-priced market rows | mixed | perps-home-state, screenshot-perps-home | recipe-run/artifacts/perps-home-after-preload.png | PROVEN |
-| AC5b | The full market browser renders a populated live market list | mixed | open-market-list, market-list-state, screenshot-market-list | recipe-run/artifacts/perps-market-list.png | PROVEN |
-| AC2 | PerpsLayout remains lazy | — | — | — | NOT RE-PROVEN this round (no `proof.ts` driver) |
-| AC3 | Mobile trace names route through shared `trace`/`endTrace` | — | — | — | NOT RE-PROVEN this round (no `proof.ts` driver) |
-| AC4 | Cold / warm / background-resume contexts stay distinct | — | — | — | NOT RE-PROVEN this round (no `proof.ts` driver) |
-| AC6 | `AccountOverviewPerpsTab` unchanged | — | — | — | NOT RE-PROVEN this round (no `proof.ts` driver) |
+| # | Claim | Mode | Evidence | Result |
+| --- | --- | --- | --- | --- |
+| C1 | The three high-volume Perps preload transactions sample strictly below the default rate | state | `yarn jest app/scripts/lib/sentry-traces-sampler.test.ts` — new case "throttles the Perps preload transactions below the default rate"; 34 passed | PROVEN |
+| C2 | A pinned preload rate is not bypassed by a sampled parent transaction | state | Same test, `sampler({ name, parentSampled: true })` asserted below default; exercises `getTransactionSampleRate`'s per-name branch ahead of the `parentSampled` branch (`sentry-traces-sampler.ts:95-110`) | PROVEN |
+| C3 | Sentry init still constructs a working sampler with the new entries | state | `yarn jest app/scripts/lib/sentry-traces-sampler.integration.test.ts` — 4 passed | PROVEN |
+| C4 | The `TraceName` enum reorder is semantically a no-op | state | Parsed the enum body at `HEAD` and in the working tree: identical 124-member set, same names and values | PROVEN |
+| C5 | The sampler module does not import `shared/lib/trace` (Sentry-bootstrap cycle) | state | String literals used instead of `TraceName`; `yarn circular-deps:check` → "Circular dependencies check passed" | PROVEN |
+| C6 | Changed files pass the repo's bounded quality gate | state | `mm-harness check diff --profile fast` → eslint pass, oxfmt pass, jest pass, policy-suppressions pass (`artifacts/check-diff/validation-summary.json`) | PROVEN |
+| C7 | New code meets the 80% coverage threshold | state | `node temp/recipe/runtime/coverage-analyze.js` → "VERDICT: PASS" | PROVEN |
+| C8 | The branch still builds and runs after the rebase + these changes | mixed | Webpack "compiled successfully in 106275 ms"; `mm-harness doctor --expect-live` → `ready: true`, decision `ready`/`healthy`; live CDP probe returned `chrome-extension://…/home.html#/`, title `macpro-mme-2 — MetaMask`; fixture validated (accounts=42, selected=Account 1) | PROVEN |
+| C9 | The sampler change behaves correctly in the running extension | visual | **N/A — reasoned.** Not observable in this slot: no Sentry DSN is configured, so Sentry is inert in the dev build (`typeof globalThis.sentry === 'undefined'`) and the sampler module is not bundled into `runtime-dist`. Covered by C1-C3 instead. | N/A |
 
-13/13 nodes pass in `recipe-run/summary.json` (exit 0). Both screenshots carry
-`metadata.provider: capture-helper` in `recipe-run/artifact-manifest.json`, so
-they are genuine captures, not the silent `Page.captureScreenshot` fallback.
+## Why the inherited recipe did not run
 
-**What AC1 does and does not establish here.** The recipe locks the wallet,
-unlocks it, waits on the wallet-home UI, dwells 4 s **without visiting any Perps
-route**, and only then navigates to Perps, where live priced rows are already
-rendered. That reproduces the user-visible outcome of the delayed-cold-entry flow
-the PR measures. It is *not* a latency benchmark and does not re-measure the
-medians in the PR description, and it does not inspect trace spans — the
-trace-level ACs above stay on the inherited evidence from the recorded run.
+`artifacts/recipe.json` (`RECIPE_SOURCE: family-inherited`, byte-identical to
+`inputs/inherited/recipe.json`) is unrunnable in this checkout. All 13 of its `command`
+nodes invoke `node temp/tasks/feat/tat-3857-0908-110457/artifacts/proof.ts <mode>`, and
+that harness script does not exist: the original family task directory was cleaned up,
+`proof.ts` was never committed (`git log --all --diff-filter=A -- '*artifacts/proof.ts'`
+returns nothing), and it is not among the staged inherited artifacts. The documented
+smoke-test fallback (`recipes/perps-lifecycle.recipe.json`) is also absent — this checkout
+has no `recipes/` directory.
 
-Unchanged from the inherited assessment: remote Sentry ingestion and unbiased
-latency remain unproven.
+The feature-level ACs (AC1-AC6) therefore retain their **inherited** PROVEN status from the
+original run, preserved unmodified under
+`artifacts/recipe-runs/inherited-ccbfa41b-3c1c-404d-9205-9a2eb5cce54c/` and referenced by
+`artifacts/latest-valid-recipe-run.json`. This run makes **no new claim** about them; it
+neither re-proved nor invalidated them. The two files changed here
+(`shared/lib/trace.ts` enum ordering, `app/scripts/lib/sentry-traces-sampler.ts` sample
+rates) do not touch the preload or trace-emission code paths those ACs cover.
