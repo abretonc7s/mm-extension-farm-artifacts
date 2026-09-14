@@ -11,21 +11,21 @@
       "nodeId": "setup-unlock",
       "action": "metamask.wallet.ensure_unlocked",
       "intent": "Make the wallet usable so Perps can load",
-      "startedAt": "2026-09-10T13:25:20.769Z",
-      "endedAt": "2026-09-10T13:25:20.839Z",
-      "durationMs": 70,
+      "startedAt": "2026-09-14T08:16:12.443Z",
+      "endedAt": "2026-09-14T08:16:12.777Z",
+      "durationMs": 334,
       "ok": true,
       "next": "setup-select-unfunded",
       "output": {
         "action": "metamask.wallet.ensure_unlocked",
         "unlocked": true,
-        "alreadyUnlocked": true,
-        "proofPath": "extension-unlocked-state",
-        "cdpPort": 7662,
-        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/",
+        "redacted": true,
+        "proofPath": "extension-password-unlock",
+        "cdpPort": 7664,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/unlock",
         "runtimeLaunch": null,
-        "cdpTargetId": "FBB4A5D58A441B1612337F38576F6408",
-        "runtimeSessionId": "0b4044af-6b2a-4fec-b1b7-c67d24d4d7ef",
+        "cdpTargetId": "2C1956F121B088D019D6389A1F594C00",
+        "runtimeSessionId": "3c0f6ce7-bc87-48c6-b37f-9a633d6a783c",
         "liveAdapter": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/actions/extension/wallet/ensure_unlocked.mjs"
       }
     },
@@ -33,9 +33,9 @@
       "nodeId": "setup-select-unfunded",
       "action": "metamask.wallet.select_account",
       "intent": "Select the fixture unfunded Perps wallet (dev6) instead of assuming Account 2 has a zero balance",
-      "startedAt": "2026-09-10T13:25:20.846Z",
-      "endedAt": "2026-09-10T13:25:21.233Z",
-      "durationMs": 387,
+      "startedAt": "2026-09-14T08:16:12.787Z",
+      "endedAt": "2026-09-14T08:16:13.711Z",
+      "durationMs": 924,
       "ok": true,
       "next": "setup-open-trade",
       "output": {
@@ -47,11 +47,11 @@
           "type": "eip155:eoa"
         },
         "proofPath": "extension-background-account-selection",
-        "cdpPort": 7662,
+        "cdpPort": 7664,
         "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/",
         "runtimeLaunch": null,
-        "cdpTargetId": "FBB4A5D58A441B1612337F38576F6408",
-        "runtimeSessionId": "0b4044af-6b2a-4fec-b1b7-c67d24d4d7ef",
+        "cdpTargetId": "2C1956F121B088D019D6389A1F594C00",
+        "runtimeSessionId": "3c0f6ce7-bc87-48c6-b37f-9a633d6a783c",
         "liveAdapter": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/actions/extension/wallet/select_account.mjs"
       }
     },
@@ -59,9 +59,9 @@
       "nodeId": "setup-open-trade",
       "action": "ui.navigate",
       "intent": "Land on the BTC long order form",
-      "startedAt": "2026-09-10T13:25:21.242Z",
-      "endedAt": "2026-09-10T13:25:21.345Z",
-      "durationMs": 103,
+      "startedAt": "2026-09-14T08:16:13.723Z",
+      "endedAt": "2026-09-14T08:16:13.845Z",
+      "durationMs": 122,
       "ok": true,
       "next": "setup-wait-form",
       "output": {
@@ -73,97 +73,26 @@
           "sameDocument": true
         },
         "proofPath": "ui-navigation",
-        "cdpPort": 7662,
+        "cdpPort": 7664,
         "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/",
         "runtimeLaunch": null,
-        "cdpTargetId": "FBB4A5D58A441B1612337F38576F6408",
-        "runtimeSessionId": "0b4044af-6b2a-4fec-b1b7-c67d24d4d7ef",
+        "cdpTargetId": "2C1956F121B088D019D6389A1F594C00",
+        "runtimeSessionId": "3c0f6ce7-bc87-48c6-b37f-9a633d6a783c",
         "liveAdapter": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/actions/extension/ui/navigate.mjs"
       },
       "observations": {
         "ui.screen": {
           "provider": "cdp-web",
-          "name": "macpro-mme-2 — MetaMask",
-          "title": "macpro-mme-2 — MetaMask",
+          "name": "macpro-mme-4 — MetaMask",
+          "title": "macpro-mme-4 — MetaMask",
           "route": "#/perps/trade/BTC",
           "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
         },
         "ui.visible": {
           "provider": "cdp-web",
           "items": [],
-          "hidden_or_offscreen": [
-            {
-              "role": "button",
-              "test_id": "app-header-logo",
-              "selector": "[data-testid=\"app-header-logo\"]",
-              "enabled": true,
-              "reason": "hidden_or_no_box"
-            },
-            {
-              "role": "button",
-              "test_id": "account-menu-icon",
-              "selector": "[data-testid=\"account-menu-icon\"]",
-              "enabled": true,
-              "reason": "hidden_or_no_box"
-            },
-            {
-              "role": "button",
-              "test_id": "discover-search-button",
-              "selector": "[data-testid=\"discover-search-button\"]",
-              "enabled": true,
-              "reason": "hidden_or_no_box"
-            },
-            {
-              "role": "button",
-              "test_id": "account-options-menu-button",
-              "selector": "[data-testid=\"account-options-menu-button\"]",
-              "enabled": true,
-              "reason": "hidden_or_no_box"
-            },
-            {
-              "role": "button",
-              "test_id": "drawer-close-button",
-              "selector": "[data-testid=\"drawer-close-button\"]",
-              "enabled": true,
-              "reason": "hidden_or_no_box"
-            },
-            {
-              "role": "button",
-              "test_id": "notifications-menu-item",
-              "selector": "[data-testid=\"notifications-menu-item\"]",
-              "enabled": true,
-              "reason": "hidden_or_no_box"
-            },
-            {
-              "role": "button",
-              "test_id": "discover",
-              "selector": "[data-testid=\"discover\"]",
-              "enabled": true,
-              "reason": "hidden_or_no_box"
-            },
-            {
-              "role": "link",
-              "test_id": "global-menu-contacts",
-              "selector": "[data-testid=\"global-menu-contacts\"]",
-              "enabled": true,
-              "reason": "hidden_or_no_box"
-            },
-            {
-              "role": "link",
-              "test_id": "global-menu-connected-sites",
-              "selector": "[data-testid=\"global-menu-connected-sites\"]",
-              "enabled": true,
-              "reason": "hidden_or_no_box"
-            },
-            {
-              "role": "link",
-              "test_id": "global-menu-networks",
-              "selector": "[data-testid=\"global-menu-networks\"]",
-              "enabled": true,
-              "reason": "hidden_or_no_box"
-            }
-          ],
-          "truncated": true,
+          "hidden_or_offscreen": [],
+          "truncated": false,
           "limits": {
             "items": 20,
             "hidden_or_offscreen": 10
@@ -175,24 +104,24 @@
       "nodeId": "setup-wait-form",
       "action": "ui.wait_for",
       "intent": "The sticky footer submit control is visible",
-      "startedAt": "2026-09-10T13:25:21.366Z",
-      "endedAt": "2026-09-10T13:25:24.428Z",
-      "durationMs": 3062,
+      "startedAt": "2026-09-14T08:16:13.854Z",
+      "endedAt": "2026-09-14T08:16:16.037Z",
+      "durationMs": 2183,
       "ok": true,
       "next": "setup-wait-zero-balance",
       "output": {
         "matched": true,
-        "cdpPort": 7662,
+        "cdpPort": 7664,
         "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/BTC?direction=long&mode=new",
         "runtimeLaunch": null,
-        "cdpTargetId": "FBB4A5D58A441B1612337F38576F6408",
-        "runtimeSessionId": "0b4044af-6b2a-4fec-b1b7-c67d24d4d7ef"
+        "cdpTargetId": "2C1956F121B088D019D6389A1F594C00",
+        "runtimeSessionId": "3c0f6ce7-bc87-48c6-b37f-9a633d6a783c"
       },
       "observations": {
         "ui.screen": {
           "provider": "cdp-web",
-          "name": "macpro-mme-2 — MetaMask",
-          "title": "macpro-mme-2 — MetaMask",
+          "name": "macpro-mme-4 — MetaMask",
+          "title": "macpro-mme-4 — MetaMask",
           "route": "#/perps/trade/BTC",
           "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
         },
@@ -207,7 +136,7 @@
               "enabled": true,
               "bounds": {
                 "x": 217,
-                "y": 21,
+                "y": -9,
                 "width": 36,
                 "height": 36
               }
@@ -220,7 +149,7 @@
               "enabled": true,
               "bounds": {
                 "x": 907,
-                "y": 21,
+                "y": -9,
                 "width": 36,
                 "height": 36
               }
@@ -233,7 +162,7 @@
               "enabled": true,
               "bounds": {
                 "x": 947,
-                "y": 21,
+                "y": -9,
                 "width": 36,
                 "height": 36
               }
@@ -246,7 +175,7 @@
               "enabled": true,
               "bounds": {
                 "x": 217,
-                "y": 344,
+                "y": 56,
                 "width": 62,
                 "height": 34
               }
@@ -259,7 +188,7 @@
               "enabled": true,
               "bounds": {
                 "x": 283,
-                "y": 344,
+                "y": 56,
                 "width": 65,
                 "height": 34
               }
@@ -272,7 +201,7 @@
               "enabled": true,
               "bounds": {
                 "x": 351,
-                "y": 344,
+                "y": 56,
                 "width": 64,
                 "height": 34
               }
@@ -285,7 +214,7 @@
               "enabled": true,
               "bounds": {
                 "x": 419,
-                "y": 344,
+                "y": 56,
                 "width": 70,
                 "height": 34
               }
@@ -298,7 +227,7 @@
               "enabled": true,
               "bounds": {
                 "x": 493,
-                "y": 344,
+                "y": 56,
                 "width": 82,
                 "height": 34
               }
@@ -311,7 +240,7 @@
               "enabled": true,
               "bounds": {
                 "x": 222,
-                "y": 390,
+                "y": 360,
                 "width": 378,
                 "height": 32
               }
@@ -324,7 +253,7 @@
               "enabled": true,
               "bounds": {
                 "x": 600,
-                "y": 390,
+                "y": 360,
                 "width": 378,
                 "height": 32
               }
@@ -337,7 +266,7 @@
               "enabled": true,
               "bounds": {
                 "x": 217,
-                "y": 442,
+                "y": 412,
                 "width": 79,
                 "height": 30
               }
@@ -350,7 +279,7 @@
               "enabled": true,
               "bounds": {
                 "x": 304,
-                "y": 442,
+                "y": 412,
                 "width": 64,
                 "height": 30
               }
@@ -363,7 +292,7 @@
               "enabled": true,
               "bounds": {
                 "x": 890,
-                "y": 488,
+                "y": 458,
                 "width": 93,
                 "height": 32
               }
@@ -375,7 +304,7 @@
               "focused": true,
               "bounds": {
                 "x": 265,
-                "y": 532,
+                "y": 502,
                 "width": 644,
                 "height": 40
               }
@@ -388,7 +317,7 @@
               "enabled": true,
               "bounds": {
                 "x": 947,
-                "y": 542,
+                "y": 512,
                 "width": 20,
                 "height": 20
               }
@@ -398,7 +327,7 @@
               "enabled": true,
               "bounds": {
                 "x": 911,
-                "y": 584,
+                "y": 554,
                 "width": 42,
                 "height": 32
               }
@@ -408,7 +337,7 @@
               "enabled": true,
               "bounds": {
                 "x": 911,
-                "y": 662,
+                "y": 632,
                 "width": 48,
                 "height": 32
               }
@@ -433,7 +362,7 @@
               "enabled": true,
               "bounds": {
                 "x": 223,
-                "y": 598,
+                "y": 568,
                 "width": 12,
                 "height": 12
               },
@@ -444,7 +373,7 @@
               "enabled": true,
               "bounds": {
                 "x": 257,
-                "y": 676,
+                "y": 646,
                 "width": 12,
                 "height": 12
               },
@@ -456,7 +385,7 @@
               "enabled": true,
               "bounds": {
                 "x": 930,
-                "y": 752,
+                "y": 722,
                 "width": 1,
                 "height": 1
               },
@@ -470,7 +399,7 @@
               "enabled": true,
               "bounds": {
                 "x": 331,
-                "y": 801,
+                "y": 771,
                 "width": 16,
                 "height": 16
               },
@@ -484,7 +413,7 @@
               "enabled": true,
               "bounds": {
                 "x": 217,
-                "y": 828,
+                "y": 798,
                 "width": 766,
                 "height": 22
               },
@@ -498,7 +427,7 @@
               "enabled": true,
               "bounds": {
                 "x": 267,
-                "y": 861,
+                "y": 831,
                 "width": 16,
                 "height": 16
               },
@@ -512,7 +441,7 @@
               "enabled": true,
               "bounds": {
                 "x": 252,
-                "y": 891,
+                "y": 861,
                 "width": 16,
                 "height": 16
               },
@@ -531,24 +460,24 @@
       "nodeId": "setup-wait-zero-balance",
       "action": "ui.wait_for",
       "intent": "Available to trade is zero on this wallet",
-      "startedAt": "2026-09-10T13:25:24.441Z",
-      "endedAt": "2026-09-10T13:25:24.813Z",
-      "durationMs": 372,
+      "startedAt": "2026-09-14T08:16:16.049Z",
+      "endedAt": "2026-09-14T08:16:16.641Z",
+      "durationMs": 592,
       "ok": true,
       "next": "ac2-wait-hint",
       "output": {
         "matched": true,
-        "cdpPort": 7662,
+        "cdpPort": 7664,
         "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/BTC?direction=long&mode=new",
         "runtimeLaunch": null,
-        "cdpTargetId": "FBB4A5D58A441B1612337F38576F6408",
-        "runtimeSessionId": "0b4044af-6b2a-4fec-b1b7-c67d24d4d7ef"
+        "cdpTargetId": "2C1956F121B088D019D6389A1F594C00",
+        "runtimeSessionId": "3c0f6ce7-bc87-48c6-b37f-9a633d6a783c"
       },
       "observations": {
         "ui.screen": {
           "provider": "cdp-web",
-          "name": "macpro-mme-2 — MetaMask",
-          "title": "macpro-mme-2 — MetaMask",
+          "name": "macpro-mme-4 — MetaMask",
+          "title": "macpro-mme-4 — MetaMask",
           "route": "#/perps/trade/BTC",
           "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
         },
@@ -563,7 +492,7 @@
               "enabled": true,
               "bounds": {
                 "x": 217,
-                "y": 21,
+                "y": -9,
                 "width": 36,
                 "height": 36
               }
@@ -576,7 +505,7 @@
               "enabled": true,
               "bounds": {
                 "x": 907,
-                "y": 21,
+                "y": -9,
                 "width": 36,
                 "height": 36
               }
@@ -589,7 +518,7 @@
               "enabled": true,
               "bounds": {
                 "x": 947,
-                "y": 21,
+                "y": -9,
                 "width": 36,
                 "height": 36
               }
@@ -602,7 +531,7 @@
               "enabled": true,
               "bounds": {
                 "x": 217,
-                "y": 344,
+                "y": 56,
                 "width": 62,
                 "height": 34
               }
@@ -615,7 +544,7 @@
               "enabled": true,
               "bounds": {
                 "x": 283,
-                "y": 344,
+                "y": 56,
                 "width": 65,
                 "height": 34
               }
@@ -628,7 +557,7 @@
               "enabled": true,
               "bounds": {
                 "x": 351,
-                "y": 344,
+                "y": 56,
                 "width": 64,
                 "height": 34
               }
@@ -641,7 +570,7 @@
               "enabled": true,
               "bounds": {
                 "x": 419,
-                "y": 344,
+                "y": 56,
                 "width": 70,
                 "height": 34
               }
@@ -654,7 +583,7 @@
               "enabled": true,
               "bounds": {
                 "x": 493,
-                "y": 344,
+                "y": 56,
                 "width": 82,
                 "height": 34
               }
@@ -667,7 +596,7 @@
               "enabled": true,
               "bounds": {
                 "x": 222,
-                "y": 390,
+                "y": 360,
                 "width": 378,
                 "height": 32
               }
@@ -680,7 +609,7 @@
               "enabled": true,
               "bounds": {
                 "x": 600,
-                "y": 390,
+                "y": 360,
                 "width": 378,
                 "height": 32
               }
@@ -693,7 +622,7 @@
               "enabled": true,
               "bounds": {
                 "x": 217,
-                "y": 442,
+                "y": 412,
                 "width": 79,
                 "height": 30
               }
@@ -706,7 +635,7 @@
               "enabled": true,
               "bounds": {
                 "x": 304,
-                "y": 442,
+                "y": 412,
                 "width": 64,
                 "height": 30
               }
@@ -719,7 +648,7 @@
               "enabled": true,
               "bounds": {
                 "x": 890,
-                "y": 488,
+                "y": 458,
                 "width": 93,
                 "height": 32
               }
@@ -731,7 +660,7 @@
               "focused": true,
               "bounds": {
                 "x": 265,
-                "y": 532,
+                "y": 502,
                 "width": 644,
                 "height": 40
               }
@@ -744,7 +673,7 @@
               "enabled": true,
               "bounds": {
                 "x": 947,
-                "y": 542,
+                "y": 512,
                 "width": 20,
                 "height": 20
               }
@@ -754,7 +683,7 @@
               "enabled": true,
               "bounds": {
                 "x": 911,
-                "y": 584,
+                "y": 554,
                 "width": 42,
                 "height": 32
               }
@@ -764,7 +693,7 @@
               "enabled": true,
               "bounds": {
                 "x": 911,
-                "y": 662,
+                "y": 632,
                 "width": 48,
                 "height": 32
               }
@@ -789,7 +718,7 @@
               "enabled": true,
               "bounds": {
                 "x": 223,
-                "y": 598,
+                "y": 568,
                 "width": 12,
                 "height": 12
               },
@@ -800,7 +729,7 @@
               "enabled": true,
               "bounds": {
                 "x": 257,
-                "y": 676,
+                "y": 646,
                 "width": 12,
                 "height": 12
               },
@@ -812,7 +741,7 @@
               "enabled": true,
               "bounds": {
                 "x": 930,
-                "y": 752,
+                "y": 722,
                 "width": 1,
                 "height": 1
               },
@@ -826,7 +755,7 @@
               "enabled": true,
               "bounds": {
                 "x": 331,
-                "y": 801,
+                "y": 771,
                 "width": 16,
                 "height": 16
               },
@@ -840,7 +769,7 @@
               "enabled": true,
               "bounds": {
                 "x": 217,
-                "y": 828,
+                "y": 798,
                 "width": 766,
                 "height": 22
               },
@@ -854,7 +783,7 @@
               "enabled": true,
               "bounds": {
                 "x": 267,
-                "y": 861,
+                "y": 831,
                 "width": 16,
                 "height": 16
               },
@@ -868,7 +797,7 @@
               "enabled": true,
               "bounds": {
                 "x": 252,
-                "y": 891,
+                "y": 861,
                 "width": 16,
                 "height": 16
               },
@@ -890,24 +819,24 @@
       "proves": [
         "ac2-enabled-add-funds-cta"
       ],
-      "startedAt": "2026-09-10T13:25:24.822Z",
-      "endedAt": "2026-09-10T13:25:25.192Z",
-      "durationMs": 370,
+      "startedAt": "2026-09-14T08:16:16.652Z",
+      "endedAt": "2026-09-14T08:16:17.023Z",
+      "durationMs": 371,
       "ok": true,
       "next": "ac2-wait-cta",
       "output": {
         "matched": true,
-        "cdpPort": 7662,
+        "cdpPort": 7664,
         "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/BTC?direction=long&mode=new",
         "runtimeLaunch": null,
-        "cdpTargetId": "FBB4A5D58A441B1612337F38576F6408",
-        "runtimeSessionId": "0b4044af-6b2a-4fec-b1b7-c67d24d4d7ef"
+        "cdpTargetId": "2C1956F121B088D019D6389A1F594C00",
+        "runtimeSessionId": "3c0f6ce7-bc87-48c6-b37f-9a633d6a783c"
       },
       "observations": {
         "ui.screen": {
           "provider": "cdp-web",
-          "name": "macpro-mme-2 — MetaMask",
-          "title": "macpro-mme-2 — MetaMask",
+          "name": "macpro-mme-4 — MetaMask",
+          "title": "macpro-mme-4 — MetaMask",
           "route": "#/perps/trade/BTC",
           "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
         },
@@ -922,7 +851,7 @@
               "enabled": true,
               "bounds": {
                 "x": 217,
-                "y": 21,
+                "y": -9,
                 "width": 36,
                 "height": 36
               }
@@ -935,7 +864,7 @@
               "enabled": true,
               "bounds": {
                 "x": 907,
-                "y": 21,
+                "y": -9,
                 "width": 36,
                 "height": 36
               }
@@ -948,7 +877,7 @@
               "enabled": true,
               "bounds": {
                 "x": 947,
-                "y": 21,
+                "y": -9,
                 "width": 36,
                 "height": 36
               }
@@ -961,7 +890,7 @@
               "enabled": true,
               "bounds": {
                 "x": 217,
-                "y": 344,
+                "y": 56,
                 "width": 62,
                 "height": 34
               }
@@ -974,7 +903,7 @@
               "enabled": true,
               "bounds": {
                 "x": 283,
-                "y": 344,
+                "y": 56,
                 "width": 65,
                 "height": 34
               }
@@ -987,7 +916,7 @@
               "enabled": true,
               "bounds": {
                 "x": 351,
-                "y": 344,
+                "y": 56,
                 "width": 64,
                 "height": 34
               }
@@ -1000,7 +929,7 @@
               "enabled": true,
               "bounds": {
                 "x": 419,
-                "y": 344,
+                "y": 56,
                 "width": 70,
                 "height": 34
               }
@@ -1013,7 +942,7 @@
               "enabled": true,
               "bounds": {
                 "x": 493,
-                "y": 344,
+                "y": 56,
                 "width": 82,
                 "height": 34
               }
@@ -1026,7 +955,7 @@
               "enabled": true,
               "bounds": {
                 "x": 222,
-                "y": 390,
+                "y": 360,
                 "width": 378,
                 "height": 32
               }
@@ -1039,7 +968,7 @@
               "enabled": true,
               "bounds": {
                 "x": 600,
-                "y": 390,
+                "y": 360,
                 "width": 378,
                 "height": 32
               }
@@ -1052,7 +981,7 @@
               "enabled": true,
               "bounds": {
                 "x": 217,
-                "y": 442,
+                "y": 412,
                 "width": 79,
                 "height": 30
               }
@@ -1065,7 +994,7 @@
               "enabled": true,
               "bounds": {
                 "x": 304,
-                "y": 442,
+                "y": 412,
                 "width": 64,
                 "height": 30
               }
@@ -1078,7 +1007,7 @@
               "enabled": true,
               "bounds": {
                 "x": 890,
-                "y": 488,
+                "y": 458,
                 "width": 93,
                 "height": 32
               }
@@ -1090,7 +1019,7 @@
               "focused": true,
               "bounds": {
                 "x": 265,
-                "y": 532,
+                "y": 502,
                 "width": 644,
                 "height": 40
               }
@@ -1103,7 +1032,7 @@
               "enabled": true,
               "bounds": {
                 "x": 947,
-                "y": 542,
+                "y": 512,
                 "width": 20,
                 "height": 20
               }
@@ -1113,7 +1042,7 @@
               "enabled": true,
               "bounds": {
                 "x": 911,
-                "y": 584,
+                "y": 554,
                 "width": 42,
                 "height": 32
               }
@@ -1123,7 +1052,7 @@
               "enabled": true,
               "bounds": {
                 "x": 911,
-                "y": 662,
+                "y": 632,
                 "width": 48,
                 "height": 32
               }
@@ -1148,7 +1077,7 @@
               "enabled": true,
               "bounds": {
                 "x": 223,
-                "y": 598,
+                "y": 568,
                 "width": 12,
                 "height": 12
               },
@@ -1159,7 +1088,7 @@
               "enabled": true,
               "bounds": {
                 "x": 257,
-                "y": 676,
+                "y": 646,
                 "width": 12,
                 "height": 12
               },
@@ -1171,7 +1100,7 @@
               "enabled": true,
               "bounds": {
                 "x": 930,
-                "y": 752,
+                "y": 722,
                 "width": 1,
                 "height": 1
               },
@@ -1185,7 +1114,7 @@
               "enabled": true,
               "bounds": {
                 "x": 331,
-                "y": 801,
+                "y": 771,
                 "width": 16,
                 "height": 16
               },
@@ -1199,7 +1128,7 @@
               "enabled": true,
               "bounds": {
                 "x": 217,
-                "y": 828,
+                "y": 798,
                 "width": 766,
                 "height": 22
               },
@@ -1213,7 +1142,7 @@
               "enabled": true,
               "bounds": {
                 "x": 267,
-                "y": 861,
+                "y": 831,
                 "width": 16,
                 "height": 16
               },
@@ -1227,7 +1156,7 @@
               "enabled": true,
               "bounds": {
                 "x": 252,
-                "y": 891,
+                "y": 861,
                 "width": 16,
                 "height": 16
               },
@@ -1249,24 +1178,24 @@
       "proves": [
         "ac2-enabled-add-funds-cta"
       ],
-      "startedAt": "2026-09-10T13:25:25.200Z",
-      "endedAt": "2026-09-10T13:25:25.564Z",
+      "startedAt": "2026-09-14T08:16:17.034Z",
+      "endedAt": "2026-09-14T08:16:17.398Z",
       "durationMs": 364,
       "ok": true,
       "next": "ac2-wait-enabled",
       "output": {
         "matched": true,
-        "cdpPort": 7662,
+        "cdpPort": 7664,
         "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/BTC?direction=long&mode=new",
         "runtimeLaunch": null,
-        "cdpTargetId": "FBB4A5D58A441B1612337F38576F6408",
-        "runtimeSessionId": "0b4044af-6b2a-4fec-b1b7-c67d24d4d7ef"
+        "cdpTargetId": "2C1956F121B088D019D6389A1F594C00",
+        "runtimeSessionId": "3c0f6ce7-bc87-48c6-b37f-9a633d6a783c"
       },
       "observations": {
         "ui.screen": {
           "provider": "cdp-web",
-          "name": "macpro-mme-2 — MetaMask",
-          "title": "macpro-mme-2 — MetaMask",
+          "name": "macpro-mme-4 — MetaMask",
+          "title": "macpro-mme-4 — MetaMask",
           "route": "#/perps/trade/BTC",
           "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
         },
@@ -1281,7 +1210,7 @@
               "enabled": true,
               "bounds": {
                 "x": 217,
-                "y": 21,
+                "y": -9,
                 "width": 36,
                 "height": 36
               }
@@ -1294,7 +1223,7 @@
               "enabled": true,
               "bounds": {
                 "x": 907,
-                "y": 21,
+                "y": -9,
                 "width": 36,
                 "height": 36
               }
@@ -1307,7 +1236,7 @@
               "enabled": true,
               "bounds": {
                 "x": 947,
-                "y": 21,
+                "y": -9,
                 "width": 36,
                 "height": 36
               }
@@ -1320,7 +1249,7 @@
               "enabled": true,
               "bounds": {
                 "x": 217,
-                "y": 344,
+                "y": 56,
                 "width": 62,
                 "height": 34
               }
@@ -1333,7 +1262,7 @@
               "enabled": true,
               "bounds": {
                 "x": 283,
-                "y": 344,
+                "y": 56,
                 "width": 65,
                 "height": 34
               }
@@ -1346,7 +1275,7 @@
               "enabled": true,
               "bounds": {
                 "x": 351,
-                "y": 344,
+                "y": 56,
                 "width": 64,
                 "height": 34
               }
@@ -1359,7 +1288,7 @@
               "enabled": true,
               "bounds": {
                 "x": 419,
-                "y": 344,
+                "y": 56,
                 "width": 70,
                 "height": 34
               }
@@ -1372,7 +1301,7 @@
               "enabled": true,
               "bounds": {
                 "x": 493,
-                "y": 344,
+                "y": 56,
                 "width": 82,
                 "height": 34
               }
@@ -1385,7 +1314,7 @@
               "enabled": true,
               "bounds": {
                 "x": 222,
-                "y": 390,
+                "y": 360,
                 "width": 378,
                 "height": 32
               }
@@ -1398,7 +1327,7 @@
               "enabled": true,
               "bounds": {
                 "x": 600,
-                "y": 390,
+                "y": 360,
                 "width": 378,
                 "height": 32
               }
@@ -1411,7 +1340,7 @@
               "enabled": true,
               "bounds": {
                 "x": 217,
-                "y": 442,
+                "y": 412,
                 "width": 79,
                 "height": 30
               }
@@ -1424,7 +1353,7 @@
               "enabled": true,
               "bounds": {
                 "x": 304,
-                "y": 442,
+                "y": 412,
                 "width": 64,
                 "height": 30
               }
@@ -1437,7 +1366,7 @@
               "enabled": true,
               "bounds": {
                 "x": 890,
-                "y": 488,
+                "y": 458,
                 "width": 93,
                 "height": 32
               }
@@ -1449,7 +1378,7 @@
               "focused": true,
               "bounds": {
                 "x": 265,
-                "y": 532,
+                "y": 502,
                 "width": 644,
                 "height": 40
               }
@@ -1462,7 +1391,7 @@
               "enabled": true,
               "bounds": {
                 "x": 947,
-                "y": 542,
+                "y": 512,
                 "width": 20,
                 "height": 20
               }
@@ -1472,7 +1401,7 @@
               "enabled": true,
               "bounds": {
                 "x": 911,
-                "y": 584,
+                "y": 554,
                 "width": 42,
                 "height": 32
               }
@@ -1482,7 +1411,7 @@
               "enabled": true,
               "bounds": {
                 "x": 911,
-                "y": 662,
+                "y": 632,
                 "width": 48,
                 "height": 32
               }
@@ -1507,7 +1436,7 @@
               "enabled": true,
               "bounds": {
                 "x": 223,
-                "y": 598,
+                "y": 568,
                 "width": 12,
                 "height": 12
               },
@@ -1518,7 +1447,7 @@
               "enabled": true,
               "bounds": {
                 "x": 257,
-                "y": 676,
+                "y": 646,
                 "width": 12,
                 "height": 12
               },
@@ -1530,7 +1459,7 @@
               "enabled": true,
               "bounds": {
                 "x": 930,
-                "y": 752,
+                "y": 722,
                 "width": 1,
                 "height": 1
               },
@@ -1544,7 +1473,7 @@
               "enabled": true,
               "bounds": {
                 "x": 331,
-                "y": 801,
+                "y": 771,
                 "width": 16,
                 "height": 16
               },
@@ -1558,7 +1487,7 @@
               "enabled": true,
               "bounds": {
                 "x": 217,
-                "y": 828,
+                "y": 798,
                 "width": 766,
                 "height": 22
               },
@@ -1572,7 +1501,7 @@
               "enabled": true,
               "bounds": {
                 "x": 267,
-                "y": 861,
+                "y": 831,
                 "width": 16,
                 "height": 16
               },
@@ -1586,7 +1515,7 @@
               "enabled": true,
               "bounds": {
                 "x": 252,
-                "y": 891,
+                "y": 861,
                 "width": 16,
                 "height": 16
               },
@@ -1608,24 +1537,24 @@
       "proves": [
         "ac2-enabled-add-funds-cta"
       ],
-      "startedAt": "2026-09-10T13:25:25.576Z",
-      "endedAt": "2026-09-10T13:25:25.948Z",
-      "durationMs": 372,
+      "startedAt": "2026-09-14T08:16:17.409Z",
+      "endedAt": "2026-09-14T08:16:17.777Z",
+      "durationMs": 368,
       "ok": true,
       "next": "ac2-kill-capture-helper",
       "output": {
         "matched": true,
-        "cdpPort": 7662,
+        "cdpPort": 7664,
         "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/BTC?direction=long&mode=new",
         "runtimeLaunch": null,
-        "cdpTargetId": "FBB4A5D58A441B1612337F38576F6408",
-        "runtimeSessionId": "0b4044af-6b2a-4fec-b1b7-c67d24d4d7ef"
+        "cdpTargetId": "2C1956F121B088D019D6389A1F594C00",
+        "runtimeSessionId": "3c0f6ce7-bc87-48c6-b37f-9a633d6a783c"
       },
       "observations": {
         "ui.screen": {
           "provider": "cdp-web",
-          "name": "macpro-mme-2 — MetaMask",
-          "title": "macpro-mme-2 — MetaMask",
+          "name": "macpro-mme-4 — MetaMask",
+          "title": "macpro-mme-4 — MetaMask",
           "route": "#/perps/trade/BTC",
           "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
         },
@@ -1640,7 +1569,7 @@
               "enabled": true,
               "bounds": {
                 "x": 217,
-                "y": 21,
+                "y": -9,
                 "width": 36,
                 "height": 36
               }
@@ -1653,7 +1582,7 @@
               "enabled": true,
               "bounds": {
                 "x": 907,
-                "y": 21,
+                "y": -9,
                 "width": 36,
                 "height": 36
               }
@@ -1666,7 +1595,7 @@
               "enabled": true,
               "bounds": {
                 "x": 947,
-                "y": 21,
+                "y": -9,
                 "width": 36,
                 "height": 36
               }
@@ -1679,7 +1608,7 @@
               "enabled": true,
               "bounds": {
                 "x": 217,
-                "y": 344,
+                "y": 56,
                 "width": 62,
                 "height": 34
               }
@@ -1692,7 +1621,7 @@
               "enabled": true,
               "bounds": {
                 "x": 283,
-                "y": 344,
+                "y": 56,
                 "width": 65,
                 "height": 34
               }
@@ -1705,7 +1634,7 @@
               "enabled": true,
               "bounds": {
                 "x": 351,
-                "y": 344,
+                "y": 56,
                 "width": 64,
                 "height": 34
               }
@@ -1718,7 +1647,7 @@
               "enabled": true,
               "bounds": {
                 "x": 419,
-                "y": 344,
+                "y": 56,
                 "width": 70,
                 "height": 34
               }
@@ -1731,7 +1660,7 @@
               "enabled": true,
               "bounds": {
                 "x": 493,
-                "y": 344,
+                "y": 56,
                 "width": 82,
                 "height": 34
               }
@@ -1744,7 +1673,7 @@
               "enabled": true,
               "bounds": {
                 "x": 222,
-                "y": 390,
+                "y": 360,
                 "width": 378,
                 "height": 32
               }
@@ -1757,7 +1686,7 @@
               "enabled": true,
               "bounds": {
                 "x": 600,
-                "y": 390,
+                "y": 360,
                 "width": 378,
                 "height": 32
               }
@@ -1770,7 +1699,7 @@
               "enabled": true,
               "bounds": {
                 "x": 217,
-                "y": 442,
+                "y": 412,
                 "width": 79,
                 "height": 30
               }
@@ -1783,7 +1712,7 @@
               "enabled": true,
               "bounds": {
                 "x": 304,
-                "y": 442,
+                "y": 412,
                 "width": 64,
                 "height": 30
               }
@@ -1796,7 +1725,7 @@
               "enabled": true,
               "bounds": {
                 "x": 890,
-                "y": 488,
+                "y": 458,
                 "width": 93,
                 "height": 32
               }
@@ -1808,7 +1737,7 @@
               "focused": true,
               "bounds": {
                 "x": 265,
-                "y": 532,
+                "y": 502,
                 "width": 644,
                 "height": 40
               }
@@ -1821,7 +1750,7 @@
               "enabled": true,
               "bounds": {
                 "x": 947,
-                "y": 542,
+                "y": 512,
                 "width": 20,
                 "height": 20
               }
@@ -1831,7 +1760,7 @@
               "enabled": true,
               "bounds": {
                 "x": 911,
-                "y": 584,
+                "y": 554,
                 "width": 42,
                 "height": 32
               }
@@ -1841,7 +1770,7 @@
               "enabled": true,
               "bounds": {
                 "x": 911,
-                "y": 662,
+                "y": 632,
                 "width": 48,
                 "height": 32
               }
@@ -1866,7 +1795,7 @@
               "enabled": true,
               "bounds": {
                 "x": 223,
-                "y": 598,
+                "y": 568,
                 "width": 12,
                 "height": 12
               },
@@ -1877,7 +1806,7 @@
               "enabled": true,
               "bounds": {
                 "x": 257,
-                "y": 676,
+                "y": 646,
                 "width": 12,
                 "height": 12
               },
@@ -1889,7 +1818,7 @@
               "enabled": true,
               "bounds": {
                 "x": 930,
-                "y": 752,
+                "y": 722,
                 "width": 1,
                 "height": 1
               },
@@ -1903,7 +1832,7 @@
               "enabled": true,
               "bounds": {
                 "x": 331,
-                "y": 801,
+                "y": 771,
                 "width": 16,
                 "height": 16
               },
@@ -1917,7 +1846,7 @@
               "enabled": true,
               "bounds": {
                 "x": 217,
-                "y": 828,
+                "y": 798,
                 "width": 766,
                 "height": 22
               },
@@ -1931,7 +1860,7 @@
               "enabled": true,
               "bounds": {
                 "x": 267,
-                "y": 861,
+                "y": 831,
                 "width": 16,
                 "height": 16
               },
@@ -1945,7 +1874,7 @@
               "enabled": true,
               "bounds": {
                 "x": 252,
-                "y": 891,
+                "y": 861,
                 "width": 16,
                 "height": 16
               },
@@ -1964,9 +1893,9 @@
       "nodeId": "ac2-kill-capture-helper",
       "action": "command",
       "intent": "Avoid a stale screenshot helper stealing the capture",
-      "startedAt": "2026-09-10T13:25:25.958Z",
-      "endedAt": "2026-09-10T13:25:26.042Z",
-      "durationMs": 84,
+      "startedAt": "2026-09-14T08:16:17.787Z",
+      "endedAt": "2026-09-14T08:16:17.851Z",
+      "durationMs": 64,
       "ok": true,
       "next": "ac2-screenshot-cta",
       "output": {
@@ -1993,18 +1922,18 @@
           "metadata": {
             "provider": "capture-helper",
             "mode": "snapshot",
-            "pid": 28447,
+            "pid": 54562,
             "captureHelper": {
-              "bytes": 631896,
-              "output": "/Users/deeeed/dev/metamask/metamask-extension-2/temp/tasks/fix/45986-0910-210128/artifacts/recipe-run/screenshots/.mm-harness-extension-evidence-IthHeQ/captured.png",
+              "bytes": 789655,
+              "output": "/Users/deeeed/dev/metamask/metamask-extension-4/temp/tasks/fix/45986-0914-154852/artifacts/recipe-run/screenshots/.mm-harness-extension-evidence-miNdgf/captured.png",
               "selected": {
                 "app": "Google Chrome for Testing",
                 "height": 996,
-                "id": 2667,
+                "id": 3511,
                 "layer": 0,
                 "onScreen": true,
-                "pid": 28447,
-                "title": "macpro-mme-2 — MetaMask",
+                "pid": 54562,
+                "title": "macpro-mme-4 — MetaMask",
                 "width": 1200,
                 "x": 22,
                 "y": 61
@@ -2015,9 +1944,9 @@
           }
         }
       ],
-      "startedAt": "2026-09-10T13:25:26.050Z",
-      "endedAt": "2026-09-10T13:25:26.284Z",
-      "durationMs": 234,
+      "startedAt": "2026-09-14T08:16:17.859Z",
+      "endedAt": "2026-09-14T08:16:18.099Z",
+      "durationMs": 240,
       "ok": true,
       "next": "done",
       "output": {
@@ -2033,18 +1962,18 @@
           "metadata": {
             "provider": "capture-helper",
             "mode": "snapshot",
-            "pid": 28447,
+            "pid": 54562,
             "captureHelper": {
-              "bytes": 631896,
-              "output": "/Users/deeeed/dev/metamask/metamask-extension-2/temp/tasks/fix/45986-0910-210128/artifacts/recipe-run/screenshots/.mm-harness-extension-evidence-IthHeQ/captured.png",
+              "bytes": 789655,
+              "output": "/Users/deeeed/dev/metamask/metamask-extension-4/temp/tasks/fix/45986-0914-154852/artifacts/recipe-run/screenshots/.mm-harness-extension-evidence-miNdgf/captured.png",
               "selected": {
                 "app": "Google Chrome for Testing",
                 "height": 996,
-                "id": 2667,
+                "id": 3511,
                 "layer": 0,
                 "onScreen": true,
-                "pid": 28447,
-                "title": "macpro-mme-2 — MetaMask",
+                "pid": 54562,
+                "title": "macpro-mme-4 — MetaMask",
                 "width": 1200,
                 "x": 22,
                 "y": 61
@@ -2058,8 +1987,8 @@
       "observations": {
         "ui.screen": {
           "provider": "cdp-web",
-          "name": "macpro-mme-2 — MetaMask",
-          "title": "macpro-mme-2 — MetaMask",
+          "name": "macpro-mme-4 — MetaMask",
+          "title": "macpro-mme-4 — MetaMask",
           "route": "#/perps/trade/BTC",
           "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
         },
@@ -2074,7 +2003,7 @@
               "enabled": true,
               "bounds": {
                 "x": 217,
-                "y": 21,
+                "y": -9,
                 "width": 36,
                 "height": 36
               }
@@ -2087,7 +2016,7 @@
               "enabled": true,
               "bounds": {
                 "x": 907,
-                "y": 21,
+                "y": -9,
                 "width": 36,
                 "height": 36
               }
@@ -2100,7 +2029,7 @@
               "enabled": true,
               "bounds": {
                 "x": 947,
-                "y": 21,
+                "y": -9,
                 "width": 36,
                 "height": 36
               }
@@ -2113,7 +2042,7 @@
               "enabled": true,
               "bounds": {
                 "x": 217,
-                "y": 344,
+                "y": 56,
                 "width": 62,
                 "height": 34
               }
@@ -2126,7 +2055,7 @@
               "enabled": true,
               "bounds": {
                 "x": 283,
-                "y": 344,
+                "y": 56,
                 "width": 65,
                 "height": 34
               }
@@ -2139,7 +2068,7 @@
               "enabled": true,
               "bounds": {
                 "x": 351,
-                "y": 344,
+                "y": 56,
                 "width": 64,
                 "height": 34
               }
@@ -2152,7 +2081,7 @@
               "enabled": true,
               "bounds": {
                 "x": 419,
-                "y": 344,
+                "y": 56,
                 "width": 70,
                 "height": 34
               }
@@ -2165,7 +2094,7 @@
               "enabled": true,
               "bounds": {
                 "x": 493,
-                "y": 344,
+                "y": 56,
                 "width": 82,
                 "height": 34
               }
@@ -2178,7 +2107,7 @@
               "enabled": true,
               "bounds": {
                 "x": 222,
-                "y": 390,
+                "y": 360,
                 "width": 378,
                 "height": 32
               }
@@ -2191,7 +2120,7 @@
               "enabled": true,
               "bounds": {
                 "x": 600,
-                "y": 390,
+                "y": 360,
                 "width": 378,
                 "height": 32
               }
@@ -2204,7 +2133,7 @@
               "enabled": true,
               "bounds": {
                 "x": 217,
-                "y": 442,
+                "y": 412,
                 "width": 79,
                 "height": 30
               }
@@ -2217,7 +2146,7 @@
               "enabled": true,
               "bounds": {
                 "x": 304,
-                "y": 442,
+                "y": 412,
                 "width": 64,
                 "height": 30
               }
@@ -2230,7 +2159,7 @@
               "enabled": true,
               "bounds": {
                 "x": 890,
-                "y": 488,
+                "y": 458,
                 "width": 93,
                 "height": 32
               }
@@ -2242,7 +2171,7 @@
               "focused": true,
               "bounds": {
                 "x": 265,
-                "y": 532,
+                "y": 502,
                 "width": 644,
                 "height": 40
               }
@@ -2255,7 +2184,7 @@
               "enabled": true,
               "bounds": {
                 "x": 947,
-                "y": 542,
+                "y": 512,
                 "width": 20,
                 "height": 20
               }
@@ -2265,7 +2194,7 @@
               "enabled": true,
               "bounds": {
                 "x": 911,
-                "y": 584,
+                "y": 554,
                 "width": 42,
                 "height": 32
               }
@@ -2275,7 +2204,7 @@
               "enabled": true,
               "bounds": {
                 "x": 911,
-                "y": 662,
+                "y": 632,
                 "width": 48,
                 "height": 32
               }
@@ -2300,7 +2229,7 @@
               "enabled": true,
               "bounds": {
                 "x": 223,
-                "y": 598,
+                "y": 568,
                 "width": 12,
                 "height": 12
               },
@@ -2311,7 +2240,7 @@
               "enabled": true,
               "bounds": {
                 "x": 257,
-                "y": 676,
+                "y": 646,
                 "width": 12,
                 "height": 12
               },
@@ -2323,7 +2252,7 @@
               "enabled": true,
               "bounds": {
                 "x": 930,
-                "y": 752,
+                "y": 722,
                 "width": 1,
                 "height": 1
               },
@@ -2337,7 +2266,7 @@
               "enabled": true,
               "bounds": {
                 "x": 331,
-                "y": 801,
+                "y": 771,
                 "width": 16,
                 "height": 16
               },
@@ -2351,7 +2280,7 @@
               "enabled": true,
               "bounds": {
                 "x": 217,
-                "y": 828,
+                "y": 798,
                 "width": 766,
                 "height": 22
               },
@@ -2365,7 +2294,7 @@
               "enabled": true,
               "bounds": {
                 "x": 267,
-                "y": 861,
+                "y": 831,
                 "width": 16,
                 "height": 16
               },
@@ -2379,7 +2308,7 @@
               "enabled": true,
               "bounds": {
                 "x": 252,
-                "y": 891,
+                "y": 861,
                 "width": 16,
                 "height": 16
               },
@@ -2397,8 +2326,8 @@
     {
       "nodeId": "done",
       "action": "end",
-      "startedAt": "2026-09-10T13:25:26.291Z",
-      "endedAt": "2026-09-10T13:25:26.291Z",
+      "startedAt": "2026-09-14T08:16:18.107Z",
+      "endedAt": "2026-09-14T08:16:18.107Z",
       "durationMs": 0,
       "ok": true,
       "status": "pass"
@@ -2407,9 +2336,9 @@
       "nodeId": "teardown-restore-account",
       "action": "metamask.wallet.select_account",
       "intent": "Put the funded Perps wallet back so later runs keep their balance",
-      "startedAt": "2026-09-10T13:25:26.291Z",
-      "endedAt": "2026-09-10T13:25:26.775Z",
-      "durationMs": 484,
+      "startedAt": "2026-09-14T08:16:18.107Z",
+      "endedAt": "2026-09-14T08:16:18.604Z",
+      "durationMs": 497,
       "ok": true,
       "next": "teardown-done",
       "output": {
@@ -2421,19 +2350,19 @@
           "type": "eip155:eoa"
         },
         "proofPath": "extension-background-account-selection",
-        "cdpPort": 7662,
+        "cdpPort": 7664,
         "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/BTC?direction=long&mode=new",
         "runtimeLaunch": null,
-        "cdpTargetId": "FBB4A5D58A441B1612337F38576F6408",
-        "runtimeSessionId": "0b4044af-6b2a-4fec-b1b7-c67d24d4d7ef",
+        "cdpTargetId": "2C1956F121B088D019D6389A1F594C00",
+        "runtimeSessionId": "3c0f6ce7-bc87-48c6-b37f-9a633d6a783c",
         "liveAdapter": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/actions/extension/wallet/select_account.mjs"
       }
     },
     {
       "nodeId": "teardown-done",
       "action": "end",
-      "startedAt": "2026-09-10T13:25:26.788Z",
-      "endedAt": "2026-09-10T13:25:26.788Z",
+      "startedAt": "2026-09-14T08:16:18.616Z",
+      "endedAt": "2026-09-14T08:16:18.616Z",
       "durationMs": 0,
       "ok": true,
       "status": "pass"

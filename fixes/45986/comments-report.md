@@ -1,60 +1,53 @@
-# Comments report — PR 45986
+# PR #45986 comment triage
 
-PR intent (TAT-3853): unfunded trade-screen users convert at 4.8% vs Mobile 12.4%. This PR enables Add funds to trade, adds a labeled row control, and instruments the deposit funnel.
+PR: feat(perps): investigate and improve deposit conversion for unfunded trade-screen users
+HEAD: `90e908ada2` (rebased onto `origin/main` `e325afe94c`; pushed with lease from `2811940cf1`)
 
-## Triage
+## Triage table
 
 | # | Author | File | Triage | Action |
 |---|--------|------|--------|--------|
-| 1 | cursor[bot] | ui/pages/perps/perps-order-entry-page.tsx:887 | REAL | Already fixed in 728d2be6. `hasNoAvailableBalance` waits on `!isLoadingAccount`; `isSubmitDisabled` includes `isLoadingAccount`. Already replied; thread resolved. No new code. |
-| 2 | cursor[bot] | ui/components/app/perps/order-entry/components/amount-input/amount-input.tsx:425 | REAL | Already fixed in 2811940cf1. Labeled Add funds waits on `!isLoadingAccount`; icon disabled while hydrating; `handleAddFunds` returns early. Already replied; thread resolved. No new code. |
+| 1 | cursor[bot] | ui/pages/perps/perps-order-entry-page.tsx:985 | REAL | Already fixed on this branch. `hasNoAvailableBalance` requires `!isLoadingAccount`; `isSubmitDisabled` includes `isLoadingAccount`. Covered by `does not treat a loading account as unfunded` / `does not show add funds to trade while account state is still loading at zero balance`. Thread already replied (`002b882`) and resolved. No further code change. |
+| 2 | cursor[bot] | ui/components/app/perps/order-entry/components/amount-input/amount-input.tsx:425 | REAL | Already fixed on this branch. Labeled Add funds renders only when `!isLoadingAccount && availableBalance < threshold`; `handleAddFunds` returns while loading. Covered by amount-input and order-entry tests. Thread already replied (`948c431`) and resolved. No further code change. |
 
-## Skipped status-only automation (6, no reply)
+## Skipped status-only automation (7, no reply)
 
-- github-actions[bot] 5518479240 CLA
-- metamask-ci[bot] 5518480911 codeowners
-- metamask-ci[bot] 5518669669 builds ready
-- metamask-ci[bot] 5519215424 builds ready
-- sonarqubecloud[bot] 5519441272 quality gate
-- metamask-ci[bot] 5519515819 builds ready + benchmarks
+- github-actions[bot] `5518479240` — CLA signed
+- metamask-ci[bot] `5518480911` — CODEOWNERS file list
+- metamask-ci[bot] `5518669669` / `5519215424` / `5519515819` / `5619782252` — Builds ready
+- sonarqubecloud[bot] `5619660610` — Quality Gate passed
 
-CHANGES_REQUESTED reviews: none.
-Human review comments: none.
+## Reviews
 
-## Current HEAD check
+- No `CHANGES_REQUESTED` reviews.
+- cursor[bot] reviews `5096627260` and `5096945837` are `COMMENTED` summaries of the two inline findings above.
+- abretonc7s replies already exist on both threads; both GraphQL threads `isResolved: true`.
 
-- `hasNoAvailableBalance` includes `!isLoadingAccount`
-- `isSubmitDisabled` includes `isLoadingAccount`
-- amount-input labeled button gated on `!isLoadingAccount`
-- `handleAddFunds` returns while `isLoadingAccount`
+## No-change reason (code)
+
+This round's comment fetch has no open REAL findings that still need a diff. Step 7 will not add a review-fix commit. Step 11 still needs a force-with-lease push because step 3 rebased onto `origin/main` (`integration-status: rebased`).
+
+## Replies
+
+- cursor[bot] `3919978743`: already replied (`abretonc7s` `3920260514`); thread resolved. No second reply.
+- cursor[bot] `3920285641`: already replied (`abretonc7s` `3920425023`); thread resolved. No second reply.
+- No new top-level issue comment (status-only automation only).
+
+## Recipe re-validation
+
+- Proof kind: mixed (selector waits + capture-helper PNG)
+- Result: PASS (13/13 nodes, 6.2s) against `90e908ada2` + `origin/main`
+- Artifacts: `artifacts/recipe-run/`
+- Screenshot provider: capture-helper (`screenshots/after-ac2-unfunded-cta.png`)
+- PNG read: BTC long order form, Available to trade 0.00 USDC, labeled row Add funds, hint "You need funds in your Perps account to place this order.", enabled footer Add funds to trade
+- Side findings: 9 non-blocking app warnings/errors; not treated as AC failure
 
 ## Totals
 
-- Total comments: 8 (2 REAL, 0 FALSE POSITIVE, 6 OUT OF SCOPE)
-- Commit SHA for fixes: none this run (prior fixes still on branch: `728d2be6d41b564cd6a652786c6e0ad2fc0996d3`, `2811940cf14f1fac50ecf84b3cc73dcef9e6ff30`)
-- Files changed this run: none (rebase only)
+- Total comments triaged: 9 (2 REAL, 0 FALSE POSITIVE, 7 OUT OF SCOPE)
+- Skipped status-only without reply: 7
+- Commit SHA for fixes: none this round (existing `70da0b96bc` and `90e908ada2` already on the branch)
+- Files changed this round: none in product; history rewritten onto main (17 PR files)
 - Recipe re-validation: PASS
 - Integration status: rebased
-
-## Replies (step 12)
-
-- 3919978743 already replied (abretonc7s 3920260514). Thread resolved. No second reply.
-- 3920285641 already replied (abretonc7s 3920425023). Thread resolved. No second reply.
-- Issue comments: status-only, no consolidated top-level response.
-
-## Integration (step 3)
-
-rebased onto origin/main `e62cb0b42abefad10385caacdda0e939aa9a434c`. Pushed `2811940cf14f1fac50ecf84b3cc73dcef9e6ff30` with `--force-with-lease`.
-
-Conflicts in `perps-events.ts`, `usePerpsDepositConfirmation.ts`, `perps-order-entry-page.tsx` resolved by keeping main chart/CTA structure plus this PR's funnel events, PayWithOption import, unfunded hint, and loading guards.
-
-## Recipe re-validation (step 10)
-
-PASS. Live run after rebase + `yarn install` + `mm-harness launch --verify` + `fixtures set`.
-Screenshot `recipe-run/screenshots/after-ac2-unfunded-cta.png` from capture-helper: enabled Add funds to trade, hint, labeled Add funds on the available-to-trade row.
-
-`--launch-existing-dist` failed (Playwright Chromium cache). Reran attached to CDP 7662.
-
-## No-change reason (review-fix commit)
-
-No new review-fix commit. Both REAL comments were already fixed and replied on this branch. Push published the rebase onto origin/main only.
+- Pushed: `90e908ada2` to `origin/TAT-3853-feat-audit-deposit-flow-unfunded-us`
