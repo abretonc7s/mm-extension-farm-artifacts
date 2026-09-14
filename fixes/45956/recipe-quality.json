@@ -4,26 +4,14 @@
   "compact": {
     "verdict": "PASS",
     "reasons": [
-      "78/78 nodes ok=true in trace.json; run status pass; sideFindings clean (0 warnings/errors/exceptions).",
-      "Each of the three design surfaces is bound to its Figma node and asserted on the live DOM, not inferred: Products chips wrap with .flex-wrap and .rounded-full plus a leading glyph (13192:28387); the market list keeps one measured row with .flex-wrap absent, the row present and .rounded-lg pills (12602:45702); the sort modal shows one list with the direction nested inside the selected field and no sort-direction-* rows (12602:46701).",
-      "Navigation is proved end to end: pressing the home Crypto chip lands on parent-selector-perps-market-list with [pill-crypto][aria-pressed=true], so a chip cannot pass by navigating alone.",
-      "The clear affordance is proved by pressing the already-active pill and asserting [aria-pressed=false].",
-      "Accessibility claims use live CSS-selector assertions a screenshot cannot make: button:not([disabled]):not([tabindex=-1]) and [role=group][aria-label].",
-      "All three screenshots report provider capture-helper in artifact-manifest.json, not the Page.captureScreenshot fallback, and each was opened and confirmed to show its claim.",
-      "Jest-backed nodes each pair assert_exit_code 0 with assert_output contains (6 passed / 1 passed / 1 passed / 3 passed / 2 passed), so a title filter matching nothing cannot pass as proof.",
-      "Captured on Hyperliquid mainnet (isTestnet false, verified in live state), so HIP-3 categories carry real markets — SpaceX, SanDisk, SK Hynix, S&P 500, Silver and XYZ100 are visible in the captures.",
-      "Products sits below the Watchlist on the tab, and the capture shows that order with the chips wrapped onto a second line.",
-      "An overflowed selection still reads as in force: the More trigger takes ButtonFilter’s active fill and names the selected category, guarded by two jest assertions.",
-      "Captured at the branch head (7dc2aaf2fd), after the glyph-name fallback, so the screenshots show the glyphs the merged code renders rather than an earlier build.",
-      "The measured overflow is photographed at both widths from a real resized window (Browser.setWindowBounds, not a viewport override): at 430px the leftovers sit behind More, at 1280px every category fits and no trigger renders.",
-      "Choosing Forex from inside the More menu is captured with the trigger filled and the list narrowed to three forex markets, so the overflowed selection is shown to remain visible on the rail."
+      "recipe.json is this pass's review-fix proof (copied from recipe-review-fix.json); recipe-run/ is its run package, status pass, exit 0, validated with --plan (zero findings) first.",
+      "R1 (controller order) is pinned by nth-child selectors on the live Products rail: index 4th, commodity 6th, new 8th and last; the removed design order fails every one of them.",
+      "R2 (wrap) is pinned by a .flex-wrap[role=group] selector plus a capture-helper screenshot showing New on a second line.",
+      "R3 (skeleton height) is a transient loading state and is proved by named jest assertions run through mm-harness check diff, not by a raced screenshot.",
+      "The inherited family recipe was stale (deleted helper test path, CDP 7665, removed All pill and overflow-x-auto rail) and failed before driving the UI; it is kept as recipe-inherited-stale.json and not used as proof."
     ],
     "better_version_guidance": [
-      "No popup-width capture of the market list showing the More trigger. The overflow is proved by jest fit tests and by a live CDP viewport override at 360px (2 pills plus a More trigger), but not by a screenshot in this run.",
-      "The market list rail asserts crypto/stock/commodity by name rather than the full set, so a dropped pre-ipo/index/etf pill would not fail this recipe.",
-      "The design's filter buttons sit flush while the implementation keeps an 8px gap, which changes how many fit before the More trigger appears. Flagged for the designer rather than guessed at.",
-      "The sort direction uses ArrowDown, which renders as a chevron, because the design's Arrow2Down asset resolves to undefined on the design-system install CI uses and Icon then renders nothing. Worth confirming with the designer.",
-      "The full-width capture still carries the Forex filter from the preceding step rather than showing an unfiltered list; it proves the pill set and the absent More trigger, not the default state."
+      "Add a navigation node that presses one Products chip and asserts the market list opens with that filter, so the chip-to-list contract is re-proved alongside the order."
     ]
   },
   "dimensions": {},
