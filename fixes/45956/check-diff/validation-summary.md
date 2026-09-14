@@ -4,14 +4,14 @@ Verdict: pass
 Profile: fast
 Fix: no
 Base: origin/main (github-pr: main)
-Changed files: 36
+Changed files: 38
 
 ## Checks
 
-- PASS policy-suppressions (/Users/deeeed/dev/metamask/metamask-extension-3/temp/tasks/fix/45956-0911-224137/artifacts/check-diff/policy-suppressions.log)
-- PASS eslint (/Users/deeeed/dev/metamask/metamask-extension-3/temp/tasks/fix/45956-0911-224137/artifacts/check-diff/eslint.log)
-- PASS oxfmt (/Users/deeeed/dev/metamask/metamask-extension-3/temp/tasks/fix/45956-0911-224137/artifacts/check-diff/oxfmt.log)
-- PASS jest (/Users/deeeed/dev/metamask/metamask-extension-3/temp/tasks/fix/45956-0911-224137/artifacts/check-diff/jest.log)
+- PASS policy-suppressions (/Users/deeeed/dev/metamask/metamask-extension-6/temp/tasks/fix/45956-0914-205729/artifacts/check-diff/policy-suppressions.log)
+- PASS eslint (/Users/deeeed/dev/metamask/metamask-extension-6/temp/tasks/fix/45956-0914-205729/artifacts/check-diff/eslint.log)
+- PASS oxfmt (/Users/deeeed/dev/metamask/metamask-extension-6/temp/tasks/fix/45956-0914-205729/artifacts/check-diff/oxfmt.log)
+- PASS jest (/Users/deeeed/dev/metamask/metamask-extension-6/temp/tasks/fix/45956-0914-205729/artifacts/check-diff/jest.log)
 - SKIP typecheck — profile=fast; run with --profile full for repo-wide typecheck
 
 ## Changed Files
@@ -37,6 +37,7 @@ Changed files: 36
 - ui/components/app/perps/dropdown/dropdown.test.tsx
 - ui/components/app/perps/dropdown/dropdown.tsx
 - ui/components/app/perps/dropdown/index.ts
+- ui/components/app/perps/hooks/usePerpsTabExploreData.ts
 - ui/components/app/perps/perps-market-categories/index.ts
 - ui/components/app/perps/perps-market-categories/perps-category-rail.test.tsx
 - ui/components/app/perps/perps-market-categories/perps-category-rail.tsx
@@ -46,6 +47,7 @@ Changed files: 36
 - ui/components/app/perps/perps-products/index.ts
 - ui/components/app/perps/perps-products/perps-products.test.tsx
 - ui/components/app/perps/perps-products/perps-products.tsx
+- ui/components/app/perps/perps-view.test.tsx
 - ui/components/app/perps/perps-view.tsx
 - ui/pages/perps/market-list/components/sort-dropdown/sort-dropdown.test.tsx
 - ui/pages/perps/market-list/components/sort-dropdown/sort-dropdown.tsx

@@ -1,0 +1,46 @@
+{
+  "$schema": "https://farmslot.io/schemas/recipe-v1.schema.json",
+  "title": "probe2",
+  "description": "capture the live Perps tab",
+  "workflow": {
+    "entry": "gate",
+    "nodes": {
+      "gate": {
+        "action": "cdp.target",
+        "require_reachable": true,
+        "intent": "attach",
+        "next": "unlock"
+      },
+      "unlock": {
+        "action": "metamask.wallet.ensure_unlocked",
+        "intent": "Unlock the wallet",
+        "next": "nav"
+      },
+      "nav": {
+        "action": "ui.navigate",
+        "page": "perps",
+        "intent": "open the Perps tab",
+        "next": "wait"
+      },
+      "wait": {
+        "action": "ui.wait_for",
+        "test_id": "parent-selector-perps-tab",
+        "expected": "visible",
+        "timeout_ms": 40000,
+        "intent": "Perps tab loaded",
+        "next": "shot"
+      },
+      "shot": {
+        "action": "ui.screenshot",
+        "path": "screenshots/perps-tab.png",
+        "label": "Live Perps tab",
+        "intent": "Preserve what a user sees on the Perps tab as review evidence",
+        "next": "done"
+      },
+      "done": {
+        "action": "end",
+        "status": "pass"
+      }
+    }
+  }
+}

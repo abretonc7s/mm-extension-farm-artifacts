@@ -1,0 +1,72 @@
+{
+  "metadata": {
+    "runner": {
+      "source": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness",
+      "git_ref": "unknown",
+      "name": "@metamask/recipe-runner"
+    }
+  },
+  "entries": [
+    {
+      "nodeId": "gate",
+      "action": "cdp.target",
+      "intent": "attach",
+      "startedAt": "2026-09-14T13:27:35.841Z",
+      "endedAt": "2026-09-14T13:27:35.850Z",
+      "durationMs": 9,
+      "ok": true,
+      "next": "unlock",
+      "output": {
+        "platform": "extension",
+        "transport": "chrome-extension-cdp",
+        "cdpPort": "7666",
+        "metroPort": "9016",
+        "probeUrl": "http://127.0.0.1:7666/json/version",
+        "timeoutMs": 10000,
+        "reachable": true,
+        "statusCode": 200,
+        "json": {
+          "Browser": "Chrome/147.0.7727.15",
+          "Protocol-Version": "1.3",
+          "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+          "V8-Version": "14.7.173.6",
+          "WebKit-Version": "537.36 (@6b5a1b80ccc1e8a4967901d8e58fc2e162cdf050)",
+          "webSocketDebuggerUrl": "ws://127.0.0.1:7666/devtools/browser/545746f7-d9d5-4ab5-8f2b-fe06e382c75e"
+        }
+      }
+    },
+    {
+      "nodeId": "unlock",
+      "action": "metamask.wallet.ensure_unlocked",
+      "intent": "Unlock the wallet so the Perps surfaces render",
+      "startedAt": "2026-09-14T13:27:35.858Z",
+      "endedAt": "2026-09-14T13:27:36.383Z",
+      "durationMs": 525,
+      "ok": true,
+      "next": "nav",
+      "output": {
+        "action": "metamask.wallet.ensure_unlocked",
+        "unlocked": true,
+        "redacted": true,
+        "proofPath": "extension-password-unlock",
+        "cdpPort": 7666,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/unlock",
+        "runtimeLaunch": null,
+        "cdpTargetId": "EA7EF33110178EA4607668989B21E000",
+        "runtimeSessionId": "545746f7-d9d5-4ab5-8f2b-fe06e382c75e",
+        "liveAdapter": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/actions/extension/wallet/ensure_unlocked.mjs"
+      }
+    },
+    {
+      "nodeId": "nav",
+      "action": "ui.navigate",
+      "intent": "open market list",
+      "startedAt": "2026-09-14T13:27:36.403Z",
+      "endedAt": "2026-09-14T13:27:41.287Z",
+      "durationMs": 4884,
+      "ok": false,
+      "cause_class": "unknown",
+      "error": "Live adapter /Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/actions/extension/ui/navigate.mjs exited 1: file:///Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/node_modules/@farmslot/recipe-harness/dist/runtime/cdp.js:531\n                throw new Error(`Click target readiness timed out: ${label}`);\n                      ^\n\nError: Click target readiness timed out: [data-testid=\"perps-explore-markets-row\"]\n    at ExtensionPage.waitForClickTarget (file:///Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/node_modules/@farmslot/recipe-harness/dist/runtime/cdp.js:531:23)\n    at async ExtensionPage.click (file:///Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/node_modules/@farmslot/recipe-harness/dist/runtime/cdp.js:515:24)\n    at async activateSemanticControl (file:///Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/actions/extension/ui/navigate.mjs:120:18)\n    at async openPerpsMarketList (file:///Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/actions/extension/ui/navigate.mjs:391:20)\n    at async file:///Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/actions/extension/ui/navigate.mjs:576:22\n    at async withExtensionPage (file:///Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/actions/extension/platform/cdp.mjs:723:20)\n    at async runAdapter (file:///Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/actions/extension/platform/cdp.mjs:892:18)\n\nNode.js v24.13.0\n"
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "$schema": "https://farmslot.io/schemas/recipe-v1.schema.json",
+  "title": "probe",
+  "description": "probe live market list state",
+  "workflow": {
+    "entry": "gate",
+    "nodes": {
+      "gate": {
+        "action": "cdp.target",
+        "require_reachable": true,
+        "intent": "attach",
+        "next": "unlock"
+      },
+      "nav": {
+        "action": "ui.navigate",
+        "page": "perps-market-list",
+        "intent": "open market list",
+        "next": "wait"
+      },
+      "wait": {
+        "action": "ui.wait_for",
+        "test_id": "market-list-categories",
+        "expected": "visible",
+        "timeout_ms": 30000,
+        "intent": "rail on screen",
+        "next": "count"
+      },
+      "count": {
+        "action": "ui.wait_for",
+        "test_id": "market-list-count",
+        "expected": "visible",
+        "timeout_ms": 20000,
+        "intent": "count label on screen",
+        "next": "done"
+      },
+      "done": {
+        "action": "end",
+        "status": "pass"
+      },
+      "unlock": {
+        "action": "metamask.wallet.ensure_unlocked",
+        "intent": "Unlock the wallet so the Perps surfaces render",
+        "next": "nav"
+      }
+    }
+  }
+}

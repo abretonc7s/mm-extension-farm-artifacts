@@ -1,0 +1,1455 @@
+{
+  "metadata": {
+    "runner": {
+      "source": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness",
+      "git_ref": "unknown",
+      "name": "@metamask/recipe-runner"
+    }
+  },
+  "entries": [
+    {
+      "nodeId": "gate",
+      "action": "cdp.target",
+      "intent": "attach",
+      "startedAt": "2026-09-14T13:27:58.750Z",
+      "endedAt": "2026-09-14T13:27:58.762Z",
+      "durationMs": 12,
+      "ok": true,
+      "next": "unlock",
+      "output": {
+        "platform": "extension",
+        "transport": "chrome-extension-cdp",
+        "cdpPort": "7666",
+        "metroPort": "9016",
+        "probeUrl": "http://127.0.0.1:7666/json/version",
+        "timeoutMs": 10000,
+        "reachable": true,
+        "statusCode": 200,
+        "json": {
+          "Browser": "Chrome/147.0.7727.15",
+          "Protocol-Version": "1.3",
+          "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+          "V8-Version": "14.7.173.6",
+          "WebKit-Version": "537.36 (@6b5a1b80ccc1e8a4967901d8e58fc2e162cdf050)",
+          "webSocketDebuggerUrl": "ws://127.0.0.1:7666/devtools/browser/545746f7-d9d5-4ab5-8f2b-fe06e382c75e"
+        }
+      }
+    },
+    {
+      "nodeId": "unlock",
+      "action": "metamask.wallet.ensure_unlocked",
+      "intent": "Unlock the wallet",
+      "startedAt": "2026-09-14T13:27:58.769Z",
+      "endedAt": "2026-09-14T13:27:58.864Z",
+      "durationMs": 95,
+      "ok": true,
+      "next": "nav",
+      "output": {
+        "action": "metamask.wallet.ensure_unlocked",
+        "unlocked": true,
+        "alreadyUnlocked": true,
+        "proofPath": "extension-unlocked-state",
+        "cdpPort": 7666,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps-home",
+        "runtimeLaunch": null,
+        "cdpTargetId": "EA7EF33110178EA4607668989B21E000",
+        "runtimeSessionId": "545746f7-d9d5-4ab5-8f2b-fe06e382c75e",
+        "liveAdapter": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/actions/extension/wallet/ensure_unlocked.mjs"
+      }
+    },
+    {
+      "nodeId": "nav",
+      "action": "ui.navigate",
+      "intent": "open the Perps tab",
+      "startedAt": "2026-09-14T13:27:58.870Z",
+      "endedAt": "2026-09-14T13:28:00.073Z",
+      "durationMs": 1203,
+      "ok": true,
+      "next": "wait",
+      "output": {
+        "action": "ui.navigate",
+        "page": "perps",
+        "method": "visible-ui",
+        "href": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps-home",
+        "steps": [
+          "[data-testid=\"perps-tutorial-skip-button\"]"
+        ],
+        "proofPath": "ui-navigation",
+        "cdpPort": 7666,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps-home",
+        "runtimeLaunch": null,
+        "cdpTargetId": "EA7EF33110178EA4607668989B21E000",
+        "runtimeSessionId": "545746f7-d9d5-4ab5-8f2b-fe06e382c75e",
+        "liveAdapter": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/actions/extension/ui/navigate.mjs"
+      },
+      "observations": {
+        "ui.screen": {
+          "provider": "cdp-web",
+          "name": "macpro-mme-6 — MetaMask",
+          "title": "macpro-mme-6 — MetaMask",
+          "route": "#/perps-home",
+          "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
+        },
+        "ui.visible": {
+          "provider": "cdp-web",
+          "items": [
+            {
+              "role": "button",
+              "label": "Crypto",
+              "test_id": "perps-products-categories-pill-crypto",
+              "selector": "[data-testid=\"perps-products-categories-pill-crypto\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 49,
+                "y": 40,
+                "width": 90,
+                "height": 40
+              }
+            },
+            {
+              "role": "button",
+              "label": "Stocks",
+              "test_id": "perps-products-categories-pill-stock",
+              "selector": "[data-testid=\"perps-products-categories-pill-stock\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 147,
+                "y": 40,
+                "width": 90,
+                "height": 40
+              }
+            },
+            {
+              "role": "button",
+              "label": "Pre-IPO",
+              "test_id": "perps-products-categories-pill-pre-ipo",
+              "selector": "[data-testid=\"perps-products-categories-pill-pre-ipo\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 245,
+                "y": 40,
+                "width": 98,
+                "height": 40
+              }
+            },
+            {
+              "role": "button",
+              "label": "Indices",
+              "test_id": "perps-products-categories-pill-index",
+              "selector": "[data-testid=\"perps-products-categories-pill-index\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 351,
+                "y": 40,
+                "width": 93,
+                "height": 40
+              }
+            },
+            {
+              "role": "button",
+              "label": "ETFs",
+              "test_id": "perps-products-categories-pill-etf",
+              "selector": "[data-testid=\"perps-products-categories-pill-etf\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 452,
+                "y": 40,
+                "width": 76,
+                "height": 40
+              }
+            },
+            {
+              "role": "button",
+              "label": "Commodities",
+              "test_id": "perps-products-categories-pill-commodity",
+              "selector": "[data-testid=\"perps-products-categories-pill-commodity\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 536,
+                "y": 40,
+                "width": 139,
+                "height": 40
+              }
+            },
+            {
+              "role": "button",
+              "label": "Forex",
+              "test_id": "perps-products-categories-pill-forex",
+              "selector": "[data-testid=\"perps-products-categories-pill-forex\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 683,
+                "y": 40,
+                "width": 80,
+                "height": 40
+              }
+            },
+            {
+              "role": "button",
+              "label": "New",
+              "test_id": "perps-products-categories-pill-new",
+              "selector": "[data-testid=\"perps-products-categories-pill-new\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 49,
+                "y": 88,
+                "width": 73,
+                "height": 40
+              }
+            },
+            {
+              "role": "button",
+              "label": "Top movers",
+              "test_id": "perps-top-movers-header",
+              "selector": "[data-testid=\"perps-top-movers-header\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 33,
+                "y": 144,
+                "width": 192,
+                "height": 48
+              }
+            },
+            {
+              "role": "button",
+              "label": "Gainers",
+              "test_id": "perps-top-movers-gainers",
+              "selector": "[data-testid=\"perps-top-movers-gainers\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 54,
+                "y": 209,
+                "width": 376,
+                "height": 28
+              }
+            },
+            {
+              "role": "button",
+              "label": "Losers",
+              "test_id": "perps-top-movers-losers",
+              "selector": "[data-testid=\"perps-top-movers-losers\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 434,
+                "y": 209,
+                "width": 376,
+                "height": 28
+              }
+            },
+            {
+              "role": "button",
+              "label": "FIL +17.87%",
+              "test_id": "perps-top-movers-pill-FIL",
+              "selector": "[data-testid=\"perps-top-movers-pill-FIL\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 49,
+                "y": 254,
+                "width": 128,
+                "height": 36
+              }
+            },
+            {
+              "role": "button",
+              "label": "REZ +14.94%",
+              "test_id": "perps-top-movers-pill-REZ",
+              "selector": "[data-testid=\"perps-top-movers-pill-REZ\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 185,
+                "y": 254,
+                "width": 138,
+                "height": 36
+              }
+            },
+            {
+              "role": "button",
+              "label": "AR +10.02%",
+              "test_id": "perps-top-movers-pill-AR",
+              "selector": "[data-testid=\"perps-top-movers-pill-AR\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 331,
+                "y": 254,
+                "width": 130,
+                "height": 36
+              }
+            },
+            {
+              "role": "button",
+              "label": "IOTA +9.48%",
+              "test_id": "perps-top-movers-pill-IOTA",
+              "selector": "[data-testid=\"perps-top-movers-pill-IOTA\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 470,
+                "y": 254,
+                "width": 138,
+                "height": 36
+              }
+            },
+            {
+              "role": "button",
+              "label": "PENDLE +8.32%",
+              "test_id": "perps-top-movers-pill-PENDLE",
+              "selector": "[data-testid=\"perps-top-movers-pill-PENDLE\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 49,
+                "y": 302,
+                "width": 160,
+                "height": 36
+              }
+            },
+            {
+              "role": "button",
+              "label": "CAKE +8.27%",
+              "test_id": "perps-top-movers-pill-CAKE",
+              "selector": "[data-testid=\"perps-top-movers-pill-CAKE\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 302,
+                "width": 143,
+                "height": 36
+              }
+            },
+            {
+              "role": "button",
+              "label": "LIT +7.37%",
+              "test_id": "perps-top-movers-pill-LIT",
+              "selector": "[data-testid=\"perps-top-movers-pill-LIT\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 367,
+                "y": 302,
+                "width": 123,
+                "height": 36
+              }
+            },
+            {
+              "role": "button",
+              "label": "XLM +7.06%",
+              "test_id": "perps-top-movers-pill-XLM",
+              "selector": "[data-testid=\"perps-top-movers-pill-XLM\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 498,
+                "y": 302,
+                "width": 133,
+                "height": 36
+              }
+            },
+            {
+              "role": "button",
+              "label": "Explore markets",
+              "test_id": "perps-explore-markets-row",
+              "selector": "[data-testid=\"perps-explore-markets-row\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 33,
+                "y": 354,
+                "width": 798,
+                "height": 48
+              }
+            }
+          ],
+          "hidden_or_offscreen": [
+            {
+              "role": "button",
+              "label": "Withdraw",
+              "test_id": "perps-balance-actions-withdraw",
+              "selector": "[data-testid=\"perps-balance-actions-withdraw\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 49,
+                "y": -424,
+                "width": 377,
+                "height": 48
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "Add funds",
+              "test_id": "perps-balance-actions-add-funds",
+              "selector": "[data-testid=\"perps-balance-actions-add-funds\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 438,
+                "y": -424,
+                "width": 377,
+                "height": 48
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "Watchlist",
+              "test_id": "perps-watchlist-header",
+              "selector": "[data-testid=\"perps-watchlist-header\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 33,
+                "y": -360,
+                "width": 798,
+                "height": 48
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "Bitcoin 40x BTC · $1.81B Vol $77,775 +1.62%",
+              "test_id": "perps-watchlist-BTC",
+              "selector": "[data-testid=\"perps-watchlist-BTC\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 33,
+                "y": -304,
+                "width": 798,
+                "height": 72
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "Hyperliquid 10x HYPE · $310.93M Vol $79.671 +3.96%",
+              "test_id": "perps-watchlist-HYPE",
+              "selector": "[data-testid=\"perps-watchlist-HYPE\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 33,
+                "y": -232,
+                "width": 798,
+                "height": 72
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "WTI Crude Oil 20x CL · $267.28M Vol $99.574 +2.80%",
+              "test_id": "perps-watchlist-xyz:CL",
+              "selector": "[data-testid=\"perps-watchlist-xyz:CL\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 33,
+                "y": -160,
+                "width": 798,
+                "height": 72
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "Ethereum 25x ETH · $1.18B Vol $2,501.8 +1.47%",
+              "test_id": "perps-watchlist-ETH",
+              "selector": "[data-testid=\"perps-watchlist-ETH\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 33,
+                "y": -88,
+                "width": 798,
+                "height": 72
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "XYZ100 30x $281.57M Vol $28,897 -0.47%",
+              "test_id": "explore-markets-xyz-XYZ100",
+              "selector": "[data-testid=\"explore-markets-xyz-XYZ100\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 33,
+                "y": 770,
+                "width": 798,
+                "height": 72
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "WTI Crude Oil 20x CL · $267.28M Vol $99.574 +2.80%",
+              "test_id": "explore-markets-xyz-CL",
+              "selector": "[data-testid=\"explore-markets-xyz-CL\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 33,
+                "y": 842,
+                "width": 798,
+                "height": 72
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "S&P 500 50x SP500 · $162.89M Vol $7,602.1 -0.00%",
+              "test_id": "explore-markets-xyz-SP500",
+              "selector": "[data-testid=\"explore-markets-xyz-SP500\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 33,
+                "y": 914,
+                "width": 798,
+                "height": 72
+              },
+              "reason": "offscreen"
+            }
+          ],
+          "truncated": true,
+          "limits": {
+            "items": 20,
+            "hidden_or_offscreen": 10
+          }
+        }
+      }
+    },
+    {
+      "nodeId": "wait",
+      "action": "ui.wait_for",
+      "intent": "Perps tab loaded",
+      "startedAt": "2026-09-14T13:28:00.078Z",
+      "endedAt": "2026-09-14T13:28:00.572Z",
+      "durationMs": 494,
+      "ok": true,
+      "next": "shot",
+      "output": {
+        "matched": true,
+        "cdpPort": 7666,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps-home",
+        "runtimeLaunch": null,
+        "cdpTargetId": "EA7EF33110178EA4607668989B21E000",
+        "runtimeSessionId": "545746f7-d9d5-4ab5-8f2b-fe06e382c75e"
+      },
+      "observations": {
+        "ui.screen": {
+          "provider": "cdp-web",
+          "name": "macpro-mme-6 — MetaMask",
+          "title": "macpro-mme-6 — MetaMask",
+          "route": "#/perps-home",
+          "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
+        },
+        "ui.visible": {
+          "provider": "cdp-web",
+          "items": [
+            {
+              "role": "button",
+              "label": "Crypto",
+              "test_id": "perps-products-categories-pill-crypto",
+              "selector": "[data-testid=\"perps-products-categories-pill-crypto\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 49,
+                "y": 40,
+                "width": 90,
+                "height": 40
+              }
+            },
+            {
+              "role": "button",
+              "label": "Stocks",
+              "test_id": "perps-products-categories-pill-stock",
+              "selector": "[data-testid=\"perps-products-categories-pill-stock\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 147,
+                "y": 40,
+                "width": 90,
+                "height": 40
+              }
+            },
+            {
+              "role": "button",
+              "label": "Pre-IPO",
+              "test_id": "perps-products-categories-pill-pre-ipo",
+              "selector": "[data-testid=\"perps-products-categories-pill-pre-ipo\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 245,
+                "y": 40,
+                "width": 98,
+                "height": 40
+              }
+            },
+            {
+              "role": "button",
+              "label": "Indices",
+              "test_id": "perps-products-categories-pill-index",
+              "selector": "[data-testid=\"perps-products-categories-pill-index\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 351,
+                "y": 40,
+                "width": 93,
+                "height": 40
+              }
+            },
+            {
+              "role": "button",
+              "label": "ETFs",
+              "test_id": "perps-products-categories-pill-etf",
+              "selector": "[data-testid=\"perps-products-categories-pill-etf\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 452,
+                "y": 40,
+                "width": 76,
+                "height": 40
+              }
+            },
+            {
+              "role": "button",
+              "label": "Commodities",
+              "test_id": "perps-products-categories-pill-commodity",
+              "selector": "[data-testid=\"perps-products-categories-pill-commodity\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 536,
+                "y": 40,
+                "width": 139,
+                "height": 40
+              }
+            },
+            {
+              "role": "button",
+              "label": "Forex",
+              "test_id": "perps-products-categories-pill-forex",
+              "selector": "[data-testid=\"perps-products-categories-pill-forex\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 683,
+                "y": 40,
+                "width": 80,
+                "height": 40
+              }
+            },
+            {
+              "role": "button",
+              "label": "New",
+              "test_id": "perps-products-categories-pill-new",
+              "selector": "[data-testid=\"perps-products-categories-pill-new\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 49,
+                "y": 88,
+                "width": 73,
+                "height": 40
+              }
+            },
+            {
+              "role": "button",
+              "label": "Top movers",
+              "test_id": "perps-top-movers-header",
+              "selector": "[data-testid=\"perps-top-movers-header\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 33,
+                "y": 144,
+                "width": 192,
+                "height": 48
+              }
+            },
+            {
+              "role": "button",
+              "label": "Gainers",
+              "test_id": "perps-top-movers-gainers",
+              "selector": "[data-testid=\"perps-top-movers-gainers\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 54,
+                "y": 209,
+                "width": 376,
+                "height": 28
+              }
+            },
+            {
+              "role": "button",
+              "label": "Losers",
+              "test_id": "perps-top-movers-losers",
+              "selector": "[data-testid=\"perps-top-movers-losers\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 434,
+                "y": 209,
+                "width": 376,
+                "height": 28
+              }
+            },
+            {
+              "role": "button",
+              "label": "FIL +17.87%",
+              "test_id": "perps-top-movers-pill-FIL",
+              "selector": "[data-testid=\"perps-top-movers-pill-FIL\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 49,
+                "y": 254,
+                "width": 128,
+                "height": 36
+              }
+            },
+            {
+              "role": "button",
+              "label": "REZ +14.83%",
+              "test_id": "perps-top-movers-pill-REZ",
+              "selector": "[data-testid=\"perps-top-movers-pill-REZ\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 185,
+                "y": 254,
+                "width": 138,
+                "height": 36
+              }
+            },
+            {
+              "role": "button",
+              "label": "AR +10.10%",
+              "test_id": "perps-top-movers-pill-AR",
+              "selector": "[data-testid=\"perps-top-movers-pill-AR\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 331,
+                "y": 254,
+                "width": 127,
+                "height": 36
+              }
+            },
+            {
+              "role": "button",
+              "label": "IOTA +9.50%",
+              "test_id": "perps-top-movers-pill-IOTA",
+              "selector": "[data-testid=\"perps-top-movers-pill-IOTA\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 465,
+                "y": 254,
+                "width": 137,
+                "height": 36
+              }
+            },
+            {
+              "role": "button",
+              "label": "PENDLE +8.34%",
+              "test_id": "perps-top-movers-pill-PENDLE",
+              "selector": "[data-testid=\"perps-top-movers-pill-PENDLE\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 49,
+                "y": 302,
+                "width": 160,
+                "height": 36
+              }
+            },
+            {
+              "role": "button",
+              "label": "CAKE +8.28%",
+              "test_id": "perps-top-movers-pill-CAKE",
+              "selector": "[data-testid=\"perps-top-movers-pill-CAKE\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 302,
+                "width": 143,
+                "height": 36
+              }
+            },
+            {
+              "role": "button",
+              "label": "LIT +7.37%",
+              "test_id": "perps-top-movers-pill-LIT",
+              "selector": "[data-testid=\"perps-top-movers-pill-LIT\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 368,
+                "y": 302,
+                "width": 123,
+                "height": 36
+              }
+            },
+            {
+              "role": "button",
+              "label": "XLM +7.06%",
+              "test_id": "perps-top-movers-pill-XLM",
+              "selector": "[data-testid=\"perps-top-movers-pill-XLM\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 499,
+                "y": 302,
+                "width": 133,
+                "height": 36
+              }
+            },
+            {
+              "role": "button",
+              "label": "Explore markets",
+              "test_id": "perps-explore-markets-row",
+              "selector": "[data-testid=\"perps-explore-markets-row\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 33,
+                "y": 354,
+                "width": 798,
+                "height": 48
+              }
+            }
+          ],
+          "hidden_or_offscreen": [
+            {
+              "role": "button",
+              "label": "Withdraw",
+              "test_id": "perps-balance-actions-withdraw",
+              "selector": "[data-testid=\"perps-balance-actions-withdraw\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 49,
+                "y": -424,
+                "width": 377,
+                "height": 48
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "Add funds",
+              "test_id": "perps-balance-actions-add-funds",
+              "selector": "[data-testid=\"perps-balance-actions-add-funds\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 438,
+                "y": -424,
+                "width": 377,
+                "height": 48
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "Watchlist",
+              "test_id": "perps-watchlist-header",
+              "selector": "[data-testid=\"perps-watchlist-header\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 33,
+                "y": -360,
+                "width": 798,
+                "height": 48
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "Bitcoin 40x BTC · $1.81B Vol $77,780 +1.63%",
+              "test_id": "perps-watchlist-BTC",
+              "selector": "[data-testid=\"perps-watchlist-BTC\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 33,
+                "y": -304,
+                "width": 798,
+                "height": 72
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "Hyperliquid 10x HYPE · $310.93M Vol $79.671 +3.96%",
+              "test_id": "perps-watchlist-HYPE",
+              "selector": "[data-testid=\"perps-watchlist-HYPE\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 33,
+                "y": -232,
+                "width": 798,
+                "height": 72
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "WTI Crude Oil 20x CL · $267.28M Vol $99.573 +2.80%",
+              "test_id": "perps-watchlist-xyz:CL",
+              "selector": "[data-testid=\"perps-watchlist-xyz:CL\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 33,
+                "y": -160,
+                "width": 798,
+                "height": 72
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "Ethereum 25x ETH · $1.18B Vol $2,501.8 +1.46%",
+              "test_id": "perps-watchlist-ETH",
+              "selector": "[data-testid=\"perps-watchlist-ETH\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 33,
+                "y": -88,
+                "width": 798,
+                "height": 72
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "XYZ100 30x $281.57M Vol $28,897 -0.47%",
+              "test_id": "explore-markets-xyz-XYZ100",
+              "selector": "[data-testid=\"explore-markets-xyz-XYZ100\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 33,
+                "y": 770,
+                "width": 798,
+                "height": 72
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "WTI Crude Oil 20x CL · $267.28M Vol $99.573 +2.80%",
+              "test_id": "explore-markets-xyz-CL",
+              "selector": "[data-testid=\"explore-markets-xyz-CL\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 33,
+                "y": 842,
+                "width": 798,
+                "height": 72
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "S&P 500 50x SP500 · $162.89M Vol $7,602.1 -0.00%",
+              "test_id": "explore-markets-xyz-SP500",
+              "selector": "[data-testid=\"explore-markets-xyz-SP500\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 33,
+                "y": 914,
+                "width": 798,
+                "height": 72
+              },
+              "reason": "offscreen"
+            }
+          ],
+          "truncated": true,
+          "limits": {
+            "items": 20,
+            "hidden_or_offscreen": 10
+          }
+        }
+      }
+    },
+    {
+      "nodeId": "shot",
+      "action": "ui.screenshot",
+      "intent": "Preserve what a user sees on the Perps tab as review evidence",
+      "artifacts": [
+        {
+          "path": "screenshots/perps-tab.png",
+          "type": "screenshot",
+          "nodeId": "shot",
+          "label": "Live Perps tab",
+          "category": "evidence",
+          "mimeType": "image/png",
+          "metadata": {
+            "provider": "capture-helper",
+            "mode": "snapshot",
+            "pid": 61764,
+            "captureHelper": {
+              "bytes": 809780,
+              "output": "/Users/deeeed/dev/metamask/metamask-extension-6/temp/tasks/fix/45956-0914-205729/artifacts/probe2/screenshots/.mm-harness-extension-evidence-jic8sb/captured.png",
+              "selected": {
+                "app": "Google Chrome for Testing",
+                "height": 995,
+                "id": 3596,
+                "layer": 0,
+                "onScreen": true,
+                "pid": 61764,
+                "title": "macpro-mme-6 — MetaMask",
+                "width": 864,
+                "x": 0,
+                "y": 83
+              },
+              "selector": "pid",
+              "type": "snapshot"
+            }
+          }
+        }
+      ],
+      "startedAt": "2026-09-14T13:28:00.580Z",
+      "endedAt": "2026-09-14T13:28:00.865Z",
+      "durationMs": 285,
+      "ok": true,
+      "next": "done",
+      "output": {
+        "captured": true,
+        "path": "screenshots/perps-tab.png",
+        "artifact": {
+          "path": "screenshots/perps-tab.png",
+          "type": "screenshot",
+          "nodeId": "shot",
+          "label": "Live Perps tab",
+          "category": "evidence",
+          "mimeType": "image/png",
+          "metadata": {
+            "provider": "capture-helper",
+            "mode": "snapshot",
+            "pid": 61764,
+            "captureHelper": {
+              "bytes": 809780,
+              "output": "/Users/deeeed/dev/metamask/metamask-extension-6/temp/tasks/fix/45956-0914-205729/artifacts/probe2/screenshots/.mm-harness-extension-evidence-jic8sb/captured.png",
+              "selected": {
+                "app": "Google Chrome for Testing",
+                "height": 995,
+                "id": 3596,
+                "layer": 0,
+                "onScreen": true,
+                "pid": 61764,
+                "title": "macpro-mme-6 — MetaMask",
+                "width": 864,
+                "x": 0,
+                "y": 83
+              },
+              "selector": "pid",
+              "type": "snapshot"
+            }
+          }
+        }
+      },
+      "observations": {
+        "ui.screen": {
+          "provider": "cdp-web",
+          "name": "macpro-mme-6 — MetaMask",
+          "title": "macpro-mme-6 — MetaMask",
+          "route": "#/perps-home",
+          "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
+        },
+        "ui.visible": {
+          "provider": "cdp-web",
+          "items": [
+            {
+              "role": "button",
+              "label": "Crypto",
+              "test_id": "perps-products-categories-pill-crypto",
+              "selector": "[data-testid=\"perps-products-categories-pill-crypto\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 49,
+                "y": 40,
+                "width": 90,
+                "height": 40
+              }
+            },
+            {
+              "role": "button",
+              "label": "Stocks",
+              "test_id": "perps-products-categories-pill-stock",
+              "selector": "[data-testid=\"perps-products-categories-pill-stock\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 147,
+                "y": 40,
+                "width": 90,
+                "height": 40
+              }
+            },
+            {
+              "role": "button",
+              "label": "Pre-IPO",
+              "test_id": "perps-products-categories-pill-pre-ipo",
+              "selector": "[data-testid=\"perps-products-categories-pill-pre-ipo\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 245,
+                "y": 40,
+                "width": 98,
+                "height": 40
+              }
+            },
+            {
+              "role": "button",
+              "label": "Indices",
+              "test_id": "perps-products-categories-pill-index",
+              "selector": "[data-testid=\"perps-products-categories-pill-index\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 351,
+                "y": 40,
+                "width": 93,
+                "height": 40
+              }
+            },
+            {
+              "role": "button",
+              "label": "ETFs",
+              "test_id": "perps-products-categories-pill-etf",
+              "selector": "[data-testid=\"perps-products-categories-pill-etf\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 452,
+                "y": 40,
+                "width": 76,
+                "height": 40
+              }
+            },
+            {
+              "role": "button",
+              "label": "Commodities",
+              "test_id": "perps-products-categories-pill-commodity",
+              "selector": "[data-testid=\"perps-products-categories-pill-commodity\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 536,
+                "y": 40,
+                "width": 139,
+                "height": 40
+              }
+            },
+            {
+              "role": "button",
+              "label": "Forex",
+              "test_id": "perps-products-categories-pill-forex",
+              "selector": "[data-testid=\"perps-products-categories-pill-forex\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 683,
+                "y": 40,
+                "width": 80,
+                "height": 40
+              }
+            },
+            {
+              "role": "button",
+              "label": "New",
+              "test_id": "perps-products-categories-pill-new",
+              "selector": "[data-testid=\"perps-products-categories-pill-new\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 49,
+                "y": 88,
+                "width": 73,
+                "height": 40
+              }
+            },
+            {
+              "role": "button",
+              "label": "Top movers",
+              "test_id": "perps-top-movers-header",
+              "selector": "[data-testid=\"perps-top-movers-header\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 33,
+                "y": 144,
+                "width": 192,
+                "height": 48
+              }
+            },
+            {
+              "role": "button",
+              "label": "Gainers",
+              "test_id": "perps-top-movers-gainers",
+              "selector": "[data-testid=\"perps-top-movers-gainers\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 54,
+                "y": 209,
+                "width": 376,
+                "height": 28
+              }
+            },
+            {
+              "role": "button",
+              "label": "Losers",
+              "test_id": "perps-top-movers-losers",
+              "selector": "[data-testid=\"perps-top-movers-losers\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 434,
+                "y": 209,
+                "width": 376,
+                "height": 28
+              }
+            },
+            {
+              "role": "button",
+              "label": "FIL +17.87%",
+              "test_id": "perps-top-movers-pill-FIL",
+              "selector": "[data-testid=\"perps-top-movers-pill-FIL\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 49,
+                "y": 254,
+                "width": 128,
+                "height": 36
+              }
+            },
+            {
+              "role": "button",
+              "label": "REZ +14.83%",
+              "test_id": "perps-top-movers-pill-REZ",
+              "selector": "[data-testid=\"perps-top-movers-pill-REZ\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 185,
+                "y": 254,
+                "width": 138,
+                "height": 36
+              }
+            },
+            {
+              "role": "button",
+              "label": "AR +10.10%",
+              "test_id": "perps-top-movers-pill-AR",
+              "selector": "[data-testid=\"perps-top-movers-pill-AR\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 331,
+                "y": 254,
+                "width": 127,
+                "height": 36
+              }
+            },
+            {
+              "role": "button",
+              "label": "IOTA +9.50%",
+              "test_id": "perps-top-movers-pill-IOTA",
+              "selector": "[data-testid=\"perps-top-movers-pill-IOTA\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 465,
+                "y": 254,
+                "width": 137,
+                "height": 36
+              }
+            },
+            {
+              "role": "button",
+              "label": "PENDLE +8.34%",
+              "test_id": "perps-top-movers-pill-PENDLE",
+              "selector": "[data-testid=\"perps-top-movers-pill-PENDLE\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 49,
+                "y": 302,
+                "width": 160,
+                "height": 36
+              }
+            },
+            {
+              "role": "button",
+              "label": "CAKE +8.28%",
+              "test_id": "perps-top-movers-pill-CAKE",
+              "selector": "[data-testid=\"perps-top-movers-pill-CAKE\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 302,
+                "width": 143,
+                "height": 36
+              }
+            },
+            {
+              "role": "button",
+              "label": "LIT +7.37%",
+              "test_id": "perps-top-movers-pill-LIT",
+              "selector": "[data-testid=\"perps-top-movers-pill-LIT\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 368,
+                "y": 302,
+                "width": 123,
+                "height": 36
+              }
+            },
+            {
+              "role": "button",
+              "label": "XLM +7.06%",
+              "test_id": "perps-top-movers-pill-XLM",
+              "selector": "[data-testid=\"perps-top-movers-pill-XLM\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 499,
+                "y": 302,
+                "width": 133,
+                "height": 36
+              }
+            },
+            {
+              "role": "button",
+              "label": "Explore markets",
+              "test_id": "perps-explore-markets-row",
+              "selector": "[data-testid=\"perps-explore-markets-row\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 33,
+                "y": 354,
+                "width": 798,
+                "height": 48
+              }
+            }
+          ],
+          "hidden_or_offscreen": [
+            {
+              "role": "button",
+              "label": "Withdraw",
+              "test_id": "perps-balance-actions-withdraw",
+              "selector": "[data-testid=\"perps-balance-actions-withdraw\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 49,
+                "y": -424,
+                "width": 377,
+                "height": 48
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "Add funds",
+              "test_id": "perps-balance-actions-add-funds",
+              "selector": "[data-testid=\"perps-balance-actions-add-funds\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 438,
+                "y": -424,
+                "width": 377,
+                "height": 48
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "Watchlist",
+              "test_id": "perps-watchlist-header",
+              "selector": "[data-testid=\"perps-watchlist-header\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 33,
+                "y": -360,
+                "width": 798,
+                "height": 48
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "Bitcoin 40x BTC · $1.81B Vol $77,780 +1.63%",
+              "test_id": "perps-watchlist-BTC",
+              "selector": "[data-testid=\"perps-watchlist-BTC\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 33,
+                "y": -304,
+                "width": 798,
+                "height": 72
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "Hyperliquid 10x HYPE · $310.93M Vol $79.671 +3.96%",
+              "test_id": "perps-watchlist-HYPE",
+              "selector": "[data-testid=\"perps-watchlist-HYPE\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 33,
+                "y": -232,
+                "width": 798,
+                "height": 72
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "WTI Crude Oil 20x CL · $267.28M Vol $99.573 +2.80%",
+              "test_id": "perps-watchlist-xyz:CL",
+              "selector": "[data-testid=\"perps-watchlist-xyz:CL\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 33,
+                "y": -160,
+                "width": 798,
+                "height": 72
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "Ethereum 25x ETH · $1.18B Vol $2,501.8 +1.46%",
+              "test_id": "perps-watchlist-ETH",
+              "selector": "[data-testid=\"perps-watchlist-ETH\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 33,
+                "y": -88,
+                "width": 798,
+                "height": 72
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "XYZ100 30x $281.57M Vol $28,897 -0.47%",
+              "test_id": "explore-markets-xyz-XYZ100",
+              "selector": "[data-testid=\"explore-markets-xyz-XYZ100\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 33,
+                "y": 770,
+                "width": 798,
+                "height": 72
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "WTI Crude Oil 20x CL · $267.28M Vol $99.573 +2.80%",
+              "test_id": "explore-markets-xyz-CL",
+              "selector": "[data-testid=\"explore-markets-xyz-CL\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 33,
+                "y": 842,
+                "width": 798,
+                "height": 72
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "S&P 500 50x SP500 · $162.89M Vol $7,602.1 -0.00%",
+              "test_id": "explore-markets-xyz-SP500",
+              "selector": "[data-testid=\"explore-markets-xyz-SP500\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 33,
+                "y": 914,
+                "width": 798,
+                "height": 72
+              },
+              "reason": "offscreen"
+            }
+          ],
+          "truncated": true,
+          "limits": {
+            "items": 20,
+            "hidden_or_offscreen": 10
+          }
+        }
+      }
+    },
+    {
+      "nodeId": "done",
+      "action": "end",
+      "startedAt": "2026-09-14T13:28:00.870Z",
+      "endedAt": "2026-09-14T13:28:00.870Z",
+      "durationMs": 0,
+      "ok": true,
+      "status": "pass"
+    }
+  ]
+}

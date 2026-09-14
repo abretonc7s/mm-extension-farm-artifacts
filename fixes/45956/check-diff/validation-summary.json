@@ -5,13 +5,13 @@
   "status": "pass",
   "exitCode": 0,
   "adapter": "extension",
-  "target": "/Users/deeeed/dev/metamask/metamask-extension-3",
+  "target": "/Users/deeeed/dev/metamask/metamask-extension-6",
   "profile": "fast",
   "fix": false,
   "baseRef": "origin/main",
   "baseSource": "github-pr",
   "baseLabel": "main",
-  "mergeBase": "e325afe94c9efa5d92fc115290602b63b146f378",
+  "mergeBase": "31cd78a3647d914e08d0b3188a7367ea205b0e3a",
   "changedFiles": [
     "app/_locales/de/messages.json",
     "app/_locales/el/messages.json",
@@ -34,6 +34,7 @@
     "ui/components/app/perps/dropdown/dropdown.test.tsx",
     "ui/components/app/perps/dropdown/dropdown.tsx",
     "ui/components/app/perps/dropdown/index.ts",
+    "ui/components/app/perps/hooks/usePerpsTabExploreData.ts",
     "ui/components/app/perps/perps-market-categories/index.ts",
     "ui/components/app/perps/perps-market-categories/perps-category-rail.test.tsx",
     "ui/components/app/perps/perps-market-categories/perps-category-rail.tsx",
@@ -43,6 +44,7 @@
     "ui/components/app/perps/perps-products/index.ts",
     "ui/components/app/perps/perps-products/perps-products.test.tsx",
     "ui/components/app/perps/perps-products/perps-products.tsx",
+    "ui/components/app/perps/perps-view.test.tsx",
     "ui/components/app/perps/perps-view.tsx",
     "ui/pages/perps/market-list/components/sort-dropdown/sort-dropdown.test.tsx",
     "ui/pages/perps/market-list/components/sort-dropdown/sort-dropdown.tsx",
@@ -56,34 +58,34 @@
       "id": "policy-suppressions",
       "label": "New ESLint suppression policy",
       "status": "pass",
-      "logPath": "/Users/deeeed/dev/metamask/metamask-extension-3/temp/tasks/fix/45956-0911-224137/artifacts/check-diff/policy-suppressions.log"
+      "logPath": "/Users/deeeed/dev/metamask/metamask-extension-6/temp/tasks/fix/45956-0914-205729/artifacts/check-diff/policy-suppressions.log"
     },
     {
       "id": "eslint",
       "label": "Changed-file ESLint",
       "status": "pass",
-      "command": "/Users/deeeed/dev/metamask/metamask-extension-3/node_modules/.bin/eslint --config ./.eslintrc.js --cache --cache-location /Users/deeeed/dev/metamask/metamask-extension-3/temp/tasks/fix/45956-0911-224137/artifacts/check-diff/eslintcache test/e2e/page-objects/pages/perps/perps-market-list-page.ts ui/components/app/perps/constants.ts ui/components/app/perps/dropdown/dropdown.test.tsx ui/components/app/perps/dropdown/dropdown.tsx ui/components/app/perps/dropdown/index.ts ui/components/app/perps/perps-market-categories/index.ts ui/components/app/perps/perps-market-categories/perps-category-rail.test.tsx ui/components/app/perps/perps-market-categories/perps-category-rail.tsx ui/components/app/perps/perps-market-categories/perps-market-category-pill.test.tsx ui/components/app/perps/perps-market-categories/perps-market-category-pill.tsx ui/components/app/perps/perps-market-categories/use-category-rail-overflow.ts ui/components/app/perps/perps-products/index.ts ui/components/app/perps/perps-products/perps-products.test.tsx ui/components/app/perps/perps-products/perps-products.tsx ui/components/app/perps/perps-view.tsx ui/pages/perps/market-list/components/sort-dropdown/sort-dropdown.test.tsx ui/pages/perps/market-list/components/sort-dropdown/sort-dropdown.tsx ui/pages/perps/market-list/index.test.tsx ui/pages/perps/market-list/index.tsx ui/pages/perps/perps-activity-page.tsx",
+      "command": "/Users/deeeed/dev/metamask/metamask-extension-6/node_modules/.bin/eslint --config ./.eslintrc.js --cache --cache-location /Users/deeeed/dev/metamask/metamask-extension-6/temp/tasks/fix/45956-0914-205729/artifacts/check-diff/eslintcache test/e2e/page-objects/pages/perps/perps-market-list-page.ts ui/components/app/perps/constants.ts ui/components/app/perps/dropdown/dropdown.test.tsx ui/components/app/perps/dropdown/dropdown.tsx ui/components/app/perps/dropdown/index.ts ui/components/app/perps/hooks/usePerpsTabExploreData.ts ui/components/app/perps/perps-market-categories/index.ts ui/components/app/perps/perps-market-categories/perps-category-rail.test.tsx ui/components/app/perps/perps-market-categories/perps-category-rail.tsx ui/components/app/perps/perps-market-categories/perps-market-category-pill.test.tsx ui/components/app/perps/perps-market-categories/perps-market-category-pill.tsx ui/components/app/perps/perps-market-categories/use-category-rail-overflow.ts ui/components/app/perps/perps-products/index.ts ui/components/app/perps/perps-products/perps-products.test.tsx ui/components/app/perps/perps-products/perps-products.tsx ui/components/app/perps/perps-view.test.tsx ui/components/app/perps/perps-view.tsx ui/pages/perps/market-list/components/sort-dropdown/sort-dropdown.test.tsx ui/pages/perps/market-list/components/sort-dropdown/sort-dropdown.tsx ui/pages/perps/market-list/index.test.tsx ui/pages/perps/market-list/index.tsx ui/pages/perps/perps-activity-page.tsx",
       "exitCode": 0,
-      "logPath": "/Users/deeeed/dev/metamask/metamask-extension-3/temp/tasks/fix/45956-0911-224137/artifacts/check-diff/eslint.log",
-      "durationMs": 245551
+      "logPath": "/Users/deeeed/dev/metamask/metamask-extension-6/temp/tasks/fix/45956-0914-205729/artifacts/check-diff/eslint.log",
+      "durationMs": 23530
     },
     {
       "id": "oxfmt",
       "label": "Changed-file oxfmt",
       "status": "pass",
-      "command": "/Users/deeeed/dev/metamask/metamask-extension-3/node_modules/.bin/oxfmt --config oxfmt.config.mts --check app/_locales/de/messages.json app/_locales/el/messages.json app/_locales/en/messages.json app/_locales/en_GB/messages.json app/_locales/es_419/messages.json app/_locales/fr/messages.json app/_locales/hi/messages.json app/_locales/id/messages.json app/_locales/ja/messages.json app/_locales/ko/messages.json app/_locales/pt/messages.json app/_locales/ru/messages.json app/_locales/tl/messages.json app/_locales/tr/messages.json app/_locales/vi/messages.json app/_locales/zh_CN/messages.json test/e2e/page-objects/pages/perps/perps-market-list-page.ts ui/components/app/perps/constants.ts ui/components/app/perps/dropdown/dropdown.test.tsx ui/components/app/perps/dropdown/dropdown.tsx ui/components/app/perps/dropdown/index.ts ui/components/app/perps/perps-market-categories/index.ts ui/components/app/perps/perps-market-categories/perps-category-rail.test.tsx ui/components/app/perps/perps-market-categories/perps-category-rail.tsx ui/components/app/perps/perps-market-categories/perps-market-category-pill.test.tsx ui/components/app/perps/perps-market-categories/perps-market-category-pill.tsx ui/components/app/perps/perps-market-categories/use-category-rail-overflow.ts ui/components/app/perps/perps-products/index.ts ui/components/app/perps/perps-products/perps-products.test.tsx ui/components/app/perps/perps-products/perps-products.tsx ui/components/app/perps/perps-view.tsx ui/pages/perps/market-list/components/sort-dropdown/sort-dropdown.test.tsx ui/pages/perps/market-list/components/sort-dropdown/sort-dropdown.tsx ui/pages/perps/market-list/index.test.tsx ui/pages/perps/market-list/index.tsx ui/pages/perps/perps-activity-page.tsx",
+      "command": "/Users/deeeed/dev/metamask/metamask-extension-6/node_modules/.bin/oxfmt --config oxfmt.config.mts --check app/_locales/de/messages.json app/_locales/el/messages.json app/_locales/en/messages.json app/_locales/en_GB/messages.json app/_locales/es_419/messages.json app/_locales/fr/messages.json app/_locales/hi/messages.json app/_locales/id/messages.json app/_locales/ja/messages.json app/_locales/ko/messages.json app/_locales/pt/messages.json app/_locales/ru/messages.json app/_locales/tl/messages.json app/_locales/tr/messages.json app/_locales/vi/messages.json app/_locales/zh_CN/messages.json test/e2e/page-objects/pages/perps/perps-market-list-page.ts ui/components/app/perps/constants.ts ui/components/app/perps/dropdown/dropdown.test.tsx ui/components/app/perps/dropdown/dropdown.tsx ui/components/app/perps/dropdown/index.ts ui/components/app/perps/hooks/usePerpsTabExploreData.ts ui/components/app/perps/perps-market-categories/index.ts ui/components/app/perps/perps-market-categories/perps-category-rail.test.tsx ui/components/app/perps/perps-market-categories/perps-category-rail.tsx ui/components/app/perps/perps-market-categories/perps-market-category-pill.test.tsx ui/components/app/perps/perps-market-categories/perps-market-category-pill.tsx ui/components/app/perps/perps-market-categories/use-category-rail-overflow.ts ui/components/app/perps/perps-products/index.ts ui/components/app/perps/perps-products/perps-products.test.tsx ui/components/app/perps/perps-products/perps-products.tsx ui/components/app/perps/perps-view.test.tsx ui/components/app/perps/perps-view.tsx ui/pages/perps/market-list/components/sort-dropdown/sort-dropdown.test.tsx ui/pages/perps/market-list/components/sort-dropdown/sort-dropdown.tsx ui/pages/perps/market-list/index.test.tsx ui/pages/perps/market-list/index.tsx ui/pages/perps/perps-activity-page.tsx",
       "exitCode": 0,
-      "logPath": "/Users/deeeed/dev/metamask/metamask-extension-3/temp/tasks/fix/45956-0911-224137/artifacts/check-diff/oxfmt.log",
-      "durationMs": 655
+      "logPath": "/Users/deeeed/dev/metamask/metamask-extension-6/temp/tasks/fix/45956-0914-205729/artifacts/check-diff/oxfmt.log",
+      "durationMs": 363
     },
     {
       "id": "jest",
       "label": "Changed test files",
       "status": "pass",
-      "command": "/Users/deeeed/dev/metamask/metamask-extension-3/node_modules/.bin/jest --no-coverage ui/components/app/perps/dropdown/dropdown.test.tsx ui/components/app/perps/perps-market-categories/perps-category-rail.test.tsx ui/components/app/perps/perps-market-categories/perps-market-category-pill.test.tsx ui/components/app/perps/perps-products/perps-products.test.tsx ui/pages/perps/market-list/components/sort-dropdown/sort-dropdown.test.tsx ui/pages/perps/market-list/index.test.tsx",
+      "command": "/Users/deeeed/dev/metamask/metamask-extension-6/node_modules/.bin/jest --no-coverage ui/components/app/perps/dropdown/dropdown.test.tsx ui/components/app/perps/perps-market-categories/perps-category-rail.test.tsx ui/components/app/perps/perps-market-categories/perps-market-category-pill.test.tsx ui/components/app/perps/perps-products/perps-products.test.tsx ui/components/app/perps/perps-view.test.tsx ui/pages/perps/market-list/components/sort-dropdown/sort-dropdown.test.tsx ui/pages/perps/market-list/index.test.tsx",
       "exitCode": 0,
-      "logPath": "/Users/deeeed/dev/metamask/metamask-extension-3/temp/tasks/fix/45956-0911-224137/artifacts/check-diff/jest.log",
-      "durationMs": 50660
+      "logPath": "/Users/deeeed/dev/metamask/metamask-extension-6/temp/tasks/fix/45956-0914-205729/artifacts/check-diff/jest.log",
+      "durationMs": 14364
     },
     {
       "id": "typecheck",
@@ -94,8 +96,8 @@
   ],
   "guidance": [],
   "artifacts": {
-    "dir": "/Users/deeeed/dev/metamask/metamask-extension-3/temp/tasks/fix/45956-0911-224137/artifacts/check-diff",
-    "summaryJson": "/Users/deeeed/dev/metamask/metamask-extension-3/temp/tasks/fix/45956-0911-224137/artifacts/check-diff/validation-summary.json",
-    "summaryMarkdown": "/Users/deeeed/dev/metamask/metamask-extension-3/temp/tasks/fix/45956-0911-224137/artifacts/check-diff/validation-summary.md"
+    "dir": "/Users/deeeed/dev/metamask/metamask-extension-6/temp/tasks/fix/45956-0914-205729/artifacts/check-diff",
+    "summaryJson": "/Users/deeeed/dev/metamask/metamask-extension-6/temp/tasks/fix/45956-0914-205729/artifacts/check-diff/validation-summary.json",
+    "summaryMarkdown": "/Users/deeeed/dev/metamask/metamask-extension-6/temp/tasks/fix/45956-0914-205729/artifacts/check-diff/validation-summary.md"
   }
 }

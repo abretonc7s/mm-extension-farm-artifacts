@@ -1,110 +1,164 @@
 {
   "$schema": "https://farmslot.io/schemas/recipe-v1.schema.json",
-  "title": "PR 45956 review fix: Products chips follow the controller order",
-  "description": "Live proof that the Perps tab Products chips come from the controller's MARKET_CATEGORIES order (plus new) and wrap instead of scrolling.",
+  "title": "PR #45956 review fixes — category rail contract, market count grammar, Products slot",
+  "description": "Proves the fixes made for the 2026-09-14 review round: the market list still renders its category rail and count with the singular/plural split in place, the Products chips still come from the controller and wrap, and the unit suites covering the watchlist skeleton slot, the rail-under-watchlist contract and the singular count all pass.",
   "workflow": {
-    "entry": "attach",
+    "entry": "gate-cdp-reachable",
     "nodes": {
-      "attach": {
+      "gate-cdp-reachable": {
         "action": "cdp.target",
-        "cdp_port": 6663,
         "require_reachable": true,
-        "intent": "Refuse to report proof unless the live extension is attached",
-        "next": "reload-extension-page"
+        "intent": "Refuse to report proof unless the live extension is actually attached",
+        "next": "setup-unlock-wallet"
       },
-      "reload-extension-page": {
-        "action": "command",
-        "cmd": "node -e \"(async()=>{const t=(await (await fetch('http://127.0.0.1:6663/json')).json()).find(x=>x.type==='page'&&x.url.includes('home.html'));const ws=new WebSocket(t.webSocketDebuggerUrl);ws.onopen=()=>ws.send(JSON.stringify({id:1,method:'Page.reload',params:{ignoreCache:true}}));ws.onmessage=()=>{ws.close();process.exit(0)};setTimeout(()=>process.exit(1),10000)})()\"",
-        "timeout_ms": 20000,
-        "intent": "Load the rebuilt bundle; webpack has no HMR for the extension page",
-        "next": "settle-after-reload"
-      },
-      "settle-after-reload": {
-        "action": "wait",
-        "duration_ms": 4000,
-        "intent": "Let the reloaded page boot before driving it",
-        "next": "unlock"
-      },
-      "unlock": {
+      "setup-unlock-wallet": {
         "action": "metamask.wallet.ensure_unlocked",
-        "timeout_ms": 60000,
-        "intent": "Reach the wallet UI from the fixture wallet",
-        "next": "open-perps-tab"
+        "intent": "Put the wallet past the lock screen so the Perps surfaces render for the user",
+        "next": "setup-open-perps-tab"
       },
-      "open-perps-tab": {
+      "setup-open-perps-tab": {
         "action": "ui.navigate",
         "page": "perps",
-        "intent": "Put the user on the Perps tab where the Products section lives",
-        "next": "wait-products"
+        "intent": "Put the user on the Perps tab, where the Products section lives",
+        "next": "setup-wait-perps-tab"
       },
-      "wait-products": {
+      "setup-wait-perps-tab": {
+        "action": "ui.wait_for",
+        "test_id": "parent-selector-perps-tab",
+        "expected": "visible",
+        "timeout_ms": 40000,
+        "intent": "Hold until the tab has finished its first market load so the chips are judged on real data",
+        "next": "fix1-wait-products-rail"
+      },
+      "fix1-wait-products-rail": {
         "action": "ui.wait_for",
         "test_id": "perps-products-categories",
         "expected": "visible",
-        "timeout_ms": 45000,
-        "intent": "Products chips rendered after the first market snapshot",
-        "next": "scroll-products"
+        "timeout_ms": 30000,
+        "intent": "The Products chips are on screen for the user, not merely in the document",
+        "next": "fix1-assert-wraps-not-scrolls"
       },
-      "scroll-products": {
-        "action": "ui.scroll",
-        "test_id": "perps-products-categories",
-        "scroll_into_view": true,
+      "fix1-assert-wraps-not-scrolls": {
+        "action": "ui.wait_for",
+        "selector": "[data-testid=\"perps-products-categories\"].flex-wrap",
+        "expected": "visible",
         "timeout_ms": 20000,
-        "intent": "Judge the chips on what a user can see",
-        "next": "assert-wraps"
+        "intent": "Every category stays reachable by wrapping onto another line instead of hiding behind a horizontal scroller",
+        "next": "fix1-assert-first-chip-is-crypto"
       },
-      "assert-wraps": {
+      "fix1-assert-first-chip-is-crypto": {
         "action": "ui.wait_for",
-        "selector": "[data-testid=\"perps-products-categories\"].flex-wrap[role=\"group\"]",
+        "selector": "[data-testid=\"perps-products-categories\"] > *:nth-child(1) [data-testid=\"perps-products-categories-pill-crypto\"], [data-testid=\"perps-products-categories\"] > *:nth-child(1)[data-testid=\"perps-products-categories-pill-crypto\"]",
         "expected": "visible",
-        "timeout_ms": 10000,
-        "intent": "Chips wrap onto further lines instead of scrolling or hiding",
-        "next": "assert-first-crypto"
+        "timeout_ms": 20000,
+        "intent": "The chips still lead with the controller's first category rather than a hand-kept order",
+        "next": "fix1-assert-last-chip-is-new"
       },
-      "assert-first-crypto": {
+      "fix1-assert-last-chip-is-new": {
         "action": "ui.wait_for",
-        "selector": "[data-testid=\"perps-products-categories\"] > [data-testid=\"perps-products-categories-pill-crypto\"]:nth-child(1)",
+        "test_id": "perps-products-categories-pill-new",
+        "text": "New",
         "expected": "visible",
-        "timeout_ms": 10000,
-        "intent": "Controller order starts with crypto",
-        "next": "assert-index-fourth"
+        "timeout_ms": 20000,
+        "intent": "The controller's trailing category is still offered to the user",
+        "next": "fix2-open-market-list"
       },
-      "assert-index-fourth": {
+      "fix2-open-market-list": {
+        "action": "ui.press",
+        "test_id": "perps-products-categories-pill-crypto",
+        "intent": "Follow a Products chip the way a user does, into the market list narrowed to that category",
+        "next": "fix2-wait-category-rail"
+      },
+      "fix2-wait-category-rail": {
         "action": "ui.wait_for",
-        "selector": "[data-testid=\"perps-products-categories\"] > [data-testid=\"perps-products-categories-pill-index\"]:nth-child(4)",
+        "test_id": "market-list-categories",
         "expected": "visible",
-        "timeout_ms": 10000,
-        "intent": "index sits right after pre-ipo, as in MARKET_CATEGORIES, not after commodity as the removed hand-kept order had it",
-        "next": "assert-commodity-sixth"
+        "timeout_ms": 30000,
+        "intent": "The market list's own category rail is on screen for the user",
+        "next": "fix2-assert-crypto-pressed"
       },
-      "assert-commodity-sixth": {
+      "fix2-assert-crypto-pressed": {
         "action": "ui.wait_for",
-        "selector": "[data-testid=\"perps-products-categories\"] > [data-testid=\"perps-products-categories-pill-commodity\"]:nth-child(6)",
+        "selector": "[data-testid=\"market-list-categories-pill-crypto\"][aria-pressed=\"true\"]",
         "expected": "visible",
-        "timeout_ms": 10000,
-        "intent": "commodity follows etf, as in MARKET_CATEGORIES",
-        "next": "assert-new-last"
+        "timeout_ms": 20000,
+        "intent": "The category the user chose reports itself as the filter in force, so the rail never holds a hidden selection",
+        "next": "fix3-wait-market-count"
       },
-      "assert-new-last": {
+      "fix3-wait-market-count": {
         "action": "ui.wait_for",
-        "selector": "[data-testid=\"perps-products-categories\"] > [data-testid=\"perps-products-categories-pill-new\"]:nth-child(8):last-child",
+        "test_id": "market-list-count",
         "expected": "visible",
-        "timeout_ms": 10000,
-        "intent": "new is appended after every controller category, matching the market list rail",
-        "next": "clear-capture-orphans"
+        "timeout_ms": 20000,
+        "intent": "The user can see how many markets the filter left",
+        "next": "fix3-assert-count-reads-plural"
       },
-      "clear-capture-orphans": {
+      "fix3-assert-count-reads-plural": {
+        "action": "ui.wait_for",
+        "test_id": "market-list-count",
+        "text_match": "\\d+ markets$",
+        "expected": "visible",
+        "timeout_ms": 20000,
+        "intent": "A many-market filter still reads with the plural noun, so the singular branch did not take over the normal case",
+        "next": "fix3-clear-capture-orphans"
+      },
+      "fix3-clear-capture-orphans": {
         "action": "command",
         "cmd": "pkill -9 -f 'capture-helper' || true",
-        "intent": "Keep the capture on the real screenshot provider",
-        "next": "screenshot-products"
+        "intent": "Keep the upcoming capture on the real screenshot provider instead of a silent fallback",
+        "next": "fix3-screenshot-market-list"
       },
-      "screenshot-products": {
+      "fix3-screenshot-market-list": {
         "action": "ui.screenshot",
-        "path": "screenshots/products-controller-order.png",
-        "label": "Products chips in the controller's category order, wrapping",
-        "next": "done",
-        "intent": "Show the reader the Products chips in controller order"
+        "path": "screenshots/market-list-filtered.png",
+        "label": "Market list narrowed to Crypto: rail pill pressed and carrying its clear glyph, count beside the sort control",
+        "intent": "Preserve what the user sees on the filtered market list as review evidence",
+        "next": "fix4-run-watchlist-slot-tests"
+      },
+      "fix4-run-watchlist-slot-tests": {
+        "action": "command",
+        "cmd": "yarn jest ui/components/app/perps/perps-view.test.tsx --no-coverage -t 'reserves' 2>&1",
+        "timeout_ms": 900000,
+        "intent": "Show the tab's loading tree reserves the watchlist's rows so the Products chips do not jump once data arrives",
+        "next": "fix4-assert-watchlist-slot-tests-passed"
+      },
+      "fix4-assert-watchlist-slot-tests-passed": {
+        "action": "assert_output",
+        "source": "fix4-run-watchlist-slot-tests",
+        "stream": "stdout",
+        "contains": "2 passed",
+        "intent": "Both the starred and the empty watchlist cases actually ran rather than silently matching nothing",
+        "next": "fix5-run-market-list-tests"
+      },
+      "fix5-run-market-list-tests": {
+        "action": "command",
+        "cmd": "yarn jest ui/pages/perps/market-list/index.test.tsx --no-coverage -t 'single market' 2>&1",
+        "timeout_ms": 900000,
+        "intent": "Show the count line drops the plural when the filter leaves exactly one market",
+        "next": "fix5-assert-market-list-tests-passed"
+      },
+      "fix5-assert-market-list-tests-passed": {
+        "action": "assert_output",
+        "source": "fix5-run-market-list-tests",
+        "stream": "stdout",
+        "contains": "1 passed",
+        "intent": "The singular-count case actually ran rather than silently matching nothing",
+        "next": "fix6-run-rail-contract-test"
+      },
+      "fix6-run-rail-contract-test": {
+        "action": "command",
+        "cmd": "yarn jest ui/pages/perps/market-list/index.test.tsx --no-coverage -t 'leaves the rail unselected while the watchlist filter is on' 2>&1",
+        "timeout_ms": 900000,
+        "intent": "Show the rail holds no selection while the watchlist filter is in force, so its contract stays category-or-nothing",
+        "next": "fix6-assert-rail-contract-test-passed"
+      },
+      "fix6-assert-rail-contract-test-passed": {
+        "action": "assert_output",
+        "source": "fix6-run-rail-contract-test",
+        "stream": "stdout",
+        "contains": "1 passed",
+        "intent": "The rail-contract case actually ran rather than silently matching nothing",
+        "next": "done"
       },
       "done": {
         "action": "end",

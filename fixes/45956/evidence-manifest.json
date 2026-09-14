@@ -1,13 +1,15 @@
 {
   "version": 1,
   "preferred_mode": "screenshots",
-  "summary": "Products chips on the Perps tab now come straight from the controller's category order and wrap onto a second line.",
+  "summary": "Review-fix round on PR #45956: the category rail's width cache now accounts for the active pill's clear glyph, the Perps tab loading tree reserves the watchlist's slot above Products, the rail's selection contract is category-or-nothing, and a one-market filter reads \"1 market\". Captured live on Hyperliquid mainnet at branch head b875cfc948.",
   "standalone": [
     {
-      "label": "After: Products chips in the controller's order (Crypto, Stocks, Pre-IPO, Indices, ETFs, Commodities, Forex, New), wrapping instead of scrolling",
-      "covers": ["R1", "R2"],
-      "file": "after-products-controller-order.png",
-      "note": "Live capture-helper screenshot from artifacts/recipe-review-fix-run; order asserted by nth-child selectors in recipe-review-fix.json"
+      "label": "Perps tab: Products chips in the controller's order, wrapping onto a second line so every category stays on screen and Tab-reachable",
+      "file": "evidence/after-perps-tab-products-wrapping.png"
+    },
+    {
+      "label": "Market list narrowed to Crypto: the active pill is filled and carries its CircleX clear glyph, all eight categories fit one row with no More trigger at this width, and the count reads \"178 markets\" — the plural branch the new singular string did not capture",
+      "file": "evidence/after-market-list-filtered-crypto.png"
     }
   ]
 }

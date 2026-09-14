@@ -4,14 +4,16 @@
   "compact": {
     "verdict": "PASS",
     "reasons": [
-      "recipe.json is this pass's review-fix proof (copied from recipe-review-fix.json); recipe-run/ is its run package, status pass, exit 0, validated with --plan (zero findings) first.",
-      "R1 (controller order) is pinned by nth-child selectors on the live Products rail: index 4th, commodity 6th, new 8th and last; the removed design order fails every one of them.",
-      "R2 (wrap) is pinned by a .flex-wrap[role=group] selector plus a capture-helper screenshot showing New on a second line.",
-      "R3 (skeleton height) is a transient loading state and is proved by named jest assertions run through mm-harness check diff, not by a raced screenshot.",
-      "The inherited family recipe was stale (deleted helper test path, CDP 7665, removed All pill and overflow-x-auto rail) and failed before driving the UI; it is kept as recipe-inherited-stale.json and not used as proof."
+      "All 22 nodes executed against the live extension on Hyperliquid mainnet at branch head b875cfc948; run status pass, exit 0, zero failures.",
+      "Each executable review fix maps to a named node group: fix1 (Products wrap + controller order), fix2 (pill pressed after navigation), fix3 (plural count branch live), fix4/fix5/fix6 (unit gates for the watchlist slot, singular count and rail contract).",
+      "Every assert_output names its source command node, so a zero-match jest -t filter cannot pass vacuously — the failure mode called out in this repo's own guidance.",
+      "The single screenshot is provider capture-helper per artifact-manifest.json, not the silent Page.captureScreenshot fallback, and shows the Crypto pill filled with its CircleX clear glyph plus '178 markets'.",
+      "The inherited family recipe was inspected and rejected with a written rationale rather than skipped: it asserts the horizontal scroller and All pill that review required removing, and references a test file this PR renamed."
     ],
     "better_version_guidance": [
-      "Add a navigation node that presses one Products chip and asserts the market list opens with that filter, so the chip-to-list contract is re-proved alongside the order."
+      "Exercise the More overflow trigger by resizing the window to a width where the 8 categories cannot fit, which would prove the fix for comment 4004409617 visually rather than only through the selected-pill state.",
+      "Add a live assertion that the Products section sits below the Watchlist for a wallet that has starred markets; the runtime wallet has an empty watchlist, so the reserved-slot fix is proved only at the unit level.",
+      "Capture a second count screenshot at a one-market filter so the singular string has visual evidence alongside its unit test."
     ]
   },
   "dimensions": {},
