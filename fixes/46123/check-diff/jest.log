@@ -1,129 +1,144 @@
-$ /Users/deeeed/dev/metamask/metamask-extension-1/node_modules/.bin/jest --no-coverage app/scripts/controllers/perps/infrastructure.test.ts app/scripts/controllers/perps/perps-stream-bridge.test.ts app/scripts/metamask-controller.test.js ui/components/app/perps/hooks/usePerpsTabExploreData.test.ts ui/components/app/perps/perps-view.test.tsx ui/helpers/perps/entry-trace.test.ts ui/hooks/discover-search/useDiscoverPerpsSearch.test.tsx ui/hooks/perps/stream/usePerpsLiveMarketListData.test.ts ui/hooks/perps/stream/usePerpsLivePrices.test.ts ui/hooks/perps/stream/usePerpsStreamManager.test.tsx ui/hooks/perps/usePerpsEntryTrace.test.ts ui/hooks/perps/usePerpsPreload.test.ts ui/providers/perps/PerpsStreamManager.test.ts
+$ /Users/deeeed/dev/metamask/metamask-extension-2/node_modules/.bin/jest --no-coverage app/scripts/controllers/perps/infrastructure.test.ts app/scripts/controllers/perps/perps-stream-bridge.test.ts app/scripts/metamask-controller.test.js development/perps/loading/market-observation.test.ts development/perps/loading/summarize-loading.test.ts ui/components/app/perps/hooks/usePerpsTabExploreData.test.ts ui/components/app/perps/perps-view.test.tsx ui/helpers/perps/entry-trace.test.ts ui/hooks/discover-search/useDiscoverPerpsSearch.test.tsx ui/hooks/perps/stream/usePerpsLiveMarketListData.test.ts ui/hooks/perps/stream/usePerpsLivePrices.test.ts ui/hooks/perps/stream/usePerpsStreamManager.test.tsx ui/hooks/perps/usePerpsEntryTrace.test.ts ui/hooks/perps/usePerpsPreload.test.ts ui/pages/perps/market-list/index.test.tsx ui/providers/perps/CandleStreamChannel.test.ts ui/providers/perps/PerpsStreamManager.test.ts
 exit: 0
-duration_ms: 9028
+duration_ms: 20312
 
 --- stdout ---
 
 ✅ No console baseline violations.
 
 --- stderr ---
-PASS ui/helpers/perps/entry-trace.test.ts
-PASS app/scripts/controllers/perps/perps-stream-bridge.test.ts
+PASS development/perps/loading/market-observation.test.ts (5.269 s)
+PASS ui/helpers/perps/entry-trace.test.ts (5.593 s)
+(node:33512) ExperimentalWarning: stripTypeScriptTypes is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+PASS ui/providers/perps/CandleStreamChannel.test.ts (5.809 s)
+PASS app/scripts/controllers/perps/perps-stream-bridge.test.ts (6.22 s)
   ● Console
 
     console.debug
       [PerpsStreamBridge] startMarketDataPreload failed Error: preload blew up
-          at Object.<anonymous> (/Users/deeeed/dev/metamask/metamask-extension-1/app/scripts/controllers/perps/perps-stream-bridge.test.ts:199:15)
-          at /Users/deeeed/dev/metamask/metamask-extension-1/node_modules/jest-mock/build/index.js:397:39
-          at Object.<anonymous> (/Users/deeeed/dev/metamask/metamask-extension-1/node_modules/jest-mock/build/index.js:404:13)
-          at Object.mockConstructor [as startMarketDataPreload] (/Users/deeeed/dev/metamask/metamask-extension-1/node_modules/jest-mock/build/index.js:148:19)
-          at startMarketDataPreload (/Users/deeeed/dev/metamask/metamask-extension-1/app/scripts/controllers/perps/perps-stream-bridge.ts:243:39)
-          at processTicksAndRejections (node:internal/process/task_queues:104:5)
-          at Object.perpsInit (/Users/deeeed/dev/metamask/metamask-extension-1/app/scripts/controllers/perps/perps-stream-bridge.ts:236:9)
-          at Object.<anonymous> (/Users/deeeed/dev/metamask/metamask-extension-1/app/scripts/controllers/perps/perps-stream-bridge.test.ts:206:7)
+          at Object.<anonymous> (/Users/deeeed/dev/metamask/metamask-extension-2/app/scripts/controllers/perps/perps-stream-bridge.test.ts:664:15)
+          at /Users/deeeed/dev/metamask/metamask-extension-2/node_modules/jest-mock/build/index.js:397:39
+          at Object.<anonymous> (/Users/deeeed/dev/metamask/metamask-extension-2/node_modules/jest-mock/build/index.js:404:13)
+          at Object.mockConstructor [as startMarketDataPreload] (/Users/deeeed/dev/metamask/metamask-extension-2/node_modules/jest-mock/build/index.js:148:19)
+          at startMarketDataPreload (/Users/deeeed/dev/metamask/metamask-extension-2/app/scripts/controllers/perps/perps-stream-bridge.ts:326:39)
+          at Object.perpsInit (/Users/deeeed/dev/metamask/metamask-extension-2/app/scripts/controllers/perps/perps-stream-bridge.ts:319:9)
+          at Object.<anonymous> (/Users/deeeed/dev/metamask/metamask-extension-2/app/scripts/controllers/perps/perps-stream-bridge.test.ts:671:7)
 
-      at debug (app/scripts/controllers/perps/perps-stream-bridge.ts:247:21)
+      at debug (app/scripts/controllers/perps/perps-stream-bridge.ts:330:21)
 
     console.debug
       [PerpsStreamBridge] cleanup error Error: static teardown failure
-          at /Users/deeeed/dev/metamask/metamask-extension-1/app/scripts/controllers/perps/perps-stream-bridge.test.ts:1397:15
-          at PerpsStreamBridge.unsub (/Users/deeeed/dev/metamask/metamask-extension-1/app/scripts/controllers/perps/perps-stream-bridge.ts:1131:7)
-          at PerpsStreamBridge.destroy (/Users/deeeed/dev/metamask/metamask-extension-1/app/scripts/controllers/perps/perps-stream-bridge.ts:497:30)
-          at destroy (/Users/deeeed/dev/metamask/metamask-extension-1/app/scripts/controllers/perps/perps-stream-bridge.test.ts:1416:27)
-          at Object.<anonymous> (/Users/deeeed/dev/metamask/metamask-extension-1/node_modules/expect/build/toThrowMatchers.js:74:11)
-          at Object.throwingMatcher [as toThrow] (/Users/deeeed/dev/metamask/metamask-extension-1/node_modules/expect/build/index.js:320:21)
-          at Object.toThrow (/Users/deeeed/dev/metamask/metamask-extension-1/app/scripts/controllers/perps/perps-stream-bridge.test.ts:1416:42)
-          at processTicksAndRejections (node:internal/process/task_queues:104:5)
+          at /Users/deeeed/dev/metamask/metamask-extension-2/app/scripts/controllers/perps/perps-stream-bridge.test.ts:1881:15
+          at PerpsStreamBridge.unsub (/Users/deeeed/dev/metamask/metamask-extension-2/app/scripts/controllers/perps/perps-stream-bridge.ts:1488:7)
+          at PerpsStreamBridge.destroy (/Users/deeeed/dev/metamask/metamask-extension-2/app/scripts/controllers/perps/perps-stream-bridge.ts:590:30)
+          at destroy (/Users/deeeed/dev/metamask/metamask-extension-2/app/scripts/controllers/perps/perps-stream-bridge.test.ts:1900:27)
+          at Object.<anonymous> (/Users/deeeed/dev/metamask/metamask-extension-2/node_modules/expect/build/toThrowMatchers.js:74:11)
+          at Object.throwingMatcher [as toThrow] (/Users/deeeed/dev/metamask/metamask-extension-2/node_modules/expect/build/index.js:320:21)
+          at Object.toThrow (/Users/deeeed/dev/metamask/metamask-extension-2/app/scripts/controllers/perps/perps-stream-bridge.test.ts:1900:42)
 
-      at PerpsStreamBridge.debug (app/scripts/controllers/perps/perps-stream-bridge.ts:1133:15)
+      at PerpsStreamBridge.debug (app/scripts/controllers/perps/perps-stream-bridge.ts:1490:15)
 
     console.debug
       [PerpsStreamBridge] cleanup error Error: dynamic teardown failure
-          at /Users/deeeed/dev/metamask/metamask-extension-1/app/scripts/controllers/perps/perps-stream-bridge.test.ts:1400:15
-          at PerpsStreamBridge.unsub (/Users/deeeed/dev/metamask/metamask-extension-1/app/scripts/controllers/perps/perps-stream-bridge.ts:1131:7)
-          at PerpsStreamBridge.#tearDownAllDynamic (/Users/deeeed/dev/metamask/metamask-extension-1/app/scripts/controllers/perps/perps-stream-bridge.ts:1148:30)
-          at PerpsStreamBridge.destroy (/Users/deeeed/dev/metamask/metamask-extension-1/app/scripts/controllers/perps/perps-stream-bridge.ts:501:29)
-          at destroy (/Users/deeeed/dev/metamask/metamask-extension-1/app/scripts/controllers/perps/perps-stream-bridge.test.ts:1416:27)
-          at Object.<anonymous> (/Users/deeeed/dev/metamask/metamask-extension-1/node_modules/expect/build/toThrowMatchers.js:74:11)
-          at Object.throwingMatcher [as toThrow] (/Users/deeeed/dev/metamask/metamask-extension-1/node_modules/expect/build/index.js:320:21)
-          at Object.toThrow (/Users/deeeed/dev/metamask/metamask-extension-1/app/scripts/controllers/perps/perps-stream-bridge.test.ts:1416:42)
-          at processTicksAndRejections (node:internal/process/task_queues:104:5)
+          at /Users/deeeed/dev/metamask/metamask-extension-2/app/scripts/controllers/perps/perps-stream-bridge.test.ts:1884:15
+          at unsubscribe (/Users/deeeed/dev/metamask/metamask-extension-2/app/scripts/controllers/perps/perps-stream-bridge.ts:1381:9)
+          at PerpsStreamBridge.unsub (/Users/deeeed/dev/metamask/metamask-extension-2/app/scripts/controllers/perps/perps-stream-bridge.ts:1488:7)
+          at PerpsStreamBridge.#tearDownAllDynamic (/Users/deeeed/dev/metamask/metamask-extension-2/app/scripts/controllers/perps/perps-stream-bridge.ts:1505:30)
+          at PerpsStreamBridge.destroy (/Users/deeeed/dev/metamask/metamask-extension-2/app/scripts/controllers/perps/perps-stream-bridge.ts:594:29)
+          at destroy (/Users/deeeed/dev/metamask/metamask-extension-2/app/scripts/controllers/perps/perps-stream-bridge.test.ts:1900:27)
+          at Object.<anonymous> (/Users/deeeed/dev/metamask/metamask-extension-2/node_modules/expect/build/toThrowMatchers.js:74:11)
+          at Object.throwingMatcher [as toThrow] (/Users/deeeed/dev/metamask/metamask-extension-2/node_modules/expect/build/index.js:320:21)
+          at Object.toThrow (/Users/deeeed/dev/metamask/metamask-extension-2/app/scripts/controllers/perps/perps-stream-bridge.test.ts:1900:42)
 
-      at PerpsStreamBridge.debug (app/scripts/controllers/perps/perps-stream-bridge.ts:1133:15)
+      at PerpsStreamBridge.debug (app/scripts/controllers/perps/perps-stream-bridge.ts:1490:15)
 
     console.debug
       [PerpsStreamBridge] health-check reconnect failed Error: reconnect failed
-          at Object.<anonymous> (/Users/deeeed/dev/metamask/metamask-extension-1/app/scripts/controllers/perps/perps-stream-bridge.test.ts:1522:46)
-          at Promise.then.completed (/Users/deeeed/dev/metamask/metamask-extension-1/node_modules/jest-circus/build/utils.js:298:28)
+          at Object.<anonymous> (/Users/deeeed/dev/metamask/metamask-extension-2/app/scripts/controllers/perps/perps-stream-bridge.test.ts:2006:46)
+          at Promise.then.completed (/Users/deeeed/dev/metamask/metamask-extension-2/node_modules/jest-circus/build/utils.js:298:28)
           at new Promise (<anonymous>)
-          at callAsyncCircusFn (/Users/deeeed/dev/metamask/metamask-extension-1/node_modules/jest-circus/build/utils.js:231:10)
-          at _callCircusTest (/Users/deeeed/dev/metamask/metamask-extension-1/node_modules/jest-circus/build/run.js:316:40)
-          at processTicksAndRejections (node:internal/process/task_queues:104:5)
-          at _runTest (/Users/deeeed/dev/metamask/metamask-extension-1/node_modules/jest-circus/build/run.js:252:3)
-          at _runTestsForDescribeBlock (/Users/deeeed/dev/metamask/metamask-extension-1/node_modules/jest-circus/build/run.js:126:9)
-          at _runTestsForDescribeBlock (/Users/deeeed/dev/metamask/metamask-extension-1/node_modules/jest-circus/build/run.js:121:9)
-          at _runTestsForDescribeBlock (/Users/deeeed/dev/metamask/metamask-extension-1/node_modules/jest-circus/build/run.js:121:9)
-          at run (/Users/deeeed/dev/metamask/metamask-extension-1/node_modules/jest-circus/build/run.js:71:3)
-          at runAndTransformResultsToJestFormat (/Users/deeeed/dev/metamask/metamask-extension-1/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)
-          at jestAdapter (/Users/deeeed/dev/metamask/metamask-extension-1/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
-          at runTestInternal (/Users/deeeed/dev/metamask/metamask-extension-1/node_modules/jest-runner/build/runTest.js:367:16)
-          at runTest (/Users/deeeed/dev/metamask/metamask-extension-1/node_modules/jest-runner/build/runTest.js:444:34)
-          at Object.worker (/Users/deeeed/dev/metamask/metamask-extension-1/node_modules/jest-runner/build/testWorker.js:106:12)
+          at callAsyncCircusFn (/Users/deeeed/dev/metamask/metamask-extension-2/node_modules/jest-circus/build/utils.js:231:10)
+          at _callCircusTest (/Users/deeeed/dev/metamask/metamask-extension-2/node_modules/jest-circus/build/run.js:316:40)
+          at _runTest (/Users/deeeed/dev/metamask/metamask-extension-2/node_modules/jest-circus/build/run.js:252:3)
+          at _runTestsForDescribeBlock (/Users/deeeed/dev/metamask/metamask-extension-2/node_modules/jest-circus/build/run.js:126:9)
+          at _runTestsForDescribeBlock (/Users/deeeed/dev/metamask/metamask-extension-2/node_modules/jest-circus/build/run.js:121:9)
+          at _runTestsForDescribeBlock (/Users/deeeed/dev/metamask/metamask-extension-2/node_modules/jest-circus/build/run.js:121:9)
+          at run (/Users/deeeed/dev/metamask/metamask-extension-2/node_modules/jest-circus/build/run.js:71:3)
+          at runAndTransformResultsToJestFormat (/Users/deeeed/dev/metamask/metamask-extension-2/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)
+          at jestAdapter (/Users/deeeed/dev/metamask/metamask-extension-2/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
+          at runTestInternal (/Users/deeeed/dev/metamask/metamask-extension-2/node_modules/jest-runner/build/runTest.js:367:16)
+          at runTest (/Users/deeeed/dev/metamask/metamask-extension-2/node_modules/jest-runner/build/runTest.js:444:34)
+          at Object.worker (/Users/deeeed/dev/metamask/metamask-extension-2/node_modules/jest-runner/build/testWorker.js:106:12)
 
-      at debug (app/scripts/controllers/perps/perps-stream-bridge.ts:453:21)
+      at debug (app/scripts/controllers/perps/perps-stream-bridge.ts:542:21)
 
     console.debug
       [PerpsStreamBridge] connectivity-change reconnect failed Error: reconnect failed
-          at Object.<anonymous> (/Users/deeeed/dev/metamask/metamask-extension-1/app/scripts/controllers/perps/perps-stream-bridge.test.ts:2232:46)
-          at Promise.then.completed (/Users/deeeed/dev/metamask/metamask-extension-1/node_modules/jest-circus/build/utils.js:298:28)
+          at Object.<anonymous> (/Users/deeeed/dev/metamask/metamask-extension-2/app/scripts/controllers/perps/perps-stream-bridge.test.ts:2716:46)
+          at Promise.then.completed (/Users/deeeed/dev/metamask/metamask-extension-2/node_modules/jest-circus/build/utils.js:298:28)
           at new Promise (<anonymous>)
-          at callAsyncCircusFn (/Users/deeeed/dev/metamask/metamask-extension-1/node_modules/jest-circus/build/utils.js:231:10)
-          at _callCircusTest (/Users/deeeed/dev/metamask/metamask-extension-1/node_modules/jest-circus/build/run.js:316:40)
-          at _runTest (/Users/deeeed/dev/metamask/metamask-extension-1/node_modules/jest-circus/build/run.js:252:3)
-          at _runTestsForDescribeBlock (/Users/deeeed/dev/metamask/metamask-extension-1/node_modules/jest-circus/build/run.js:126:9)
-          at _runTestsForDescribeBlock (/Users/deeeed/dev/metamask/metamask-extension-1/node_modules/jest-circus/build/run.js:121:9)
-          at _runTestsForDescribeBlock (/Users/deeeed/dev/metamask/metamask-extension-1/node_modules/jest-circus/build/run.js:121:9)
-          at run (/Users/deeeed/dev/metamask/metamask-extension-1/node_modules/jest-circus/build/run.js:71:3)
-          at runAndTransformResultsToJestFormat (/Users/deeeed/dev/metamask/metamask-extension-1/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)
-          at jestAdapter (/Users/deeeed/dev/metamask/metamask-extension-1/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
-          at runTestInternal (/Users/deeeed/dev/metamask/metamask-extension-1/node_modules/jest-runner/build/runTest.js:367:16)
-          at runTest (/Users/deeeed/dev/metamask/metamask-extension-1/node_modules/jest-runner/build/runTest.js:444:34)
-          at Object.worker (/Users/deeeed/dev/metamask/metamask-extension-1/node_modules/jest-runner/build/testWorker.js:106:12)
+          at callAsyncCircusFn (/Users/deeeed/dev/metamask/metamask-extension-2/node_modules/jest-circus/build/utils.js:231:10)
+          at _callCircusTest (/Users/deeeed/dev/metamask/metamask-extension-2/node_modules/jest-circus/build/run.js:316:40)
+          at _runTest (/Users/deeeed/dev/metamask/metamask-extension-2/node_modules/jest-circus/build/run.js:252:3)
+          at _runTestsForDescribeBlock (/Users/deeeed/dev/metamask/metamask-extension-2/node_modules/jest-circus/build/run.js:126:9)
+          at _runTestsForDescribeBlock (/Users/deeeed/dev/metamask/metamask-extension-2/node_modules/jest-circus/build/run.js:121:9)
+          at _runTestsForDescribeBlock (/Users/deeeed/dev/metamask/metamask-extension-2/node_modules/jest-circus/build/run.js:121:9)
+          at run (/Users/deeeed/dev/metamask/metamask-extension-2/node_modules/jest-circus/build/run.js:71:3)
+          at runAndTransformResultsToJestFormat (/Users/deeeed/dev/metamask/metamask-extension-2/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapterInit.js:122:21)
+          at jestAdapter (/Users/deeeed/dev/metamask/metamask-extension-2/node_modules/jest-circus/build/legacy-code-todo-rewrite/jestAdapter.js:79:19)
+          at runTestInternal (/Users/deeeed/dev/metamask/metamask-extension-2/node_modules/jest-runner/build/runTest.js:367:16)
+          at runTest (/Users/deeeed/dev/metamask/metamask-extension-2/node_modules/jest-runner/build/runTest.js:444:34)
+          at Object.worker (/Users/deeeed/dev/metamask/metamask-extension-2/node_modules/jest-runner/build/testWorker.js:106:12)
 
-      at debug (app/scripts/controllers/perps/perps-stream-bridge.ts:774:19)
+      at debug (app/scripts/controllers/perps/perps-stream-bridge.ts:1116:19)
 
     console.debug
       [PerpsStreamBridge] startMarketDataPreload failed Error: cache unavailable
-          at Object.<anonymous> (/Users/deeeed/dev/metamask/metamask-extension-1/app/scripts/controllers/perps/perps-stream-bridge.test.ts:2728:13)
-          at /Users/deeeed/dev/metamask/metamask-extension-1/node_modules/jest-mock/build/index.js:397:39
-          at Object.<anonymous> (/Users/deeeed/dev/metamask/metamask-extension-1/node_modules/jest-mock/build/index.js:404:13)
-          at Object.mockConstructor [as startMarketDataPreload] (/Users/deeeed/dev/metamask/metamask-extension-1/node_modules/jest-mock/build/index.js:148:19)
-          at startMarketDataPreload (/Users/deeeed/dev/metamask/metamask-extension-1/app/scripts/controllers/perps/perps-stream-bridge.ts:243:39)
-          at Object.perpsInit (/Users/deeeed/dev/metamask/metamask-extension-1/app/scripts/controllers/perps/perps-stream-bridge.ts:236:9)
-          at Object.<anonymous> (/Users/deeeed/dev/metamask/metamask-extension-1/app/scripts/controllers/perps/perps-stream-bridge.test.ts:2731:5)
+          at Object.<anonymous> (/Users/deeeed/dev/metamask/metamask-extension-2/app/scripts/controllers/perps/perps-stream-bridge.test.ts:3832:13)
+          at /Users/deeeed/dev/metamask/metamask-extension-2/node_modules/jest-mock/build/index.js:397:39
+          at Object.<anonymous> (/Users/deeeed/dev/metamask/metamask-extension-2/node_modules/jest-mock/build/index.js:404:13)
+          at Object.mockConstructor [as startMarketDataPreload] (/Users/deeeed/dev/metamask/metamask-extension-2/node_modules/jest-mock/build/index.js:148:19)
+          at startMarketDataPreload (/Users/deeeed/dev/metamask/metamask-extension-2/app/scripts/controllers/perps/perps-stream-bridge.ts:326:39)
+          at Object.perpsInit (/Users/deeeed/dev/metamask/metamask-extension-2/app/scripts/controllers/perps/perps-stream-bridge.ts:319:9)
+          at Object.<anonymous> (/Users/deeeed/dev/metamask/metamask-extension-2/app/scripts/controllers/perps/perps-stream-bridge.test.ts:3835:5)
 
-      at debug (app/scripts/controllers/perps/perps-stream-bridge.ts:247:21)
+      at debug (app/scripts/controllers/perps/perps-stream-bridge.ts:330:21)
 
-PASS ui/providers/perps/PerpsStreamManager.test.ts
-PASS ui/hooks/perps/usePerpsEntryTrace.test.ts
-PASS ui/hooks/perps/stream/usePerpsLiveMarketListData.test.ts
-PASS ui/hooks/perps/stream/usePerpsLivePrices.test.ts
-PASS ui/hooks/perps/usePerpsPreload.test.ts
-PASS app/scripts/controllers/perps/infrastructure.test.ts
-PASS ui/hooks/perps/stream/usePerpsStreamManager.test.tsx
-PASS ui/hooks/discover-search/useDiscoverPerpsSearch.test.tsx
-PASS ui/components/app/perps/hooks/usePerpsTabExploreData.test.ts
-PASS ui/components/app/perps/perps-view.test.tsx
-PASS app/scripts/metamask-controller.test.js (8.033 s)
+PASS ui/providers/perps/PerpsStreamManager.test.ts (6.221 s)
+PASS ui/hooks/perps/usePerpsEntryTrace.test.ts (6.469 s)
+PASS ui/hooks/perps/stream/usePerpsLivePrices.test.ts (6.55 s)
+PASS ui/hooks/perps/stream/usePerpsLiveMarketListData.test.ts (6.891 s)
+PASS development/perps/loading/summarize-loading.test.ts (8.584 s)
+PASS app/scripts/controllers/perps/infrastructure.test.ts (8.579 s)
+PASS ui/hooks/perps/usePerpsPreload.test.ts (11.643 s)
+  ● Console
+
+    console.debug
+      [usePerpsPreload] Preload failed Error: offline
+          at /Users/deeeed/dev/metamask/metamask-extension-2/ui/hooks/perps/usePerpsPreload.test.ts:464:23
+          at /Users/deeeed/dev/metamask/metamask-extension-2/node_modules/@testing-library/react/dist/act-compat.js:48:24
+          at act (/Users/deeeed/dev/metamask/metamask-extension-2/node_modules/react/cjs/react.development.js:2512:16)
+          at /Users/deeeed/dev/metamask/metamask-extension-2/node_modules/@testing-library/react/dist/act-compat.js:47:25
+          at /Users/deeeed/dev/metamask/metamask-extension-2/ui/hooks/perps/usePerpsPreload.test.ts:462:16
+
+      at debug (ui/hooks/perps/usePerpsPreload.ts:160:18)
+
+PASS ui/hooks/perps/stream/usePerpsStreamManager.test.tsx (12.012 s)
+PASS ui/hooks/discover-search/useDiscoverPerpsSearch.test.tsx (11.991 s)
+PASS ui/components/app/perps/hooks/usePerpsTabExploreData.test.ts (12.095 s)
+PASS ui/pages/perps/market-list/index.test.tsx (14.238 s)
+PASS ui/components/app/perps/perps-view.test.tsx (14.35 s)
+PASS app/scripts/metamask-controller.test.js (18.646 s)
   ● Console
 
     console.error
       AssertionError: The Snaps platform requires basic functionality to be used. Enable basic functionality in the settings to use the Snaps platform.
-          at getError (/Users/deeeed/dev/metamask/metamask-extension-1/node_modules/@metamask/utils/src/assert.ts:49:12)
-          at assert (/Users/deeeed/dev/metamask/metamask-extension-1/node_modules/@metamask/utils/src/assert.ts:92:11)
-          at SnapController.#ensureCanUsePlatform (/Users/deeeed/dev/metamask/metamask-extension-1/node_modules/@metamask/snaps-controllers/src/snaps/SnapController.ts:1819:11)
-          at runNextTicks (node:internal/process/task_queues:65:5)
-          at processImmediate (node:internal/timers:502:9) {
+          at getError (/Users/deeeed/dev/metamask/metamask-extension-2/node_modules/@metamask/utils/src/assert.ts:49:12)
+          at assert (/Users/deeeed/dev/metamask/metamask-extension-2/node_modules/@metamask/utils/src/assert.ts:92:11)
+          at SnapController.#ensureCanUsePlatform (/Users/deeeed/dev/metamask/metamask-extension-2/node_modules/@metamask/snaps-controllers/src/snaps/SnapController.ts:1819:11)
+          at runNextTicks (node:internal/process/task_queues:64:5)
+          at processImmediate (node:internal/timers:472:9) {
         code: 'ERR_ASSERTION'
       }
 
@@ -131,10 +146,10 @@ PASS app/scripts/metamask-controller.test.js (8.033 s)
 
     console.warn
       Error during SnapController initialization. AssertionError: The Snaps platform requires basic functionality to be used. Enable basic functionality in the settings to use the Snaps platform.
-          at getError (/Users/deeeed/dev/metamask/metamask-extension-1/node_modules/@metamask/utils/src/assert.ts:49:12)
-          at assert (/Users/deeeed/dev/metamask/metamask-extension-1/node_modules/@metamask/utils/src/assert.ts:92:11)
-          at SnapController.#ensureCanUsePlatform (/Users/deeeed/dev/metamask/metamask-extension-1/node_modules/@metamask/snaps-controllers/src/snaps/SnapController.ts:1819:11)
-          at SnapController.init (/Users/deeeed/dev/metamask/metamask-extension-1/node_modules/@metamask/snaps-controllers/src/snaps/SnapController.ts:1363:9) {
+          at getError (/Users/deeeed/dev/metamask/metamask-extension-2/node_modules/@metamask/utils/src/assert.ts:49:12)
+          at assert (/Users/deeeed/dev/metamask/metamask-extension-2/node_modules/@metamask/utils/src/assert.ts:92:11)
+          at SnapController.#ensureCanUsePlatform (/Users/deeeed/dev/metamask/metamask-extension-2/node_modules/@metamask/snaps-controllers/src/snaps/SnapController.ts:1819:11)
+          at SnapController.init (/Users/deeeed/dev/metamask/metamask-extension-2/node_modules/@metamask/snaps-controllers/src/snaps/SnapController.ts:1363:9) {
         code: 'ERR_ASSERTION'
       }
 
@@ -143,12 +158,12 @@ PASS app/scripts/metamask-controller.test.js (8.033 s)
 
     console.warn
       Error during SnapController initialization. AssertionError: The Snaps platform requires basic functionality to be used. Enable basic functionality in the settings to use the Snaps platform.
-          at getError (/Users/deeeed/dev/metamask/metamask-extension-1/node_modules/@metamask/utils/src/assert.ts:49:12)
-          at assert (/Users/deeeed/dev/metamask/metamask-extension-1/node_modules/@metamask/utils/src/assert.ts:92:11)
-          at SnapController.#ensureCanUsePlatform (/Users/deeeed/dev/metamask/metamask-extension-1/node_modules/@metamask/snaps-controllers/src/snaps/SnapController.ts:1819:11)
-          at runNextTicks (node:internal/process/task_queues:65:5)
-          at processTimers (node:internal/timers:568:9)
-          at SnapController.init (/Users/deeeed/dev/metamask/metamask-extension-1/node_modules/@metamask/snaps-controllers/src/snaps/SnapController.ts:1363:9) {
+          at getError (/Users/deeeed/dev/metamask/metamask-extension-2/node_modules/@metamask/utils/src/assert.ts:49:12)
+          at assert (/Users/deeeed/dev/metamask/metamask-extension-2/node_modules/@metamask/utils/src/assert.ts:92:11)
+          at SnapController.#ensureCanUsePlatform (/Users/deeeed/dev/metamask/metamask-extension-2/node_modules/@metamask/snaps-controllers/src/snaps/SnapController.ts:1819:11)
+          at runNextTicks (node:internal/process/task_queues:64:5)
+          at processTimers (node:internal/timers:538:9)
+          at SnapController.init (/Users/deeeed/dev/metamask/metamask-extension-2/node_modules/@metamask/snaps-controllers/src/snaps/SnapController.ts:1363:9) {
         code: 'ERR_ASSERTION'
       }
 
@@ -157,12 +172,10 @@ PASS app/scripts/metamask-controller.test.js (8.033 s)
 
     console.warn
       Error during SnapController initialization. AssertionError: The Snaps platform requires basic functionality to be used. Enable basic functionality in the settings to use the Snaps platform.
-          at getError (/Users/deeeed/dev/metamask/metamask-extension-1/node_modules/@metamask/utils/src/assert.ts:49:12)
-          at assert (/Users/deeeed/dev/metamask/metamask-extension-1/node_modules/@metamask/utils/src/assert.ts:92:11)
-          at SnapController.#ensureCanUsePlatform (/Users/deeeed/dev/metamask/metamask-extension-1/node_modules/@metamask/snaps-controllers/src/snaps/SnapController.ts:1819:11)
-          at runNextTicks (node:internal/process/task_queues:65:5)
-          at processTimers (node:internal/timers:568:9)
-          at SnapController.init (/Users/deeeed/dev/metamask/metamask-extension-1/node_modules/@metamask/snaps-controllers/src/snaps/SnapController.ts:1363:9) {
+          at getError (/Users/deeeed/dev/metamask/metamask-extension-2/node_modules/@metamask/utils/src/assert.ts:49:12)
+          at assert (/Users/deeeed/dev/metamask/metamask-extension-2/node_modules/@metamask/utils/src/assert.ts:92:11)
+          at SnapController.#ensureCanUsePlatform (/Users/deeeed/dev/metamask/metamask-extension-2/node_modules/@metamask/snaps-controllers/src/snaps/SnapController.ts:1819:11)
+          at SnapController.init (/Users/deeeed/dev/metamask/metamask-extension-2/node_modules/@metamask/snaps-controllers/src/snaps/SnapController.ts:1363:9) {
         code: 'ERR_ASSERTION'
       }
 
@@ -192,8 +205,8 @@ PASS app/scripts/metamask-controller.test.js (8.033 s)
 WARN 1     MetaMask: MetaMetrics invalid trait types
 WARN 1     ObjectMultiplex: Malformed chunk warnings
 
-Test Suites: 13 passed, 13 total
-Tests:       515 passed, 515 total
+Test Suites: 17 passed, 17 total
+Tests:       705 passed, 705 total
 Snapshots:   1 passed, 1 total
-Time:        8.248 s
-Ran all test suites matching /app\/scripts\/controllers\/perps\/infrastructure.test.ts|app\/scripts\/controllers\/perps\/perps-stream-bridge.test.ts|app\/scripts\/metamask-controller.test.js|ui\/components\/app\/perps\/hooks\/usePerpsTabExploreData.test.ts|ui\/components\/app\/perps\/perps-view.test.tsx|ui\/helpers\/perps\/entry-trace.test.ts|ui\/hooks\/discover-search\/useDiscoverPerpsSearch.test.tsx|ui\/hooks\/perps\/stream\/usePerpsLiveMarketListData.test.ts|ui\/hooks\/perps\/stream\/usePerpsLivePrices.test.ts|ui\/hooks\/perps\/stream\/usePerpsStreamManager.test.tsx|ui\/hooks\/perps\/usePerpsEntryTrace.test.ts|ui\/hooks\/perps\/usePerpsPreload.test.ts|ui\/providers\/perps\/PerpsStreamManager.test.ts/i.
+Time:        19.341 s, estimated 20 s
+Ran all test suites matching /app\/scripts\/controllers\/perps\/infrastructure.test.ts|app\/scripts\/controllers\/perps\/perps-stream-bridge.test.ts|app\/scripts\/metamask-controller.test.js|development\/perps\/loading\/market-observation.test.ts|development\/perps\/loading\/summarize-loading.test.ts|ui\/components\/app\/perps\/hooks\/usePerpsTabExploreData.test.ts|ui\/components\/app\/perps\/perps-view.test.tsx|ui\/helpers\/perps\/entry-trace.test.ts|ui\/hooks\/discover-search\/useDiscoverPerpsSearch.test.tsx|ui\/hooks\/perps\/stream\/usePerpsLiveMarketListData.test.ts|ui\/hooks\/perps\/stream\/usePerpsLivePrices.test.ts|ui\/hooks\/perps\/stream\/usePerpsStreamManager.test.tsx|ui\/hooks\/perps\/usePerpsEntryTrace.test.ts|ui\/hooks\/perps\/usePerpsPreload.test.ts|ui\/pages\/perps\/market-list\/index.test.tsx|ui\/providers\/perps\/CandleStreamChannel.test.ts|ui\/providers\/perps\/PerpsStreamManager.test.ts/i.

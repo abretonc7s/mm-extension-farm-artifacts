@@ -1,16 +1,20 @@
 {
   "version": 1,
-  "verdict": "fail",
+  "verdict": "warn",
   "compact": {
-    "verdict": "FAIL",
+    "verdict": "WARN",
     "reasons": [
-      "Current recipe failed at wallet setup with WALLET_STATE_REQUIRED; no product acceptance nodes executed.",
-      "State regression evidence proves the supplied stream-lifetime fix, but does not replace the requested browser journey.",
-      "Historical inherited media is not current evidence."
+      "The inherited 27-node recipe could not be executed: all 13 of its command nodes invoke temp/tasks/feat/tat-3857-0908-110457/artifacts/proof.ts, and that parent task directory was never synced into this slot. TASK.md itself lists 'Task recipe library' under Missing inherited artifacts.",
+      "A 13-node substitute smoke recipe (artifacts/smoke-recipe.json) was authored from the live action manifest and passed 13/13 against a clean rebuild of the rebased head (exit 0).",
+      "The substitute proves the user-visible outcome of AC1 and AC5: lock, unlock, dwell 4s on Home without visiting any Perps route, then enter Perps and observe live positively-priced market rows, plus a populated market browser.",
+      "Both screenshots carry metadata.provider=capture-helper in artifact-manifest.json, so they are genuine captures rather than the silent Page.captureScreenshot fallback.",
+      "Coverage is narrower than the inherited recipe's: AC2 (lazy layout), AC3 (shared trace routing), AC4 (cold/warm/background-resume context) and AC6 (AccountOverviewPerpsTab unchanged) are NOT re-proven this round and remain on the inherited recorded-run evidence.",
+      "The substitute is not a latency benchmark and does not re-measure the medians in the PR description; it establishes functional readiness only.",
+      "mm-harness run --plan passes on the inherited recipe despite it being unrunnable, because plan validation does not resolve command-node script paths — a green plan was not sufficient evidence here."
     ],
     "better_version_guidance": [
-      "Restore the previously selected test wallet using an authorized fixture workflow, then rerun the unchanged product recipe against this commit.",
-      "Keep remote telemetry and fair loading-comparison gaps explicit."
+      "Sync the family's task recipe library (or inline proof.ts into this task's artifacts) so the 27-node recipe with its trace-level assertions can run in a follow-up round and re-prove AC2, AC3, AC4 and AC6 on the rebased head.",
+      "Add a trace-span assertion to the substitute recipe so entry-readiness can be proven from observed spans rather than only from rendered DOM."
     ]
   },
   "dimensions": {},

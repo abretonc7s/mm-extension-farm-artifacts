@@ -1,0 +1,88 @@
+{
+  "version": 1,
+  "verdict": "warn",
+  "compact": {
+    "verdict": "WARN",
+    "reasons": [
+      "All 27 nodes pass and six executable ACs have state, trace or mixed proof.",
+      "Mobile Home and market-browser names, variants and lifecycle tags are observed at shared trace/endTrace.",
+      "Remote Sentry ingestion is not validated; local runtime reports Sentry not initialized."
+    ],
+    "better_version_guidance": [
+      "Validate ingestion in a Sentry-enabled release and query the documented names by platform and lifecycle_context."
+    ]
+  },
+  "dimensions": {
+    "graph_integrity": {
+      "status": "pass",
+      "reason": "All 27 nodes are reachable and executed successfully.",
+      "evidence": [
+        "recorded-recipe-run/recipe.json",
+        "recorded-recipe-run/summary.json"
+      ]
+    },
+    "ac_coverage": {
+      "status": "pass",
+      "reason": "Six executable ACs bind to feature-sensitive assertions. Baseline acceptance recipe failed before implementation.",
+      "evidence": [
+        "recipe-coverage.md",
+        "before-run-2/summary.json",
+        "recorded-recipe-run/trace.json"
+      ]
+    },
+    "evidence_contract_basics": {
+      "status": "pass",
+      "reason": "Capture-helper snapshot inspected; recording contains a finalized moov atom. Hidden behavior uses observed shared traces and tests.",
+      "evidence": [
+        "recorded-recipe-run/artifact-manifest.json",
+        "after.mp4",
+        "coverage-report.json"
+      ]
+    },
+    "remote_telemetry": {
+      "status": "warn",
+      "reason": "Local calls prove trace routing and completion; remote dashboard ingestion needs an identifiable Sentry-enabled release.",
+      "evidence": [
+        "recorded-recipe-run/observed-traces.jsonl",
+        "recorded-recipe-run/diagnostics.json"
+      ]
+    }
+  },
+  "structural_findings": [],
+  "contextual_findings": [
+    {
+      "code": "REMOTE_INGESTION_UNVERIFIED",
+      "message": "Do not treat debugger timings as latency measurements or local calls as proof of remote ingestion.",
+      "dimension": "remote_telemetry"
+    }
+  ],
+  "suggested_recipe_delta": [],
+  "training_fields": {
+    "farm": "metamask-extension",
+    "project": "metamask-extension-farm",
+    "flow_type": "dev",
+    "task_type": "feature",
+    "claim_is_visual": true,
+    "proof_mode": "mixed",
+    "anti_patterns": [],
+    "good_patterns": [
+      "shared-trace-observation",
+      "capture-helper-evidence",
+      "unchanged-profile",
+      "edge-case-unit-tests"
+    ]
+  },
+  "meta": {
+    "producer": "worker",
+    "fallback_used": false,
+    "legacy_task": false,
+    "artifact_required": true,
+    "source_signals": [
+      "recipe.json",
+      "recipe-coverage.md",
+      "recorded-recipe-run/summary.json",
+      "recorded-recipe-run/trace.json",
+      "coverage-report.json"
+    ]
+  }
+}

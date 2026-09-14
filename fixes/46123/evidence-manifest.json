@@ -1,5 +1,20 @@
 {
   "version": 1,
-  "summary": "No current product media: recipe stopped before product assertions with WALLET_STATE_REQUIRED. Review-fix state evidence is in regression-before.log, regression-after.log, coverage-report.json and validation-final.json. Prior inherited screenshots are excluded from current claims.",
-  "standalone": []
+  "preferred_mode": "screenshots",
+  "summary": "On the rebased head, Perps renders live positively-priced market rows on first entry after an unlock during which no Perps route was visited. Trace-level acceptance criteria are not re-proven this round because the inherited recipe's proof.ts driver was not synced into this slot.",
+  "standalone": [
+    {
+      "label": "Perps home on first entry after unlock-triggered preload",
+      "file": "recipe-run/artifacts/perps-home-after-preload.png"
+    },
+    {
+      "label": "Perps market browser with populated live rows",
+      "file": "recipe-run/artifacts/perps-market-list.png"
+    }
+  ],
+  "videos": {
+    "preferred": false,
+    "note": "No recording captured this round; the two capture-helper screenshots are the visual evidence."
+  },
+  "omit": []
 }

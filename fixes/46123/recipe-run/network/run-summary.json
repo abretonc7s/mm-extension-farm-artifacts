@@ -2,47 +2,2404 @@
   "schemaVersion": 1,
   "id": "run-network",
   "status": "partial",
-  "startedAtEpochMs": 1788929757500,
-  "endedAtEpochMs": 1788929791867,
+  "startedAtEpochMs": 1789354411551,
+  "endedAtEpochMs": 1789354430579,
   "maxDurationMs": 3600000,
-  "reconnects": 3,
+  "reconnects": 1,
   "droppedRequests": 0,
   "unavailableReasons": [],
   "coverageGapReasons": [],
-  "uninspectableBodyRequests": 1,
+  "uninspectableBodyRequests": 338,
   "projectedBodyFields": [
     "type"
   ],
-  "totalRequests": 1,
+  "totalRequests": 361,
   "requestsByMethod": {
-    "GET": 1
+    "GET": 336,
+    "POST": 25
   },
   "requestsByHost": {
-    "hebhblbkkdabgoldnojllkipeoacjioc": 1
+    "": 1,
+    "accounts.api.cx.metamask.io": 1,
+    "api.hyperliquid-testnet.xyz": 14,
+    "app.hyperliquid.xyz": 139,
+    "authentication.api.cx.metamask.io": 7,
+    "cdn.contentful.com": 1,
+    "client-config.api.cx.metamask.io": 3,
+    "compliance.api.cx.metamask.io": 2,
+    "hebhblbkkdabgoldnojllkipeoacjioc": 11,
+    "mainnet.infura.io": 1,
+    "monad-mainnet.infura.io": 1,
+    "money.api.cx.metamask.io": 1,
+    "notification.api.cx.metamask.io": 1,
+    "oidc.api.cx.metamask.io": 2,
+    "raw.githubusercontent.com": 173,
+    "tokens.api.cx.metamask.io": 1,
+    "trigger.api.cx.metamask.io": 1,
+    "user-storage.api.cx.metamask.io": 1
   },
   "requestsByType": {
-    "unknown": 1
+    "allMids": 6,
+    "clearinghouseState": 2,
+    "frontendOpenOrders": 2,
+    "spotClearinghouseState": 2,
+    "unknown": 347,
+    "userAbstraction": 2
   },
   "requests": [
     {
-      "elapsedMs": 265,
+      "elapsedMs": 1852,
       "host": "hebhblbkkdabgoldnojllkipeoacjioc",
       "path": "/snaps/index.html",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 4063,
+      "host": "tokens.api.cx.metamask.io",
+      "path": "/v3/assets",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 8537,
+      "host": "monad-mainnet.infura.io",
+      "path": "/v3/144385cceddc41f88d960aca519f794e",
+      "method": "POST"
+    },
+    {
+      "elapsedMs": 10159,
+      "host": "money.api.cx.metamask.io",
+      "path": "/v1/positions/<redacted>",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 11001,
+      "host": "client-config.api.cx.metamask.io",
+      "path": "/v1/flags",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 11008,
+      "host": "hebhblbkkdabgoldnojllkipeoacjioc",
+      "path": "/snaps/index.html",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 11027,
+      "host": "",
+      "path": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/f878a4e2-b1a6-4c41-9aa2-815a854d6ef7",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 11356,
+      "host": "authentication.api.cx.metamask.io",
+      "path": "/api/v2/nonce",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 11356,
+      "host": "client-config.api.cx.metamask.io",
+      "path": "/v1/config/networks",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 11413,
+      "host": "mainnet.infura.io",
+      "path": "/v3/144385cceddc41f88d960aca519f794e",
+      "method": "POST"
+    },
+    {
+      "elapsedMs": 11416,
+      "host": "api.hyperliquid-testnet.xyz",
+      "path": "/info",
+      "method": "POST",
+      "body": {
+        "type": "clearinghouseState"
+      }
+    },
+    {
+      "elapsedMs": 11417,
+      "host": "api.hyperliquid-testnet.xyz",
+      "path": "/info",
+      "method": "POST",
+      "body": {
+        "type": "clearinghouseState"
+      }
+    },
+    {
+      "elapsedMs": 11417,
+      "host": "api.hyperliquid-testnet.xyz",
+      "path": "/info",
+      "method": "POST",
+      "body": {
+        "type": "frontendOpenOrders"
+      }
+    },
+    {
+      "elapsedMs": 11417,
+      "host": "api.hyperliquid-testnet.xyz",
+      "path": "/info",
+      "method": "POST",
+      "body": {
+        "type": "frontendOpenOrders"
+      }
+    },
+    {
+      "elapsedMs": 11417,
+      "host": "api.hyperliquid-testnet.xyz",
+      "path": "/info",
+      "method": "POST",
+      "body": {
+        "type": "spotClearinghouseState"
+      }
+    },
+    {
+      "elapsedMs": 11417,
+      "host": "api.hyperliquid-testnet.xyz",
+      "path": "/info",
+      "method": "POST",
+      "body": {
+        "type": "userAbstraction"
+      }
+    },
+    {
+      "elapsedMs": 11418,
+      "host": "hebhblbkkdabgoldnojllkipeoacjioc",
+      "path": "/images/icons/danger.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 11668,
+      "host": "authentication.api.cx.metamask.io",
+      "path": "/api/v2/srp/login",
+      "method": "POST"
+    },
+    {
+      "elapsedMs": 11852,
+      "host": "accounts.api.cx.metamask.io",
+      "path": "/v5/multiaccount/balances",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 12209,
+      "host": "api.hyperliquid-testnet.xyz",
+      "path": "/info",
+      "method": "POST",
+      "body": {
+        "type": "allMids"
+      }
+    },
+    {
+      "elapsedMs": 12209,
+      "host": "api.hyperliquid-testnet.xyz",
+      "path": "/info",
+      "method": "POST",
+      "body": {
+        "type": "allMids"
+      }
+    },
+    {
+      "elapsedMs": 12482,
+      "host": "oidc.api.cx.metamask.io",
+      "path": "/oauth2/token",
+      "method": "POST"
+    },
+    {
+      "elapsedMs": 12922,
+      "host": "client-config.api.cx.metamask.io",
+      "path": "/v1/flags",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 12922,
+      "host": "authentication.api.cx.metamask.io",
+      "path": "/api/v2/profile/lineage",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 12922,
+      "host": "authentication.api.cx.metamask.io",
+      "path": "/api/v2/profile/lineage",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 12922,
+      "host": "authentication.api.cx.metamask.io",
+      "path": "/api/v2/nonce",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 13164,
+      "host": "user-storage.api.cx.metamask.io",
+      "path": "/api/v1/preferences/notifications",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 13164,
+      "host": "api.hyperliquid-testnet.xyz",
+      "path": "/info",
+      "method": "POST",
+      "body": {
+        "type": "userAbstraction"
+      }
+    },
+    {
+      "elapsedMs": 13164,
+      "host": "api.hyperliquid-testnet.xyz",
+      "path": "/info",
+      "method": "POST",
+      "body": {
+        "type": "spotClearinghouseState"
+      }
+    },
+    {
+      "elapsedMs": 13239,
+      "host": "authentication.api.cx.metamask.io",
+      "path": "/api/v2/srp/login",
+      "method": "POST"
+    },
+    {
+      "elapsedMs": 13591,
+      "host": "oidc.api.cx.metamask.io",
+      "path": "/oauth2/token",
+      "method": "POST"
+    },
+    {
+      "elapsedMs": 13593,
+      "host": "cdn.contentful.com",
+      "path": "/spaces/:spaceId/environments/master/entries",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 13993,
+      "host": "trigger.api.cx.metamask.io",
+      "path": "/api/v2/notifications/query",
+      "method": "POST"
+    },
+    {
+      "elapsedMs": 14057,
+      "host": "authentication.api.cx.metamask.io",
+      "path": "/api/v2/profile/pair",
+      "method": "POST"
+    },
+    {
+      "elapsedMs": 14078,
+      "host": "api.hyperliquid-testnet.xyz",
+      "path": "/info",
+      "method": "POST",
+      "body": {
+        "type": "allMids"
+      }
+    },
+    {
+      "elapsedMs": 14078,
+      "host": "api.hyperliquid-testnet.xyz",
+      "path": "/info",
+      "method": "POST",
+      "body": {
+        "type": "allMids"
+      }
+    },
+    {
+      "elapsedMs": 14078,
+      "host": "api.hyperliquid-testnet.xyz",
+      "path": "/info",
+      "method": "POST",
+      "body": {
+        "type": "allMids"
+      }
+    },
+    {
+      "elapsedMs": 14079,
+      "host": "api.hyperliquid-testnet.xyz",
+      "path": "/info",
+      "method": "POST",
+      "body": {
+        "type": "allMids"
+      }
+    },
+    {
+      "elapsedMs": 14358,
+      "host": "notification.api.cx.metamask.io",
+      "path": "/api/v4/notifications",
+      "method": "POST"
+    },
+    {
+      "elapsedMs": 15950,
+      "host": "hebhblbkkdabgoldnojllkipeoacjioc",
+      "path": "/1382.js",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 15969,
+      "host": "compliance.api.cx.metamask.io",
+      "path": "/v1/wallet/batch",
+      "method": "POST"
+    },
+    {
+      "elapsedMs": 15972,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/SOL.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 15972,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/ADA.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 15972,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/BTC.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 15972,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/ETH.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 15972,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/FIL.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 15972,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/REZ.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 15972,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/AR.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 15972,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/ALGO.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 15972,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/BSV.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 15972,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/PYTH.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 15972,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/ICP.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 15972,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/CAKE.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 15972,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/AVAX.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 15973,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/SUI.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 15973,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/DOGE.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 15973,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/ARB.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 15973,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/BNB.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 15978,
+      "host": "compliance.api.cx.metamask.io",
+      "path": "/v1/wallet/batch",
+      "method": "POST"
+    },
+    {
+      "elapsedMs": 16101,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/SOL.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 16101,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/REZ.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 16101,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/BTC.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 16101,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/ADA.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 16121,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/ETH.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 16121,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/FIL.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 16148,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/CAKE.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 16150,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/PYTH.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 16151,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/AR.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 16151,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/BSV.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 16151,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/ICP.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 16155,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/ALGO.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 16356,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/AVAX.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 16356,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/BNB.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 16356,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/DOGE.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 16386,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/SUI.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 16422,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/ARB.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18241,
+      "host": "hebhblbkkdabgoldnojllkipeoacjioc",
+      "path": "/1478.js",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18241,
+      "host": "hebhblbkkdabgoldnojllkipeoacjioc",
+      "path": "/9274.js",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18241,
+      "host": "hebhblbkkdabgoldnojllkipeoacjioc",
+      "path": "/8914.js",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18242,
+      "host": "hebhblbkkdabgoldnojllkipeoacjioc",
+      "path": "/5431.js",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18242,
+      "host": "hebhblbkkdabgoldnojllkipeoacjioc",
+      "path": "/9367.js",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18249,
+      "host": "hebhblbkkdabgoldnojllkipeoacjioc",
+      "path": "/3619.js",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18250,
+      "host": "hebhblbkkdabgoldnojllkipeoacjioc",
+      "path": "/4816.js",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18295,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/BTC.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18295,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/ETH.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18295,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/SOL.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18296,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/AVAX.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18296,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/SUI.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18296,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/DOGE.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18296,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/ARB.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18296,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/BNB.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18296,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/INJ.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18296,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/BLUR.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18297,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/WLD.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18297,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/ADA.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18297,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/COMP.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18298,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/FIL.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18298,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/AR.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18298,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/ICP.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18298,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/SUPER.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18298,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/TAO.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18298,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/PONS.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18299,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/ATOM.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18299,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/ONDO.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18299,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/APT.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18300,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/ORDI.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18300,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/WLFI.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18300,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/OP.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18300,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/AAVE.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18300,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/JUP.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18300,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/VVV.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18300,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/ZRO.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18301,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/JTO.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18301,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/WIF.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18301,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/XLM.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18301,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/XPL.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18301,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/XMR.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18301,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/VIRTUAL.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18301,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/PENDLE.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18301,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/HBAR.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18301,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/PENGU.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18301,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/2Z.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18301,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/GRAM.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18301,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/KPEPE.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18301,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/HEMI.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18301,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/TIA.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18301,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/POLYX.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18301,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/ZEN.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18301,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/REZ.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18301,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/BRETT.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18301,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/POL.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18301,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/ALGO.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18301,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/IOTA.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18301,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/FARTCOIN.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18301,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/KAITO.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18301,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/PUMP.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18301,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/AVNT.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18301,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/FET.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18301,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/ACE.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18301,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/CAKE.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18301,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/GRIFFAIN.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18302,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/BABY.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18302,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/PEOPLE.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18302,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/ZETA.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18302,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/KSHIB.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18302,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/GALA.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18302,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/CHIP.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18302,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/BIGTIME.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18302,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/BERA.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18302,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/IMX.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18302,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/MANTA.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18302,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/NEO.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18302,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/HYPE.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18302,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/ALT.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18303,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/ENS.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18303,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/MERL.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18303,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/CELO.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18303,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/BIO.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18303,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/MET.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18303,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/CASHCAT.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18303,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/SPX.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18303,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/STBL.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18303,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/USUAL.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18303,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/APE.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18303,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/KNEIRO.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18303,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/hip3:xyz_PLTR.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18304,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/NEAR.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18304,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/AERO.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18304,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/FOGO.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18304,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/LIT.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18304,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/DYDX.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18304,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/PYTH.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18304,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/TRB.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18304,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/MORPHO.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18304,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/TRUMP.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18304,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/SAND.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18304,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/MON.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18304,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/MINA.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18304,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/INIT.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18304,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/ASTER.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18304,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/DASH.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18304,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/PROVE.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18304,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/LDO.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18305,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/SKR.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18305,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/BSV.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18305,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/NIL.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18305,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/USELESS.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18305,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/POPCAT.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18305,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/PAXG.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18305,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/RENDER.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18305,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/MOVE.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18305,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/CC.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18305,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/WCT.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18305,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/MEGA.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18305,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/ETC.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18305,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/KBONK.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18305,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/GAS.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18305,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/RUNE.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18305,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/EIGEN.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18305,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/RESOLV.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18305,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/SNX.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18306,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/MOODENG.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18306,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/AIXBT.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18306,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/AZTEC.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18306,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/GOAT.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18306,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/KAS.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18306,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/hip3:xyz_INTC.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18306,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/0G.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18306,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/MELANIA.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18306,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/HMSTR.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18306,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/W.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18306,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/XAI.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18306,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/GRASS.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18306,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/PNUT.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18306,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/IO.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18306,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/UMA.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18306,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/AXS.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18306,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/S.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18307,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/SYRUP.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18307,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/STX.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18307,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/SAGA.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18307,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/BANANA.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18307,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/HYPER.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18307,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/SKY.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18307,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/LAYER.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18307,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/NOT.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18307,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/LINEA.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18307,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/ZORA.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18307,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/NXPC.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18307,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/APEX.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18307,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/SUSHI.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18307,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/ANIME.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18307,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/ZK.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18307,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/RSR.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18307,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/TURBO.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18307,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/DYM.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18308,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/GMT.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18308,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/hip3:xyz_CL.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18308,
+      "host": "raw.githubusercontent.com",
+      "path": "/MetaMask/contract-metadata/master/icons/eip155:999/hip3:xyz_TSLA.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18333,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/INJ.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18344,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/PUMP.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18345,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/HYPE.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18345,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/BABY.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18346,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/CHIP.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18352,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/LIT.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18352,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/CASHCAT.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18538,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/VIRTUAL.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18541,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/GRIFFAIN.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18541,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/XPL.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18541,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/DYDX.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18542,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/POLYX.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18542,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/KAITO.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18543,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/XLM.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18549,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/SKR.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18549,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/FARTCOIN.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18549,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/TRUMP.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18549,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/USELESS.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18554,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/BLUR.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18555,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/SUPER.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18558,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/ATOM.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18558,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/GRAM.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18558,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/PENDLE.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18558,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/APT.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18559,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/IMX.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18561,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/STBL.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18561,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/USUAL.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18561,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/BRETT.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18561,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/OP.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18561,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/ORDI.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18561,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/ZRO.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18578,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/GALA.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18578,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/WLFI.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18579,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/2Z.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18580,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/NEAR.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18581,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/ASTER.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18581,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/HBAR.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18582,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/LDO.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18582,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/COMP.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18583,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/PENGU.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18583,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/MERL.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18583,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/RENDER.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18584,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/RESOLV.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18585,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/KPEPE.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18585,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/MOVE.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18585,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/HEMI.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18585,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/SPX.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18585,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/AERO.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18585,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/PAXG.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18585,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/XMR.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18585,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/WCT.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18586,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/TAO.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18586,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/BERA.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18586,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/BIO.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18586,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/ENS.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18587,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/IOTA.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18587,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/MEGA.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18587,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/CELO.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18587,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/GAS.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18587,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/MET.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18587,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/KSHIB.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18588,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/PROVE.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18588,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/ZETA.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18592,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/POL.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18592,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/INIT.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18600,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/EIGEN.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18600,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/SNX.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18603,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/PONS.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18604,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/GOAT.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18614,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/MOODENG.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18614,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/NEO.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18615,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/IO.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18615,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/XAI.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18615,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/JTO.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18622,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/VVV.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18626,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/TRB.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18626,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/DASH.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18626,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/FET.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18628,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/ACE.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18629,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/MORPHO.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18632,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/WLD.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18632,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/JUP.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18632,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/CC.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18634,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/ZEN.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18640,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/POPCAT.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18640,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/MON.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18640,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/BIGTIME.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18640,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/SAND.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18640,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/ALT.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18644,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/AVNT.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18644,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/WIF.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18644,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/FOGO.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18644,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/ONDO.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18644,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/TIA.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18644,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/RUNE.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18646,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/KBONK.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18646,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/APE.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18646,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/ETC.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18650,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/AAVE.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18652,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/MINA.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18653,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/MANTA.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18660,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/NIL.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18660,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/KNEIRO.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18676,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/AIXBT.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18686,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/AZTEC.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18686,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/GRASS.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18721,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/PNUT.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18802,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/STX.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18802,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/BANANA.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18804,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/DYM.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18804,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/SUSHI.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18808,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/ZK.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18816,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/NXPC.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18822,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/LINEA.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18822,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/ANIME.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18822,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/W.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18822,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/MELANIA.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18824,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/GMT.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18825,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/SAGA.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18825,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/AXS.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18828,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/SKY.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 18828,
+      "host": "app.hyperliquid.xyz",
+      "path": "/coins/SYRUP.svg",
       "method": "GET"
     }
   ],
   "nodeEvents": [
     {
       "action": "metamask.wallet.ensure_unlocked",
-      "elapsedMs": 34160,
-      "nodeId": "setup-unlock",
+      "elapsedMs": 10520,
+      "nodeId": "ensure-unlocked",
       "status": "running"
     },
     {
       "action": "metamask.wallet.ensure_unlocked",
-      "elapsedMs": 34225,
-      "nodeId": "setup-unlock",
-      "status": "failed"
+      "elapsedMs": 10587,
+      "nodeId": "ensure-unlocked",
+      "status": "passed"
+    },
+    {
+      "action": "ui.navigate",
+      "elapsedMs": 10596,
+      "nodeId": "home-before-lock",
+      "status": "running"
+    },
+    {
+      "action": "ui.navigate",
+      "elapsedMs": 10664,
+      "nodeId": "home-before-lock",
+      "status": "passed"
+    },
+    {
+      "action": "metamask.wallet.lock",
+      "elapsedMs": 10684,
+      "nodeId": "lock",
+      "status": "running"
+    },
+    {
+      "action": "metamask.wallet.lock",
+      "elapsedMs": 11130,
+      "nodeId": "lock",
+      "status": "passed"
+    },
+    {
+      "action": "metamask.wallet.ensure_unlocked",
+      "elapsedMs": 11144,
+      "nodeId": "unlock",
+      "status": "running"
+    },
+    {
+      "action": "metamask.wallet.ensure_unlocked",
+      "elapsedMs": 11425,
+      "nodeId": "unlock",
+      "status": "passed"
+    },
+    {
+      "action": "ui.wait_for",
+      "elapsedMs": 11438,
+      "nodeId": "settle-on-home",
+      "status": "running"
+    },
+    {
+      "action": "ui.wait_for",
+      "elapsedMs": 11763,
+      "nodeId": "settle-on-home",
+      "status": "passed"
+    },
+    {
+      "action": "wait",
+      "elapsedMs": 11784,
+      "nodeId": "dwell-on-home",
+      "status": "running"
+    },
+    {
+      "action": "wait",
+      "elapsedMs": 15788,
+      "nodeId": "dwell-on-home",
+      "status": "passed"
+    },
+    {
+      "action": "ui.navigate",
+      "elapsedMs": 15804,
+      "nodeId": "enter-perps",
+      "status": "running"
+    },
+    {
+      "action": "ui.navigate",
+      "elapsedMs": 16958,
+      "nodeId": "enter-perps",
+      "status": "passed"
+    },
+    {
+      "action": "metamask.perps.read_visible_state",
+      "elapsedMs": 16975,
+      "nodeId": "perps-home-state",
+      "status": "running"
+    },
+    {
+      "action": "metamask.perps.read_visible_state",
+      "elapsedMs": 17047,
+      "nodeId": "perps-home-state",
+      "status": "passed"
+    },
+    {
+      "action": "ui.screenshot",
+      "elapsedMs": 17056,
+      "nodeId": "screenshot-perps-home",
+      "status": "running"
+    },
+    {
+      "action": "ui.screenshot",
+      "elapsedMs": 17272,
+      "nodeId": "screenshot-perps-home",
+      "status": "passed"
+    },
+    {
+      "action": "ui.navigate",
+      "elapsedMs": 17289,
+      "nodeId": "open-market-list",
+      "status": "running"
+    },
+    {
+      "action": "ui.navigate",
+      "elapsedMs": 18459,
+      "nodeId": "open-market-list",
+      "status": "passed"
+    },
+    {
+      "action": "metamask.perps.read_visible_state",
+      "elapsedMs": 18483,
+      "nodeId": "market-list-state",
+      "status": "running"
+    },
+    {
+      "action": "metamask.perps.read_visible_state",
+      "elapsedMs": 18564,
+      "nodeId": "market-list-state",
+      "status": "passed"
+    },
+    {
+      "action": "ui.screenshot",
+      "elapsedMs": 18574,
+      "nodeId": "screenshot-market-list",
+      "status": "running"
+    },
+    {
+      "action": "ui.screenshot",
+      "elapsedMs": 18799,
+      "nodeId": "screenshot-market-list",
+      "status": "passed"
     }
   ]
 }
