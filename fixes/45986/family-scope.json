@@ -2,5 +2,5 @@
   "originalFamilyScopeSummary": "Audit and optimize deposit flow friction for unfunded Extension trade-screen users converting at 4.8% vs Mobile's 12.4%",
   "currentTriggerSummary": "pr-complete: feat(perps): investigate and improve deposit conversion for unfunded trade-screen users",
   "scopeVerdict": "full-scope-addressed",
-  "notes": "The PR ships funnel instrumentation (unfunded click, deposit opened, deposit confirmed, trade submitted after deposit) and a concrete UI change: enabled Add funds to trade, hint, and labeled row Add funds, with loading-state guards from review. Live recipe on 90e908ada2 after rebase onto origin/main proves the unfunded CTA. Post-launch conversion vs 4.8% remains a production metric, not an in-slot proof."
+  "notes": "The PR already shipped the ticket's funnel events plus the unfunded Add funds to trade CTA, hint, and labeled row control. This round fixed the remaining open Bugbot finding: a prior review-fix applied isLoadingAccount to every order mode and blocked close/modify. Live recipe re-validation passed on the unfunded BTC trade screen (capture-helper PNG). Post-launch conversion (AC3) remains untestable in-slot."
 }

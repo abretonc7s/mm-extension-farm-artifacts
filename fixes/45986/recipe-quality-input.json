@@ -1,35 +1,9 @@
 {
   "verdict": "pass",
   "reasons": [
-    "AC2 is proven by ac2-wait-hint, ac2-wait-cta, ac2-wait-enabled and a capture-helper snapshot of the enabled Add funds to trade control on 90e908ada2 after rebase onto origin/main.",
-    "The PNG shows Available to trade 0.00 USDC, a labeled row Add funds button, the unfunded hint, and an enabled footer Add funds to trade.",
+    "AC2 is proven by ac2-wait-hint, ac2-wait-cta, ac2-wait-enabled and a capture-helper snapshot of the enabled Add funds to trade control after the close/modify loading-guard fix.",
+    "The PNG shows Available to trade 0.00 USDC, a labeled row Add funds button, the unfunded hint, and an enabled footer Add funds to trade on #/perps/trade/BTC?direction=long&mode=new.",
     "AC1 funnel emits are covered by unit tests; this live recipe does not assert Segment events.",
     "AC3 post-launch conversion is UNTESTABLE in-slot."
-  ],
-  "betterVersionGuidance": [],
-  "dimensions": {
-    "graph_integrity": {
-      "status": "pass",
-      "reason": "Workflow graph is valid; setup selects the fixture unfunded wallet by address; teardown restores Account 1.",
-      "evidence": ["artifacts/recipe.json", "artifacts/recipe-run/trace.json"]
-    },
-    "ac_coverage": {
-      "status": "pass",
-      "reason": "AC2 bound to ac2-* nodes; AC1 proven by unit tests; AC3 UNTESTABLE with rationale.",
-      "evidence": ["artifacts/recipe-coverage.md", "artifacts/recipe-run/trace.json"]
-    },
-    "evidence_contract_basics": {
-      "status": "pass",
-      "reason": "Visual AC waits on the claimed selectors then captures a capture-helper PNG that was inspected.",
-      "evidence": ["artifacts/recipe-run/screenshots/after-ac2-unfunded-cta.png", "artifacts/recipe-run/artifact-manifest.json"]
-    }
-  },
-  "trainingFields": {
-    "farm": "metamask-extension",
-    "project": "metamask-extension-farm",
-    "flowType": "pr-complete",
-    "taskType": "pr-complete",
-    "claimIsVisual": true,
-    "proofMode": "mixed"
-  }
+  ]
 }

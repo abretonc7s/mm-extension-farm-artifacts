@@ -1,6 +1,6 @@
 # Recipe coverage
 
-Proof target → node → evidence for this re-validation run (working tree after the close/modify loading-guard fix, on `origin/main`).
+Proof target → node → evidence for this re-validation run (`90e908ada2` on `origin/main`).
 
 | AC | Claim | Proof mode | Primary evidence | Recipe nodes | Verdict | Rationale |
 | --- | --- | --- | --- | --- | --- | --- |
