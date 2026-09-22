@@ -2,240 +2,310 @@
   "schemaVersion": 1,
   "id": "run-network",
   "status": "partial",
-  "startedAtEpochMs": 1790095719733,
-  "endedAtEpochMs": 1790095728282,
+  "startedAtEpochMs": 1790097935756,
+  "endedAtEpochMs": 1790097945356,
   "maxDurationMs": 3600000,
   "reconnects": 0,
   "droppedRequests": 0,
   "unavailableReasons": [],
   "coverageGapReasons": [],
-  "uninspectableBodyRequests": 43,
+  "uninspectableBodyRequests": 42,
   "projectedBodyFields": [
     "type"
   ],
-  "totalRequests": 81,
+  "totalRequests": 73,
   "requestsByMethod": {
-    "GET": 41,
-    "POST": 37,
-    "PUT": 3
+    "GET": 42,
+    "POST": 31
   },
   "requestsByHost": {
     "accounts.api.cx.metamask.io": 2,
-    "api.hyperliquid-testnet.xyz": 18,
+    "api.hyperliquid-testnet.xyz": 19,
     "api.sevenseas.capital": 1,
     "arc-mainnet.infura.io": 1,
-    "authentication.api.cx.metamask.io": 13,
+    "authentication.api.cx.metamask.io": 4,
     "cdn.contentful.com": 1,
-    "chainid.network": 1,
     "chomp.api.cx.metamask.io": 1,
     "client-config.api.cx.metamask.io": 1,
+    "client-side-detection.api.cx.metamask.io": 1,
     "compliance.api.cx.metamask.io": 3,
-    "hebhblbkkdabgoldnojllkipeoacjioc": 18,
+    "hebhblbkkdabgoldnojllkipeoacjioc": 19,
     "mainnet.infura.io": 1,
     "monad-mainnet.infura.io": 4,
     "money.api.cx.metamask.io": 1,
     "notification.api.cx.metamask.io": 1,
-    "oidc.api.cx.metamask.io": 2,
+    "phishing-detection.api.cx.metamask.io": 1,
     "price.api.cx.metamask.io": 2,
-    "rewards.uat-api.cx.metamask.io": 1,
-    "terminal.dev-api.cx.metamask.io": 1,
+    "terminal.dev-api.cx.metamask.io": 2,
     "token.api.cx.metamask.io": 2,
     "tokens.api.cx.metamask.io": 4,
     "trigger.api.cx.metamask.io": 1,
     "user-storage.api.cx.metamask.io": 1
   },
   "requestsByType": {
-    "allMids": 3,
+    "allMids": 4,
     "candleSnapshot": 1,
     "clearinghouseState": 4,
     "frontendOpenOrders": 4,
     "spotClearinghouseState": 3,
-    "unknown": 63,
+    "unknown": 54,
     "userAbstraction": 3
   },
   "requests": [
     {
-      "elapsedMs": 1664,
-      "host": "authentication.api.cx.metamask.io",
-      "path": "/api/v2/nonce",
-      "method": "GET"
-    },
-    {
-      "elapsedMs": 1664,
-      "host": "client-config.api.cx.metamask.io",
-      "path": "/v1/config/networks",
-      "method": "GET"
-    },
-    {
-      "elapsedMs": 1748,
-      "host": "hebhblbkkdabgoldnojllkipeoacjioc",
-      "path": "/images/icons/arrow-down.svg",
-      "method": "GET"
-    },
-    {
-      "elapsedMs": 1748,
-      "host": "hebhblbkkdabgoldnojllkipeoacjioc",
-      "path": "/images/icons/export.svg",
-      "method": "GET"
-    },
-    {
-      "elapsedMs": 1748,
-      "host": "hebhblbkkdabgoldnojllkipeoacjioc",
-      "path": "/images/icons/dollar.svg",
-      "method": "GET"
-    },
-    {
-      "elapsedMs": 1748,
-      "host": "hebhblbkkdabgoldnojllkipeoacjioc",
-      "path": "/images/logo/metamask-fox.svg",
-      "method": "GET"
-    },
-    {
-      "elapsedMs": 1748,
-      "host": "hebhblbkkdabgoldnojllkipeoacjioc",
-      "path": "/images/arc-network-logo.svg",
-      "method": "GET"
-    },
-    {
-      "elapsedMs": 1749,
-      "host": "hebhblbkkdabgoldnojllkipeoacjioc",
-      "path": "/images/bitcoin-logo.svg",
-      "method": "GET"
-    },
-    {
-      "elapsedMs": 1749,
-      "host": "hebhblbkkdabgoldnojllkipeoacjioc",
-      "path": "/images/solana-logo.svg",
-      "method": "GET"
-    },
-    {
-      "elapsedMs": 1749,
-      "host": "hebhblbkkdabgoldnojllkipeoacjioc",
-      "path": "/images/eth_logo.svg",
-      "method": "GET"
-    },
-    {
-      "elapsedMs": 1766,
-      "host": "arc-mainnet.infura.io",
-      "path": "/v3/144385cceddc41f88d960aca519f794e",
+      "elapsedMs": 2271,
+      "host": "trigger.api.cx.metamask.io",
+      "path": "/api/v2/notifications/query",
       "method": "POST"
     },
     {
-      "elapsedMs": 1767,
-      "host": "mainnet.infura.io",
-      "path": "/v3/144385cceddc41f88d960aca519f794e",
-      "method": "POST"
-    },
-    {
-      "elapsedMs": 1767,
-      "host": "hebhblbkkdabgoldnojllkipeoacjioc",
-      "path": "/images/icons/danger.svg",
+      "elapsedMs": 2272,
+      "host": "chomp.api.cx.metamask.io",
+      "path": "/v1/chomp",
       "method": "GET"
     },
     {
-      "elapsedMs": 1767,
-      "host": "hebhblbkkdabgoldnojllkipeoacjioc",
-      "path": "/images/arc-native-token-logo.svg",
-      "method": "GET"
-    },
-    {
-      "elapsedMs": 1787,
-      "host": "monad-mainnet.infura.io",
-      "path": "/v3/144385cceddc41f88d960aca519f794e",
-      "method": "POST"
-    },
-    {
-      "elapsedMs": 1787,
-      "host": "api.sevenseas.capital",
-      "path": "/performance/monad/<redacted>",
-      "method": "GET"
-    },
-    {
-      "elapsedMs": 1797,
-      "host": "chainid.network",
-      "path": "/chains.json",
-      "method": "GET"
-    },
-    {
-      "elapsedMs": 1908,
-      "host": "rewards.uat-api.cx.metamask.io",
-      "path": "/public/rewards/ois",
-      "method": "POST"
-    },
-    {
-      "elapsedMs": 2130,
-      "host": "authentication.api.cx.metamask.io",
-      "path": "/api/v2/srp/login",
-      "method": "POST"
-    },
-    {
-      "elapsedMs": 2158,
+      "elapsedMs": 2272,
       "host": "accounts.api.cx.metamask.io",
       "path": "/v5/multiaccount/balances",
       "method": "GET"
     },
     {
-      "elapsedMs": 2251,
+      "elapsedMs": 2272,
+      "host": "client-config.api.cx.metamask.io",
+      "path": "/v1/config/networks",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 2285,
+      "host": "hebhblbkkdabgoldnojllkipeoacjioc",
+      "path": "/snaps/index.html",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 2429,
+      "host": "hebhblbkkdabgoldnojllkipeoacjioc",
+      "path": "/images/icons/arrow-down.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 2429,
+      "host": "hebhblbkkdabgoldnojllkipeoacjioc",
+      "path": "/images/icons/export.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 2429,
+      "host": "hebhblbkkdabgoldnojllkipeoacjioc",
+      "path": "/images/icons/dollar.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 2430,
+      "host": "hebhblbkkdabgoldnojllkipeoacjioc",
+      "path": "/images/logo/metamask-fox.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 2430,
+      "host": "hebhblbkkdabgoldnojllkipeoacjioc",
+      "path": "/images/arc-network-logo.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 2430,
+      "host": "hebhblbkkdabgoldnojllkipeoacjioc",
+      "path": "/images/bitcoin-logo.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 2430,
+      "host": "hebhblbkkdabgoldnojllkipeoacjioc",
+      "path": "/images/solana-logo.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 2430,
+      "host": "hebhblbkkdabgoldnojllkipeoacjioc",
+      "path": "/images/eth_logo.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 2430,
+      "host": "authentication.api.cx.metamask.io",
+      "path": "/api/v2/profile/lineage",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 2449,
+      "host": "arc-mainnet.infura.io",
+      "path": "/v3/144385cceddc41f88d960aca519f794e",
+      "method": "POST"
+    },
+    {
+      "elapsedMs": 2449,
+      "host": "mainnet.infura.io",
+      "path": "/v3/144385cceddc41f88d960aca519f794e",
+      "method": "POST"
+    },
+    {
+      "elapsedMs": 2450,
+      "host": "authentication.api.cx.metamask.io",
+      "path": "/api/v2/profile/pair",
+      "method": "POST"
+    },
+    {
+      "elapsedMs": 2450,
+      "host": "authentication.api.cx.metamask.io",
+      "path": "/api/v2/profile/lineage",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 2465,
+      "host": "hebhblbkkdabgoldnojllkipeoacjioc",
+      "path": "/images/icons/danger.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 2465,
+      "host": "hebhblbkkdabgoldnojllkipeoacjioc",
+      "path": "/images/arc-native-token-logo.svg",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 2475,
       "host": "tokens.api.cx.metamask.io",
       "path": "/v2/supportedNetworks",
       "method": "GET"
     },
     {
-      "elapsedMs": 2524,
+      "elapsedMs": 2476,
+      "host": "phishing-detection.api.cx.metamask.io",
+      "path": "/v2/diffsSince/1790096571",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 2488,
+      "host": "monad-mainnet.infura.io",
+      "path": "/v3/144385cceddc41f88d960aca519f794e",
+      "method": "POST"
+    },
+    {
+      "elapsedMs": 2490,
+      "host": "api.sevenseas.capital",
+      "path": "/performance/monad/<redacted>",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 2490,
+      "host": "user-storage.api.cx.metamask.io",
+      "path": "/api/v1/preferences/notifications",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 2645,
+      "host": "client-side-detection.api.cx.metamask.io",
+      "path": "/v1/request-blocklist",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 2808,
+      "host": "tokens.api.cx.metamask.io",
+      "path": "/v2/supportedNetworks",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 2808,
+      "host": "token.api.cx.metamask.io",
+      "path": "/v1/suggestedOccurrenceFloors",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 2830,
+      "host": "token.api.cx.metamask.io",
+      "path": "/assets",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 3100,
+      "host": "tokens.api.cx.metamask.io",
+      "path": "/v3/assets",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 3106,
+      "host": "price.api.cx.metamask.io",
+      "path": "/v2/supportedNetworks",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 3107,
+      "host": "authentication.api.cx.metamask.io",
+      "path": "/api/v2/profile/lineage",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 3125,
+      "host": "cdn.contentful.com",
+      "path": "/spaces/:spaceId/environments/master/entries",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 3299,
       "host": "hebhblbkkdabgoldnojllkipeoacjioc",
       "path": "/1478.js",
       "method": "GET"
     },
     {
-      "elapsedMs": 2524,
+      "elapsedMs": 3299,
       "host": "hebhblbkkdabgoldnojllkipeoacjioc",
       "path": "/9274.js",
       "method": "GET"
     },
     {
-      "elapsedMs": 2525,
+      "elapsedMs": 3299,
       "host": "hebhblbkkdabgoldnojllkipeoacjioc",
       "path": "/8914.js",
       "method": "GET"
     },
     {
-      "elapsedMs": 2525,
+      "elapsedMs": 3299,
       "host": "hebhblbkkdabgoldnojllkipeoacjioc",
       "path": "/5431.js",
       "method": "GET"
     },
     {
-      "elapsedMs": 2525,
+      "elapsedMs": 3299,
       "host": "hebhblbkkdabgoldnojllkipeoacjioc",
       "path": "/9367.js",
       "method": "GET"
     },
     {
-      "elapsedMs": 2536,
+      "elapsedMs": 3314,
       "host": "hebhblbkkdabgoldnojllkipeoacjioc",
       "path": "/4613.js",
       "method": "GET"
     },
     {
-      "elapsedMs": 2536,
+      "elapsedMs": 3315,
       "host": "hebhblbkkdabgoldnojllkipeoacjioc",
       "path": "/2928.js",
       "method": "GET"
     },
     {
-      "elapsedMs": 2536,
+      "elapsedMs": 3315,
       "host": "hebhblbkkdabgoldnojllkipeoacjioc",
       "path": "/600.js",
       "method": "GET"
     },
     {
-      "elapsedMs": 2558,
+      "elapsedMs": 3344,
       "host": "compliance.api.cx.metamask.io",
       "path": "/v1/wallet/batch",
       "method": "POST"
     },
     {
-      "elapsedMs": 2563,
+      "elapsedMs": 3352,
       "host": "api.hyperliquid-testnet.xyz",
       "path": "/info",
       "method": "POST",
@@ -244,7 +314,7 @@
       }
     },
     {
-      "elapsedMs": 2564,
+      "elapsedMs": 3352,
       "host": "api.hyperliquid-testnet.xyz",
       "path": "/info",
       "method": "POST",
@@ -253,7 +323,7 @@
       }
     },
     {
-      "elapsedMs": 2564,
+      "elapsedMs": 3352,
       "host": "api.hyperliquid-testnet.xyz",
       "path": "/info",
       "method": "POST",
@@ -262,7 +332,7 @@
       }
     },
     {
-      "elapsedMs": 2564,
+      "elapsedMs": 3352,
       "host": "api.hyperliquid-testnet.xyz",
       "path": "/info",
       "method": "POST",
@@ -271,7 +341,7 @@
       }
     },
     {
-      "elapsedMs": 2564,
+      "elapsedMs": 3352,
       "host": "api.hyperliquid-testnet.xyz",
       "path": "/info",
       "method": "POST",
@@ -280,7 +350,7 @@
       }
     },
     {
-      "elapsedMs": 2564,
+      "elapsedMs": 3352,
       "host": "api.hyperliquid-testnet.xyz",
       "path": "/info",
       "method": "POST",
@@ -289,7 +359,7 @@
       }
     },
     {
-      "elapsedMs": 2564,
+      "elapsedMs": 3352,
       "host": "api.hyperliquid-testnet.xyz",
       "path": "/info",
       "method": "POST",
@@ -298,7 +368,7 @@
       }
     },
     {
-      "elapsedMs": 2564,
+      "elapsedMs": 3353,
       "host": "api.hyperliquid-testnet.xyz",
       "path": "/info",
       "method": "POST",
@@ -307,7 +377,7 @@
       }
     },
     {
-      "elapsedMs": 2565,
+      "elapsedMs": 3354,
       "host": "api.hyperliquid-testnet.xyz",
       "path": "/info",
       "method": "POST",
@@ -316,193 +386,43 @@
       }
     },
     {
-      "elapsedMs": 2565,
+      "elapsedMs": 3357,
       "host": "terminal.dev-api.cx.metamask.io",
       "path": "/v1/perpetuals",
       "method": "GET"
     },
     {
-      "elapsedMs": 2567,
+      "elapsedMs": 3362,
       "host": "compliance.api.cx.metamask.io",
       "path": "/v1/wallet/batch",
       "method": "POST"
     },
     {
-      "elapsedMs": 2595,
-      "host": "token.api.cx.metamask.io",
-      "path": "/assets",
-      "method": "GET"
-    },
-    {
-      "elapsedMs": 2968,
-      "host": "monad-mainnet.infura.io",
-      "path": "/v3/144385cceddc41f88d960aca519f794e",
-      "method": "POST"
-    },
-    {
-      "elapsedMs": 2994,
-      "host": "oidc.api.cx.metamask.io",
-      "path": "/oauth2/token",
-      "method": "POST"
-    },
-    {
-      "elapsedMs": 3032,
-      "host": "tokens.api.cx.metamask.io",
-      "path": "/v2/supportedNetworks",
-      "method": "GET"
-    },
-    {
-      "elapsedMs": 3032,
-      "host": "token.api.cx.metamask.io",
-      "path": "/v1/suggestedOccurrenceFloors",
-      "method": "GET"
-    },
-    {
-      "elapsedMs": 3489,
-      "host": "monad-mainnet.infura.io",
-      "path": "/v3/144385cceddc41f88d960aca519f794e",
-      "method": "POST"
-    },
-    {
-      "elapsedMs": 3520,
-      "host": "authentication.api.cx.metamask.io",
-      "path": "/api/v2/profile/lineage",
-      "method": "GET"
-    },
-    {
-      "elapsedMs": 3520,
-      "host": "authentication.api.cx.metamask.io",
-      "path": "/api/v2/profile/lineage",
-      "method": "GET"
-    },
-    {
-      "elapsedMs": 3520,
-      "host": "authentication.api.cx.metamask.io",
-      "path": "/api/v2/profile/lineage",
-      "method": "GET"
-    },
-    {
-      "elapsedMs": 3520,
-      "host": "authentication.api.cx.metamask.io",
-      "path": "/api/v2/nonce/batch",
-      "method": "POST"
-    },
-    {
-      "elapsedMs": 3520,
-      "host": "chomp.api.cx.metamask.io",
-      "path": "/v1/chomp",
-      "method": "GET"
-    },
-    {
-      "elapsedMs": 3521,
-      "host": "trigger.api.cx.metamask.io",
-      "path": "/api/v2/notifications/query",
-      "method": "POST"
-    },
-    {
-      "elapsedMs": 3521,
-      "host": "tokens.api.cx.metamask.io",
-      "path": "/v3/assets",
-      "method": "GET"
-    },
-    {
-      "elapsedMs": 3521,
-      "host": "user-storage.api.cx.metamask.io",
-      "path": "/api/v1/preferences/notifications",
-      "method": "GET"
-    },
-    {
-      "elapsedMs": 3521,
-      "host": "authentication.api.cx.metamask.io",
-      "path": "/api/v2/nonce",
-      "method": "GET"
-    },
-    {
-      "elapsedMs": 3573,
-      "host": "price.api.cx.metamask.io",
-      "path": "/v2/supportedNetworks",
-      "method": "GET"
-    },
-    {
-      "elapsedMs": 3866,
-      "host": "api.hyperliquid-testnet.xyz",
-      "path": "/info",
-      "method": "POST",
-      "body": {
-        "type": "allMids"
-      }
-    },
-    {
-      "elapsedMs": 3866,
-      "host": "api.hyperliquid-testnet.xyz",
-      "path": "/info",
-      "method": "POST",
-      "body": {
-        "type": "allMids"
-      }
-    },
-    {
-      "elapsedMs": 3919,
-      "host": "price.api.cx.metamask.io",
-      "path": "/v3/spot-prices",
-      "method": "GET"
-    },
-    {
-      "elapsedMs": 3991,
-      "host": "cdn.contentful.com",
-      "path": "/spaces/:spaceId/environments/master/entries",
-      "method": "GET"
-    },
-    {
-      "elapsedMs": 3997,
-      "host": "monad-mainnet.infura.io",
-      "path": "/v3/144385cceddc41f88d960aca519f794e",
-      "method": "POST"
-    },
-    {
-      "elapsedMs": 4177,
-      "host": "authentication.api.cx.metamask.io",
-      "path": "/api/v2/profile/accounts",
-      "method": "PUT"
-    },
-    {
-      "elapsedMs": 4298,
-      "host": "money.api.cx.metamask.io",
-      "path": "/v1/positions/<redacted>",
-      "method": "GET"
-    },
-    {
-      "elapsedMs": 4339,
-      "host": "authentication.api.cx.metamask.io",
-      "path": "/api/v2/srp/login",
-      "method": "POST"
-    },
-    {
-      "elapsedMs": 4396,
+      "elapsedMs": 3536,
       "host": "notification.api.cx.metamask.io",
       "path": "/api/v4/notifications",
       "method": "POST"
     },
     {
-      "elapsedMs": 4608,
-      "host": "authentication.api.cx.metamask.io",
-      "path": "/api/v2/profile/accounts",
-      "method": "PUT"
-    },
-    {
-      "elapsedMs": 5124,
-      "host": "tokens.api.cx.metamask.io",
-      "path": "/v3/assets",
-      "method": "GET"
-    },
-    {
-      "elapsedMs": 5200,
-      "host": "oidc.api.cx.metamask.io",
-      "path": "/oauth2/token",
+      "elapsedMs": 3852,
+      "host": "monad-mainnet.infura.io",
+      "path": "/v3/144385cceddc41f88d960aca519f794e",
       "method": "POST"
     },
     {
-      "elapsedMs": 5242,
+      "elapsedMs": 4060,
+      "host": "price.api.cx.metamask.io",
+      "path": "/v3/spot-prices",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 4262,
+      "host": "monad-mainnet.infura.io",
+      "path": "/v3/144385cceddc41f88d960aca519f794e",
+      "method": "POST"
+    },
+    {
+      "elapsedMs": 4553,
       "host": "api.hyperliquid-testnet.xyz",
       "path": "/info",
       "method": "POST",
@@ -511,25 +431,58 @@
       }
     },
     {
-      "elapsedMs": 5669,
-      "host": "authentication.api.cx.metamask.io",
-      "path": "/api/v2/profile/pair",
+      "elapsedMs": 4553,
+      "host": "api.hyperliquid-testnet.xyz",
+      "path": "/info",
+      "method": "POST",
+      "body": {
+        "type": "allMids"
+      }
+    },
+    {
+      "elapsedMs": 4899,
+      "host": "monad-mainnet.infura.io",
+      "path": "/v3/144385cceddc41f88d960aca519f794e",
       "method": "POST"
     },
     {
-      "elapsedMs": 5669,
-      "host": "authentication.api.cx.metamask.io",
-      "path": "/api/v2/nonce/batch",
-      "method": "POST"
+      "elapsedMs": 5182,
+      "host": "money.api.cx.metamask.io",
+      "path": "/v1/positions/<redacted>",
+      "method": "GET"
     },
     {
-      "elapsedMs": 6017,
-      "host": "authentication.api.cx.metamask.io",
-      "path": "/api/v2/profile/accounts",
-      "method": "PUT"
+      "elapsedMs": 5458,
+      "host": "terminal.dev-api.cx.metamask.io",
+      "path": "/v1/perpetuals",
+      "method": "GET"
     },
     {
-      "elapsedMs": 7905,
+      "elapsedMs": 5824,
+      "host": "api.hyperliquid-testnet.xyz",
+      "path": "/info",
+      "method": "POST",
+      "body": {
+        "type": "allMids"
+      }
+    },
+    {
+      "elapsedMs": 5824,
+      "host": "api.hyperliquid-testnet.xyz",
+      "path": "/info",
+      "method": "POST",
+      "body": {
+        "type": "allMids"
+      }
+    },
+    {
+      "elapsedMs": 5938,
+      "host": "tokens.api.cx.metamask.io",
+      "path": "/v3/assets",
+      "method": "GET"
+    },
+    {
+      "elapsedMs": 8630,
       "host": "api.hyperliquid-testnet.xyz",
       "path": "/info",
       "method": "POST",
@@ -538,7 +491,7 @@
       }
     },
     {
-      "elapsedMs": 7906,
+      "elapsedMs": 8630,
       "host": "api.hyperliquid-testnet.xyz",
       "path": "/info",
       "method": "POST",
@@ -547,7 +500,7 @@
       }
     },
     {
-      "elapsedMs": 7906,
+      "elapsedMs": 8631,
       "host": "api.hyperliquid-testnet.xyz",
       "path": "/info",
       "method": "POST",
@@ -556,7 +509,7 @@
       }
     },
     {
-      "elapsedMs": 7906,
+      "elapsedMs": 8631,
       "host": "api.hyperliquid-testnet.xyz",
       "path": "/info",
       "method": "POST",
@@ -565,7 +518,7 @@
       }
     },
     {
-      "elapsedMs": 7906,
+      "elapsedMs": 8631,
       "host": "api.hyperliquid-testnet.xyz",
       "path": "/info",
       "method": "POST",
@@ -574,7 +527,7 @@
       }
     },
     {
-      "elapsedMs": 7906,
+      "elapsedMs": 8631,
       "host": "api.hyperliquid-testnet.xyz",
       "path": "/info",
       "method": "POST",
@@ -583,13 +536,13 @@
       }
     },
     {
-      "elapsedMs": 7906,
+      "elapsedMs": 8631,
       "host": "accounts.api.cx.metamask.io",
       "path": "/v5/multiaccount/balances",
       "method": "GET"
     },
     {
-      "elapsedMs": 8196,
+      "elapsedMs": 9184,
       "host": "compliance.api.cx.metamask.io",
       "path": "/v1/wallet/batch",
       "method": "POST"
@@ -598,133 +551,133 @@
   "nodeEvents": [
     {
       "action": "metamask.wallet.ensure_unlocked",
-      "elapsedMs": 1408,
+      "elapsedMs": 1959,
       "nodeId": "setup-unlock",
       "status": "running"
     },
     {
       "action": "metamask.wallet.ensure_unlocked",
-      "elapsedMs": 1760,
+      "elapsedMs": 2473,
       "nodeId": "setup-unlock",
       "status": "passed"
     },
     {
       "action": "metamask.wallet.select_account",
-      "elapsedMs": 1810,
+      "elapsedMs": 2506,
       "nodeId": "setup-select-unfunded",
       "status": "running"
     },
     {
       "action": "metamask.wallet.select_account",
-      "elapsedMs": 2421,
+      "elapsedMs": 3161,
       "nodeId": "setup-select-unfunded",
       "status": "passed"
     },
     {
       "action": "ui.navigate",
-      "elapsedMs": 2435,
+      "elapsedMs": 3176,
       "nodeId": "setup-open-trade",
       "status": "running"
     },
     {
       "action": "ui.navigate",
-      "elapsedMs": 2532,
+      "elapsedMs": 3311,
       "nodeId": "setup-open-trade",
       "status": "passed"
     },
     {
       "action": "ui.wait_for",
-      "elapsedMs": 2568,
+      "elapsedMs": 3358,
       "nodeId": "setup-wait-form",
       "status": "running"
     },
     {
       "action": "ui.wait_for",
-      "elapsedMs": 5908,
+      "elapsedMs": 6542,
       "nodeId": "setup-wait-form",
       "status": "passed"
     },
     {
       "action": "ui.wait_for",
-      "elapsedMs": 5924,
+      "elapsedMs": 6566,
       "nodeId": "setup-wait-zero-balance",
       "status": "running"
     },
     {
       "action": "ui.wait_for",
-      "elapsedMs": 6260,
+      "elapsedMs": 6907,
       "nodeId": "setup-wait-zero-balance",
       "status": "passed"
     },
     {
       "action": "ui.wait_for",
-      "elapsedMs": 6284,
+      "elapsedMs": 6933,
       "nodeId": "ac2-wait-hint",
       "status": "running"
     },
     {
       "action": "ui.wait_for",
-      "elapsedMs": 6619,
+      "elapsedMs": 7272,
       "nodeId": "ac2-wait-hint",
       "status": "passed"
     },
     {
       "action": "ui.wait_for",
-      "elapsedMs": 6645,
+      "elapsedMs": 7302,
       "nodeId": "ac2-wait-cta",
       "status": "running"
     },
     {
       "action": "ui.wait_for",
-      "elapsedMs": 7033,
+      "elapsedMs": 7640,
       "nodeId": "ac2-wait-cta",
       "status": "passed"
     },
     {
       "action": "ui.wait_for",
-      "elapsedMs": 7056,
+      "elapsedMs": 7664,
       "nodeId": "ac2-wait-enabled",
       "status": "running"
     },
     {
       "action": "ui.wait_for",
-      "elapsedMs": 7394,
+      "elapsedMs": 8000,
       "nodeId": "ac2-wait-enabled",
       "status": "passed"
     },
     {
       "action": "command",
-      "elapsedMs": 7417,
+      "elapsedMs": 8037,
       "nodeId": "ac2-kill-capture-helper",
       "status": "running"
     },
     {
       "action": "command",
-      "elapsedMs": 7501,
+      "elapsedMs": 8129,
       "nodeId": "ac2-kill-capture-helper",
       "status": "passed"
     },
     {
       "action": "ui.screenshot",
-      "elapsedMs": 7510,
+      "elapsedMs": 8140,
       "nodeId": "ac2-screenshot-cta",
       "status": "running"
     },
     {
       "action": "ui.screenshot",
-      "elapsedMs": 7803,
+      "elapsedMs": 8513,
       "nodeId": "ac2-screenshot-cta",
       "status": "passed"
     },
     {
       "action": "metamask.wallet.select_account",
-      "elapsedMs": 7821,
+      "elapsedMs": 8533,
       "nodeId": "teardown-restore-account",
       "status": "running"
     },
     {
       "action": "metamask.wallet.select_account",
-      "elapsedMs": 8220,
+      "elapsedMs": 9243,
       "nodeId": "teardown-restore-account",
       "status": "passed"
     }
