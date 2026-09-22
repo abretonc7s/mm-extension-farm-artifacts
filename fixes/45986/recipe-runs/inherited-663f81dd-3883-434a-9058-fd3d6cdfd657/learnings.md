@@ -1,3 +1,0 @@
-- Loading vs zero balance: Bugbot caught `hasNoAvailableBalance` treating a null live account as $0. Gate unfunded CTA and submit disable on `isLoadingAccount` before comparing the numeric balance.
-- Row vs footer disagreement: The amount-input Add funds label used the raw zero fallback while the footer waited on load. Pass `isLoadingAccount` into the row and no-op `handleAddFunds` until the stream is ready.
-- Rebase onto toast/entry-point work: main added `setLastPerpsDepositEntryPoint` in the deposit hook and `perpsClearPendingTradeConfiguration` after place-order. Keep those next to the unfunded funnel track/consume calls instead of dropping either side.

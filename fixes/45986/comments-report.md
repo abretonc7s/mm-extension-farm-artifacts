@@ -1,61 +1,95 @@
-# Comments report — PR #45986
+# PR #45986 — review comment triage
 
-Fetched live from GitHub (not the TASK.md snapshot).
+PR intent (from description + TAT-3853): make the unfunded Perps trade-screen CTA an
+**enabled** `Add funds to trade` control, add a hint and a labeled available-balance
+`Add funds` control, and instrument the unfunded deposit funnel
+(click → deposit opened → deposit confirmed → order submitted).
 
-## Totals
+Live fetch: 14 top-level inline review comments, 9 issue comments, 7 reviews
+(1 `CHANGES_REQUESTED` from geositta, review `5242211383`).
 
-- Actionable review comments: 3 (3 REAL, 0 FALSE POSITIVE, 0 OUT OF SCOPE)
-- Skipped status-only comments: 8 issue + 1 Bugbot review summary (no replies)
-- Commit SHA for this round's fix: `c82dde9e5d5186610b97f59bb50ad552b07dd319`
-- Files changed this round: `ui/pages/perps/perps-order-entry-page.tsx`, `ui/pages/perps/perps-order-entry-page.test.tsx`
-- Recipe re-validation: PASS (13/13 nodes, capture-helper PNG)
-- Integration status: `skipped` (HEAD already contained origin/main at start)
+- 3 inline threads are cursor[bot] findings from earlier commits and already have
+  author replies at current HEAD (ids 3919978743, 3920285641, 4003393370) — no new reply.
+- 9 issue comments are routine status automation (CLA, CODEOWNERS, 5× build-ready,
+  SonarQube quality gate). **9 skipped without reply**, none actionable.
 
-## Actionable comments
+## Triage
 
-| # | Author | File | Triage | Action |
-|---|--------|------|--------|--------|
-| 1 | cursor[bot] | ui/pages/perps/perps-order-entry-page.tsx:1148 (orig 886) | REAL | Already fixed in 002b882; already replied; thread resolved |
-| 2 | cursor[bot] | ui/components/app/perps/order-entry/components/amount-input/amount-input.tsx:425 | REAL | Already fixed in 948c431; already replied; thread resolved |
-| 3 | cursor[bot] | ui/pages/perps/perps-order-entry-page.tsx:1350 | REAL | Fixed in c82dde9e5d; replied; thread resolved |
+| # | ID | Author | File | Triage | Action |
+|---|----|--------|------|--------|--------|
+| 1 | 4042083223 | geositta | ui/pages/perps/perps-order-entry-page.tsx:1144 | REAL | Add `getTradeableBalanceRaw` so absent/unparseable balance is "unknown", not a fundable zero |
+| 2 | 4042083233 | geositta | ui/pages/perps/perps-order-entry-page.tsx:2169 | REAL | Funnel stores `{address, confirmedAt}`; consume requires a confirmed deposit for the same address |
+| 3 | 4042083239 | geositta | ui/components/app/perps/perps-deposit-toast.tsx:71 | REAL | Fire-once ref keyed on deposit-result identity so `deposit_confirmed` cannot double-count |
+| 4 | 4042083242 | geositta | ui/components/app/perps/order-entry/components/amount-input/amount-input.tsx:416 | REAL | Pass `hasNoAvailableBalance` down as the single source of truth; drop the child's threshold import |
+| 5 | 4042083247 | geositta | ui/pages/perps/perps-order-entry-page.tsx:2318 | REAL | Derive `PerpsButtonLocation` from the `as const` instead of widening to `string` |
+| 6 | 4042083249 | geositta | ui/pages/perps/perps-order-entry-page.tsx:2347 | REAL | Add non-deprecated `ORDER_FORM_FOOTER` location for the footer CTA |
+| 7 | 4042083252 | geositta | ui/pages/perps/perps-order-entry-page.tsx:2380 | REAL | Collapse the duplicated branch into one helper taking `{buttonLocation, hasPerpBalance}` |
+| 8 | 4042083254 | geositta | ui/components/app/perps/hooks/usePerpsDepositConfirmation.ts:91 | REAL | Always emit `has_perp_balance` (true/false), never omit it |
+| 9 | 4042083257 | geositta | ui/pages/perps/perps-order-entry-page.tsx:2338 | REAL | Track the click before the eligibility branch, with a `geo_block_modal`/`deposit` outcome |
+| 10 | 4042083259 | geositta | ui/components/app/perps/order-entry/components/amount-input/amount-input.tsx:433 | REAL | Drop redundant `onClick` guard; make both branches gate on `onAddFunds` symmetrically |
+| 11 | 4042083262 | geositta | ui/components/app/perps/constants.ts:76 | REAL | Correct the threshold rationale comment; name the $10 minimum in the hint copy |
 
-### 1. Unfunded CTA shown while balance loads — `review_comment` 3919978743
+Totals: **11 REAL, 0 FALSE POSITIVE, 0 OUT OF SCOPE** (+3 already-replied bot threads, 9 skipped status comments).
 
-`hasNoAvailableBalance` originally dropped the loading wait, so a missing account looked like $0 and the primary button became Add funds to trade. Fixed in 002b882 by requiring `!isLoadingAccount`. Thread already replied and resolved. Recorded as already replied.
+## Recipe re-validation (step 10)
 
-### 2. Row CTA ignores account loading — `review_comment` 3920285641
+`RECIPE_SOURCE=family-inherited` (trusted), `HAS_RECIPE=yes`.
 
-The labeled Add funds row control used the raw zero fallback while the footer waited on loading. Fixed in 948c431 by gating the row control and `handleAddFunds` on `isLoadingAccount`. Thread already replied and resolved. Recorded as already replied.
+**Result: PASS** — `temp/tasks/fix/45986-0923-000830/artifacts/recipe-run/summary.json`.
+All 13 nodes executed against `branch + origin/main` (post-rebase). The AC2 screenshot
+(`screenshots/after-ac2-unfunded-cta.png`, `metadata.provider = capture-helper`, not the
+CDP fallback) shows the live post-fix UI: `Available to trade 0.00 USDC` with a labeled
+**Add funds** row control, an enabled **Add funds to trade** footer CTA, and the revised
+hint copy from comment 11 — "Add at least $10 to your Perps account to place this order."
 
-### 3. Loading account blocks close and modify — `review_comment` 4003393370
+Side findings: 5 pre-existing application warnings/errors (reselect input-selector
+warnings, Solana Snap account de-sync, a dehydrated auth-storage query rejection).
+None touch the files in this diff; non-blocking.
 
-The first review-fix restored a loading disable, but as a global `isLoadingAccount ||` on `isSubmitDisabled`. Main only disabled new-order submit while the account hydrates: `(orderMode === 'new' && isLoadingAccount)`. Close and modify already have their own validations (`isInsufficientFunds` is false in close; empty-amount modify is TP/SL-only).
+### Runtime note (framework, not a repo issue)
 
-Fix: restore the new-order-only loading guard. Tests cover close and modify remaining enabled while `isInitialLoading` is true.
+Each `mm-harness launch` re-snapshots `temp/recipe/runtime/runtime-dist` underneath the
+running Chrome, which invalidates the loaded unpacked extension. Chrome then persists
+`disable_reasons: [16777216]` for extension `hebhblbkkdabgoldnojllkipeoacjioc` in
+`chrome-profile/Default/Secure Preferences`, and every later launch lands on
+`ERR_BLOCKED_BY_CLIENT` / `WALLET_STATE_REQUIRED` — `launch --verify` alone does not
+recover it. Recovery used twice this run (steps 4 and 10): `mm-harness stop`, kill the
+Chrome processes on the CDP port, clear that `disable_reasons` entry, then relaunch.
+No repo config was changed for this.
 
-Reply: https://github.com/MetaMask/metamask-extension/pull/45986#discussion_r4003879598
-Thread `PRRT_kwDOAoEEns6iCWPa` resolved.
+## Final summary (step 13)
 
-## Skipped status-only comments (8 issue + 1 review summary)
+- **Total actionable comments: 11** — 11 REAL, 0 FALSE POSITIVE, 0 OUT OF SCOPE.
+  All from geositta's `CHANGES_REQUESTED` review `5242211383`. Every one was verified
+  against current HEAD before being fixed.
+- **Not replied to:** 3 cursor[bot] inline threads already answered at HEAD and already
+  resolved (3919978743, 3920285641, 4003393370); 9 status-only issue comments
+  (CLA, CODEOWNERS, 5× build-ready, SonarQube) — skipped without reply, none actionable.
+- **Commit SHA:** `3bbdb97bf4d0f3dffb8f62ae453f7741c4055986`
+- **Threads:** all 11 replied inline with the SHA and resolved via `resolveReviewThread`.
 
-No replies.
+### Files changed in the review-fix commit
 
-| ID | Author | Why skipped |
-|----|--------|-------------|
-| 5518479240 | github-actions[bot] | CLA signature |
-| 5518480911 | metamask-ci[bot] | CODEOWNERS notice |
-| 5518669669 | metamask-ci[bot] | Builds ready [c45015c] |
-| 5519215424 | metamask-ci[bot] | Builds ready [002b882] |
-| 5519515819 | metamask-ci[bot] | Builds ready [948c431] |
-| 5619782252 | metamask-ci[bot] | Builds ready [2811940] |
-| 5661250569 | sonarqubecloud[bot] | Quality Gate passed |
-| 5661322393 | metamask-ci[bot] | Builds ready [90e908a] |
-| review 5195454359 | cursor[bot] | Bugbot summary of comment 3; no extra suggestion |
+| File | Comments addressed |
+|------|--------------------|
+| `shared/constants/perps-events.ts` | 5, 6, 9 — `ORDER_FORM_FOOTER`, `DEPOSIT_CLICK_OUTCOME`, derived `PerpsButtonLocation` / `PerpsDepositClickOutcome` |
+| `ui/hooks/perps/getTradeableBalance.ts` | 1 — new `getTradeableBalanceRaw` sibling accessor |
+| `ui/pages/perps/perps-order-entry-page.tsx` | 1, 2, 5, 6, 7, 9, 11 |
+| `ui/components/app/perps/utils/unfunded-deposit-funnel.ts` | 2 — `{address, confirmedAt}` funnel with confirm/clear |
+| `ui/components/app/perps/perps-deposit-toast.tsx` | 3, 8 — fire-once guard, always-emitted property |
+| `ui/components/app/perps/hooks/usePerpsDepositConfirmation.ts` | 8 |
+| `ui/components/app/perps/order-entry/components/amount-input/amount-input.tsx` | 4, 10 |
+| `ui/components/app/perps/order-entry/order-entry.tsx`, `order-entry.types.ts` | 4 — prop pass-through |
+| `ui/components/app/perps/constants.ts` | 11 — corrected threshold rationale |
+| `app/_locales/en/messages.json`, `app/_locales/en_GB/messages.json` | 11 — hint names the $10 minimum |
+| 5 test files | regression coverage for 1, 3, 4, 8, 9 |
 
-No `CHANGES_REQUESTED` reviews. No human review comments besides prior author replies.
+### Validation
 
-## Recipe re-validation
-
-PASS. 13/13 nodes. Screenshot `artifacts/recipe-run/screenshots/after-ac2-unfunded-cta.png` is capture-helper (pid selector, Google Chrome for Testing). PNG shows 0.00 USDC, labeled row Add funds, hint, enabled footer Add funds to trade on `#/perps/trade/BTC?direction=long&mode=new`.
-
-check-diff: pass (eslint, oxfmt, jest). Coverage: PASS, new code 93% (26/28).
+- `mm-harness check diff --profile fast`: **PASS** (policy-suppressions, eslint, oxfmt, jest)
+- Coverage on changed files: **PASS** — 88% new code (threshold 80%)
+- Targeted jest (5 suites): **245 passed**
+- Final parity gate (`lint:changed` + `verify-locales` + `circular-deps:check`): **PASS**
+- Recipe re-validation: **PASS** (capture-helper screenshot, see above)
+- Integration status (step 3): **`rebased`** — clean 4-commit rebase onto `origin/main`,
+  `yarn install --immutable` rerun after `yarn.lock` moved; pushed with `--force-with-lease`.

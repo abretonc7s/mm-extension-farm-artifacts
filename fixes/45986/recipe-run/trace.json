@@ -11,9 +11,9 @@
       "nodeId": "setup-unlock",
       "action": "metamask.wallet.ensure_unlocked",
       "intent": "Make the wallet usable so Perps can load",
-      "startedAt": "2026-09-14T09:30:22.253Z",
-      "endedAt": "2026-09-14T09:30:22.600Z",
-      "durationMs": 347,
+      "startedAt": "2026-09-22T16:48:41.134Z",
+      "endedAt": "2026-09-22T16:48:41.493Z",
+      "durationMs": 359,
       "ok": true,
       "next": "setup-select-unfunded",
       "output": {
@@ -21,11 +21,11 @@
         "unlocked": true,
         "redacted": true,
         "proofPath": "extension-password-unlock",
-        "cdpPort": 7664,
+        "cdpPort": 7662,
         "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/unlock",
         "runtimeLaunch": null,
-        "cdpTargetId": "454A33EFFBD3D2C1B55379F49BDF5E07",
-        "runtimeSessionId": "3c0f6ce7-bc87-48c6-b37f-9a633d6a783c",
+        "cdpTargetId": "1A280E81ECA7B749C7B3073A178A4FBF",
+        "runtimeSessionId": "421408cc-b788-493e-91d7-caa58443042a",
         "liveAdapter": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/actions/extension/wallet/ensure_unlocked.mjs"
       }
     },
@@ -33,9 +33,9 @@
       "nodeId": "setup-select-unfunded",
       "action": "metamask.wallet.select_account",
       "intent": "Select the fixture unfunded Perps wallet (dev6) instead of assuming Account 2 has a zero balance",
-      "startedAt": "2026-09-14T09:30:22.613Z",
-      "endedAt": "2026-09-14T09:30:23.529Z",
-      "durationMs": 916,
+      "startedAt": "2026-09-22T16:48:41.523Z",
+      "endedAt": "2026-09-22T16:48:42.154Z",
+      "durationMs": 631,
       "ok": true,
       "next": "setup-open-trade",
       "output": {
@@ -47,11 +47,11 @@
           "type": "eip155:eoa"
         },
         "proofPath": "extension-background-account-selection",
-        "cdpPort": 7664,
+        "cdpPort": 7662,
         "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/",
         "runtimeLaunch": null,
-        "cdpTargetId": "454A33EFFBD3D2C1B55379F49BDF5E07",
-        "runtimeSessionId": "3c0f6ce7-bc87-48c6-b37f-9a633d6a783c",
+        "cdpTargetId": "1A280E81ECA7B749C7B3073A178A4FBF",
+        "runtimeSessionId": "421408cc-b788-493e-91d7-caa58443042a",
         "liveAdapter": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/actions/extension/wallet/select_account.mjs"
       }
     },
@@ -59,9 +59,9 @@
       "nodeId": "setup-open-trade",
       "action": "ui.navigate",
       "intent": "Land on the BTC long order form",
-      "startedAt": "2026-09-14T09:30:23.540Z",
-      "endedAt": "2026-09-14T09:30:23.671Z",
-      "durationMs": 131,
+      "startedAt": "2026-09-22T16:48:42.162Z",
+      "endedAt": "2026-09-22T16:48:42.278Z",
+      "durationMs": 116,
       "ok": true,
       "next": "setup-wait-form",
       "output": {
@@ -73,26 +73,96 @@
           "sameDocument": true
         },
         "proofPath": "ui-navigation",
-        "cdpPort": 7664,
+        "cdpPort": 7662,
         "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/",
         "runtimeLaunch": null,
-        "cdpTargetId": "454A33EFFBD3D2C1B55379F49BDF5E07",
-        "runtimeSessionId": "3c0f6ce7-bc87-48c6-b37f-9a633d6a783c",
+        "cdpTargetId": "1A280E81ECA7B749C7B3073A178A4FBF",
+        "runtimeSessionId": "421408cc-b788-493e-91d7-caa58443042a",
         "liveAdapter": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/actions/extension/ui/navigate.mjs"
       },
       "observations": {
         "ui.screen": {
           "provider": "cdp-web",
-          "name": "macpro-mme-4 — MetaMask",
-          "title": "macpro-mme-4 — MetaMask",
+          "name": "macpro-mme-2 — MetaMask",
+          "title": "macpro-mme-2 — MetaMask",
           "route": "#/perps/trade/BTC",
           "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
         },
         "ui.visible": {
           "provider": "cdp-web",
           "items": [],
-          "hidden_or_offscreen": [],
-          "truncated": false,
+          "hidden_or_offscreen": [
+            {
+              "role": "link",
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > header > div:nth-of-type(1) > a",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "button",
+              "test_id": "account-menu-icon",
+              "selector": "[data-testid=\"account-menu-icon\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "button",
+              "test_id": "discover-search-button",
+              "selector": "[data-testid=\"discover-search-button\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "button",
+              "test_id": "account-options-menu-button",
+              "selector": "[data-testid=\"account-options-menu-button\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "button",
+              "test_id": "drawer-close-button",
+              "selector": "[data-testid=\"drawer-close-button\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "button",
+              "test_id": "notifications-menu-item",
+              "selector": "[data-testid=\"notifications-menu-item\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "button",
+              "test_id": "discover",
+              "selector": "[data-testid=\"discover\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "link",
+              "test_id": "global-menu-contacts",
+              "selector": "[data-testid=\"global-menu-contacts\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "link",
+              "test_id": "global-menu-connected-sites",
+              "selector": "[data-testid=\"global-menu-connected-sites\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "link",
+              "test_id": "global-menu-networks",
+              "selector": "[data-testid=\"global-menu-networks\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            }
+          ],
+          "truncated": true,
           "limits": {
             "items": 20,
             "hidden_or_offscreen": 10
@@ -104,24 +174,24 @@
       "nodeId": "setup-wait-form",
       "action": "ui.wait_for",
       "intent": "The sticky footer submit control is visible",
-      "startedAt": "2026-09-14T09:30:23.683Z",
-      "endedAt": "2026-09-14T09:30:26.270Z",
-      "durationMs": 2587,
+      "startedAt": "2026-09-22T16:48:42.293Z",
+      "endedAt": "2026-09-22T16:48:45.647Z",
+      "durationMs": 3355,
       "ok": true,
       "next": "setup-wait-zero-balance",
       "output": {
         "matched": true,
-        "cdpPort": 7664,
+        "cdpPort": 7662,
         "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/BTC?direction=long&mode=new",
         "runtimeLaunch": null,
-        "cdpTargetId": "454A33EFFBD3D2C1B55379F49BDF5E07",
-        "runtimeSessionId": "3c0f6ce7-bc87-48c6-b37f-9a633d6a783c"
+        "cdpTargetId": "1A280E81ECA7B749C7B3073A178A4FBF",
+        "runtimeSessionId": "421408cc-b788-493e-91d7-caa58443042a"
       },
       "observations": {
         "ui.screen": {
           "provider": "cdp-web",
-          "name": "macpro-mme-4 — MetaMask",
-          "title": "macpro-mme-4 — MetaMask",
+          "name": "macpro-mme-2 — MetaMask",
+          "title": "macpro-mme-2 — MetaMask",
           "route": "#/perps/trade/BTC",
           "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
         },
@@ -291,15 +361,15 @@
               "selector": "[data-testid=\"amount-input-add-funds\"]",
               "enabled": true,
               "bounds": {
-                "x": 890,
+                "x": 882,
                 "y": 458,
-                "width": 93,
+                "width": 101,
                 "height": 32
               }
             },
             {
               "label": "0.00",
-              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(2) > input",
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(2) > input",
               "enabled": true,
               "focused": true,
               "bounds": {
@@ -323,7 +393,7 @@
               }
             },
             {
-              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(2) > div > input",
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(2) > div > input",
               "enabled": true,
               "bounds": {
                 "x": 911,
@@ -333,7 +403,7 @@
               }
             },
             {
-              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(2) > div > input",
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(2) > div > input",
               "enabled": true,
               "bounds": {
                 "x": 911,
@@ -358,7 +428,7 @@
           ],
           "hidden_or_offscreen": [
             {
-              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(1) > div > span > span:nth-of-type(3) > input",
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(1) > div > span > span:nth-of-type(3) > input",
               "enabled": true,
               "bounds": {
                 "x": 223,
@@ -369,7 +439,7 @@
               "reason": "covered"
             },
             {
-              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div > span > span:nth-of-type(11) > input",
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div > span > span:nth-of-type(11) > input",
               "enabled": true,
               "bounds": {
                 "x": 257,
@@ -460,24 +530,24 @@
       "nodeId": "setup-wait-zero-balance",
       "action": "ui.wait_for",
       "intent": "Available to trade is zero on this wallet",
-      "startedAt": "2026-09-14T09:30:26.282Z",
-      "endedAt": "2026-09-14T09:30:26.848Z",
-      "durationMs": 566,
+      "startedAt": "2026-09-22T16:48:45.653Z",
+      "endedAt": "2026-09-22T16:48:46.003Z",
+      "durationMs": 350,
       "ok": true,
       "next": "ac2-wait-hint",
       "output": {
         "matched": true,
-        "cdpPort": 7664,
+        "cdpPort": 7662,
         "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/BTC?direction=long&mode=new",
         "runtimeLaunch": null,
-        "cdpTargetId": "454A33EFFBD3D2C1B55379F49BDF5E07",
-        "runtimeSessionId": "3c0f6ce7-bc87-48c6-b37f-9a633d6a783c"
+        "cdpTargetId": "1A280E81ECA7B749C7B3073A178A4FBF",
+        "runtimeSessionId": "421408cc-b788-493e-91d7-caa58443042a"
       },
       "observations": {
         "ui.screen": {
           "provider": "cdp-web",
-          "name": "macpro-mme-4 — MetaMask",
-          "title": "macpro-mme-4 — MetaMask",
+          "name": "macpro-mme-2 — MetaMask",
+          "title": "macpro-mme-2 — MetaMask",
           "route": "#/perps/trade/BTC",
           "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
         },
@@ -647,15 +717,15 @@
               "selector": "[data-testid=\"amount-input-add-funds\"]",
               "enabled": true,
               "bounds": {
-                "x": 890,
+                "x": 882,
                 "y": 458,
-                "width": 93,
+                "width": 101,
                 "height": 32
               }
             },
             {
               "label": "0.00",
-              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(2) > input",
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(2) > input",
               "enabled": true,
               "focused": true,
               "bounds": {
@@ -679,7 +749,7 @@
               }
             },
             {
-              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(2) > div > input",
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(2) > div > input",
               "enabled": true,
               "bounds": {
                 "x": 911,
@@ -689,7 +759,7 @@
               }
             },
             {
-              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(2) > div > input",
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(2) > div > input",
               "enabled": true,
               "bounds": {
                 "x": 911,
@@ -714,7 +784,7 @@
           ],
           "hidden_or_offscreen": [
             {
-              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(1) > div > span > span:nth-of-type(3) > input",
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(1) > div > span > span:nth-of-type(3) > input",
               "enabled": true,
               "bounds": {
                 "x": 223,
@@ -725,7 +795,7 @@
               "reason": "covered"
             },
             {
-              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div > span > span:nth-of-type(11) > input",
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div > span > span:nth-of-type(11) > input",
               "enabled": true,
               "bounds": {
                 "x": 257,
@@ -819,24 +889,24 @@
       "proves": [
         "ac2-enabled-add-funds-cta"
       ],
-      "startedAt": "2026-09-14T09:30:26.860Z",
-      "endedAt": "2026-09-14T09:30:27.229Z",
-      "durationMs": 369,
+      "startedAt": "2026-09-22T16:48:46.010Z",
+      "endedAt": "2026-09-22T16:48:46.365Z",
+      "durationMs": 355,
       "ok": true,
       "next": "ac2-wait-cta",
       "output": {
         "matched": true,
-        "cdpPort": 7664,
+        "cdpPort": 7662,
         "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/BTC?direction=long&mode=new",
         "runtimeLaunch": null,
-        "cdpTargetId": "454A33EFFBD3D2C1B55379F49BDF5E07",
-        "runtimeSessionId": "3c0f6ce7-bc87-48c6-b37f-9a633d6a783c"
+        "cdpTargetId": "1A280E81ECA7B749C7B3073A178A4FBF",
+        "runtimeSessionId": "421408cc-b788-493e-91d7-caa58443042a"
       },
       "observations": {
         "ui.screen": {
           "provider": "cdp-web",
-          "name": "macpro-mme-4 — MetaMask",
-          "title": "macpro-mme-4 — MetaMask",
+          "name": "macpro-mme-2 — MetaMask",
+          "title": "macpro-mme-2 — MetaMask",
           "route": "#/perps/trade/BTC",
           "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
         },
@@ -1006,15 +1076,15 @@
               "selector": "[data-testid=\"amount-input-add-funds\"]",
               "enabled": true,
               "bounds": {
-                "x": 890,
+                "x": 882,
                 "y": 458,
-                "width": 93,
+                "width": 101,
                 "height": 32
               }
             },
             {
               "label": "0.00",
-              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(2) > input",
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(2) > input",
               "enabled": true,
               "focused": true,
               "bounds": {
@@ -1038,7 +1108,7 @@
               }
             },
             {
-              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(2) > div > input",
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(2) > div > input",
               "enabled": true,
               "bounds": {
                 "x": 911,
@@ -1048,7 +1118,7 @@
               }
             },
             {
-              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(2) > div > input",
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(2) > div > input",
               "enabled": true,
               "bounds": {
                 "x": 911,
@@ -1073,7 +1143,7 @@
           ],
           "hidden_or_offscreen": [
             {
-              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(1) > div > span > span:nth-of-type(3) > input",
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(1) > div > span > span:nth-of-type(3) > input",
               "enabled": true,
               "bounds": {
                 "x": 223,
@@ -1084,7 +1154,7 @@
               "reason": "covered"
             },
             {
-              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div > span > span:nth-of-type(11) > input",
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div > span > span:nth-of-type(11) > input",
               "enabled": true,
               "bounds": {
                 "x": 257,
@@ -1178,24 +1248,24 @@
       "proves": [
         "ac2-enabled-add-funds-cta"
       ],
-      "startedAt": "2026-09-14T09:30:27.239Z",
-      "endedAt": "2026-09-14T09:30:27.856Z",
-      "durationMs": 617,
+      "startedAt": "2026-09-22T16:48:46.370Z",
+      "endedAt": "2026-09-22T16:48:46.775Z",
+      "durationMs": 405,
       "ok": true,
       "next": "ac2-wait-enabled",
       "output": {
         "matched": true,
-        "cdpPort": 7664,
+        "cdpPort": 7662,
         "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/BTC?direction=long&mode=new",
         "runtimeLaunch": null,
-        "cdpTargetId": "454A33EFFBD3D2C1B55379F49BDF5E07",
-        "runtimeSessionId": "3c0f6ce7-bc87-48c6-b37f-9a633d6a783c"
+        "cdpTargetId": "1A280E81ECA7B749C7B3073A178A4FBF",
+        "runtimeSessionId": "421408cc-b788-493e-91d7-caa58443042a"
       },
       "observations": {
         "ui.screen": {
           "provider": "cdp-web",
-          "name": "macpro-mme-4 — MetaMask",
-          "title": "macpro-mme-4 — MetaMask",
+          "name": "macpro-mme-2 — MetaMask",
+          "title": "macpro-mme-2 — MetaMask",
           "route": "#/perps/trade/BTC",
           "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
         },
@@ -1365,15 +1435,15 @@
               "selector": "[data-testid=\"amount-input-add-funds\"]",
               "enabled": true,
               "bounds": {
-                "x": 890,
+                "x": 882,
                 "y": 458,
-                "width": 93,
+                "width": 101,
                 "height": 32
               }
             },
             {
               "label": "0.00",
-              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(2) > input",
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(2) > input",
               "enabled": true,
               "focused": true,
               "bounds": {
@@ -1397,7 +1467,7 @@
               }
             },
             {
-              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(2) > div > input",
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(2) > div > input",
               "enabled": true,
               "bounds": {
                 "x": 911,
@@ -1407,7 +1477,7 @@
               }
             },
             {
-              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(2) > div > input",
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(2) > div > input",
               "enabled": true,
               "bounds": {
                 "x": 911,
@@ -1432,7 +1502,7 @@
           ],
           "hidden_or_offscreen": [
             {
-              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(1) > div > span > span:nth-of-type(3) > input",
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(1) > div > span > span:nth-of-type(3) > input",
               "enabled": true,
               "bounds": {
                 "x": 223,
@@ -1443,7 +1513,7 @@
               "reason": "covered"
             },
             {
-              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div > span > span:nth-of-type(11) > input",
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div > span > span:nth-of-type(11) > input",
               "enabled": true,
               "bounds": {
                 "x": 257,
@@ -1537,24 +1607,24 @@
       "proves": [
         "ac2-enabled-add-funds-cta"
       ],
-      "startedAt": "2026-09-14T09:30:27.882Z",
-      "endedAt": "2026-09-14T09:30:28.252Z",
-      "durationMs": 370,
+      "startedAt": "2026-09-22T16:48:46.781Z",
+      "endedAt": "2026-09-22T16:48:47.139Z",
+      "durationMs": 358,
       "ok": true,
       "next": "ac2-kill-capture-helper",
       "output": {
         "matched": true,
-        "cdpPort": 7664,
+        "cdpPort": 7662,
         "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/BTC?direction=long&mode=new",
         "runtimeLaunch": null,
-        "cdpTargetId": "454A33EFFBD3D2C1B55379F49BDF5E07",
-        "runtimeSessionId": "3c0f6ce7-bc87-48c6-b37f-9a633d6a783c"
+        "cdpTargetId": "1A280E81ECA7B749C7B3073A178A4FBF",
+        "runtimeSessionId": "421408cc-b788-493e-91d7-caa58443042a"
       },
       "observations": {
         "ui.screen": {
           "provider": "cdp-web",
-          "name": "macpro-mme-4 — MetaMask",
-          "title": "macpro-mme-4 — MetaMask",
+          "name": "macpro-mme-2 — MetaMask",
+          "title": "macpro-mme-2 — MetaMask",
           "route": "#/perps/trade/BTC",
           "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
         },
@@ -1724,15 +1794,15 @@
               "selector": "[data-testid=\"amount-input-add-funds\"]",
               "enabled": true,
               "bounds": {
-                "x": 890,
+                "x": 882,
                 "y": 458,
-                "width": 93,
+                "width": 101,
                 "height": 32
               }
             },
             {
               "label": "0.00",
-              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(2) > input",
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(2) > input",
               "enabled": true,
               "focused": true,
               "bounds": {
@@ -1756,7 +1826,7 @@
               }
             },
             {
-              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(2) > div > input",
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(2) > div > input",
               "enabled": true,
               "bounds": {
                 "x": 911,
@@ -1766,7 +1836,7 @@
               }
             },
             {
-              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(2) > div > input",
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(2) > div > input",
               "enabled": true,
               "bounds": {
                 "x": 911,
@@ -1791,7 +1861,7 @@
           ],
           "hidden_or_offscreen": [
             {
-              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(1) > div > span > span:nth-of-type(3) > input",
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(1) > div > span > span:nth-of-type(3) > input",
               "enabled": true,
               "bounds": {
                 "x": 223,
@@ -1802,7 +1872,7 @@
               "reason": "covered"
             },
             {
-              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div > span > span:nth-of-type(11) > input",
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div > span > span:nth-of-type(11) > input",
               "enabled": true,
               "bounds": {
                 "x": 257,
@@ -1893,9 +1963,9 @@
       "nodeId": "ac2-kill-capture-helper",
       "action": "command",
       "intent": "Avoid a stale screenshot helper stealing the capture",
-      "startedAt": "2026-09-14T09:30:28.264Z",
-      "endedAt": "2026-09-14T09:30:28.332Z",
-      "durationMs": 68,
+      "startedAt": "2026-09-22T16:48:47.145Z",
+      "endedAt": "2026-09-22T16:48:47.234Z",
+      "durationMs": 89,
       "ok": true,
       "next": "ac2-screenshot-cta",
       "output": {
@@ -1922,21 +1992,21 @@
           "metadata": {
             "provider": "capture-helper",
             "mode": "snapshot",
-            "pid": 54562,
+            "pid": 2393,
             "captureHelper": {
-              "bytes": 790706,
-              "output": "/Users/deeeed/dev/metamask/metamask-extension-4/temp/tasks/fix/45986-0914-165357/artifacts/recipe-run/screenshots/.mm-harness-extension-evidence-pRoXS1/captured.png",
+              "bytes": 644902,
+              "output": "/Users/deeeed/dev/metamask/metamask-extension-2/temp/tasks/fix/45986-0923-000830/artifacts/recipe-run/screenshots/.mm-harness-extension-evidence-xtwngN/captured.png",
               "selected": {
                 "app": "Google Chrome for Testing",
                 "height": 996,
-                "id": 3511,
+                "id": 4944,
                 "layer": 0,
                 "onScreen": true,
-                "pid": 54562,
-                "title": "macpro-mme-4 — MetaMask",
+                "pid": 2393,
+                "title": "macpro-mme-2 — MetaMask",
                 "width": 1200,
-                "x": 22,
-                "y": 61
+                "x": 600,
+                "y": 57
               },
               "selector": "pid",
               "type": "snapshot"
@@ -1944,9 +2014,9 @@
           }
         }
       ],
-      "startedAt": "2026-09-14T09:30:28.340Z",
-      "endedAt": "2026-09-14T09:30:28.617Z",
-      "durationMs": 277,
+      "startedAt": "2026-09-22T16:48:47.238Z",
+      "endedAt": "2026-09-22T16:48:47.543Z",
+      "durationMs": 305,
       "ok": true,
       "next": "done",
       "output": {
@@ -1962,21 +2032,21 @@
           "metadata": {
             "provider": "capture-helper",
             "mode": "snapshot",
-            "pid": 54562,
+            "pid": 2393,
             "captureHelper": {
-              "bytes": 790706,
-              "output": "/Users/deeeed/dev/metamask/metamask-extension-4/temp/tasks/fix/45986-0914-165357/artifacts/recipe-run/screenshots/.mm-harness-extension-evidence-pRoXS1/captured.png",
+              "bytes": 644902,
+              "output": "/Users/deeeed/dev/metamask/metamask-extension-2/temp/tasks/fix/45986-0923-000830/artifacts/recipe-run/screenshots/.mm-harness-extension-evidence-xtwngN/captured.png",
               "selected": {
                 "app": "Google Chrome for Testing",
                 "height": 996,
-                "id": 3511,
+                "id": 4944,
                 "layer": 0,
                 "onScreen": true,
-                "pid": 54562,
-                "title": "macpro-mme-4 — MetaMask",
+                "pid": 2393,
+                "title": "macpro-mme-2 — MetaMask",
                 "width": 1200,
-                "x": 22,
-                "y": 61
+                "x": 600,
+                "y": 57
               },
               "selector": "pid",
               "type": "snapshot"
@@ -1987,8 +2057,8 @@
       "observations": {
         "ui.screen": {
           "provider": "cdp-web",
-          "name": "macpro-mme-4 — MetaMask",
-          "title": "macpro-mme-4 — MetaMask",
+          "name": "macpro-mme-2 — MetaMask",
+          "title": "macpro-mme-2 — MetaMask",
           "route": "#/perps/trade/BTC",
           "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
         },
@@ -2158,15 +2228,15 @@
               "selector": "[data-testid=\"amount-input-add-funds\"]",
               "enabled": true,
               "bounds": {
-                "x": 890,
+                "x": 882,
                 "y": 458,
-                "width": 93,
+                "width": 101,
                 "height": 32
               }
             },
             {
               "label": "0.00",
-              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(2) > input",
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(2) > input",
               "enabled": true,
               "focused": true,
               "bounds": {
@@ -2190,7 +2260,7 @@
               }
             },
             {
-              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(2) > div > input",
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(2) > div > input",
               "enabled": true,
               "bounds": {
                 "x": 911,
@@ -2200,7 +2270,7 @@
               }
             },
             {
-              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(2) > div > input",
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(2) > div > input",
               "enabled": true,
               "bounds": {
                 "x": 911,
@@ -2225,7 +2295,7 @@
           ],
           "hidden_or_offscreen": [
             {
-              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(1) > div > span > span:nth-of-type(3) > input",
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(1) > div > span > span:nth-of-type(3) > input",
               "enabled": true,
               "bounds": {
                 "x": 223,
@@ -2236,7 +2306,7 @@
               "reason": "covered"
             },
             {
-              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div > span > span:nth-of-type(11) > input",
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div > span > span:nth-of-type(11) > input",
               "enabled": true,
               "bounds": {
                 "x": 257,
@@ -2326,8 +2396,8 @@
     {
       "nodeId": "done",
       "action": "end",
-      "startedAt": "2026-09-14T09:30:28.625Z",
-      "endedAt": "2026-09-14T09:30:28.625Z",
+      "startedAt": "2026-09-22T16:48:47.549Z",
+      "endedAt": "2026-09-22T16:48:47.549Z",
       "durationMs": 0,
       "ok": true,
       "status": "pass"
@@ -2336,9 +2406,9 @@
       "nodeId": "teardown-restore-account",
       "action": "metamask.wallet.select_account",
       "intent": "Put the funded Perps wallet back so later runs keep their balance",
-      "startedAt": "2026-09-14T09:30:28.625Z",
-      "endedAt": "2026-09-14T09:30:29.124Z",
-      "durationMs": 499,
+      "startedAt": "2026-09-22T16:48:47.549Z",
+      "endedAt": "2026-09-22T16:48:47.953Z",
+      "durationMs": 404,
       "ok": true,
       "next": "teardown-done",
       "output": {
@@ -2350,19 +2420,19 @@
           "type": "eip155:eoa"
         },
         "proofPath": "extension-background-account-selection",
-        "cdpPort": 7664,
+        "cdpPort": 7662,
         "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/BTC?direction=long&mode=new",
         "runtimeLaunch": null,
-        "cdpTargetId": "454A33EFFBD3D2C1B55379F49BDF5E07",
-        "runtimeSessionId": "3c0f6ce7-bc87-48c6-b37f-9a633d6a783c",
+        "cdpTargetId": "1A280E81ECA7B749C7B3073A178A4FBF",
+        "runtimeSessionId": "421408cc-b788-493e-91d7-caa58443042a",
         "liveAdapter": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/actions/extension/wallet/select_account.mjs"
       }
     },
     {
       "nodeId": "teardown-done",
       "action": "end",
-      "startedAt": "2026-09-14T09:30:29.135Z",
-      "endedAt": "2026-09-14T09:30:29.135Z",
+      "startedAt": "2026-09-22T16:48:47.960Z",
+      "endedAt": "2026-09-22T16:48:47.960Z",
       "durationMs": 0,
       "ok": true,
       "status": "pass"

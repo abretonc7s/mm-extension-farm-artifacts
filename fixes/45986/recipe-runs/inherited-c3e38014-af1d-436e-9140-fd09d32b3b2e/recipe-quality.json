@@ -4,9 +4,8 @@
   "compact": {
     "verdict": "PASS",
     "reasons": [
-      "AC2 is proven by ac2-wait-hint, ac2-wait-cta, ac2-wait-enabled and a capture-helper snapshot of the enabled Add funds to trade control on 90e908ada2 after rebase onto origin/main.",
-      "The PNG shows Available to trade 0.00 USDC, a labeled row Add funds button, the unfunded hint, and an enabled footer Add funds to trade.",
-      "AC1 funnel emits are covered by unit tests; this live recipe does not assert Segment events.",
+      "AC2 is proven by ac2-wait-hint, ac2-wait-cta, ac2-wait-enabled and a capture-helper snapshot of the enabled Add funds to trade control.",
+      "AC1 funnel emits including trade_submitted_after_deposit page wiring are covered by unit tests; live Segment capture on this webpack-dev slot returned no events.",
       "AC3 post-launch conversion is UNTESTABLE in-slot."
     ],
     "better_version_guidance": []
@@ -14,26 +13,24 @@
   "dimensions": {
     "graph_integrity": {
       "status": "pass",
-      "reason": "Workflow graph is valid; setup selects the fixture unfunded wallet by address; teardown restores Account 1.",
+      "reason": "Workflow graph is valid; setup selects the fixture unfunded wallet (dev6) by address; teardown restores Account 1.",
       "evidence": [
-        "artifacts/recipe.json",
-        "artifacts/recipe-run/trace.json"
+        "recipe.json"
       ]
     },
     "ac_coverage": {
       "status": "pass",
       "reason": "AC2 bound to ac2-* nodes; AC1 proven by unit tests; AC3 UNTESTABLE with rationale.",
       "evidence": [
-        "artifacts/recipe-coverage.md",
-        "artifacts/recipe-run/trace.json"
+        "recipe-coverage.md",
+        "trace.json"
       ]
     },
     "evidence_contract_basics": {
       "status": "pass",
-      "reason": "Visual AC waits on the claimed selectors then captures a capture-helper PNG that was inspected.",
+      "reason": "Visual AC has wait_for on the claimed target plus a capture-helper PNG.",
       "evidence": [
-        "artifacts/recipe-run/screenshots/after-ac2-unfunded-cta.png",
-        "artifacts/recipe-run/artifact-manifest.json"
+        "after-ac2-unfunded-cta.png"
       ]
     }
   },
@@ -44,8 +41,8 @@
     "proof_mode": "unknown",
     "farm": "metamask-extension",
     "project": "metamask-extension-farm",
-    "flowType": "pr-complete",
-    "taskType": "pr-complete",
+    "flowType": "dev",
+    "taskType": "dev",
     "claimIsVisual": true,
     "proofMode": "mixed"
   },
