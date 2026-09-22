@@ -11,9 +11,9 @@
       "nodeId": "setup-unlock",
       "action": "metamask.wallet.ensure_unlocked",
       "intent": "Make the wallet usable so Perps can load",
-      "startedAt": "2026-09-22T17:25:37.706Z",
-      "endedAt": "2026-09-22T17:25:38.229Z",
-      "durationMs": 523,
+      "startedAt": "2026-09-22T18:11:30.022Z",
+      "endedAt": "2026-09-22T18:11:30.470Z",
+      "durationMs": 448,
       "ok": true,
       "next": "setup-select-unfunded",
       "output": {
@@ -24,8 +24,8 @@
         "cdpPort": 7662,
         "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/unlock",
         "runtimeLaunch": null,
-        "cdpTargetId": "D92AEB38A97EA6EB0E36A40BE21EB4B2",
-        "runtimeSessionId": "e6d11b56-28dc-4ee4-a2cc-b539b213ae21",
+        "cdpTargetId": "D459A6AB122AD48B7883CE4C3B3EF88A",
+        "runtimeSessionId": "d94d5b7d-8d1a-49cf-83be-c2eaa19ed6b8",
         "liveAdapter": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/actions/extension/wallet/ensure_unlocked.mjs"
       }
     },
@@ -33,9 +33,9 @@
       "nodeId": "setup-select-unfunded",
       "action": "metamask.wallet.select_account",
       "intent": "Select the fixture unfunded Perps wallet (dev6) instead of assuming Account 2 has a zero balance",
-      "startedAt": "2026-09-22T17:25:38.254Z",
-      "endedAt": "2026-09-22T17:25:38.917Z",
-      "durationMs": 663,
+      "startedAt": "2026-09-22T18:11:30.488Z",
+      "endedAt": "2026-09-22T18:11:30.909Z",
+      "durationMs": 421,
       "ok": true,
       "next": "setup-open-trade",
       "output": {
@@ -50,8 +50,8 @@
         "cdpPort": 7662,
         "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/",
         "runtimeLaunch": null,
-        "cdpTargetId": "D92AEB38A97EA6EB0E36A40BE21EB4B2",
-        "runtimeSessionId": "e6d11b56-28dc-4ee4-a2cc-b539b213ae21",
+        "cdpTargetId": "D459A6AB122AD48B7883CE4C3B3EF88A",
+        "runtimeSessionId": "d94d5b7d-8d1a-49cf-83be-c2eaa19ed6b8",
         "liveAdapter": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/actions/extension/wallet/select_account.mjs"
       }
     },
@@ -59,9 +59,9 @@
       "nodeId": "setup-open-trade",
       "action": "ui.navigate",
       "intent": "Land on the BTC long order form",
-      "startedAt": "2026-09-22T17:25:38.925Z",
-      "endedAt": "2026-09-22T17:25:39.084Z",
-      "durationMs": 159,
+      "startedAt": "2026-09-22T18:11:30.916Z",
+      "endedAt": "2026-09-22T18:11:31.076Z",
+      "durationMs": 160,
       "ok": true,
       "next": "setup-wait-form",
       "output": {
@@ -76,8 +76,8 @@
         "cdpPort": 7662,
         "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/",
         "runtimeLaunch": null,
-        "cdpTargetId": "D92AEB38A97EA6EB0E36A40BE21EB4B2",
-        "runtimeSessionId": "e6d11b56-28dc-4ee4-a2cc-b539b213ae21",
+        "cdpTargetId": "D459A6AB122AD48B7883CE4C3B3EF88A",
+        "runtimeSessionId": "d94d5b7d-8d1a-49cf-83be-c2eaa19ed6b8",
         "liveAdapter": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/actions/extension/ui/navigate.mjs"
       },
       "observations": {
@@ -174,9 +174,9 @@
       "nodeId": "setup-wait-form",
       "action": "ui.wait_for",
       "intent": "The sticky footer submit control is visible",
-      "startedAt": "2026-09-22T17:25:39.104Z",
-      "endedAt": "2026-09-22T17:25:42.307Z",
-      "durationMs": 3203,
+      "startedAt": "2026-09-22T18:11:31.094Z",
+      "endedAt": "2026-09-22T18:11:34.499Z",
+      "durationMs": 3405,
       "ok": true,
       "next": "setup-wait-zero-balance",
       "output": {
@@ -184,8 +184,8 @@
         "cdpPort": 7662,
         "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/BTC?direction=long&mode=new",
         "runtimeLaunch": null,
-        "cdpTargetId": "D92AEB38A97EA6EB0E36A40BE21EB4B2",
-        "runtimeSessionId": "e6d11b56-28dc-4ee4-a2cc-b539b213ae21"
+        "cdpTargetId": "D459A6AB122AD48B7883CE4C3B3EF88A",
+        "runtimeSessionId": "d94d5b7d-8d1a-49cf-83be-c2eaa19ed6b8"
       },
       "observations": {
         "ui.screen": {
@@ -530,8 +530,8 @@
       "nodeId": "setup-wait-zero-balance",
       "action": "ui.wait_for",
       "intent": "Available to trade is zero on this wallet",
-      "startedAt": "2026-09-22T17:25:42.314Z",
-      "endedAt": "2026-09-22T17:25:42.672Z",
+      "startedAt": "2026-09-22T18:11:34.506Z",
+      "endedAt": "2026-09-22T18:11:34.864Z",
       "durationMs": 358,
       "ok": true,
       "next": "ac2-wait-hint",
@@ -540,8 +540,8 @@
         "cdpPort": 7662,
         "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/BTC?direction=long&mode=new",
         "runtimeLaunch": null,
-        "cdpTargetId": "D92AEB38A97EA6EB0E36A40BE21EB4B2",
-        "runtimeSessionId": "e6d11b56-28dc-4ee4-a2cc-b539b213ae21"
+        "cdpTargetId": "D459A6AB122AD48B7883CE4C3B3EF88A",
+        "runtimeSessionId": "d94d5b7d-8d1a-49cf-83be-c2eaa19ed6b8"
       },
       "observations": {
         "ui.screen": {
@@ -889,9 +889,9 @@
       "proves": [
         "ac2-enabled-add-funds-cta"
       ],
-      "startedAt": "2026-09-22T17:25:42.681Z",
-      "endedAt": "2026-09-22T17:25:43.035Z",
-      "durationMs": 354,
+      "startedAt": "2026-09-22T18:11:34.871Z",
+      "endedAt": "2026-09-22T18:11:35.222Z",
+      "durationMs": 351,
       "ok": true,
       "next": "ac2-wait-cta",
       "output": {
@@ -899,8 +899,8 @@
         "cdpPort": 7662,
         "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/BTC?direction=long&mode=new",
         "runtimeLaunch": null,
-        "cdpTargetId": "D92AEB38A97EA6EB0E36A40BE21EB4B2",
-        "runtimeSessionId": "e6d11b56-28dc-4ee4-a2cc-b539b213ae21"
+        "cdpTargetId": "D459A6AB122AD48B7883CE4C3B3EF88A",
+        "runtimeSessionId": "d94d5b7d-8d1a-49cf-83be-c2eaa19ed6b8"
       },
       "observations": {
         "ui.screen": {
@@ -1248,9 +1248,9 @@
       "proves": [
         "ac2-enabled-add-funds-cta"
       ],
-      "startedAt": "2026-09-22T17:25:43.040Z",
-      "endedAt": "2026-09-22T17:25:43.404Z",
-      "durationMs": 364,
+      "startedAt": "2026-09-22T18:11:35.242Z",
+      "endedAt": "2026-09-22T18:11:35.595Z",
+      "durationMs": 353,
       "ok": true,
       "next": "ac2-wait-enabled",
       "output": {
@@ -1258,8 +1258,8 @@
         "cdpPort": 7662,
         "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/BTC?direction=long&mode=new",
         "runtimeLaunch": null,
-        "cdpTargetId": "D92AEB38A97EA6EB0E36A40BE21EB4B2",
-        "runtimeSessionId": "e6d11b56-28dc-4ee4-a2cc-b539b213ae21"
+        "cdpTargetId": "D459A6AB122AD48B7883CE4C3B3EF88A",
+        "runtimeSessionId": "d94d5b7d-8d1a-49cf-83be-c2eaa19ed6b8"
       },
       "observations": {
         "ui.screen": {
@@ -1607,9 +1607,9 @@
       "proves": [
         "ac2-enabled-add-funds-cta"
       ],
-      "startedAt": "2026-09-22T17:25:43.411Z",
-      "endedAt": "2026-09-22T17:25:43.774Z",
-      "durationMs": 363,
+      "startedAt": "2026-09-22T18:11:35.601Z",
+      "endedAt": "2026-09-22T18:11:35.956Z",
+      "durationMs": 355,
       "ok": true,
       "next": "ac2-kill-capture-helper",
       "output": {
@@ -1617,8 +1617,8 @@
         "cdpPort": 7662,
         "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/BTC?direction=long&mode=new",
         "runtimeLaunch": null,
-        "cdpTargetId": "D92AEB38A97EA6EB0E36A40BE21EB4B2",
-        "runtimeSessionId": "e6d11b56-28dc-4ee4-a2cc-b539b213ae21"
+        "cdpTargetId": "D459A6AB122AD48B7883CE4C3B3EF88A",
+        "runtimeSessionId": "d94d5b7d-8d1a-49cf-83be-c2eaa19ed6b8"
       },
       "observations": {
         "ui.screen": {
@@ -1963,9 +1963,9 @@
       "nodeId": "ac2-kill-capture-helper",
       "action": "command",
       "intent": "Avoid a stale screenshot helper stealing the capture",
-      "startedAt": "2026-09-22T17:25:43.785Z",
-      "endedAt": "2026-09-22T17:25:43.885Z",
-      "durationMs": 100,
+      "startedAt": "2026-09-22T18:11:35.963Z",
+      "endedAt": "2026-09-22T18:11:36.072Z",
+      "durationMs": 109,
       "ok": true,
       "next": "ac2-screenshot-cta",
       "output": {
@@ -1992,17 +1992,17 @@
           "metadata": {
             "provider": "capture-helper",
             "mode": "snapshot",
-            "pid": 63011,
+            "pid": 60761,
             "captureHelper": {
-              "bytes": 642772,
-              "output": "/Users/deeeed/dev/metamask/metamask-extension-2/temp/tasks/fix/45986-0923-011542/artifacts/recipe-run/screenshots/.mm-harness-extension-evidence-SDpJTL/captured.png",
+              "bytes": 798673,
+              "output": "/Users/deeeed/dev/metamask/metamask-extension-2/temp/tasks/fix/45986-0923-015826/artifacts/recipe-run/screenshots/.mm-harness-extension-evidence-ArPHUW/captured.png",
               "selected": {
                 "app": "Google Chrome for Testing",
                 "height": 996,
-                "id": 4984,
+                "id": 5006,
                 "layer": 0,
                 "onScreen": true,
-                "pid": 63011,
+                "pid": 60761,
                 "title": "macpro-mme-2 — MetaMask",
                 "width": 1200,
                 "x": 22,
@@ -2014,9 +2014,9 @@
           }
         }
       ],
-      "startedAt": "2026-09-22T17:25:43.891Z",
-      "endedAt": "2026-09-22T17:25:44.277Z",
-      "durationMs": 386,
+      "startedAt": "2026-09-22T18:11:36.079Z",
+      "endedAt": "2026-09-22T18:11:36.516Z",
+      "durationMs": 437,
       "ok": true,
       "next": "done",
       "output": {
@@ -2032,17 +2032,17 @@
           "metadata": {
             "provider": "capture-helper",
             "mode": "snapshot",
-            "pid": 63011,
+            "pid": 60761,
             "captureHelper": {
-              "bytes": 642772,
-              "output": "/Users/deeeed/dev/metamask/metamask-extension-2/temp/tasks/fix/45986-0923-011542/artifacts/recipe-run/screenshots/.mm-harness-extension-evidence-SDpJTL/captured.png",
+              "bytes": 798673,
+              "output": "/Users/deeeed/dev/metamask/metamask-extension-2/temp/tasks/fix/45986-0923-015826/artifacts/recipe-run/screenshots/.mm-harness-extension-evidence-ArPHUW/captured.png",
               "selected": {
                 "app": "Google Chrome for Testing",
                 "height": 996,
-                "id": 4984,
+                "id": 5006,
                 "layer": 0,
                 "onScreen": true,
-                "pid": 63011,
+                "pid": 60761,
                 "title": "macpro-mme-2 — MetaMask",
                 "width": 1200,
                 "x": 22,
@@ -2396,8 +2396,8 @@
     {
       "nodeId": "done",
       "action": "end",
-      "startedAt": "2026-09-22T17:25:44.283Z",
-      "endedAt": "2026-09-22T17:25:44.283Z",
+      "startedAt": "2026-09-22T18:11:36.522Z",
+      "endedAt": "2026-09-22T18:11:36.522Z",
       "durationMs": 0,
       "ok": true,
       "status": "pass"
@@ -2406,9 +2406,9 @@
       "nodeId": "teardown-restore-account",
       "action": "metamask.wallet.select_account",
       "intent": "Put the funded Perps wallet back so later runs keep their balance",
-      "startedAt": "2026-09-22T17:25:44.283Z",
-      "endedAt": "2026-09-22T17:25:44.999Z",
-      "durationMs": 716,
+      "startedAt": "2026-09-22T18:11:36.522Z",
+      "endedAt": "2026-09-22T18:11:37.248Z",
+      "durationMs": 726,
       "ok": true,
       "next": "teardown-done",
       "output": {
@@ -2423,16 +2423,16 @@
         "cdpPort": 7662,
         "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/BTC?direction=long&mode=new",
         "runtimeLaunch": null,
-        "cdpTargetId": "D92AEB38A97EA6EB0E36A40BE21EB4B2",
-        "runtimeSessionId": "e6d11b56-28dc-4ee4-a2cc-b539b213ae21",
+        "cdpTargetId": "D459A6AB122AD48B7883CE4C3B3EF88A",
+        "runtimeSessionId": "d94d5b7d-8d1a-49cf-83be-c2eaa19ed6b8",
         "liveAdapter": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/actions/extension/wallet/select_account.mjs"
       }
     },
     {
       "nodeId": "teardown-done",
       "action": "end",
-      "startedAt": "2026-09-22T17:25:45.004Z",
-      "endedAt": "2026-09-22T17:25:45.004Z",
+      "startedAt": "2026-09-22T18:11:37.254Z",
+      "endedAt": "2026-09-22T18:11:37.254Z",
       "durationMs": 0,
       "ok": true,
       "status": "pass"

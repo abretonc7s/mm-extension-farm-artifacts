@@ -1,17 +1,32 @@
 [
   {
-    "comment_id": 4074196442,
     "review_id": null,
     "author_login": "cursor[bot]",
     "author_type": "Bot",
     "reviewer_login": "cursor[bot]",
     "review_state": "COMMENTED",
     "source_kind": "bugbot",
-    "path": "ui/components/app/perps/utils/unfunded-deposit-funnel.ts",
-    "line": 48,
-    "body": "### Confirmed funnel reset on rematch (Medium Severity). `markUnfundedDepositFunnel` always writes `confirmedAt: null`, so a second unfunded Add funds click after a deposit has already confirmed wipes the joinable funnel. The available-to-trade CTA can stay enabled until the live balance stream catches up, and that rematch makes `consumeUnfundedDepositFunnel` miss `trade_submitted_after_deposit` on the actual first order.",
+    "path": "ui/components/app/perps/perps-deposit-toast.tsx",
     "triage": "REAL",
-    "action": "markUnfundedDepositFunnel now preserves an existing same-address confirmation; a different address still restarts the funnel.",
-    "fixed_in_commit": "0198df0f8e8e5ba38bfb94d58145cf6b19d58ae0"
+    "fixed_in_commit": "f4f7cfb8c391e370569019a896bfdb5566c5546d",
+    "comment_id": 4074521389,
+    "line": 109,
+    "body": "### Failed deposit clears confirmed funnel (Medium Severity). A later failed deposit wipes an already-confirmed unfunded funnel. isUnfundedDepositFunnelActive is true for any matching address, including after confirmedAt is set, and the toast fail path then calls clearUnfundedDepositFunnel. markUnfundedDepositFunnel keeps that confirmation when the balance stream lags and the user clicks Add funds again, so a rejected or failed follow-up deposit drops trade_submitted_after_deposit for the deposit that already succeeded.",
+    "action": "Failure path now calls clearPendingUnfundedDepositFunnel, which only drops an unconfirmed funnel for that address."
+  },
+  {
+    "review_id": null,
+    "author_login": "cursor[bot]",
+    "author_type": "Bot",
+    "reviewer_login": "cursor[bot]",
+    "review_state": "COMMENTED",
+    "source_kind": "bugbot",
+    "path": "ui/components/app/perps/perps-deposit-toast.tsx",
+    "triage": "REAL",
+    "fixed_in_commit": "f4f7cfb8c391e370569019a896bfdb5566c5546d",
+    "comment_id": 4074521401,
+    "line": 99,
+    "body": "### Deposit confirmed can fire twice (Low Severity). The once-per-deposit guard for deposit_confirmed lives in a useRef, which resets when PerpsDepositToast remounts. The effect comment calls out remount-on-unlock, and unmount also cancels the timeout that would have cleared lastDepositResult, so the same success is processed again and the funnel event is emitted twice.",
+    "action": "Fire-once guard persisted via markDepositResultTracked (localStorage), keyed on tx id + result timestamp + outcome."
   }
 ]
