@@ -1,0 +1,1103 @@
+{
+  "metadata": {
+    "runner": {
+      "source": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness",
+      "git_ref": "unknown",
+      "name": "@metamask/recipe-runner"
+    }
+  },
+  "entries": [
+    {
+      "nodeId": "setup-cdp",
+      "action": "cdp.target",
+      "intent": "CDP reachable",
+      "startedAt": "2026-09-24T11:20:56.843Z",
+      "endedAt": "2026-09-24T11:20:56.850Z",
+      "durationMs": 7,
+      "ok": true,
+      "next": "setup-unlock",
+      "output": {
+        "platform": "extension",
+        "transport": "chrome-extension-cdp",
+        "cdpPort": "7664",
+        "metroPort": "9014",
+        "probeUrl": "http://127.0.0.1:7664/json/version",
+        "timeoutMs": 15000,
+        "reachable": true,
+        "statusCode": 200,
+        "json": {
+          "Browser": "Chrome/147.0.7727.15",
+          "Protocol-Version": "1.3",
+          "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36",
+          "V8-Version": "14.7.173.6",
+          "WebKit-Version": "537.36 (@6b5a1b80ccc1e8a4967901d8e58fc2e162cdf050)",
+          "webSocketDebuggerUrl": "ws://127.0.0.1:7664/devtools/browser/abc027a3-18b2-4365-b70f-f43050924ed7"
+        }
+      }
+    },
+    {
+      "nodeId": "setup-unlock",
+      "action": "metamask.wallet.ensure_unlocked",
+      "intent": "Unlocked",
+      "startedAt": "2026-09-24T11:20:56.857Z",
+      "endedAt": "2026-09-24T11:20:56.924Z",
+      "durationMs": 67,
+      "ok": true,
+      "next": "setup-analytics-capture",
+      "output": {
+        "action": "metamask.wallet.ensure_unlocked",
+        "unlocked": true,
+        "alreadyUnlocked": true,
+        "proofPath": "extension-unlocked-state",
+        "cdpPort": 7664,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/?tab=perps",
+        "runtimeLaunch": null,
+        "cdpTargetId": "3A4BEEA851D524E3A6E7713D8F557233",
+        "runtimeSessionId": "abc027a3-18b2-4365-b70f-f43050924ed7",
+        "liveAdapter": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/actions/extension/wallet/ensure_unlocked.mjs"
+      }
+    },
+    {
+      "nodeId": "setup-analytics-capture",
+      "action": "metamask.analytics.start_capture",
+      "intent": "Start the local Segment collector the build's SEGMENT_HOST points at",
+      "startedAt": "2026-09-24T11:20:56.929Z",
+      "endedAt": "2026-09-24T11:20:57.001Z",
+      "durationMs": 72,
+      "ok": true,
+      "next": "open-home",
+      "output": {
+        "action": "metamask.analytics.start_capture",
+        "cursor": 1790248856976,
+        "port": 8664,
+        "pid": 24536,
+        "eventsFile": "/Users/deeeed/dev/metamask/metamask-extension-4/temp/recipe/runtime/analytics/events.jsonl",
+        "reused": true,
+        "androidDevice": null,
+        "note": "Client must be built with its Segment host pointed at http://localhost:8664 (extension SEGMENT_HOST, mobile SEGMENT_PROXY_URL) and a non-empty write key.",
+        "liveAdapter": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/actions/shared/analytics/start_capture.mjs"
+      }
+    },
+    {
+      "nodeId": "open-home",
+      "action": "ui.navigate",
+      "intent": "Start from Perps home",
+      "startedAt": "2026-09-24T11:20:57.008Z",
+      "endedAt": "2026-09-24T11:20:57.125Z",
+      "durationMs": 117,
+      "ok": true,
+      "next": "reset",
+      "output": {
+        "action": "ui.navigate",
+        "hash": "#/perps-home",
+        "navigation": {
+          "before": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/?tab=perps",
+          "href": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps-home",
+          "sameDocument": true
+        },
+        "proofPath": "ui-navigation",
+        "cdpPort": 7664,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/?tab=perps",
+        "runtimeLaunch": null,
+        "cdpTargetId": "3A4BEEA851D524E3A6E7713D8F557233",
+        "runtimeSessionId": "abc027a3-18b2-4365-b70f-f43050924ed7",
+        "liveAdapter": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/actions/extension/ui/navigate.mjs"
+      },
+      "observations": {
+        "ui.screen": {
+          "provider": "cdp-web",
+          "name": "macpro-mme-4 — MetaMask",
+          "title": "macpro-mme-4 — MetaMask",
+          "route": "#/perps-home",
+          "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
+        },
+        "ui.visible": {
+          "provider": "cdp-web",
+          "items": [
+            {
+              "role": "button",
+              "label": "Withdraw",
+              "test_id": "perps-balance-actions-withdraw",
+              "selector": "[data-testid=\"perps-balance-actions-withdraw\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 142,
+                "width": 377,
+                "height": 48
+              }
+            },
+            {
+              "role": "button",
+              "label": "Add funds",
+              "test_id": "perps-balance-actions-add-funds",
+              "selector": "[data-testid=\"perps-balance-actions-add-funds\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 606,
+                "y": 142,
+                "width": 377,
+                "height": 48
+              }
+            },
+            {
+              "role": "button",
+              "label": "Close all",
+              "test_id": "perps-close-all-positions",
+              "selector": "[data-testid=\"perps-close-all-positions\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 922,
+                "y": 222,
+                "width": 65,
+                "height": 32
+              }
+            },
+            {
+              "role": "button",
+              "label": "Ethereum 3x long 0.0049 ETH $12.93 +$0.70 (17.10%)",
+              "test_id": "position-card-ETH",
+              "selector": "[data-testid=\"position-card-ETH\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 201,
+                "y": 296,
+                "width": 798,
+                "height": 62
+              }
+            },
+            {
+              "role": "button",
+              "label": "Avalanche 3x long 1.52 AVAX $15.50 +$3.46 (86.24%)",
+              "test_id": "position-card-AVAX",
+              "selector": "[data-testid=\"position-card-AVAX\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 201,
+                "y": 358,
+                "width": 798,
+                "height": 62
+              }
+            },
+            {
+              "role": "button",
+              "label": "Arbitrum 3x long 55.6 ARB $11.90 -$0.12 (-3.09%)",
+              "test_id": "position-card-ARB",
+              "selector": "[data-testid=\"position-card-ARB\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 201,
+                "y": 420,
+                "width": 798,
+                "height": 62
+              }
+            },
+            {
+              "role": "button",
+              "label": "Cardano 3x long 56 ADA $13.26 +$1.24 (30.92%)",
+              "test_id": "position-card-ADA",
+              "selector": "[data-testid=\"position-card-ADA\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 201,
+                "y": 482,
+                "width": 798,
+                "height": 62
+              }
+            },
+            {
+              "role": "button",
+              "label": "Dogecoin 3x long 143 DOGE $13.28 +$1.24 (30.97%)",
+              "test_id": "position-card-DOGE",
+              "selector": "[data-testid=\"position-card-DOGE\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 201,
+                "y": 544,
+                "width": 798,
+                "height": 62
+              }
+            },
+            {
+              "role": "button",
+              "label": "Arbitrum Limit long 237.4 ARB $0.15167",
+              "test_id": "order-card-60417200227",
+              "selector": "[data-testid=\"order-card-60417200227\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 201,
+                "y": 654,
+                "width": 798,
+                "height": 62
+              }
+            },
+            {
+              "role": "button",
+              "label": "Solana Limit long 0.49 SOL $74.102",
+              "test_id": "order-card-60417116051",
+              "selector": "[data-testid=\"order-card-60417116051\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 201,
+                "y": 716,
+                "width": 798,
+                "height": 62
+              }
+            }
+          ],
+          "hidden_or_offscreen": [
+            {
+              "role": "button",
+              "label": "Ethereum Limit long 0.0206 ETH $1,745.3",
+              "test_id": "order-card-60417046534",
+              "selector": "[data-testid=\"order-card-60417046534\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 201,
+                "y": 778,
+                "width": 798,
+                "height": 62
+              },
+              "reason": "covered"
+            },
+            {
+              "role": "button",
+              "label": "Watchlist",
+              "test_id": "perps-watchlist-header",
+              "selector": "[data-testid=\"perps-watchlist-header\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 201,
+                "y": 856,
+                "width": 798,
+                "height": 48
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "Solana 10x SOL · $537K Vol $113.34 -2.92%",
+              "test_id": "perps-watchlist-SOL",
+              "selector": "[data-testid=\"perps-watchlist-SOL\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 201,
+                "y": 912,
+                "width": 798,
+                "height": 72
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "Cardano 10x ADA · $15K Vol $0.23684 -6.46%",
+              "test_id": "perps-watchlist-ADA",
+              "selector": "[data-testid=\"perps-watchlist-ADA\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 201,
+                "y": 984,
+                "width": 798,
+                "height": 72
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "Bitcoin 40x BTC · $3.82M Vol $85,543 -1.07%",
+              "test_id": "perps-watchlist-BTC",
+              "selector": "[data-testid=\"perps-watchlist-BTC\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 201,
+                "y": 1056,
+                "width": 798,
+                "height": 72
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "Ethereum 25x ETH · $2.52M Vol $2,639.6 -2.61%",
+              "test_id": "perps-watchlist-ETH",
+              "selector": "[data-testid=\"perps-watchlist-ETH\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 201,
+                "y": 1128,
+                "width": 798,
+                "height": 72
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "Crypto",
+              "test_id": "perps-products-categories-pill-crypto",
+              "selector": "[data-testid=\"perps-products-categories-pill-crypto\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 1256,
+                "width": 90,
+                "height": 40
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "Memecoins",
+              "test_id": "perps-products-categories-pill-memecoin",
+              "selector": "[data-testid=\"perps-products-categories-pill-memecoin\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 315,
+                "y": 1256,
+                "width": 127,
+                "height": 40
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "Stocks",
+              "test_id": "perps-products-categories-pill-stock",
+              "selector": "[data-testid=\"perps-products-categories-pill-stock\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 450,
+                "y": 1256,
+                "width": 90,
+                "height": 40
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "Pre-IPO",
+              "test_id": "perps-products-categories-pill-pre-ipo",
+              "selector": "[data-testid=\"perps-products-categories-pill-pre-ipo\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 548,
+                "y": 1256,
+                "width": 98,
+                "height": 40
+              },
+              "reason": "offscreen"
+            }
+          ],
+          "truncated": true,
+          "limits": {
+            "items": 20,
+            "hidden_or_offscreen": 10
+          }
+        }
+      }
+    },
+    {
+      "nodeId": "reset",
+      "action": "command",
+      "intent": "Let queued events flush (5s Segment interval), then clear captured events so the modify assertion only sees the redirect landing",
+      "startedAt": "2026-09-24T11:20:57.153Z",
+      "endedAt": "2026-09-24T11:21:04.172Z",
+      "durationMs": 7019,
+      "ok": true,
+      "next": "land-lowercase",
+      "output": {
+        "exitCode": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    },
+    {
+      "nodeId": "land-lowercase",
+      "action": "ui.navigate",
+      "intent": "Land on the modify form through a lower-cased symbol in a fresh page load",
+      "startedAt": "2026-09-24T11:21:04.192Z",
+      "endedAt": "2026-09-24T11:21:05.116Z",
+      "durationMs": 924,
+      "ok": true,
+      "next": "wait-form",
+      "output": {
+        "action": "ui.navigate",
+        "url": "home.html?landing=tat3833-modify#/perps/trade/eth?direction=long&mode=modify",
+        "navigation": {
+          "frameId": "3A4BEEA851D524E3A6E7713D8F557233",
+          "loaderId": "BEF17031D1286D95AD13C77A9405A2A7",
+          "isDownload": false
+        },
+        "proofPath": "ui-navigation",
+        "cdpPort": 7664,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps-home",
+        "runtimeLaunch": null,
+        "cdpTargetId": "3A4BEEA851D524E3A6E7713D8F557233",
+        "runtimeSessionId": "abc027a3-18b2-4365-b70f-f43050924ed7",
+        "liveAdapter": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/actions/extension/ui/navigate.mjs"
+      },
+      "observations": {
+        "ui.screen": {
+          "provider": "cdp-web",
+          "name": "macpro-mme-4 — MetaMask",
+          "title": "macpro-mme-4 — MetaMask",
+          "route": "#/perps/trade/eth",
+          "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
+        },
+        "ui.visible": {
+          "provider": "cdp-web",
+          "items": [],
+          "hidden_or_offscreen": [],
+          "truncated": false,
+          "limits": {
+            "items": 20,
+            "hidden_or_offscreen": 10
+          }
+        }
+      }
+    },
+    {
+      "nodeId": "wait-form",
+      "action": "ui.wait_for",
+      "intent": "Modify form shows the open ETH position reached through the lower-cased route",
+      "startedAt": "2026-09-24T11:21:05.159Z",
+      "endedAt": "2026-09-24T11:21:11.190Z",
+      "durationMs": 6031,
+      "ok": true,
+      "next": "leave-uncommitted",
+      "output": {
+        "matched": true,
+        "cdpPort": 7664,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html?landing=tat3833-modify#/perps/trade/eth?direction=long&mode=modify",
+        "runtimeLaunch": null,
+        "cdpTargetId": "3A4BEEA851D524E3A6E7713D8F557233",
+        "runtimeSessionId": "abc027a3-18b2-4365-b70f-f43050924ed7"
+      },
+      "observations": {
+        "ui.screen": {
+          "provider": "cdp-web",
+          "name": "macpro-mme-4 — MetaMask",
+          "title": "macpro-mme-4 — MetaMask",
+          "route": "#/perps/trade/ETH",
+          "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
+        },
+        "ui.visible": {
+          "provider": "cdp-web",
+          "items": [
+            {
+              "role": "button",
+              "label": "Back",
+              "test_id": "perps-order-entry-back-button",
+              "selector": "[data-testid=\"perps-order-entry-back-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 21,
+                "width": 36,
+                "height": 36
+              }
+            },
+            {
+              "role": "button",
+              "label": "Order book",
+              "test_id": "perps-order-book-toggle",
+              "selector": "[data-testid=\"perps-order-book-toggle\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 907,
+                "y": 21,
+                "width": 36,
+                "height": 36
+              }
+            },
+            {
+              "role": "button",
+              "label": "Collapse chart",
+              "test_id": "perps-order-entry-chart-toggle",
+              "selector": "[data-testid=\"perps-order-entry-chart-toggle\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 947,
+                "y": 21,
+                "width": 36,
+                "height": 36
+              }
+            },
+            {
+              "role": "button",
+              "label": "1min",
+              "test_id": "perps-candle-period-1m",
+              "selector": "[data-testid=\"perps-candle-period-1m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 86,
+                "width": 62,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "3min",
+              "test_id": "perps-candle-period-3m",
+              "selector": "[data-testid=\"perps-candle-period-3m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 283,
+                "y": 86,
+                "width": 65,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "5min",
+              "test_id": "perps-candle-period-5m",
+              "selector": "[data-testid=\"perps-candle-period-5m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 351,
+                "y": 86,
+                "width": 64,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "15min",
+              "test_id": "perps-candle-period-15m",
+              "selector": "[data-testid=\"perps-candle-period-15m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 419,
+                "y": 86,
+                "width": 70,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "More",
+              "test_id": "perps-candle-period-more",
+              "selector": "[data-testid=\"perps-candle-period-more\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 493,
+                "y": 86,
+                "width": 82,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "Market",
+              "test_id": "order-type-market",
+              "selector": "[data-testid=\"order-type-market\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 386,
+                "width": 79,
+                "height": 30
+              }
+            },
+            {
+              "role": "button",
+              "label": "Limit",
+              "test_id": "order-type-limit",
+              "selector": "[data-testid=\"order-type-limit\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 304,
+                "y": 386,
+                "width": 64,
+                "height": 30
+              }
+            },
+            {
+              "role": "button",
+              "label": "Add funds",
+              "test_id": "amount-input-add-funds",
+              "selector": "[data-testid=\"amount-input-add-funds\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 963,
+                "y": 467,
+                "width": 20,
+                "height": 20
+              }
+            },
+            {
+              "label": "0.00",
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(1) > div > div:nth-of-type(2) > div:nth-of-type(3) > input",
+              "enabled": true,
+              "focused": true,
+              "bounds": {
+                "x": 265,
+                "y": 500,
+                "width": 644,
+                "height": 40
+              }
+            },
+            {
+              "role": "button",
+              "label": "Toggle size denomination",
+              "test_id": "toggle-denomination",
+              "selector": "[data-testid=\"toggle-denomination\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 947,
+                "y": 510,
+                "width": 20,
+                "height": 20
+              }
+            },
+            {
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(1) > div > div:nth-of-type(2) > div:nth-of-type(4) > div:nth-of-type(2) > div > input",
+              "enabled": true,
+              "bounds": {
+                "x": 911,
+                "y": 552,
+                "width": 42,
+                "height": 32
+              }
+            },
+            {
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(1) > div > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(2) > div > input",
+              "enabled": true,
+              "bounds": {
+                "x": 911,
+                "y": 630,
+                "width": 48,
+                "height": 32
+              }
+            },
+            {
+              "role": "button",
+              "label": "Liquidation price info",
+              "test_id": "perps-order-summary-liquidation-price-tooltip-label-trigger",
+              "selector": "[data-testid=\"perps-order-summary-liquidation-price-tooltip-label-trigger\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 331,
+                "y": 727,
+                "width": 16,
+                "height": 16
+              }
+            },
+            {
+              "role": "button",
+              "label": "Edit max slippage",
+              "test_id": "perps-order-summary-slippage-row",
+              "selector": "[data-testid=\"perps-order-summary-slippage-row\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 754,
+                "width": 766,
+                "height": 22
+              }
+            },
+            {
+              "role": "button",
+              "label": "Modify Position",
+              "test_id": "submit-order-button",
+              "selector": "[data-testid=\"submit-order-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 789,
+                "width": 766,
+                "height": 48
+              }
+            }
+          ],
+          "hidden_or_offscreen": [
+            {
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(1) > div > div:nth-of-type(2) > div:nth-of-type(4) > div:nth-of-type(1) > div > span > span:nth-of-type(3) > input",
+              "enabled": true,
+              "bounds": {
+                "x": 223,
+                "y": 566,
+                "width": 12,
+                "height": 12
+              },
+              "reason": "covered"
+            },
+            {
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(1) > div > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div > span > span:nth-of-type(8) > input",
+              "enabled": true,
+              "bounds": {
+                "x": 223,
+                "y": 644,
+                "width": 12,
+                "height": 12
+              },
+              "reason": "covered"
+            },
+            {
+              "role": "button",
+              "label": "Margin info",
+              "test_id": "perps-order-summary-margin-tooltip-label-trigger",
+              "selector": "[data-testid=\"perps-order-summary-margin-tooltip-label-trigger\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 267,
+                "y": 787,
+                "width": 16,
+                "height": 16
+              },
+              "reason": "covered"
+            },
+            {
+              "role": "button",
+              "label": "Fees info",
+              "test_id": "perps-order-summary-fees-tooltip-label-trigger",
+              "selector": "[data-testid=\"perps-order-summary-fees-tooltip-label-trigger\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 252,
+                "y": 817,
+                "width": 16,
+                "height": 16
+              },
+              "reason": "covered"
+            }
+          ],
+          "truncated": false,
+          "limits": {
+            "items": 20,
+            "hidden_or_offscreen": 10
+          }
+        }
+      }
+    },
+    {
+      "nodeId": "leave-uncommitted",
+      "action": "ui.navigate",
+      "intent": "Leave the modify form without submitting: a genuine abandonment",
+      "startedAt": "2026-09-24T11:21:11.200Z",
+      "endedAt": "2026-09-24T11:21:11.342Z",
+      "durationMs": 142,
+      "ok": true,
+      "next": "assert-no-abandon",
+      "output": {
+        "action": "ui.navigate",
+        "hash": "#/perps-home",
+        "navigation": {
+          "before": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html?landing=tat3833-modify#/perps/trade/ETH?direction=long&mode=modify",
+          "href": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html?landing=tat3833-modify#/perps-home",
+          "sameDocument": true
+        },
+        "proofPath": "ui-navigation",
+        "cdpPort": 7664,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html?landing=tat3833-modify#/perps/trade/ETH?direction=long&mode=modify",
+        "runtimeLaunch": null,
+        "cdpTargetId": "3A4BEEA851D524E3A6E7713D8F557233",
+        "runtimeSessionId": "abc027a3-18b2-4365-b70f-f43050924ed7",
+        "liveAdapter": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/actions/extension/ui/navigate.mjs"
+      },
+      "observations": {
+        "ui.screen": {
+          "provider": "cdp-web",
+          "name": "macpro-mme-4 — MetaMask",
+          "title": "macpro-mme-4 — MetaMask",
+          "route": "#/perps-home",
+          "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
+        },
+        "ui.visible": {
+          "provider": "cdp-web",
+          "items": [
+            {
+              "role": "button",
+              "label": "Withdraw",
+              "test_id": "perps-balance-actions-withdraw",
+              "selector": "[data-testid=\"perps-balance-actions-withdraw\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 172,
+                "width": 377,
+                "height": 48
+              }
+            },
+            {
+              "role": "button",
+              "label": "Add funds",
+              "test_id": "perps-balance-actions-add-funds",
+              "selector": "[data-testid=\"perps-balance-actions-add-funds\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 606,
+                "y": 172,
+                "width": 377,
+                "height": 48
+              }
+            },
+            {
+              "role": "button",
+              "label": "Close all",
+              "test_id": "perps-close-all-positions",
+              "selector": "[data-testid=\"perps-close-all-positions\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 922,
+                "y": 252,
+                "width": 65,
+                "height": 32
+              }
+            },
+            {
+              "role": "button",
+              "label": "Ethereum 3x long 0.0049 ETH $12.93 +$0.70 (17.05%)",
+              "test_id": "position-card-ETH",
+              "selector": "[data-testid=\"position-card-ETH\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 201,
+                "y": 326,
+                "width": 798,
+                "height": 62
+              }
+            },
+            {
+              "role": "button",
+              "label": "Avalanche 3x long 1.52 AVAX $15.50 +$3.46 (86.20%)",
+              "test_id": "position-card-AVAX",
+              "selector": "[data-testid=\"position-card-AVAX\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 201,
+                "y": 388,
+                "width": 798,
+                "height": 62
+              }
+            },
+            {
+              "role": "button",
+              "label": "Arbitrum 3x long 55.6 ARB $11.90 -$0.12 (-3.01%)",
+              "test_id": "position-card-ARB",
+              "selector": "[data-testid=\"position-card-ARB\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 201,
+                "y": 450,
+                "width": 798,
+                "height": 62
+              }
+            },
+            {
+              "role": "button",
+              "label": "Cardano 3x long 56 ADA $13.26 +$1.24 (30.89%)",
+              "test_id": "position-card-ADA",
+              "selector": "[data-testid=\"position-card-ADA\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 201,
+                "y": 512,
+                "width": 798,
+                "height": 62
+              }
+            },
+            {
+              "role": "button",
+              "label": "Dogecoin 3x long 143 DOGE $13.28 +$1.24 (30.88%)",
+              "test_id": "position-card-DOGE",
+              "selector": "[data-testid=\"position-card-DOGE\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 201,
+                "y": 574,
+                "width": 798,
+                "height": 62
+              }
+            },
+            {
+              "role": "button",
+              "label": "Arbitrum Limit long 237.4 ARB $0.15167",
+              "test_id": "order-card-60417200227",
+              "selector": "[data-testid=\"order-card-60417200227\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 201,
+                "y": 684,
+                "width": 798,
+                "height": 62
+              }
+            },
+            {
+              "role": "button",
+              "label": "Solana Limit long 0.49 SOL $74.102",
+              "test_id": "order-card-60417116051",
+              "selector": "[data-testid=\"order-card-60417116051\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 201,
+                "y": 746,
+                "width": 798,
+                "height": 62
+              }
+            }
+          ],
+          "hidden_or_offscreen": [
+            {
+              "role": "button",
+              "label": "Ethereum Limit long 0.0206 ETH $1,745.3",
+              "test_id": "order-card-60417046534",
+              "selector": "[data-testid=\"order-card-60417046534\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 201,
+                "y": 808,
+                "width": 798,
+                "height": 62
+              },
+              "reason": "covered"
+            },
+            {
+              "role": "button",
+              "label": "Watchlist",
+              "test_id": "perps-watchlist-header",
+              "selector": "[data-testid=\"perps-watchlist-header\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 201,
+                "y": 886,
+                "width": 798,
+                "height": 48
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "Solana 10x SOL · $519K Vol $113.34 -2.92%",
+              "test_id": "perps-watchlist-SOL",
+              "selector": "[data-testid=\"perps-watchlist-SOL\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 201,
+                "y": 942,
+                "width": 798,
+                "height": 72
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "Cardano 10x ADA · $15K Vol $0.23692 -6.42%",
+              "test_id": "perps-watchlist-ADA",
+              "selector": "[data-testid=\"perps-watchlist-ADA\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 201,
+                "y": 1014,
+                "width": 798,
+                "height": 72
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "Bitcoin 40x BTC · $3.82M Vol $85,549 -1.07%",
+              "test_id": "perps-watchlist-BTC",
+              "selector": "[data-testid=\"perps-watchlist-BTC\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 201,
+                "y": 1086,
+                "width": 798,
+                "height": 72
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "Ethereum 25x ETH · $2.50M Vol $2,638.9 -2.63%",
+              "test_id": "perps-watchlist-ETH",
+              "selector": "[data-testid=\"perps-watchlist-ETH\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 201,
+                "y": 1158,
+                "width": 798,
+                "height": 72
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "Crypto",
+              "test_id": "perps-products-categories-pill-crypto",
+              "selector": "[data-testid=\"perps-products-categories-pill-crypto\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 1286,
+                "width": 90,
+                "height": 40
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "Memecoins",
+              "test_id": "perps-products-categories-pill-memecoin",
+              "selector": "[data-testid=\"perps-products-categories-pill-memecoin\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 315,
+                "y": 1286,
+                "width": 127,
+                "height": 40
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "Stocks",
+              "test_id": "perps-products-categories-pill-stock",
+              "selector": "[data-testid=\"perps-products-categories-pill-stock\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 450,
+                "y": 1286,
+                "width": 90,
+                "height": 40
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "Pre-IPO",
+              "test_id": "perps-products-categories-pill-pre-ipo",
+              "selector": "[data-testid=\"perps-products-categories-pill-pre-ipo\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 548,
+                "y": 1286,
+                "width": 98,
+                "height": 40
+              },
+              "reason": "offscreen"
+            }
+          ],
+          "truncated": true,
+          "limits": {
+            "items": 20,
+            "hidden_or_offscreen": 10
+          }
+        }
+      }
+    },
+    {
+      "nodeId": "assert-no-abandon",
+      "action": "metamask.analytics.assert_events",
+      "intent": "Must FAIL: the uncommitted exit emits abandon_order",
+      "startedAt": "2026-09-24T11:21:11.396Z",
+      "endedAt": "2026-09-24T11:21:19.450Z",
+      "durationMs": 8054,
+      "ok": false,
+      "cause_class": "unknown",
+      "error": "Live adapter /Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/actions/shared/analytics/assert_events.mjs exited 1: [shared/analytics] metamask.analytics.assert_events failed: Error: metamask.analytics.assert_events failed:\n  - expected \"Perp UI Interaction\" matching {\"action\":\"abandon_order\"} (exactly 0), got 1\n  captured since 0: App Opened, Perp UI Interaction, Perp Screen Viewed, Perp Screen Viewed, Perp UI Interaction\n  if utm_* / marketing properties are missing, check MetaMetrics consent before suspecting the client.\n    at file:///Users/deeeed/dev/metamask/metamask-extension-4/[eval1]:317:11\n    at async runAdapter (file:///Users/deeeed/dev/metamask/metamask-extension-4/[eval1]:10:20)\n"
+    }
+  ]
+}

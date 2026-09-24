@@ -1,0 +1,81 @@
+{
+  "$schema": "https://farmslot.io/schemas/recipe-v1.schema.json",
+  "title": "TAT-3833 negative control: abandon_order assertion detects an uncommitted exit",
+  "description": "Lands on the lower-cased ETH modify form, then leaves it without submitting. That is a real abandonment, so the zero-abandon_order assertion must FAIL. Proves the assertion used by recipe.json is not vacuous. Precondition: MetaMetrics opted in on the slot profile (the harness set_consent action currently fails its read-back against main's AnalyticsController state); the one-trading-screen-view expectation fails loudly if events are not captured.",
+  "workflow": {
+    "entry": "setup-cdp",
+    "nodes": {
+      "setup-cdp": {
+        "action": "cdp.target",
+        "required": true,
+        "timeout_ms": 15000,
+        "next": "setup-unlock",
+        "intent": "CDP reachable"
+      },
+      "setup-unlock": {
+        "action": "metamask.wallet.ensure_unlocked",
+        "timeout_ms": 45000,
+        "next": "setup-analytics-capture",
+        "intent": "Unlocked"
+      },
+      "setup-analytics-capture": {
+        "action": "metamask.analytics.start_capture",
+        "next": "open-home",
+        "intent": "Start the local Segment collector the build's SEGMENT_HOST points at"
+      },
+      "open-home": {
+        "action": "ui.navigate",
+        "next": "reset",
+        "intent": "Start from Perps home",
+        "hash": "#/perps-home"
+      },
+      "reset": {
+        "action": "command",
+        "command": "sleep 7; : > temp/recipe/runtime/analytics/events.jsonl",
+        "timeout_ms": 20000,
+        "next": "land-lowercase",
+        "intent": "Let queued events flush (5s Segment interval), then clear captured events so the modify assertion only sees the redirect landing"
+      },
+      "land-lowercase": {
+        "action": "ui.navigate",
+        "next": "wait-form",
+        "intent": "Land on the modify form through a lower-cased symbol in a fresh page load",
+        "url": "home.html?landing=tat3833-modify#/perps/trade/eth?direction=long&mode=modify",
+        "timeout_ms": 30000
+      },
+      "wait-form": {
+        "action": "ui.wait_for",
+        "test_id": "perps-current-position-size-value",
+        "timeout_ms": 30000,
+        "next": "leave-uncommitted",
+        "intent": "Modify form shows the open ETH position reached through the lower-cased route"
+      },
+      "leave-uncommitted": {
+        "action": "ui.navigate",
+        "next": "assert-no-abandon",
+        "intent": "Leave the modify form without submitting: a genuine abandonment",
+        "hash": "#/perps-home"
+      },
+      "assert-no-abandon": {
+        "action": "metamask.analytics.assert_events",
+        "expect": [
+          {
+            "event": "Perp UI Interaction",
+            "properties": {
+              "action": "abandon_order"
+            },
+            "count": 0
+          }
+        ],
+        "timeout_ms": 15000,
+        "settle_ms": 8000,
+        "next": "done",
+        "intent": "Must FAIL: the uncommitted exit emits abandon_order"
+      },
+      "done": {
+        "action": "end",
+        "status": "pass"
+      }
+    }
+  }
+}

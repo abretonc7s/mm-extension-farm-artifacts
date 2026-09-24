@@ -1,0 +1,37 @@
+{
+  "version": 1,
+  "preferred_mode": "screenshots",
+  "summary": "Order entry opened with a lower-cased symbol (/perps/trade/sol, /perps/trade/eth) on Hyperliquid testnet.",
+  "before_after_pairs": [
+    {
+      "label": "Close position from /perps/trade/sol: fails with POSITION_NOT_FOUND vs closes",
+      "covers": [
+        "ac1"
+      ],
+      "before": "before-evidence-ac1-close-failed.png",
+      "after": "after-ac1-positions-without-sol.png",
+      "note": "After: route is replaced with /perps/trade/SOL, the close succeeds and Solana leaves the positions list."
+    },
+    {
+      "label": "TP/SL update from /perps/trade/eth: fails vs submitted from canonical /perps/trade/ETH",
+      "covers": [
+        "ac2",
+        "ac3"
+      ],
+      "before": "before-evidence-ac2-tpsl-update-failed.png",
+      "after": "after-ac2-modify-form-route.png",
+      "note": "After: the URL carries ETH; the update succeeds and returns to Perps home (asserted in the recipe trace)."
+    }
+  ],
+  "standalone": [],
+  "omit": [
+    "before-evidence-ac1-close-form-route.png",
+    "before-evidence-ac2-modify-form-route.png",
+    "after-ac1-close-form-route.png"
+  ],
+  "videos": {
+    "before": "before.mp4",
+    "preferred": false,
+    "note": "after.mp4 dropped: the shared screen recorder captured stale frames during the self-review re-run; after screenshots come from that passing run."
+  }
+}

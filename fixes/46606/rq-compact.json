@@ -1,0 +1,7 @@
+{"verdict":"warn","reasons":[
+"recipe.json trace 44/44 on rebased HEAD + review fix; AC1-3 unchanged, AC4 (no abandon_order across the redirect) added via metamask.analytics.assert_events.",
+"AC4 assertions pair count:0 abandon_order with count:1 trading screen view for the landed asset in the same reset window, so an empty capture fails.",
+"Negative control recipe-negative-control.json leaves the redirected form uncommitted; the same assertion FAILS (abandon_order got 1), proving it is not vacuous.",
+"Limitation: live the page stays mounted across the param redirect, so the pre-fix build would also emit 0 abandon_order; revert sensitivity for the gate comes from the unit test, which fails without the fix.",
+"One capture (evidence-ac2-modify-form-route.png) fell back to CDP; PR evidence images are from the prior capture-helper run."],
+"betterVersionGuidance":["Harness: metamask.analytics.set_consent read-back checks dataCollectionForMarketing, removed by #46473; ui.navigate page:perps waits for a perps-view test id absent on main."]}

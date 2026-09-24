@@ -1,0 +1,4 @@
+- Gate every page-level tracker on the same condition as the rendered form: the redirect fix gated the screen-view event on the canonical symbol but left `usePerpsAbandonOrderTracking.active` on `Boolean(market)`. When adding an early return, grep for every `active`/`conditions` flag that assumes the form renders.
+- `a?.x === b` is true when both sides are undefined: keep an explicit `market &&` guard when turning `Boolean(market)` into a symbol comparison.
+- Hard-coded CDP ports in inherited recipes (`127.0.0.1:7666`) break on another slot; use the slot's `CDP_PORT`. URL-substring gates must tolerate a `?landing=` query.
+- A "count 0" analytics assertion needs a positive sibling expectation in the same window (e.g. exactly 1 screen view) and a negative-control run, or it passes on an empty capture.

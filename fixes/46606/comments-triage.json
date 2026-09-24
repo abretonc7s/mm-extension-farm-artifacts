@@ -1,0 +1,17 @@
+[
+  {
+    "comment_id": null,
+    "review_id": "7d676c30-6f7e-4971-b1b4-c55e1e870d0c",
+    "author_login": "codex-gpt-6-sol",
+    "author_type": "unknown",
+    "reviewer_login": "codex-gpt-6-sol",
+    "review_state": "CHANGES_REQUESTED",
+    "source_kind": "bot",
+    "path": "ui/pages/perps/perps-order-entry-page.tsx",
+    "line": 952,
+    "body": "The canonical redirect for mis-cased symbols returns <Navigate> but usePerpsAbandonOrderTracking.active is already true because market exists. Redirect unmount emits false abandon_order before order form appears. Gate active on market?.symbol === decodedSymbol and add redirect teardown test proving no abandon event.",
+    "triage": "REAL",
+    "action": "Gated abandon tracking on the exact symbol (with a market guard) and added a redirect teardown test that fails without the fix.",
+    "fixed_in_commit": "a16719e3fe01e5ef21a2ea340fcc0271b6e15119"
+  }
+]

@@ -1,0 +1,273 @@
+{
+  "$schema": "https://farmslot.io/schemas/recipe-v1.schema.json",
+  "title": "TAT-3833: close and TP/SL succeed from a mis-cased order-entry symbol",
+  "description": "Opens the order-entry close/modify forms through a lower-cased market symbol (as a deeplink or typed URL would). The route is canonicalized to the market's symbol, the position closes, and the TP/SL update succeeds instead of failing with POSITION_NOT_FOUND. Preconditions: Hyperliquid testnet provider; selected account funded in Perps with an open ETH position.",
+  "workflow": {
+    "entry": "setup-status",
+    "nodes": {
+      "setup-status": {
+        "action": "app.status",
+        "next": "setup-cdp",
+        "intent": "Resolve the Extension checkout and adapter status"
+      },
+      "setup-cdp": {
+        "action": "cdp.target",
+        "required": true,
+        "timeout_ms": 15000,
+        "next": "setup-unlock",
+        "intent": "Confirm the Extension CDP runtime is reachable"
+      },
+      "setup-unlock": {
+        "action": "metamask.wallet.ensure_unlocked",
+        "timeout_ms": 45000,
+        "next": "setup-open-perps-home",
+        "intent": "Ensure the wallet is unlocked before opening Perps"
+      },
+      "setup-open-perps-home": {
+        "action": "ui.navigate",
+        "page": "perps",
+        "next": "setup-open-sol-form",
+        "intent": "Start from the Perps home so the order form mounts fresh"
+      },
+      "setup-open-sol-form": {
+        "action": "ui.navigate",
+        "hash": "#/perps/trade/SOL?direction=long&mode=new",
+        "next": "setup-wait-amount-input",
+        "intent": "Open the canonical SOL long order form to seed a SOL position"
+      },
+      "setup-wait-amount-input": {
+        "action": "ui.wait_for",
+        "test_id": "amount-input-field",
+        "timeout_ms": 20000,
+        "next": "setup-set-amount",
+        "intent": "Order amount entry is ready for the SOL setup order"
+      },
+      "setup-set-amount": {
+        "action": "ui.set_input",
+        "value": "12",
+        "next": "setup-submit-order",
+        "intent": "Enter a 12 USD order through the visible amount input",
+        "selector": "[data-testid=\"amount-input-field\"] input"
+      },
+      "setup-submit-order": {
+        "action": "ui.press",
+        "test_id": "submit-order-button",
+        "next": "setup-wait-order-form-closed",
+        "intent": "Submit the SOL long market order through the visible button"
+      },
+      "setup-wait-order-form-closed": {
+        "action": "ui.wait_for",
+        "test_id": "amount-input-field",
+        "visible": false,
+        "timeout_ms": 30000,
+        "next": "gate-sol-position-open",
+        "intent": "The filled order returns the user from the order form before the next route opens"
+      },
+      "gate-sol-position-open": {
+        "action": "metamask.perps.assert_positions",
+        "market": "SOL",
+        "state": "open",
+        "timeout_ms": 30000,
+        "next": "gate-eth-position-open",
+        "intent": "Fail the run unless a live SOL position exists before the close attempt"
+      },
+      "gate-eth-position-open": {
+        "action": "metamask.perps.assert_positions",
+        "market": "ETH",
+        "state": "open",
+        "timeout_ms": 15000,
+        "next": "ac1-open-home",
+        "intent": "Fail the run unless a live ETH position exists for the TP/SL attempt"
+      },
+      "ac1-open-home": {
+        "action": "ui.navigate",
+        "page": "perps",
+        "next": "ac1-navigate-close-lowercase",
+        "intent": "Leave the order form so the next route mounts fresh"
+      },
+      "ac1-navigate-close-lowercase": {
+        "action": "ui.navigate",
+        "next": "ac1-wait-close-form",
+        "intent": "Land on the close form through a lower-cased symbol in a fresh page load, as a typed URL would",
+        "url": "home.html?landing=tat3833-close#/perps/trade/sol?mode=close",
+        "timeout_ms": 30000
+      },
+      "ac1-wait-close-form": {
+        "action": "ui.wait_for",
+        "test_id": "close-amount-value",
+        "timeout_ms": 30000,
+        "next": "ac3-read-close-route",
+        "intent": "Close form shows the open SOL position reached through the lower-cased route"
+      },
+      "ac3-read-close-route": {
+        "action": "metamask.wallet.read_state",
+        "next": "ac3-assert-close-route",
+        "intent": "Read the current route to see which symbol the close form submits"
+      },
+      "ac3-assert-close-route": {
+        "action": "assert_output",
+        "source": "ac3-read-close-route",
+        "assert": {
+          "path": "$.state.href",
+          "operator": "contains",
+          "value": "#/perps/trade/SOL?mode=close"
+        },
+        "next": "gate-clear-capture-close-form",
+        "intent": "Fixed: the lower-cased route is replaced by the market's exact symbol"
+      },
+      "gate-clear-capture-close-form": {
+        "action": "command",
+        "command": "pkill -9 -f 'capture-helper snapshot' || true",
+        "next": "ac1-screenshot-close-form",
+        "intent": "Clear orphan screenshot capture-helper processes, keeping any screen recorder running"
+      },
+      "ac1-screenshot-close-form": {
+        "action": "ui.screenshot",
+        "path": "evidence-ac1-close-form-route.png",
+        "label": "AC1/AC3: close form route carries /perps/trade/SOL",
+        "next": "ac1-press-close",
+        "intent": "Reviewer sees which symbol the close form route carries before submitting"
+      },
+      "ac1-press-close": {
+        "action": "ui.press",
+        "test_id": "submit-order-button",
+        "intent": "Submit the full close through the visible Close position button",
+        "next": "ac1-wait-position-closed"
+      },
+      "ac1-wait-position-closed": {
+        "action": "ui.wait_for",
+        "text": "Position closed",
+        "timeout_ms": 20000,
+        "next": "gate-wait-return-document",
+        "intent": "Fixed: the close succeeds and the Position closed toast appears"
+      },
+      "gate-wait-return-document": {
+        "action": "command",
+        "command": "for i in $(seq 1 120); do curl -s http://127.0.0.1:7666/json | grep -q 'home.html#/perps-home' && exit 0; sleep 0.25; done; echo 'perps home never loaded'; exit 1",
+        "next": "gate-reattach-after-close",
+        "intent": "The close returns the user to the Perps home document before its page is inspected"
+      },
+      "gate-reattach-after-close": {
+        "action": "metamask.wallet.ensure_unlocked",
+        "timeout_ms": 45000,
+        "next": "ac1-wait-perps-home",
+        "intent": "Reattach to the wallet page after the close returns to the previous document"
+      },
+      "ac1-wait-perps-home": {
+        "action": "ui.wait_for",
+        "test_id": "perps-positions-section",
+        "timeout_ms": 30000,
+        "next": "ac1-assert-sol-closed",
+        "intent": "The user is returned to the Perps positions list after the close"
+      },
+      "ac1-assert-sol-closed": {
+        "action": "metamask.perps.assert_positions",
+        "market": "SOL",
+        "state": "closed",
+        "timeout_ms": 20000,
+        "next": "ac1-wait-sol-row-gone",
+        "intent": "Fixed: the live SOL position is gone after the close"
+      },
+      "ac1-wait-sol-row-gone": {
+        "action": "ui.wait_for",
+        "selector": "[data-testid=\"perps-positions-section\"] [data-testid=\"perps-token-logo-SOL\"]",
+        "visible": false,
+        "timeout_ms": 20000,
+        "next": "gate-clear-capture-positions",
+        "intent": "Fixed: the Solana row has left the visible positions list"
+      },
+      "gate-clear-capture-positions": {
+        "action": "command",
+        "command": "pkill -9 -f 'capture-helper snapshot' || true",
+        "next": "ac1-screenshot-positions",
+        "intent": "Clear orphan screenshot capture-helper processes, keeping any screen recorder running"
+      },
+      "ac1-screenshot-positions": {
+        "action": "ui.screenshot",
+        "path": "evidence-ac1-positions-without-sol.png",
+        "label": "AC1 after: SOL position closed, no longer listed",
+        "next": "ac2-open-home",
+        "intent": "Reviewer sees the positions list without the closed Solana position"
+      },
+      "ac2-open-home": {
+        "action": "ui.navigate",
+        "page": "perps",
+        "next": "ac2-navigate-modify-lowercase",
+        "intent": "Return to the Perps home before the next landing"
+      },
+      "ac2-navigate-modify-lowercase": {
+        "action": "ui.navigate",
+        "next": "ac2-wait-modify-form",
+        "intent": "Land on the modify form through a lower-cased symbol in a fresh page load",
+        "url": "home.html?landing=tat3833-modify#/perps/trade/eth?direction=long&mode=modify",
+        "timeout_ms": 30000
+      },
+      "ac2-wait-modify-form": {
+        "action": "ui.wait_for",
+        "test_id": "perps-current-position-size-value",
+        "timeout_ms": 30000,
+        "next": "ac3-read-modify-route",
+        "intent": "Modify form shows the open ETH position reached through the lower-cased route"
+      },
+      "ac3-read-modify-route": {
+        "action": "metamask.wallet.read_state",
+        "next": "ac3-assert-modify-route",
+        "intent": "Read the current route to see which symbol the TP/SL update submits"
+      },
+      "ac3-assert-modify-route": {
+        "action": "assert_output",
+        "source": "ac3-read-modify-route",
+        "assert": {
+          "path": "$.state.href",
+          "operator": "contains",
+          "value": "#/perps/trade/ETH?direction=long&mode=modify"
+        },
+        "next": "gate-clear-capture-modify-form",
+        "intent": "Fixed: the modify route carries the market's exact symbol"
+      },
+      "gate-clear-capture-modify-form": {
+        "action": "command",
+        "command": "pkill -9 -f 'capture-helper snapshot' || true",
+        "next": "ac2-screenshot-modify-form",
+        "intent": "Clear orphan screenshot capture-helper processes, keeping any screen recorder running"
+      },
+      "ac2-screenshot-modify-form": {
+        "action": "ui.screenshot",
+        "path": "evidence-ac2-modify-form-route.png",
+        "label": "AC2/AC3: modify form route carries /perps/trade/ETH",
+        "next": "ac2-press-modify",
+        "intent": "Reviewer sees which symbol the modify form route carries before submitting"
+      },
+      "ac2-press-modify": {
+        "action": "ui.press",
+        "test_id": "submit-order-button",
+        "intent": "Submit the modify form with no added size, which sends a TP/SL update",
+        "next": "ac2-wait-left-modify-form"
+      },
+      "ac2-wait-left-modify-form": {
+        "action": "command",
+        "command": "for i in $(seq 1 120); do curl -s http://127.0.0.1:7666/json | grep -q 'home.html#/perps-home' && exit 0; sleep 0.25; done; echo 'perps home never loaded'; exit 1",
+        "next": "gate-reattach-after-modify",
+        "intent": "Fixed: the TP/SL update succeeds, so the user leaves the modify form for Perps home (a failure keeps them on the form)"
+      },
+      "gate-reattach-after-modify": {
+        "action": "metamask.wallet.ensure_unlocked",
+        "timeout_ms": 45000,
+        "next": "ac2-assert-eth-open",
+        "intent": "Reattach to the wallet page after the modify flow returns home"
+      },
+      "ac2-assert-eth-open": {
+        "action": "metamask.perps.assert_positions",
+        "market": "ETH",
+        "state": "open",
+        "timeout_ms": 20000,
+        "next": "done",
+        "intent": "The ETH position the TP/SL update targeted is still open and was found by the controller"
+      },
+      "done": {
+        "action": "end",
+        "status": "pass"
+      }
+    }
+  }
+}

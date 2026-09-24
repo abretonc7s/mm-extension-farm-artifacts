@@ -1,0 +1,7 @@
+# Learnings — TAT-3833
+
+- Investigation (~40%) went into ruling out controller causes: the ticket's "No position found for X" string is pre-16.0 perps-controller; core #10037/#10101 already fixed the stale-cache paths. The extension-side cause was a case-insensitive UI lookup vs exact controller match on `/perps/trade/:symbol`. Reproducing with `perpsUpdatePositionTPSL({symbol:'sol'})` vs `'ETH'` was the fastest confirmation.
+- Most time went to harness friction, not the fix: (1) launch left the extension disabled (`unsupportedDeveloperExtension`), fixed by enabling developer mode through `chrome.developerPrivate` on chrome://extensions; (2) `ui.navigate hash` waits for the exact URL, so any route-redirect fix breaks it; use `ui.navigate url: home.html?x=…#/route` (fresh document); (3) order-entry success runs a delayed `navigate(-1)`, so wait for the form to unmount before the next navigation.
+- The CLAUDE.local `pkill -9 -f capture-helper` rule kills the screen recorder too. `pkill -9 -f 'capture-helper snapshot'` clears only screenshot orphans. Start the recorder in the same shell as the run, or it dies when that shell exits.
+- Failed unlock attempts append to the password field; select it before typing again, otherwise `ensure_unlocked` keeps failing with "Input did not retain the supplied value length".
+- Checklist step 28 (commit) conflicts with CLAUDE.local "stage only"; the fix was staged, not committed.
