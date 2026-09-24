@@ -1,0 +1,3118 @@
+{
+  "metadata": {
+    "runner": {
+      "source": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness",
+      "git_ref": "unknown",
+      "name": "@metamask/recipe-runner"
+    }
+  },
+  "entries": [
+    {
+      "nodeId": "setup-unlock",
+      "action": "metamask.wallet.ensure_unlocked",
+      "intent": "Make sure the wallet UI is unlocked",
+      "startedAt": "2026-09-24T07:17:48.629Z",
+      "endedAt": "2026-09-24T07:17:48.797Z",
+      "durationMs": 168,
+      "ok": true,
+      "next": "setup-open-tokens-tab",
+      "output": {
+        "action": "metamask.wallet.ensure_unlocked",
+        "unlocked": true,
+        "alreadyUnlocked": true,
+        "proofPath": "extension-unlocked-state",
+        "cdpPort": 7666,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/?tab=perps",
+        "runtimeLaunch": null,
+        "cdpTargetId": "959DF611BDDEA8BF4CA2C09006128AE5",
+        "runtimeSessionId": "bf74a8eb-0912-4834-899e-5f082012a21e",
+        "liveAdapter": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/actions/extension/wallet/ensure_unlocked.mjs"
+      }
+    },
+    {
+      "nodeId": "setup-open-tokens-tab",
+      "action": "ui.press",
+      "intent": "Start from the Tokens tab so opening Perps is a fresh screen view",
+      "startedAt": "2026-09-24T07:17:48.824Z",
+      "endedAt": "2026-09-24T07:17:49.511Z",
+      "durationMs": 687,
+      "ok": true,
+      "next": "setup-wait-tokens-tab",
+      "output": {
+        "clicked": true,
+        "selector": "[data-testid=\"account-overview__asset-tab\"], [data-test-id=\"account-overview__asset-tab\"], [data-test=\"account-overview__asset-tab\"]",
+        "tagName": "BUTTON",
+        "cdpPort": 7666,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/?tab=perps",
+        "runtimeLaunch": null,
+        "cdpTargetId": "959DF611BDDEA8BF4CA2C09006128AE5",
+        "runtimeSessionId": "bf74a8eb-0912-4834-899e-5f082012a21e"
+      },
+      "observations": {
+        "ui.screen": {
+          "provider": "cdp-web",
+          "name": "macpro-mme-6 — MetaMask",
+          "title": "macpro-mme-6 — MetaMask",
+          "route": "#/",
+          "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
+        },
+        "ui.visible": {
+          "provider": "cdp-web",
+          "items": [
+            {
+              "role": "link",
+              "label": "Home",
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div > main > header > div:nth-of-type(1) > a",
+              "enabled": true,
+              "bounds": {
+                "x": 519,
+                "y": -22,
+                "width": 162,
+                "height": 62
+              }
+            },
+            {
+              "role": "button",
+              "label": "dev1",
+              "test_id": "account-menu-icon",
+              "selector": "[data-testid=\"account-menu-icon\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 209,
+                "y": 56,
+                "width": 75,
+                "height": 24
+              }
+            },
+            {
+              "role": "button",
+              "label": "Search tokens",
+              "test_id": "discover-search-button",
+              "selector": "[data-testid=\"discover-search-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 911,
+                "y": 66,
+                "width": 32,
+                "height": 32
+              }
+            },
+            {
+              "role": "button",
+              "label": "Account options",
+              "test_id": "account-options-menu-button",
+              "selector": "[data-testid=\"account-options-menu-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 951,
+                "y": 66,
+                "width": 32,
+                "height": 32
+              }
+            },
+            {
+              "role": "button",
+              "label": "Buy",
+              "test_id": "eth-overview-buy",
+              "selector": "[data-testid=\"eth-overview-buy\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 371,
+                "y": 310,
+                "width": 106,
+                "height": 69
+              }
+            },
+            {
+              "role": "button",
+              "label": "Swap",
+              "test_id": "eth-overview-swap",
+              "selector": "[data-testid=\"eth-overview-swap\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 489,
+                "y": 310,
+                "width": 106,
+                "height": 69
+              }
+            },
+            {
+              "role": "button",
+              "label": "Send",
+              "test_id": "eth-overview-send",
+              "selector": "[data-testid=\"eth-overview-send\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 606,
+                "y": 310,
+                "width": 106,
+                "height": 69
+              }
+            },
+            {
+              "role": "button",
+              "label": "More",
+              "test_id": "eth-overview-more",
+              "selector": "[data-testid=\"eth-overview-more\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 724,
+                "y": 310,
+                "width": 106,
+                "height": 69
+              }
+            },
+            {
+              "role": "button",
+              "label": "Add",
+              "test_id": "money-account-balance-add-button",
+              "selector": "[data-testid=\"money-account-balance-add-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 750,
+                "y": 410,
+                "width": 63,
+                "height": 40
+              }
+            },
+            {
+              "role": "tab",
+              "label": "Tokens",
+              "test_id": "account-overview__asset-tab",
+              "selector": "[data-testid=\"account-overview__asset-tab\"]",
+              "enabled": true,
+              "selected": true,
+              "focused": true,
+              "bounds": {
+                "x": 217,
+                "y": 482,
+                "width": 55,
+                "height": 34
+              }
+            },
+            {
+              "role": "tab",
+              "label": "Perps",
+              "test_id": "account-overview__perps-tab",
+              "selector": "[data-testid=\"account-overview__perps-tab\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 288,
+                "y": 482,
+                "width": 44,
+                "height": 34
+              }
+            },
+            {
+              "role": "tab",
+              "label": "DeFi",
+              "test_id": "account-overview__defi-tab",
+              "selector": "[data-testid=\"account-overview__defi-tab\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 349,
+                "y": 482,
+                "width": 34,
+                "height": 34
+              }
+            },
+            {
+              "role": "tab",
+              "label": "NFTs",
+              "test_id": "account-overview__nfts-tab",
+              "selector": "[data-testid=\"account-overview__nfts-tab\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 399,
+                "y": 482,
+                "width": 39,
+                "height": 34
+              }
+            },
+            {
+              "role": "tab",
+              "label": "Activity",
+              "test_id": "account-overview__activity-tab",
+              "selector": "[data-testid=\"account-overview__activity-tab\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 454,
+                "y": 482,
+                "width": 58,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "Network: Arc",
+              "test_id": "sort-by-networks",
+              "selector": "[data-testid=\"sort-by-networks\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 532,
+                "width": 134,
+                "height": 32
+              }
+            },
+            {
+              "role": "button",
+              "label": "Sort by",
+              "test_id": "sort-by-popover-toggle",
+              "selector": "[data-testid=\"sort-by-popover-toggle\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 919,
+                "y": 536,
+                "width": 32,
+                "height": 24
+              }
+            },
+            {
+              "role": "button",
+              "label": "Asset options",
+              "test_id": "asset-list-control-bar-action-button",
+              "selector": "[data-testid=\"asset-list-control-bar-action-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 951,
+                "y": 536,
+                "width": 32,
+                "height": 24
+              }
+            }
+          ],
+          "hidden_or_offscreen": [
+            {
+              "role": "button",
+              "test_id": "drawer-close-button",
+              "selector": "[data-testid=\"drawer-close-button\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "button",
+              "test_id": "notifications-menu-item",
+              "selector": "[data-testid=\"notifications-menu-item\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "button",
+              "test_id": "discover",
+              "selector": "[data-testid=\"discover\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "link",
+              "test_id": "global-menu-contacts",
+              "selector": "[data-testid=\"global-menu-contacts\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "link",
+              "test_id": "global-menu-connected-sites",
+              "selector": "[data-testid=\"global-menu-connected-sites\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "link",
+              "test_id": "global-menu-networks",
+              "selector": "[data-testid=\"global-menu-networks\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "link",
+              "test_id": "global-menu-snaps",
+              "selector": "[data-testid=\"global-menu-snaps\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "link",
+              "test_id": "global-menu-settings",
+              "selector": "[data-testid=\"global-menu-settings\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "button",
+              "test_id": "global-menu-support",
+              "selector": "[data-testid=\"global-menu-support\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "button",
+              "test_id": "global-menu-lock",
+              "selector": "[data-testid=\"global-menu-lock\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            }
+          ],
+          "truncated": false,
+          "limits": {
+            "items": 20,
+            "hidden_or_offscreen": 10
+          }
+        }
+      }
+    },
+    {
+      "nodeId": "setup-wait-tokens-tab",
+      "action": "ui.wait_for",
+      "intent": "The Tokens tab is the active wallet home tab",
+      "startedAt": "2026-09-24T07:17:49.518Z",
+      "endedAt": "2026-09-24T07:17:50.004Z",
+      "durationMs": 486,
+      "ok": true,
+      "next": "setup-capture",
+      "output": {
+        "matched": true,
+        "cdpPort": 7666,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/?tab=tokens",
+        "runtimeLaunch": null,
+        "cdpTargetId": "959DF611BDDEA8BF4CA2C09006128AE5",
+        "runtimeSessionId": "bf74a8eb-0912-4834-899e-5f082012a21e"
+      },
+      "observations": {
+        "ui.screen": {
+          "provider": "cdp-web",
+          "name": "macpro-mme-6 — MetaMask",
+          "title": "macpro-mme-6 — MetaMask",
+          "route": "#/",
+          "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
+        },
+        "ui.visible": {
+          "provider": "cdp-web",
+          "items": [
+            {
+              "role": "link",
+              "label": "Home",
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div > main > header > div:nth-of-type(1) > a",
+              "enabled": true,
+              "bounds": {
+                "x": 519,
+                "y": -22,
+                "width": 162,
+                "height": 62
+              }
+            },
+            {
+              "role": "button",
+              "label": "dev1",
+              "test_id": "account-menu-icon",
+              "selector": "[data-testid=\"account-menu-icon\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 209,
+                "y": 56,
+                "width": 75,
+                "height": 24
+              }
+            },
+            {
+              "role": "button",
+              "label": "Search tokens",
+              "test_id": "discover-search-button",
+              "selector": "[data-testid=\"discover-search-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 911,
+                "y": 66,
+                "width": 32,
+                "height": 32
+              }
+            },
+            {
+              "role": "button",
+              "label": "Account options",
+              "test_id": "account-options-menu-button",
+              "selector": "[data-testid=\"account-options-menu-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 951,
+                "y": 66,
+                "width": 32,
+                "height": 32
+              }
+            },
+            {
+              "role": "button",
+              "label": "Buy",
+              "test_id": "eth-overview-buy",
+              "selector": "[data-testid=\"eth-overview-buy\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 371,
+                "y": 310,
+                "width": 106,
+                "height": 69
+              }
+            },
+            {
+              "role": "button",
+              "label": "Swap",
+              "test_id": "eth-overview-swap",
+              "selector": "[data-testid=\"eth-overview-swap\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 489,
+                "y": 310,
+                "width": 106,
+                "height": 69
+              }
+            },
+            {
+              "role": "button",
+              "label": "Send",
+              "test_id": "eth-overview-send",
+              "selector": "[data-testid=\"eth-overview-send\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 606,
+                "y": 310,
+                "width": 106,
+                "height": 69
+              }
+            },
+            {
+              "role": "button",
+              "label": "More",
+              "test_id": "eth-overview-more",
+              "selector": "[data-testid=\"eth-overview-more\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 724,
+                "y": 310,
+                "width": 106,
+                "height": 69
+              }
+            },
+            {
+              "role": "button",
+              "label": "Add",
+              "test_id": "money-account-balance-add-button",
+              "selector": "[data-testid=\"money-account-balance-add-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 750,
+                "y": 410,
+                "width": 63,
+                "height": 40
+              }
+            },
+            {
+              "role": "tab",
+              "label": "Tokens",
+              "test_id": "account-overview__asset-tab",
+              "selector": "[data-testid=\"account-overview__asset-tab\"]",
+              "enabled": true,
+              "selected": true,
+              "focused": true,
+              "bounds": {
+                "x": 217,
+                "y": 482,
+                "width": 55,
+                "height": 34
+              }
+            },
+            {
+              "role": "tab",
+              "label": "Perps",
+              "test_id": "account-overview__perps-tab",
+              "selector": "[data-testid=\"account-overview__perps-tab\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 288,
+                "y": 482,
+                "width": 44,
+                "height": 34
+              }
+            },
+            {
+              "role": "tab",
+              "label": "DeFi",
+              "test_id": "account-overview__defi-tab",
+              "selector": "[data-testid=\"account-overview__defi-tab\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 349,
+                "y": 482,
+                "width": 34,
+                "height": 34
+              }
+            },
+            {
+              "role": "tab",
+              "label": "NFTs",
+              "test_id": "account-overview__nfts-tab",
+              "selector": "[data-testid=\"account-overview__nfts-tab\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 399,
+                "y": 482,
+                "width": 39,
+                "height": 34
+              }
+            },
+            {
+              "role": "tab",
+              "label": "Activity",
+              "test_id": "account-overview__activity-tab",
+              "selector": "[data-testid=\"account-overview__activity-tab\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 454,
+                "y": 482,
+                "width": 58,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "Network: Arc",
+              "test_id": "sort-by-networks",
+              "selector": "[data-testid=\"sort-by-networks\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 532,
+                "width": 134,
+                "height": 32
+              }
+            },
+            {
+              "role": "button",
+              "label": "Sort by",
+              "test_id": "sort-by-popover-toggle",
+              "selector": "[data-testid=\"sort-by-popover-toggle\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 919,
+                "y": 536,
+                "width": 32,
+                "height": 24
+              }
+            },
+            {
+              "role": "button",
+              "label": "Asset options",
+              "test_id": "asset-list-control-bar-action-button",
+              "selector": "[data-testid=\"asset-list-control-bar-action-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 951,
+                "y": 536,
+                "width": 32,
+                "height": 24
+              }
+            }
+          ],
+          "hidden_or_offscreen": [
+            {
+              "role": "button",
+              "test_id": "drawer-close-button",
+              "selector": "[data-testid=\"drawer-close-button\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "button",
+              "test_id": "notifications-menu-item",
+              "selector": "[data-testid=\"notifications-menu-item\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "button",
+              "test_id": "discover",
+              "selector": "[data-testid=\"discover\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "link",
+              "test_id": "global-menu-contacts",
+              "selector": "[data-testid=\"global-menu-contacts\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "link",
+              "test_id": "global-menu-connected-sites",
+              "selector": "[data-testid=\"global-menu-connected-sites\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "link",
+              "test_id": "global-menu-networks",
+              "selector": "[data-testid=\"global-menu-networks\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "link",
+              "test_id": "global-menu-snaps",
+              "selector": "[data-testid=\"global-menu-snaps\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "link",
+              "test_id": "global-menu-settings",
+              "selector": "[data-testid=\"global-menu-settings\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "button",
+              "test_id": "global-menu-support",
+              "selector": "[data-testid=\"global-menu-support\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "button",
+              "test_id": "global-menu-lock",
+              "selector": "[data-testid=\"global-menu-lock\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            }
+          ],
+          "truncated": false,
+          "limits": {
+            "items": 20,
+            "hidden_or_offscreen": 10
+          }
+        }
+      }
+    },
+    {
+      "nodeId": "setup-capture",
+      "action": "metamask.analytics.start_capture",
+      "intent": "Start the local Segment collector and take a cursor for this flow",
+      "startedAt": "2026-09-24T07:17:50.044Z",
+      "endedAt": "2026-09-24T07:17:50.612Z",
+      "durationMs": 568,
+      "ok": true,
+      "next": "ac1-open-perps-tab",
+      "output": {
+        "action": "metamask.analytics.start_capture",
+        "cursor": 1790234270576,
+        "port": 8667,
+        "pid": 37906,
+        "eventsFile": "/Users/deeeed/dev/metamask/metamask-extension-6/temp/recipe/runtime/analytics/events.jsonl",
+        "reused": false,
+        "androidDevice": null,
+        "note": "Client must be built with its Segment host pointed at http://localhost:8667 (extension SEGMENT_HOST, mobile SEGMENT_PROXY_URL) and a non-empty write key.",
+        "liveAdapter": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/actions/shared/analytics/start_capture.mjs"
+      }
+    },
+    {
+      "nodeId": "ac1-open-perps-tab",
+      "action": "ui.press",
+      "intent": "Open Perps from wallet home (account-overview Perps tab, or the bottom nav when that layout is enabled), which reports a Perp Screen Viewed",
+      "startedAt": "2026-09-24T07:17:50.736Z",
+      "endedAt": "2026-09-24T07:17:51.445Z",
+      "durationMs": 709,
+      "ok": true,
+      "next": "ac1-wait-perps-view",
+      "output": {
+        "clicked": true,
+        "selector": "[data-testid=\"account-overview__perps-tab\"], [data-testid=\"bottom-nav-perps\"]",
+        "tagName": "BUTTON",
+        "cdpPort": 7666,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/?tab=tokens",
+        "runtimeLaunch": null,
+        "cdpTargetId": "959DF611BDDEA8BF4CA2C09006128AE5",
+        "runtimeSessionId": "bf74a8eb-0912-4834-899e-5f082012a21e"
+      },
+      "observations": {
+        "ui.screen": {
+          "provider": "cdp-web",
+          "name": "macpro-mme-6 — MetaMask",
+          "title": "macpro-mme-6 — MetaMask",
+          "route": "#/",
+          "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
+        },
+        "ui.visible": {
+          "provider": "cdp-web",
+          "items": [
+            {
+              "role": "link",
+              "label": "Home",
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div > main > header > div:nth-of-type(1) > a",
+              "enabled": true,
+              "bounds": {
+                "x": 519,
+                "y": -22,
+                "width": 162,
+                "height": 62
+              }
+            },
+            {
+              "role": "button",
+              "label": "dev1",
+              "test_id": "account-menu-icon",
+              "selector": "[data-testid=\"account-menu-icon\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 209,
+                "y": 56,
+                "width": 75,
+                "height": 24
+              }
+            },
+            {
+              "role": "button",
+              "label": "Search tokens",
+              "test_id": "discover-search-button",
+              "selector": "[data-testid=\"discover-search-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 911,
+                "y": 66,
+                "width": 32,
+                "height": 32
+              }
+            },
+            {
+              "role": "button",
+              "label": "Account options",
+              "test_id": "account-options-menu-button",
+              "selector": "[data-testid=\"account-options-menu-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 951,
+                "y": 66,
+                "width": 32,
+                "height": 32
+              }
+            },
+            {
+              "role": "button",
+              "label": "Buy",
+              "test_id": "eth-overview-buy",
+              "selector": "[data-testid=\"eth-overview-buy\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 371,
+                "y": 310,
+                "width": 106,
+                "height": 69
+              }
+            },
+            {
+              "role": "button",
+              "label": "Swap",
+              "test_id": "eth-overview-swap",
+              "selector": "[data-testid=\"eth-overview-swap\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 489,
+                "y": 310,
+                "width": 106,
+                "height": 69
+              }
+            },
+            {
+              "role": "button",
+              "label": "Send",
+              "test_id": "eth-overview-send",
+              "selector": "[data-testid=\"eth-overview-send\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 606,
+                "y": 310,
+                "width": 106,
+                "height": 69
+              }
+            },
+            {
+              "role": "button",
+              "label": "More",
+              "test_id": "eth-overview-more",
+              "selector": "[data-testid=\"eth-overview-more\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 724,
+                "y": 310,
+                "width": 106,
+                "height": 69
+              }
+            },
+            {
+              "role": "button",
+              "label": "Add",
+              "test_id": "money-account-balance-add-button",
+              "selector": "[data-testid=\"money-account-balance-add-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 750,
+                "y": 410,
+                "width": 63,
+                "height": 40
+              }
+            },
+            {
+              "role": "tab",
+              "label": "Tokens",
+              "test_id": "account-overview__asset-tab",
+              "selector": "[data-testid=\"account-overview__asset-tab\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 482,
+                "width": 55,
+                "height": 34
+              }
+            },
+            {
+              "role": "tab",
+              "label": "Perps",
+              "test_id": "account-overview__perps-tab",
+              "selector": "[data-testid=\"account-overview__perps-tab\"]",
+              "enabled": true,
+              "selected": true,
+              "focused": true,
+              "bounds": {
+                "x": 288,
+                "y": 482,
+                "width": 44,
+                "height": 34
+              }
+            },
+            {
+              "role": "tab",
+              "label": "DeFi",
+              "test_id": "account-overview__defi-tab",
+              "selector": "[data-testid=\"account-overview__defi-tab\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 349,
+                "y": 482,
+                "width": 34,
+                "height": 34
+              }
+            },
+            {
+              "role": "tab",
+              "label": "NFTs",
+              "test_id": "account-overview__nfts-tab",
+              "selector": "[data-testid=\"account-overview__nfts-tab\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 399,
+                "y": 482,
+                "width": 39,
+                "height": 34
+              }
+            },
+            {
+              "role": "tab",
+              "label": "Activity",
+              "test_id": "account-overview__activity-tab",
+              "selector": "[data-testid=\"account-overview__activity-tab\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 454,
+                "y": 482,
+                "width": 58,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "Withdraw",
+              "test_id": "perps-balance-actions-withdraw",
+              "selector": "[data-testid=\"perps-balance-actions-withdraw\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 688,
+                "width": 377,
+                "height": 48
+              }
+            },
+            {
+              "role": "button",
+              "label": "Add funds",
+              "test_id": "perps-balance-actions-add-funds",
+              "selector": "[data-testid=\"perps-balance-actions-add-funds\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 606,
+                "y": 688,
+                "width": 377,
+                "height": 48
+              }
+            },
+            {
+              "role": "button",
+              "label": "Close all",
+              "test_id": "perps-close-all-positions",
+              "selector": "[data-testid=\"perps-close-all-positions\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 922,
+                "y": 768,
+                "width": 65,
+                "height": 32
+              }
+            }
+          ],
+          "hidden_or_offscreen": [
+            {
+              "role": "button",
+              "test_id": "drawer-close-button",
+              "selector": "[data-testid=\"drawer-close-button\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "button",
+              "test_id": "notifications-menu-item",
+              "selector": "[data-testid=\"notifications-menu-item\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "button",
+              "test_id": "discover",
+              "selector": "[data-testid=\"discover\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "link",
+              "test_id": "global-menu-contacts",
+              "selector": "[data-testid=\"global-menu-contacts\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "link",
+              "test_id": "global-menu-connected-sites",
+              "selector": "[data-testid=\"global-menu-connected-sites\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "link",
+              "test_id": "global-menu-networks",
+              "selector": "[data-testid=\"global-menu-networks\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "link",
+              "test_id": "global-menu-snaps",
+              "selector": "[data-testid=\"global-menu-snaps\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "link",
+              "test_id": "global-menu-settings",
+              "selector": "[data-testid=\"global-menu-settings\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "button",
+              "test_id": "global-menu-support",
+              "selector": "[data-testid=\"global-menu-support\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "button",
+              "test_id": "global-menu-lock",
+              "selector": "[data-testid=\"global-menu-lock\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            }
+          ],
+          "truncated": true,
+          "limits": {
+            "items": 20,
+            "hidden_or_offscreen": 10
+          }
+        }
+      }
+    },
+    {
+      "nodeId": "ac1-wait-perps-view",
+      "action": "ui.wait_for",
+      "intent": "Perps tab content is rendered",
+      "startedAt": "2026-09-24T07:17:51.455Z",
+      "endedAt": "2026-09-24T07:17:51.808Z",
+      "durationMs": 353,
+      "ok": true,
+      "next": "ac1-assert-screen-viewed-env",
+      "output": {
+        "matched": true,
+        "cdpPort": 7666,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/?tab=perps",
+        "runtimeLaunch": null,
+        "cdpTargetId": "959DF611BDDEA8BF4CA2C09006128AE5",
+        "runtimeSessionId": "bf74a8eb-0912-4834-899e-5f082012a21e"
+      },
+      "observations": {
+        "ui.screen": {
+          "provider": "cdp-web",
+          "name": "macpro-mme-6 — MetaMask",
+          "title": "macpro-mme-6 — MetaMask",
+          "route": "#/",
+          "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
+        },
+        "ui.visible": {
+          "provider": "cdp-web",
+          "items": [
+            {
+              "role": "link",
+              "label": "Home",
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div > main > header > div:nth-of-type(1) > a",
+              "enabled": true,
+              "bounds": {
+                "x": 519,
+                "y": -22,
+                "width": 162,
+                "height": 62
+              }
+            },
+            {
+              "role": "button",
+              "label": "dev1",
+              "test_id": "account-menu-icon",
+              "selector": "[data-testid=\"account-menu-icon\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 209,
+                "y": 56,
+                "width": 75,
+                "height": 24
+              }
+            },
+            {
+              "role": "button",
+              "label": "Search tokens",
+              "test_id": "discover-search-button",
+              "selector": "[data-testid=\"discover-search-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 911,
+                "y": 66,
+                "width": 32,
+                "height": 32
+              }
+            },
+            {
+              "role": "button",
+              "label": "Account options",
+              "test_id": "account-options-menu-button",
+              "selector": "[data-testid=\"account-options-menu-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 951,
+                "y": 66,
+                "width": 32,
+                "height": 32
+              }
+            },
+            {
+              "role": "button",
+              "label": "Buy",
+              "test_id": "eth-overview-buy",
+              "selector": "[data-testid=\"eth-overview-buy\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 371,
+                "y": 310,
+                "width": 106,
+                "height": 69
+              }
+            },
+            {
+              "role": "button",
+              "label": "Swap",
+              "test_id": "eth-overview-swap",
+              "selector": "[data-testid=\"eth-overview-swap\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 489,
+                "y": 310,
+                "width": 106,
+                "height": 69
+              }
+            },
+            {
+              "role": "button",
+              "label": "Send",
+              "test_id": "eth-overview-send",
+              "selector": "[data-testid=\"eth-overview-send\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 606,
+                "y": 310,
+                "width": 106,
+                "height": 69
+              }
+            },
+            {
+              "role": "button",
+              "label": "More",
+              "test_id": "eth-overview-more",
+              "selector": "[data-testid=\"eth-overview-more\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 724,
+                "y": 310,
+                "width": 106,
+                "height": 69
+              }
+            },
+            {
+              "role": "button",
+              "label": "Add",
+              "test_id": "money-account-balance-add-button",
+              "selector": "[data-testid=\"money-account-balance-add-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 750,
+                "y": 410,
+                "width": 63,
+                "height": 40
+              }
+            },
+            {
+              "role": "tab",
+              "label": "Tokens",
+              "test_id": "account-overview__asset-tab",
+              "selector": "[data-testid=\"account-overview__asset-tab\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 482,
+                "width": 55,
+                "height": 34
+              }
+            },
+            {
+              "role": "tab",
+              "label": "Perps",
+              "test_id": "account-overview__perps-tab",
+              "selector": "[data-testid=\"account-overview__perps-tab\"]",
+              "enabled": true,
+              "selected": true,
+              "focused": true,
+              "bounds": {
+                "x": 288,
+                "y": 482,
+                "width": 44,
+                "height": 34
+              }
+            },
+            {
+              "role": "tab",
+              "label": "DeFi",
+              "test_id": "account-overview__defi-tab",
+              "selector": "[data-testid=\"account-overview__defi-tab\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 349,
+                "y": 482,
+                "width": 34,
+                "height": 34
+              }
+            },
+            {
+              "role": "tab",
+              "label": "NFTs",
+              "test_id": "account-overview__nfts-tab",
+              "selector": "[data-testid=\"account-overview__nfts-tab\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 399,
+                "y": 482,
+                "width": 39,
+                "height": 34
+              }
+            },
+            {
+              "role": "tab",
+              "label": "Activity",
+              "test_id": "account-overview__activity-tab",
+              "selector": "[data-testid=\"account-overview__activity-tab\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 454,
+                "y": 482,
+                "width": 58,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "Withdraw",
+              "test_id": "perps-balance-actions-withdraw",
+              "selector": "[data-testid=\"perps-balance-actions-withdraw\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 688,
+                "width": 377,
+                "height": 48
+              }
+            },
+            {
+              "role": "button",
+              "label": "Add funds",
+              "test_id": "perps-balance-actions-add-funds",
+              "selector": "[data-testid=\"perps-balance-actions-add-funds\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 606,
+                "y": 688,
+                "width": 377,
+                "height": 48
+              }
+            },
+            {
+              "role": "button",
+              "label": "Close all",
+              "test_id": "perps-close-all-positions",
+              "selector": "[data-testid=\"perps-close-all-positions\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 922,
+                "y": 768,
+                "width": 65,
+                "height": 32
+              }
+            }
+          ],
+          "hidden_or_offscreen": [
+            {
+              "role": "button",
+              "test_id": "drawer-close-button",
+              "selector": "[data-testid=\"drawer-close-button\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "button",
+              "test_id": "notifications-menu-item",
+              "selector": "[data-testid=\"notifications-menu-item\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "button",
+              "test_id": "discover",
+              "selector": "[data-testid=\"discover\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "link",
+              "test_id": "global-menu-contacts",
+              "selector": "[data-testid=\"global-menu-contacts\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "link",
+              "test_id": "global-menu-connected-sites",
+              "selector": "[data-testid=\"global-menu-connected-sites\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "link",
+              "test_id": "global-menu-networks",
+              "selector": "[data-testid=\"global-menu-networks\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "link",
+              "test_id": "global-menu-snaps",
+              "selector": "[data-testid=\"global-menu-snaps\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "link",
+              "test_id": "global-menu-settings",
+              "selector": "[data-testid=\"global-menu-settings\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "button",
+              "test_id": "global-menu-support",
+              "selector": "[data-testid=\"global-menu-support\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "button",
+              "test_id": "global-menu-lock",
+              "selector": "[data-testid=\"global-menu-lock\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            }
+          ],
+          "truncated": true,
+          "limits": {
+            "items": 20,
+            "hidden_or_offscreen": 10
+          }
+        }
+      }
+    },
+    {
+      "nodeId": "ac1-assert-screen-viewed-env",
+      "action": "metamask.analytics.assert_events",
+      "intent": "Perp Screen Viewed carries environment_type=fullscreen",
+      "startedAt": "2026-09-24T07:17:51.814Z",
+      "endedAt": "2026-09-24T07:17:53.356Z",
+      "durationMs": 1542,
+      "ok": true,
+      "next": "ac3-scroll-learn-basics",
+      "output": {
+        "action": "metamask.analytics.assert_events",
+        "since": 1790234270576,
+        "exact": false,
+        "observed": [
+          {
+            "event": "Perp Screen Viewed",
+            "matched": 1
+          }
+        ],
+        "capturedCount": 1,
+        "liveAdapter": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/actions/shared/analytics/assert_events.mjs"
+      }
+    },
+    {
+      "nodeId": "ac3-scroll-learn-basics",
+      "action": "ui.scroll",
+      "intent": "Reveal the education section at the bottom of Perps home so the tutorial entry point is on screen",
+      "startedAt": "2026-09-24T07:17:53.362Z",
+      "endedAt": "2026-09-24T07:17:53.711Z",
+      "durationMs": 349,
+      "ok": true,
+      "next": "ac3-wait-learn-basics",
+      "output": {
+        "scrolled": true,
+        "selector": "[data-testid=\"perps-learn-basics\"], [data-test-id=\"perps-learn-basics\"], [data-test=\"perps-learn-basics\"]",
+        "intoView": true,
+        "cdpPort": 7666,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/?tab=perps",
+        "runtimeLaunch": null,
+        "cdpTargetId": "959DF611BDDEA8BF4CA2C09006128AE5",
+        "runtimeSessionId": "bf74a8eb-0912-4834-899e-5f082012a21e"
+      },
+      "observations": {
+        "ui.screen": {
+          "provider": "cdp-web",
+          "name": "macpro-mme-6 — MetaMask",
+          "title": "macpro-mme-6 — MetaMask",
+          "route": "#/",
+          "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
+        },
+        "ui.visible": {
+          "provider": "cdp-web",
+          "items": [
+            {
+              "role": "link",
+              "label": "Home",
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div > main > header > div:nth-of-type(1) > a",
+              "enabled": true,
+              "bounds": {
+                "x": 519,
+                "y": -22,
+                "width": 162,
+                "height": 62
+              }
+            },
+            {
+              "role": "button",
+              "label": "dev1",
+              "test_id": "account-menu-icon",
+              "selector": "[data-testid=\"account-menu-icon\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 209,
+                "y": 56,
+                "width": 75,
+                "height": 24
+              }
+            },
+            {
+              "role": "button",
+              "label": "Search tokens",
+              "test_id": "discover-search-button",
+              "selector": "[data-testid=\"discover-search-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 911,
+                "y": 66,
+                "width": 32,
+                "height": 32
+              }
+            },
+            {
+              "role": "button",
+              "label": "Account options",
+              "test_id": "account-options-menu-button",
+              "selector": "[data-testid=\"account-options-menu-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 951,
+                "y": 66,
+                "width": 32,
+                "height": 32
+              }
+            },
+            {
+              "role": "button",
+              "label": "Avalanche 10x AVAX · $44K Vol $10.253 -8.91%",
+              "test_id": "explore-markets-AVAX",
+              "selector": "[data-testid=\"explore-markets-AVAX\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 201,
+                "y": 101,
+                "width": 798,
+                "height": 72
+              }
+            },
+            {
+              "role": "button",
+              "label": "Recent activity, See all",
+              "test_id": "perps-recent-activity-see-all",
+              "selector": "[data-testid=\"perps-recent-activity-see-all\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 201,
+                "y": 189,
+                "width": 798,
+                "height": 48
+              }
+            },
+            {
+              "role": "button",
+              "label": "Closed long 0.11 SOL -$0.04",
+              "test_id": "transaction-card-60855141998-1790178023186-0",
+              "selector": "[data-testid=\"transaction-card-60855141998-1790178023186-0\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 201,
+                "y": 245,
+                "width": 798,
+                "height": 74
+              }
+            },
+            {
+              "role": "button",
+              "label": "Opened long 0.11 SOL -$0.02",
+              "test_id": "transaction-card-60855131208-1790178014605-1",
+              "selector": "[data-testid=\"transaction-card-60855131208-1790178014605-1\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 201,
+                "y": 319,
+                "width": 798,
+                "height": 74
+              }
+            },
+            {
+              "role": "button",
+              "label": "Closed long 0.11 SOL -$0.04",
+              "test_id": "transaction-card-60854960166-1790177880054-2",
+              "selector": "[data-testid=\"transaction-card-60854960166-1790177880054-2\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 201,
+                "y": 393,
+                "width": 798,
+                "height": 74
+              }
+            },
+            {
+              "role": "button",
+              "label": "Opened long 0.11 SOL -$0.02",
+              "test_id": "transaction-card-60854948853-1790177870539-3",
+              "selector": "[data-testid=\"transaction-card-60854948853-1790177870539-3\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 201,
+                "y": 467,
+                "width": 798,
+                "height": 74
+              }
+            },
+            {
+              "role": "button",
+              "label": "Closed long 0.11 SOL -$0.04",
+              "test_id": "transaction-card-60854454868-1790177506478-4",
+              "selector": "[data-testid=\"transaction-card-60854454868-1790177506478-4\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 201,
+                "y": 541,
+                "width": 798,
+                "height": 74
+              }
+            },
+            {
+              "role": "button",
+              "label": "Contact support",
+              "test_id": "perps-contact-support",
+              "selector": "[data-testid=\"perps-contact-support\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 631,
+                "width": 766,
+                "height": 48
+              }
+            },
+            {
+              "role": "button",
+              "label": "Give us feedback",
+              "test_id": "perps-give-feedback",
+              "selector": "[data-testid=\"perps-give-feedback\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 680,
+                "width": 766,
+                "height": 48
+              }
+            },
+            {
+              "role": "button",
+              "label": "Learn the basics of perps",
+              "test_id": "perps-learn-basics",
+              "selector": "[data-testid=\"perps-learn-basics\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 729,
+                "width": 766,
+                "height": 48
+              }
+            }
+          ],
+          "hidden_or_offscreen": [
+            {
+              "role": "button",
+              "test_id": "drawer-close-button",
+              "selector": "[data-testid=\"drawer-close-button\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "button",
+              "test_id": "notifications-menu-item",
+              "selector": "[data-testid=\"notifications-menu-item\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "button",
+              "test_id": "discover",
+              "selector": "[data-testid=\"discover\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "link",
+              "test_id": "global-menu-contacts",
+              "selector": "[data-testid=\"global-menu-contacts\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "link",
+              "test_id": "global-menu-connected-sites",
+              "selector": "[data-testid=\"global-menu-connected-sites\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "link",
+              "test_id": "global-menu-networks",
+              "selector": "[data-testid=\"global-menu-networks\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "link",
+              "test_id": "global-menu-snaps",
+              "selector": "[data-testid=\"global-menu-snaps\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "link",
+              "test_id": "global-menu-settings",
+              "selector": "[data-testid=\"global-menu-settings\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "button",
+              "test_id": "global-menu-support",
+              "selector": "[data-testid=\"global-menu-support\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "button",
+              "test_id": "global-menu-lock",
+              "selector": "[data-testid=\"global-menu-lock\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            }
+          ],
+          "truncated": true,
+          "limits": {
+            "items": 20,
+            "hidden_or_offscreen": 10
+          }
+        }
+      }
+    },
+    {
+      "nodeId": "ac3-wait-learn-basics",
+      "action": "ui.wait_for",
+      "intent": "Learn-the-basics button is visible on Perps home",
+      "startedAt": "2026-09-24T07:17:53.717Z",
+      "endedAt": "2026-09-24T07:17:54.074Z",
+      "durationMs": 357,
+      "ok": true,
+      "next": "gate-kill-capture-helper",
+      "output": {
+        "matched": true,
+        "cdpPort": 7666,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/?tab=perps",
+        "runtimeLaunch": null,
+        "cdpTargetId": "959DF611BDDEA8BF4CA2C09006128AE5",
+        "runtimeSessionId": "bf74a8eb-0912-4834-899e-5f082012a21e"
+      },
+      "observations": {
+        "ui.screen": {
+          "provider": "cdp-web",
+          "name": "macpro-mme-6 — MetaMask",
+          "title": "macpro-mme-6 — MetaMask",
+          "route": "#/",
+          "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
+        },
+        "ui.visible": {
+          "provider": "cdp-web",
+          "items": [
+            {
+              "role": "link",
+              "label": "Home",
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div > main > header > div:nth-of-type(1) > a",
+              "enabled": true,
+              "bounds": {
+                "x": 519,
+                "y": -22,
+                "width": 162,
+                "height": 62
+              }
+            },
+            {
+              "role": "button",
+              "label": "dev1",
+              "test_id": "account-menu-icon",
+              "selector": "[data-testid=\"account-menu-icon\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 209,
+                "y": 56,
+                "width": 75,
+                "height": 24
+              }
+            },
+            {
+              "role": "button",
+              "label": "Search tokens",
+              "test_id": "discover-search-button",
+              "selector": "[data-testid=\"discover-search-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 911,
+                "y": 66,
+                "width": 32,
+                "height": 32
+              }
+            },
+            {
+              "role": "button",
+              "label": "Account options",
+              "test_id": "account-options-menu-button",
+              "selector": "[data-testid=\"account-options-menu-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 951,
+                "y": 66,
+                "width": 32,
+                "height": 32
+              }
+            },
+            {
+              "role": "button",
+              "label": "Avalanche 10x AVAX · $44K Vol $10.253 -8.91%",
+              "test_id": "explore-markets-AVAX",
+              "selector": "[data-testid=\"explore-markets-AVAX\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 201,
+                "y": 101,
+                "width": 798,
+                "height": 72
+              }
+            },
+            {
+              "role": "button",
+              "label": "Recent activity, See all",
+              "test_id": "perps-recent-activity-see-all",
+              "selector": "[data-testid=\"perps-recent-activity-see-all\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 201,
+                "y": 189,
+                "width": 798,
+                "height": 48
+              }
+            },
+            {
+              "role": "button",
+              "label": "Closed long 0.11 SOL -$0.04",
+              "test_id": "transaction-card-60855141998-1790178023186-0",
+              "selector": "[data-testid=\"transaction-card-60855141998-1790178023186-0\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 201,
+                "y": 245,
+                "width": 798,
+                "height": 74
+              }
+            },
+            {
+              "role": "button",
+              "label": "Opened long 0.11 SOL -$0.02",
+              "test_id": "transaction-card-60855131208-1790178014605-1",
+              "selector": "[data-testid=\"transaction-card-60855131208-1790178014605-1\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 201,
+                "y": 319,
+                "width": 798,
+                "height": 74
+              }
+            },
+            {
+              "role": "button",
+              "label": "Closed long 0.11 SOL -$0.04",
+              "test_id": "transaction-card-60854960166-1790177880054-2",
+              "selector": "[data-testid=\"transaction-card-60854960166-1790177880054-2\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 201,
+                "y": 393,
+                "width": 798,
+                "height": 74
+              }
+            },
+            {
+              "role": "button",
+              "label": "Opened long 0.11 SOL -$0.02",
+              "test_id": "transaction-card-60854948853-1790177870539-3",
+              "selector": "[data-testid=\"transaction-card-60854948853-1790177870539-3\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 201,
+                "y": 467,
+                "width": 798,
+                "height": 74
+              }
+            },
+            {
+              "role": "button",
+              "label": "Closed long 0.11 SOL -$0.04",
+              "test_id": "transaction-card-60854454868-1790177506478-4",
+              "selector": "[data-testid=\"transaction-card-60854454868-1790177506478-4\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 201,
+                "y": 541,
+                "width": 798,
+                "height": 74
+              }
+            },
+            {
+              "role": "button",
+              "label": "Contact support",
+              "test_id": "perps-contact-support",
+              "selector": "[data-testid=\"perps-contact-support\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 631,
+                "width": 766,
+                "height": 48
+              }
+            },
+            {
+              "role": "button",
+              "label": "Give us feedback",
+              "test_id": "perps-give-feedback",
+              "selector": "[data-testid=\"perps-give-feedback\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 680,
+                "width": 766,
+                "height": 48
+              }
+            },
+            {
+              "role": "button",
+              "label": "Learn the basics of perps",
+              "test_id": "perps-learn-basics",
+              "selector": "[data-testid=\"perps-learn-basics\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 729,
+                "width": 766,
+                "height": 48
+              }
+            }
+          ],
+          "hidden_or_offscreen": [
+            {
+              "role": "button",
+              "test_id": "drawer-close-button",
+              "selector": "[data-testid=\"drawer-close-button\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "button",
+              "test_id": "notifications-menu-item",
+              "selector": "[data-testid=\"notifications-menu-item\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "button",
+              "test_id": "discover",
+              "selector": "[data-testid=\"discover\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "link",
+              "test_id": "global-menu-contacts",
+              "selector": "[data-testid=\"global-menu-contacts\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "link",
+              "test_id": "global-menu-connected-sites",
+              "selector": "[data-testid=\"global-menu-connected-sites\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "link",
+              "test_id": "global-menu-networks",
+              "selector": "[data-testid=\"global-menu-networks\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "link",
+              "test_id": "global-menu-snaps",
+              "selector": "[data-testid=\"global-menu-snaps\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "link",
+              "test_id": "global-menu-settings",
+              "selector": "[data-testid=\"global-menu-settings\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "button",
+              "test_id": "global-menu-support",
+              "selector": "[data-testid=\"global-menu-support\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "button",
+              "test_id": "global-menu-lock",
+              "selector": "[data-testid=\"global-menu-lock\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            }
+          ],
+          "truncated": true,
+          "limits": {
+            "items": 20,
+            "hidden_or_offscreen": 10
+          }
+        }
+      }
+    },
+    {
+      "nodeId": "gate-kill-capture-helper",
+      "action": "command",
+      "intent": "Clear orphaned capture helpers so the screenshot uses the real capture path",
+      "startedAt": "2026-09-24T07:17:54.081Z",
+      "endedAt": "2026-09-24T07:17:54.165Z",
+      "durationMs": 84,
+      "ok": true,
+      "next": "ac3-screenshot-perps-home",
+      "output": {
+        "exitCode": 0,
+        "stdout": "",
+        "stderr": ""
+      }
+    },
+    {
+      "nodeId": "ac3-screenshot-perps-home",
+      "action": "ui.screenshot",
+      "intent": "Show reviewers which Perps home button the interaction event describes",
+      "artifacts": [
+        {
+          "path": "evidence-ac3-perps-home.png",
+          "type": "screenshot",
+          "nodeId": "ac3-screenshot-perps-home",
+          "label": "AC3 orientation: Perps home with the Learn-the-basics button",
+          "category": "evidence",
+          "mimeType": "image/png",
+          "metadata": {
+            "provider": "capture-helper",
+            "mode": "snapshot",
+            "pid": 22603,
+            "captureHelper": {
+              "bytes": 639428,
+              "output": "/Users/deeeed/dev/metamask/metamask-extension-6/temp/tasks/fix/46607-0924-145238/artifacts/recipe-run/.mm-harness-extension-evidence-hNffyo/captured.png",
+              "selected": {
+                "app": "Google Chrome for Testing",
+                "height": 996,
+                "id": 5497,
+                "layer": 0,
+                "onScreen": true,
+                "pid": 22603,
+                "title": "macpro-mme-6 — MetaMask",
+                "width": 1200,
+                "x": 22,
+                "y": 61
+              },
+              "selector": "pid",
+              "type": "snapshot"
+            }
+          }
+        }
+      ],
+      "startedAt": "2026-09-24T07:17:54.171Z",
+      "endedAt": "2026-09-24T07:17:54.490Z",
+      "durationMs": 319,
+      "ok": true,
+      "next": "ac3-press-learn-basics",
+      "output": {
+        "captured": true,
+        "path": "evidence-ac3-perps-home.png",
+        "artifact": {
+          "path": "evidence-ac3-perps-home.png",
+          "type": "screenshot",
+          "nodeId": "ac3-screenshot-perps-home",
+          "label": "AC3 orientation: Perps home with the Learn-the-basics button",
+          "category": "evidence",
+          "mimeType": "image/png",
+          "metadata": {
+            "provider": "capture-helper",
+            "mode": "snapshot",
+            "pid": 22603,
+            "captureHelper": {
+              "bytes": 639428,
+              "output": "/Users/deeeed/dev/metamask/metamask-extension-6/temp/tasks/fix/46607-0924-145238/artifacts/recipe-run/.mm-harness-extension-evidence-hNffyo/captured.png",
+              "selected": {
+                "app": "Google Chrome for Testing",
+                "height": 996,
+                "id": 5497,
+                "layer": 0,
+                "onScreen": true,
+                "pid": 22603,
+                "title": "macpro-mme-6 — MetaMask",
+                "width": 1200,
+                "x": 22,
+                "y": 61
+              },
+              "selector": "pid",
+              "type": "snapshot"
+            }
+          }
+        }
+      },
+      "observations": {
+        "ui.screen": {
+          "provider": "cdp-web",
+          "name": "macpro-mme-6 — MetaMask",
+          "title": "macpro-mme-6 — MetaMask",
+          "route": "#/",
+          "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
+        },
+        "ui.visible": {
+          "provider": "cdp-web",
+          "items": [
+            {
+              "role": "link",
+              "label": "Home",
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div > main > header > div:nth-of-type(1) > a",
+              "enabled": true,
+              "bounds": {
+                "x": 519,
+                "y": -22,
+                "width": 162,
+                "height": 62
+              }
+            },
+            {
+              "role": "button",
+              "label": "dev1",
+              "test_id": "account-menu-icon",
+              "selector": "[data-testid=\"account-menu-icon\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 209,
+                "y": 56,
+                "width": 75,
+                "height": 24
+              }
+            },
+            {
+              "role": "button",
+              "label": "Search tokens",
+              "test_id": "discover-search-button",
+              "selector": "[data-testid=\"discover-search-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 911,
+                "y": 66,
+                "width": 32,
+                "height": 32
+              }
+            },
+            {
+              "role": "button",
+              "label": "Account options",
+              "test_id": "account-options-menu-button",
+              "selector": "[data-testid=\"account-options-menu-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 951,
+                "y": 66,
+                "width": 32,
+                "height": 32
+              }
+            },
+            {
+              "role": "button",
+              "label": "Avalanche 10x AVAX · $44K Vol $10.253 -8.91%",
+              "test_id": "explore-markets-AVAX",
+              "selector": "[data-testid=\"explore-markets-AVAX\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 201,
+                "y": 101,
+                "width": 798,
+                "height": 72
+              }
+            },
+            {
+              "role": "button",
+              "label": "Recent activity, See all",
+              "test_id": "perps-recent-activity-see-all",
+              "selector": "[data-testid=\"perps-recent-activity-see-all\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 201,
+                "y": 189,
+                "width": 798,
+                "height": 48
+              }
+            },
+            {
+              "role": "button",
+              "label": "Closed long 0.11 SOL -$0.04",
+              "test_id": "transaction-card-60855141998-1790178023186-0",
+              "selector": "[data-testid=\"transaction-card-60855141998-1790178023186-0\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 201,
+                "y": 245,
+                "width": 798,
+                "height": 74
+              }
+            },
+            {
+              "role": "button",
+              "label": "Opened long 0.11 SOL -$0.02",
+              "test_id": "transaction-card-60855131208-1790178014605-1",
+              "selector": "[data-testid=\"transaction-card-60855131208-1790178014605-1\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 201,
+                "y": 319,
+                "width": 798,
+                "height": 74
+              }
+            },
+            {
+              "role": "button",
+              "label": "Closed long 0.11 SOL -$0.04",
+              "test_id": "transaction-card-60854960166-1790177880054-2",
+              "selector": "[data-testid=\"transaction-card-60854960166-1790177880054-2\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 201,
+                "y": 393,
+                "width": 798,
+                "height": 74
+              }
+            },
+            {
+              "role": "button",
+              "label": "Opened long 0.11 SOL -$0.02",
+              "test_id": "transaction-card-60854948853-1790177870539-3",
+              "selector": "[data-testid=\"transaction-card-60854948853-1790177870539-3\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 201,
+                "y": 467,
+                "width": 798,
+                "height": 74
+              }
+            },
+            {
+              "role": "button",
+              "label": "Closed long 0.11 SOL -$0.04",
+              "test_id": "transaction-card-60854454868-1790177506478-4",
+              "selector": "[data-testid=\"transaction-card-60854454868-1790177506478-4\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 201,
+                "y": 541,
+                "width": 798,
+                "height": 74
+              }
+            },
+            {
+              "role": "button",
+              "label": "Contact support",
+              "test_id": "perps-contact-support",
+              "selector": "[data-testid=\"perps-contact-support\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 631,
+                "width": 766,
+                "height": 48
+              }
+            },
+            {
+              "role": "button",
+              "label": "Give us feedback",
+              "test_id": "perps-give-feedback",
+              "selector": "[data-testid=\"perps-give-feedback\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 680,
+                "width": 766,
+                "height": 48
+              }
+            },
+            {
+              "role": "button",
+              "label": "Learn the basics of perps",
+              "test_id": "perps-learn-basics",
+              "selector": "[data-testid=\"perps-learn-basics\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 729,
+                "width": 766,
+                "height": 48
+              }
+            }
+          ],
+          "hidden_or_offscreen": [
+            {
+              "role": "button",
+              "test_id": "drawer-close-button",
+              "selector": "[data-testid=\"drawer-close-button\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "button",
+              "test_id": "notifications-menu-item",
+              "selector": "[data-testid=\"notifications-menu-item\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "button",
+              "test_id": "discover",
+              "selector": "[data-testid=\"discover\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "link",
+              "test_id": "global-menu-contacts",
+              "selector": "[data-testid=\"global-menu-contacts\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "link",
+              "test_id": "global-menu-connected-sites",
+              "selector": "[data-testid=\"global-menu-connected-sites\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "link",
+              "test_id": "global-menu-networks",
+              "selector": "[data-testid=\"global-menu-networks\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "link",
+              "test_id": "global-menu-snaps",
+              "selector": "[data-testid=\"global-menu-snaps\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "link",
+              "test_id": "global-menu-settings",
+              "selector": "[data-testid=\"global-menu-settings\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "button",
+              "test_id": "global-menu-support",
+              "selector": "[data-testid=\"global-menu-support\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "button",
+              "test_id": "global-menu-lock",
+              "selector": "[data-testid=\"global-menu-lock\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            }
+          ],
+          "truncated": true,
+          "limits": {
+            "items": 20,
+            "hidden_or_offscreen": 10
+          }
+        }
+      }
+    },
+    {
+      "nodeId": "ac3-press-learn-basics",
+      "action": "ui.press",
+      "intent": "Open the Perps tutorial as a user would, producing one button interaction event",
+      "startedAt": "2026-09-24T07:17:54.497Z",
+      "endedAt": "2026-09-24T07:17:55.243Z",
+      "durationMs": 746,
+      "ok": true,
+      "next": "ac3-assert-ui-interaction",
+      "output": {
+        "clicked": true,
+        "selector": "[data-testid=\"perps-learn-basics\"], [data-test-id=\"perps-learn-basics\"], [data-test=\"perps-learn-basics\"]",
+        "tagName": "DIV",
+        "cdpPort": 7666,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/?tab=perps",
+        "runtimeLaunch": null,
+        "cdpTargetId": "959DF611BDDEA8BF4CA2C09006128AE5",
+        "runtimeSessionId": "bf74a8eb-0912-4834-899e-5f082012a21e"
+      },
+      "observations": {
+        "ui.screen": {
+          "provider": "cdp-web",
+          "name": "macpro-mme-6 — MetaMask",
+          "title": "macpro-mme-6 — MetaMask",
+          "route": "#/",
+          "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
+        },
+        "ui.visible": {
+          "provider": "cdp-web",
+          "items": [
+            {
+              "role": "button",
+              "label": "Close",
+              "selector": "html > body > div:nth-of-type(5) > div:nth-of-type(3) > div > section > header > div > button",
+              "enabled": true,
+              "focused": true,
+              "bounds": {
+                "x": 795,
+                "y": 114,
+                "width": 32,
+                "height": 32
+              }
+            },
+            {
+              "role": "button",
+              "label": "Continue",
+              "test_id": "perps-tutorial-continue-button",
+              "selector": "[data-testid=\"perps-tutorial-continue-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 393,
+                "y": 659,
+                "width": 414,
+                "height": 48
+              }
+            },
+            {
+              "role": "button",
+              "label": "Skip",
+              "test_id": "perps-tutorial-skip-button",
+              "selector": "[data-testid=\"perps-tutorial-skip-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 393,
+                "y": 715,
+                "width": 414,
+                "height": 32
+              }
+            }
+          ],
+          "hidden_or_offscreen": [
+            {
+              "role": "link",
+              "label": "Home",
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div > main > header > div:nth-of-type(1) > a",
+              "enabled": true,
+              "bounds": {
+                "x": 519,
+                "y": -22,
+                "width": 162,
+                "height": 62
+              },
+              "reason": "covered"
+            },
+            {
+              "role": "button",
+              "label": "dev1",
+              "test_id": "account-menu-icon",
+              "selector": "[data-testid=\"account-menu-icon\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 209,
+                "y": 56,
+                "width": 75,
+                "height": 24
+              },
+              "reason": "covered"
+            },
+            {
+              "role": "button",
+              "label": "Search tokens",
+              "test_id": "discover-search-button",
+              "selector": "[data-testid=\"discover-search-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 911,
+                "y": 66,
+                "width": 32,
+                "height": 32
+              },
+              "reason": "covered"
+            },
+            {
+              "role": "button",
+              "label": "Account options",
+              "test_id": "account-options-menu-button",
+              "selector": "[data-testid=\"account-options-menu-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 951,
+                "y": 66,
+                "width": 32,
+                "height": 32
+              },
+              "reason": "covered"
+            },
+            {
+              "role": "button",
+              "test_id": "drawer-close-button",
+              "selector": "[data-testid=\"drawer-close-button\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "button",
+              "test_id": "notifications-menu-item",
+              "selector": "[data-testid=\"notifications-menu-item\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "button",
+              "test_id": "discover",
+              "selector": "[data-testid=\"discover\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "link",
+              "test_id": "global-menu-contacts",
+              "selector": "[data-testid=\"global-menu-contacts\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "link",
+              "test_id": "global-menu-connected-sites",
+              "selector": "[data-testid=\"global-menu-connected-sites\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "link",
+              "test_id": "global-menu-networks",
+              "selector": "[data-testid=\"global-menu-networks\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            }
+          ],
+          "truncated": true,
+          "limits": {
+            "items": 20,
+            "hidden_or_offscreen": 10
+          }
+        }
+      }
+    },
+    {
+      "nodeId": "ac3-assert-ui-interaction",
+      "action": "metamask.analytics.assert_events",
+      "intent": "The button tap names the button via button_clicked=tutorial, matching mobile",
+      "startedAt": "2026-09-24T07:17:55.251Z",
+      "endedAt": "2026-09-24T07:17:56.797Z",
+      "durationMs": 1546,
+      "ok": true,
+      "next": "ac3-read-events",
+      "output": {
+        "action": "metamask.analytics.assert_events",
+        "since": 1790234270576,
+        "exact": false,
+        "observed": [
+          {
+            "event": "Perp UI Interaction",
+            "matched": 1
+          }
+        ],
+        "capturedCount": 4,
+        "liveAdapter": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/actions/shared/analytics/assert_events.mjs"
+      }
+    },
+    {
+      "nodeId": "ac3-read-events",
+      "action": "metamask.analytics.read_events",
+      "intent": "Keep the raw Perp UI Interaction payload as evidence",
+      "startedAt": "2026-09-24T07:17:56.804Z",
+      "endedAt": "2026-09-24T07:17:56.871Z",
+      "durationMs": 67,
+      "ok": true,
+      "next": "ac2-run-geo-block-test",
+      "output": {
+        "action": "metamask.analytics.read_events",
+        "since": 1790234270576,
+        "count": 2,
+        "events": [
+          {
+            "type": "track",
+            "event": "Perp UI Interaction",
+            "properties": {
+              "category": "Perps",
+              "interaction_type": "button_clicked",
+              "button_clicked": "tutorial",
+              "button_location": "perps_tab",
+              "timestamp": 1790234274586,
+              "environment_type": "fullscreen",
+              "locale": "en",
+              "chain_id": "0x1",
+              "profile_id": "58b5f192-6607-4606-813c-010b90287eb9",
+              "canonical_profile_id": "3ad7e304-c059-4d3d-a349-5fb7f9c15e3a"
+            },
+            "userId": "0xffeb0b3324c7233a7f21c6ca38aa8b6490dbdda53cb2f196eee4b86360c535df",
+            "anonymousId": null,
+            "sentAt": "2026-09-24T07:17:54.586Z",
+            "ts": 1790234274591
+          },
+          {
+            "type": "track",
+            "event": "Perp UI Interaction",
+            "properties": {
+              "category": "Perps",
+              "interaction_type": "tutorial_started",
+              "timestamp": 1790234274596,
+              "environment_type": "fullscreen",
+              "locale": "en",
+              "chain_id": "0x1",
+              "profile_id": "58b5f192-6607-4606-813c-010b90287eb9",
+              "canonical_profile_id": "3ad7e304-c059-4d3d-a349-5fb7f9c15e3a"
+            },
+            "userId": "0xffeb0b3324c7233a7f21c6ca38aa8b6490dbdda53cb2f196eee4b86360c535df",
+            "anonymousId": null,
+            "sentAt": "2026-09-24T07:17:54.599Z",
+            "ts": 1790234274602
+          }
+        ],
+        "names": [
+          "Perp UI Interaction",
+          "Perp UI Interaction"
+        ],
+        "liveAdapter": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/actions/shared/analytics/read_events.mjs"
+      }
+    },
+    {
+      "nodeId": "ac2-run-geo-block-test",
+      "action": "command",
+      "intent": "Prove the geo-block notice reports screen_type=geo_block_notif (slot cannot be geo-blocked live)",
+      "startedAt": "2026-09-24T07:17:56.882Z",
+      "endedAt": "2026-09-24T07:18:06.276Z",
+      "durationMs": 9394,
+      "ok": true,
+      "next": "ac2-assert-geo-block-test",
+      "output": {
+        "exitCode": 0,
+        "stdout": "PASS ui/components/app/perps/perps-geo-block-modal/perps-geo-block-modal.test.tsx (6.805 s)\n\nTest Suites: 1 passed, 1 total\nTests:       5 skipped, 1 passed, 6 total\nSnapshots:   0 total\nTime:        7.397 s\nRan all test suites matching /ui\\/components\\/app\\/perps\\/perps-geo-block-modal\\/perps-geo-block-modal.test.tsx/i with tests matching \"geo_block_notif\".\n\n✅ No console baseline violations.\n\n",
+        "stderr": ""
+      }
+    },
+    {
+      "nodeId": "ac2-assert-geo-block-test",
+      "action": "assert_output",
+      "intent": "The geo_block_notif screen-view test ran and passed",
+      "startedAt": "2026-09-24T07:18:06.287Z",
+      "endedAt": "2026-09-24T07:18:06.295Z",
+      "durationMs": 8,
+      "ok": true,
+      "next": "teardown-wait-tutorial",
+      "output": {
+        "source": "ac2-run-geo-block-test",
+        "stream": "stdout",
+        "contains": "1 passed"
+      }
+    },
+    {
+      "nodeId": "teardown-wait-tutorial",
+      "action": "ui.wait_for",
+      "intent": "The tutorial opened by the button tap is on screen and can be dismissed",
+      "startedAt": "2026-09-24T07:18:06.303Z",
+      "endedAt": "2026-09-24T07:18:06.657Z",
+      "durationMs": 354,
+      "ok": true,
+      "next": "teardown-close-tutorial",
+      "output": {
+        "matched": true,
+        "cdpPort": 7666,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/?tab=perps",
+        "runtimeLaunch": null,
+        "cdpTargetId": "959DF611BDDEA8BF4CA2C09006128AE5",
+        "runtimeSessionId": "bf74a8eb-0912-4834-899e-5f082012a21e"
+      },
+      "observations": {
+        "ui.screen": {
+          "provider": "cdp-web",
+          "name": "macpro-mme-6 — MetaMask",
+          "title": "macpro-mme-6 — MetaMask",
+          "route": "#/",
+          "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
+        },
+        "ui.visible": {
+          "provider": "cdp-web",
+          "items": [
+            {
+              "role": "button",
+              "label": "Close",
+              "selector": "html > body > div:nth-of-type(5) > div:nth-of-type(3) > div > section > header > div > button",
+              "enabled": true,
+              "focused": true,
+              "bounds": {
+                "x": 795,
+                "y": 114,
+                "width": 32,
+                "height": 32
+              }
+            },
+            {
+              "role": "button",
+              "label": "Continue",
+              "test_id": "perps-tutorial-continue-button",
+              "selector": "[data-testid=\"perps-tutorial-continue-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 393,
+                "y": 659,
+                "width": 414,
+                "height": 48
+              }
+            },
+            {
+              "role": "button",
+              "label": "Skip",
+              "test_id": "perps-tutorial-skip-button",
+              "selector": "[data-testid=\"perps-tutorial-skip-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 393,
+                "y": 715,
+                "width": 414,
+                "height": 32
+              }
+            }
+          ],
+          "hidden_or_offscreen": [
+            {
+              "role": "link",
+              "label": "Home",
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div > main > header > div:nth-of-type(1) > a",
+              "enabled": true,
+              "bounds": {
+                "x": 519,
+                "y": -22,
+                "width": 162,
+                "height": 62
+              },
+              "reason": "covered"
+            },
+            {
+              "role": "button",
+              "label": "dev1",
+              "test_id": "account-menu-icon",
+              "selector": "[data-testid=\"account-menu-icon\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 209,
+                "y": 56,
+                "width": 75,
+                "height": 24
+              },
+              "reason": "covered"
+            },
+            {
+              "role": "button",
+              "label": "Search tokens",
+              "test_id": "discover-search-button",
+              "selector": "[data-testid=\"discover-search-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 911,
+                "y": 66,
+                "width": 32,
+                "height": 32
+              },
+              "reason": "covered"
+            },
+            {
+              "role": "button",
+              "label": "Account options",
+              "test_id": "account-options-menu-button",
+              "selector": "[data-testid=\"account-options-menu-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 951,
+                "y": 66,
+                "width": 32,
+                "height": 32
+              },
+              "reason": "covered"
+            },
+            {
+              "role": "button",
+              "test_id": "drawer-close-button",
+              "selector": "[data-testid=\"drawer-close-button\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "button",
+              "test_id": "notifications-menu-item",
+              "selector": "[data-testid=\"notifications-menu-item\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "button",
+              "test_id": "discover",
+              "selector": "[data-testid=\"discover\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "link",
+              "test_id": "global-menu-contacts",
+              "selector": "[data-testid=\"global-menu-contacts\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "link",
+              "test_id": "global-menu-connected-sites",
+              "selector": "[data-testid=\"global-menu-connected-sites\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "link",
+              "test_id": "global-menu-networks",
+              "selector": "[data-testid=\"global-menu-networks\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            }
+          ],
+          "truncated": true,
+          "limits": {
+            "items": 20,
+            "hidden_or_offscreen": 10
+          }
+        }
+      }
+    },
+    {
+      "nodeId": "teardown-close-tutorial",
+      "action": "ui.press",
+      "intent": "Dismiss the tutorial so the next run starts from a clean wallet home",
+      "startedAt": "2026-09-24T07:18:06.662Z",
+      "endedAt": "2026-09-24T07:18:07.087Z",
+      "durationMs": 425,
+      "ok": true,
+      "next": "done",
+      "output": {
+        "clicked": true,
+        "selector": "[data-testid=\"perps-tutorial-skip-button\"], [data-test-id=\"perps-tutorial-skip-button\"], [data-test=\"perps-tutorial-skip-button\"]",
+        "tagName": "BUTTON",
+        "cdpPort": 7666,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/?tab=perps",
+        "runtimeLaunch": null,
+        "cdpTargetId": "959DF611BDDEA8BF4CA2C09006128AE5",
+        "runtimeSessionId": "bf74a8eb-0912-4834-899e-5f082012a21e"
+      },
+      "observations": {
+        "ui.screen": {
+          "provider": "cdp-web",
+          "name": "macpro-mme-6 — MetaMask",
+          "title": "macpro-mme-6 — MetaMask",
+          "route": "#/",
+          "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
+        },
+        "ui.visible": {
+          "provider": "cdp-web",
+          "items": [
+            {
+              "role": "link",
+              "label": "Home",
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div > main > header > div:nth-of-type(1) > a",
+              "enabled": true,
+              "bounds": {
+                "x": 519,
+                "y": -22,
+                "width": 162,
+                "height": 62
+              }
+            },
+            {
+              "role": "button",
+              "label": "dev1",
+              "test_id": "account-menu-icon",
+              "selector": "[data-testid=\"account-menu-icon\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 209,
+                "y": 56,
+                "width": 75,
+                "height": 24
+              }
+            },
+            {
+              "role": "button",
+              "label": "Search tokens",
+              "test_id": "discover-search-button",
+              "selector": "[data-testid=\"discover-search-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 911,
+                "y": 66,
+                "width": 32,
+                "height": 32
+              }
+            },
+            {
+              "role": "button",
+              "label": "Account options",
+              "test_id": "account-options-menu-button",
+              "selector": "[data-testid=\"account-options-menu-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 951,
+                "y": 66,
+                "width": 32,
+                "height": 32
+              }
+            },
+            {
+              "role": "button",
+              "label": "Avalanche 10x AVAX · $44K Vol $10.248 -8.96%",
+              "test_id": "explore-markets-AVAX",
+              "selector": "[data-testid=\"explore-markets-AVAX\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 201,
+                "y": 101,
+                "width": 798,
+                "height": 72
+              }
+            },
+            {
+              "role": "button",
+              "label": "Recent activity, See all",
+              "test_id": "perps-recent-activity-see-all",
+              "selector": "[data-testid=\"perps-recent-activity-see-all\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 201,
+                "y": 189,
+                "width": 798,
+                "height": 48
+              }
+            },
+            {
+              "role": "button",
+              "label": "Closed long 0.11 SOL -$0.04",
+              "test_id": "transaction-card-60855141998-1790178023186-0",
+              "selector": "[data-testid=\"transaction-card-60855141998-1790178023186-0\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 201,
+                "y": 245,
+                "width": 798,
+                "height": 74
+              }
+            },
+            {
+              "role": "button",
+              "label": "Opened long 0.11 SOL -$0.02",
+              "test_id": "transaction-card-60855131208-1790178014605-1",
+              "selector": "[data-testid=\"transaction-card-60855131208-1790178014605-1\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 201,
+                "y": 319,
+                "width": 798,
+                "height": 74
+              }
+            },
+            {
+              "role": "button",
+              "label": "Closed long 0.11 SOL -$0.04",
+              "test_id": "transaction-card-60854960166-1790177880054-2",
+              "selector": "[data-testid=\"transaction-card-60854960166-1790177880054-2\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 201,
+                "y": 393,
+                "width": 798,
+                "height": 74
+              }
+            },
+            {
+              "role": "button",
+              "label": "Opened long 0.11 SOL -$0.02",
+              "test_id": "transaction-card-60854948853-1790177870539-3",
+              "selector": "[data-testid=\"transaction-card-60854948853-1790177870539-3\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 201,
+                "y": 467,
+                "width": 798,
+                "height": 74
+              }
+            },
+            {
+              "role": "button",
+              "label": "Closed long 0.11 SOL -$0.04",
+              "test_id": "transaction-card-60854454868-1790177506478-4",
+              "selector": "[data-testid=\"transaction-card-60854454868-1790177506478-4\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 201,
+                "y": 541,
+                "width": 798,
+                "height": 74
+              }
+            },
+            {
+              "role": "button",
+              "label": "Contact support",
+              "test_id": "perps-contact-support",
+              "selector": "[data-testid=\"perps-contact-support\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 631,
+                "width": 766,
+                "height": 48
+              }
+            },
+            {
+              "role": "button",
+              "label": "Give us feedback",
+              "test_id": "perps-give-feedback",
+              "selector": "[data-testid=\"perps-give-feedback\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 680,
+                "width": 766,
+                "height": 48
+              }
+            },
+            {
+              "role": "button",
+              "label": "Learn the basics of perps",
+              "test_id": "perps-learn-basics",
+              "selector": "[data-testid=\"perps-learn-basics\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 729,
+                "width": 766,
+                "height": 48
+              }
+            }
+          ],
+          "hidden_or_offscreen": [
+            {
+              "role": "button",
+              "test_id": "drawer-close-button",
+              "selector": "[data-testid=\"drawer-close-button\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "button",
+              "test_id": "notifications-menu-item",
+              "selector": "[data-testid=\"notifications-menu-item\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "button",
+              "test_id": "discover",
+              "selector": "[data-testid=\"discover\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "link",
+              "test_id": "global-menu-contacts",
+              "selector": "[data-testid=\"global-menu-contacts\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "link",
+              "test_id": "global-menu-connected-sites",
+              "selector": "[data-testid=\"global-menu-connected-sites\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "link",
+              "test_id": "global-menu-networks",
+              "selector": "[data-testid=\"global-menu-networks\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "link",
+              "test_id": "global-menu-snaps",
+              "selector": "[data-testid=\"global-menu-snaps\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "link",
+              "test_id": "global-menu-settings",
+              "selector": "[data-testid=\"global-menu-settings\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "button",
+              "test_id": "global-menu-support",
+              "selector": "[data-testid=\"global-menu-support\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "button",
+              "test_id": "global-menu-lock",
+              "selector": "[data-testid=\"global-menu-lock\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            }
+          ],
+          "truncated": true,
+          "limits": {
+            "items": 20,
+            "hidden_or_offscreen": 10
+          }
+        }
+      }
+    },
+    {
+      "nodeId": "done",
+      "action": "end",
+      "startedAt": "2026-09-24T07:18:07.095Z",
+      "endedAt": "2026-09-24T07:18:07.095Z",
+      "durationMs": 0,
+      "ok": true,
+      "status": "pass"
+    }
+  ]
+}

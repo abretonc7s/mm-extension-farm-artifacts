@@ -1,0 +1,33 @@
+{
+  "version": 1,
+  "verdict": "pass",
+  "compact": {
+    "verdict": "PASS",
+    "reasons": [
+      "AC3 assertion (button_clicked=tutorial, button_type absent, exact count 1) runs against real Segment payloads from the harness collector and fails on the pre-fix build (baseline recipe asserted the buggy button_type shape and passed).",
+      "AC1 UI-emitted environment_type asserted on captured payloads; controller-emitted events are explicitly scoped out (Core dependency), not silently skipped.",
+      "AC2 geo-block cannot be triggered live (no geolocation override); proven by a named jest node with a '1 passed' guard against vacuous -t matches.",
+      "Screenshot is labelled as orientation for a state AC and came from capture-helper."
+    ],
+    "better_version_guidance": [
+      "Once a harness action can force perps ineligibility, drive the geo-block modal live and assert Perp Screen Viewed {screen_type: geo_block_notif}.",
+      "After perps-controller forwards a UI surface in trackingData, extend the recipe to assert environment_type on a controller-emitted event."
+    ]
+  },
+  "dimensions": {},
+  "structural_findings": [],
+  "contextual_findings": [],
+  "suggested_recipe_delta": [],
+  "training_fields": {
+    "proof_mode": "unknown"
+  },
+  "meta": {
+    "producer": "worker",
+    "fallback_used": false,
+    "legacy_task": false,
+    "artifact_required": true,
+    "source_signals": [
+      "recipe-quality.json"
+    ]
+  }
+}

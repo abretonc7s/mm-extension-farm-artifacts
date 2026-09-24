@@ -1,0 +1,77 @@
+{
+  "schemaVersion": 1,
+  "command": "check",
+  "action": "diff",
+  "status": "pass",
+  "exitCode": 0,
+  "adapter": "extension",
+  "target": "/Users/deeeed/dev/metamask/metamask-extension-6",
+  "profile": "fast",
+  "fix": false,
+  "baseRef": "origin/main",
+  "baseSource": "github-pr",
+  "baseLabel": "main",
+  "mergeBase": "ca97b63ed467e342de353b98bcd186282730f01d",
+  "changedFiles": [
+    "shared/constants/perps-events.ts",
+    "test/mocks/metamask-perps-controller.js",
+    "ui/components/app/perps/perps-market-balance-actions/perps-market-balance-actions.test.tsx",
+    "ui/components/app/perps/perps-market-balance-actions/perps-market-balance-actions.tsx",
+    "ui/components/app/perps/perps-support-learn/perps-support-learn.test.tsx",
+    "ui/components/app/perps/perps-support-learn/perps-support-learn.tsx",
+    "ui/pages/perps/market-list/index.test.tsx",
+    "ui/pages/perps/market-list/index.tsx",
+    "ui/pages/perps/perps-market-detail-page.test.tsx",
+    "ui/pages/perps/perps-market-detail-page.tsx",
+    "ui/pages/perps/perps-order-entry-page.test.tsx",
+    "ui/pages/perps/perps-order-entry-page.tsx"
+  ],
+  "fixes": [],
+  "checks": [
+    {
+      "id": "policy-suppressions",
+      "label": "New ESLint suppression policy",
+      "status": "pass",
+      "logPath": "/Users/deeeed/dev/metamask/metamask-extension-6/temp/tasks/fix/46607-0924-145238/artifacts/check-diff/policy-suppressions.log"
+    },
+    {
+      "id": "eslint",
+      "label": "Changed-file ESLint",
+      "status": "pass",
+      "command": "/Users/deeeed/dev/metamask/metamask-extension-6/node_modules/.bin/eslint --config ./.eslintrc.js --cache --cache-location /Users/deeeed/dev/metamask/metamask-extension-6/temp/tasks/fix/46607-0924-145238/artifacts/check-diff/eslintcache shared/constants/perps-events.ts test/mocks/metamask-perps-controller.js ui/components/app/perps/perps-market-balance-actions/perps-market-balance-actions.test.tsx ui/components/app/perps/perps-market-balance-actions/perps-market-balance-actions.tsx ui/components/app/perps/perps-support-learn/perps-support-learn.test.tsx ui/components/app/perps/perps-support-learn/perps-support-learn.tsx ui/pages/perps/market-list/index.test.tsx ui/pages/perps/market-list/index.tsx ui/pages/perps/perps-market-detail-page.test.tsx ui/pages/perps/perps-market-detail-page.tsx ui/pages/perps/perps-order-entry-page.test.tsx ui/pages/perps/perps-order-entry-page.tsx",
+      "exitCode": 0,
+      "logPath": "/Users/deeeed/dev/metamask/metamask-extension-6/temp/tasks/fix/46607-0924-145238/artifacts/check-diff/eslint.log",
+      "durationMs": 38886
+    },
+    {
+      "id": "oxfmt",
+      "label": "Changed-file oxfmt",
+      "status": "pass",
+      "command": "/Users/deeeed/dev/metamask/metamask-extension-6/node_modules/.bin/oxfmt --config oxfmt.config.mts --check shared/constants/perps-events.ts test/mocks/metamask-perps-controller.js ui/components/app/perps/perps-market-balance-actions/perps-market-balance-actions.test.tsx ui/components/app/perps/perps-market-balance-actions/perps-market-balance-actions.tsx ui/components/app/perps/perps-support-learn/perps-support-learn.test.tsx ui/components/app/perps/perps-support-learn/perps-support-learn.tsx ui/pages/perps/market-list/index.test.tsx ui/pages/perps/market-list/index.tsx ui/pages/perps/perps-market-detail-page.test.tsx ui/pages/perps/perps-market-detail-page.tsx ui/pages/perps/perps-order-entry-page.test.tsx ui/pages/perps/perps-order-entry-page.tsx",
+      "exitCode": 0,
+      "logPath": "/Users/deeeed/dev/metamask/metamask-extension-6/temp/tasks/fix/46607-0924-145238/artifacts/check-diff/oxfmt.log",
+      "durationMs": 278
+    },
+    {
+      "id": "jest",
+      "label": "Changed test files",
+      "status": "pass",
+      "command": "/Users/deeeed/dev/metamask/metamask-extension-6/node_modules/.bin/jest --no-coverage ui/components/app/perps/perps-market-balance-actions/perps-market-balance-actions.test.tsx ui/components/app/perps/perps-support-learn/perps-support-learn.test.tsx ui/pages/perps/market-list/index.test.tsx ui/pages/perps/perps-market-detail-page.test.tsx ui/pages/perps/perps-order-entry-page.test.tsx",
+      "exitCode": 0,
+      "logPath": "/Users/deeeed/dev/metamask/metamask-extension-6/temp/tasks/fix/46607-0924-145238/artifacts/check-diff/jest.log",
+      "durationMs": 27232
+    },
+    {
+      "id": "typecheck",
+      "label": "TypeScript project check",
+      "status": "skip",
+      "reason": "profile=fast; run with --profile full for repo-wide typecheck"
+    }
+  ],
+  "guidance": [],
+  "artifacts": {
+    "dir": "/Users/deeeed/dev/metamask/metamask-extension-6/temp/tasks/fix/46607-0924-145238/artifacts/check-diff",
+    "summaryJson": "/Users/deeeed/dev/metamask/metamask-extension-6/temp/tasks/fix/46607-0924-145238/artifacts/check-diff/validation-summary.json",
+    "summaryMarkdown": "/Users/deeeed/dev/metamask/metamask-extension-6/temp/tasks/fix/46607-0924-145238/artifacts/check-diff/validation-summary.md"
+  }
+}

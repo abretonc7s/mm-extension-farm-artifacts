@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "preferred_mode": "screenshots",
+  "summary": "Analytics-only fix: proof is the captured Segment payload (before: button_type=tutorial; after: button_clicked=tutorial). Screenshot shows the button tapped in the recipe.",
+  "before_after_pairs": [],
+  "standalone": [
+    {
+      "label": "Perps home — 'Learn the basics of perps' button the recipe taps to emit Perp UI Interaction",
+      "covers": [
+        "ac3"
+      ],
+      "file": "after-ac3-perps-home.png"
+    }
+  ],
+  "omit": [
+    "before-evidence-ac3-perps-home.png"
+  ],
+  "videos": {
+    "before": "before.mp4",
+    "preferred": false,
+    "note": "UI is identical before/after; the difference is in the emitted payload. after.mp4 dropped: the recipe capture-helper cleanup node kills the recorder."
+  }
+}

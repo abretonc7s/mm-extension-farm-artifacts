@@ -1,0 +1,30 @@
+# mm-harness check diff
+
+Verdict: pass
+Profile: fast
+Fix: no
+Base: origin/main (github-pr: main)
+Changed files: 12
+
+## Checks
+
+- PASS policy-suppressions (/Users/deeeed/dev/metamask/metamask-extension-6/temp/tasks/fix/46607-0924-145238/artifacts/check-diff/policy-suppressions.log)
+- PASS eslint (/Users/deeeed/dev/metamask/metamask-extension-6/temp/tasks/fix/46607-0924-145238/artifacts/check-diff/eslint.log)
+- PASS oxfmt (/Users/deeeed/dev/metamask/metamask-extension-6/temp/tasks/fix/46607-0924-145238/artifacts/check-diff/oxfmt.log)
+- PASS jest (/Users/deeeed/dev/metamask/metamask-extension-6/temp/tasks/fix/46607-0924-145238/artifacts/check-diff/jest.log)
+- SKIP typecheck — profile=fast; run with --profile full for repo-wide typecheck
+
+## Changed Files
+
+- shared/constants/perps-events.ts
+- test/mocks/metamask-perps-controller.js
+- ui/components/app/perps/perps-market-balance-actions/perps-market-balance-actions.test.tsx
+- ui/components/app/perps/perps-market-balance-actions/perps-market-balance-actions.tsx
+- ui/components/app/perps/perps-support-learn/perps-support-learn.test.tsx
+- ui/components/app/perps/perps-support-learn/perps-support-learn.tsx
+- ui/pages/perps/market-list/index.test.tsx
+- ui/pages/perps/market-list/index.tsx
+- ui/pages/perps/perps-market-detail-page.test.tsx
+- ui/pages/perps/perps-market-detail-page.tsx
+- ui/pages/perps/perps-order-entry-page.test.tsx
+- ui/pages/perps/perps-order-entry-page.tsx

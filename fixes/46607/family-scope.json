@@ -1,0 +1,6 @@
+{
+  "originalFamilyScopeSummary": "Add missing perp events and parameters to extension for environment and interaction tracking (TAT-3175).",
+  "currentTriggerSummary": "pr-complete for PR #46607: Test lint TS2339 after main (#45986) added a BUTTON_TYPE call site that this PR's alias removal broke.",
+  "scopeVerdict": "full-scope-addressed",
+  "notes": "Every PERPS_EVENT_PROPERTY.BUTTON_TYPE usage now emits button_clicked (git grep finds none left). Full tsc exits 0 and the 3 perps suites pass (264 tests). The live recipe captured button_clicked=tutorial with no button_type and environment_type=fullscreen. Controller-emitted environment_type stays split to TAT-4006, owner-approved."
+}

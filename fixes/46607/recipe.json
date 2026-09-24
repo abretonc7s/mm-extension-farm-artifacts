@@ -1,0 +1,151 @@
+{
+  "$schema": "https://farmslot.io/schemas/recipe-v1.schema.json",
+  "title": "TAT-3175: perps UI interaction reports button_clicked; perps events carry environment_type",
+  "description": "Fixed tree: tapping 'Learn the basics' on Perps home emits exactly one Perp UI Interaction with button_clicked=tutorial (no legacy button_type) and environment_type=fullscreen; the geo-block modal's screen_type=geo_block_notif is proven by its unit test. Preconditions: MetaMetrics participation already enabled in the fixture wallet (optedIn=true); Build has SEGMENT_HOST=http://localhost:8667 and a non-empty SEGMENT_WRITE_KEY so events reach the harness collector.",
+  "workflow": {
+    "entry": "setup-unlock",
+    "nodes": {
+      "setup-unlock": {
+        "action": "metamask.wallet.ensure_unlocked",
+        "intent": "Make sure the wallet UI is unlocked",
+        "next": "setup-open-tokens-tab"
+      },
+      "setup-capture": {
+        "action": "metamask.analytics.start_capture",
+        "intent": "Start the local Segment collector and take a cursor for this flow",
+        "next": "ac1-open-perps-tab"
+      },
+      "ac1-assert-screen-viewed-env": {
+        "action": "metamask.analytics.assert_events",
+        "since": "{{outputs.setup-capture.cursor}}",
+        "expect": [
+          {
+            "event": "Perp Screen Viewed",
+            "min": 1,
+            "properties": {
+              "environment_type": "fullscreen"
+            }
+          }
+        ],
+        "intent": "Perp Screen Viewed carries environment_type=fullscreen",
+        "next": "ac3-scroll-learn-basics"
+      },
+      "ac3-wait-learn-basics": {
+        "action": "ui.wait_for",
+        "testID": "perps-learn-basics",
+        "intent": "Learn-the-basics button is visible on Perps home",
+        "next": "gate-kill-capture-helper",
+        "visible": true
+      },
+      "ac3-press-learn-basics": {
+        "action": "ui.press",
+        "testID": "perps-learn-basics",
+        "intent": "Open the Perps tutorial as a user would, producing one button interaction event",
+        "next": "ac3-assert-ui-interaction"
+      },
+      "ac3-assert-ui-interaction": {
+        "action": "metamask.analytics.assert_events",
+        "since": "{{outputs.setup-capture.cursor}}",
+        "expect": [
+          {
+            "event": "Perp UI Interaction",
+            "count": 1,
+            "properties": {
+              "interaction_type": "button_clicked",
+              "button_clicked": "tutorial",
+              "button_type": {
+                "$exists": false
+              },
+              "button_location": "perps_tab",
+              "environment_type": "fullscreen"
+            }
+          }
+        ],
+        "intent": "The button tap names the button via button_clicked=tutorial, matching mobile",
+        "next": "ac3-read-events"
+      },
+      "ac3-read-events": {
+        "action": "metamask.analytics.read_events",
+        "since": "{{outputs.setup-capture.cursor}}",
+        "event": "Perp UI Interaction",
+        "intent": "Keep the raw Perp UI Interaction payload as evidence",
+        "next": "ac2-run-geo-block-test"
+      },
+      "done": {
+        "action": "end",
+        "status": "pass"
+      },
+      "gate-kill-capture-helper": {
+        "action": "command",
+        "cmd": "pkill -9 -f capture-helper || true",
+        "allow_failure": true,
+        "intent": "Clear orphaned capture helpers so the screenshot uses the real capture path",
+        "next": "ac3-screenshot-perps-home"
+      },
+      "ac3-screenshot-perps-home": {
+        "action": "ui.screenshot",
+        "path": "evidence-ac3-perps-home.png",
+        "label": "AC3 orientation: Perps home with the Learn-the-basics button",
+        "intent": "Show reviewers which Perps home button the interaction event describes",
+        "next": "ac3-press-learn-basics"
+      },
+      "ac1-open-perps-tab": {
+        "action": "ui.press",
+        "intent": "Open Perps from wallet home (account-overview Perps tab, or the bottom nav when that layout is enabled), which reports a Perp Screen Viewed",
+        "next": "ac1-wait-perps-view",
+        "selector": "[data-testid=\"account-overview__perps-tab\"], [data-testid=\"bottom-nav-perps\"]"
+      },
+      "ac1-wait-perps-view": {
+        "action": "ui.wait_for",
+        "testID": "perps-view-title",
+        "intent": "Perps tab content is rendered",
+        "next": "ac1-assert-screen-viewed-env"
+      },
+      "ac3-scroll-learn-basics": {
+        "action": "ui.scroll",
+        "testID": "perps-learn-basics",
+        "scroll_into_view": true,
+        "intent": "Reveal the education section at the bottom of Perps home so the tutorial entry point is on screen",
+        "next": "ac3-wait-learn-basics"
+      },
+      "ac2-run-geo-block-test": {
+        "action": "command",
+        "cmd": "yarn jest ui/components/app/perps/perps-geo-block-modal/perps-geo-block-modal.test.tsx -t 'geo_block_notif' --no-coverage 2>&1",
+        "timeout_ms": 240000,
+        "intent": "Prove the geo-block notice reports screen_type=geo_block_notif (slot cannot be geo-blocked live)",
+        "next": "ac2-assert-geo-block-test"
+      },
+      "ac2-assert-geo-block-test": {
+        "action": "assert_output",
+        "source": "ac2-run-geo-block-test",
+        "contains": "1 passed",
+        "intent": "The geo_block_notif screen-view test ran and passed",
+        "next": "teardown-wait-tutorial"
+      },
+      "teardown-wait-tutorial": {
+        "action": "ui.wait_for",
+        "testID": "perps-tutorial-skip-button",
+        "intent": "The tutorial opened by the button tap is on screen and can be dismissed",
+        "next": "teardown-close-tutorial"
+      },
+      "teardown-close-tutorial": {
+        "action": "ui.press",
+        "testID": "perps-tutorial-skip-button",
+        "intent": "Dismiss the tutorial so the next run starts from a clean wallet home",
+        "next": "done"
+      },
+      "setup-open-tokens-tab": {
+        "action": "ui.press",
+        "testID": "account-overview__asset-tab",
+        "intent": "Start from the Tokens tab so opening Perps is a fresh screen view",
+        "next": "setup-wait-tokens-tab"
+      },
+      "setup-wait-tokens-tab": {
+        "action": "ui.wait_for",
+        "selector": "[data-testid=\"account-overview__asset-tab\"][aria-selected=\"true\"]",
+        "intent": "The Tokens tab is the active wallet home tab",
+        "next": "setup-capture"
+      }
+    }
+  }
+}
