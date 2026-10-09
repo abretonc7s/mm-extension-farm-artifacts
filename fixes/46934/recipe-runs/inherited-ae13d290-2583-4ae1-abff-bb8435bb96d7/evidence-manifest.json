@@ -1,0 +1,61 @@
+{
+  "version": 1,
+  "preferred_mode": "screenshots",
+  "summary": "Controller20 upgrade: four distinct HUD-visible before19/after20 BTC testnet USD100 and USD1000 fee pairs, one per comment and size. Current-source hook notionals, exact quote rates and UI sizing formula asserted. Ten fixtures checked on both networks: no positive discount. No submission; testnet positions empty. Historical17-to19 proof retained.",
+  "standalone": [
+    {
+      "label": "Controller20 current-source Perps home",
+      "covers": [
+        "AC2"
+      ],
+      "file": "recipe-run/screenshots/ac2-home.png"
+    }
+  ],
+  "before_after_pairs": [
+    {
+      "label": "BTC $1,000 market preview fee: controller 17.1.0 before / 19.0.0 after",
+      "covers": [
+        "FEE"
+      ],
+      "before": "fee-proof-before/screenshots/order-fee.png",
+      "after": "fee-proof-after-final/screenshots/order-fee.png",
+      "note": "Same dev1 address, testnet, long, USD 1000, 3x. Both fee rows show $1.43. No active fee discount. Current trace records isFallback=false and unchanged controller rates. Close-all N/A because positions are empty. No order or close submitted."
+    },
+    {
+      "label": "Comment 1: BTC USD 100, controller 19 before / controller 20 after, HUD shown",
+      "covers": [
+        "COMMENT1"
+      ],
+      "before": "review-comments/before-final/screenshots/comment1-100.png",
+      "after": "review-comments/after-20-complete/screenshots/comment1-100.png",
+      "note": "Same prepared dev1, testnet, long market order, 3x, unsubmitted. Quote feeSource rewards with zero discount; no badge. Positive discounts proven by unit tests only. Distinct native captures per comment. Current trace checks live hook receives the entered USD notional and preserves controller rates. Final round3 source: displayed fee equals rounded asset size times observed oracle price times the unchanged quote rate. USD1000 shows $1.43 before and $1.42 after due to live sizing/prices, not an extra discount."
+    },
+    {
+      "label": "Comment 1: BTC USD 1000, controller 19 before / controller 20 after, HUD shown",
+      "covers": [
+        "COMMENT1"
+      ],
+      "before": "review-comments/before-final/screenshots/comment1-1000.png",
+      "after": "review-comments/after-20-complete/screenshots/comment1-1000.png",
+      "note": "Same prepared dev1, testnet, long market order, 3x, unsubmitted. Quote feeSource rewards with zero discount; no badge. Positive discounts proven by unit tests only. Distinct native captures per comment. Current trace checks live hook receives the entered USD notional and preserves controller rates. Final round3 source: displayed fee equals rounded asset size times observed oracle price times the unchanged quote rate. USD1000 shows $1.43 before and $1.42 after due to live sizing/prices, not an extra discount."
+    },
+    {
+      "label": "Comment 2: BTC USD 100, controller 19 before / controller 20 after, HUD shown",
+      "covers": [
+        "COMMENT2"
+      ],
+      "before": "review-comments/before-final/screenshots/comment2-100.png",
+      "after": "review-comments/after-20-complete/screenshots/comment2-100.png",
+      "note": "Same prepared dev1, testnet, long market order, 3x, unsubmitted. Quote feeSource rewards with zero discount; no badge. Positive discounts proven by unit tests only. Distinct native captures per comment. Current trace checks live hook receives the entered USD notional and preserves controller rates. Final round3 source: displayed fee equals rounded asset size times observed oracle price times the unchanged quote rate. USD1000 shows $1.43 before and $1.42 after due to live sizing/prices, not an extra discount."
+    },
+    {
+      "label": "Comment 2: BTC USD 1000, controller 19 before / controller 20 after, HUD shown",
+      "covers": [
+        "COMMENT2"
+      ],
+      "before": "review-comments/before-final/screenshots/comment2-1000.png",
+      "after": "review-comments/after-20-complete/screenshots/comment2-1000.png",
+      "note": "Same prepared dev1, testnet, long market order, 3x, unsubmitted. Quote feeSource rewards with zero discount; no badge. Positive discounts proven by unit tests only. Distinct native captures per comment. Current trace checks live hook receives the entered USD notional and preserves controller rates. Final round3 source: displayed fee equals rounded asset size times observed oracle price times the unchanged quote rate. USD1000 shows $1.43 before and $1.42 after due to live sizing/prices, not an extra discount."
+    }
+  ]
+}

@@ -1,0 +1,110 @@
+{
+  "schemaVersion": 1,
+  "command": "run",
+  "context": {
+    "adapter": {
+      "value": "extension",
+      "source": "flag",
+      "detail": "--adapter"
+    },
+    "target": {
+      "value": "/Volumes/FD/dev/metamask/metamask-extension-3",
+      "source": "default",
+      "detail": "cwd"
+    },
+    "slot": {
+      "value": "mini-mme-3",
+      "source": "slot",
+      "detail": "slot-config (~/farmslot-node/pool)",
+      "session": "mme-3",
+      "poolFile": "/Users/deeeed/farmslot-node/pool/mini.json",
+      "ports": {
+        "cdp_port": 7667,
+        "port": 9013,
+        "metro_port": 9113,
+        "watcherPort": 9013,
+        "devServerPort": 9013,
+        "cdpPort": 7667
+      }
+    },
+    "ports": {
+      "cdp": {
+        "value": 7667,
+        "source": "flag"
+      },
+      "watcher": {
+        "value": 9013,
+        "source": "slot",
+        "filled": true,
+        "via": "env",
+        "names": [
+          "RECIPE_WATCHER_PORT",
+          "WATCHER_PORT",
+          "METRO_PORT"
+        ]
+      }
+    }
+  },
+  "mode": "plan",
+  "status": "pass",
+  "adapter": "extension",
+  "recipe": "/Volumes/FD/dev/metamask/metamask-extension-3/temp/tasks/fix/46934-1009-163330/artifacts/fee-preview.recipe.json",
+  "params": {},
+  "findings": [],
+  "plan": [
+    {
+      "step": "resolve.recipe",
+      "confidence": "static",
+      "status": "ok",
+      "detail": "/Volumes/FD/dev/metamask/metamask-extension-3/temp/tasks/fix/46934-1009-163330/artifacts/fee-preview.recipe.json"
+    },
+    {
+      "step": "resolve.adapter",
+      "confidence": "static",
+      "status": "ok",
+      "detail": "extension"
+    },
+    {
+      "step": "resolve.artifactsDir",
+      "confidence": "static",
+      "status": "ok",
+      "detail": "(resolved to the slot artifacts dir at run time)"
+    },
+    {
+      "step": "validate.manifest",
+      "confidence": "static",
+      "status": "ok",
+      "detail": "action manifest is well-formed"
+    },
+    {
+      "step": "validate.schema",
+      "confidence": "static",
+      "status": "ok",
+      "detail": "recipe document schema + action existence/platform vs the adapter manifest"
+    },
+    {
+      "step": "fixture.file",
+      "confidence": "static",
+      "status": "ok",
+      "detail": "present: /Volumes/FD/dev/metamask/metamask-extension-3/temp/recipe/runtime/wallet-fixture.json"
+    },
+    {
+      "step": "overlay.ensure",
+      "confidence": "conditional",
+      "status": "planned",
+      "detail": "would auto-ensure the runtime overlay if missing (install phase)"
+    },
+    {
+      "step": "launch.app",
+      "confidence": "conditional",
+      "status": "planned",
+      "detail": "would launch/attach the app + heal transport (Metro/Chrome/CDP) before executing"
+    },
+    {
+      "step": "execute.nodes",
+      "confidence": "conditional",
+      "status": "planned",
+      "detail": "would execute 19 recipe node(s)"
+    }
+  ]
+}

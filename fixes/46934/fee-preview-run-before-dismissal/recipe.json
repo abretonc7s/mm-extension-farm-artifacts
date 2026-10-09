@@ -1,0 +1,182 @@
+{
+  "title": "TAT-4063 shared helper fee preview",
+  "workflow": {
+    "entry": "unlock",
+    "nodes": {
+      "unlock": {
+        "action": "metamask.wallet.ensure_unlocked",
+        "next": "open-btc",
+        "intent": "The prepared wallet is unlocked for read-only Perps verification"
+      },
+      "open-btc": {
+        "action": "ui.navigate",
+        "hash": "#/perps/trade/BTC",
+        "next": "wait-entry",
+        "intent": "The BTC order preview is ready for a notional comparison"
+      },
+      "wait-entry": {
+        "action": "ui.wait_for",
+        "test_id": "amount-input-field",
+        "timeout_ms": 20000,
+        "next": "leverage",
+        "intent": "The editable order amount is present before fee verification"
+      },
+      "leverage": {
+        "action": "ui.set_input",
+        "selector": "[data-testid=\"leverage-input\"] input",
+        "value": "3",
+        "next": "long",
+        "intent": "The comparison uses the same three-times leverage at both notionals"
+      },
+      "long": {
+        "action": "ui.press",
+        "test_id": "direction-tab-long",
+        "next": "amount-100",
+        "intent": "The comparison remains on the long side without submitting a trade"
+      },
+      "amount-100": {
+        "action": "ui.set_input",
+        "selector": "[data-testid=\"amount-input-field\"] input",
+        "value": "100",
+        "next": "read-100",
+        "intent": "Enter USD 100 without submitting"
+      },
+      "read-100": {
+        "action": "metamask.perps.read_visible_state",
+        "surface": "order-entry",
+        "market": "BTC",
+        "direction": "long",
+        "leverage": 3,
+        "amount": "100",
+        "order_type": "market",
+        "require_test_ids": [
+          "perps-order-summary-estimated-fees"
+        ],
+        "next": "fee-visible-100",
+        "intent": "The visible BTC preview uses USD 100, long direction and three-times leverage"
+      },
+      "quote-100": {
+        "action": "command",
+        "cmd": "yarn tsx temp/tasks/fix/46934-1009-163330/artifacts/observe-fee.ts 100",
+        "timeout_ms": 20000,
+        "next": "capture-100",
+        "proves": [
+          "LEAD-FEE"
+        ],
+        "intent": "Assert both live hooks quote the current notional and the displayed fee matches the quote within sizing precision"
+      },
+      "capture-100": {
+        "action": "ui.screenshot",
+        "path": "screenshots/btc-100-fee.png",
+        "next": "amount-1000",
+        "proves": [
+          "LEAD-FEE"
+        ],
+        "intent": "The unsubmitted BTC USD 100 fee preview is preserved as visual evidence"
+      },
+      "amount-1000": {
+        "action": "ui.set_input",
+        "selector": "[data-testid=\"amount-input-field\"] input",
+        "value": "1000",
+        "next": "read-1000",
+        "intent": "Enter USD 1000 without submitting"
+      },
+      "read-1000": {
+        "action": "metamask.perps.read_visible_state",
+        "surface": "order-entry",
+        "market": "BTC",
+        "direction": "long",
+        "leverage": 3,
+        "amount": "1000",
+        "order_type": "market",
+        "require_test_ids": [
+          "perps-order-summary-estimated-fees"
+        ],
+        "next": "fee-visible-1000",
+        "intent": "The visible BTC preview uses USD 1000, long direction and three-times leverage"
+      },
+      "quote-1000": {
+        "action": "command",
+        "cmd": "yarn tsx temp/tasks/fix/46934-1009-163330/artifacts/observe-fee.ts 1000",
+        "timeout_ms": 20000,
+        "next": "capture-1000",
+        "proves": [
+          "LEAD-FEE"
+        ],
+        "intent": "Assert both live hooks quote the current notional and the displayed fee matches the quote within sizing precision"
+      },
+      "capture-1000": {
+        "action": "ui.screenshot",
+        "path": "screenshots/btc-1000-fee.png",
+        "next": "home",
+        "proves": [
+          "LEAD-FEE"
+        ],
+        "intent": "The unsubmitted BTC USD 1000 fee preview is preserved as visual evidence"
+      },
+      "home": {
+        "action": "ui.navigate",
+        "hash": "#/perps-home",
+        "next": "close-all",
+        "intent": "The existing position is available for a close-all preview"
+      },
+      "close-all": {
+        "action": "ui.press",
+        "test_id": "perps-close-all-positions",
+        "next": "wait-close-all",
+        "intent": "Open existing-position fee preview without confirming"
+      },
+      "wait-close-all": {
+        "action": "ui.wait_for",
+        "test_id": "perps-close-all-fees-value",
+        "timeout_ms": 10000,
+        "next": "capture-close-all",
+        "intent": "The aggregate closing fee is present in the confirmation preview"
+      },
+      "capture-close-all": {
+        "action": "ui.screenshot",
+        "path": "screenshots/close-all-fee.png",
+        "next": "leave-preview",
+        "proves": [
+          "LEAD-CLOSE-ALL"
+        ],
+        "intent": "The existing SOL closing fee is preserved as visual evidence"
+      },
+      "leave-preview": {
+        "action": "ui.navigate",
+        "hash": "#/perps-home",
+        "next": "done",
+        "intent": "The wallet returns to the overview without confirming a close"
+      },
+      "done": {
+        "action": "end",
+        "status": "pass"
+      },
+      "fee-visible-100": {
+        "action": "ui.scroll",
+        "test_id": "perps-order-summary-estimated-fees",
+        "scroll_into_view": true,
+        "intent": "The fee estimate is visible in the viewport for the evidence image",
+        "next": "quote-100"
+      },
+      "fee-visible-1000": {
+        "action": "ui.scroll",
+        "test_id": "perps-order-summary-estimated-fees",
+        "scroll_into_view": true,
+        "intent": "The fee estimate is visible in the viewport for the evidence image",
+        "next": "quote-1000"
+      }
+    }
+  },
+  "proofTargets": [
+    {
+      "id": "LEAD-FEE",
+      "claim": "Live order preview quotes USD100 and USD1000 with the shared helper and preserves resolved rates."
+    },
+    {
+      "id": "LEAD-CLOSE-ALL",
+      "claim": "The existing-position close-all fee preview remains visible after fallback discount extraction."
+    }
+  ],
+  "$schema": "https://farmslot.io/schemas/recipe-v1.schema.json"
+}

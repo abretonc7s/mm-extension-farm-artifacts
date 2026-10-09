@@ -1,0 +1,137 @@
+{
+  "$schema": "https://farmslot.io/schemas/recipe-v1.schema.json",
+  "title": "TAT-4063 Perps controller 20.0.0 proof",
+  "description": "Read-only live regression guard followed by the new dependency-version assertion. Derived AC3 is corroborated outside this runtime recipe.",
+  "workflow": {
+    "entry": "setup-status",
+    "nodes": {
+      "setup-status": {
+        "action": "app.status",
+        "next": "setup-cdp",
+        "intent": "Resolve the Extension checkout and adapter status before Perps proof"
+      },
+      "setup-cdp": {
+        "action": "cdp.target",
+        "required": true,
+        "timeout_ms": 15000,
+        "next": "setup-ensure-unlocked",
+        "intent": "Confirm the Extension CDP runtime is reachable"
+      },
+      "setup-ensure-unlocked": {
+        "action": "metamask.wallet.ensure_unlocked",
+        "timeout_ms": 45000,
+        "next": "setup-open-perps",
+        "intent": "Ensure the wallet is unlocked before opening Perps"
+      },
+      "setup-open-perps": {
+        "action": "ui.navigate",
+        "next": "setup-perps-ready",
+        "intent": "Show the Perps home surface",
+        "hash": "#/perps-home"
+      },
+      "ac2-read-positions": {
+        "action": "metamask.perps.read_positions",
+        "next": "ac2-read-orders",
+        "intent": "Read live Perps positions without mutating account state"
+      },
+      "ac2-read-orders": {
+        "action": "metamask.perps.read_orders",
+        "next": "ac2-settle",
+        "intent": "Read live Perps open orders without mutating account state"
+      },
+      "gate-done": {
+        "action": "end",
+        "status": "pass"
+      },
+      "ac2-read-home": {
+        "action": "metamask.perps.read_visible_state",
+        "surface": "home",
+        "minimum_market_count": 1,
+        "require_features": [
+          "balance",
+          "market-list"
+        ],
+        "intent": "Observe a populated Perps home after setup",
+        "next": "ac2-assert-home",
+        "forbid_test_ids": [
+          "perps-tutorial-skip-button"
+        ],
+        "max_items": 200
+      },
+      "ac2-assert-home": {
+        "action": "assert_output",
+        "source": "ac2-read-home",
+        "assert": {
+          "path": "$.surface",
+          "operator": "eq",
+          "value": "home"
+        },
+        "proves": [
+          "AC2"
+        ],
+        "intent": "The observed surface is Perps home",
+        "next": "ac2-assert-markets"
+      },
+      "ac2-assert-markets": {
+        "action": "assert_output",
+        "source": "ac2-read-home",
+        "assert": {
+          "path": "$.marketCount",
+          "operator": "gte",
+          "value": 1
+        },
+        "proves": [
+          "AC2"
+        ],
+        "intent": "Perps home contains market data rather than only a loading shell",
+        "next": "ac2-read-positions"
+      },
+      "ac2-settle": {
+        "action": "ui.wait_for",
+        "test_id": "perps-watchlist-BTC",
+        "timeout_ms": 20000,
+        "intent": "Show the populated account market watchlist",
+        "next": "ac2-capture",
+        "proves": [
+          "AC2"
+        ]
+      },
+      "ac2-capture": {
+        "action": "ui.screenshot",
+        "path": "screenshots/ac2-home.png",
+        "intent": "Preserve the read-only trading overview",
+        "next": "ac1-version",
+        "proves": [
+          "AC2"
+        ]
+      },
+      "ac1-version": {
+        "action": "command",
+        "cmd": "node -e 'const fs=require('\"'\"'node:fs'\"'\"');const assert=require('\"'\"'node:assert/strict'\"'\"');const manifest=require('\"'\"'./package.json'\"'\"').dependencies['\"'\"'@metamask/perps-controller'\"'\"'];const installed=require('\"'\"'./node_modules/@metamask/perps-controller/package.json'\"'\"').version;const lock=fs.readFileSync('\"'\"'yarn.lock'\"'\"','\"'\"'utf8'\"'\"');console.log(JSON.stringify({manifest,installed,lock20:lock.includes('\"'\"'resolution: \\\"@metamask/perps-controller@npm:20.0.0\\\"'\"'\"')}));assert.equal(manifest,'\"'\"'^20.0.0'\"'\"');assert.equal(installed,'\"'\"'20.0.0'\"'\"');assert.ok(lock.includes('\"'\"'resolution: \\\"@metamask/perps-controller@npm:20.0.0\\\"'\"'\"'));'",
+        "timeout_ms": 10000,
+        "intent": "The installed trading controller matches the requested release",
+        "next": "gate-done",
+        "proves": [
+          "AC1"
+        ]
+      },
+      "setup-perps-ready": {
+        "action": "ui.wait_for",
+        "test_id": "perps-watchlist-BTC",
+        "timeout_ms": 60000,
+        "intent": "The account watchlist is ready before checking the trading overview",
+        "next": "ac2-read-home"
+      }
+    }
+  },
+  "proofTargets": [
+    {
+      "id": "AC1",
+      "claim": "The Extension manifest, lockfile and installed controller resolve 20.0.0."
+    },
+    {
+      "id": "AC2",
+      "claim": "The live Perps home remains populated and positions/orders reads succeed."
+    }
+  ]
+}

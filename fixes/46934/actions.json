@@ -1,0 +1,2033 @@
+{
+  "schemaVersion": 1,
+  "command": "actions",
+  "context": {
+    "adapter": {
+      "value": "extension",
+      "source": "flag",
+      "detail": "--adapter"
+    },
+    "target": {
+      "value": "/Volumes/FD/dev/metamask/metamask-extension-3",
+      "source": "default",
+      "detail": "cwd"
+    },
+    "slot": {
+      "value": "mini-mme-3",
+      "source": "slot",
+      "detail": "slot-config (~/farmslot-node/pool)",
+      "session": "mme-3",
+      "poolFile": "/Users/deeeed/farmslot-node/pool/mini.json",
+      "ports": {
+        "cdp_port": 7667,
+        "port": 9013,
+        "metro_port": 9113,
+        "watcherPort": 9013,
+        "devServerPort": 9013,
+        "cdpPort": 7667
+      }
+    }
+  },
+  "adapter": "extension",
+  "detail": "summary",
+  "actions": [
+    {
+      "name": "command",
+      "kind": "official",
+      "category": "control",
+      "description": "Run a shell command from the project root.",
+      "fields": [
+        "allow_failure",
+        "cmd",
+        "command",
+        "cwd",
+        "timeout_ms"
+      ],
+      "source": "official",
+      "sourceTier": "official",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": [],
+      "capabilities": [
+        "host-exec"
+      ]
+    },
+    {
+      "name": "wait",
+      "kind": "official",
+      "category": "control",
+      "description": "Base wait action.",
+      "fields": [
+        "duration_ms",
+        "ms"
+      ],
+      "source": "official",
+      "sourceTier": "official",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": [],
+      "capabilities": []
+    },
+    {
+      "name": "assert_file",
+      "kind": "official",
+      "category": "assertion",
+      "description": "Assert that a project file exists and optionally contains text.",
+      "fields": [
+        "contains",
+        "path"
+      ],
+      "source": "official",
+      "sourceTier": "official",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": [],
+      "capabilities": [
+        "host-read-export"
+      ]
+    },
+    {
+      "name": "assert_json",
+      "kind": "official",
+      "category": "assertion",
+      "description": "Assert a JSON file value with a JSONPath-style selector.",
+      "fields": [
+        "assert",
+        "path"
+      ],
+      "source": "official",
+      "sourceTier": "official",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": [],
+      "capabilities": [
+        "host-read-export"
+      ]
+    },
+    {
+      "name": "assert_exit_code",
+      "kind": "official",
+      "category": "assertion",
+      "description": "Assert the exit code captured from a command node output.",
+      "fields": [
+        "expected",
+        "node",
+        "source"
+      ],
+      "source": "official",
+      "sourceTier": "official",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": [],
+      "capabilities": []
+    },
+    {
+      "name": "assert_output",
+      "kind": "official",
+      "category": "assertion",
+      "description": "Assert a previous node's stdout/stderr with contains or match, or compare a structured output field using assert.path and an operator such as eq or length_eq.",
+      "fields": [
+        "assert",
+        "contains",
+        "match",
+        "node",
+        "source",
+        "stream"
+      ],
+      "source": "official",
+      "sourceTier": "official",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": [],
+      "capabilities": []
+    },
+    {
+      "name": "watch_logs",
+      "kind": "official",
+      "category": "evidence",
+      "description": "Base log assertion/capture action.",
+      "fields": [
+        "contains",
+        "path",
+        "scope"
+      ],
+      "source": "official",
+      "sourceTier": "official",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": [],
+      "capabilities": [
+        "host-read-export"
+      ]
+    },
+    {
+      "name": "index_artifacts",
+      "kind": "official",
+      "category": "evidence",
+      "description": "Index extra recipe-authored artifacts that already exist on disk. Do not use after ui.screenshot; screenshots are registered by the runner.",
+      "fields": [
+        "artifacts"
+      ],
+      "source": "official",
+      "sourceTier": "official",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": [],
+      "capabilities": [
+        "host-read-export"
+      ]
+    },
+    {
+      "name": "end",
+      "kind": "official",
+      "category": "control",
+      "description": "Base terminal action.",
+      "fields": [],
+      "source": "official",
+      "sourceTier": "official",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": [],
+      "capabilities": []
+    },
+    {
+      "name": "call",
+      "kind": "official",
+      "category": "control",
+      "description": "Invoke a named recipe by ref and run its steps inline.",
+      "fields": [],
+      "source": "official",
+      "sourceTier": "official",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": [],
+      "capabilities": []
+    },
+    {
+      "name": "switch",
+      "kind": "official",
+      "category": "utility",
+      "description": "Choose a graph branch when one resolved string equals another.",
+      "fields": [
+        "equals",
+        "value"
+      ],
+      "result_cases": [
+        "match"
+      ],
+      "source": "official",
+      "sourceTier": "official",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": [],
+      "capabilities": []
+    },
+    {
+      "name": "ui.navigate",
+      "kind": "official",
+      "category": "ui",
+      "description": "Navigate by semantic page intent when available; the adapter uses the current visible UI or a verified route. Raw url/hash/path values must be verified against the current app first. Perps Home returns gate=perps-tutorial and gateSelector without dismissing a visible tutorial. Complete explicit tutorial setup before dependent market or activity navigation.",
+      "fields": [
+        "add_if_missing",
+        "chain_id",
+        "hash",
+        "market",
+        "network",
+        "page",
+        "params",
+        "path",
+        "route",
+        "screen",
+        "symbol",
+        "timeout_ms",
+        "url"
+      ],
+      "source": "official",
+      "sourceTier": "official",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": [],
+      "capabilities": [
+        "app-mutation"
+      ]
+    },
+    {
+      "name": "ui.press",
+      "kind": "official",
+      "category": "ui",
+      "description": "Press/tap/click a UI target through the platform adapter.",
+      "fields": [
+        "label",
+        "selector",
+        "settle",
+        "testID",
+        "test_id",
+        "text",
+        "timeout_ms"
+      ],
+      "source": "official",
+      "sourceTier": "official",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": [],
+      "capabilities": [
+        "app-mutation",
+        "external-mutation"
+      ]
+    },
+    {
+      "name": "ui.key_press",
+      "kind": "official",
+      "category": "ui",
+      "description": "Send a trusted keyboard press to the currently focused UI element through the UI transport.",
+      "fields": [
+        "key",
+        "settle",
+        "timeout_ms"
+      ],
+      "source": "official",
+      "sourceTier": "official",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": [],
+      "capabilities": [
+        "app-mutation",
+        "external-mutation"
+      ]
+    },
+    {
+      "name": "ui.set_input",
+      "kind": "official",
+      "category": "ui",
+      "description": "Set text on an extension DOM input through the CDP UI transport.",
+      "fields": [
+        "selector",
+        "settle",
+        "testID",
+        "test_id",
+        "text",
+        "timeout_ms",
+        "value"
+      ],
+      "source": "official",
+      "sourceTier": "official",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": [],
+      "capabilities": [
+        "app-mutation"
+      ]
+    },
+    {
+      "name": "ui.scroll",
+      "kind": "official",
+      "category": "ui",
+      "description": "Scroll through the UI through the Farmslot base platform adapter. Supports deltas and scroll_into_view for selector/test-id proof positioning.",
+      "fields": [
+        "animated",
+        "deltaX",
+        "deltaY",
+        "delta_x",
+        "delta_y",
+        "into_view",
+        "offset",
+        "scroll_into_view",
+        "selector",
+        "settle",
+        "testID",
+        "test_id",
+        "timeout_ms"
+      ],
+      "source": "official",
+      "sourceTier": "official",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": [],
+      "capabilities": [
+        "app-mutation"
+      ]
+    },
+    {
+      "name": "ui.swipe",
+      "kind": "official",
+      "category": "ui",
+      "description": "Swipe from a test-id target or screen coordinates in one cardinal direction through the shared browser UI transport.",
+      "fields": [
+        "direction",
+        "distance",
+        "duration_ms",
+        "settle",
+        "target",
+        "timeout_ms"
+      ],
+      "source": "official",
+      "sourceTier": "official",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": [],
+      "capabilities": [
+        "app-mutation",
+        "external-mutation"
+      ]
+    },
+    {
+      "name": "ui.pan",
+      "kind": "official",
+      "category": "ui",
+      "description": "Pan from a test-id target or screen coordinates through the shared browser UI transport. path and delta are offsets from the resolved start, not absolute endpoints.",
+      "fields": [
+        "delta",
+        "duration_ms",
+        "path",
+        "settle",
+        "target",
+        "timeout_ms"
+      ],
+      "source": "official",
+      "sourceTier": "official",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": [],
+      "capabilities": [
+        "app-mutation",
+        "external-mutation"
+      ]
+    },
+    {
+      "name": "ui.drag",
+      "kind": "official",
+      "category": "ui",
+      "description": "Drag a test-id target or screen coordinate through the shared browser UI transport. path and delta are offsets from the resolved start, not absolute endpoints.",
+      "fields": [
+        "delta",
+        "duration_ms",
+        "path",
+        "settle",
+        "target",
+        "timeout_ms"
+      ],
+      "source": "official",
+      "sourceTier": "official",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": [],
+      "capabilities": [
+        "app-mutation",
+        "external-mutation"
+      ]
+    },
+    {
+      "name": "ui.long_press",
+      "kind": "official",
+      "category": "ui",
+      "description": "Hold a test-id target or screen coordinate through the shared browser UI transport.",
+      "fields": [
+        "hold_ms",
+        "settle",
+        "target",
+        "timeout_ms"
+      ],
+      "source": "official",
+      "sourceTier": "official",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": [],
+      "capabilities": [
+        "app-mutation",
+        "external-mutation"
+      ]
+    },
+    {
+      "name": "ui.wait_for",
+      "kind": "official",
+      "category": "ui",
+      "description": "Wait for a UI condition through the Extension CDP adapter.",
+      "fields": [
+        "expected",
+        "selector",
+        "testID",
+        "test_id",
+        "text",
+        "textMatch",
+        "text_match",
+        "timeout_ms",
+        "visible"
+      ],
+      "source": "official",
+      "sourceTier": "official",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": [],
+      "capabilities": [
+        "host-read-export"
+      ]
+    },
+    {
+      "name": "ui.screenshot",
+      "kind": "official",
+      "category": "ui",
+      "description": "Capture the current native browser window on macOS, with bounded Chrome viewport capture as fallback. A native window can include a separate side panel or a tab other than the driven page. For report evidence of the driven document, use ui.capture_surface. Always inspect the resulting PNG and artifact metadata; failed real capture does not produce a reconstructed DOM image.",
+      "fields": [
+        "category",
+        "label",
+        "path",
+        "timeout_ms"
+      ],
+      "source": "official",
+      "sourceTier": "official",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": [],
+      "capabilities": [
+        "host-read-export"
+      ]
+    },
+    {
+      "name": "ui.capture_surface",
+      "kind": "official",
+      "category": "ui",
+      "description": "Capture the complete current browser document through Chrome as one registered PNG. Includes document content below the viewport, not browser chrome or the hidden contents of nested scroll areas. Keep viewport assertions separate.",
+      "fields": [
+        "category",
+        "label",
+        "path",
+        "timeout_ms"
+      ],
+      "source": "official",
+      "sourceTier": "official",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": [],
+      "capabilities": [
+        "host-read-export",
+        "app-mutation"
+      ]
+    },
+    {
+      "name": "app.status",
+      "kind": "official",
+      "category": "runtime",
+      "description": "Report the adapter's static status — platform, project root, resolved checkout shape, and headless compatibility mode (no live route or account).",
+      "fields": [],
+      "source": "official",
+      "sourceTier": "official",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": [],
+      "capabilities": [
+        "host-read-export"
+      ]
+    },
+    {
+      "name": "app.hud",
+      "kind": "official",
+      "category": "runtime",
+      "description": "Display minimal human-readable recipe progress. The intent must explain the current agent goal; debug metadata and grouping labels are hidden unless explicitly opted in.",
+      "fields": [
+        "action_name",
+        "clear",
+        "detail",
+        "display",
+        "error",
+        "nodeId",
+        "node_id",
+        "phase",
+        "progress",
+        "recipe_action",
+        "status",
+        "text",
+        "title"
+      ],
+      "source": "official",
+      "sourceTier": "official",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": [],
+      "capabilities": [
+        "app-mutation"
+      ]
+    },
+    {
+      "name": "cdp.target",
+      "kind": "official",
+      "category": "runtime",
+      "description": "Probe the platform debug transport — Chrome CDP for extension, the React Native debug bridge for mobile — and report whether it is reachable.",
+      "fields": [
+        "cdp_port",
+        "cdp_timeout_ms",
+        "metro_port",
+        "probe_timeout_ms",
+        "require_reachable",
+        "required",
+        "timeout_ms",
+        "watcher_port"
+      ],
+      "source": "official",
+      "sourceTier": "official",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": [],
+      "capabilities": [
+        "host-read-export"
+      ]
+    },
+    {
+      "name": "metamask.perps.ensure_unwatchlisted",
+      "kind": "custom",
+      "category": "perps",
+      "description": "Idempotently restore the visible Extension Perps market to an unwatchlisted state during workflow teardown.",
+      "fields": [
+        "timeout_ms"
+      ],
+      "source": "perps",
+      "sourceTier": "team",
+      "sourceManifest": "/Volumes/FD/dev/metamask/experimental-metamask-recipe-perps-delivery-01/manifests/extension.action-manifest.json",
+      "shadows": [],
+      "capabilities": [
+        "app-mutation",
+        "arbitrary-code"
+      ]
+    },
+    {
+      "name": "metamask.feature_flags.set",
+      "kind": "custom",
+      "category": "feature_flags",
+      "description": "Report that the extension cannot pin remote feature flags at runtime and name the relaunch that can. The extension pins flags into the per-run dist snapshot manifest at launch.",
+      "fields": [
+        "flags"
+      ],
+      "source": "metamask",
+      "sourceTier": "canonical",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": [],
+      "capabilities": [
+        "arbitrary-code"
+      ]
+    },
+    {
+      "name": "metamask.feature_flags.read",
+      "kind": "custom",
+      "category": "feature_flags",
+      "description": "Read the effective remote feature flags, the manifest pin, and the fetched flags from the running extension.",
+      "fields": [
+        "keys"
+      ],
+      "source": "metamask",
+      "sourceTier": "canonical",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": [],
+      "capabilities": [
+        "arbitrary-code"
+      ]
+    },
+    {
+      "name": "metamask.feature_flags.clear",
+      "kind": "custom",
+      "category": "feature_flags",
+      "description": "Confirm no manifest flag pin is active, or name the relaunch that drops it.",
+      "fields": [],
+      "source": "metamask",
+      "sourceTier": "canonical",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": [],
+      "capabilities": [
+        "arbitrary-code"
+      ]
+    },
+    {
+      "name": "ui.locators",
+      "kind": "custom",
+      "category": "ui",
+      "description": "List ranked, copy-pasteable ui.press targets from the current ui.visible observation. Prefer high-confidence test IDs when updating durable recipe source after exploratory interaction.",
+      "fields": [],
+      "source": "metamask",
+      "sourceTier": "canonical",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": [],
+      "capabilities": [
+        "host-read-export"
+      ]
+    },
+    {
+      "name": "app.network_capture",
+      "kind": "custom",
+      "category": "runtime",
+      "description": "Capture redacted HTTP requests between named Recipe Protocol v1 nodes through the adapter's persistent Network observer.",
+      "fields": [
+        "artifact_path",
+        "body_json_fields",
+        "id",
+        "max_duration_ms",
+        "max_requests",
+        "methods",
+        "phase",
+        "url_includes"
+      ],
+      "source": "metamask",
+      "sourceTier": "canonical",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": [],
+      "capabilities": [
+        "arbitrary-code"
+      ]
+    },
+    {
+      "name": "metamask.app.assert_no_console_errors",
+      "kind": "custom",
+      "category": "app",
+      "description": "Fail when MetaMask (service worker or UI pages) logged an error or uncaught exception that no console allowlist (the bundled library's, then each recipe library's diagnostics/console-allowlist.json) marks as known noise, judging the events since the launch began, by their own timestamps. Reads extension-console.log from the offset mm-harness launch records when it starts, and leaves out records the collector stamps with an event time before the launch (a replaced collector's replay of a browser the launch kept); with no recorded launch it fails unless since is start-of-log. The same classification feeds run diagnostics. Fails as unavailable unless this runtime's console collector runs on the run's CDP port and a control line logged in MetaMask's service worker or page reaches extension-console.log. Allowlist entries are exact signatures (schemaVersion 3).",
+      "fields": [
+        "allowlist_root",
+        "levels",
+        "since",
+        "timeout_ms"
+      ],
+      "source": "metamask",
+      "sourceTier": "canonical",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": [],
+      "capabilities": [
+        "host-read-export"
+      ]
+    },
+    {
+      "name": "app.network_assert",
+      "kind": "custom",
+      "category": "runtime",
+      "description": "Assert a previously indexed app.network_capture summary without hiding its diagnostics on failure.",
+      "fields": [
+        "artifact_path",
+        "forbidden_types",
+        "id",
+        "required_max_requests",
+        "required_min_requests",
+        "required_status",
+        "required_types"
+      ],
+      "source": "metamask",
+      "sourceTier": "canonical",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": [],
+      "capabilities": [
+        "arbitrary-code"
+      ]
+    },
+    {
+      "name": "app.performance_capture",
+      "kind": "custom",
+      "category": "runtime",
+      "description": "Capture bounded CDP renderer frame metrics and separately labelled JavaScript work across Recipe Protocol v1 node boundaries.",
+      "fields": [
+        "artifact_path",
+        "html_path",
+        "id",
+        "max_duration_ms",
+        "phase"
+      ],
+      "source": "metamask",
+      "sourceTier": "canonical",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": [],
+      "capabilities": [
+        "host-read-export",
+        "arbitrary-code"
+      ]
+    },
+    {
+      "name": "app.performance_assert",
+      "kind": "custom",
+      "category": "runtime",
+      "description": "Assert a previously indexed app.performance_capture summary without hiding unavailable or partial source coverage.",
+      "fields": [
+        "artifact_path",
+        "id",
+        "minimum_frame_count",
+        "require_native_ui_when_supported",
+        "required_node_ids",
+        "required_status"
+      ],
+      "source": "metamask",
+      "sourceTier": "canonical",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": [],
+      "capabilities": [
+        "host-read-export",
+        "arbitrary-code"
+      ]
+    },
+    {
+      "name": "metamask.wallet.fixture_status",
+      "kind": "custom",
+      "category": "wallet",
+      "description": "Report the on-disk wallet fixture status (accounts and password presence) without launching or mutating the app.",
+      "fields": [],
+      "source": "metamask",
+      "sourceTier": "canonical",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": [],
+      "capabilities": [
+        "host-read-export"
+      ]
+    },
+    {
+      "name": "metamask.wallet.validate_import",
+      "kind": "custom",
+      "category": "wallet",
+      "description": "Validate wallet recovery credentials and derive the expected primary address without launching or mutating the app.",
+      "fields": [
+        "credential_source",
+        "interests",
+        "metametrics",
+        "password_env",
+        "srp_env"
+      ],
+      "source": "metamask",
+      "sourceTier": "canonical",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": [],
+      "capabilities": [
+        "host-read-export"
+      ]
+    },
+    {
+      "name": "metamask.wallet.setup",
+      "kind": "custom",
+      "category": "wallet",
+      "description": "Import the wallet fixture accounts and password so the app starts from a known signed-in state.",
+      "fields": [],
+      "source": "metamask",
+      "sourceTier": "canonical",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": [],
+      "capabilities": [
+        "app-mutation"
+      ]
+    },
+    {
+      "name": "metamask.wallet.import",
+      "kind": "custom",
+      "category": "wallet",
+      "description": "Make the wallet ready through visible onboarding or prove and select the derived account in an existing visible session when method=ui.",
+      "fields": [
+        "biometrics",
+        "credential_source",
+        "interests",
+        "metametrics",
+        "method",
+        "notifications",
+        "password_env",
+        "skip_wallet_tour",
+        "srp_env",
+        "timeout_ms"
+      ],
+      "source": "metamask",
+      "sourceTier": "canonical",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": [],
+      "capabilities": [
+        "app-mutation"
+      ]
+    },
+    {
+      "name": "metamask.wallet.reset",
+      "kind": "custom",
+      "category": "wallet",
+      "description": "Delete the current wallet through the visible client reset flow and reach fresh onboarding.",
+      "fields": [
+        "timeout_ms"
+      ],
+      "source": "metamask",
+      "sourceTier": "canonical",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": [],
+      "capabilities": [
+        "app-mutation"
+      ]
+    },
+    {
+      "name": "metamask.wallet.ensure_unlocked",
+      "kind": "custom",
+      "category": "wallet",
+      "description": "Unlock the wallet with the fixture password when it is currently locked.",
+      "fields": [
+        "timeout_ms"
+      ],
+      "source": "metamask",
+      "sourceTier": "canonical",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": [],
+      "capabilities": [
+        "app-mutation"
+      ]
+    },
+    {
+      "name": "metamask.wallet.select_account",
+      "kind": "custom",
+      "category": "wallet",
+      "description": "extension action to select a wallet account by address, id, or display name.",
+      "fields": [
+        "address",
+        "id",
+        "name"
+      ],
+      "source": "metamask",
+      "sourceTier": "canonical",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": [],
+      "capabilities": [
+        "app-mutation"
+      ]
+    },
+    {
+      "name": "metamask.wallet.list_accounts",
+      "kind": "custom",
+      "category": "wallet",
+      "description": "List redacted wallet accounts and identify the selected account without mutating the app.",
+      "fields": [
+        "scope"
+      ],
+      "source": "metamask",
+      "sourceTier": "canonical",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": [],
+      "capabilities": [
+        "host-read-export"
+      ]
+    },
+    {
+      "name": "metamask.wallet.read_state",
+      "kind": "custom",
+      "category": "wallet",
+      "description": "Read redacted wallet state, or pending approval IDs/types/count from the source-dev store without modifying requests. Pending approvals are unsupported on official artifacts without the dev store.",
+      "fields": [
+        "scope"
+      ],
+      "source": "metamask",
+      "sourceTier": "canonical",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": [],
+      "capabilities": [
+        "host-read-export"
+      ]
+    },
+    {
+      "name": "metamask.performance.measure_navigation_memory",
+      "kind": "custom",
+      "category": "performance",
+      "description": "Measure retained DOM nodes and listeners across repeated Extension navigation after forced garbage collection, using least-squares slopes and separate declared bounds.",
+      "fields": [
+        "cycles",
+        "gc_settle_ms",
+        "max_listeners_per_cycle",
+        "max_nodes_per_cycle",
+        "return_hash",
+        "screen_hash",
+        "screen_test_id",
+        "screen_timeout_ms",
+        "settle_ms",
+        "timeout_ms"
+      ],
+      "source": "metamask",
+      "sourceTier": "canonical",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": [],
+      "capabilities": [
+        "arbitrary-code"
+      ]
+    },
+    {
+      "name": "metamask.performance.measure_detached_dom",
+      "kind": "custom",
+      "category": "performance",
+      "description": "Compare retained detached-DOM counts before and after repeated Extension navigation, with forced garbage collection before each heap snapshot.",
+      "fields": [
+        "cycles",
+        "gc_settle_ms",
+        "max_detached_growth",
+        "return_hash",
+        "screen_hash",
+        "screen_test_id",
+        "screen_timeout_ms",
+        "settle_ms",
+        "timeout_ms"
+      ],
+      "source": "metamask",
+      "sourceTier": "canonical",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": [],
+      "capabilities": [
+        "arbitrary-code"
+      ]
+    },
+    {
+      "name": "metamask.performance.compare_idle_navigation_memory",
+      "kind": "custom",
+      "category": "performance",
+      "description": "Compare equal-duration idle and navigating Extension arms to isolate navigation-attributable listener growth after forced garbage collection.",
+      "fields": [
+        "gc_settle_ms",
+        "max_attributable_listeners_per_cycle",
+        "return_hash",
+        "round_duration_ms",
+        "rounds",
+        "screen_hash",
+        "screen_test_id",
+        "screen_timeout_ms",
+        "settle_ms",
+        "timeout_ms"
+      ],
+      "source": "metamask",
+      "sourceTier": "canonical",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": [],
+      "capabilities": [
+        "arbitrary-code"
+      ]
+    },
+    {
+      "name": "metamask.assets.read_visible_state",
+      "kind": "custom",
+      "category": "assets",
+      "description": "Read and assert bounded visible wallet assets from an untouched Extension runtime without product background hooks.",
+      "fields": [
+        "max_items",
+        "minimum_asset_count",
+        "minimum_price_change_count",
+        "minimum_without_price_change_count",
+        "require_fiat",
+        "require_price_change_styling",
+        "require_symbols"
+      ],
+      "source": "metamask",
+      "sourceTier": "canonical",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": [],
+      "capabilities": [
+        "host-read-export"
+      ]
+    },
+    {
+      "name": "metamask.assets.open_details",
+      "kind": "custom",
+      "category": "assets",
+      "description": "Open the uniquely visible Extension asset matching a symbol; refuse ambiguous rows without clicking. Symbol alone does not prove funding or network identity.",
+      "fields": [
+        "symbol",
+        "timeout_ms"
+      ],
+      "source": "metamask",
+      "sourceTier": "canonical",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": [],
+      "capabilities": [
+        "app-mutation",
+        "arbitrary-code"
+      ]
+    },
+    {
+      "name": "metamask.assets.read_details",
+      "kind": "custom",
+      "category": "assets",
+      "description": "Observe asset details until requested chart and market data are ready within the polling budget. A required chart needs visible price labels and an unmuted price, not just a canvas. Never refreshes the page.",
+      "fields": [
+        "expected_symbol",
+        "require_chart",
+        "require_market_cap",
+        "timeout_ms"
+      ],
+      "source": "metamask",
+      "sourceTier": "canonical",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": [],
+      "capabilities": [
+        "host-read-export"
+      ]
+    },
+    {
+      "name": "metamask.assets.verify_sorting",
+      "kind": "custom",
+      "category": "assets",
+      "description": "Verify both Extension asset sort modes and restore the observed initial preference after success or failure. Already-selected modes skip redundant selection; row-order observation is bounded.",
+      "fields": [],
+      "source": "metamask",
+      "sourceTier": "canonical",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": [],
+      "capabilities": [
+        "app-mutation"
+      ]
+    },
+    {
+      "name": "metamask.assets.set_token_visibility",
+      "kind": "custom",
+      "category": "assets",
+      "description": "Enable or disable one uniquely matched Extension token through Manage tokens and verify the home list state. Ambiguous search results fail before toggling; require_unchanged verifies existing visibility without repairing it.",
+      "fields": [
+        "asset_id",
+        "query",
+        "require_change",
+        "require_unchanged",
+        "timeout_ms",
+        "visible"
+      ],
+      "source": "metamask",
+      "sourceTier": "canonical",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": [],
+      "capabilities": [
+        "app-mutation"
+      ]
+    },
+    {
+      "name": "metamask.wallet.lock",
+      "kind": "custom",
+      "category": "wallet",
+      "description": "Lock the Extension wallet through the visible global menu and prove the unlock page appears.",
+      "fields": [
+        "timeout_ms"
+      ],
+      "source": "metamask",
+      "sourceTier": "canonical",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": [],
+      "capabilities": [
+        "app-mutation"
+      ]
+    },
+    {
+      "name": "metamask.assets.import_custom_token",
+      "kind": "custom",
+      "category": "assets",
+      "description": "Import one ERC-20 on a selected Extension network through the custom-token form and verify its row.",
+      "fields": [
+        "address",
+        "chain_id",
+        "decimals",
+        "expected_symbol",
+        "network",
+        "timeout_ms"
+      ],
+      "source": "metamask",
+      "sourceTier": "canonical",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": [],
+      "capabilities": [
+        "app-mutation"
+      ]
+    },
+    {
+      "name": "metamask.assets.prepare_send",
+      "kind": "custom",
+      "category": "assets",
+      "description": "Prepare a wallet-initiated EVM asset send through visible UI without advancing to confirmation.",
+      "fields": [
+        "amount",
+        "max",
+        "recipient",
+        "symbol",
+        "timeout_ms"
+      ],
+      "source": "metamask",
+      "sourceTier": "canonical",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": [],
+      "capabilities": [
+        "app-mutation"
+      ]
+    },
+    {
+      "name": "metamask.assets.review_send",
+      "kind": "custom",
+      "category": "assets",
+      "description": "Advance a prepared Extension send to confirmation and prove its visible network fee.",
+      "fields": [
+        "timeout_ms"
+      ],
+      "source": "metamask",
+      "sourceTier": "canonical",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": [],
+      "capabilities": [
+        "app-mutation"
+      ]
+    },
+    {
+      "name": "metamask.assets.set_custom_gas",
+      "kind": "custom",
+      "category": "assets",
+      "description": "Set a custom EVM gas limit on the current Extension send confirmation through visible controls.",
+      "fields": [
+        "gas_limit",
+        "timeout_ms"
+      ],
+      "source": "metamask",
+      "sourceTier": "canonical",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": [],
+      "capabilities": [
+        "app-mutation"
+      ]
+    },
+    {
+      "name": "metamask.assets.select_network_scope",
+      "kind": "custom",
+      "category": "assets",
+      "description": "Select the all-networks Extension asset scope through the visible network filter.",
+      "fields": [
+        "scope",
+        "timeout_ms"
+      ],
+      "source": "metamask",
+      "sourceTier": "canonical",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": [],
+      "capabilities": [
+        "app-mutation"
+      ]
+    },
+    {
+      "name": "metamask.networks.read_visible_state",
+      "kind": "custom",
+      "category": "networks",
+      "description": "Read one selected Extension network and prove its visible balance rows remain stable across a bounded settle window.",
+      "fields": [
+        "chain_id",
+        "max_items",
+        "minimum_asset_count",
+        "minimum_price_change_count",
+        "minimum_without_price_change_count",
+        "network",
+        "require_fiat",
+        "require_price_change_styling",
+        "require_symbols",
+        "settle_ms"
+      ],
+      "source": "metamask",
+      "sourceTier": "canonical",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": [],
+      "capabilities": [
+        "host-read-export"
+      ]
+    },
+    {
+      "name": "metamask.networks.add_custom",
+      "kind": "custom",
+      "category": "networks",
+      "description": "Add or select one custom Extension network through visible network management controls.",
+      "fields": [
+        "chain_id",
+        "explorer_url",
+        "network",
+        "require_absent",
+        "rpc_url",
+        "symbol",
+        "timeout_ms"
+      ],
+      "source": "metamask",
+      "sourceTier": "canonical",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": [],
+      "capabilities": [
+        "app-mutation"
+      ]
+    },
+    {
+      "name": "metamask.networks.add_chainlist",
+      "kind": "custom",
+      "category": "networks",
+      "description": "Add or select one Extension network from the visible ChainList search results.",
+      "fields": [
+        "chain_id",
+        "network",
+        "query",
+        "require_absent",
+        "symbol",
+        "timeout_ms"
+      ],
+      "source": "metamask",
+      "sourceTier": "canonical",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": [],
+      "capabilities": [
+        "app-mutation"
+      ]
+    },
+    {
+      "name": "metamask.networks.remove_custom",
+      "kind": "custom",
+      "category": "networks",
+      "description": "Remove one custom Extension network through visible network management controls.",
+      "fields": [
+        "chain_id",
+        "network",
+        "timeout_ms"
+      ],
+      "source": "metamask",
+      "sourceTier": "canonical",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": [],
+      "capabilities": [
+        "app-mutation"
+      ]
+    },
+    {
+      "name": "metamask.swap_bridge.read_visible_state",
+      "kind": "custom",
+      "category": "swap_bridge",
+      "description": "Read the visible Swap surface without mutation. require_quote additionally needs exposed bridge quote state to verify current input/quote identity; surface-only reads do not require those hooks.",
+      "fields": [
+        "destination_symbol",
+        "expected_slippage",
+        "require_amount_inputs",
+        "require_quote",
+        "require_settings",
+        "source_symbol"
+      ],
+      "source": "metamask",
+      "sourceTier": "canonical",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": [],
+      "capabilities": [
+        "host-read-export"
+      ]
+    },
+    {
+      "name": "metamask.swap_bridge.select_assets",
+      "kind": "custom",
+      "category": "swap_bridge",
+      "description": "Select exact Swap source and destination assets through the visible asset pickers.",
+      "fields": [
+        "destination_asset_id",
+        "destination_chain",
+        "destination_query",
+        "destination_symbol",
+        "source_asset_id",
+        "source_chain",
+        "source_query",
+        "source_symbol",
+        "timeout_ms"
+      ],
+      "source": "metamask",
+      "sourceTier": "canonical",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": [],
+      "capabilities": [
+        "app-mutation"
+      ]
+    },
+    {
+      "name": "metamask.swap_bridge.set_amount",
+      "kind": "custom",
+      "category": "swap_bridge",
+      "description": "Enter a positive Swap amount through visible UI. Quote waiting requires exposed bridge quote state to bind the current token-unit amount and assets to the quote; no implicit refresh or submission.",
+      "fields": [
+        "amount",
+        "timeout_ms",
+        "wait_for_quote"
+      ],
+      "source": "metamask",
+      "sourceTier": "canonical",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": [],
+      "capabilities": [
+        "app-mutation"
+      ]
+    },
+    {
+      "name": "metamask.swap_bridge.set_slippage",
+      "kind": "custom",
+      "category": "swap_bridge",
+      "description": "Set a custom Swap slippage percentage through the visible transaction settings.",
+      "fields": [
+        "percent",
+        "timeout_ms"
+      ],
+      "source": "metamask",
+      "sourceTier": "canonical",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": [],
+      "capabilities": [
+        "app-mutation"
+      ]
+    },
+    {
+      "name": "metamask.swap_bridge.set_max_amount",
+      "kind": "custom",
+      "category": "swap_bridge",
+      "description": "Use the visible Swap Max control; quote waiting requires exposed bridge quote state and a reviewable quote matching current inputs. Never refresh or submit implicitly.",
+      "fields": [
+        "timeout_ms",
+        "wait_for_quote"
+      ],
+      "source": "metamask",
+      "sourceTier": "canonical",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": [],
+      "capabilities": [
+        "app-mutation"
+      ]
+    },
+    {
+      "name": "metamask.perps.read_visible_state",
+      "kind": "custom",
+      "category": "perps",
+      "description": "Read and assert bounded visible Perps UI state without product background hooks. marketDetails exposes visible symbol, pair, name, price and priceChange as text, or null when absent/ambiguous. marketCount counts the bounded observed markets array, not an unbounded total. topMovers separately reports its bounded pills, count and visibleCount when that list is observed; otherwise null. favorite is boolean only when the requested market pair and one favorite control are both visible; otherwise null, never an assumed false.",
+      "fields": [
+        "amount",
+        "auto_close",
+        "direction",
+        "forbid_test_ids",
+        "include_offscreen",
+        "leverage",
+        "market",
+        "max_items",
+        "maximum_market_count",
+        "maximum_order_count",
+        "maximum_position_count",
+        "minimum_activity_count",
+        "minimum_market_count",
+        "minimum_order_count",
+        "minimum_position_count",
+        "order_type",
+        "percent",
+        "require_features",
+        "require_no_control_overlap",
+        "require_no_horizontal_overflow",
+        "require_test_ids",
+        "require_validation_text",
+        "submit_enabled",
+        "surface"
+      ],
+      "source": "metamask",
+      "sourceTier": "canonical",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": [],
+      "capabilities": [
+        "host-read-export"
+      ]
+    },
+    {
+      "name": "metamask.perps.search_markets",
+      "kind": "custom",
+      "category": "perps",
+      "description": "Enter a Perps market query through the visible search field and prove visible results are returned.",
+      "fields": [
+        "query",
+        "timeout_ms"
+      ],
+      "source": "metamask",
+      "sourceTier": "canonical",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": [],
+      "capabilities": [
+        "app-mutation",
+        "arbitrary-code"
+      ]
+    },
+    {
+      "name": "metamask.perps.select_market_filter",
+      "kind": "custom",
+      "category": "perps",
+      "description": "Select and assert a live Perps market category through trusted visible UI controls.",
+      "fields": [
+        "filter",
+        "max_items",
+        "maximum_market_count",
+        "minimum_market_count",
+        "timeout_ms"
+      ],
+      "source": "metamask",
+      "sourceTier": "canonical",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": [],
+      "capabilities": [
+        "app-mutation"
+      ]
+    },
+    {
+      "name": "metamask.perps.close_visible_position",
+      "kind": "custom",
+      "category": "perps",
+      "description": "Close all or part of one live Perps position through semantic visible controls.",
+      "fields": [
+        "amount",
+        "balance_reconciliation_tolerance_base_units",
+        "cleanup_only",
+        "confirm_live",
+        "funding_amount",
+        "funding_position_size",
+        "funding_side",
+        "identity_rounding_tolerance_base_units",
+        "leverage",
+        "market",
+        "network",
+        "placement_node",
+        "provider"
+      ],
+      "source": "metamask",
+      "sourceTier": "canonical",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": [],
+      "capabilities": [
+        "app-mutation",
+        "external-mutation"
+      ]
+    },
+    {
+      "name": "metamask.perps.compare_provider_market",
+      "kind": "custom",
+      "category": "perps",
+      "description": "Compare one visible Perps market with the live Hyperliquid production response.",
+      "fields": [
+        "endpoint",
+        "market",
+        "timeout_ms"
+      ],
+      "source": "metamask",
+      "sourceTier": "canonical",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": [],
+      "capabilities": [
+        "host-read-export"
+      ]
+    },
+    {
+      "name": "metamask.perps.read_eligibility",
+      "kind": "custom",
+      "category": "perps",
+      "description": "Read the current Extension Perps eligibility and live MetaMask geolocation without changing either.",
+      "fields": [
+        "timeout_ms"
+      ],
+      "source": "metamask",
+      "sourceTier": "canonical",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": [],
+      "capabilities": [
+        "host-read-export"
+      ]
+    },
+    {
+      "name": "metamask.perps.set_market_favorite",
+      "kind": "custom",
+      "category": "perps",
+      "description": "Converge one live Perps market favorite to the requested state through its semantic visible control.",
+      "fields": [
+        "favorite",
+        "market",
+        "require_unchanged"
+      ],
+      "source": "metamask",
+      "sourceTier": "canonical",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": [],
+      "capabilities": [
+        "app-mutation"
+      ]
+    },
+    {
+      "name": "metamask.perps.select_activity_filter",
+      "kind": "custom",
+      "category": "perps",
+      "description": "Select and read one live Perps activity category through semantic visible controls.",
+      "fields": [
+        "filter"
+      ],
+      "source": "metamask",
+      "sourceTier": "canonical",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": [],
+      "capabilities": [
+        "app-mutation"
+      ]
+    },
+    {
+      "name": "metamask.perps.open_balance_action",
+      "kind": "custom",
+      "category": "perps",
+      "description": "Open Add funds or Withdraw from the live Perps balance dropdown in one trusted UI session.",
+      "fields": [
+        "balance_action"
+      ],
+      "source": "metamask",
+      "sourceTier": "canonical",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": [],
+      "capabilities": [
+        "app-mutation"
+      ]
+    },
+    {
+      "name": "metamask.perps.open_position_action",
+      "kind": "custom",
+      "category": "perps",
+      "description": "Open a position-management flow from a live Perps position through visible controls in one trusted UI session.",
+      "fields": [
+        "market",
+        "position_action"
+      ],
+      "source": "metamask",
+      "sourceTier": "canonical",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": [],
+      "capabilities": [
+        "app-mutation"
+      ]
+    },
+    {
+      "name": "metamask.perps.edit_margin",
+      "kind": "custom",
+      "category": "perps",
+      "description": "Add or remove isolated margin from a live Perps position through visible controls and prove the reconciled position values.",
+      "fields": [
+        "amount",
+        "balance_reconciliation_tolerance_base_units",
+        "confirm_live",
+        "funding_amount",
+        "funding_position_size",
+        "funding_side",
+        "leverage",
+        "margin_action",
+        "market",
+        "network",
+        "provider",
+        "timeout_ms"
+      ],
+      "source": "metamask",
+      "sourceTier": "canonical",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": [],
+      "capabilities": [
+        "app-mutation",
+        "external-mutation"
+      ]
+    },
+    {
+      "name": "metamask.perps.update_position_tpsl",
+      "kind": "custom",
+      "category": "perps",
+      "description": "Update take-profit and stop-loss for a live Extension Perps position through visible controls and prove the reconciled position row.",
+      "fields": [
+        "confirm_live",
+        "funding_amount",
+        "funding_position_size",
+        "funding_side",
+        "leverage",
+        "market",
+        "network",
+        "provider",
+        "stop_loss_price",
+        "take_profit_price",
+        "timeout_ms"
+      ],
+      "source": "metamask",
+      "sourceTier": "canonical",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": [],
+      "capabilities": [
+        "app-mutation",
+        "external-mutation"
+      ]
+    },
+    {
+      "name": "metamask.settings.set_basic_functionality",
+      "kind": "custom",
+      "category": "settings",
+      "description": "Converge the Extension Basic Functionality privacy setting through its visible toggle and confirmation modal.",
+      "fields": [
+        "enabled"
+      ],
+      "source": "metamask",
+      "sourceTier": "canonical",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": [],
+      "capabilities": [
+        "app-mutation"
+      ]
+    },
+    {
+      "name": "metamask.perps.read_funds_confirmation",
+      "kind": "custom",
+      "category": "perps",
+      "description": "Read the loaded Perps deposit or withdraw confirmation without submitting it.",
+      "fields": [
+        "expected_amount",
+        "expected_amount_symbol",
+        "expected_pay_token",
+        "expected_pay_token_amount_visible",
+        "expected_percentage_controls",
+        "expected_receive_token",
+        "expected_submit_enabled",
+        "expected_submit_label",
+        "expected_visible_network",
+        "mode",
+        "require_no_horizontal_overflow",
+        "require_preview_fields",
+        "require_visible_text"
+      ],
+      "source": "metamask",
+      "sourceTier": "canonical",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": [],
+      "capabilities": [
+        "host-read-export"
+      ]
+    },
+    {
+      "name": "metamask.perps.assert_visible_consistency",
+      "kind": "custom",
+      "category": "perps",
+      "description": "Assert bounded rendered Perps market or price changes, or recent-to-full activity containment, through visible Extension UI.",
+      "fields": [
+        "market",
+        "max_items",
+        "minimum_changed_count",
+        "minimum_recent_activity_count",
+        "mode",
+        "require_unique_ids",
+        "sample_count",
+        "sample_interval_ms",
+        "surface",
+        "timeout_ms"
+      ],
+      "source": "metamask",
+      "sourceTier": "canonical",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": [],
+      "capabilities": [
+        "host-read-export",
+        "app-mutation"
+      ]
+    },
+    {
+      "name": "metamask.perps.read_snapshot",
+      "kind": "custom",
+      "category": "perps",
+      "description": "Read a bounded, redacted source-dev snapshot of Extension Perps state through the optional product background hook.",
+      "fields": [
+        "expect",
+        "history",
+        "include",
+        "market",
+        "markets",
+        "max_items_per_section",
+        "sampling",
+        "timeout_ms"
+      ],
+      "source": "metamask",
+      "sourceTier": "canonical",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": [],
+      "capabilities": [
+        "host-read-export"
+      ]
+    },
+    {
+      "name": "metamask.perps.read_positions",
+      "kind": "custom",
+      "category": "perps",
+      "description": "extension Read live Perps positions; without a selector, return all live positions.",
+      "fields": [
+        "market",
+        "markets",
+        "mode",
+        "network",
+        "selector",
+        "side",
+        "symbol",
+        "symbols",
+        "timeout_ms"
+      ],
+      "source": "metamask",
+      "sourceTier": "canonical",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": [],
+      "capabilities": [
+        "host-read-export"
+      ]
+    },
+    {
+      "name": "metamask.perps.read_orders",
+      "kind": "custom",
+      "category": "perps",
+      "description": "extension Read live Perps open orders; without a selector, return all live orders.",
+      "fields": [
+        "market",
+        "markets",
+        "mode",
+        "network",
+        "selector",
+        "side",
+        "symbol",
+        "symbols",
+        "timeout_ms"
+      ],
+      "source": "metamask",
+      "sourceTier": "canonical",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": [],
+      "capabilities": [
+        "host-read-export"
+      ]
+    },
+    {
+      "name": "metamask.perps.close_orders",
+      "kind": "custom",
+      "category": "perps",
+      "description": "extension Default to testnet for Perps mutations; mainnet is read-only unless explicitly requested. Cancel selected live Perps open orders. Use selector/mode params to cancel matching symbols or all orders. Extension ensure_* only assert existing state; converge an owned testnet account through an explicitly funded leaf action. Mainnet is never mutated.",
+      "fields": [
+        "amount",
+        "confirm_live",
+        "identity_rounding_tolerance_base_units",
+        "leverage",
+        "limit_price",
+        "market",
+        "markets",
+        "mode",
+        "network",
+        "offset_pct",
+        "order_id",
+        "placement_node",
+        "provider",
+        "selector",
+        "side",
+        "symbol",
+        "symbols",
+        "timeout_ms"
+      ],
+      "source": "metamask",
+      "sourceTier": "canonical",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": [],
+      "capabilities": [
+        "app-mutation",
+        "external-mutation"
+      ]
+    },
+    {
+      "name": "metamask.perps.place_order",
+      "kind": "custom",
+      "category": "perps",
+      "description": "extension Place a Perps order through a supported app/API path. Default to testnet; mainnet order placement requires an explicit user request.",
+      "fields": [
+        "amount",
+        "close_immediately",
+        "confirm_live",
+        "from_current_form",
+        "identity_rounding_tolerance_base_units",
+        "leverage",
+        "limit_price",
+        "market",
+        "markets",
+        "mode",
+        "network",
+        "notional",
+        "offset_pct",
+        "order_type",
+        "position_mode",
+        "provider",
+        "selector",
+        "side",
+        "size",
+        "submit_attempts",
+        "symbol",
+        "symbols",
+        "timeout_ms"
+      ],
+      "source": "metamask",
+      "sourceTier": "canonical",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": [],
+      "capabilities": [
+        "app-mutation",
+        "external-mutation"
+      ]
+    },
+    {
+      "name": "metamask.perps.assert_positions",
+      "kind": "custom",
+      "category": "perps",
+      "description": "extension Assert live Perps positions are present or absent for an explicit market selection or mode=all.",
+      "fields": [
+        "market",
+        "markets",
+        "mode",
+        "selector",
+        "side",
+        "state",
+        "symbol",
+        "symbols",
+        "timeout_ms"
+      ],
+      "source": "metamask",
+      "sourceTier": "canonical",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": [],
+      "capabilities": [
+        "host-read-export"
+      ]
+    },
+    {
+      "name": "metamask.perps.assert_orders",
+      "kind": "custom",
+      "category": "perps",
+      "description": "extension Assert live Perps open orders are present or absent for an explicit market selection or mode=all.",
+      "fields": [
+        "market",
+        "markets",
+        "mode",
+        "selector",
+        "side",
+        "state",
+        "symbol",
+        "symbols",
+        "timeout_ms"
+      ],
+      "source": "metamask",
+      "sourceTier": "canonical",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": [],
+      "capabilities": [
+        "host-read-export"
+      ]
+    },
+    {
+      "name": "metamask.perps.ensure_positions",
+      "kind": "custom",
+      "category": "perps",
+      "description": "Read and assert the selected Extension Perps position state without creating or closing a position. Use an explicitly funded leaf action for any transition. Extension ensure_* only assert existing state; converge an owned testnet account through an explicitly funded leaf action. Mainnet is never mutated.",
+      "fields": [
+        "market",
+        "markets",
+        "mode",
+        "selector",
+        "side",
+        "state",
+        "symbol",
+        "symbols",
+        "timeout_ms"
+      ],
+      "source": "metamask",
+      "sourceTier": "canonical",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": [],
+      "capabilities": [
+        "host-read-export"
+      ]
+    },
+    {
+      "name": "metamask.perps.ensure_orders",
+      "kind": "custom",
+      "category": "perps",
+      "description": "Read and assert the selected Extension Perps order state without creating or canceling an order. Use an explicitly funded leaf action for any transition. Extension ensure_* only assert existing state; converge an owned testnet account through an explicitly funded leaf action. Mainnet is never mutated.",
+      "fields": [
+        "market",
+        "markets",
+        "mode",
+        "selector",
+        "side",
+        "state",
+        "symbol",
+        "symbols",
+        "timeout_ms"
+      ],
+      "source": "metamask",
+      "sourceTier": "canonical",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": [],
+      "capabilities": [
+        "host-read-export"
+      ]
+    },
+    {
+      "name": "metamask.perps.teardown_state",
+      "kind": "custom",
+      "category": "perps",
+      "description": "Verify an optional expected network, assert the requested final Extension Perps order and position state, then optionally navigate. This action never switches networks, closes positions or cancels orders.",
+      "fields": [
+        "market",
+        "markets",
+        "mode",
+        "network",
+        "orders",
+        "page",
+        "positions",
+        "side",
+        "symbol",
+        "symbols",
+        "timeout_ms"
+      ],
+      "source": "metamask",
+      "sourceTier": "canonical",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": [],
+      "capabilities": [
+        "app-mutation"
+      ]
+    },
+    {
+      "name": "metamask.deeplink.open",
+      "kind": "custom",
+      "category": "deeplink",
+      "description": "Open an HTTPS deeplink through real browser ingress so the Extension owns parsing, verification, and destination navigation.",
+      "fields": [
+        "timeout_ms",
+        "url"
+      ],
+      "source": "metamask",
+      "sourceTier": "canonical",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": [],
+      "capabilities": [
+        "app-mutation"
+      ]
+    },
+    {
+      "name": "metamask.analytics.start_capture",
+      "kind": "custom",
+      "category": "analytics",
+      "description": "extension Start capturing MetaMetrics events at the Segment transport and return a cursor to bracket later reads.",
+      "fields": [
+        "cdp_port",
+        "port"
+      ],
+      "source": "metamask",
+      "sourceTier": "canonical",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": [],
+      "capabilities": [
+        "arbitrary-code"
+      ]
+    },
+    {
+      "name": "metamask.analytics.read_events",
+      "kind": "custom",
+      "category": "analytics",
+      "description": "extension Read MetaMetrics events captured since a cursor, as [{ event, properties, ts }].",
+      "fields": [
+        "event",
+        "since"
+      ],
+      "source": "metamask",
+      "sourceTier": "canonical",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": [],
+      "capabilities": [
+        "host-read-export"
+      ]
+    },
+    {
+      "name": "metamask.analytics.assert_events",
+      "kind": "custom",
+      "category": "analytics",
+      "description": "extension Assert MetaMetrics event names, property values and counts. Counts are the point: an exact count catches a double emit that a presence check cannot.",
+      "fields": [
+        "exact",
+        "expect",
+        "settle_ms",
+        "since",
+        "timeout_ms"
+      ],
+      "source": "metamask",
+      "sourceTier": "canonical",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": [],
+      "capabilities": [
+        "host-read-export"
+      ]
+    },
+    {
+      "name": "metamask.analytics.set_consent",
+      "kind": "custom",
+      "category": "analytics",
+      "description": "extension Set MetaMetrics consent flags so events actually reach the Segment transport. Wallet fixtures set neither, so capture yields nothing without this.",
+      "fields": [
+        "marketing",
+        "participate",
+        "timeout_ms"
+      ],
+      "source": "metamask",
+      "sourceTier": "canonical",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": [],
+      "capabilities": [
+        "app-mutation"
+      ]
+    }
+  ]
+}

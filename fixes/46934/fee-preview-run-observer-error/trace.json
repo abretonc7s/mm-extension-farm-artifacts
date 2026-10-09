@@ -1,0 +1,2137 @@
+{
+  "metadata": {
+    "runner": {
+      "source": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness",
+      "git_ref": "unknown",
+      "name": "@metamask/recipe-runner"
+    }
+  },
+  "entries": [
+    {
+      "nodeId": "unlock",
+      "action": "metamask.wallet.ensure_unlocked",
+      "intent": "The prepared wallet is unlocked for read-only Perps verification",
+      "startedAt": "2026-10-09T09:00:44.526Z",
+      "endedAt": "2026-10-09T09:00:44.710Z",
+      "durationMs": 184,
+      "ok": true,
+      "next": "open-btc",
+      "output": {
+        "action": "metamask.wallet.ensure_unlocked",
+        "unlocked": true,
+        "alreadyUnlocked": true,
+        "proofPath": "extension-unlocked-state",
+        "cdpPort": 7667,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/BTC",
+        "runtimeLaunch": null,
+        "cdpTargetId": "1ED7CD2E15AC58B09D09BBE9183BC1FA",
+        "runtimeSessionId": "18e5fd79-9059-4e61-87df-5be926599abb",
+        "liveAdapter": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/actions/extension/wallet/ensure_unlocked.mjs"
+      }
+    },
+    {
+      "nodeId": "open-btc",
+      "action": "ui.navigate",
+      "intent": "The BTC order preview is ready for a notional comparison",
+      "startedAt": "2026-10-09T09:00:44.719Z",
+      "endedAt": "2026-10-09T09:00:44.871Z",
+      "durationMs": 152,
+      "ok": true,
+      "next": "wait-entry",
+      "output": {
+        "action": "ui.navigate",
+        "hash": "#/perps/trade/BTC",
+        "navigation": {
+          "before": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/BTC",
+          "href": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/BTC",
+          "sameDocument": true
+        },
+        "proofPath": "ui-navigation",
+        "cdpPort": 7667,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/BTC",
+        "runtimeLaunch": null,
+        "cdpTargetId": "1ED7CD2E15AC58B09D09BBE9183BC1FA",
+        "runtimeSessionId": "18e5fd79-9059-4e61-87df-5be926599abb",
+        "liveAdapter": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/actions/extension/ui/navigate.mjs"
+      },
+      "observations": {
+        "ui.screen": {
+          "provider": "cdp-web",
+          "name": "mini-mme-3 — MetaMask",
+          "title": "mini-mme-3 — MetaMask",
+          "route": "#/perps/trade/BTC",
+          "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
+        },
+        "ui.visible": {
+          "provider": "cdp-web",
+          "items": [
+            {
+              "role": "button",
+              "label": "Back",
+              "test_id": "perps-order-entry-back-button",
+              "selector": "[data-testid=\"perps-order-entry-back-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 212,
+                "y": 21,
+                "width": 36,
+                "height": 36
+              }
+            },
+            {
+              "role": "button",
+              "label": "Order book",
+              "test_id": "perps-order-book-toggle",
+              "selector": "[data-testid=\"perps-order-book-toggle\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 891,
+                "y": 21,
+                "width": 36,
+                "height": 36
+              }
+            },
+            {
+              "role": "button",
+              "label": "Collapse chart",
+              "test_id": "perps-order-entry-chart-toggle",
+              "selector": "[data-testid=\"perps-order-entry-chart-toggle\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 931,
+                "y": 21,
+                "width": 36,
+                "height": 36
+              }
+            },
+            {
+              "role": "button",
+              "label": "1min",
+              "test_id": "perps-candle-period-1m",
+              "selector": "[data-testid=\"perps-candle-period-1m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 212,
+                "y": 86,
+                "width": 62,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "3min",
+              "test_id": "perps-candle-period-3m",
+              "selector": "[data-testid=\"perps-candle-period-3m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 277,
+                "y": 86,
+                "width": 65,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "5min",
+              "test_id": "perps-candle-period-5m",
+              "selector": "[data-testid=\"perps-candle-period-5m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 346,
+                "y": 86,
+                "width": 64,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "15min",
+              "test_id": "perps-candle-period-15m",
+              "selector": "[data-testid=\"perps-candle-period-15m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 414,
+                "y": 86,
+                "width": 70,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "More",
+              "test_id": "perps-candle-period-more",
+              "selector": "[data-testid=\"perps-candle-period-more\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 488,
+                "y": 86,
+                "width": 82,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "Long",
+              "test_id": "direction-tab-long",
+              "selector": "[data-testid=\"direction-tab-long\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 390,
+                "width": 373,
+                "height": 32
+              }
+            },
+            {
+              "role": "button",
+              "label": "Short",
+              "test_id": "direction-tab-short",
+              "selector": "[data-testid=\"direction-tab-short\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 589,
+                "y": 390,
+                "width": 373,
+                "height": 32
+              }
+            },
+            {
+              "role": "button",
+              "label": "Market",
+              "test_id": "order-type-market",
+              "selector": "[data-testid=\"order-type-market\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 212,
+                "y": 442,
+                "width": 79,
+                "height": 30
+              }
+            },
+            {
+              "role": "button",
+              "label": "Limit",
+              "test_id": "order-type-limit",
+              "selector": "[data-testid=\"order-type-limit\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 298,
+                "y": 442,
+                "width": 64,
+                "height": 30
+              }
+            },
+            {
+              "role": "button",
+              "label": "Add funds",
+              "test_id": "amount-input-add-funds",
+              "selector": "[data-testid=\"amount-input-add-funds\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 947,
+                "y": 489,
+                "width": 20,
+                "height": 20
+              }
+            },
+            {
+              "label": "0.00",
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(2) > input",
+              "enabled": true,
+              "focused": true,
+              "bounds": {
+                "x": 260,
+                "y": 522,
+                "width": 633,
+                "height": 40
+              }
+            },
+            {
+              "role": "button",
+              "label": "Toggle size denomination",
+              "test_id": "toggle-denomination",
+              "selector": "[data-testid=\"toggle-denomination\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 931,
+                "y": 532,
+                "width": 20,
+                "height": 20
+              }
+            },
+            {
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(2) > div > input",
+              "enabled": true,
+              "bounds": {
+                "x": 895,
+                "y": 574,
+                "width": 42,
+                "height": 32
+              }
+            },
+            {
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(2) > div > input",
+              "enabled": true,
+              "bounds": {
+                "x": 895,
+                "y": 652,
+                "width": 48,
+                "height": 32
+              }
+            },
+            {
+              "role": "button",
+              "label": "Open long BTC",
+              "test_id": "submit-order-button",
+              "selector": "[data-testid=\"submit-order-button\"]",
+              "enabled": false,
+              "bounds": {
+                "x": 212,
+                "y": 765,
+                "width": 755,
+                "height": 48
+              }
+            }
+          ],
+          "hidden_or_offscreen": [
+            {
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(1) > div > span > span:nth-of-type(3) > input",
+              "enabled": true,
+              "bounds": {
+                "x": 224,
+                "y": 588,
+                "width": 12,
+                "height": 12
+              },
+              "reason": "covered"
+            },
+            {
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div > span > span:nth-of-type(11) > input",
+              "enabled": true,
+              "bounds": {
+                "x": 251,
+                "y": 666,
+                "width": 12,
+                "height": 12
+              },
+              "reason": "covered"
+            },
+            {
+              "test_id": "auto-close-toggle",
+              "selector": "[data-testid=\"auto-close-toggle\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 914,
+                "y": 742,
+                "width": 1,
+                "height": 1
+              },
+              "reason": "covered"
+            },
+            {
+              "role": "button",
+              "label": "Liquidation price info",
+              "test_id": "perps-order-summary-liquidation-price-tooltip-label-trigger",
+              "selector": "[data-testid=\"perps-order-summary-liquidation-price-tooltip-label-trigger\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 326,
+                "y": 791,
+                "width": 16,
+                "height": 16
+              },
+              "reason": "covered"
+            },
+            {
+              "role": "button",
+              "label": "Edit max slippage",
+              "test_id": "perps-order-summary-slippage-row",
+              "selector": "[data-testid=\"perps-order-summary-slippage-row\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 212,
+                "y": 818,
+                "width": 755,
+                "height": 22
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "Margin info",
+              "test_id": "perps-order-summary-margin-tooltip-label-trigger",
+              "selector": "[data-testid=\"perps-order-summary-margin-tooltip-label-trigger\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 261,
+                "y": 851,
+                "width": 16,
+                "height": 16
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "Fees info",
+              "test_id": "perps-order-summary-fees-tooltip-label-trigger",
+              "selector": "[data-testid=\"perps-order-summary-fees-tooltip-label-trigger\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 247,
+                "y": 881,
+                "width": 16,
+                "height": 16
+              },
+              "reason": "offscreen"
+            }
+          ],
+          "truncated": false,
+          "limits": {
+            "items": 20,
+            "hidden_or_offscreen": 10
+          }
+        }
+      }
+    },
+    {
+      "nodeId": "wait-entry",
+      "action": "ui.wait_for",
+      "intent": "The editable order amount is present before fee verification",
+      "startedAt": "2026-10-09T09:00:44.877Z",
+      "endedAt": "2026-10-09T09:00:45.242Z",
+      "durationMs": 365,
+      "ok": true,
+      "next": "leverage",
+      "output": {
+        "matched": true,
+        "cdpPort": 7667,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/BTC",
+        "runtimeLaunch": null,
+        "cdpTargetId": "1ED7CD2E15AC58B09D09BBE9183BC1FA",
+        "runtimeSessionId": "18e5fd79-9059-4e61-87df-5be926599abb"
+      },
+      "observations": {
+        "ui.screen": {
+          "provider": "cdp-web",
+          "name": "mini-mme-3 — MetaMask",
+          "title": "mini-mme-3 — MetaMask",
+          "route": "#/perps/trade/BTC",
+          "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
+        },
+        "ui.visible": {
+          "provider": "cdp-web",
+          "items": [
+            {
+              "role": "button",
+              "label": "Back",
+              "test_id": "perps-order-entry-back-button",
+              "selector": "[data-testid=\"perps-order-entry-back-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 212,
+                "y": 21,
+                "width": 36,
+                "height": 36
+              }
+            },
+            {
+              "role": "button",
+              "label": "Order book",
+              "test_id": "perps-order-book-toggle",
+              "selector": "[data-testid=\"perps-order-book-toggle\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 891,
+                "y": 21,
+                "width": 36,
+                "height": 36
+              }
+            },
+            {
+              "role": "button",
+              "label": "Collapse chart",
+              "test_id": "perps-order-entry-chart-toggle",
+              "selector": "[data-testid=\"perps-order-entry-chart-toggle\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 931,
+                "y": 21,
+                "width": 36,
+                "height": 36
+              }
+            },
+            {
+              "role": "button",
+              "label": "1min",
+              "test_id": "perps-candle-period-1m",
+              "selector": "[data-testid=\"perps-candle-period-1m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 212,
+                "y": 86,
+                "width": 62,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "3min",
+              "test_id": "perps-candle-period-3m",
+              "selector": "[data-testid=\"perps-candle-period-3m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 277,
+                "y": 86,
+                "width": 65,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "5min",
+              "test_id": "perps-candle-period-5m",
+              "selector": "[data-testid=\"perps-candle-period-5m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 346,
+                "y": 86,
+                "width": 64,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "15min",
+              "test_id": "perps-candle-period-15m",
+              "selector": "[data-testid=\"perps-candle-period-15m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 414,
+                "y": 86,
+                "width": 70,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "More",
+              "test_id": "perps-candle-period-more",
+              "selector": "[data-testid=\"perps-candle-period-more\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 488,
+                "y": 86,
+                "width": 82,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "Long",
+              "test_id": "direction-tab-long",
+              "selector": "[data-testid=\"direction-tab-long\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 390,
+                "width": 373,
+                "height": 32
+              }
+            },
+            {
+              "role": "button",
+              "label": "Short",
+              "test_id": "direction-tab-short",
+              "selector": "[data-testid=\"direction-tab-short\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 589,
+                "y": 390,
+                "width": 373,
+                "height": 32
+              }
+            },
+            {
+              "role": "button",
+              "label": "Market",
+              "test_id": "order-type-market",
+              "selector": "[data-testid=\"order-type-market\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 212,
+                "y": 442,
+                "width": 79,
+                "height": 30
+              }
+            },
+            {
+              "role": "button",
+              "label": "Limit",
+              "test_id": "order-type-limit",
+              "selector": "[data-testid=\"order-type-limit\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 298,
+                "y": 442,
+                "width": 64,
+                "height": 30
+              }
+            },
+            {
+              "role": "button",
+              "label": "Add funds",
+              "test_id": "amount-input-add-funds",
+              "selector": "[data-testid=\"amount-input-add-funds\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 947,
+                "y": 489,
+                "width": 20,
+                "height": 20
+              }
+            },
+            {
+              "label": "0.00",
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(2) > input",
+              "enabled": true,
+              "focused": true,
+              "bounds": {
+                "x": 260,
+                "y": 522,
+                "width": 633,
+                "height": 40
+              }
+            },
+            {
+              "role": "button",
+              "label": "Toggle size denomination",
+              "test_id": "toggle-denomination",
+              "selector": "[data-testid=\"toggle-denomination\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 931,
+                "y": 532,
+                "width": 20,
+                "height": 20
+              }
+            },
+            {
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(2) > div > input",
+              "enabled": true,
+              "bounds": {
+                "x": 895,
+                "y": 574,
+                "width": 42,
+                "height": 32
+              }
+            },
+            {
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(2) > div > input",
+              "enabled": true,
+              "bounds": {
+                "x": 895,
+                "y": 652,
+                "width": 48,
+                "height": 32
+              }
+            },
+            {
+              "role": "button",
+              "label": "Open long BTC",
+              "test_id": "submit-order-button",
+              "selector": "[data-testid=\"submit-order-button\"]",
+              "enabled": false,
+              "bounds": {
+                "x": 212,
+                "y": 765,
+                "width": 755,
+                "height": 48
+              }
+            }
+          ],
+          "hidden_or_offscreen": [
+            {
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(1) > div > span > span:nth-of-type(3) > input",
+              "enabled": true,
+              "bounds": {
+                "x": 224,
+                "y": 588,
+                "width": 12,
+                "height": 12
+              },
+              "reason": "covered"
+            },
+            {
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div > span > span:nth-of-type(11) > input",
+              "enabled": true,
+              "bounds": {
+                "x": 251,
+                "y": 666,
+                "width": 12,
+                "height": 12
+              },
+              "reason": "covered"
+            },
+            {
+              "test_id": "auto-close-toggle",
+              "selector": "[data-testid=\"auto-close-toggle\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 914,
+                "y": 742,
+                "width": 1,
+                "height": 1
+              },
+              "reason": "covered"
+            },
+            {
+              "role": "button",
+              "label": "Liquidation price info",
+              "test_id": "perps-order-summary-liquidation-price-tooltip-label-trigger",
+              "selector": "[data-testid=\"perps-order-summary-liquidation-price-tooltip-label-trigger\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 326,
+                "y": 791,
+                "width": 16,
+                "height": 16
+              },
+              "reason": "covered"
+            },
+            {
+              "role": "button",
+              "label": "Edit max slippage",
+              "test_id": "perps-order-summary-slippage-row",
+              "selector": "[data-testid=\"perps-order-summary-slippage-row\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 212,
+                "y": 818,
+                "width": 755,
+                "height": 22
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "Margin info",
+              "test_id": "perps-order-summary-margin-tooltip-label-trigger",
+              "selector": "[data-testid=\"perps-order-summary-margin-tooltip-label-trigger\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 261,
+                "y": 851,
+                "width": 16,
+                "height": 16
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "Fees info",
+              "test_id": "perps-order-summary-fees-tooltip-label-trigger",
+              "selector": "[data-testid=\"perps-order-summary-fees-tooltip-label-trigger\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 247,
+                "y": 881,
+                "width": 16,
+                "height": 16
+              },
+              "reason": "offscreen"
+            }
+          ],
+          "truncated": false,
+          "limits": {
+            "items": 20,
+            "hidden_or_offscreen": 10
+          }
+        }
+      }
+    },
+    {
+      "nodeId": "leverage",
+      "action": "ui.set_input",
+      "intent": "The comparison uses the same three-times leverage at both notionals",
+      "startedAt": "2026-10-09T09:00:45.258Z",
+      "endedAt": "2026-10-09T09:00:45.668Z",
+      "durationMs": 410,
+      "ok": true,
+      "next": "long",
+      "output": {
+        "set": true,
+        "selector": "[data-testid=\"leverage-input\"] input",
+        "tagName": "INPUT",
+        "previousLength": 1,
+        "retainedLength": 1,
+        "cdpPort": 7667,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/BTC",
+        "runtimeLaunch": null,
+        "cdpTargetId": "1ED7CD2E15AC58B09D09BBE9183BC1FA",
+        "runtimeSessionId": "18e5fd79-9059-4e61-87df-5be926599abb"
+      },
+      "observations": {
+        "ui.screen": {
+          "provider": "cdp-web",
+          "name": "mini-mme-3 — MetaMask",
+          "title": "mini-mme-3 — MetaMask",
+          "route": "#/perps/trade/BTC",
+          "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
+        },
+        "ui.visible": {
+          "provider": "cdp-web",
+          "items": [
+            {
+              "role": "button",
+              "label": "Back",
+              "test_id": "perps-order-entry-back-button",
+              "selector": "[data-testid=\"perps-order-entry-back-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 212,
+                "y": 21,
+                "width": 36,
+                "height": 36
+              }
+            },
+            {
+              "role": "button",
+              "label": "Order book",
+              "test_id": "perps-order-book-toggle",
+              "selector": "[data-testid=\"perps-order-book-toggle\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 891,
+                "y": 21,
+                "width": 36,
+                "height": 36
+              }
+            },
+            {
+              "role": "button",
+              "label": "Collapse chart",
+              "test_id": "perps-order-entry-chart-toggle",
+              "selector": "[data-testid=\"perps-order-entry-chart-toggle\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 931,
+                "y": 21,
+                "width": 36,
+                "height": 36
+              }
+            },
+            {
+              "role": "button",
+              "label": "1min",
+              "test_id": "perps-candle-period-1m",
+              "selector": "[data-testid=\"perps-candle-period-1m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 212,
+                "y": 86,
+                "width": 62,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "3min",
+              "test_id": "perps-candle-period-3m",
+              "selector": "[data-testid=\"perps-candle-period-3m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 277,
+                "y": 86,
+                "width": 65,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "5min",
+              "test_id": "perps-candle-period-5m",
+              "selector": "[data-testid=\"perps-candle-period-5m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 346,
+                "y": 86,
+                "width": 64,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "15min",
+              "test_id": "perps-candle-period-15m",
+              "selector": "[data-testid=\"perps-candle-period-15m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 414,
+                "y": 86,
+                "width": 70,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "More",
+              "test_id": "perps-candle-period-more",
+              "selector": "[data-testid=\"perps-candle-period-more\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 488,
+                "y": 86,
+                "width": 82,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "Long",
+              "test_id": "direction-tab-long",
+              "selector": "[data-testid=\"direction-tab-long\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 390,
+                "width": 373,
+                "height": 32
+              }
+            },
+            {
+              "role": "button",
+              "label": "Short",
+              "test_id": "direction-tab-short",
+              "selector": "[data-testid=\"direction-tab-short\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 589,
+                "y": 390,
+                "width": 373,
+                "height": 32
+              }
+            },
+            {
+              "role": "button",
+              "label": "Market",
+              "test_id": "order-type-market",
+              "selector": "[data-testid=\"order-type-market\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 212,
+                "y": 442,
+                "width": 79,
+                "height": 30
+              }
+            },
+            {
+              "role": "button",
+              "label": "Limit",
+              "test_id": "order-type-limit",
+              "selector": "[data-testid=\"order-type-limit\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 298,
+                "y": 442,
+                "width": 64,
+                "height": 30
+              }
+            },
+            {
+              "role": "button",
+              "label": "Add funds",
+              "test_id": "amount-input-add-funds",
+              "selector": "[data-testid=\"amount-input-add-funds\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 947,
+                "y": 489,
+                "width": 20,
+                "height": 20
+              }
+            },
+            {
+              "label": "0.00",
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(2) > input",
+              "enabled": true,
+              "bounds": {
+                "x": 260,
+                "y": 522,
+                "width": 633,
+                "height": 40
+              }
+            },
+            {
+              "role": "button",
+              "label": "Toggle size denomination",
+              "test_id": "toggle-denomination",
+              "selector": "[data-testid=\"toggle-denomination\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 931,
+                "y": 532,
+                "width": 20,
+                "height": 20
+              }
+            },
+            {
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(2) > div > input",
+              "enabled": true,
+              "bounds": {
+                "x": 895,
+                "y": 574,
+                "width": 42,
+                "height": 32
+              }
+            },
+            {
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(2) > div > input",
+              "enabled": true,
+              "focused": true,
+              "bounds": {
+                "x": 895,
+                "y": 652,
+                "width": 48,
+                "height": 32
+              }
+            },
+            {
+              "role": "button",
+              "label": "Open long BTC",
+              "test_id": "submit-order-button",
+              "selector": "[data-testid=\"submit-order-button\"]",
+              "enabled": false,
+              "bounds": {
+                "x": 212,
+                "y": 765,
+                "width": 755,
+                "height": 48
+              }
+            }
+          ],
+          "hidden_or_offscreen": [
+            {
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(1) > div > span > span:nth-of-type(3) > input",
+              "enabled": true,
+              "bounds": {
+                "x": 224,
+                "y": 588,
+                "width": 12,
+                "height": 12
+              },
+              "reason": "covered"
+            },
+            {
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div > span > span:nth-of-type(11) > input",
+              "enabled": true,
+              "bounds": {
+                "x": 251,
+                "y": 666,
+                "width": 12,
+                "height": 12
+              },
+              "reason": "covered"
+            },
+            {
+              "test_id": "auto-close-toggle",
+              "selector": "[data-testid=\"auto-close-toggle\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 914,
+                "y": 742,
+                "width": 1,
+                "height": 1
+              },
+              "reason": "covered"
+            },
+            {
+              "role": "button",
+              "label": "Liquidation price info",
+              "test_id": "perps-order-summary-liquidation-price-tooltip-label-trigger",
+              "selector": "[data-testid=\"perps-order-summary-liquidation-price-tooltip-label-trigger\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 326,
+                "y": 791,
+                "width": 16,
+                "height": 16
+              },
+              "reason": "covered"
+            },
+            {
+              "role": "button",
+              "label": "Edit max slippage",
+              "test_id": "perps-order-summary-slippage-row",
+              "selector": "[data-testid=\"perps-order-summary-slippage-row\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 212,
+                "y": 818,
+                "width": 755,
+                "height": 22
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "Margin info",
+              "test_id": "perps-order-summary-margin-tooltip-label-trigger",
+              "selector": "[data-testid=\"perps-order-summary-margin-tooltip-label-trigger\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 261,
+                "y": 851,
+                "width": 16,
+                "height": 16
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "Fees info",
+              "test_id": "perps-order-summary-fees-tooltip-label-trigger",
+              "selector": "[data-testid=\"perps-order-summary-fees-tooltip-label-trigger\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 247,
+                "y": 881,
+                "width": 16,
+                "height": 16
+              },
+              "reason": "offscreen"
+            }
+          ],
+          "truncated": false,
+          "limits": {
+            "items": 20,
+            "hidden_or_offscreen": 10
+          }
+        }
+      }
+    },
+    {
+      "nodeId": "long",
+      "action": "ui.press",
+      "intent": "The comparison remains on the long side without submitting a trade",
+      "startedAt": "2026-10-09T09:00:45.685Z",
+      "endedAt": "2026-10-09T09:00:46.169Z",
+      "durationMs": 484,
+      "ok": true,
+      "next": "amount-100",
+      "output": {
+        "clicked": true,
+        "selector": "[data-testid=\"direction-tab-long\"], [data-test-id=\"direction-tab-long\"], [data-test=\"direction-tab-long\"]",
+        "tagName": "BUTTON",
+        "cdpPort": 7667,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/BTC",
+        "runtimeLaunch": null,
+        "cdpTargetId": "1ED7CD2E15AC58B09D09BBE9183BC1FA",
+        "runtimeSessionId": "18e5fd79-9059-4e61-87df-5be926599abb"
+      },
+      "observations": {
+        "ui.screen": {
+          "provider": "cdp-web",
+          "name": "mini-mme-3 — MetaMask",
+          "title": "mini-mme-3 — MetaMask",
+          "route": "#/perps/trade/BTC",
+          "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
+        },
+        "ui.visible": {
+          "provider": "cdp-web",
+          "items": [
+            {
+              "role": "button",
+              "label": "Back",
+              "test_id": "perps-order-entry-back-button",
+              "selector": "[data-testid=\"perps-order-entry-back-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 212,
+                "y": 14,
+                "width": 36,
+                "height": 36
+              }
+            },
+            {
+              "role": "button",
+              "label": "Order book",
+              "test_id": "perps-order-book-toggle",
+              "selector": "[data-testid=\"perps-order-book-toggle\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 891,
+                "y": 14,
+                "width": 36,
+                "height": 36
+              }
+            },
+            {
+              "role": "button",
+              "label": "Collapse chart",
+              "test_id": "perps-order-entry-chart-toggle",
+              "selector": "[data-testid=\"perps-order-entry-chart-toggle\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 931,
+                "y": 14,
+                "width": 36,
+                "height": 36
+              }
+            },
+            {
+              "role": "button",
+              "label": "1min",
+              "test_id": "perps-candle-period-1m",
+              "selector": "[data-testid=\"perps-candle-period-1m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 212,
+                "y": 79,
+                "width": 62,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "3min",
+              "test_id": "perps-candle-period-3m",
+              "selector": "[data-testid=\"perps-candle-period-3m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 277,
+                "y": 79,
+                "width": 65,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "5min",
+              "test_id": "perps-candle-period-5m",
+              "selector": "[data-testid=\"perps-candle-period-5m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 346,
+                "y": 79,
+                "width": 64,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "15min",
+              "test_id": "perps-candle-period-15m",
+              "selector": "[data-testid=\"perps-candle-period-15m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 414,
+                "y": 79,
+                "width": 70,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "More",
+              "test_id": "perps-candle-period-more",
+              "selector": "[data-testid=\"perps-candle-period-more\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 488,
+                "y": 79,
+                "width": 82,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "Long",
+              "test_id": "direction-tab-long",
+              "selector": "[data-testid=\"direction-tab-long\"]",
+              "enabled": true,
+              "focused": true,
+              "bounds": {
+                "x": 217,
+                "y": 383,
+                "width": 373,
+                "height": 32
+              }
+            },
+            {
+              "role": "button",
+              "label": "Short",
+              "test_id": "direction-tab-short",
+              "selector": "[data-testid=\"direction-tab-short\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 589,
+                "y": 383,
+                "width": 373,
+                "height": 32
+              }
+            },
+            {
+              "role": "button",
+              "label": "Market",
+              "test_id": "order-type-market",
+              "selector": "[data-testid=\"order-type-market\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 212,
+                "y": 435,
+                "width": 79,
+                "height": 30
+              }
+            },
+            {
+              "role": "button",
+              "label": "Limit",
+              "test_id": "order-type-limit",
+              "selector": "[data-testid=\"order-type-limit\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 298,
+                "y": 435,
+                "width": 64,
+                "height": 30
+              }
+            },
+            {
+              "role": "button",
+              "label": "Add funds",
+              "test_id": "amount-input-add-funds",
+              "selector": "[data-testid=\"amount-input-add-funds\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 947,
+                "y": 482,
+                "width": 20,
+                "height": 20
+              }
+            },
+            {
+              "label": "0.00",
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(2) > input",
+              "enabled": true,
+              "bounds": {
+                "x": 260,
+                "y": 515,
+                "width": 633,
+                "height": 40
+              }
+            },
+            {
+              "role": "button",
+              "label": "Toggle size denomination",
+              "test_id": "toggle-denomination",
+              "selector": "[data-testid=\"toggle-denomination\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 931,
+                "y": 525,
+                "width": 20,
+                "height": 20
+              }
+            },
+            {
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(2) > div > input",
+              "enabled": true,
+              "bounds": {
+                "x": 895,
+                "y": 567,
+                "width": 42,
+                "height": 32
+              }
+            },
+            {
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(2) > div > input",
+              "enabled": true,
+              "bounds": {
+                "x": 895,
+                "y": 645,
+                "width": 48,
+                "height": 32
+              }
+            },
+            {
+              "role": "button",
+              "label": "Open long BTC",
+              "test_id": "submit-order-button",
+              "selector": "[data-testid=\"submit-order-button\"]",
+              "enabled": false,
+              "bounds": {
+                "x": 212,
+                "y": 765,
+                "width": 755,
+                "height": 48
+              }
+            }
+          ],
+          "hidden_or_offscreen": [
+            {
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(1) > div > span > span:nth-of-type(3) > input",
+              "enabled": true,
+              "bounds": {
+                "x": 224,
+                "y": 581,
+                "width": 12,
+                "height": 12
+              },
+              "reason": "covered"
+            },
+            {
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div > span > span:nth-of-type(11) > input",
+              "enabled": true,
+              "bounds": {
+                "x": 251,
+                "y": 659,
+                "width": 12,
+                "height": 12
+              },
+              "reason": "covered"
+            },
+            {
+              "test_id": "auto-close-toggle",
+              "selector": "[data-testid=\"auto-close-toggle\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 914,
+                "y": 735,
+                "width": 1,
+                "height": 1
+              },
+              "reason": "covered"
+            },
+            {
+              "role": "button",
+              "label": "Liquidation price info",
+              "test_id": "perps-order-summary-liquidation-price-tooltip-label-trigger",
+              "selector": "[data-testid=\"perps-order-summary-liquidation-price-tooltip-label-trigger\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 326,
+                "y": 784,
+                "width": 16,
+                "height": 16
+              },
+              "reason": "covered"
+            },
+            {
+              "role": "button",
+              "label": "Edit max slippage",
+              "test_id": "perps-order-summary-slippage-row",
+              "selector": "[data-testid=\"perps-order-summary-slippage-row\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 212,
+                "y": 811,
+                "width": 755,
+                "height": 22
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "Margin info",
+              "test_id": "perps-order-summary-margin-tooltip-label-trigger",
+              "selector": "[data-testid=\"perps-order-summary-margin-tooltip-label-trigger\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 261,
+                "y": 844,
+                "width": 16,
+                "height": 16
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "Fees info",
+              "test_id": "perps-order-summary-fees-tooltip-label-trigger",
+              "selector": "[data-testid=\"perps-order-summary-fees-tooltip-label-trigger\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 247,
+                "y": 874,
+                "width": 16,
+                "height": 16
+              },
+              "reason": "offscreen"
+            }
+          ],
+          "truncated": false,
+          "limits": {
+            "items": 20,
+            "hidden_or_offscreen": 10
+          }
+        }
+      }
+    },
+    {
+      "nodeId": "amount-100",
+      "action": "ui.set_input",
+      "intent": "Enter USD 100 without submitting",
+      "startedAt": "2026-10-09T09:00:46.185Z",
+      "endedAt": "2026-10-09T09:00:46.613Z",
+      "durationMs": 428,
+      "ok": true,
+      "next": "read-100",
+      "output": {
+        "set": true,
+        "selector": "[data-testid=\"amount-input-field\"] input",
+        "tagName": "INPUT",
+        "previousLength": 5,
+        "retainedLength": 3,
+        "cdpPort": 7667,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/BTC",
+        "runtimeLaunch": null,
+        "cdpTargetId": "1ED7CD2E15AC58B09D09BBE9183BC1FA",
+        "runtimeSessionId": "18e5fd79-9059-4e61-87df-5be926599abb"
+      },
+      "observations": {
+        "ui.screen": {
+          "provider": "cdp-web",
+          "name": "mini-mme-3 — MetaMask",
+          "title": "mini-mme-3 — MetaMask",
+          "route": "#/perps/trade/BTC",
+          "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
+        },
+        "ui.visible": {
+          "provider": "cdp-web",
+          "items": [
+            {
+              "role": "button",
+              "label": "Back",
+              "test_id": "perps-order-entry-back-button",
+              "selector": "[data-testid=\"perps-order-entry-back-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 212,
+                "y": 14,
+                "width": 36,
+                "height": 36
+              }
+            },
+            {
+              "role": "button",
+              "label": "Order book",
+              "test_id": "perps-order-book-toggle",
+              "selector": "[data-testid=\"perps-order-book-toggle\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 891,
+                "y": 14,
+                "width": 36,
+                "height": 36
+              }
+            },
+            {
+              "role": "button",
+              "label": "Collapse chart",
+              "test_id": "perps-order-entry-chart-toggle",
+              "selector": "[data-testid=\"perps-order-entry-chart-toggle\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 931,
+                "y": 14,
+                "width": 36,
+                "height": 36
+              }
+            },
+            {
+              "role": "button",
+              "label": "1min",
+              "test_id": "perps-candle-period-1m",
+              "selector": "[data-testid=\"perps-candle-period-1m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 212,
+                "y": 79,
+                "width": 62,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "3min",
+              "test_id": "perps-candle-period-3m",
+              "selector": "[data-testid=\"perps-candle-period-3m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 277,
+                "y": 79,
+                "width": 65,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "5min",
+              "test_id": "perps-candle-period-5m",
+              "selector": "[data-testid=\"perps-candle-period-5m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 346,
+                "y": 79,
+                "width": 64,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "15min",
+              "test_id": "perps-candle-period-15m",
+              "selector": "[data-testid=\"perps-candle-period-15m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 414,
+                "y": 79,
+                "width": 70,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "More",
+              "test_id": "perps-candle-period-more",
+              "selector": "[data-testid=\"perps-candle-period-more\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 488,
+                "y": 79,
+                "width": 82,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "Long",
+              "test_id": "direction-tab-long",
+              "selector": "[data-testid=\"direction-tab-long\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 383,
+                "width": 373,
+                "height": 32
+              }
+            },
+            {
+              "role": "button",
+              "label": "Short",
+              "test_id": "direction-tab-short",
+              "selector": "[data-testid=\"direction-tab-short\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 589,
+                "y": 383,
+                "width": 373,
+                "height": 32
+              }
+            },
+            {
+              "role": "button",
+              "label": "Market",
+              "test_id": "order-type-market",
+              "selector": "[data-testid=\"order-type-market\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 212,
+                "y": 435,
+                "width": 79,
+                "height": 30
+              }
+            },
+            {
+              "role": "button",
+              "label": "Limit",
+              "test_id": "order-type-limit",
+              "selector": "[data-testid=\"order-type-limit\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 298,
+                "y": 435,
+                "width": 64,
+                "height": 30
+              }
+            },
+            {
+              "role": "button",
+              "label": "Add funds",
+              "test_id": "amount-input-add-funds",
+              "selector": "[data-testid=\"amount-input-add-funds\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 947,
+                "y": 482,
+                "width": 20,
+                "height": 20
+              }
+            },
+            {
+              "label": "0.00",
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(2) > input",
+              "enabled": true,
+              "focused": true,
+              "bounds": {
+                "x": 260,
+                "y": 515,
+                "width": 633,
+                "height": 40
+              }
+            },
+            {
+              "role": "button",
+              "label": "Toggle size denomination",
+              "test_id": "toggle-denomination",
+              "selector": "[data-testid=\"toggle-denomination\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 931,
+                "y": 525,
+                "width": 20,
+                "height": 20
+              }
+            },
+            {
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(2) > div > input",
+              "enabled": true,
+              "bounds": {
+                "x": 895,
+                "y": 567,
+                "width": 42,
+                "height": 32
+              }
+            },
+            {
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(2) > div > input",
+              "enabled": true,
+              "bounds": {
+                "x": 895,
+                "y": 645,
+                "width": 48,
+                "height": 32
+              }
+            },
+            {
+              "role": "button",
+              "label": "Open long BTC",
+              "test_id": "submit-order-button",
+              "selector": "[data-testid=\"submit-order-button\"]",
+              "enabled": false,
+              "bounds": {
+                "x": 212,
+                "y": 765,
+                "width": 755,
+                "height": 48
+              }
+            }
+          ],
+          "hidden_or_offscreen": [
+            {
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(1) > div > span > span:nth-of-type(3) > input",
+              "enabled": true,
+              "bounds": {
+                "x": 257,
+                "y": 581,
+                "width": 12,
+                "height": 12
+              },
+              "reason": "covered"
+            },
+            {
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div > span > span:nth-of-type(11) > input",
+              "enabled": true,
+              "bounds": {
+                "x": 251,
+                "y": 659,
+                "width": 12,
+                "height": 12
+              },
+              "reason": "covered"
+            },
+            {
+              "test_id": "auto-close-toggle",
+              "selector": "[data-testid=\"auto-close-toggle\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 914,
+                "y": 735,
+                "width": 1,
+                "height": 1
+              },
+              "reason": "covered"
+            },
+            {
+              "role": "button",
+              "label": "Liquidation price info",
+              "test_id": "perps-order-summary-liquidation-price-tooltip-label-trigger",
+              "selector": "[data-testid=\"perps-order-summary-liquidation-price-tooltip-label-trigger\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 326,
+                "y": 784,
+                "width": 16,
+                "height": 16
+              },
+              "reason": "covered"
+            },
+            {
+              "role": "button",
+              "label": "Edit max slippage",
+              "test_id": "perps-order-summary-slippage-row",
+              "selector": "[data-testid=\"perps-order-summary-slippage-row\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 212,
+                "y": 811,
+                "width": 755,
+                "height": 22
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "Margin info",
+              "test_id": "perps-order-summary-margin-tooltip-label-trigger",
+              "selector": "[data-testid=\"perps-order-summary-margin-tooltip-label-trigger\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 261,
+                "y": 844,
+                "width": 16,
+                "height": 16
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "Fees info",
+              "test_id": "perps-order-summary-fees-tooltip-label-trigger",
+              "selector": "[data-testid=\"perps-order-summary-fees-tooltip-label-trigger\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 247,
+                "y": 874,
+                "width": 16,
+                "height": 16
+              },
+              "reason": "offscreen"
+            }
+          ],
+          "truncated": false,
+          "limits": {
+            "items": 20,
+            "hidden_or_offscreen": 10
+          }
+        }
+      }
+    },
+    {
+      "nodeId": "read-100",
+      "action": "metamask.perps.read_visible_state",
+      "intent": "The visible BTC preview uses USD 100, long direction and three-times leverage",
+      "startedAt": "2026-10-09T09:00:46.624Z",
+      "endedAt": "2026-10-09T09:00:46.806Z",
+      "durationMs": 182,
+      "ok": true,
+      "next": "quote-100",
+      "output": {
+        "action": "metamask.perps.read_visible_state",
+        "source": "visible-ui",
+        "platform": "extension",
+        "surface": "order-entry",
+        "favorite": null,
+        "marketDetails": null,
+        "route": "#/perps/trade/BTC",
+        "title": "mini-mme-3 — MetaMask",
+        "balance": null,
+        "markets": [],
+        "marketCount": 0,
+        "topMovers": null,
+        "positions": [],
+        "orders": [],
+        "activity": [],
+        "orderEntry": {
+          "symbol": "BTC",
+          "direction": "long",
+          "orderType": "market",
+          "amount": "100",
+          "percent": "6",
+          "leverage": "3",
+          "autoClose": false,
+          "takeProfitPrice": null,
+          "stopLossPrice": null,
+          "submit": {
+            "label": "Open long BTC",
+            "enabled": false
+          },
+          "limitPrice": null,
+          "validation": []
+        },
+        "features": {
+          "activity": false,
+          "balance": false,
+          "chart": false,
+          "long-short": false,
+          "market-list": false,
+          "order-entry": true,
+          "price": false,
+          "price-change": false,
+          "stats": false
+        },
+        "controls": [
+          {
+            "testId": "perps-order-entry-back-button",
+            "label": "Back",
+            "enabled": true,
+            "visible": true
+          },
+          {
+            "testId": "perps-order-entry-asset-symbol",
+            "label": "BTC",
+            "enabled": true,
+            "visible": true
+          },
+          {
+            "testId": "perps-order-entry-price",
+            "label": "$82,706",
+            "enabled": true,
+            "visible": true
+          },
+          {
+            "testId": "perps-order-entry-change",
+            "label": "-0.18%",
+            "enabled": true,
+            "visible": true
+          },
+          {
+            "testId": "perps-order-entry-right-accessory",
+            "enabled": true,
+            "visible": true
+          },
+          {
+            "testId": "perps-order-book-toggle",
+            "label": "Order book",
+            "enabled": true,
+            "visible": true
+          },
+          {
+            "testId": "perps-order-entry-chart-toggle",
+            "label": "Collapse chart",
+            "enabled": true,
+            "visible": true
+          },
+          {
+            "testId": "perps-order-entry-chart",
+            "label": "Price chart",
+            "enabled": true,
+            "visible": true
+          },
+          {
+            "testId": "perps-candle-period-selector",
+            "label": "1min 3min 5min 15min More",
+            "enabled": true,
+            "visible": true
+          },
+          {
+            "testId": "perps-candle-period-1m",
+            "label": "1min",
+            "enabled": true,
+            "visible": true
+          },
+          {
+            "testId": "perps-candle-period-3m",
+            "label": "3min",
+            "enabled": true,
+            "visible": true
+          },
+          {
+            "testId": "perps-candle-period-5m",
+            "label": "5min",
+            "enabled": true,
+            "visible": true
+          },
+          {
+            "testId": "perps-candle-period-15m",
+            "label": "15min",
+            "enabled": true,
+            "visible": true
+          },
+          {
+            "testId": "perps-candle-period-more",
+            "label": "More",
+            "enabled": true,
+            "visible": true
+          },
+          {
+            "testId": "perps-order-entry-chart-loading",
+            "enabled": true,
+            "visible": true
+          },
+          {
+            "testId": "perps-order-body",
+            "label": "Long Short Market Limit Available to trade 524.91 USDC Size USD % Leverage x 1x 40x Auto close Liquidation price $55,835 Slippage Est: -- / Max: 3% Margin $33.37 Fees $0.15 Open long BTC",
+            "enabled": true,
+            "visible": true
+          },
+          {
+            "testId": "perps-order-form-content",
+            "label": "Long Short Market Limit Available to trade 524.91 USDC Size USD % Leverage x 1x 40x Auto close Liquidation price $55,835 Slippage Est: -- / Max: 3% Margin $33.37 Fees $0.15",
+            "enabled": true,
+            "visible": true
+          },
+          {
+            "testId": "perps-order-summary-liquidation-price-tooltip-label",
+            "label": "Liquidation price",
+            "enabled": true,
+            "visible": true
+          },
+          {
+            "testId": "perps-order-summary-liquidation-price-tooltip-label-trigger",
+            "label": "Liquidation price info",
+            "enabled": true,
+            "visible": true
+          },
+          {
+            "testId": "perps-order-summary-liquidation-price",
+            "label": "$55,835",
+            "enabled": true,
+            "visible": true
+          },
+          {
+            "testId": "perps-order-summary-slippage-row",
+            "label": "Edit max slippage",
+            "enabled": true,
+            "visible": true
+          },
+          {
+            "testId": "perps-order-summary-slippage-value",
+            "label": "Est: -- / Max: 3%",
+            "enabled": true,
+            "visible": true
+          },
+          {
+            "testId": "perps-order-summary-margin-tooltip-label",
+            "label": "Margin",
+            "enabled": true,
+            "visible": false
+          },
+          {
+            "testId": "perps-order-summary-margin-tooltip-label-trigger",
+            "label": "Margin info",
+            "enabled": true,
+            "visible": false
+          },
+          {
+            "testId": "perps-order-summary-margin-required",
+            "label": "$33.37",
+            "enabled": true,
+            "visible": false
+          },
+          {
+            "testId": "perps-order-summary-fees-tooltip-label",
+            "label": "Fees",
+            "enabled": true,
+            "visible": false
+          },
+          {
+            "testId": "perps-order-summary-fees-tooltip-label-trigger",
+            "label": "Fees info",
+            "enabled": true,
+            "visible": false
+          },
+          {
+            "testId": "perps-order-summary-estimated-fees",
+            "label": "$0.15",
+            "enabled": true,
+            "visible": false
+          }
+        ],
+        "observedTestIds": [
+          "parent-selector-perps-order-entry",
+          "perps-order-entry-back-button",
+          "perps-order-entry-asset-symbol",
+          "perps-order-entry-price",
+          "perps-order-entry-change",
+          "perps-order-entry-right-accessory",
+          "perps-order-book-toggle",
+          "perps-order-entry-chart-toggle",
+          "perps-order-entry-chart",
+          "perps-candle-period-selector",
+          "perps-candle-period-1m",
+          "perps-candle-period-3m",
+          "perps-candle-period-5m",
+          "perps-candle-period-15m",
+          "perps-candle-period-more",
+          "perps-order-entry-chart-loading",
+          "perps-order-body",
+          "perps-order-form-content",
+          "direction-tabs",
+          "direction-tab-long",
+          "direction-tab-short",
+          "order-type-toggle",
+          "order-type-market",
+          "order-type-limit",
+          "amount-input-available-to-trade-row",
+          "amount-input-add-funds",
+          "amount-input-field",
+          "amount-input-denomination-unit",
+          "amount-slider",
+          "balance-percent-input",
+          "leverage-slider",
+          "leverage-input",
+          "auto-close-section",
+          "auto-close-toggle",
+          "perps-order-summary-liquidation-price-tooltip-label",
+          "perps-order-summary-liquidation-price-tooltip-label-trigger",
+          "perps-order-summary-liquidation-price",
+          "perps-order-summary-slippage-row",
+          "perps-order-summary-slippage-value",
+          "submit-order-button",
+          "perps-order-summary-margin-tooltip-label",
+          "perps-order-summary-margin-tooltip-label-trigger",
+          "perps-order-summary-margin-required",
+          "perps-order-summary-fees-tooltip-label",
+          "perps-order-summary-fees-tooltip-label-trigger",
+          "perps-order-summary-estimated-fees"
+        ],
+        "truncated": false,
+        "layout": {
+          "viewportWidth": 1200,
+          "viewportHeight": 829,
+          "contentWidth": 1200,
+          "horizontalOverflow": false,
+          "clippedTestIds": [],
+          "obscuredControlTestIds": [
+            "auto-close-toggle",
+            "perps-order-summary-liquidation-price-tooltip-label-trigger",
+            "perps-order-summary-slippage-row"
+          ],
+          "overlappingControlPairs": []
+        },
+        "proofPath": "visible-dom-accessibility",
+        "cdpPort": 7667,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/BTC",
+        "runtimeLaunch": null,
+        "cdpTargetId": "1ED7CD2E15AC58B09D09BBE9183BC1FA",
+        "runtimeSessionId": "18e5fd79-9059-4e61-87df-5be926599abb",
+        "liveAdapter": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/actions/extension/perps/read_visible_state.mjs"
+      }
+    },
+    {
+      "nodeId": "quote-100",
+      "action": "command",
+      "intent": "Assert both live hooks quote the current notional and the displayed fee matches the quote within sizing precision",
+      "proves": [
+        "LEAD-FEE"
+      ],
+      "startedAt": "2026-10-09T09:00:46.812Z",
+      "endedAt": "2026-10-09T09:00:47.736Z",
+      "durationMs": 924,
+      "ok": false,
+      "cause_class": "unknown",
+      "error": "Command exited with 1: yarn tsx temp/tasks/fix/46934-1009-163330/artifacts/observe-fee.ts 100\npage.evaluate: ReferenceError: __name is not defined\n    at eval (eval at evaluate (:302:30), <anonymous>:1:19)\n    at UtilityScript.evaluate (<anonymous>:304:16)\n    at UtilityScript.<anonymous> (<anonymous>:1:44)\n    at read (/Volumes/FD/dev/metamask/metamask-extension-3/temp/tasks/fix/46934-1009-163330/artifacts/observe-fee.ts:18:27)\n    at main (/Volumes/FD/dev/metamask/metamask-extension-3/temp/tasks/fix/46934-1009-163330/artifacts/observe-fee.ts:55:24)\n"
+    }
+  ]
+}

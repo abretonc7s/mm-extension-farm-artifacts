@@ -1,0 +1,5653 @@
+{
+  "metadata": {
+    "runner": {
+      "source": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness",
+      "git_ref": "unknown",
+      "name": "@metamask/recipe-runner"
+    }
+  },
+  "entries": [
+    {
+      "nodeId": "unlock",
+      "action": "metamask.wallet.ensure_unlocked",
+      "intent": "The prepared wallet is unlocked for read-only Perps verification",
+      "startedAt": "2026-10-09T09:02:48.056Z",
+      "endedAt": "2026-10-09T09:02:48.217Z",
+      "durationMs": 161,
+      "ok": true,
+      "next": "open-btc",
+      "output": {
+        "action": "metamask.wallet.ensure_unlocked",
+        "unlocked": true,
+        "alreadyUnlocked": true,
+        "proofPath": "extension-unlocked-state",
+        "cdpPort": 7667,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps-home",
+        "runtimeLaunch": null,
+        "cdpTargetId": "1ED7CD2E15AC58B09D09BBE9183BC1FA",
+        "runtimeSessionId": "18e5fd79-9059-4e61-87df-5be926599abb",
+        "liveAdapter": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/actions/extension/wallet/ensure_unlocked.mjs"
+      }
+    },
+    {
+      "nodeId": "open-btc",
+      "action": "ui.navigate",
+      "intent": "The BTC order preview is ready for a notional comparison",
+      "startedAt": "2026-10-09T09:02:48.225Z",
+      "endedAt": "2026-10-09T09:02:48.411Z",
+      "durationMs": 186,
+      "ok": true,
+      "next": "wait-entry",
+      "output": {
+        "action": "ui.navigate",
+        "hash": "#/perps/trade/BTC",
+        "navigation": {
+          "before": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps-home",
+          "href": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/BTC",
+          "sameDocument": true
+        },
+        "proofPath": "ui-navigation",
+        "cdpPort": 7667,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps-home",
+        "runtimeLaunch": null,
+        "cdpTargetId": "1ED7CD2E15AC58B09D09BBE9183BC1FA",
+        "runtimeSessionId": "18e5fd79-9059-4e61-87df-5be926599abb",
+        "liveAdapter": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/actions/extension/ui/navigate.mjs"
+      },
+      "observations": {
+        "ui.screen": {
+          "provider": "cdp-web",
+          "name": "mini-mme-3 — MetaMask",
+          "title": "mini-mme-3 — MetaMask",
+          "route": "#/perps/trade/BTC",
+          "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
+        },
+        "ui.visible": {
+          "provider": "cdp-web",
+          "items": [
+            {
+              "role": "button",
+              "label": "Back",
+              "test_id": "perps-order-entry-back-button",
+              "selector": "[data-testid=\"perps-order-entry-back-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 212,
+                "y": 21,
+                "width": 36,
+                "height": 36
+              }
+            },
+            {
+              "role": "button",
+              "label": "Order book",
+              "test_id": "perps-order-book-toggle",
+              "selector": "[data-testid=\"perps-order-book-toggle\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 891,
+                "y": 21,
+                "width": 36,
+                "height": 36
+              }
+            },
+            {
+              "role": "button",
+              "label": "Collapse chart",
+              "test_id": "perps-order-entry-chart-toggle",
+              "selector": "[data-testid=\"perps-order-entry-chart-toggle\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 931,
+                "y": 21,
+                "width": 36,
+                "height": 36
+              }
+            },
+            {
+              "role": "button",
+              "label": "1min",
+              "test_id": "perps-candle-period-1m",
+              "selector": "[data-testid=\"perps-candle-period-1m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 212,
+                "y": 86,
+                "width": 62,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "3min",
+              "test_id": "perps-candle-period-3m",
+              "selector": "[data-testid=\"perps-candle-period-3m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 277,
+                "y": 86,
+                "width": 65,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "5min",
+              "test_id": "perps-candle-period-5m",
+              "selector": "[data-testid=\"perps-candle-period-5m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 346,
+                "y": 86,
+                "width": 64,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "15min",
+              "test_id": "perps-candle-period-15m",
+              "selector": "[data-testid=\"perps-candle-period-15m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 414,
+                "y": 86,
+                "width": 70,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "More",
+              "test_id": "perps-candle-period-more",
+              "selector": "[data-testid=\"perps-candle-period-more\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 488,
+                "y": 86,
+                "width": 82,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "Long",
+              "test_id": "direction-tab-long",
+              "selector": "[data-testid=\"direction-tab-long\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 390,
+                "width": 373,
+                "height": 32
+              }
+            },
+            {
+              "role": "button",
+              "label": "Short",
+              "test_id": "direction-tab-short",
+              "selector": "[data-testid=\"direction-tab-short\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 589,
+                "y": 390,
+                "width": 373,
+                "height": 32
+              }
+            },
+            {
+              "role": "button",
+              "label": "Market",
+              "test_id": "order-type-market",
+              "selector": "[data-testid=\"order-type-market\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 212,
+                "y": 442,
+                "width": 79,
+                "height": 30
+              }
+            },
+            {
+              "role": "button",
+              "label": "Limit",
+              "test_id": "order-type-limit",
+              "selector": "[data-testid=\"order-type-limit\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 298,
+                "y": 442,
+                "width": 64,
+                "height": 30
+              }
+            },
+            {
+              "role": "button",
+              "label": "Add funds",
+              "test_id": "amount-input-add-funds",
+              "selector": "[data-testid=\"amount-input-add-funds\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 947,
+                "y": 489,
+                "width": 20,
+                "height": 20
+              }
+            },
+            {
+              "label": "0.00",
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(2) > input",
+              "enabled": true,
+              "focused": true,
+              "bounds": {
+                "x": 260,
+                "y": 522,
+                "width": 633,
+                "height": 40
+              }
+            },
+            {
+              "role": "button",
+              "label": "Toggle size denomination",
+              "test_id": "toggle-denomination",
+              "selector": "[data-testid=\"toggle-denomination\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 931,
+                "y": 532,
+                "width": 20,
+                "height": 20
+              }
+            },
+            {
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(2) > div > input",
+              "enabled": true,
+              "bounds": {
+                "x": 895,
+                "y": 574,
+                "width": 42,
+                "height": 32
+              }
+            },
+            {
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(2) > div > input",
+              "enabled": true,
+              "bounds": {
+                "x": 895,
+                "y": 652,
+                "width": 48,
+                "height": 32
+              }
+            },
+            {
+              "role": "button",
+              "label": "Open long BTC",
+              "test_id": "submit-order-button",
+              "selector": "[data-testid=\"submit-order-button\"]",
+              "enabled": false,
+              "bounds": {
+                "x": 212,
+                "y": 765,
+                "width": 755,
+                "height": 48
+              }
+            }
+          ],
+          "hidden_or_offscreen": [
+            {
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(1) > div > span > span:nth-of-type(3) > input",
+              "enabled": true,
+              "bounds": {
+                "x": 224,
+                "y": 588,
+                "width": 12,
+                "height": 12
+              },
+              "reason": "covered"
+            },
+            {
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div > span > span:nth-of-type(11) > input",
+              "enabled": true,
+              "bounds": {
+                "x": 251,
+                "y": 666,
+                "width": 12,
+                "height": 12
+              },
+              "reason": "covered"
+            },
+            {
+              "test_id": "auto-close-toggle",
+              "selector": "[data-testid=\"auto-close-toggle\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 914,
+                "y": 742,
+                "width": 1,
+                "height": 1
+              },
+              "reason": "covered"
+            },
+            {
+              "role": "button",
+              "label": "Liquidation price info",
+              "test_id": "perps-order-summary-liquidation-price-tooltip-label-trigger",
+              "selector": "[data-testid=\"perps-order-summary-liquidation-price-tooltip-label-trigger\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 326,
+                "y": 791,
+                "width": 16,
+                "height": 16
+              },
+              "reason": "covered"
+            },
+            {
+              "role": "button",
+              "label": "Edit max slippage",
+              "test_id": "perps-order-summary-slippage-row",
+              "selector": "[data-testid=\"perps-order-summary-slippage-row\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 212,
+                "y": 818,
+                "width": 755,
+                "height": 22
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "Margin info",
+              "test_id": "perps-order-summary-margin-tooltip-label-trigger",
+              "selector": "[data-testid=\"perps-order-summary-margin-tooltip-label-trigger\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 261,
+                "y": 851,
+                "width": 16,
+                "height": 16
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "Fees info",
+              "test_id": "perps-order-summary-fees-tooltip-label-trigger",
+              "selector": "[data-testid=\"perps-order-summary-fees-tooltip-label-trigger\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 247,
+                "y": 881,
+                "width": 16,
+                "height": 16
+              },
+              "reason": "offscreen"
+            }
+          ],
+          "truncated": false,
+          "limits": {
+            "items": 20,
+            "hidden_or_offscreen": 10
+          }
+        }
+      }
+    },
+    {
+      "nodeId": "wait-entry",
+      "action": "ui.wait_for",
+      "intent": "The editable order amount is present before fee verification",
+      "startedAt": "2026-10-09T09:02:48.416Z",
+      "endedAt": "2026-10-09T09:02:48.961Z",
+      "durationMs": 545,
+      "ok": true,
+      "next": "leverage",
+      "output": {
+        "matched": true,
+        "cdpPort": 7667,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/BTC",
+        "runtimeLaunch": null,
+        "cdpTargetId": "1ED7CD2E15AC58B09D09BBE9183BC1FA",
+        "runtimeSessionId": "18e5fd79-9059-4e61-87df-5be926599abb"
+      },
+      "observations": {
+        "ui.screen": {
+          "provider": "cdp-web",
+          "name": "mini-mme-3 — MetaMask",
+          "title": "mini-mme-3 — MetaMask",
+          "route": "#/perps/trade/BTC",
+          "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
+        },
+        "ui.visible": {
+          "provider": "cdp-web",
+          "items": [
+            {
+              "role": "button",
+              "label": "Back",
+              "test_id": "perps-order-entry-back-button",
+              "selector": "[data-testid=\"perps-order-entry-back-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 212,
+                "y": 21,
+                "width": 36,
+                "height": 36
+              }
+            },
+            {
+              "role": "button",
+              "label": "Order book",
+              "test_id": "perps-order-book-toggle",
+              "selector": "[data-testid=\"perps-order-book-toggle\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 891,
+                "y": 21,
+                "width": 36,
+                "height": 36
+              }
+            },
+            {
+              "role": "button",
+              "label": "Collapse chart",
+              "test_id": "perps-order-entry-chart-toggle",
+              "selector": "[data-testid=\"perps-order-entry-chart-toggle\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 931,
+                "y": 21,
+                "width": 36,
+                "height": 36
+              }
+            },
+            {
+              "role": "button",
+              "label": "1min",
+              "test_id": "perps-candle-period-1m",
+              "selector": "[data-testid=\"perps-candle-period-1m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 212,
+                "y": 86,
+                "width": 62,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "3min",
+              "test_id": "perps-candle-period-3m",
+              "selector": "[data-testid=\"perps-candle-period-3m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 277,
+                "y": 86,
+                "width": 65,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "5min",
+              "test_id": "perps-candle-period-5m",
+              "selector": "[data-testid=\"perps-candle-period-5m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 346,
+                "y": 86,
+                "width": 64,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "15min",
+              "test_id": "perps-candle-period-15m",
+              "selector": "[data-testid=\"perps-candle-period-15m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 414,
+                "y": 86,
+                "width": 70,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "More",
+              "test_id": "perps-candle-period-more",
+              "selector": "[data-testid=\"perps-candle-period-more\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 488,
+                "y": 86,
+                "width": 82,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "Long",
+              "test_id": "direction-tab-long",
+              "selector": "[data-testid=\"direction-tab-long\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 390,
+                "width": 373,
+                "height": 32
+              }
+            },
+            {
+              "role": "button",
+              "label": "Short",
+              "test_id": "direction-tab-short",
+              "selector": "[data-testid=\"direction-tab-short\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 589,
+                "y": 390,
+                "width": 373,
+                "height": 32
+              }
+            },
+            {
+              "role": "button",
+              "label": "Market",
+              "test_id": "order-type-market",
+              "selector": "[data-testid=\"order-type-market\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 212,
+                "y": 442,
+                "width": 79,
+                "height": 30
+              }
+            },
+            {
+              "role": "button",
+              "label": "Limit",
+              "test_id": "order-type-limit",
+              "selector": "[data-testid=\"order-type-limit\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 298,
+                "y": 442,
+                "width": 64,
+                "height": 30
+              }
+            },
+            {
+              "role": "button",
+              "label": "Add funds",
+              "test_id": "amount-input-add-funds",
+              "selector": "[data-testid=\"amount-input-add-funds\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 947,
+                "y": 489,
+                "width": 20,
+                "height": 20
+              }
+            },
+            {
+              "label": "0.00",
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(2) > input",
+              "enabled": true,
+              "focused": true,
+              "bounds": {
+                "x": 260,
+                "y": 522,
+                "width": 633,
+                "height": 40
+              }
+            },
+            {
+              "role": "button",
+              "label": "Toggle size denomination",
+              "test_id": "toggle-denomination",
+              "selector": "[data-testid=\"toggle-denomination\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 931,
+                "y": 532,
+                "width": 20,
+                "height": 20
+              }
+            },
+            {
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(2) > div > input",
+              "enabled": true,
+              "bounds": {
+                "x": 895,
+                "y": 574,
+                "width": 42,
+                "height": 32
+              }
+            },
+            {
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(2) > div > input",
+              "enabled": true,
+              "bounds": {
+                "x": 895,
+                "y": 652,
+                "width": 48,
+                "height": 32
+              }
+            },
+            {
+              "role": "button",
+              "label": "Open long BTC",
+              "test_id": "submit-order-button",
+              "selector": "[data-testid=\"submit-order-button\"]",
+              "enabled": false,
+              "bounds": {
+                "x": 212,
+                "y": 765,
+                "width": 755,
+                "height": 48
+              }
+            }
+          ],
+          "hidden_or_offscreen": [
+            {
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(1) > div > span > span:nth-of-type(3) > input",
+              "enabled": true,
+              "bounds": {
+                "x": 224,
+                "y": 588,
+                "width": 12,
+                "height": 12
+              },
+              "reason": "covered"
+            },
+            {
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div > span > span:nth-of-type(11) > input",
+              "enabled": true,
+              "bounds": {
+                "x": 251,
+                "y": 666,
+                "width": 12,
+                "height": 12
+              },
+              "reason": "covered"
+            },
+            {
+              "test_id": "auto-close-toggle",
+              "selector": "[data-testid=\"auto-close-toggle\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 914,
+                "y": 742,
+                "width": 1,
+                "height": 1
+              },
+              "reason": "covered"
+            },
+            {
+              "role": "button",
+              "label": "Liquidation price info",
+              "test_id": "perps-order-summary-liquidation-price-tooltip-label-trigger",
+              "selector": "[data-testid=\"perps-order-summary-liquidation-price-tooltip-label-trigger\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 326,
+                "y": 791,
+                "width": 16,
+                "height": 16
+              },
+              "reason": "covered"
+            },
+            {
+              "role": "button",
+              "label": "Edit max slippage",
+              "test_id": "perps-order-summary-slippage-row",
+              "selector": "[data-testid=\"perps-order-summary-slippage-row\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 212,
+                "y": 818,
+                "width": 755,
+                "height": 22
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "Margin info",
+              "test_id": "perps-order-summary-margin-tooltip-label-trigger",
+              "selector": "[data-testid=\"perps-order-summary-margin-tooltip-label-trigger\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 261,
+                "y": 851,
+                "width": 16,
+                "height": 16
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "Fees info",
+              "test_id": "perps-order-summary-fees-tooltip-label-trigger",
+              "selector": "[data-testid=\"perps-order-summary-fees-tooltip-label-trigger\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 247,
+                "y": 881,
+                "width": 16,
+                "height": 16
+              },
+              "reason": "offscreen"
+            }
+          ],
+          "truncated": false,
+          "limits": {
+            "items": 20,
+            "hidden_or_offscreen": 10
+          }
+        }
+      }
+    },
+    {
+      "nodeId": "leverage",
+      "action": "ui.set_input",
+      "intent": "The comparison uses the same three-times leverage at both notionals",
+      "startedAt": "2026-10-09T09:02:48.975Z",
+      "endedAt": "2026-10-09T09:02:49.353Z",
+      "durationMs": 378,
+      "ok": true,
+      "next": "long",
+      "output": {
+        "set": true,
+        "selector": "[data-testid=\"leverage-input\"] input",
+        "tagName": "INPUT",
+        "previousLength": 1,
+        "retainedLength": 1,
+        "cdpPort": 7667,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/BTC",
+        "runtimeLaunch": null,
+        "cdpTargetId": "1ED7CD2E15AC58B09D09BBE9183BC1FA",
+        "runtimeSessionId": "18e5fd79-9059-4e61-87df-5be926599abb"
+      },
+      "observations": {
+        "ui.screen": {
+          "provider": "cdp-web",
+          "name": "mini-mme-3 — MetaMask",
+          "title": "mini-mme-3 — MetaMask",
+          "route": "#/perps/trade/BTC",
+          "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
+        },
+        "ui.visible": {
+          "provider": "cdp-web",
+          "items": [
+            {
+              "role": "button",
+              "label": "Back",
+              "test_id": "perps-order-entry-back-button",
+              "selector": "[data-testid=\"perps-order-entry-back-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 212,
+                "y": 21,
+                "width": 36,
+                "height": 36
+              }
+            },
+            {
+              "role": "button",
+              "label": "Order book",
+              "test_id": "perps-order-book-toggle",
+              "selector": "[data-testid=\"perps-order-book-toggle\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 891,
+                "y": 21,
+                "width": 36,
+                "height": 36
+              }
+            },
+            {
+              "role": "button",
+              "label": "Collapse chart",
+              "test_id": "perps-order-entry-chart-toggle",
+              "selector": "[data-testid=\"perps-order-entry-chart-toggle\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 931,
+                "y": 21,
+                "width": 36,
+                "height": 36
+              }
+            },
+            {
+              "role": "button",
+              "label": "1min",
+              "test_id": "perps-candle-period-1m",
+              "selector": "[data-testid=\"perps-candle-period-1m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 212,
+                "y": 86,
+                "width": 62,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "3min",
+              "test_id": "perps-candle-period-3m",
+              "selector": "[data-testid=\"perps-candle-period-3m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 277,
+                "y": 86,
+                "width": 65,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "5min",
+              "test_id": "perps-candle-period-5m",
+              "selector": "[data-testid=\"perps-candle-period-5m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 346,
+                "y": 86,
+                "width": 64,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "15min",
+              "test_id": "perps-candle-period-15m",
+              "selector": "[data-testid=\"perps-candle-period-15m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 414,
+                "y": 86,
+                "width": 70,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "More",
+              "test_id": "perps-candle-period-more",
+              "selector": "[data-testid=\"perps-candle-period-more\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 488,
+                "y": 86,
+                "width": 82,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "Long",
+              "test_id": "direction-tab-long",
+              "selector": "[data-testid=\"direction-tab-long\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 390,
+                "width": 373,
+                "height": 32
+              }
+            },
+            {
+              "role": "button",
+              "label": "Short",
+              "test_id": "direction-tab-short",
+              "selector": "[data-testid=\"direction-tab-short\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 589,
+                "y": 390,
+                "width": 373,
+                "height": 32
+              }
+            },
+            {
+              "role": "button",
+              "label": "Market",
+              "test_id": "order-type-market",
+              "selector": "[data-testid=\"order-type-market\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 212,
+                "y": 442,
+                "width": 79,
+                "height": 30
+              }
+            },
+            {
+              "role": "button",
+              "label": "Limit",
+              "test_id": "order-type-limit",
+              "selector": "[data-testid=\"order-type-limit\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 298,
+                "y": 442,
+                "width": 64,
+                "height": 30
+              }
+            },
+            {
+              "role": "button",
+              "label": "Add funds",
+              "test_id": "amount-input-add-funds",
+              "selector": "[data-testid=\"amount-input-add-funds\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 947,
+                "y": 489,
+                "width": 20,
+                "height": 20
+              }
+            },
+            {
+              "label": "0.00",
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(2) > input",
+              "enabled": true,
+              "bounds": {
+                "x": 260,
+                "y": 522,
+                "width": 633,
+                "height": 40
+              }
+            },
+            {
+              "role": "button",
+              "label": "Toggle size denomination",
+              "test_id": "toggle-denomination",
+              "selector": "[data-testid=\"toggle-denomination\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 931,
+                "y": 532,
+                "width": 20,
+                "height": 20
+              }
+            },
+            {
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(2) > div > input",
+              "enabled": true,
+              "bounds": {
+                "x": 895,
+                "y": 574,
+                "width": 42,
+                "height": 32
+              }
+            },
+            {
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(2) > div > input",
+              "enabled": true,
+              "focused": true,
+              "bounds": {
+                "x": 895,
+                "y": 652,
+                "width": 48,
+                "height": 32
+              }
+            },
+            {
+              "role": "button",
+              "label": "Open long BTC",
+              "test_id": "submit-order-button",
+              "selector": "[data-testid=\"submit-order-button\"]",
+              "enabled": false,
+              "bounds": {
+                "x": 212,
+                "y": 765,
+                "width": 755,
+                "height": 48
+              }
+            }
+          ],
+          "hidden_or_offscreen": [
+            {
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(1) > div > span > span:nth-of-type(3) > input",
+              "enabled": true,
+              "bounds": {
+                "x": 224,
+                "y": 588,
+                "width": 12,
+                "height": 12
+              },
+              "reason": "covered"
+            },
+            {
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div > span > span:nth-of-type(11) > input",
+              "enabled": true,
+              "bounds": {
+                "x": 251,
+                "y": 666,
+                "width": 12,
+                "height": 12
+              },
+              "reason": "covered"
+            },
+            {
+              "test_id": "auto-close-toggle",
+              "selector": "[data-testid=\"auto-close-toggle\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 914,
+                "y": 742,
+                "width": 1,
+                "height": 1
+              },
+              "reason": "covered"
+            },
+            {
+              "role": "button",
+              "label": "Liquidation price info",
+              "test_id": "perps-order-summary-liquidation-price-tooltip-label-trigger",
+              "selector": "[data-testid=\"perps-order-summary-liquidation-price-tooltip-label-trigger\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 326,
+                "y": 791,
+                "width": 16,
+                "height": 16
+              },
+              "reason": "covered"
+            },
+            {
+              "role": "button",
+              "label": "Edit max slippage",
+              "test_id": "perps-order-summary-slippage-row",
+              "selector": "[data-testid=\"perps-order-summary-slippage-row\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 212,
+                "y": 818,
+                "width": 755,
+                "height": 22
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "Margin info",
+              "test_id": "perps-order-summary-margin-tooltip-label-trigger",
+              "selector": "[data-testid=\"perps-order-summary-margin-tooltip-label-trigger\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 261,
+                "y": 851,
+                "width": 16,
+                "height": 16
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "Fees info",
+              "test_id": "perps-order-summary-fees-tooltip-label-trigger",
+              "selector": "[data-testid=\"perps-order-summary-fees-tooltip-label-trigger\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 247,
+                "y": 881,
+                "width": 16,
+                "height": 16
+              },
+              "reason": "offscreen"
+            }
+          ],
+          "truncated": false,
+          "limits": {
+            "items": 20,
+            "hidden_or_offscreen": 10
+          }
+        }
+      }
+    },
+    {
+      "nodeId": "long",
+      "action": "ui.press",
+      "intent": "The comparison remains on the long side without submitting a trade",
+      "startedAt": "2026-10-09T09:02:49.363Z",
+      "endedAt": "2026-10-09T09:02:49.804Z",
+      "durationMs": 441,
+      "ok": true,
+      "next": "amount-100",
+      "output": {
+        "clicked": true,
+        "selector": "[data-testid=\"direction-tab-long\"], [data-test-id=\"direction-tab-long\"], [data-test=\"direction-tab-long\"]",
+        "tagName": "BUTTON",
+        "cdpPort": 7667,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/BTC",
+        "runtimeLaunch": null,
+        "cdpTargetId": "1ED7CD2E15AC58B09D09BBE9183BC1FA",
+        "runtimeSessionId": "18e5fd79-9059-4e61-87df-5be926599abb"
+      },
+      "observations": {
+        "ui.screen": {
+          "provider": "cdp-web",
+          "name": "mini-mme-3 — MetaMask",
+          "title": "mini-mme-3 — MetaMask",
+          "route": "#/perps/trade/BTC",
+          "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
+        },
+        "ui.visible": {
+          "provider": "cdp-web",
+          "items": [
+            {
+              "role": "button",
+              "label": "Back",
+              "test_id": "perps-order-entry-back-button",
+              "selector": "[data-testid=\"perps-order-entry-back-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 212,
+                "y": 14,
+                "width": 36,
+                "height": 36
+              }
+            },
+            {
+              "role": "button",
+              "label": "Order book",
+              "test_id": "perps-order-book-toggle",
+              "selector": "[data-testid=\"perps-order-book-toggle\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 891,
+                "y": 14,
+                "width": 36,
+                "height": 36
+              }
+            },
+            {
+              "role": "button",
+              "label": "Collapse chart",
+              "test_id": "perps-order-entry-chart-toggle",
+              "selector": "[data-testid=\"perps-order-entry-chart-toggle\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 931,
+                "y": 14,
+                "width": 36,
+                "height": 36
+              }
+            },
+            {
+              "role": "button",
+              "label": "1min",
+              "test_id": "perps-candle-period-1m",
+              "selector": "[data-testid=\"perps-candle-period-1m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 212,
+                "y": 79,
+                "width": 62,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "3min",
+              "test_id": "perps-candle-period-3m",
+              "selector": "[data-testid=\"perps-candle-period-3m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 277,
+                "y": 79,
+                "width": 65,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "5min",
+              "test_id": "perps-candle-period-5m",
+              "selector": "[data-testid=\"perps-candle-period-5m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 346,
+                "y": 79,
+                "width": 64,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "15min",
+              "test_id": "perps-candle-period-15m",
+              "selector": "[data-testid=\"perps-candle-period-15m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 414,
+                "y": 79,
+                "width": 70,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "More",
+              "test_id": "perps-candle-period-more",
+              "selector": "[data-testid=\"perps-candle-period-more\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 488,
+                "y": 79,
+                "width": 82,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "Long",
+              "test_id": "direction-tab-long",
+              "selector": "[data-testid=\"direction-tab-long\"]",
+              "enabled": true,
+              "focused": true,
+              "bounds": {
+                "x": 217,
+                "y": 383,
+                "width": 373,
+                "height": 32
+              }
+            },
+            {
+              "role": "button",
+              "label": "Short",
+              "test_id": "direction-tab-short",
+              "selector": "[data-testid=\"direction-tab-short\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 589,
+                "y": 383,
+                "width": 373,
+                "height": 32
+              }
+            },
+            {
+              "role": "button",
+              "label": "Market",
+              "test_id": "order-type-market",
+              "selector": "[data-testid=\"order-type-market\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 212,
+                "y": 435,
+                "width": 79,
+                "height": 30
+              }
+            },
+            {
+              "role": "button",
+              "label": "Limit",
+              "test_id": "order-type-limit",
+              "selector": "[data-testid=\"order-type-limit\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 298,
+                "y": 435,
+                "width": 64,
+                "height": 30
+              }
+            },
+            {
+              "role": "button",
+              "label": "Add funds",
+              "test_id": "amount-input-add-funds",
+              "selector": "[data-testid=\"amount-input-add-funds\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 947,
+                "y": 482,
+                "width": 20,
+                "height": 20
+              }
+            },
+            {
+              "label": "0.00",
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(2) > input",
+              "enabled": true,
+              "bounds": {
+                "x": 260,
+                "y": 515,
+                "width": 633,
+                "height": 40
+              }
+            },
+            {
+              "role": "button",
+              "label": "Toggle size denomination",
+              "test_id": "toggle-denomination",
+              "selector": "[data-testid=\"toggle-denomination\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 931,
+                "y": 525,
+                "width": 20,
+                "height": 20
+              }
+            },
+            {
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(2) > div > input",
+              "enabled": true,
+              "bounds": {
+                "x": 895,
+                "y": 567,
+                "width": 42,
+                "height": 32
+              }
+            },
+            {
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(2) > div > input",
+              "enabled": true,
+              "bounds": {
+                "x": 895,
+                "y": 645,
+                "width": 48,
+                "height": 32
+              }
+            },
+            {
+              "role": "button",
+              "label": "Open long BTC",
+              "test_id": "submit-order-button",
+              "selector": "[data-testid=\"submit-order-button\"]",
+              "enabled": false,
+              "bounds": {
+                "x": 212,
+                "y": 765,
+                "width": 755,
+                "height": 48
+              }
+            }
+          ],
+          "hidden_or_offscreen": [
+            {
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(1) > div > span > span:nth-of-type(3) > input",
+              "enabled": true,
+              "bounds": {
+                "x": 224,
+                "y": 581,
+                "width": 12,
+                "height": 12
+              },
+              "reason": "covered"
+            },
+            {
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div > span > span:nth-of-type(11) > input",
+              "enabled": true,
+              "bounds": {
+                "x": 251,
+                "y": 659,
+                "width": 12,
+                "height": 12
+              },
+              "reason": "covered"
+            },
+            {
+              "test_id": "auto-close-toggle",
+              "selector": "[data-testid=\"auto-close-toggle\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 914,
+                "y": 735,
+                "width": 1,
+                "height": 1
+              },
+              "reason": "covered"
+            },
+            {
+              "role": "button",
+              "label": "Liquidation price info",
+              "test_id": "perps-order-summary-liquidation-price-tooltip-label-trigger",
+              "selector": "[data-testid=\"perps-order-summary-liquidation-price-tooltip-label-trigger\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 326,
+                "y": 784,
+                "width": 16,
+                "height": 16
+              },
+              "reason": "covered"
+            },
+            {
+              "role": "button",
+              "label": "Edit max slippage",
+              "test_id": "perps-order-summary-slippage-row",
+              "selector": "[data-testid=\"perps-order-summary-slippage-row\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 212,
+                "y": 811,
+                "width": 755,
+                "height": 22
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "Margin info",
+              "test_id": "perps-order-summary-margin-tooltip-label-trigger",
+              "selector": "[data-testid=\"perps-order-summary-margin-tooltip-label-trigger\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 261,
+                "y": 844,
+                "width": 16,
+                "height": 16
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "Fees info",
+              "test_id": "perps-order-summary-fees-tooltip-label-trigger",
+              "selector": "[data-testid=\"perps-order-summary-fees-tooltip-label-trigger\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 247,
+                "y": 874,
+                "width": 16,
+                "height": 16
+              },
+              "reason": "offscreen"
+            }
+          ],
+          "truncated": false,
+          "limits": {
+            "items": 20,
+            "hidden_or_offscreen": 10
+          }
+        }
+      }
+    },
+    {
+      "nodeId": "amount-100",
+      "action": "ui.set_input",
+      "intent": "Enter USD 100 without submitting",
+      "startedAt": "2026-10-09T09:02:49.816Z",
+      "endedAt": "2026-10-09T09:02:50.215Z",
+      "durationMs": 399,
+      "ok": true,
+      "next": "read-100",
+      "output": {
+        "set": true,
+        "selector": "[data-testid=\"amount-input-field\"] input",
+        "tagName": "INPUT",
+        "previousLength": 5,
+        "retainedLength": 3,
+        "cdpPort": 7667,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/BTC",
+        "runtimeLaunch": null,
+        "cdpTargetId": "1ED7CD2E15AC58B09D09BBE9183BC1FA",
+        "runtimeSessionId": "18e5fd79-9059-4e61-87df-5be926599abb"
+      },
+      "observations": {
+        "ui.screen": {
+          "provider": "cdp-web",
+          "name": "mini-mme-3 — MetaMask",
+          "title": "mini-mme-3 — MetaMask",
+          "route": "#/perps/trade/BTC",
+          "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
+        },
+        "ui.visible": {
+          "provider": "cdp-web",
+          "items": [
+            {
+              "role": "button",
+              "label": "Back",
+              "test_id": "perps-order-entry-back-button",
+              "selector": "[data-testid=\"perps-order-entry-back-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 212,
+                "y": 14,
+                "width": 36,
+                "height": 36
+              }
+            },
+            {
+              "role": "button",
+              "label": "Order book",
+              "test_id": "perps-order-book-toggle",
+              "selector": "[data-testid=\"perps-order-book-toggle\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 891,
+                "y": 14,
+                "width": 36,
+                "height": 36
+              }
+            },
+            {
+              "role": "button",
+              "label": "Collapse chart",
+              "test_id": "perps-order-entry-chart-toggle",
+              "selector": "[data-testid=\"perps-order-entry-chart-toggle\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 931,
+                "y": 14,
+                "width": 36,
+                "height": 36
+              }
+            },
+            {
+              "role": "button",
+              "label": "1min",
+              "test_id": "perps-candle-period-1m",
+              "selector": "[data-testid=\"perps-candle-period-1m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 212,
+                "y": 79,
+                "width": 62,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "3min",
+              "test_id": "perps-candle-period-3m",
+              "selector": "[data-testid=\"perps-candle-period-3m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 277,
+                "y": 79,
+                "width": 65,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "5min",
+              "test_id": "perps-candle-period-5m",
+              "selector": "[data-testid=\"perps-candle-period-5m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 346,
+                "y": 79,
+                "width": 64,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "15min",
+              "test_id": "perps-candle-period-15m",
+              "selector": "[data-testid=\"perps-candle-period-15m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 414,
+                "y": 79,
+                "width": 70,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "More",
+              "test_id": "perps-candle-period-more",
+              "selector": "[data-testid=\"perps-candle-period-more\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 488,
+                "y": 79,
+                "width": 82,
+                "height": 34
+              }
+            },
+            {
+              "role": "button",
+              "label": "Long",
+              "test_id": "direction-tab-long",
+              "selector": "[data-testid=\"direction-tab-long\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": 383,
+                "width": 373,
+                "height": 32
+              }
+            },
+            {
+              "role": "button",
+              "label": "Short",
+              "test_id": "direction-tab-short",
+              "selector": "[data-testid=\"direction-tab-short\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 589,
+                "y": 383,
+                "width": 373,
+                "height": 32
+              }
+            },
+            {
+              "role": "button",
+              "label": "Market",
+              "test_id": "order-type-market",
+              "selector": "[data-testid=\"order-type-market\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 212,
+                "y": 435,
+                "width": 79,
+                "height": 30
+              }
+            },
+            {
+              "role": "button",
+              "label": "Limit",
+              "test_id": "order-type-limit",
+              "selector": "[data-testid=\"order-type-limit\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 298,
+                "y": 435,
+                "width": 64,
+                "height": 30
+              }
+            },
+            {
+              "role": "button",
+              "label": "Add funds",
+              "test_id": "amount-input-add-funds",
+              "selector": "[data-testid=\"amount-input-add-funds\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 947,
+                "y": 482,
+                "width": 20,
+                "height": 20
+              }
+            },
+            {
+              "label": "0.00",
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(2) > input",
+              "enabled": true,
+              "focused": true,
+              "bounds": {
+                "x": 260,
+                "y": 515,
+                "width": 633,
+                "height": 40
+              }
+            },
+            {
+              "role": "button",
+              "label": "Toggle size denomination",
+              "test_id": "toggle-denomination",
+              "selector": "[data-testid=\"toggle-denomination\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 931,
+                "y": 525,
+                "width": 20,
+                "height": 20
+              }
+            },
+            {
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(2) > div > input",
+              "enabled": true,
+              "bounds": {
+                "x": 895,
+                "y": 567,
+                "width": 42,
+                "height": 32
+              }
+            },
+            {
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(2) > div > input",
+              "enabled": true,
+              "bounds": {
+                "x": 895,
+                "y": 645,
+                "width": 48,
+                "height": 32
+              }
+            },
+            {
+              "role": "button",
+              "label": "Open long BTC",
+              "test_id": "submit-order-button",
+              "selector": "[data-testid=\"submit-order-button\"]",
+              "enabled": false,
+              "bounds": {
+                "x": 212,
+                "y": 765,
+                "width": 755,
+                "height": 48
+              }
+            }
+          ],
+          "hidden_or_offscreen": [
+            {
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(1) > div > span > span:nth-of-type(3) > input",
+              "enabled": true,
+              "bounds": {
+                "x": 257,
+                "y": 581,
+                "width": 12,
+                "height": 12
+              },
+              "reason": "covered"
+            },
+            {
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div > span > span:nth-of-type(11) > input",
+              "enabled": true,
+              "bounds": {
+                "x": 251,
+                "y": 659,
+                "width": 12,
+                "height": 12
+              },
+              "reason": "covered"
+            },
+            {
+              "test_id": "auto-close-toggle",
+              "selector": "[data-testid=\"auto-close-toggle\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 914,
+                "y": 735,
+                "width": 1,
+                "height": 1
+              },
+              "reason": "covered"
+            },
+            {
+              "role": "button",
+              "label": "Liquidation price info",
+              "test_id": "perps-order-summary-liquidation-price-tooltip-label-trigger",
+              "selector": "[data-testid=\"perps-order-summary-liquidation-price-tooltip-label-trigger\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 326,
+                "y": 784,
+                "width": 16,
+                "height": 16
+              },
+              "reason": "covered"
+            },
+            {
+              "role": "button",
+              "label": "Edit max slippage",
+              "test_id": "perps-order-summary-slippage-row",
+              "selector": "[data-testid=\"perps-order-summary-slippage-row\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 212,
+                "y": 811,
+                "width": 755,
+                "height": 22
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "Margin info",
+              "test_id": "perps-order-summary-margin-tooltip-label-trigger",
+              "selector": "[data-testid=\"perps-order-summary-margin-tooltip-label-trigger\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 261,
+                "y": 844,
+                "width": 16,
+                "height": 16
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "Fees info",
+              "test_id": "perps-order-summary-fees-tooltip-label-trigger",
+              "selector": "[data-testid=\"perps-order-summary-fees-tooltip-label-trigger\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 247,
+                "y": 874,
+                "width": 16,
+                "height": 16
+              },
+              "reason": "offscreen"
+            }
+          ],
+          "truncated": false,
+          "limits": {
+            "items": 20,
+            "hidden_or_offscreen": 10
+          }
+        }
+      }
+    },
+    {
+      "nodeId": "read-100",
+      "action": "metamask.perps.read_visible_state",
+      "intent": "The visible BTC preview uses USD 100, long direction and three-times leverage",
+      "startedAt": "2026-10-09T09:02:50.230Z",
+      "endedAt": "2026-10-09T09:02:50.430Z",
+      "durationMs": 200,
+      "ok": true,
+      "next": "fee-visible-100",
+      "output": {
+        "action": "metamask.perps.read_visible_state",
+        "source": "visible-ui",
+        "platform": "extension",
+        "surface": "order-entry",
+        "favorite": null,
+        "marketDetails": null,
+        "route": "#/perps/trade/BTC",
+        "title": "mini-mme-3 — MetaMask",
+        "balance": null,
+        "markets": [],
+        "marketCount": 0,
+        "topMovers": null,
+        "positions": [],
+        "orders": [],
+        "activity": [],
+        "orderEntry": {
+          "symbol": "BTC",
+          "direction": "long",
+          "orderType": "market",
+          "amount": "100",
+          "percent": "6",
+          "leverage": "3",
+          "autoClose": false,
+          "takeProfitPrice": null,
+          "stopLossPrice": null,
+          "submit": {
+            "label": "Open long BTC",
+            "enabled": false
+          },
+          "limitPrice": null,
+          "validation": []
+        },
+        "features": {
+          "activity": false,
+          "balance": false,
+          "chart": true,
+          "long-short": false,
+          "market-list": false,
+          "order-entry": true,
+          "price": false,
+          "price-change": false,
+          "stats": false
+        },
+        "controls": [
+          {
+            "testId": "perps-order-entry-back-button",
+            "label": "Back",
+            "enabled": true,
+            "visible": true
+          },
+          {
+            "testId": "perps-order-entry-asset-symbol",
+            "label": "BTC",
+            "enabled": true,
+            "visible": true
+          },
+          {
+            "testId": "perps-order-entry-price",
+            "label": "$82,706",
+            "enabled": true,
+            "visible": true
+          },
+          {
+            "testId": "perps-order-entry-change",
+            "label": "-0.18%",
+            "enabled": true,
+            "visible": true
+          },
+          {
+            "testId": "perps-order-entry-right-accessory",
+            "enabled": true,
+            "visible": true
+          },
+          {
+            "testId": "perps-order-book-toggle",
+            "label": "Order book",
+            "enabled": true,
+            "visible": true
+          },
+          {
+            "testId": "perps-order-entry-chart-toggle",
+            "label": "Collapse chart",
+            "enabled": true,
+            "visible": true
+          },
+          {
+            "testId": "perps-order-entry-chart",
+            "label": "Price chart",
+            "enabled": true,
+            "visible": true
+          },
+          {
+            "testId": "perps-candle-period-selector",
+            "label": "1min 3min 5min 15min More",
+            "enabled": true,
+            "visible": true
+          },
+          {
+            "testId": "perps-candle-period-1m",
+            "label": "1min",
+            "enabled": true,
+            "visible": true
+          },
+          {
+            "testId": "perps-candle-period-3m",
+            "label": "3min",
+            "enabled": true,
+            "visible": true
+          },
+          {
+            "testId": "perps-candle-period-5m",
+            "label": "5min",
+            "enabled": true,
+            "visible": true
+          },
+          {
+            "testId": "perps-candle-period-15m",
+            "label": "15min",
+            "enabled": true,
+            "visible": true
+          },
+          {
+            "testId": "perps-candle-period-more",
+            "label": "More",
+            "enabled": true,
+            "visible": true
+          },
+          {
+            "testId": "perps-candlestick-chart",
+            "enabled": true,
+            "visible": true
+          },
+          {
+            "testId": "perps-order-body",
+            "label": "Long Short Market Limit Available to trade 524.91 USDC Size USD % Leverage x 1x 40x Auto close Liquidation price $55,835 Slippage Est: -- / Max: 3% Margin $33.34 Fees $0.15 Open long BTC",
+            "enabled": true,
+            "visible": true
+          },
+          {
+            "testId": "perps-order-form-content",
+            "label": "Long Short Market Limit Available to trade 524.91 USDC Size USD % Leverage x 1x 40x Auto close Liquidation price $55,835 Slippage Est: -- / Max: 3% Margin $33.34 Fees $0.15",
+            "enabled": true,
+            "visible": true
+          },
+          {
+            "testId": "perps-order-summary-liquidation-price-tooltip-label",
+            "label": "Liquidation price",
+            "enabled": true,
+            "visible": true
+          },
+          {
+            "testId": "perps-order-summary-liquidation-price-tooltip-label-trigger",
+            "label": "Liquidation price info",
+            "enabled": true,
+            "visible": true
+          },
+          {
+            "testId": "perps-order-summary-liquidation-price",
+            "label": "$55,835",
+            "enabled": true,
+            "visible": true
+          },
+          {
+            "testId": "perps-order-summary-slippage-row",
+            "label": "Edit max slippage",
+            "enabled": true,
+            "visible": true
+          },
+          {
+            "testId": "perps-order-summary-slippage-value",
+            "label": "Est: -- / Max: 3%",
+            "enabled": true,
+            "visible": true
+          },
+          {
+            "testId": "perps-order-summary-margin-tooltip-label",
+            "label": "Margin",
+            "enabled": true,
+            "visible": false
+          },
+          {
+            "testId": "perps-order-summary-margin-tooltip-label-trigger",
+            "label": "Margin info",
+            "enabled": true,
+            "visible": false
+          },
+          {
+            "testId": "perps-order-summary-margin-required",
+            "label": "$33.34",
+            "enabled": true,
+            "visible": false
+          },
+          {
+            "testId": "perps-order-summary-fees-tooltip-label",
+            "label": "Fees",
+            "enabled": true,
+            "visible": false
+          },
+          {
+            "testId": "perps-order-summary-fees-tooltip-label-trigger",
+            "label": "Fees info",
+            "enabled": true,
+            "visible": false
+          },
+          {
+            "testId": "perps-order-summary-estimated-fees",
+            "label": "$0.15",
+            "enabled": true,
+            "visible": false
+          }
+        ],
+        "observedTestIds": [
+          "parent-selector-perps-order-entry",
+          "perps-order-entry-back-button",
+          "perps-order-entry-asset-symbol",
+          "perps-order-entry-price",
+          "perps-order-entry-change",
+          "perps-order-entry-right-accessory",
+          "perps-order-book-toggle",
+          "perps-order-entry-chart-toggle",
+          "perps-order-entry-chart",
+          "perps-candle-period-selector",
+          "perps-candle-period-1m",
+          "perps-candle-period-3m",
+          "perps-candle-period-5m",
+          "perps-candle-period-15m",
+          "perps-candle-period-more",
+          "perps-candlestick-chart",
+          "perps-order-body",
+          "perps-order-form-content",
+          "direction-tabs",
+          "direction-tab-long",
+          "direction-tab-short",
+          "order-type-toggle",
+          "order-type-market",
+          "order-type-limit",
+          "amount-input-available-to-trade-row",
+          "amount-input-add-funds",
+          "amount-input-field",
+          "amount-input-denomination-unit",
+          "amount-slider",
+          "balance-percent-input",
+          "leverage-slider",
+          "leverage-input",
+          "auto-close-section",
+          "auto-close-toggle",
+          "perps-order-summary-liquidation-price-tooltip-label",
+          "perps-order-summary-liquidation-price-tooltip-label-trigger",
+          "perps-order-summary-liquidation-price",
+          "perps-order-summary-slippage-row",
+          "perps-order-summary-slippage-value",
+          "submit-order-button",
+          "perps-order-summary-margin-tooltip-label",
+          "perps-order-summary-margin-tooltip-label-trigger",
+          "perps-order-summary-margin-required",
+          "perps-order-summary-fees-tooltip-label",
+          "perps-order-summary-fees-tooltip-label-trigger",
+          "perps-order-summary-estimated-fees"
+        ],
+        "truncated": false,
+        "layout": {
+          "viewportWidth": 1200,
+          "viewportHeight": 829,
+          "contentWidth": 1200,
+          "horizontalOverflow": false,
+          "clippedTestIds": [],
+          "obscuredControlTestIds": [
+            "auto-close-toggle",
+            "perps-order-summary-liquidation-price-tooltip-label-trigger",
+            "perps-order-summary-slippage-row"
+          ],
+          "overlappingControlPairs": []
+        },
+        "proofPath": "visible-dom-accessibility",
+        "cdpPort": 7667,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/BTC",
+        "runtimeLaunch": null,
+        "cdpTargetId": "1ED7CD2E15AC58B09D09BBE9183BC1FA",
+        "runtimeSessionId": "18e5fd79-9059-4e61-87df-5be926599abb",
+        "liveAdapter": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/actions/extension/perps/read_visible_state.mjs"
+      }
+    },
+    {
+      "nodeId": "fee-visible-100",
+      "action": "ui.scroll",
+      "intent": "The fee estimate is visible in the viewport for the evidence image",
+      "startedAt": "2026-10-09T09:02:50.438Z",
+      "endedAt": "2026-10-09T09:02:50.960Z",
+      "durationMs": 522,
+      "ok": true,
+      "next": "quote-100",
+      "output": {
+        "scrolled": true,
+        "selector": "[data-testid=\"perps-order-summary-estimated-fees\"], [data-test-id=\"perps-order-summary-estimated-fees\"], [data-test=\"perps-order-summary-estimated-fees\"]",
+        "intoView": true,
+        "cdpPort": 7667,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/BTC",
+        "runtimeLaunch": null,
+        "cdpTargetId": "1ED7CD2E15AC58B09D09BBE9183BC1FA",
+        "runtimeSessionId": "18e5fd79-9059-4e61-87df-5be926599abb"
+      },
+      "observations": {
+        "ui.screen": {
+          "provider": "cdp-web",
+          "name": "mini-mme-3 — MetaMask",
+          "title": "mini-mme-3 — MetaMask",
+          "route": "#/perps/trade/BTC",
+          "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
+        },
+        "ui.visible": {
+          "provider": "cdp-web",
+          "items": [
+            {
+              "role": "button",
+              "label": "Long",
+              "test_id": "direction-tab-long",
+              "selector": "[data-testid=\"direction-tab-long\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": -26,
+                "width": 373,
+                "height": 32
+              }
+            },
+            {
+              "role": "button",
+              "label": "Short",
+              "test_id": "direction-tab-short",
+              "selector": "[data-testid=\"direction-tab-short\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 589,
+                "y": -26,
+                "width": 373,
+                "height": 32
+              }
+            },
+            {
+              "role": "button",
+              "label": "Market",
+              "test_id": "order-type-market",
+              "selector": "[data-testid=\"order-type-market\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 212,
+                "y": 26,
+                "width": 79,
+                "height": 30
+              }
+            },
+            {
+              "role": "button",
+              "label": "Limit",
+              "test_id": "order-type-limit",
+              "selector": "[data-testid=\"order-type-limit\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 298,
+                "y": 26,
+                "width": 64,
+                "height": 30
+              }
+            },
+            {
+              "role": "button",
+              "label": "Add funds",
+              "test_id": "amount-input-add-funds",
+              "selector": "[data-testid=\"amount-input-add-funds\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 947,
+                "y": 73,
+                "width": 20,
+                "height": 20
+              }
+            },
+            {
+              "label": "0.00",
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(2) > input",
+              "enabled": true,
+              "focused": true,
+              "bounds": {
+                "x": 260,
+                "y": 106,
+                "width": 633,
+                "height": 40
+              }
+            },
+            {
+              "role": "button",
+              "label": "Toggle size denomination",
+              "test_id": "toggle-denomination",
+              "selector": "[data-testid=\"toggle-denomination\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 931,
+                "y": 116,
+                "width": 20,
+                "height": 20
+              }
+            },
+            {
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(2) > div > input",
+              "enabled": true,
+              "bounds": {
+                "x": 895,
+                "y": 158,
+                "width": 42,
+                "height": 32
+              }
+            },
+            {
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(2) > div > input",
+              "enabled": true,
+              "bounds": {
+                "x": 895,
+                "y": 236,
+                "width": 48,
+                "height": 32
+              }
+            },
+            {
+              "role": "button",
+              "label": "Liquidation price info",
+              "test_id": "perps-order-summary-liquidation-price-tooltip-label-trigger",
+              "selector": "[data-testid=\"perps-order-summary-liquidation-price-tooltip-label-trigger\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 326,
+                "y": 375,
+                "width": 16,
+                "height": 16
+              }
+            },
+            {
+              "role": "button",
+              "label": "Edit max slippage",
+              "test_id": "perps-order-summary-slippage-row",
+              "selector": "[data-testid=\"perps-order-summary-slippage-row\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 212,
+                "y": 402,
+                "width": 755,
+                "height": 22
+              }
+            },
+            {
+              "role": "button",
+              "label": "Margin info",
+              "test_id": "perps-order-summary-margin-tooltip-label-trigger",
+              "selector": "[data-testid=\"perps-order-summary-margin-tooltip-label-trigger\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 261,
+                "y": 435,
+                "width": 16,
+                "height": 16
+              }
+            },
+            {
+              "role": "button",
+              "label": "Fees info",
+              "test_id": "perps-order-summary-fees-tooltip-label-trigger",
+              "selector": "[data-testid=\"perps-order-summary-fees-tooltip-label-trigger\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 247,
+                "y": 465,
+                "width": 16,
+                "height": 16
+              }
+            },
+            {
+              "role": "button",
+              "label": "Open long BTC",
+              "test_id": "submit-order-button",
+              "selector": "[data-testid=\"submit-order-button\"]",
+              "enabled": false,
+              "bounds": {
+                "x": 212,
+                "y": 765,
+                "width": 755,
+                "height": 48
+              }
+            }
+          ],
+          "hidden_or_offscreen": [
+            {
+              "role": "button",
+              "label": "Back",
+              "test_id": "perps-order-entry-back-button",
+              "selector": "[data-testid=\"perps-order-entry-back-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 212,
+                "y": -395,
+                "width": 36,
+                "height": 36
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "Order book",
+              "test_id": "perps-order-book-toggle",
+              "selector": "[data-testid=\"perps-order-book-toggle\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 891,
+                "y": -395,
+                "width": 36,
+                "height": 36
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "Collapse chart",
+              "test_id": "perps-order-entry-chart-toggle",
+              "selector": "[data-testid=\"perps-order-entry-chart-toggle\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 931,
+                "y": -395,
+                "width": 36,
+                "height": 36
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "1min",
+              "test_id": "perps-candle-period-1m",
+              "selector": "[data-testid=\"perps-candle-period-1m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 212,
+                "y": -330,
+                "width": 62,
+                "height": 34
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "3min",
+              "test_id": "perps-candle-period-3m",
+              "selector": "[data-testid=\"perps-candle-period-3m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 277,
+                "y": -330,
+                "width": 65,
+                "height": 34
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "5min",
+              "test_id": "perps-candle-period-5m",
+              "selector": "[data-testid=\"perps-candle-period-5m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 346,
+                "y": -330,
+                "width": 64,
+                "height": 34
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "15min",
+              "test_id": "perps-candle-period-15m",
+              "selector": "[data-testid=\"perps-candle-period-15m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 414,
+                "y": -330,
+                "width": 70,
+                "height": 34
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "More",
+              "test_id": "perps-candle-period-more",
+              "selector": "[data-testid=\"perps-candle-period-more\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 488,
+                "y": -330,
+                "width": 82,
+                "height": 34
+              },
+              "reason": "offscreen"
+            },
+            {
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(1) > div > span > span:nth-of-type(3) > input",
+              "enabled": true,
+              "bounds": {
+                "x": 257,
+                "y": 172,
+                "width": 12,
+                "height": 12
+              },
+              "reason": "covered"
+            },
+            {
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div > span > span:nth-of-type(11) > input",
+              "enabled": true,
+              "bounds": {
+                "x": 251,
+                "y": 250,
+                "width": 12,
+                "height": 12
+              },
+              "reason": "covered"
+            }
+          ],
+          "truncated": true,
+          "limits": {
+            "items": 20,
+            "hidden_or_offscreen": 10
+          }
+        }
+      }
+    },
+    {
+      "nodeId": "quote-100",
+      "action": "command",
+      "intent": "Assert both live hooks quote the current notional and the displayed fee matches the quote within sizing precision",
+      "proves": [
+        "LEAD-FEE"
+      ],
+      "startedAt": "2026-10-09T09:02:50.976Z",
+      "endedAt": "2026-10-09T09:02:51.819Z",
+      "durationMs": 843,
+      "ok": true,
+      "next": "capture-100",
+      "output": {
+        "exitCode": 0,
+        "stdout": "{\"isTestnet\":true,\"quotes\":[{\"name\":\"OrderEntry\",\"isFallback\":false,\"result\":{\"feeRate\":0.00145,\"feeAmount\":0.145,\"protocolFeeRate\":0.00045,\"protocolFeeAmount\":0.045,\"metamaskFeeRate\":0.001,\"metamaskFeeAmount\":0.1,\"chargesMetamaskBuilderFee\":true,\"feeSource\":\"rewards\",\"metamaskFeeDiscountBips\":0,\"undiscountedMetamaskFeeRate\":0.001}},{\"name\":\"PerpsOrderEntryPage\",\"isFallback\":false,\"result\":{\"feeRate\":0.00145,\"feeAmount\":0.145,\"protocolFeeRate\":0.00045,\"protocolFeeAmount\":0.045,\"metamaskFeeRate\":0.001,\"metamaskFeeAmount\":0.1,\"chargesMetamaskBuilderFee\":true,\"feeSource\":\"rewards\",\"metamaskFeeDiscountBips\":0,\"undiscountedMetamaskFeeRate\":0.001}}],\"amount\":\"100\",\"leverage\":\"3\",\"displayedFee\":\"$0.15\",\"discountBadge\":null,\"route\":\"#/perps/trade/BTC\"}\n",
+        "stderr": ""
+      }
+    },
+    {
+      "nodeId": "capture-100",
+      "action": "ui.screenshot",
+      "intent": "The unsubmitted BTC USD 100 fee preview is preserved as visual evidence",
+      "proves": [
+        "LEAD-FEE"
+      ],
+      "artifacts": [
+        {
+          "path": "screenshots/btc-100-fee.png",
+          "type": "screenshot",
+          "nodeId": "capture-100",
+          "label": "UI screenshot",
+          "category": "evidence",
+          "mimeType": "image/png",
+          "metadata": {
+            "provider": "capture-helper",
+            "mode": "snapshot",
+            "pid": 8037,
+            "captureHelper": {
+              "bytes": 194471,
+              "output": "/Volumes/FD/dev/metamask/metamask-extension-3/temp/tasks/fix/46934-1009-163330/artifacts/fee-preview-run/screenshots/.mm-harness-extension-evidence-j8yiOF/captured.png",
+              "selected": {
+                "app": "Google Chrome for Testing",
+                "height": 916,
+                "id": 502,
+                "layer": 0,
+                "onScreen": true,
+                "pid": 8037,
+                "title": "mini-mme-3 — MetaMask",
+                "width": 1200,
+                "x": 35,
+                "y": 51
+              },
+              "selector": "pid",
+              "type": "snapshot"
+            }
+          }
+        }
+      ],
+      "startedAt": "2026-10-09T09:02:51.826Z",
+      "endedAt": "2026-10-09T09:02:52.015Z",
+      "durationMs": 189,
+      "ok": true,
+      "next": "amount-1000",
+      "output": {
+        "captured": true,
+        "path": "screenshots/btc-100-fee.png",
+        "artifact": {
+          "path": "screenshots/btc-100-fee.png",
+          "type": "screenshot",
+          "nodeId": "capture-100",
+          "label": "UI screenshot",
+          "category": "evidence",
+          "mimeType": "image/png",
+          "metadata": {
+            "provider": "capture-helper",
+            "mode": "snapshot",
+            "pid": 8037,
+            "captureHelper": {
+              "bytes": 194471,
+              "output": "/Volumes/FD/dev/metamask/metamask-extension-3/temp/tasks/fix/46934-1009-163330/artifacts/fee-preview-run/screenshots/.mm-harness-extension-evidence-j8yiOF/captured.png",
+              "selected": {
+                "app": "Google Chrome for Testing",
+                "height": 916,
+                "id": 502,
+                "layer": 0,
+                "onScreen": true,
+                "pid": 8037,
+                "title": "mini-mme-3 — MetaMask",
+                "width": 1200,
+                "x": 35,
+                "y": 51
+              },
+              "selector": "pid",
+              "type": "snapshot"
+            }
+          }
+        }
+      },
+      "observations": {
+        "ui.screen": {
+          "provider": "cdp-web",
+          "name": "mini-mme-3 — MetaMask",
+          "title": "mini-mme-3 — MetaMask",
+          "route": "#/perps/trade/BTC",
+          "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
+        },
+        "ui.visible": {
+          "provider": "cdp-web",
+          "items": [
+            {
+              "role": "button",
+              "label": "Long",
+              "test_id": "direction-tab-long",
+              "selector": "[data-testid=\"direction-tab-long\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": -26,
+                "width": 373,
+                "height": 32
+              }
+            },
+            {
+              "role": "button",
+              "label": "Short",
+              "test_id": "direction-tab-short",
+              "selector": "[data-testid=\"direction-tab-short\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 589,
+                "y": -26,
+                "width": 373,
+                "height": 32
+              }
+            },
+            {
+              "role": "button",
+              "label": "Market",
+              "test_id": "order-type-market",
+              "selector": "[data-testid=\"order-type-market\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 212,
+                "y": 26,
+                "width": 79,
+                "height": 30
+              }
+            },
+            {
+              "role": "button",
+              "label": "Limit",
+              "test_id": "order-type-limit",
+              "selector": "[data-testid=\"order-type-limit\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 298,
+                "y": 26,
+                "width": 64,
+                "height": 30
+              }
+            },
+            {
+              "role": "button",
+              "label": "Add funds",
+              "test_id": "amount-input-add-funds",
+              "selector": "[data-testid=\"amount-input-add-funds\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 947,
+                "y": 73,
+                "width": 20,
+                "height": 20
+              }
+            },
+            {
+              "label": "0.00",
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(2) > input",
+              "enabled": true,
+              "focused": true,
+              "bounds": {
+                "x": 260,
+                "y": 106,
+                "width": 633,
+                "height": 40
+              }
+            },
+            {
+              "role": "button",
+              "label": "Toggle size denomination",
+              "test_id": "toggle-denomination",
+              "selector": "[data-testid=\"toggle-denomination\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 931,
+                "y": 116,
+                "width": 20,
+                "height": 20
+              }
+            },
+            {
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(2) > div > input",
+              "enabled": true,
+              "bounds": {
+                "x": 895,
+                "y": 158,
+                "width": 42,
+                "height": 32
+              }
+            },
+            {
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(2) > div > input",
+              "enabled": true,
+              "bounds": {
+                "x": 895,
+                "y": 236,
+                "width": 48,
+                "height": 32
+              }
+            },
+            {
+              "role": "button",
+              "label": "Liquidation price info",
+              "test_id": "perps-order-summary-liquidation-price-tooltip-label-trigger",
+              "selector": "[data-testid=\"perps-order-summary-liquidation-price-tooltip-label-trigger\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 326,
+                "y": 375,
+                "width": 16,
+                "height": 16
+              }
+            },
+            {
+              "role": "button",
+              "label": "Edit max slippage",
+              "test_id": "perps-order-summary-slippage-row",
+              "selector": "[data-testid=\"perps-order-summary-slippage-row\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 212,
+                "y": 402,
+                "width": 755,
+                "height": 22
+              }
+            },
+            {
+              "role": "button",
+              "label": "Margin info",
+              "test_id": "perps-order-summary-margin-tooltip-label-trigger",
+              "selector": "[data-testid=\"perps-order-summary-margin-tooltip-label-trigger\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 261,
+                "y": 435,
+                "width": 16,
+                "height": 16
+              }
+            },
+            {
+              "role": "button",
+              "label": "Fees info",
+              "test_id": "perps-order-summary-fees-tooltip-label-trigger",
+              "selector": "[data-testid=\"perps-order-summary-fees-tooltip-label-trigger\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 247,
+                "y": 465,
+                "width": 16,
+                "height": 16
+              }
+            },
+            {
+              "role": "button",
+              "label": "Open long BTC",
+              "test_id": "submit-order-button",
+              "selector": "[data-testid=\"submit-order-button\"]",
+              "enabled": false,
+              "bounds": {
+                "x": 212,
+                "y": 765,
+                "width": 755,
+                "height": 48
+              }
+            }
+          ],
+          "hidden_or_offscreen": [
+            {
+              "role": "button",
+              "label": "Back",
+              "test_id": "perps-order-entry-back-button",
+              "selector": "[data-testid=\"perps-order-entry-back-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 212,
+                "y": -395,
+                "width": 36,
+                "height": 36
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "Order book",
+              "test_id": "perps-order-book-toggle",
+              "selector": "[data-testid=\"perps-order-book-toggle\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 891,
+                "y": -395,
+                "width": 36,
+                "height": 36
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "Collapse chart",
+              "test_id": "perps-order-entry-chart-toggle",
+              "selector": "[data-testid=\"perps-order-entry-chart-toggle\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 931,
+                "y": -395,
+                "width": 36,
+                "height": 36
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "1min",
+              "test_id": "perps-candle-period-1m",
+              "selector": "[data-testid=\"perps-candle-period-1m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 212,
+                "y": -330,
+                "width": 62,
+                "height": 34
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "3min",
+              "test_id": "perps-candle-period-3m",
+              "selector": "[data-testid=\"perps-candle-period-3m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 277,
+                "y": -330,
+                "width": 65,
+                "height": 34
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "5min",
+              "test_id": "perps-candle-period-5m",
+              "selector": "[data-testid=\"perps-candle-period-5m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 346,
+                "y": -330,
+                "width": 64,
+                "height": 34
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "15min",
+              "test_id": "perps-candle-period-15m",
+              "selector": "[data-testid=\"perps-candle-period-15m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 414,
+                "y": -330,
+                "width": 70,
+                "height": 34
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "More",
+              "test_id": "perps-candle-period-more",
+              "selector": "[data-testid=\"perps-candle-period-more\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 488,
+                "y": -330,
+                "width": 82,
+                "height": 34
+              },
+              "reason": "offscreen"
+            },
+            {
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(1) > div > span > span:nth-of-type(3) > input",
+              "enabled": true,
+              "bounds": {
+                "x": 257,
+                "y": 172,
+                "width": 12,
+                "height": 12
+              },
+              "reason": "covered"
+            },
+            {
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div > span > span:nth-of-type(11) > input",
+              "enabled": true,
+              "bounds": {
+                "x": 251,
+                "y": 250,
+                "width": 12,
+                "height": 12
+              },
+              "reason": "covered"
+            }
+          ],
+          "truncated": true,
+          "limits": {
+            "items": 20,
+            "hidden_or_offscreen": 10
+          }
+        }
+      }
+    },
+    {
+      "nodeId": "amount-1000",
+      "action": "ui.set_input",
+      "intent": "Enter USD 1000 without submitting",
+      "startedAt": "2026-10-09T09:02:52.020Z",
+      "endedAt": "2026-10-09T09:02:52.396Z",
+      "durationMs": 376,
+      "ok": true,
+      "next": "read-1000",
+      "output": {
+        "set": true,
+        "selector": "[data-testid=\"amount-input-field\"] input",
+        "tagName": "INPUT",
+        "previousLength": 3,
+        "retainedLength": 4,
+        "cdpPort": 7667,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/BTC",
+        "runtimeLaunch": null,
+        "cdpTargetId": "1ED7CD2E15AC58B09D09BBE9183BC1FA",
+        "runtimeSessionId": "18e5fd79-9059-4e61-87df-5be926599abb"
+      },
+      "observations": {
+        "ui.screen": {
+          "provider": "cdp-web",
+          "name": "mini-mme-3 — MetaMask",
+          "title": "mini-mme-3 — MetaMask",
+          "route": "#/perps/trade/BTC",
+          "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
+        },
+        "ui.visible": {
+          "provider": "cdp-web",
+          "items": [
+            {
+              "role": "button",
+              "label": "Long",
+              "test_id": "direction-tab-long",
+              "selector": "[data-testid=\"direction-tab-long\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": -26,
+                "width": 373,
+                "height": 32
+              }
+            },
+            {
+              "role": "button",
+              "label": "Short",
+              "test_id": "direction-tab-short",
+              "selector": "[data-testid=\"direction-tab-short\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 589,
+                "y": -26,
+                "width": 373,
+                "height": 32
+              }
+            },
+            {
+              "role": "button",
+              "label": "Market",
+              "test_id": "order-type-market",
+              "selector": "[data-testid=\"order-type-market\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 212,
+                "y": 26,
+                "width": 79,
+                "height": 30
+              }
+            },
+            {
+              "role": "button",
+              "label": "Limit",
+              "test_id": "order-type-limit",
+              "selector": "[data-testid=\"order-type-limit\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 298,
+                "y": 26,
+                "width": 64,
+                "height": 30
+              }
+            },
+            {
+              "role": "button",
+              "label": "Add funds",
+              "test_id": "amount-input-add-funds",
+              "selector": "[data-testid=\"amount-input-add-funds\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 947,
+                "y": 73,
+                "width": 20,
+                "height": 20
+              }
+            },
+            {
+              "label": "0.00",
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(2) > input",
+              "enabled": true,
+              "focused": true,
+              "bounds": {
+                "x": 260,
+                "y": 106,
+                "width": 633,
+                "height": 40
+              }
+            },
+            {
+              "role": "button",
+              "label": "Toggle size denomination",
+              "test_id": "toggle-denomination",
+              "selector": "[data-testid=\"toggle-denomination\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 931,
+                "y": 116,
+                "width": 20,
+                "height": 20
+              }
+            },
+            {
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(2) > div > input",
+              "enabled": true,
+              "bounds": {
+                "x": 895,
+                "y": 158,
+                "width": 42,
+                "height": 32
+              }
+            },
+            {
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(2) > div > input",
+              "enabled": true,
+              "bounds": {
+                "x": 895,
+                "y": 236,
+                "width": 48,
+                "height": 32
+              }
+            },
+            {
+              "role": "button",
+              "label": "Liquidation price info",
+              "test_id": "perps-order-summary-liquidation-price-tooltip-label-trigger",
+              "selector": "[data-testid=\"perps-order-summary-liquidation-price-tooltip-label-trigger\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 326,
+                "y": 375,
+                "width": 16,
+                "height": 16
+              }
+            },
+            {
+              "role": "button",
+              "label": "Edit max slippage",
+              "test_id": "perps-order-summary-slippage-row",
+              "selector": "[data-testid=\"perps-order-summary-slippage-row\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 212,
+                "y": 402,
+                "width": 755,
+                "height": 22
+              }
+            },
+            {
+              "role": "button",
+              "label": "Margin info",
+              "test_id": "perps-order-summary-margin-tooltip-label-trigger",
+              "selector": "[data-testid=\"perps-order-summary-margin-tooltip-label-trigger\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 261,
+                "y": 435,
+                "width": 16,
+                "height": 16
+              }
+            },
+            {
+              "role": "button",
+              "label": "Fees info",
+              "test_id": "perps-order-summary-fees-tooltip-label-trigger",
+              "selector": "[data-testid=\"perps-order-summary-fees-tooltip-label-trigger\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 247,
+                "y": 465,
+                "width": 16,
+                "height": 16
+              }
+            },
+            {
+              "role": "button",
+              "label": "Open long BTC",
+              "test_id": "submit-order-button",
+              "selector": "[data-testid=\"submit-order-button\"]",
+              "enabled": false,
+              "bounds": {
+                "x": 212,
+                "y": 765,
+                "width": 755,
+                "height": 48
+              }
+            }
+          ],
+          "hidden_or_offscreen": [
+            {
+              "role": "button",
+              "label": "Back",
+              "test_id": "perps-order-entry-back-button",
+              "selector": "[data-testid=\"perps-order-entry-back-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 212,
+                "y": -395,
+                "width": 36,
+                "height": 36
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "Order book",
+              "test_id": "perps-order-book-toggle",
+              "selector": "[data-testid=\"perps-order-book-toggle\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 891,
+                "y": -395,
+                "width": 36,
+                "height": 36
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "Collapse chart",
+              "test_id": "perps-order-entry-chart-toggle",
+              "selector": "[data-testid=\"perps-order-entry-chart-toggle\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 931,
+                "y": -395,
+                "width": 36,
+                "height": 36
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "1min",
+              "test_id": "perps-candle-period-1m",
+              "selector": "[data-testid=\"perps-candle-period-1m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 212,
+                "y": -330,
+                "width": 62,
+                "height": 34
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "3min",
+              "test_id": "perps-candle-period-3m",
+              "selector": "[data-testid=\"perps-candle-period-3m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 277,
+                "y": -330,
+                "width": 65,
+                "height": 34
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "5min",
+              "test_id": "perps-candle-period-5m",
+              "selector": "[data-testid=\"perps-candle-period-5m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 346,
+                "y": -330,
+                "width": 64,
+                "height": 34
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "15min",
+              "test_id": "perps-candle-period-15m",
+              "selector": "[data-testid=\"perps-candle-period-15m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 414,
+                "y": -330,
+                "width": 70,
+                "height": 34
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "More",
+              "test_id": "perps-candle-period-more",
+              "selector": "[data-testid=\"perps-candle-period-more\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 488,
+                "y": -330,
+                "width": 82,
+                "height": 34
+              },
+              "reason": "offscreen"
+            },
+            {
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(1) > div > span > span:nth-of-type(3) > input",
+              "enabled": true,
+              "bounds": {
+                "x": 634,
+                "y": 172,
+                "width": 12,
+                "height": 12
+              },
+              "reason": "covered"
+            },
+            {
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div > span > span:nth-of-type(11) > input",
+              "enabled": true,
+              "bounds": {
+                "x": 251,
+                "y": 250,
+                "width": 12,
+                "height": 12
+              },
+              "reason": "covered"
+            }
+          ],
+          "truncated": true,
+          "limits": {
+            "items": 20,
+            "hidden_or_offscreen": 10
+          }
+        }
+      }
+    },
+    {
+      "nodeId": "read-1000",
+      "action": "metamask.perps.read_visible_state",
+      "intent": "The visible BTC preview uses USD 1000, long direction and three-times leverage",
+      "startedAt": "2026-10-09T09:02:52.412Z",
+      "endedAt": "2026-10-09T09:02:52.589Z",
+      "durationMs": 177,
+      "ok": true,
+      "next": "fee-visible-1000",
+      "output": {
+        "action": "metamask.perps.read_visible_state",
+        "source": "visible-ui",
+        "platform": "extension",
+        "surface": "order-entry",
+        "favorite": null,
+        "marketDetails": null,
+        "route": "#/perps/trade/BTC",
+        "title": "mini-mme-3 — MetaMask",
+        "balance": null,
+        "markets": [],
+        "marketCount": 0,
+        "topMovers": null,
+        "positions": [],
+        "orders": [],
+        "activity": [],
+        "orderEntry": {
+          "symbol": "BTC",
+          "direction": "long",
+          "orderType": "market",
+          "amount": "1000",
+          "percent": "64",
+          "leverage": "3",
+          "autoClose": false,
+          "takeProfitPrice": null,
+          "stopLossPrice": null,
+          "submit": {
+            "label": "Open long BTC",
+            "enabled": false
+          },
+          "limitPrice": null,
+          "validation": []
+        },
+        "features": {
+          "activity": false,
+          "balance": false,
+          "chart": true,
+          "long-short": false,
+          "market-list": false,
+          "order-entry": true,
+          "price": false,
+          "price-change": false,
+          "stats": false
+        },
+        "controls": [
+          {
+            "testId": "perps-order-body",
+            "label": "Long Short Market Limit Available to trade 524.91 USDC Size USD % Leverage x 1x 40x Auto close Liquidation price $55,835 Slippage Est: -- / Max: 3% Margin $333.67 Fees $1.45 Open long BTC",
+            "enabled": true,
+            "visible": true
+          },
+          {
+            "testId": "perps-order-form-content",
+            "label": "Long Short Market Limit Available to trade 524.91 USDC Size USD % Leverage x 1x 40x Auto close Liquidation price $55,835 Slippage Est: -- / Max: 3% Margin $333.67 Fees $1.45",
+            "enabled": true,
+            "visible": true
+          },
+          {
+            "testId": "perps-order-summary-liquidation-price-tooltip-label",
+            "label": "Liquidation price",
+            "enabled": true,
+            "visible": true
+          },
+          {
+            "testId": "perps-order-summary-liquidation-price-tooltip-label-trigger",
+            "label": "Liquidation price info",
+            "enabled": true,
+            "visible": true
+          },
+          {
+            "testId": "perps-order-summary-liquidation-price",
+            "label": "$55,835",
+            "enabled": true,
+            "visible": true
+          },
+          {
+            "testId": "perps-order-summary-slippage-row",
+            "label": "Edit max slippage",
+            "enabled": true,
+            "visible": true
+          },
+          {
+            "testId": "perps-order-summary-slippage-value",
+            "label": "Est: -- / Max: 3%",
+            "enabled": true,
+            "visible": true
+          },
+          {
+            "testId": "perps-order-summary-margin-tooltip-label",
+            "label": "Margin",
+            "enabled": true,
+            "visible": true
+          },
+          {
+            "testId": "perps-order-summary-margin-tooltip-label-trigger",
+            "label": "Margin info",
+            "enabled": true,
+            "visible": true
+          },
+          {
+            "testId": "perps-order-summary-margin-required",
+            "label": "$333.67",
+            "enabled": true,
+            "visible": true
+          },
+          {
+            "testId": "perps-order-summary-fees-tooltip-label",
+            "label": "Fees",
+            "enabled": true,
+            "visible": true
+          },
+          {
+            "testId": "perps-order-summary-fees-tooltip-label-trigger",
+            "label": "Fees info",
+            "enabled": true,
+            "visible": true
+          },
+          {
+            "testId": "perps-order-summary-estimated-fees",
+            "label": "$1.45",
+            "enabled": true,
+            "visible": true
+          },
+          {
+            "testId": "perps-order-entry-back-button",
+            "label": "Back",
+            "enabled": true,
+            "visible": false
+          },
+          {
+            "testId": "perps-order-entry-asset-symbol",
+            "label": "BTC",
+            "enabled": true,
+            "visible": false
+          },
+          {
+            "testId": "perps-order-entry-price",
+            "label": "$82,706",
+            "enabled": true,
+            "visible": false
+          },
+          {
+            "testId": "perps-order-entry-change",
+            "label": "-0.18%",
+            "enabled": true,
+            "visible": false
+          },
+          {
+            "testId": "perps-order-entry-right-accessory",
+            "enabled": true,
+            "visible": false
+          },
+          {
+            "testId": "perps-order-book-toggle",
+            "label": "Order book",
+            "enabled": true,
+            "visible": false
+          },
+          {
+            "testId": "perps-order-entry-chart-toggle",
+            "label": "Collapse chart",
+            "enabled": true,
+            "visible": false
+          },
+          {
+            "testId": "perps-order-entry-chart",
+            "label": "Price chart",
+            "enabled": true,
+            "visible": false
+          },
+          {
+            "testId": "perps-candle-period-selector",
+            "label": "1min 3min 5min 15min More",
+            "enabled": true,
+            "visible": false
+          },
+          {
+            "testId": "perps-candle-period-1m",
+            "label": "1min",
+            "enabled": true,
+            "visible": false
+          },
+          {
+            "testId": "perps-candle-period-3m",
+            "label": "3min",
+            "enabled": true,
+            "visible": false
+          },
+          {
+            "testId": "perps-candle-period-5m",
+            "label": "5min",
+            "enabled": true,
+            "visible": false
+          },
+          {
+            "testId": "perps-candle-period-15m",
+            "label": "15min",
+            "enabled": true,
+            "visible": false
+          },
+          {
+            "testId": "perps-candle-period-more",
+            "label": "More",
+            "enabled": true,
+            "visible": false
+          },
+          {
+            "testId": "perps-candlestick-chart",
+            "enabled": true,
+            "visible": false
+          }
+        ],
+        "observedTestIds": [
+          "parent-selector-perps-order-entry",
+          "perps-order-body",
+          "perps-order-form-content",
+          "direction-tabs",
+          "direction-tab-long",
+          "direction-tab-short",
+          "order-type-toggle",
+          "order-type-market",
+          "order-type-limit",
+          "amount-input-available-to-trade-row",
+          "amount-input-add-funds",
+          "amount-input-field",
+          "amount-input-denomination-unit",
+          "amount-slider",
+          "balance-percent-input",
+          "leverage-slider",
+          "leverage-input",
+          "auto-close-section",
+          "auto-close-toggle",
+          "perps-order-summary-liquidation-price-tooltip-label",
+          "perps-order-summary-liquidation-price-tooltip-label-trigger",
+          "perps-order-summary-liquidation-price",
+          "perps-order-summary-slippage-row",
+          "perps-order-summary-slippage-value",
+          "perps-order-summary-margin-tooltip-label",
+          "perps-order-summary-margin-tooltip-label-trigger",
+          "perps-order-summary-margin-required",
+          "perps-order-summary-fees-tooltip-label",
+          "perps-order-summary-fees-tooltip-label-trigger",
+          "perps-order-summary-estimated-fees",
+          "submit-order-button",
+          "perps-order-entry-back-button",
+          "perps-order-entry-asset-symbol",
+          "perps-order-entry-price",
+          "perps-order-entry-change",
+          "perps-order-entry-right-accessory",
+          "perps-order-book-toggle",
+          "perps-order-entry-chart-toggle",
+          "perps-order-entry-chart",
+          "perps-candle-period-selector",
+          "perps-candle-period-1m",
+          "perps-candle-period-3m",
+          "perps-candle-period-5m",
+          "perps-candle-period-15m",
+          "perps-candle-period-more",
+          "perps-candlestick-chart"
+        ],
+        "truncated": false,
+        "layout": {
+          "viewportWidth": 1200,
+          "viewportHeight": 829,
+          "contentWidth": 1200,
+          "horizontalOverflow": false,
+          "clippedTestIds": [],
+          "obscuredControlTestIds": [
+            "auto-close-toggle"
+          ],
+          "overlappingControlPairs": []
+        },
+        "proofPath": "visible-dom-accessibility",
+        "cdpPort": 7667,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/BTC",
+        "runtimeLaunch": null,
+        "cdpTargetId": "1ED7CD2E15AC58B09D09BBE9183BC1FA",
+        "runtimeSessionId": "18e5fd79-9059-4e61-87df-5be926599abb",
+        "liveAdapter": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/actions/extension/perps/read_visible_state.mjs"
+      }
+    },
+    {
+      "nodeId": "fee-visible-1000",
+      "action": "ui.scroll",
+      "intent": "The fee estimate is visible in the viewport for the evidence image",
+      "startedAt": "2026-10-09T09:02:52.596Z",
+      "endedAt": "2026-10-09T09:02:52.951Z",
+      "durationMs": 355,
+      "ok": true,
+      "next": "quote-1000",
+      "output": {
+        "scrolled": true,
+        "selector": "[data-testid=\"perps-order-summary-estimated-fees\"], [data-test-id=\"perps-order-summary-estimated-fees\"], [data-test=\"perps-order-summary-estimated-fees\"]",
+        "intoView": true,
+        "cdpPort": 7667,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/BTC",
+        "runtimeLaunch": null,
+        "cdpTargetId": "1ED7CD2E15AC58B09D09BBE9183BC1FA",
+        "runtimeSessionId": "18e5fd79-9059-4e61-87df-5be926599abb"
+      },
+      "observations": {
+        "ui.screen": {
+          "provider": "cdp-web",
+          "name": "mini-mme-3 — MetaMask",
+          "title": "mini-mme-3 — MetaMask",
+          "route": "#/perps/trade/BTC",
+          "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
+        },
+        "ui.visible": {
+          "provider": "cdp-web",
+          "items": [
+            {
+              "role": "button",
+              "label": "Long",
+              "test_id": "direction-tab-long",
+              "selector": "[data-testid=\"direction-tab-long\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": -26,
+                "width": 373,
+                "height": 32
+              }
+            },
+            {
+              "role": "button",
+              "label": "Short",
+              "test_id": "direction-tab-short",
+              "selector": "[data-testid=\"direction-tab-short\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 589,
+                "y": -26,
+                "width": 373,
+                "height": 32
+              }
+            },
+            {
+              "role": "button",
+              "label": "Market",
+              "test_id": "order-type-market",
+              "selector": "[data-testid=\"order-type-market\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 212,
+                "y": 26,
+                "width": 79,
+                "height": 30
+              }
+            },
+            {
+              "role": "button",
+              "label": "Limit",
+              "test_id": "order-type-limit",
+              "selector": "[data-testid=\"order-type-limit\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 298,
+                "y": 26,
+                "width": 64,
+                "height": 30
+              }
+            },
+            {
+              "role": "button",
+              "label": "Add funds",
+              "test_id": "amount-input-add-funds",
+              "selector": "[data-testid=\"amount-input-add-funds\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 947,
+                "y": 73,
+                "width": 20,
+                "height": 20
+              }
+            },
+            {
+              "label": "0.00",
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(2) > input",
+              "enabled": true,
+              "focused": true,
+              "bounds": {
+                "x": 260,
+                "y": 106,
+                "width": 633,
+                "height": 40
+              }
+            },
+            {
+              "role": "button",
+              "label": "Toggle size denomination",
+              "test_id": "toggle-denomination",
+              "selector": "[data-testid=\"toggle-denomination\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 931,
+                "y": 116,
+                "width": 20,
+                "height": 20
+              }
+            },
+            {
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(2) > div > input",
+              "enabled": true,
+              "bounds": {
+                "x": 895,
+                "y": 158,
+                "width": 42,
+                "height": 32
+              }
+            },
+            {
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(2) > div > input",
+              "enabled": true,
+              "bounds": {
+                "x": 895,
+                "y": 236,
+                "width": 48,
+                "height": 32
+              }
+            },
+            {
+              "role": "button",
+              "label": "Liquidation price info",
+              "test_id": "perps-order-summary-liquidation-price-tooltip-label-trigger",
+              "selector": "[data-testid=\"perps-order-summary-liquidation-price-tooltip-label-trigger\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 326,
+                "y": 375,
+                "width": 16,
+                "height": 16
+              }
+            },
+            {
+              "role": "button",
+              "label": "Edit max slippage",
+              "test_id": "perps-order-summary-slippage-row",
+              "selector": "[data-testid=\"perps-order-summary-slippage-row\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 212,
+                "y": 402,
+                "width": 755,
+                "height": 22
+              }
+            },
+            {
+              "role": "button",
+              "label": "Margin info",
+              "test_id": "perps-order-summary-margin-tooltip-label-trigger",
+              "selector": "[data-testid=\"perps-order-summary-margin-tooltip-label-trigger\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 261,
+                "y": 435,
+                "width": 16,
+                "height": 16
+              }
+            },
+            {
+              "role": "button",
+              "label": "Fees info",
+              "test_id": "perps-order-summary-fees-tooltip-label-trigger",
+              "selector": "[data-testid=\"perps-order-summary-fees-tooltip-label-trigger\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 247,
+                "y": 465,
+                "width": 16,
+                "height": 16
+              }
+            },
+            {
+              "role": "button",
+              "label": "Open long BTC",
+              "test_id": "submit-order-button",
+              "selector": "[data-testid=\"submit-order-button\"]",
+              "enabled": false,
+              "bounds": {
+                "x": 212,
+                "y": 765,
+                "width": 755,
+                "height": 48
+              }
+            }
+          ],
+          "hidden_or_offscreen": [
+            {
+              "role": "button",
+              "label": "Back",
+              "test_id": "perps-order-entry-back-button",
+              "selector": "[data-testid=\"perps-order-entry-back-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 212,
+                "y": -395,
+                "width": 36,
+                "height": 36
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "Order book",
+              "test_id": "perps-order-book-toggle",
+              "selector": "[data-testid=\"perps-order-book-toggle\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 891,
+                "y": -395,
+                "width": 36,
+                "height": 36
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "Collapse chart",
+              "test_id": "perps-order-entry-chart-toggle",
+              "selector": "[data-testid=\"perps-order-entry-chart-toggle\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 931,
+                "y": -395,
+                "width": 36,
+                "height": 36
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "1min",
+              "test_id": "perps-candle-period-1m",
+              "selector": "[data-testid=\"perps-candle-period-1m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 212,
+                "y": -330,
+                "width": 62,
+                "height": 34
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "3min",
+              "test_id": "perps-candle-period-3m",
+              "selector": "[data-testid=\"perps-candle-period-3m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 277,
+                "y": -330,
+                "width": 65,
+                "height": 34
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "5min",
+              "test_id": "perps-candle-period-5m",
+              "selector": "[data-testid=\"perps-candle-period-5m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 346,
+                "y": -330,
+                "width": 64,
+                "height": 34
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "15min",
+              "test_id": "perps-candle-period-15m",
+              "selector": "[data-testid=\"perps-candle-period-15m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 414,
+                "y": -330,
+                "width": 70,
+                "height": 34
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "More",
+              "test_id": "perps-candle-period-more",
+              "selector": "[data-testid=\"perps-candle-period-more\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 488,
+                "y": -330,
+                "width": 82,
+                "height": 34
+              },
+              "reason": "offscreen"
+            },
+            {
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(1) > div > span > span:nth-of-type(3) > input",
+              "enabled": true,
+              "bounds": {
+                "x": 634,
+                "y": 172,
+                "width": 12,
+                "height": 12
+              },
+              "reason": "covered"
+            },
+            {
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div > span > span:nth-of-type(11) > input",
+              "enabled": true,
+              "bounds": {
+                "x": 251,
+                "y": 250,
+                "width": 12,
+                "height": 12
+              },
+              "reason": "covered"
+            }
+          ],
+          "truncated": true,
+          "limits": {
+            "items": 20,
+            "hidden_or_offscreen": 10
+          }
+        }
+      }
+    },
+    {
+      "nodeId": "quote-1000",
+      "action": "command",
+      "intent": "Assert both live hooks quote the current notional and the displayed fee matches the quote within sizing precision",
+      "proves": [
+        "LEAD-FEE"
+      ],
+      "startedAt": "2026-10-09T09:02:52.960Z",
+      "endedAt": "2026-10-09T09:02:53.652Z",
+      "durationMs": 692,
+      "ok": true,
+      "next": "capture-1000",
+      "output": {
+        "exitCode": 0,
+        "stdout": "{\"isTestnet\":true,\"quotes\":[{\"name\":\"OrderEntry\",\"isFallback\":false,\"result\":{\"feeRate\":0.00145,\"feeAmount\":1.45,\"protocolFeeRate\":0.00045,\"protocolFeeAmount\":0.45,\"metamaskFeeRate\":0.001,\"metamaskFeeAmount\":1,\"chargesMetamaskBuilderFee\":true,\"feeSource\":\"rewards\",\"metamaskFeeDiscountBips\":0,\"undiscountedMetamaskFeeRate\":0.001}},{\"name\":\"PerpsOrderEntryPage\",\"isFallback\":false,\"result\":{\"feeRate\":0.00145,\"feeAmount\":1.45,\"protocolFeeRate\":0.00045,\"protocolFeeAmount\":0.45,\"metamaskFeeRate\":0.001,\"metamaskFeeAmount\":1,\"chargesMetamaskBuilderFee\":true,\"feeSource\":\"rewards\",\"metamaskFeeDiscountBips\":0,\"undiscountedMetamaskFeeRate\":0.001}}],\"amount\":\"1000\",\"leverage\":\"3\",\"displayedFee\":\"$1.45\",\"discountBadge\":null,\"route\":\"#/perps/trade/BTC\"}\n",
+        "stderr": ""
+      }
+    },
+    {
+      "nodeId": "capture-1000",
+      "action": "ui.screenshot",
+      "intent": "The unsubmitted BTC USD 1000 fee preview is preserved as visual evidence",
+      "proves": [
+        "LEAD-FEE"
+      ],
+      "artifacts": [
+        {
+          "path": "screenshots/btc-1000-fee.png",
+          "type": "screenshot",
+          "nodeId": "capture-1000",
+          "label": "UI screenshot",
+          "category": "evidence",
+          "mimeType": "image/png",
+          "metadata": {
+            "provider": "capture-helper",
+            "mode": "snapshot",
+            "pid": 8037,
+            "captureHelper": {
+              "bytes": 194934,
+              "output": "/Volumes/FD/dev/metamask/metamask-extension-3/temp/tasks/fix/46934-1009-163330/artifacts/fee-preview-run/screenshots/.mm-harness-extension-evidence-ZlPB98/captured.png",
+              "selected": {
+                "app": "Google Chrome for Testing",
+                "height": 916,
+                "id": 502,
+                "layer": 0,
+                "onScreen": true,
+                "pid": 8037,
+                "title": "mini-mme-3 — MetaMask",
+                "width": 1200,
+                "x": 35,
+                "y": 51
+              },
+              "selector": "pid",
+              "type": "snapshot"
+            }
+          }
+        }
+      ],
+      "startedAt": "2026-10-09T09:02:53.717Z",
+      "endedAt": "2026-10-09T09:02:53.895Z",
+      "durationMs": 178,
+      "ok": true,
+      "next": "home",
+      "output": {
+        "captured": true,
+        "path": "screenshots/btc-1000-fee.png",
+        "artifact": {
+          "path": "screenshots/btc-1000-fee.png",
+          "type": "screenshot",
+          "nodeId": "capture-1000",
+          "label": "UI screenshot",
+          "category": "evidence",
+          "mimeType": "image/png",
+          "metadata": {
+            "provider": "capture-helper",
+            "mode": "snapshot",
+            "pid": 8037,
+            "captureHelper": {
+              "bytes": 194934,
+              "output": "/Volumes/FD/dev/metamask/metamask-extension-3/temp/tasks/fix/46934-1009-163330/artifacts/fee-preview-run/screenshots/.mm-harness-extension-evidence-ZlPB98/captured.png",
+              "selected": {
+                "app": "Google Chrome for Testing",
+                "height": 916,
+                "id": 502,
+                "layer": 0,
+                "onScreen": true,
+                "pid": 8037,
+                "title": "mini-mme-3 — MetaMask",
+                "width": 1200,
+                "x": 35,
+                "y": 51
+              },
+              "selector": "pid",
+              "type": "snapshot"
+            }
+          }
+        }
+      },
+      "observations": {
+        "ui.screen": {
+          "provider": "cdp-web",
+          "name": "mini-mme-3 — MetaMask",
+          "title": "mini-mme-3 — MetaMask",
+          "route": "#/perps/trade/BTC",
+          "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
+        },
+        "ui.visible": {
+          "provider": "cdp-web",
+          "items": [
+            {
+              "role": "button",
+              "label": "Long",
+              "test_id": "direction-tab-long",
+              "selector": "[data-testid=\"direction-tab-long\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 217,
+                "y": -26,
+                "width": 373,
+                "height": 32
+              }
+            },
+            {
+              "role": "button",
+              "label": "Short",
+              "test_id": "direction-tab-short",
+              "selector": "[data-testid=\"direction-tab-short\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 589,
+                "y": -26,
+                "width": 373,
+                "height": 32
+              }
+            },
+            {
+              "role": "button",
+              "label": "Market",
+              "test_id": "order-type-market",
+              "selector": "[data-testid=\"order-type-market\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 212,
+                "y": 26,
+                "width": 79,
+                "height": 30
+              }
+            },
+            {
+              "role": "button",
+              "label": "Limit",
+              "test_id": "order-type-limit",
+              "selector": "[data-testid=\"order-type-limit\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 298,
+                "y": 26,
+                "width": 64,
+                "height": 30
+              }
+            },
+            {
+              "role": "button",
+              "label": "Add funds",
+              "test_id": "amount-input-add-funds",
+              "selector": "[data-testid=\"amount-input-add-funds\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 947,
+                "y": 73,
+                "width": 20,
+                "height": 20
+              }
+            },
+            {
+              "label": "0.00",
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(2) > input",
+              "enabled": true,
+              "focused": true,
+              "bounds": {
+                "x": 260,
+                "y": 106,
+                "width": 633,
+                "height": 40
+              }
+            },
+            {
+              "role": "button",
+              "label": "Toggle size denomination",
+              "test_id": "toggle-denomination",
+              "selector": "[data-testid=\"toggle-denomination\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 931,
+                "y": 116,
+                "width": 20,
+                "height": 20
+              }
+            },
+            {
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(2) > div > input",
+              "enabled": true,
+              "bounds": {
+                "x": 895,
+                "y": 158,
+                "width": 42,
+                "height": 32
+              }
+            },
+            {
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(2) > div > input",
+              "enabled": true,
+              "bounds": {
+                "x": 895,
+                "y": 236,
+                "width": 48,
+                "height": 32
+              }
+            },
+            {
+              "role": "button",
+              "label": "Liquidation price info",
+              "test_id": "perps-order-summary-liquidation-price-tooltip-label-trigger",
+              "selector": "[data-testid=\"perps-order-summary-liquidation-price-tooltip-label-trigger\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 326,
+                "y": 375,
+                "width": 16,
+                "height": 16
+              }
+            },
+            {
+              "role": "button",
+              "label": "Edit max slippage",
+              "test_id": "perps-order-summary-slippage-row",
+              "selector": "[data-testid=\"perps-order-summary-slippage-row\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 212,
+                "y": 402,
+                "width": 755,
+                "height": 22
+              }
+            },
+            {
+              "role": "button",
+              "label": "Margin info",
+              "test_id": "perps-order-summary-margin-tooltip-label-trigger",
+              "selector": "[data-testid=\"perps-order-summary-margin-tooltip-label-trigger\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 261,
+                "y": 435,
+                "width": 16,
+                "height": 16
+              }
+            },
+            {
+              "role": "button",
+              "label": "Fees info",
+              "test_id": "perps-order-summary-fees-tooltip-label-trigger",
+              "selector": "[data-testid=\"perps-order-summary-fees-tooltip-label-trigger\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 247,
+                "y": 465,
+                "width": 16,
+                "height": 16
+              }
+            },
+            {
+              "role": "button",
+              "label": "Open long BTC",
+              "test_id": "submit-order-button",
+              "selector": "[data-testid=\"submit-order-button\"]",
+              "enabled": false,
+              "bounds": {
+                "x": 212,
+                "y": 765,
+                "width": 755,
+                "height": 48
+              }
+            }
+          ],
+          "hidden_or_offscreen": [
+            {
+              "role": "button",
+              "label": "Back",
+              "test_id": "perps-order-entry-back-button",
+              "selector": "[data-testid=\"perps-order-entry-back-button\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 212,
+                "y": -395,
+                "width": 36,
+                "height": 36
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "Order book",
+              "test_id": "perps-order-book-toggle",
+              "selector": "[data-testid=\"perps-order-book-toggle\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 891,
+                "y": -395,
+                "width": 36,
+                "height": 36
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "Collapse chart",
+              "test_id": "perps-order-entry-chart-toggle",
+              "selector": "[data-testid=\"perps-order-entry-chart-toggle\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 931,
+                "y": -395,
+                "width": 36,
+                "height": 36
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "1min",
+              "test_id": "perps-candle-period-1m",
+              "selector": "[data-testid=\"perps-candle-period-1m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 212,
+                "y": -330,
+                "width": 62,
+                "height": 34
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "3min",
+              "test_id": "perps-candle-period-3m",
+              "selector": "[data-testid=\"perps-candle-period-3m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 277,
+                "y": -330,
+                "width": 65,
+                "height": 34
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "5min",
+              "test_id": "perps-candle-period-5m",
+              "selector": "[data-testid=\"perps-candle-period-5m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 346,
+                "y": -330,
+                "width": 64,
+                "height": 34
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "15min",
+              "test_id": "perps-candle-period-15m",
+              "selector": "[data-testid=\"perps-candle-period-15m\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 414,
+                "y": -330,
+                "width": 70,
+                "height": 34
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "More",
+              "test_id": "perps-candle-period-more",
+              "selector": "[data-testid=\"perps-candle-period-more\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 488,
+                "y": -330,
+                "width": 82,
+                "height": 34
+              },
+              "reason": "offscreen"
+            },
+            {
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(2) > div:nth-of-type(3) > div:nth-of-type(1) > div > span > span:nth-of-type(3) > input",
+              "enabled": true,
+              "bounds": {
+                "x": 634,
+                "y": 172,
+                "width": 12,
+                "height": 12
+              },
+              "reason": "covered"
+            },
+            {
+              "selector": "[id=\"app-content\"] > div > div:nth-of-type(1) > div > div:nth-of-type(3) > form > div:nth-of-type(1) > div:nth-of-type(2) > div > div:nth-of-type(3) > div:nth-of-type(1) > div:nth-of-type(1) > div > span > span:nth-of-type(11) > input",
+              "enabled": true,
+              "bounds": {
+                "x": 251,
+                "y": 250,
+                "width": 12,
+                "height": 12
+              },
+              "reason": "covered"
+            }
+          ],
+          "truncated": true,
+          "limits": {
+            "items": 20,
+            "hidden_or_offscreen": 10
+          }
+        }
+      }
+    },
+    {
+      "nodeId": "home",
+      "action": "ui.navigate",
+      "intent": "The existing position is available for a close-all preview",
+      "startedAt": "2026-10-09T09:02:53.900Z",
+      "endedAt": "2026-10-09T09:02:54.105Z",
+      "durationMs": 205,
+      "ok": true,
+      "next": "close-all",
+      "output": {
+        "action": "ui.navigate",
+        "hash": "#/perps-home",
+        "navigation": {
+          "before": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/BTC",
+          "href": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps-home",
+          "sameDocument": true
+        },
+        "proofPath": "ui-navigation",
+        "cdpPort": 7667,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/BTC",
+        "runtimeLaunch": null,
+        "cdpTargetId": "1ED7CD2E15AC58B09D09BBE9183BC1FA",
+        "runtimeSessionId": "18e5fd79-9059-4e61-87df-5be926599abb",
+        "liveAdapter": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/actions/extension/ui/navigate.mjs"
+      },
+      "observations": {
+        "ui.screen": {
+          "provider": "cdp-web",
+          "name": "mini-mme-3 — MetaMask",
+          "title": "mini-mme-3 — MetaMask",
+          "route": "#/perps-home",
+          "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
+        },
+        "ui.visible": {
+          "provider": "cdp-web",
+          "items": [
+            {
+              "role": "button",
+              "label": "Withdraw",
+              "test_id": "perps-balance-actions-withdraw",
+              "selector": "[data-testid=\"perps-balance-actions-withdraw\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 206,
+                "y": 142,
+                "width": 377,
+                "height": 48
+              }
+            },
+            {
+              "role": "button",
+              "label": "Add funds",
+              "test_id": "perps-balance-actions-add-funds",
+              "selector": "[data-testid=\"perps-balance-actions-add-funds\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 595,
+                "y": 142,
+                "width": 377,
+                "height": 48
+              }
+            },
+            {
+              "role": "button",
+              "label": "Close all",
+              "test_id": "perps-close-all-positions",
+              "selector": "[data-testid=\"perps-close-all-positions\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 911,
+                "y": 222,
+                "width": 65,
+                "height": 32
+              }
+            },
+            {
+              "role": "button",
+              "label": "Solana 1x long 0.11 SOL $12.11 +$0.01 (0.10%)",
+              "test_id": "position-card-SOL",
+              "selector": "[data-testid=\"position-card-SOL\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 190,
+                "y": 296,
+                "width": 798,
+                "height": 62
+              }
+            },
+            {
+              "role": "button",
+              "label": "Watchlist",
+              "test_id": "perps-watchlist-header",
+              "selector": "[data-testid=\"perps-watchlist-header\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 190,
+                "y": 374,
+                "width": 798,
+                "height": 48
+              }
+            },
+            {
+              "role": "button",
+              "label": "Solana 10x SOL · $366K Vol $110.02 -4.31%",
+              "test_id": "perps-watchlist-SOL",
+              "selector": "[data-testid=\"perps-watchlist-SOL\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 190,
+                "y": 430,
+                "width": 798,
+                "height": 72
+              }
+            },
+            {
+              "role": "button",
+              "label": "Cardano 10x ADA · $48K Vol $0.24094 -4.69%",
+              "test_id": "perps-watchlist-ADA",
+              "selector": "[data-testid=\"perps-watchlist-ADA\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 190,
+                "y": 502,
+                "width": 798,
+                "height": 72
+              }
+            },
+            {
+              "role": "button",
+              "label": "Bitcoin 40x BTC · $2.86M Vol $82,706 -0.18%",
+              "test_id": "perps-watchlist-BTC",
+              "selector": "[data-testid=\"perps-watchlist-BTC\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 190,
+                "y": 574,
+                "width": 798,
+                "height": 72
+              }
+            },
+            {
+              "role": "button",
+              "label": "Ethereum 25x ETH · $1.28M Vol $2,491.8 -2.51%",
+              "test_id": "perps-watchlist-ETH",
+              "selector": "[data-testid=\"perps-watchlist-ETH\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 190,
+                "y": 646,
+                "width": 798,
+                "height": 72
+              }
+            }
+          ],
+          "hidden_or_offscreen": [
+            {
+              "role": "button",
+              "label": "Crypto",
+              "test_id": "perps-products-categories-pill-crypto",
+              "selector": "[data-testid=\"perps-products-categories-pill-crypto\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 206,
+                "y": 774,
+                "width": 90,
+                "height": 40
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "Memecoins",
+              "test_id": "perps-products-categories-pill-memecoin",
+              "selector": "[data-testid=\"perps-products-categories-pill-memecoin\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 304,
+                "y": 774,
+                "width": 127,
+                "height": 40
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "Stocks",
+              "test_id": "perps-products-categories-pill-stock",
+              "selector": "[data-testid=\"perps-products-categories-pill-stock\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 439,
+                "y": 774,
+                "width": 90,
+                "height": 40
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "Pre-IPO",
+              "test_id": "perps-products-categories-pill-pre-ipo",
+              "selector": "[data-testid=\"perps-products-categories-pill-pre-ipo\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 537,
+                "y": 774,
+                "width": 98,
+                "height": 40
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "Indices",
+              "test_id": "perps-products-categories-pill-index",
+              "selector": "[data-testid=\"perps-products-categories-pill-index\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 643,
+                "y": 774,
+                "width": 93,
+                "height": 40
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "ETFs",
+              "test_id": "perps-products-categories-pill-etf",
+              "selector": "[data-testid=\"perps-products-categories-pill-etf\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 744,
+                "y": 774,
+                "width": 76,
+                "height": 40
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "Commodities",
+              "test_id": "perps-products-categories-pill-commodity",
+              "selector": "[data-testid=\"perps-products-categories-pill-commodity\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 828,
+                "y": 774,
+                "width": 139,
+                "height": 40
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "Forex",
+              "test_id": "perps-products-categories-pill-forex",
+              "selector": "[data-testid=\"perps-products-categories-pill-forex\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 206,
+                "y": 822,
+                "width": 80,
+                "height": 40
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "New",
+              "test_id": "perps-products-categories-pill-new",
+              "selector": "[data-testid=\"perps-products-categories-pill-new\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 294,
+                "y": 822,
+                "width": 73,
+                "height": 40
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "Top movers",
+              "test_id": "perps-top-movers-header",
+              "selector": "[data-testid=\"perps-top-movers-header\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 190,
+                "y": 878,
+                "width": 192,
+                "height": 48
+              },
+              "reason": "offscreen"
+            }
+          ],
+          "truncated": true,
+          "limits": {
+            "items": 20,
+            "hidden_or_offscreen": 10
+          }
+        }
+      }
+    },
+    {
+      "nodeId": "close-all",
+      "action": "ui.press",
+      "intent": "Open existing-position fee preview without confirming",
+      "startedAt": "2026-10-09T09:02:54.110Z",
+      "endedAt": "2026-10-09T09:02:55.021Z",
+      "durationMs": 911,
+      "ok": true,
+      "next": "wait-close-all",
+      "output": {
+        "clicked": true,
+        "selector": "[data-testid=\"perps-close-all-positions\"], [data-test-id=\"perps-close-all-positions\"], [data-test=\"perps-close-all-positions\"]",
+        "tagName": "BUTTON",
+        "cdpPort": 7667,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps-home",
+        "runtimeLaunch": null,
+        "cdpTargetId": "1ED7CD2E15AC58B09D09BBE9183BC1FA",
+        "runtimeSessionId": "18e5fd79-9059-4e61-87df-5be926599abb"
+      },
+      "observations": {
+        "ui.screen": {
+          "provider": "cdp-web",
+          "name": "mini-mme-3 — MetaMask",
+          "title": "mini-mme-3 — MetaMask",
+          "route": "#/perps-home",
+          "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
+        },
+        "ui.visible": {
+          "provider": "cdp-web",
+          "items": [
+            {
+              "role": "button",
+              "label": "Close",
+              "selector": "html > body > div:nth-of-type(5) > div:nth-of-type(3) > div > section > header > div:nth-of-type(2) > button",
+              "enabled": true,
+              "focused": true,
+              "bounds": {
+                "x": 731,
+                "y": 65,
+                "width": 32,
+                "height": 32
+              }
+            },
+            {
+              "role": "button",
+              "label": "Keep positions",
+              "test_id": "perps-close-all-positions-modal-cancel",
+              "selector": "[data-testid=\"perps-close-all-positions-modal-cancel\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 437,
+                "y": 316,
+                "width": 179,
+                "height": 48
+              }
+            },
+            {
+              "role": "button",
+              "label": "Close all",
+              "test_id": "perps-close-all-positions-modal-submit",
+              "selector": "[data-testid=\"perps-close-all-positions-modal-submit\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 632,
+                "y": 316,
+                "width": 131,
+                "height": 48
+              }
+            }
+          ],
+          "hidden_or_offscreen": [
+            {
+              "role": "button",
+              "label": "Withdraw",
+              "test_id": "perps-balance-actions-withdraw",
+              "selector": "[data-testid=\"perps-balance-actions-withdraw\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 206,
+                "y": 172,
+                "width": 377,
+                "height": 48
+              },
+              "reason": "covered"
+            },
+            {
+              "role": "button",
+              "label": "Add funds",
+              "test_id": "perps-balance-actions-add-funds",
+              "selector": "[data-testid=\"perps-balance-actions-add-funds\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 595,
+                "y": 172,
+                "width": 377,
+                "height": 48
+              },
+              "reason": "covered"
+            },
+            {
+              "role": "button",
+              "label": "Close all",
+              "test_id": "perps-close-all-positions",
+              "selector": "[data-testid=\"perps-close-all-positions\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 911,
+                "y": 252,
+                "width": 65,
+                "height": 32
+              },
+              "reason": "covered"
+            },
+            {
+              "role": "button",
+              "label": "Solana 1x long 0.11 SOL $12.11 +$0.01 (0.10%)",
+              "test_id": "position-card-SOL",
+              "selector": "[data-testid=\"position-card-SOL\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 190,
+                "y": 326,
+                "width": 798,
+                "height": 62
+              },
+              "reason": "covered"
+            },
+            {
+              "role": "button",
+              "label": "Watchlist",
+              "test_id": "perps-watchlist-header",
+              "selector": "[data-testid=\"perps-watchlist-header\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 190,
+                "y": 404,
+                "width": 798,
+                "height": 48
+              },
+              "reason": "covered"
+            },
+            {
+              "role": "button",
+              "label": "Solana 10x SOL · $366K Vol $110.02 -4.31%",
+              "test_id": "perps-watchlist-SOL",
+              "selector": "[data-testid=\"perps-watchlist-SOL\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 190,
+                "y": 460,
+                "width": 798,
+                "height": 72
+              },
+              "reason": "covered"
+            },
+            {
+              "role": "button",
+              "label": "Cardano 10x ADA · $48K Vol $0.24094 -4.69%",
+              "test_id": "perps-watchlist-ADA",
+              "selector": "[data-testid=\"perps-watchlist-ADA\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 190,
+                "y": 532,
+                "width": 798,
+                "height": 72
+              },
+              "reason": "covered"
+            },
+            {
+              "role": "button",
+              "label": "Bitcoin 40x BTC · $2.86M Vol $82,706 -0.18%",
+              "test_id": "perps-watchlist-BTC",
+              "selector": "[data-testid=\"perps-watchlist-BTC\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 190,
+                "y": 604,
+                "width": 798,
+                "height": 72
+              },
+              "reason": "covered"
+            },
+            {
+              "role": "button",
+              "label": "Ethereum 25x ETH · $1.28M Vol $2,491.8 -2.51%",
+              "test_id": "perps-watchlist-ETH",
+              "selector": "[data-testid=\"perps-watchlist-ETH\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 190,
+                "y": 676,
+                "width": 798,
+                "height": 72
+              },
+              "reason": "covered"
+            },
+            {
+              "role": "button",
+              "label": "Crypto",
+              "test_id": "perps-products-categories-pill-crypto",
+              "selector": "[data-testid=\"perps-products-categories-pill-crypto\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 206,
+                "y": 804,
+                "width": 90,
+                "height": 40
+              },
+              "reason": "offscreen"
+            }
+          ],
+          "truncated": true,
+          "limits": {
+            "items": 20,
+            "hidden_or_offscreen": 10
+          }
+        }
+      }
+    },
+    {
+      "nodeId": "wait-close-all",
+      "action": "ui.wait_for",
+      "intent": "The aggregate closing fee is present in the confirmation preview",
+      "startedAt": "2026-10-09T09:02:55.035Z",
+      "endedAt": "2026-10-09T09:02:55.443Z",
+      "durationMs": 408,
+      "ok": true,
+      "next": "capture-close-all",
+      "output": {
+        "matched": true,
+        "cdpPort": 7667,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps-home",
+        "runtimeLaunch": null,
+        "cdpTargetId": "1ED7CD2E15AC58B09D09BBE9183BC1FA",
+        "runtimeSessionId": "18e5fd79-9059-4e61-87df-5be926599abb"
+      },
+      "observations": {
+        "ui.screen": {
+          "provider": "cdp-web",
+          "name": "mini-mme-3 — MetaMask",
+          "title": "mini-mme-3 — MetaMask",
+          "route": "#/perps-home",
+          "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
+        },
+        "ui.visible": {
+          "provider": "cdp-web",
+          "items": [
+            {
+              "role": "button",
+              "label": "Close",
+              "selector": "html > body > div:nth-of-type(5) > div:nth-of-type(3) > div > section > header > div:nth-of-type(2) > button",
+              "enabled": true,
+              "focused": true,
+              "bounds": {
+                "x": 731,
+                "y": 65,
+                "width": 32,
+                "height": 32
+              }
+            },
+            {
+              "role": "button",
+              "label": "Keep positions",
+              "test_id": "perps-close-all-positions-modal-cancel",
+              "selector": "[data-testid=\"perps-close-all-positions-modal-cancel\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 437,
+                "y": 316,
+                "width": 179,
+                "height": 48
+              }
+            },
+            {
+              "role": "button",
+              "label": "Close all",
+              "test_id": "perps-close-all-positions-modal-submit",
+              "selector": "[data-testid=\"perps-close-all-positions-modal-submit\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 632,
+                "y": 316,
+                "width": 131,
+                "height": 48
+              }
+            }
+          ],
+          "hidden_or_offscreen": [
+            {
+              "role": "button",
+              "label": "Withdraw",
+              "test_id": "perps-balance-actions-withdraw",
+              "selector": "[data-testid=\"perps-balance-actions-withdraw\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 206,
+                "y": 172,
+                "width": 377,
+                "height": 48
+              },
+              "reason": "covered"
+            },
+            {
+              "role": "button",
+              "label": "Add funds",
+              "test_id": "perps-balance-actions-add-funds",
+              "selector": "[data-testid=\"perps-balance-actions-add-funds\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 595,
+                "y": 172,
+                "width": 377,
+                "height": 48
+              },
+              "reason": "covered"
+            },
+            {
+              "role": "button",
+              "label": "Close all",
+              "test_id": "perps-close-all-positions",
+              "selector": "[data-testid=\"perps-close-all-positions\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 911,
+                "y": 252,
+                "width": 65,
+                "height": 32
+              },
+              "reason": "covered"
+            },
+            {
+              "role": "button",
+              "label": "Solana 1x long 0.11 SOL $12.11 +$0.01 (0.10%)",
+              "test_id": "position-card-SOL",
+              "selector": "[data-testid=\"position-card-SOL\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 190,
+                "y": 326,
+                "width": 798,
+                "height": 62
+              },
+              "reason": "covered"
+            },
+            {
+              "role": "button",
+              "label": "Watchlist",
+              "test_id": "perps-watchlist-header",
+              "selector": "[data-testid=\"perps-watchlist-header\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 190,
+                "y": 404,
+                "width": 798,
+                "height": 48
+              },
+              "reason": "covered"
+            },
+            {
+              "role": "button",
+              "label": "Solana 10x SOL · $366K Vol $110.02 -4.31%",
+              "test_id": "perps-watchlist-SOL",
+              "selector": "[data-testid=\"perps-watchlist-SOL\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 190,
+                "y": 460,
+                "width": 798,
+                "height": 72
+              },
+              "reason": "covered"
+            },
+            {
+              "role": "button",
+              "label": "Cardano 10x ADA · $48K Vol $0.24094 -4.69%",
+              "test_id": "perps-watchlist-ADA",
+              "selector": "[data-testid=\"perps-watchlist-ADA\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 190,
+                "y": 532,
+                "width": 798,
+                "height": 72
+              },
+              "reason": "covered"
+            },
+            {
+              "role": "button",
+              "label": "Bitcoin 40x BTC · $2.86M Vol $82,706 -0.18%",
+              "test_id": "perps-watchlist-BTC",
+              "selector": "[data-testid=\"perps-watchlist-BTC\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 190,
+                "y": 604,
+                "width": 798,
+                "height": 72
+              },
+              "reason": "covered"
+            },
+            {
+              "role": "button",
+              "label": "Ethereum 25x ETH · $1.28M Vol $2,491.8 -2.51%",
+              "test_id": "perps-watchlist-ETH",
+              "selector": "[data-testid=\"perps-watchlist-ETH\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 190,
+                "y": 676,
+                "width": 798,
+                "height": 72
+              },
+              "reason": "covered"
+            },
+            {
+              "role": "button",
+              "label": "Crypto",
+              "test_id": "perps-products-categories-pill-crypto",
+              "selector": "[data-testid=\"perps-products-categories-pill-crypto\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 206,
+                "y": 804,
+                "width": 90,
+                "height": 40
+              },
+              "reason": "offscreen"
+            }
+          ],
+          "truncated": true,
+          "limits": {
+            "items": 20,
+            "hidden_or_offscreen": 10
+          }
+        }
+      }
+    },
+    {
+      "nodeId": "capture-close-all",
+      "action": "ui.screenshot",
+      "intent": "The existing SOL closing fee is preserved as visual evidence",
+      "proves": [
+        "LEAD-CLOSE-ALL"
+      ],
+      "artifacts": [
+        {
+          "path": "screenshots/close-all-fee.png",
+          "type": "screenshot",
+          "nodeId": "capture-close-all",
+          "label": "UI screenshot",
+          "category": "evidence",
+          "mimeType": "image/png",
+          "metadata": {
+            "provider": "capture-helper",
+            "mode": "snapshot",
+            "pid": 8037,
+            "captureHelper": {
+              "bytes": 245832,
+              "output": "/Volumes/FD/dev/metamask/metamask-extension-3/temp/tasks/fix/46934-1009-163330/artifacts/fee-preview-run/screenshots/.mm-harness-extension-evidence-Ax4IGh/captured.png",
+              "selected": {
+                "app": "Google Chrome for Testing",
+                "height": 916,
+                "id": 502,
+                "layer": 0,
+                "onScreen": true,
+                "pid": 8037,
+                "title": "mini-mme-3 — MetaMask",
+                "width": 1200,
+                "x": 35,
+                "y": 51
+              },
+              "selector": "pid",
+              "type": "snapshot"
+            }
+          }
+        }
+      ],
+      "startedAt": "2026-10-09T09:02:55.453Z",
+      "endedAt": "2026-10-09T09:02:55.676Z",
+      "durationMs": 223,
+      "ok": true,
+      "next": "leave-preview",
+      "output": {
+        "captured": true,
+        "path": "screenshots/close-all-fee.png",
+        "artifact": {
+          "path": "screenshots/close-all-fee.png",
+          "type": "screenshot",
+          "nodeId": "capture-close-all",
+          "label": "UI screenshot",
+          "category": "evidence",
+          "mimeType": "image/png",
+          "metadata": {
+            "provider": "capture-helper",
+            "mode": "snapshot",
+            "pid": 8037,
+            "captureHelper": {
+              "bytes": 245832,
+              "output": "/Volumes/FD/dev/metamask/metamask-extension-3/temp/tasks/fix/46934-1009-163330/artifacts/fee-preview-run/screenshots/.mm-harness-extension-evidence-Ax4IGh/captured.png",
+              "selected": {
+                "app": "Google Chrome for Testing",
+                "height": 916,
+                "id": 502,
+                "layer": 0,
+                "onScreen": true,
+                "pid": 8037,
+                "title": "mini-mme-3 — MetaMask",
+                "width": 1200,
+                "x": 35,
+                "y": 51
+              },
+              "selector": "pid",
+              "type": "snapshot"
+            }
+          }
+        }
+      },
+      "observations": {
+        "ui.screen": {
+          "provider": "cdp-web",
+          "name": "mini-mme-3 — MetaMask",
+          "title": "mini-mme-3 — MetaMask",
+          "route": "#/perps-home",
+          "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
+        },
+        "ui.visible": {
+          "provider": "cdp-web",
+          "items": [
+            {
+              "role": "button",
+              "label": "Close",
+              "selector": "html > body > div:nth-of-type(5) > div:nth-of-type(3) > div > section > header > div:nth-of-type(2) > button",
+              "enabled": true,
+              "focused": true,
+              "bounds": {
+                "x": 731,
+                "y": 65,
+                "width": 32,
+                "height": 32
+              }
+            },
+            {
+              "role": "button",
+              "label": "Keep positions",
+              "test_id": "perps-close-all-positions-modal-cancel",
+              "selector": "[data-testid=\"perps-close-all-positions-modal-cancel\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 437,
+                "y": 316,
+                "width": 179,
+                "height": 48
+              }
+            },
+            {
+              "role": "button",
+              "label": "Close all",
+              "test_id": "perps-close-all-positions-modal-submit",
+              "selector": "[data-testid=\"perps-close-all-positions-modal-submit\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 632,
+                "y": 316,
+                "width": 131,
+                "height": 48
+              }
+            }
+          ],
+          "hidden_or_offscreen": [
+            {
+              "role": "button",
+              "label": "Withdraw",
+              "test_id": "perps-balance-actions-withdraw",
+              "selector": "[data-testid=\"perps-balance-actions-withdraw\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 206,
+                "y": 172,
+                "width": 377,
+                "height": 48
+              },
+              "reason": "covered"
+            },
+            {
+              "role": "button",
+              "label": "Add funds",
+              "test_id": "perps-balance-actions-add-funds",
+              "selector": "[data-testid=\"perps-balance-actions-add-funds\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 595,
+                "y": 172,
+                "width": 377,
+                "height": 48
+              },
+              "reason": "covered"
+            },
+            {
+              "role": "button",
+              "label": "Close all",
+              "test_id": "perps-close-all-positions",
+              "selector": "[data-testid=\"perps-close-all-positions\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 911,
+                "y": 252,
+                "width": 65,
+                "height": 32
+              },
+              "reason": "covered"
+            },
+            {
+              "role": "button",
+              "label": "Solana 1x long 0.11 SOL $12.11 +$0.01 (0.10%)",
+              "test_id": "position-card-SOL",
+              "selector": "[data-testid=\"position-card-SOL\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 190,
+                "y": 326,
+                "width": 798,
+                "height": 62
+              },
+              "reason": "covered"
+            },
+            {
+              "role": "button",
+              "label": "Watchlist",
+              "test_id": "perps-watchlist-header",
+              "selector": "[data-testid=\"perps-watchlist-header\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 190,
+                "y": 404,
+                "width": 798,
+                "height": 48
+              },
+              "reason": "covered"
+            },
+            {
+              "role": "button",
+              "label": "Solana 10x SOL · $366K Vol $110.02 -4.31%",
+              "test_id": "perps-watchlist-SOL",
+              "selector": "[data-testid=\"perps-watchlist-SOL\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 190,
+                "y": 460,
+                "width": 798,
+                "height": 72
+              },
+              "reason": "covered"
+            },
+            {
+              "role": "button",
+              "label": "Cardano 10x ADA · $48K Vol $0.24094 -4.69%",
+              "test_id": "perps-watchlist-ADA",
+              "selector": "[data-testid=\"perps-watchlist-ADA\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 190,
+                "y": 532,
+                "width": 798,
+                "height": 72
+              },
+              "reason": "covered"
+            },
+            {
+              "role": "button",
+              "label": "Bitcoin 40x BTC · $2.86M Vol $82,706 -0.18%",
+              "test_id": "perps-watchlist-BTC",
+              "selector": "[data-testid=\"perps-watchlist-BTC\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 190,
+                "y": 604,
+                "width": 798,
+                "height": 72
+              },
+              "reason": "covered"
+            },
+            {
+              "role": "button",
+              "label": "Ethereum 25x ETH · $1.28M Vol $2,491.8 -2.51%",
+              "test_id": "perps-watchlist-ETH",
+              "selector": "[data-testid=\"perps-watchlist-ETH\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 190,
+                "y": 676,
+                "width": 798,
+                "height": 72
+              },
+              "reason": "covered"
+            },
+            {
+              "role": "button",
+              "label": "Crypto",
+              "test_id": "perps-products-categories-pill-crypto",
+              "selector": "[data-testid=\"perps-products-categories-pill-crypto\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 206,
+                "y": 804,
+                "width": 90,
+                "height": 40
+              },
+              "reason": "offscreen"
+            }
+          ],
+          "truncated": true,
+          "limits": {
+            "items": 20,
+            "hidden_or_offscreen": 10
+          }
+        }
+      }
+    },
+    {
+      "nodeId": "leave-preview",
+      "action": "ui.press",
+      "intent": "The wallet returns to the overview without confirming a close",
+      "startedAt": "2026-10-09T09:02:55.681Z",
+      "endedAt": "2026-10-09T09:02:56.127Z",
+      "durationMs": 446,
+      "ok": true,
+      "next": "done",
+      "output": {
+        "clicked": true,
+        "text": "Keep positions",
+        "tagName": "BUTTON",
+        "cdpPort": 7667,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps-home",
+        "runtimeLaunch": null,
+        "cdpTargetId": "1ED7CD2E15AC58B09D09BBE9183BC1FA",
+        "runtimeSessionId": "18e5fd79-9059-4e61-87df-5be926599abb"
+      },
+      "observations": {
+        "ui.screen": {
+          "provider": "cdp-web",
+          "name": "mini-mme-3 — MetaMask",
+          "title": "mini-mme-3 — MetaMask",
+          "route": "#/perps-home",
+          "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
+        },
+        "ui.visible": {
+          "provider": "cdp-web",
+          "items": [
+            {
+              "role": "button",
+              "label": "Withdraw",
+              "test_id": "perps-balance-actions-withdraw",
+              "selector": "[data-testid=\"perps-balance-actions-withdraw\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 206,
+                "y": 172,
+                "width": 377,
+                "height": 48
+              }
+            },
+            {
+              "role": "button",
+              "label": "Add funds",
+              "test_id": "perps-balance-actions-add-funds",
+              "selector": "[data-testid=\"perps-balance-actions-add-funds\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 595,
+                "y": 172,
+                "width": 377,
+                "height": 48
+              }
+            },
+            {
+              "role": "button",
+              "label": "Close all",
+              "test_id": "perps-close-all-positions",
+              "selector": "[data-testid=\"perps-close-all-positions\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 911,
+                "y": 252,
+                "width": 65,
+                "height": 32
+              }
+            },
+            {
+              "role": "button",
+              "label": "Solana 1x long 0.11 SOL $12.11 +$0.01 (0.10%)",
+              "test_id": "position-card-SOL",
+              "selector": "[data-testid=\"position-card-SOL\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 190,
+                "y": 326,
+                "width": 798,
+                "height": 62
+              }
+            },
+            {
+              "role": "button",
+              "label": "Watchlist",
+              "test_id": "perps-watchlist-header",
+              "selector": "[data-testid=\"perps-watchlist-header\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 190,
+                "y": 404,
+                "width": 798,
+                "height": 48
+              }
+            },
+            {
+              "role": "button",
+              "label": "Solana 10x SOL · $366K Vol $110.02 -4.31%",
+              "test_id": "perps-watchlist-SOL",
+              "selector": "[data-testid=\"perps-watchlist-SOL\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 190,
+                "y": 460,
+                "width": 798,
+                "height": 72
+              }
+            },
+            {
+              "role": "button",
+              "label": "Cardano 10x ADA · $48K Vol $0.24094 -4.69%",
+              "test_id": "perps-watchlist-ADA",
+              "selector": "[data-testid=\"perps-watchlist-ADA\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 190,
+                "y": 532,
+                "width": 798,
+                "height": 72
+              }
+            },
+            {
+              "role": "button",
+              "label": "Bitcoin 40x BTC · $2.86M Vol $82,706 -0.18%",
+              "test_id": "perps-watchlist-BTC",
+              "selector": "[data-testid=\"perps-watchlist-BTC\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 190,
+                "y": 604,
+                "width": 798,
+                "height": 72
+              }
+            },
+            {
+              "role": "button",
+              "label": "Ethereum 25x ETH · $1.28M Vol $2,491.8 -2.51%",
+              "test_id": "perps-watchlist-ETH",
+              "selector": "[data-testid=\"perps-watchlist-ETH\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 190,
+                "y": 676,
+                "width": 798,
+                "height": 72
+              }
+            }
+          ],
+          "hidden_or_offscreen": [
+            {
+              "role": "button",
+              "label": "Crypto",
+              "test_id": "perps-products-categories-pill-crypto",
+              "selector": "[data-testid=\"perps-products-categories-pill-crypto\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 206,
+                "y": 804,
+                "width": 90,
+                "height": 40
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "Memecoins",
+              "test_id": "perps-products-categories-pill-memecoin",
+              "selector": "[data-testid=\"perps-products-categories-pill-memecoin\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 304,
+                "y": 804,
+                "width": 127,
+                "height": 40
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "Stocks",
+              "test_id": "perps-products-categories-pill-stock",
+              "selector": "[data-testid=\"perps-products-categories-pill-stock\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 439,
+                "y": 804,
+                "width": 90,
+                "height": 40
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "Pre-IPO",
+              "test_id": "perps-products-categories-pill-pre-ipo",
+              "selector": "[data-testid=\"perps-products-categories-pill-pre-ipo\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 537,
+                "y": 804,
+                "width": 98,
+                "height": 40
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "Indices",
+              "test_id": "perps-products-categories-pill-index",
+              "selector": "[data-testid=\"perps-products-categories-pill-index\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 643,
+                "y": 804,
+                "width": 93,
+                "height": 40
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "ETFs",
+              "test_id": "perps-products-categories-pill-etf",
+              "selector": "[data-testid=\"perps-products-categories-pill-etf\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 744,
+                "y": 804,
+                "width": 76,
+                "height": 40
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "Commodities",
+              "test_id": "perps-products-categories-pill-commodity",
+              "selector": "[data-testid=\"perps-products-categories-pill-commodity\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 828,
+                "y": 804,
+                "width": 139,
+                "height": 40
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "Forex",
+              "test_id": "perps-products-categories-pill-forex",
+              "selector": "[data-testid=\"perps-products-categories-pill-forex\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 206,
+                "y": 852,
+                "width": 80,
+                "height": 40
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "New",
+              "test_id": "perps-products-categories-pill-new",
+              "selector": "[data-testid=\"perps-products-categories-pill-new\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 294,
+                "y": 852,
+                "width": 73,
+                "height": 40
+              },
+              "reason": "offscreen"
+            },
+            {
+              "role": "button",
+              "label": "Top movers",
+              "test_id": "perps-top-movers-header",
+              "selector": "[data-testid=\"perps-top-movers-header\"]",
+              "enabled": true,
+              "bounds": {
+                "x": 190,
+                "y": 908,
+                "width": 192,
+                "height": 48
+              },
+              "reason": "offscreen"
+            }
+          ],
+          "truncated": true,
+          "limits": {
+            "items": 20,
+            "hidden_or_offscreen": 10
+          }
+        }
+      }
+    },
+    {
+      "nodeId": "done",
+      "action": "end",
+      "startedAt": "2026-10-09T09:02:56.142Z",
+      "endedAt": "2026-10-09T09:02:56.142Z",
+      "durationMs": 0,
+      "ok": true,
+      "status": "pass"
+    }
+  ]
+}

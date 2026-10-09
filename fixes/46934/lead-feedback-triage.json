@@ -1,0 +1,9 @@
+{
+  "source": "inputs/lead-feedback.md",
+  "author_login": "Arthur and Alejandro Garcia",
+  "source_kind": "human",
+  "body": "# ext #46934 follow-up: one notional helper (Arthur + Alejandro Garcia review, 2026-10-09)\nReviewer feedback (Slack): \"why do we need to do the fee calculation in several places / a lot of logic added\".\nFacts: all six surfaces (order entry page, close, close-all, reverse, auto-close, TP/SL) already called usePerpsOrderFees;\nthe PR passes USD notional to each. Real duplication: each surface derives notional inline (e.g. perps-order-entry-page.tsx\nparses position.size, * currentPrice * closePercent; close-all sums per-position notional) and close-all-positions-modal.tsx\nre-implements the hook's fallback-discount math (fallbackMetamaskFees * discountFactor).\nDo, in this PR (minimal diff, no behaviour change):\n1. One helper next to the hook (ui/hooks/perps/ or ui/components/app/perps/utils/) that returns the order/close notional in USD\n   from the inputs each surface has; every surface uses it; no inline parse/multiply left.\n2. Close-all reuses the hook's fallback/discount logic (shared pure function) instead of its own copy.\n3. Unit tests for the helper; existing tests stay green; the fee screenshots in the PR body still hold (re-run the recipe\n   if any fee render path changed; HUD on).\n4. Update the PR description's Description bullets to say fees come from one controller quote via one helper.\nRules: do NOT post or reply to any GitHub comment or review thread. Commit and push once to the PR branch when green.\n",
+  "triage": "REAL",
+  "action": "Extract shared notional and fallback-discount helpers while preserving controller quotes and batch aggregation.",
+  "fixed_in_commit": "85d5ffc530703d9609099dc965db5a7443600e92"
+}

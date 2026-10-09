@@ -1,0 +1,93 @@
+{
+  "schemaVersion": 1,
+  "command": "call",
+  "context": {
+    "adapter": {
+      "value": "extension",
+      "source": "flag",
+      "detail": "--adapter"
+    },
+    "target": {
+      "value": "/Volumes/FD/dev/metamask/metamask-extension-3",
+      "source": "default",
+      "detail": "cwd"
+    },
+    "slot": {
+      "value": "mini-mme-3",
+      "source": "slot",
+      "detail": "slot-config (~/farmslot-node/pool)",
+      "session": "mme-3",
+      "poolFile": "/Users/deeeed/farmslot-node/pool/mini.json",
+      "ports": {
+        "cdp_port": 7667,
+        "port": 9013,
+        "metro_port": 9113,
+        "watcherPort": 9013,
+        "devServerPort": 9013,
+        "cdpPort": 7667
+      }
+    },
+    "ports": {
+      "cdp": {
+        "value": 7667,
+        "source": "flag"
+      },
+      "watcher": {
+        "value": 9013,
+        "source": "slot",
+        "filled": true,
+        "via": "env",
+        "names": [
+          "RECIPE_WATCHER_PORT",
+          "WATCHER_PORT",
+          "METRO_PORT"
+        ]
+      }
+    }
+  },
+  "adapter": "extension",
+  "action": "ui.navigate",
+  "resolvedAction": "ui.navigate",
+  "args": {
+    "hash": "#/perps/trade/BTC"
+  },
+  "defaultsUsed": {
+    "add_if_missing": true,
+    "timeout_ms": 20000
+  },
+  "status": "pass",
+  "summaryPath": "/Volumes/FD/dev/metamask/metamask-extension-3/temp/tasks/fix/46934-1009-163330/artifacts/fee-discovery/summary.json",
+  "tracePath": "/Volumes/FD/dev/metamask/metamask-extension-3/temp/tasks/fix/46934-1009-163330/artifacts/fee-discovery/trace.json",
+  "artifactManifestPath": "/Volumes/FD/dev/metamask/metamask-extension-3/temp/tasks/fix/46934-1009-163330/artifacts/fee-discovery/artifact-manifest.json",
+  "diagnosticsPath": "/Volumes/FD/dev/metamask/metamask-extension-3/temp/tasks/fix/46934-1009-163330/artifacts/fee-discovery/diagnostics.json",
+  "sideFindings": {
+    "status": "review",
+    "note": "Observed 3 distinct application warning/error event(s) during the recipe run; showing 3 preview(s) and omitting 0. Relation to the task is not determined.",
+    "counts": {
+      "total": 3,
+      "warning": 2,
+      "error": 1,
+      "exception": 0,
+      "info": 0
+    }
+  },
+  "output": {
+    "action": "ui.navigate",
+    "hash": "#/perps/trade/BTC",
+    "navigation": {
+      "before": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps-home",
+      "href": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/BTC",
+      "sameDocument": true
+    },
+    "proofPath": "ui-navigation",
+    "cdpPort": 7667,
+    "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps-home",
+    "runtimeLaunch": null,
+    "cdpTargetId": "1ED7CD2E15AC58B09D09BBE9183BC1FA",
+    "runtimeSessionId": "18e5fd79-9059-4e61-87df-5be926599abb",
+    "liveAdapter": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/actions/extension/ui/navigate.mjs"
+  },
+  "recovered": [],
+  "mutations": [],
+  "exitCode": 0
+}

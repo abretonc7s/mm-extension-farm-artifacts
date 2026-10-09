@@ -1,0 +1,22 @@
+# Recipe coverage
+
+The final follow-up migrates this PR directly to controller 20. Historical controller 17/19 runs remain separately labelled. Selected current images are the native captures from review-comments/after-20-complete and canonical recipe-run.
+
+| Claim | Mode | Evidence | Checks | Verdict and limits |
+| --- | --- | --- | --- | --- |
+| AC1: resolve controller 20 | state | recipe.json; recipe-run/trace.json | ac1-version asserts manifest, installation and lockfile20 | Proven |
+| AC2: populated Perps home and reads | mixed | recipe-run/trace.json; screenshots/ac2-home.png | home/markets assertions, positions/orders reads, BTC readiness and native capture | Proven for prepared dev1 Chrome MV3 |
+| AC3: dependency compatibility | state | review-comments/*tests*.log, *typecheck*.log, *lint*.log, locales-closeout.log, circular-round3.log, lavamoat-auto.log; breaking-change-audit.md | Focused suites, TypeScript, lint/locales/circular, eight policy production variants | Passed. Regenerated policies unchanged |
+| COMMENT1: current USD notional reaches fee previews and refetches | mixed | review-comments/before-final and after-20-complete traces; comment1-100.png and comment1-1000.png in both runs; comparison.json | USD 100/1000 visible-state assertions and current live hook fee amounts0.1432/1.432; all listed caller unit tests | Proven for live order preview; other callers covered by unit tests |
+| COMMENT2: quote owns resolved discount and original rate | mixed | same traces, separate comment2-100.png and comment2-1000.png in both runs; usePerpsOrderFees.test.ts | exact live UI/controller rate and original metadata equality; no badge for source rewards with bips 0; full/blended waiver/rewards and conflicting lookup regressions | Proven for available no-discount live fixture and discounted unit scenarios. No live positive discount claimed |
+| Fixture discount availability | state | review-comments/scan-testnet-final and scan-mainnet-quotes traces; fixture-scan-testnet.json and fixture-scan-mainnet.json | Ten allowlisted selected addresses, network assertions, two quotes each | All 40 quotes bips 0. Read-only mainnet fallback checked; dev1 testnet restored |
+| Close-all confirmation | state | testnet scan and preview position reads | Positions count0 for all fixtures | N/A; no position manufactured |
+| No submission | state | Before/after graphs and traces; restore-testnet | Only navigation/input/capture, account/network selection and read methods; preview orders/positions remain empty | Proven; no submit click, financial dispatch or signature |
+
+Before-final and after-20-complete each execute 43/43 nodes from 35 root nodes, including the session library. Both use --hud show. Distinct original native captures per comment and size were inspected. The before observer is preserved as observe-fee.ts; the after observer is separately preserved as observe-fee-after.ts with explicit controller 20 metadata, live hook notional and no-badge assertions. Their byte provenance is recorded by their runs.
+
+The canonical home recipe is updated to20 and rerun on the reviewed code. The harness runtime was rebuilt after the dependency upgrade and reloaded after the review fixes. Runs reuse the prepared profile; --launch-existing-dist is omitted because it creates an empty validation profile. Network selection used the public Settings background action after exploratory UI toggle clicks did not change the network; assertions guard the result. No fixture import/reset or direct controller-state forcing occurred.
+
+Runtime captures are development MV3 builds. Policy regeneration separately compiled production MV2/MV3 variants. Diagnostics are retained per run. Exact quote rates and hook USD notionals are asserted. The raw OrderSummary fee equals rounded asset size × observed oracle price × exact quote rate; its DOM value matches cent rounding. Direct fixed-USD quote amounts can differ from that estimate, as comparison.md records. Live discounted accounts, nonempty close-all, order placement and Firefox runtime remain unexercised. Recipe quality is WARN for these evidence limits, not a failure of the available proof.
+
+The final canonical recipe-run also passed 14/14 on20. The older19 canonical run is preserved under review-comments/home-19-canonical so it cannot be mistaken for current proof. The earlier20 home-20 and home-20-round2-canonical runs remain historical evidence. Final current-code proof is recipe-run and after-20-complete.

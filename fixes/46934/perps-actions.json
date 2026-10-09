@@ -1,0 +1,549 @@
+{
+  "schemaVersion": 1,
+  "command": "call",
+  "context": {
+    "adapter": {
+      "value": "extension",
+      "source": "flag",
+      "detail": "--adapter"
+    },
+    "target": {
+      "value": "/Volumes/FD/dev/metamask/metamask-extension-3",
+      "source": "default",
+      "detail": "cwd"
+    },
+    "slot": {
+      "value": "mini-mme-3",
+      "source": "slot",
+      "detail": "slot-config (~/farmslot-node/pool)",
+      "session": "mme-3",
+      "poolFile": "/Users/deeeed/farmslot-node/pool/mini.json",
+      "ports": {
+        "cdp_port": 7667,
+        "port": 9013,
+        "metro_port": 9113,
+        "watcherPort": 9013,
+        "devServerPort": 9013,
+        "cdpPort": 7667
+      }
+    },
+    "ports": {
+      "cdp": {
+        "value": 7667,
+        "source": "slot",
+        "filled": true,
+        "via": "env",
+        "names": [
+          "RECIPE_CDP_PORT",
+          "CDP_PORT"
+        ]
+      },
+      "watcher": {
+        "value": 9013,
+        "source": "slot",
+        "filled": true,
+        "via": "env",
+        "names": [
+          "RECIPE_WATCHER_PORT",
+          "WATCHER_PORT",
+          "METRO_PORT"
+        ]
+      }
+    }
+  },
+  "action": "list",
+  "adapter": "extension",
+  "actions": [
+    {
+      "name": "metamask.perps.assert_orders",
+      "short": "assert_orders",
+      "description": "extension Assert live Perps open orders are present or absent for an explicit market selection or mode=all.",
+      "fields": [
+        "market",
+        "markets",
+        "mode",
+        "selector",
+        "side",
+        "state",
+        "symbol",
+        "symbols",
+        "timeout_ms"
+      ],
+      "source": "metamask",
+      "sourceTier": "canonical",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": []
+    },
+    {
+      "name": "metamask.perps.assert_positions",
+      "short": "assert_positions",
+      "description": "extension Assert live Perps positions are present or absent for an explicit market selection or mode=all.",
+      "fields": [
+        "market",
+        "markets",
+        "mode",
+        "selector",
+        "side",
+        "state",
+        "symbol",
+        "symbols",
+        "timeout_ms"
+      ],
+      "source": "metamask",
+      "sourceTier": "canonical",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": []
+    },
+    {
+      "name": "metamask.perps.assert_visible_consistency",
+      "short": "assert_visible_consistency",
+      "description": "Assert bounded rendered Perps market or price changes, or recent-to-full activity containment, through visible Extension UI.",
+      "fields": [
+        "market",
+        "max_items",
+        "minimum_changed_count",
+        "minimum_recent_activity_count",
+        "mode",
+        "require_unique_ids",
+        "sample_count",
+        "sample_interval_ms",
+        "surface",
+        "timeout_ms"
+      ],
+      "source": "metamask",
+      "sourceTier": "canonical",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": []
+    },
+    {
+      "name": "metamask.perps.close_orders",
+      "short": "close_orders",
+      "description": "extension Default to testnet for Perps mutations; mainnet is read-only unless explicitly requested. Cancel selected live Perps open orders. Use selector/mode params to cancel matching symbols or all orders. Extension ensure_* only assert existing state; converge an owned testnet account through an explicitly funded leaf action. Mainnet is never mutated.",
+      "fields": [
+        "amount",
+        "confirm_live",
+        "identity_rounding_tolerance_base_units",
+        "leverage",
+        "limit_price",
+        "market",
+        "markets",
+        "mode",
+        "network",
+        "offset_pct",
+        "order_id",
+        "placement_node",
+        "provider",
+        "selector",
+        "side",
+        "symbol",
+        "symbols",
+        "timeout_ms"
+      ],
+      "source": "metamask",
+      "sourceTier": "canonical",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": []
+    },
+    {
+      "name": "metamask.perps.close_visible_position",
+      "short": "close_visible_position",
+      "description": "Close all or part of one live Perps position through semantic visible controls.",
+      "fields": [
+        "amount",
+        "balance_reconciliation_tolerance_base_units",
+        "cleanup_only",
+        "confirm_live",
+        "funding_amount",
+        "funding_position_size",
+        "funding_side",
+        "identity_rounding_tolerance_base_units",
+        "leverage",
+        "market",
+        "network",
+        "placement_node",
+        "provider"
+      ],
+      "source": "metamask",
+      "sourceTier": "canonical",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": []
+    },
+    {
+      "name": "metamask.perps.compare_provider_market",
+      "short": "compare_provider_market",
+      "description": "Compare one visible Perps market with the live Hyperliquid production response.",
+      "fields": [
+        "endpoint",
+        "market",
+        "timeout_ms"
+      ],
+      "source": "metamask",
+      "sourceTier": "canonical",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": []
+    },
+    {
+      "name": "metamask.perps.edit_margin",
+      "short": "edit_margin",
+      "description": "Add or remove isolated margin from a live Perps position through visible controls and prove the reconciled position values.",
+      "fields": [
+        "amount",
+        "balance_reconciliation_tolerance_base_units",
+        "confirm_live",
+        "funding_amount",
+        "funding_position_size",
+        "funding_side",
+        "leverage",
+        "margin_action",
+        "market",
+        "network",
+        "provider",
+        "timeout_ms"
+      ],
+      "source": "metamask",
+      "sourceTier": "canonical",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": []
+    },
+    {
+      "name": "metamask.perps.ensure_orders",
+      "short": "ensure_orders",
+      "description": "Read and assert the selected Extension Perps order state without creating or canceling an order. Use an explicitly funded leaf action for any transition. Extension ensure_* only assert existing state; converge an owned testnet account through an explicitly funded leaf action. Mainnet is never mutated.",
+      "fields": [
+        "market",
+        "markets",
+        "mode",
+        "selector",
+        "side",
+        "state",
+        "symbol",
+        "symbols",
+        "timeout_ms"
+      ],
+      "source": "metamask",
+      "sourceTier": "canonical",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": []
+    },
+    {
+      "name": "metamask.perps.ensure_positions",
+      "short": "ensure_positions",
+      "description": "Read and assert the selected Extension Perps position state without creating or closing a position. Use an explicitly funded leaf action for any transition. Extension ensure_* only assert existing state; converge an owned testnet account through an explicitly funded leaf action. Mainnet is never mutated.",
+      "fields": [
+        "market",
+        "markets",
+        "mode",
+        "selector",
+        "side",
+        "state",
+        "symbol",
+        "symbols",
+        "timeout_ms"
+      ],
+      "source": "metamask",
+      "sourceTier": "canonical",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": []
+    },
+    {
+      "name": "metamask.perps.ensure_unwatchlisted",
+      "short": "ensure_unwatchlisted",
+      "description": "Idempotently restore the visible Extension Perps market to an unwatchlisted state during workflow teardown.",
+      "fields": [
+        "timeout_ms"
+      ],
+      "source": "perps",
+      "sourceTier": "team",
+      "sourceManifest": "/Volumes/FD/dev/metamask/experimental-metamask-recipe-perps-delivery-01/manifests/extension.action-manifest.json",
+      "shadows": []
+    },
+    {
+      "name": "metamask.perps.open_balance_action",
+      "short": "open_balance_action",
+      "description": "Open Add funds or Withdraw from the live Perps balance dropdown in one trusted UI session.",
+      "fields": [
+        "balance_action"
+      ],
+      "source": "metamask",
+      "sourceTier": "canonical",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": []
+    },
+    {
+      "name": "metamask.perps.open_position_action",
+      "short": "open_position_action",
+      "description": "Open a position-management flow from a live Perps position through visible controls in one trusted UI session.",
+      "fields": [
+        "market",
+        "position_action"
+      ],
+      "source": "metamask",
+      "sourceTier": "canonical",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": []
+    },
+    {
+      "name": "metamask.perps.place_order",
+      "short": "place_order",
+      "description": "extension Place a Perps order through a supported app/API path. Default to testnet; mainnet order placement requires an explicit user request.",
+      "fields": [
+        "amount",
+        "close_immediately",
+        "confirm_live",
+        "from_current_form",
+        "identity_rounding_tolerance_base_units",
+        "leverage",
+        "limit_price",
+        "market",
+        "markets",
+        "mode",
+        "network",
+        "notional",
+        "offset_pct",
+        "order_type",
+        "position_mode",
+        "provider",
+        "selector",
+        "side",
+        "size",
+        "submit_attempts",
+        "symbol",
+        "symbols",
+        "timeout_ms"
+      ],
+      "source": "metamask",
+      "sourceTier": "canonical",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": []
+    },
+    {
+      "name": "metamask.perps.read_eligibility",
+      "short": "read_eligibility",
+      "description": "Read the current Extension Perps eligibility and live MetaMask geolocation without changing either.",
+      "fields": [
+        "timeout_ms"
+      ],
+      "source": "metamask",
+      "sourceTier": "canonical",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": []
+    },
+    {
+      "name": "metamask.perps.read_funds_confirmation",
+      "short": "read_funds_confirmation",
+      "description": "Read the loaded Perps deposit or withdraw confirmation without submitting it.",
+      "fields": [
+        "expected_amount",
+        "expected_amount_symbol",
+        "expected_pay_token",
+        "expected_pay_token_amount_visible",
+        "expected_percentage_controls",
+        "expected_receive_token",
+        "expected_submit_enabled",
+        "expected_submit_label",
+        "expected_visible_network",
+        "mode",
+        "require_no_horizontal_overflow",
+        "require_preview_fields",
+        "require_visible_text"
+      ],
+      "source": "metamask",
+      "sourceTier": "canonical",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": []
+    },
+    {
+      "name": "metamask.perps.read_orders",
+      "short": "read_orders",
+      "description": "extension Read live Perps open orders; without a selector, return all live orders.",
+      "fields": [
+        "market",
+        "markets",
+        "mode",
+        "network",
+        "selector",
+        "side",
+        "symbol",
+        "symbols",
+        "timeout_ms"
+      ],
+      "source": "metamask",
+      "sourceTier": "canonical",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": []
+    },
+    {
+      "name": "metamask.perps.read_positions",
+      "short": "read_positions",
+      "description": "extension Read live Perps positions; without a selector, return all live positions.",
+      "fields": [
+        "market",
+        "markets",
+        "mode",
+        "network",
+        "selector",
+        "side",
+        "symbol",
+        "symbols",
+        "timeout_ms"
+      ],
+      "source": "metamask",
+      "sourceTier": "canonical",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": []
+    },
+    {
+      "name": "metamask.perps.read_snapshot",
+      "short": "read_snapshot",
+      "description": "Read a bounded, redacted source-dev snapshot of Extension Perps state through the optional product background hook.",
+      "fields": [
+        "expect",
+        "history",
+        "include",
+        "market",
+        "markets",
+        "max_items_per_section",
+        "sampling",
+        "timeout_ms"
+      ],
+      "source": "metamask",
+      "sourceTier": "canonical",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": []
+    },
+    {
+      "name": "metamask.perps.read_visible_state",
+      "short": null,
+      "description": "Read and assert bounded visible Perps UI state without product background hooks. marketDetails exposes visible symbol, pair, name, price and priceChange as text, or null when absent/ambiguous. marketCount counts the bounded observed markets array, not an unbounded total. topMovers separately reports its bounded pills, count and visibleCount when that list is observed; otherwise null. favorite is boolean only when the requested market pair and one favorite control are both visible; otherwise null, never an assumed false.",
+      "fields": [
+        "amount",
+        "auto_close",
+        "direction",
+        "forbid_test_ids",
+        "include_offscreen",
+        "leverage",
+        "market",
+        "max_items",
+        "maximum_market_count",
+        "maximum_order_count",
+        "maximum_position_count",
+        "minimum_activity_count",
+        "minimum_market_count",
+        "minimum_order_count",
+        "minimum_position_count",
+        "order_type",
+        "percent",
+        "require_features",
+        "require_no_control_overlap",
+        "require_no_horizontal_overflow",
+        "require_test_ids",
+        "require_validation_text",
+        "submit_enabled",
+        "surface"
+      ],
+      "source": "metamask",
+      "sourceTier": "canonical",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": []
+    },
+    {
+      "name": "metamask.perps.search_markets",
+      "short": "search_markets",
+      "description": "Enter a Perps market query through the visible search field and prove visible results are returned.",
+      "fields": [
+        "query",
+        "timeout_ms"
+      ],
+      "source": "metamask",
+      "sourceTier": "canonical",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": []
+    },
+    {
+      "name": "metamask.perps.select_activity_filter",
+      "short": "select_activity_filter",
+      "description": "Select and read one live Perps activity category through semantic visible controls.",
+      "fields": [
+        "filter"
+      ],
+      "source": "metamask",
+      "sourceTier": "canonical",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": []
+    },
+    {
+      "name": "metamask.perps.select_market_filter",
+      "short": "select_market_filter",
+      "description": "Select and assert a live Perps market category through trusted visible UI controls.",
+      "fields": [
+        "filter",
+        "max_items",
+        "maximum_market_count",
+        "minimum_market_count",
+        "timeout_ms"
+      ],
+      "source": "metamask",
+      "sourceTier": "canonical",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": []
+    },
+    {
+      "name": "metamask.perps.set_market_favorite",
+      "short": "set_market_favorite",
+      "description": "Converge one live Perps market favorite to the requested state through its semantic visible control.",
+      "fields": [
+        "favorite",
+        "market",
+        "require_unchanged"
+      ],
+      "source": "metamask",
+      "sourceTier": "canonical",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": []
+    },
+    {
+      "name": "metamask.perps.teardown_state",
+      "short": "teardown_state",
+      "description": "Verify an optional expected network, assert the requested final Extension Perps order and position state, then optionally navigate. This action never switches networks, closes positions or cancels orders.",
+      "fields": [
+        "market",
+        "markets",
+        "mode",
+        "network",
+        "orders",
+        "page",
+        "positions",
+        "side",
+        "symbol",
+        "symbols",
+        "timeout_ms"
+      ],
+      "source": "metamask",
+      "sourceTier": "canonical",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": []
+    },
+    {
+      "name": "metamask.perps.update_position_tpsl",
+      "short": "update_position_tpsl",
+      "description": "Update take-profit and stop-loss for a live Extension Perps position through visible controls and prove the reconciled position row.",
+      "fields": [
+        "confirm_live",
+        "funding_amount",
+        "funding_position_size",
+        "funding_side",
+        "leverage",
+        "market",
+        "network",
+        "provider",
+        "stop_loss_price",
+        "take_profit_price",
+        "timeout_ms"
+      ],
+      "source": "metamask",
+      "sourceTier": "canonical",
+      "sourceManifest": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+      "shadows": []
+    }
+  ]
+}

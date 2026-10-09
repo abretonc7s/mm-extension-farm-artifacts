@@ -1,0 +1,109 @@
+Recipe libraries: task-local=/Volumes/FD/dev/metamask/metamask-extension-3/temp/tasks/fix/46934-1009-163330/artifacts/recipe-library (2 recipes), perps=/Volumes/FD/dev/metamask/experimental-metamask-recipe-perps-delivery-01 (25 recipes), terminal=/Users/deeeed/dev/metamask/experimental-metamask-recipe-terminal (0 recipes), metamask=/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library (25 recipes)
+Recipe libraries: task-local=/Volumes/FD/dev/metamask/metamask-extension-3/temp/tasks/fix/46934-1009-163330/artifacts/recipe-library (2 recipes), perps=/Volumes/FD/dev/metamask/experimental-metamask-recipe-perps-delivery-01 (25 recipes), terminal=/Users/deeeed/dev/metamask/experimental-metamask-recipe-terminal (0 recipes), metamask=/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library (25 recipes)
+{
+  "schemaVersion": 1,
+  "command": "run",
+  "context": {
+    "adapter": {
+      "value": "extension",
+      "source": "flag",
+      "detail": "--adapter"
+    },
+    "target": {
+      "value": "/Volumes/FD/dev/metamask/metamask-extension-3",
+      "source": "flag",
+      "detail": "--target"
+    },
+    "slot": {
+      "value": "mini-mme-3",
+      "source": "slot",
+      "detail": "slot-config (~/farmslot-node/pool)",
+      "session": "mme-3",
+      "poolFile": "/Users/deeeed/farmslot-node/pool/mini.json",
+      "ports": {
+        "cdp_port": 7667,
+        "port": 9013,
+        "metro_port": 9113,
+        "watcherPort": 9013,
+        "devServerPort": 9013,
+        "cdpPort": 7667
+      }
+    },
+    "ports": {
+      "cdp": {
+        "value": 7667,
+        "source": "flag"
+      },
+      "watcher": {
+        "value": 9013,
+        "source": "slot",
+        "filled": true,
+        "via": "env",
+        "names": [
+          "RECIPE_WATCHER_PORT",
+          "WATCHER_PORT",
+          "METRO_PORT"
+        ]
+      }
+    }
+  },
+  "adapter": "extension",
+  "status": "pass",
+  "exitCode": 0,
+  "recovered": [],
+  "mutations": [],
+  "reportPath": "/Volumes/FD/dev/metamask/metamask-extension-3/temp/tasks/fix/46934-1009-163330/artifacts/recipe-run/report.md",
+  "result": {
+    "status": "pass",
+    "summaryPath": "/Volumes/FD/dev/metamask/metamask-extension-3/temp/tasks/fix/46934-1009-163330/artifacts/recipe-run/summary.json",
+    "tracePath": "/Volumes/FD/dev/metamask/metamask-extension-3/temp/tasks/fix/46934-1009-163330/artifacts/recipe-run/trace.json",
+    "artifactManifestPath": "/Volumes/FD/dev/metamask/metamask-extension-3/temp/tasks/fix/46934-1009-163330/artifacts/recipe-run/artifact-manifest.json",
+    "recipePath": "/Volumes/FD/dev/metamask/metamask-extension-3/temp/tasks/fix/46934-1009-163330/artifacts/recipe-run/recipe.json",
+    "diagnosticsPath": "/Volumes/FD/dev/metamask/metamask-extension-3/temp/tasks/fix/46934-1009-163330/artifacts/recipe-run/diagnostics.json",
+    "sideFindings": {
+      "status": "review",
+      "note": "Observed 4 distinct application warning/error event(s) during the recipe run; showing 5 preview(s) and omitting 0. Relation to the task is not determined.",
+      "counts": {
+        "total": 4,
+        "warning": 3,
+        "error": 1,
+        "exception": 0,
+        "info": 1
+      }
+    },
+    "browser": {
+      "schemaVersion": 2,
+      "bin": "/Users/deeeed/Library/Caches/ms-playwright/chromium-1217/chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing",
+      "browser": "chrome-for-testing",
+      "version": "147.0.7727.15",
+      "extensionLoading": "load-extension",
+      "source": "auto-recorded",
+      "resolvedAt": "2026-10-09T08:40:57.689Z",
+      "mode": "auto",
+      "selection": "auto",
+      "probe": {
+        "bin": "/Users/deeeed/Library/Caches/ms-playwright/chromium-1217/chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing",
+        "version": "147.0.7727.15",
+        "launchMethod": "launch-services",
+        "display": "headful",
+        "ok": true,
+        "reason": "started and rendered",
+        "transient": false,
+        "checkedAt": "2026-10-06T08:31:39.669Z",
+        "cached": true,
+        "cachePath": "/Users/deeeed/.cache/farmslot/browser-probe.json"
+      },
+      "recordedFrom": "/Volumes/FD/dev/metamask/metamask-extension-3/temp/recipe/runtime/browser-resolution.json",
+      "recordedBin": "/Users/deeeed/Library/Caches/ms-playwright/chromium-1217/chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing",
+      "recordedSelection": "auto",
+      "launch": {
+        "pid": 8037,
+        "cdpPort": 7667,
+        "startedAt": "2026-10-09T08:41:44.555Z",
+        "profile": "/Volumes/FD/dev/metamask/metamask-extension-3/temp/recipe/runtime/chrome-profile",
+        "processStartedAt": "Fri Oct  9 08:41:44 2026"
+      },
+      "boundTo": "slot-runtime"
+    }
+  }
+}

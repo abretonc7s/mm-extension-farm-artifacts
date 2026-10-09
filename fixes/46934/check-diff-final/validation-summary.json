@@ -1,0 +1,119 @@
+{
+  "schemaVersion": 1,
+  "command": "check",
+  "action": "diff",
+  "status": "pass",
+  "exitCode": 0,
+  "adapter": "extension",
+  "target": "/Volumes/FD/dev/metamask/metamask-extension-3",
+  "profile": "fast",
+  "fix": false,
+  "baseRef": "origin/main",
+  "baseSource": "github-pr",
+  "baseLabel": "main",
+  "mergeBase": "3d1dc9c3c2c852d62e1bce4b96249399a0ca6c58",
+  "changedFiles": [
+    "lavamoat/webpack/mv2/beta/policy.json",
+    "lavamoat/webpack/mv2/experimental/policy.json",
+    "lavamoat/webpack/mv2/flask/policy.json",
+    "lavamoat/webpack/mv2/main/policy.json",
+    "lavamoat/webpack/mv3/beta/policy.json",
+    "lavamoat/webpack/mv3/experimental/policy.json",
+    "lavamoat/webpack/mv3/flask/policy.json",
+    "lavamoat/webpack/mv3/main/policy.json",
+    "package.json",
+    "ui/components/app/perps/close-position/close-all-positions-modal.test.tsx",
+    "ui/components/app/perps/close-position/close-all-positions-modal.tsx",
+    "ui/components/app/perps/close-position/close-position-modal.test.tsx",
+    "ui/components/app/perps/close-position/close-position-modal.tsx",
+    "ui/components/app/perps/order-entry/components/auto-close-section/auto-close-section.test.tsx",
+    "ui/components/app/perps/order-entry/components/auto-close-section/auto-close-section.tsx",
+    "ui/components/app/perps/order-entry/order-entry.test.tsx",
+    "ui/components/app/perps/order-entry/order-entry.tsx",
+    "ui/components/app/perps/order-entry/order-entry.types.ts",
+    "ui/components/app/perps/perps-fill-tag/perps-fill-tag.test.tsx",
+    "ui/components/app/perps/reverse-position/reverse-position-modal.test.tsx",
+    "ui/components/app/perps/reverse-position/reverse-position-modal.tsx",
+    "ui/components/app/perps/transaction-card/transaction-card.tsx",
+    "ui/components/app/perps/types/transactionHistory.ts",
+    "ui/components/app/perps/update-tpsl/update-tpsl-modal-content.test.tsx",
+    "ui/components/app/perps/update-tpsl/update-tpsl-modal-content.tsx",
+    "ui/components/app/perps/utils/transactionTransforms.test.ts",
+    "ui/components/app/perps/utils/transactionTransforms.ts",
+    "ui/components/app/perps/utils/translate-perps-error.ts",
+    "ui/hooks/perps/perps-fee-utils.test.ts",
+    "ui/hooks/perps/perps-fee-utils.ts",
+    "ui/hooks/perps/usePerpsOrderFees.test.ts",
+    "ui/hooks/perps/usePerpsOrderFees.ts",
+    "ui/hooks/perps/usePerpsOrderForm.test.ts",
+    "ui/hooks/perps/usePerpsOrderForm.ts",
+    "ui/pages/perps/perps-order-entry-page.test.tsx",
+    "ui/pages/perps/perps-order-entry-page.tsx",
+    "ui/pages/perps/perps-transaction-details-page.test.tsx",
+    "ui/pages/perps/perps-transaction-details-page.tsx",
+    "yarn.lock"
+  ],
+  "fixes": [],
+  "checks": [
+    {
+      "id": "policy-suppressions",
+      "label": "New ESLint suppression policy",
+      "status": "pass",
+      "logPath": "/Volumes/FD/dev/metamask/metamask-extension-3/temp/tasks/fix/46934-1009-163330/artifacts/check-diff-final/policy-suppressions.log"
+    },
+    {
+      "id": "eslint",
+      "label": "Changed-file ESLint",
+      "status": "pass",
+      "command": "/Volumes/FD/dev/metamask/metamask-extension-3/node_modules/.bin/eslint --config ./.eslintrc.js --cache --cache-location /Volumes/FD/dev/metamask/metamask-extension-3/temp/tasks/fix/46934-1009-163330/artifacts/check-diff-final/eslintcache ui/components/app/perps/close-position/close-all-positions-modal.test.tsx ui/components/app/perps/close-position/close-all-positions-modal.tsx ui/components/app/perps/close-position/close-position-modal.test.tsx ui/components/app/perps/close-position/close-position-modal.tsx ui/components/app/perps/order-entry/components/auto-close-section/auto-close-section.test.tsx ui/components/app/perps/order-entry/components/auto-close-section/auto-close-section.tsx ui/components/app/perps/order-entry/order-entry.test.tsx ui/components/app/perps/order-entry/order-entry.tsx ui/components/app/perps/order-entry/order-entry.types.ts ui/components/app/perps/perps-fill-tag/perps-fill-tag.test.tsx ui/components/app/perps/reverse-position/reverse-position-modal.test.tsx ui/components/app/perps/reverse-position/reverse-position-modal.tsx ui/components/app/perps/transaction-card/transaction-card.tsx ui/components/app/perps/types/transactionHistory.ts ui/components/app/perps/update-tpsl/update-tpsl-modal-content.test.tsx ui/components/app/perps/update-tpsl/update-tpsl-modal-content.tsx ui/components/app/perps/utils/transactionTransforms.test.ts ui/components/app/perps/utils/transactionTransforms.ts ui/components/app/perps/utils/translate-perps-error.ts ui/hooks/perps/perps-fee-utils.test.ts ui/hooks/perps/perps-fee-utils.ts ui/hooks/perps/usePerpsOrderFees.test.ts ui/hooks/perps/usePerpsOrderFees.ts ui/hooks/perps/usePerpsOrderForm.test.ts ui/hooks/perps/usePerpsOrderForm.ts ui/pages/perps/perps-order-entry-page.test.tsx ui/pages/perps/perps-order-entry-page.tsx ui/pages/perps/perps-transaction-details-page.test.tsx ui/pages/perps/perps-transaction-details-page.tsx",
+      "exitCode": 0,
+      "logPath": "/Volumes/FD/dev/metamask/metamask-extension-3/temp/tasks/fix/46934-1009-163330/artifacts/check-diff-final/eslint.log",
+      "durationMs": 23443
+    },
+    {
+      "id": "oxfmt",
+      "label": "Changed-file oxfmt",
+      "status": "pass",
+      "command": "/Volumes/FD/dev/metamask/metamask-extension-3/node_modules/.bin/oxfmt --config oxfmt.config.mts --check --no-error-on-unmatched-pattern lavamoat/webpack/mv2/beta/policy.json lavamoat/webpack/mv2/experimental/policy.json lavamoat/webpack/mv2/flask/policy.json lavamoat/webpack/mv2/main/policy.json lavamoat/webpack/mv3/beta/policy.json lavamoat/webpack/mv3/experimental/policy.json lavamoat/webpack/mv3/flask/policy.json lavamoat/webpack/mv3/main/policy.json package.json ui/components/app/perps/close-position/close-all-positions-modal.test.tsx ui/components/app/perps/close-position/close-all-positions-modal.tsx ui/components/app/perps/close-position/close-position-modal.test.tsx ui/components/app/perps/close-position/close-position-modal.tsx ui/components/app/perps/order-entry/components/auto-close-section/auto-close-section.test.tsx ui/components/app/perps/order-entry/components/auto-close-section/auto-close-section.tsx ui/components/app/perps/order-entry/order-entry.test.tsx ui/components/app/perps/order-entry/order-entry.tsx ui/components/app/perps/order-entry/order-entry.types.ts ui/components/app/perps/perps-fill-tag/perps-fill-tag.test.tsx ui/components/app/perps/reverse-position/reverse-position-modal.test.tsx ui/components/app/perps/reverse-position/reverse-position-modal.tsx ui/components/app/perps/transaction-card/transaction-card.tsx ui/components/app/perps/types/transactionHistory.ts ui/components/app/perps/update-tpsl/update-tpsl-modal-content.test.tsx ui/components/app/perps/update-tpsl/update-tpsl-modal-content.tsx ui/components/app/perps/utils/transactionTransforms.test.ts ui/components/app/perps/utils/transactionTransforms.ts ui/components/app/perps/utils/translate-perps-error.ts ui/hooks/perps/perps-fee-utils.test.ts ui/hooks/perps/perps-fee-utils.ts ui/hooks/perps/usePerpsOrderFees.test.ts ui/hooks/perps/usePerpsOrderFees.ts ui/hooks/perps/usePerpsOrderForm.test.ts ui/hooks/perps/usePerpsOrderForm.ts ui/pages/perps/perps-order-entry-page.test.tsx ui/pages/perps/perps-order-entry-page.tsx ui/pages/perps/perps-transaction-details-page.test.tsx ui/pages/perps/perps-transaction-details-page.tsx",
+      "exitCode": 0,
+      "logPath": "/Volumes/FD/dev/metamask/metamask-extension-3/temp/tasks/fix/46934-1009-163330/artifacts/check-diff-final/oxfmt.log",
+      "durationMs": 141
+    },
+    {
+      "id": "jest",
+      "label": "Changed test files",
+      "status": "pass",
+      "command": "/Volumes/FD/dev/metamask/metamask-extension-3/node_modules/.bin/jest --no-coverage ui/components/app/perps/close-position/close-all-positions-modal.test.tsx ui/components/app/perps/close-position/close-position-modal.test.tsx ui/components/app/perps/order-entry/components/auto-close-section/auto-close-section.test.tsx ui/components/app/perps/order-entry/order-entry.test.tsx ui/components/app/perps/perps-fill-tag/perps-fill-tag.test.tsx ui/components/app/perps/reverse-position/reverse-position-modal.test.tsx ui/components/app/perps/update-tpsl/update-tpsl-modal-content.test.tsx ui/components/app/perps/utils/transactionTransforms.test.ts ui/hooks/perps/perps-fee-utils.test.ts ui/hooks/perps/usePerpsOrderFees.test.ts ui/hooks/perps/usePerpsOrderForm.test.ts ui/pages/perps/perps-order-entry-page.test.tsx ui/pages/perps/perps-transaction-details-page.test.tsx",
+      "exitCode": 0,
+      "logPath": "/Volumes/FD/dev/metamask/metamask-extension-3/temp/tasks/fix/46934-1009-163330/artifacts/check-diff-final/jest.log",
+      "durationMs": 17107
+    },
+    {
+      "id": "verify-locales",
+      "label": "Locale strings",
+      "status": "skip",
+      "reason": "no app/_locales changes"
+    },
+    {
+      "id": "circular-deps",
+      "label": "Circular dependencies",
+      "status": "pass",
+      "command": "yarn circular-deps:check",
+      "exitCode": 0,
+      "logPath": "/Volumes/FD/dev/metamask/metamask-extension-3/temp/tasks/fix/46934-1009-163330/artifacts/check-diff-final/circular-deps.log",
+      "durationMs": 25263
+    },
+    {
+      "id": "typecheck",
+      "label": "TypeScript project check",
+      "status": "skip",
+      "reason": "profile=fast; run with --profile full for repo-wide typecheck"
+    }
+  ],
+  "guidance": [],
+  "artifacts": {
+    "dir": "/Volumes/FD/dev/metamask/metamask-extension-3/temp/tasks/fix/46934-1009-163330/artifacts/check-diff-final",
+    "summaryJson": "/Volumes/FD/dev/metamask/metamask-extension-3/temp/tasks/fix/46934-1009-163330/artifacts/check-diff-final/validation-summary.json",
+    "summaryMarkdown": "/Volumes/FD/dev/metamask/metamask-extension-3/temp/tasks/fix/46934-1009-163330/artifacts/check-diff-final/validation-summary.md"
+  }
+}

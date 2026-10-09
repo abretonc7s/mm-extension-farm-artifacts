@@ -1,0 +1,197 @@
+{
+  "schemaVersion": 1,
+  "protocolVersion": "v1",
+  "runner_protocol_version": 1,
+  "status": "pass",
+  "checks": [
+    {
+      "id": "manifest",
+      "status": "pass",
+      "required": true,
+      "message": "Action manifest is valid Recipe v1."
+    },
+    {
+      "id": "bridge",
+      "status": "pass",
+      "required": false,
+      "message": "extension compatibility mode: bridge present."
+    },
+    {
+      "id": "playwright-chromium",
+      "status": "pass",
+      "required": true,
+      "message": "Checkout-pinned Playwright Chromium is installed.",
+      "detail": "/Users/deeeed/Library/Caches/ms-playwright/chromium-1217/chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing"
+    },
+    {
+      "id": "extension-browser",
+      "status": "pass",
+      "required": false,
+      "message": "Launch browser: chrome-for-testing 147.0.7727.15 via auto-recorded (auto); extension loading: load-extension; Chrome for Testing probe (launch-services, headful, cached): started and rendered.",
+      "detail": "/Users/deeeed/Library/Caches/ms-playwright/chromium-1217/chrome-mac-arm64/Google Chrome for Testing.app/Contents/MacOS/Google Chrome for Testing"
+    },
+    {
+      "id": "runtime",
+      "status": "pass",
+      "required": true,
+      "message": "Runtime is ready.",
+      "detail": "Build is fresh and the extension runtime is healthy over CDP."
+    }
+  ],
+  "requiredChecks": {
+    "status": "pass",
+    "total": 3,
+    "passed": 3,
+    "failed": []
+  },
+  "adapter": "extension",
+  "target": "/Volumes/FD/dev/metamask/metamask-extension-3",
+  "context": {
+    "adapter": {
+      "value": "extension",
+      "source": "flag",
+      "detail": "--adapter"
+    },
+    "target": {
+      "value": "/Volumes/FD/dev/metamask/metamask-extension-3",
+      "source": "flag",
+      "detail": "--target"
+    },
+    "slot": {
+      "value": "mini-mme-3",
+      "source": "slot",
+      "detail": "slot-config (~/farmslot-node/pool)",
+      "session": "mme-3",
+      "poolFile": "/Users/deeeed/farmslot-node/pool/mini.json",
+      "ports": {
+        "cdp_port": 7667,
+        "port": 9013,
+        "metro_port": 9113,
+        "watcherPort": 9013,
+        "devServerPort": 9013,
+        "cdpPort": 7667
+      }
+    },
+    "ports": {
+      "cdp": {
+        "value": 7667,
+        "source": "flag"
+      },
+      "watcher": {
+        "value": 9013,
+        "source": "slot",
+        "filled": true,
+        "via": "env",
+        "names": [
+          "RECIPE_WATCHER_PORT",
+          "WATCHER_PORT",
+          "METRO_PORT"
+        ]
+      }
+    }
+  },
+  "runner": {
+    "name": "@metamask/recipe-runner",
+    "packageName": "@deeeed/metamask-harness",
+    "version": "0.85.0",
+    "runnerDir": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness",
+    "packagePath": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/package.json",
+    "packageSource": "node_modules",
+    "installKind": "global-install",
+    "linked": false,
+    "global": true,
+    "invokedPath": "/Users/deeeed/.npm-global/bin/mm-harness",
+    "executablePath": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/bin/mm-harness",
+    "actionManifestPath": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/manifests/extension.action-manifest.json",
+    "harnessPackage": "@farmslot/recipe-runner",
+    "recipeCliVersion": "0.11.0"
+  },
+  "compatibilityMode": "bridge present",
+  "shape": {
+    "packageName": "metamask-crx",
+    "packageJsonStatus": "valid",
+    "packageJsonError": null,
+    "extensionProject": true,
+    "mobileProject": false,
+    "agenticService": false,
+    "mobileProductHarness": false,
+    "mobileBridgeScript": true,
+    "extensionRuntime": true,
+    "injectedHarness": true,
+    "walletFixture": true
+  },
+  "fixture": {
+    "status": "ready",
+    "path": "temp/recipe/runtime/wallet-fixture.json",
+    "accountCount": 4,
+    "hasPassword": true,
+    "remoteFeatureFlagCount": 0
+  },
+  "environment": {},
+  "runtimeContext": {
+    "file": "temp/recipe/runtime/agentic-runtime.json",
+    "fileExists": true,
+    "envOverride": null,
+    "fields": {
+      "slotId": {
+        "value": "mini-mme-3",
+        "source": "file",
+        "envVar": "RECIPE_SLOT_ID",
+        "customize": "doctor --fix creates local identity; Farmslot may override"
+      },
+      "devServerPort": {
+        "value": "9013",
+        "source": "file",
+        "envVar": "WATCHER_PORT",
+        "customize": "mirrors watcherPort for the adapter dev server"
+      },
+      "extensionId": {
+        "value": null,
+        "source": "default",
+        "envVar": "RECIPE_HARNESS_EXTENSION_ID",
+        "customize": "resolved from the built extension"
+      },
+      "cdpPort": {
+        "value": "7667",
+        "source": "file",
+        "envVar": "CDP_PORT",
+        "customize": "doctor --fix claims one; --cdp-port overrides"
+      }
+    }
+  },
+  "manifestValidation": {
+    "errors": 0,
+    "warnings": 0
+  },
+  "ready": true,
+  "runtime": {
+    "decision": "ready",
+    "reasonCode": "healthy",
+    "reasons": [
+      "Build is fresh and the extension runtime is healthy over CDP."
+    ],
+    "deps": "current",
+    "devServer": {
+      "label": "webpack",
+      "status": "up"
+    }
+  },
+  "orphanMetros": [],
+  "capture": {
+    "status": "pass",
+    "failing": [],
+    "screenshots": {
+      "available": true,
+      "providers": [
+        "capture-helper",
+        "cdp"
+      ]
+    },
+    "recording": {
+      "available": true,
+      "provider": "capture-helper"
+    }
+  },
+  "devices": [],
+  "additionalReachableDevices": []
+}

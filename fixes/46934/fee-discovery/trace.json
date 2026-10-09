@@ -1,0 +1,136 @@
+{
+  "metadata": {
+    "runner": {
+      "source": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness",
+      "git_ref": "unknown",
+      "name": "@metamask/recipe-runner"
+    }
+  },
+  "entries": [
+    {
+      "nodeId": "call",
+      "action": "ui.navigate",
+      "intent": "Complete the requested ui.navigate operation",
+      "startedAt": "2026-10-09T08:57:14.087Z",
+      "endedAt": "2026-10-09T08:57:14.251Z",
+      "durationMs": 164,
+      "ok": true,
+      "next": "done",
+      "output": {
+        "action": "ui.navigate",
+        "hash": "#/perps/trade/BTC",
+        "navigation": {
+          "before": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps-home",
+          "href": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps/trade/BTC",
+          "sameDocument": true
+        },
+        "proofPath": "ui-navigation",
+        "cdpPort": 7667,
+        "targetUrl": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html#/perps-home",
+        "runtimeLaunch": null,
+        "cdpTargetId": "1ED7CD2E15AC58B09D09BBE9183BC1FA",
+        "runtimeSessionId": "18e5fd79-9059-4e61-87df-5be926599abb",
+        "liveAdapter": "/Users/deeeed/.npm-global/lib/node_modules/@deeeed/metamask-harness/library/actions/extension/ui/navigate.mjs"
+      },
+      "observations": {
+        "ui.screen": {
+          "provider": "cdp-web",
+          "name": "mini-mme-3 — MetaMask",
+          "title": "mini-mme-3 — MetaMask",
+          "route": "#/perps/trade/BTC",
+          "url": "chrome-extension://hebhblbkkdabgoldnojllkipeoacjioc/home.html"
+        },
+        "ui.visible": {
+          "provider": "cdp-web",
+          "items": [],
+          "hidden_or_offscreen": [
+            {
+              "role": "button",
+              "test_id": "perps-balance-actions-withdraw",
+              "selector": "[data-testid=\"perps-balance-actions-withdraw\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "button",
+              "test_id": "perps-balance-actions-add-funds",
+              "selector": "[data-testid=\"perps-balance-actions-add-funds\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "button",
+              "test_id": "perps-close-all-positions",
+              "selector": "[data-testid=\"perps-close-all-positions\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "button",
+              "test_id": "position-card-SOL",
+              "selector": "[data-testid=\"position-card-SOL\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "button",
+              "test_id": "perps-watchlist-header",
+              "selector": "[data-testid=\"perps-watchlist-header\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "button",
+              "test_id": "perps-watchlist-SOL",
+              "selector": "[data-testid=\"perps-watchlist-SOL\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "button",
+              "test_id": "perps-watchlist-ADA",
+              "selector": "[data-testid=\"perps-watchlist-ADA\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "button",
+              "test_id": "perps-watchlist-BTC",
+              "selector": "[data-testid=\"perps-watchlist-BTC\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "button",
+              "test_id": "perps-watchlist-ETH",
+              "selector": "[data-testid=\"perps-watchlist-ETH\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            },
+            {
+              "role": "button",
+              "test_id": "perps-products-categories-pill-crypto",
+              "selector": "[data-testid=\"perps-products-categories-pill-crypto\"]",
+              "enabled": true,
+              "reason": "hidden_or_no_box"
+            }
+          ],
+          "truncated": true,
+          "limits": {
+            "items": 20,
+            "hidden_or_offscreen": 10
+          }
+        }
+      }
+    },
+    {
+      "nodeId": "done",
+      "action": "end",
+      "startedAt": "2026-10-09T08:57:14.251Z",
+      "endedAt": "2026-10-09T08:57:14.251Z",
+      "durationMs": 0,
+      "ok": true,
+      "status": "pass"
+    }
+  ]
+}

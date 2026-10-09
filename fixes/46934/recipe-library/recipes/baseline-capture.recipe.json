@@ -1,0 +1,26 @@
+{
+  "$schema": "https://farmslot.io/schemas/recipe-v1.schema.json",
+  "title": "Perps controller upgrade baseline capture",
+  "workflow": {
+    "entry": "setup-settle",
+    "nodes": {
+      "setup-settle": {
+        "action": "ui.wait_for",
+        "test_id": "perps-watchlist-BTC",
+        "timeout_ms": 20000,
+        "intent": "Show the populated account market watchlist",
+        "next": "setup-capture"
+      },
+      "setup-capture": {
+        "action": "ui.screenshot",
+        "path": "screenshots/before-ac2.png",
+        "intent": "Preserve the existing read-only trading overview",
+        "next": "done"
+      },
+      "done": {
+        "action": "end",
+        "status": "pass"
+      }
+    }
+  }
+}

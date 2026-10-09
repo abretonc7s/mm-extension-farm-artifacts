@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 1,
+  "command": "recipe-quality",
+  "action": "build",
+  "status": "ok",
+  "outputPath": "temp/tasks/fix/46934-1009-163330/artifacts/recipe-quality.json",
+  "artifact": {
+    "version": 1,
+    "verdict": "warn",
+    "compact": {
+      "verdict": "WARN",
+      "reasons": [
+        "Root recipe passed 14/14 and fee preview recipe passed 21/21 on rebuilt current source with HUD captures inspected.",
+        "All 631 tests pass; shared helper has 100% line coverage.",
+        "Positive account discount was not present; detailed discounts and mixed local fallbacks are proven by unit tests.",
+        "Live close-all covered one SOL position; multi-symbol and fallback paths rely on unit tests.",
+        "Runtime proof uses Chrome MV3 development build, without order or close submission."
+      ],
+      "better_version_guidance": []
+    },
+    "dimensions": {},
+    "structural_findings": [],
+    "contextual_findings": [],
+    "suggested_recipe_delta": [],
+    "training_fields": {
+      "proof_mode": "unknown"
+    },
+    "meta": {
+      "producer": "worker",
+      "fallback_used": false,
+      "legacy_task": false,
+      "artifact_required": true,
+      "source_signals": [
+        "recipe-quality.json"
+      ]
+    }
+  }
+}
